@@ -8,7 +8,12 @@ World Writing Wrangler (WW Wrangler) is about world building for stories, univer
 (TODO--FILL THIS IN)
 
 
+
 ## Additional Information
+
+### Building
+
+WW Wrangler uses CMake for build management and C++20 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
 
 ### Contributing
 
@@ -21,9 +26,12 @@ World Writing Wrangler (WW Wrangler) is about world building for stories, univer
 * Vulkan &mdash; For new gui app development
 * Intel TBB (thread building blocks)
 * Graphviz
+* Log4Cpp
+* Curl
+* Libzip
+* nghttp2
 * C++ 20
 * Latest web browser, javascript enabled.
-
 
 
 
