@@ -1,6 +1,6 @@
-# World Writing Wrangler
+# Your Quill
 
-World Writing Wrangler (WW Wrangler) is about world building for stories, universes, D&D campaigns, or even trying to keep track of who's who in Game of Thrones.   WW Wrangler will be a collection of tools to assist the author/creator in developing their world.
+Your Quill is about world building for stories, universes, D&D campaigns, or even trying to keep track of who's who in Game of Thrones.   Your Quill will be a collection of tools to assist the author/creator in developing their world.
 
 **Data resides with the USER** is an important mantra in this development.
 
@@ -13,7 +13,7 @@ World Writing Wrangler (WW Wrangler) is about world building for stories, univer
 
 ### Building
 
-WW Wrangler uses CMake for build management and C++20 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
+Your Quill uses CMake for build management and C++20 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
 
 ### Contributing
 
