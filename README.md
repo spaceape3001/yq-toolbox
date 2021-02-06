@@ -31,6 +31,7 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Libzip
 * nghttp2
 * C++ 20
+* Perl
 * Latest web browser, javascript enabled.
 
 
