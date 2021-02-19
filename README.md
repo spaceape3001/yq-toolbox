@@ -30,10 +30,8 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Curl
 * Libzip
 * nghttp2
-* C++ 20
+* C++ 20 compiler
 * Perl
 * Latest web browser, javascript enabled.
-
-
-
+* ArgoUML &mdash; For offline UML documentation
 
