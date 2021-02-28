@@ -2,7 +2,9 @@
 
 Your Quill is about world building for stories, universes, D&D campaigns, or even trying to keep track of who's who in Game of Thrones.   Your Quill will be a collection of tools to assist the author/creator in developing their world.
 
-**Data resides with the USER** is an important mantra in this development.
+**Data resides with the USER** is an important mantra in this development, thus the user controls any "cloud".
+
+
 
 
 (TODO--FILL THIS IN)
@@ -19,19 +21,21 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 
 ### Dependencies
 
-* Qt5 &mdash; In use for expediency of implementation, looking to remove it.
-* Sqlite &mdash; For use after Qt is removed
-* Imgui &mdash; For new gui app development (pending)
-* Glfw3 &mdash; For new gui app development
-* Vulkan &mdash; For new gui app development
+* C++ 20 compiler
+* Qt5
 * Intel TBB (thread building blocks)
 * Graphviz
 * Log4Cpp
 * Curl
-* Libzip
-* nghttp2
-* C++ 20 compiler
 * Perl
 * Latest web browser, javascript enabled.
 * ArgoUML &mdash; For offline UML documentation
+
+Future dependencies....
+* Sqlite &mdash; (pending)
+* Imgui &mdash; (pending)
+* Glfw3 &mdash; (pending)
+* Vulkan &mdash; (pending)
+* nghttp2
+* Libzip
 
