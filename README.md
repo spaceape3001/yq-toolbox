@@ -25,9 +25,8 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Intel TBB (thread building blocks)
 * Graphviz
 * Log4Cpp
-* Curl
+* Curl (might vanish...)
 * Perl
-* JsonCpp
 * Latest web browser, javascript enabled.
 * ArgoUML &mdash; For offline UML documentation
 * RapidXML &mdash; Bundled
@@ -39,5 +38,6 @@ Future dependencies....
 * Imgui &mdash; (pending)
 * Glfw3 &mdash; (pending)
 * Vulkan &mdash; (pending)
-* Libzip
+* Libzip &mdash; (pending)
+* JsonCpp ?? &mdash; (TBD, have another consideration in mind)
 
