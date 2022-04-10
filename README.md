@@ -30,14 +30,16 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Latest web browser, javascript enabled.
 * ArgoUML &mdash; For offline UML documentation
 * RapidXML &mdash; Bundled
-* ASIO (non-boost) &mdash; As submodule
-* Boost UT &mdash; As submodel
+* ASIO (non-boost) &mdash; as submodule
+* Boost-ext UT &mdash; as submoule
+* NLohmann JSON &mdash; as submodule
+* Sqlite3
 
 Future dependencies....
-* Sqlite &mdash; (pending)
 * Imgui &mdash; (pending)
 * Glfw3 &mdash; (pending)
 * Vulkan &mdash; (pending)
 * Libzip &mdash; (pending)
-* JsonCpp ?? &mdash; (TBD, have another consideration in mind)
+* Imagemagick &mdash; (pending)
+
 
