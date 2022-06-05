@@ -34,12 +34,13 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Boost-ext UT &mdash; as submoule
 * NLohmann JSON &mdash; as submodule
 * Sqlite3
-
-Future dependencies....
 * Imgui &mdash; (pending)
 * Glfw3 &mdash; (pending)
 * Vulkan &mdash; (pending)
-* Libzip &mdash; (pending)
 * Imagemagick &mdash; (pending)
+
+Future dependencies....
+* Libzip &mdash; (pending)
+* Graphviz
 
 
