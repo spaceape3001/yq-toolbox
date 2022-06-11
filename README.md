@@ -39,7 +39,8 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Vulkan &mdash;
 * Imagemagick &mdash;
 * GLM
-* STB (may become a imagemagick successor)
+* STB &mdash; as submodule (may become a imagemagick successor)
+* Vma &mdash; as submodule
 
 Future dependencies....
 * Libzip &mdash; (pending)
