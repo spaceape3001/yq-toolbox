@@ -34,7 +34,7 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 * Boost-ext UT &mdash; as submoule
 * NLohmann JSON &mdash; as submodule
 * Sqlite3
-* Imgui &mdash; as submodule
+* Imgui &mdash; BUNDLED
 * Glfw3 &mdash;
 * Vulkan &mdash;
 * Imagemagick &mdash;
