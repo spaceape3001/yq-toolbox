@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <vector>
+
+namespace yq {
+    template <typename V>
+    struct PolygonData {
+        std::vector<V>  vertex;
+        constexpr bool operator==(const PolygonData&) const noexcept = default;
+    };
+}
+

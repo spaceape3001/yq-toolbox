@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename V>
+    struct QuadrilateralData {
+        V     a, b, c, d;
+
+        constexpr bool operator==(const QuadrilateralData&) const noexcept = default;
+    };
+}
+

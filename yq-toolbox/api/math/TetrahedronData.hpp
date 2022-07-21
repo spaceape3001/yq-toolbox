@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename V>
+    struct TetrahedronData {
+        V     a, b, c, d;
+
+        constexpr bool operator==(const TetrahedronData&) const noexcept = default;
+    };
+}
+
