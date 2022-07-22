@@ -21,9 +21,10 @@ if(NOT YOUR_QUILL_CMAKE)
         get_filename_component(CMAKE_BUILD_TYPE ${CMAKE_BINARY_DIR} NAME)
     endif()
 
+    SET(YQ_TOOLBOX_DIR ${CMAKE_CURRENT_LIST_DIR})
+
     include(GroupFiles)
     include(LinkTest)
-
 
     set(CMAKE_CONFIGURATION_TYPES Debug;Release)
     set(CMAKE_CXX_STANDARD 23)                  # C++20 is the standard (may be bumped in the future)
