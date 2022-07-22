@@ -1,15 +1,6 @@
-# Your Quill
+# Your Quill's Toolbox
 
-Your Quill is about world building for stories, universes, D&D campaigns, or even trying to keep track of who's who in Game of Thrones.   Your Quill will be a collection of tools to assist the author/creator in developing their world.
-
-**Data resides with the USER** is an important mantra in this development, thus the user controls any "cloud".
-
-
-
-
-(TODO--FILL THIS IN)
-
-
+This is the general utility toolbox for my Your Quill project.  It's split into a separate repository so it can be used with other projects as it contains a nice meta system, math, and other miscellaneous utilities.
 
 ## Additional Information
 
@@ -23,28 +14,12 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 
 * C++ 20 compiler
 * Intel TBB (thread building blocks)
-* Graphviz
 * Log4Cpp
 * Curl (might vanish...)
-* Perl
-* Latest web browser, javascript enabled.
-* ArgoUML &mdash; For offline UML documentation
-* RapidXML &mdash; Bundled
-* ASIO (non-boost) &mdash; as submodule
-* Boost-ext UT &mdash; as submoule
-* NLohmann JSON &mdash; as submodule
+* RapidXML &mdash; bundled
+* Boost-ext UT &mdash; bundled
+* NLohmann JSON &mdash; bundled
 * Sqlite3
-* Imgui &mdash; BUNDLED
-* Glfw3 &mdash;
-* Vulkan &mdash;
-* Imagemagick &mdash;
 * GLM
-* STB &mdash; as submodule (may become a imagemagick successor)
-* Vma &mdash; as submodule
-
-Future dependencies....
-* Libzip &mdash; (pending)
-* Graphviz
-* Vulkan Memory Allocator
 
 
