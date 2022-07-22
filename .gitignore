@@ -1,0 +1,66 @@
+# Other source control
+.svn
+.svn0
+
+# Temporaries
+*.bck
+
+#  Old code dies here
+_dep
+
+# And these are experimental (not included in GIT)
+3rdx
+apix
+exex
+play
+pluginx
+sharex
+toolx
+testx
+
+# testing c++ files
+test.cpp
+
+# Doxygen output
+3rd/pstreams-1.0.3/doc
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Omit the build directory
+build/*
+
+# Omit temporaries
+*/*~
+*~
+
