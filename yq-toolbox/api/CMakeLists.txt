@@ -4,7 +4,7 @@
 ##
 ################################################################################
 
-project(yqutility)
+project(yqtoolbox)
 
 find_package(CURL REQUIRED)
 find_package(Log4cpp REQUIRED)
