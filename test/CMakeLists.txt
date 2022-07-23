@@ -4,6 +4,8 @@
 ##
 ################################################################################
 
+include(${YOUR_QUILL_EXTERNAL}/ut.cmake)
+
 macro(toolbox_test name)
     add_executable(test_${name} ${name}.cpp)
     target_link_libraries(test_${name} PRIVATE yqtoolbox BoostUT)

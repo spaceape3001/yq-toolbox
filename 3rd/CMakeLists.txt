@@ -12,11 +12,3 @@ target_sources(pstreams INTERFACE
 )
 target_include_directories(pstreams INTERFACE ${pstreams_dir})
 
-file( GLOB ut_dir ut-*)
-add_library(BoostUT INTERFACE)
-target_sources(BoostUT INTERFACE
-    ${ut_dir}/include/boost/ut.hpp
-)
-target_include_directories(BoostUT INTERFACE ${ut_dir}/include)
-
-
