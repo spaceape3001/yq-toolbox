@@ -4,13 +4,13 @@
 ##
 ################################################################################
 
-project(yqtoolbox)
-
 find_package(CURL REQUIRED)
 find_package(Log4cpp REQUIRED)
 find_package(TBB REQUIRED)
 find_package(glm REQUIRED)
 find_package(SQLite3 REQUIRED)
+
+include(${YOUR_QUILL_EXTERNAL}/rapidxml.cmake)
 
 message("INCLUDE ${Sqlite3_INCLUDE_DIRS}")
 
@@ -22,8 +22,8 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
     set(core_test_source ./test.cpp)
 endif()
 
-add_library(${PROJECT_NAME} SHARED 
-    ${core_test_source}
+add_library(yqtoolbox SHARED 
+#    ${core_test_source}
     ./basic/basic.cpp
     ./chemistry/chemistry.cpp
     ./earth/earth.cpp
@@ -31,19 +31,19 @@ add_library(${PROJECT_NAME} SHARED
     ./physics/physics.cpp
 )
 
-target_compile_definitions(${PROJECT_NAME}
+target_compile_definitions(yqtoolbox
     PRIVATE 
         YQ__CORE__OVERRIDE 
 )
 
 IF(GCC)
-    target_link_libraries(${PROJECT_NAME}
+    target_link_libraries(yqtoolbox
         PUBLIC
             stdc++fs
     )
 ENDIF()
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(yqtoolbox
     PUBLIC
         ${LOG4CPP_LIBRARIES} 
         ${TBB_LIBRARIES}
@@ -54,7 +54,7 @@ target_link_libraries(${PROJECT_NAME}
         json
 )
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(yqtoolbox
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         ${TBB_INCLUDE_DIR}
@@ -62,6 +62,6 @@ target_include_directories(${PROJECT_NAME}
         ${Sqlite3_INCLUDE_DIRS}
 )
 
-LinkTest(${PROJECT_NAME})
+LinkTest(yqtoolbox)
 
 
