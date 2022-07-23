@@ -5,10 +5,3 @@ target_sources(json INTERFACE
 )
 target_include_directories(json INTERFACE ${json_dir}/include)
 
-file( GLOB pstreams_dir pstreams-*)
-add_library(pstreams INTERFACE)
-target_sources(pstreams INTERFACE
-    ${pstreams_dir}/pstream.h
-)
-target_include_directories(pstreams INTERFACE ${pstreams_dir})
-

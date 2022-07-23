@@ -11,8 +11,9 @@ find_package(glm REQUIRED)
 find_package(SQLite3 REQUIRED)
 
 include(${YOUR_QUILL_EXTERNAL}/rapidxml.cmake)
+include(${YOUR_QUILL_EXTERNAL}/pstreams.cmake)
 
-message("INCLUDE ${Sqlite3_INCLUDE_DIRS}")
+message("INCLUDE ${SQLite3_INCLUDE_DIRS}")
 
 
 #   This is a testing file, excluded from GIT, used for quick test compilation 
@@ -49,9 +50,10 @@ target_link_libraries(yqtoolbox
         ${TBB_LIBRARIES}
         ${CURL_LIBRARIES}
         ${SQLite3_LIBRARY}
-        pstreams
         RapidXml
         json
+     PRIVATE
+        pstreams
 )
 
 target_include_directories(yqtoolbox
@@ -59,7 +61,7 @@ target_include_directories(yqtoolbox
         ${CMAKE_CURRENT_LIST_DIR}
         ${TBB_INCLUDE_DIR}
         ${LOG4CPP_INCLUDE_DIR}
-        ${Sqlite3_INCLUDE_DIRS}
+        ${SQLite3_INCLUDE_DIRS}
 )
 
 LinkTest(yqtoolbox)
