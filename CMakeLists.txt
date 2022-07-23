@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.23.0)
 
-project(YourQuill VERSION 0.0.0.3)
-include(YourQuill.cmake)
+if("${PROJECT_NAME}" STREQUAL "")
+    project(YourQuill VERSION 0.0.0.3)
+endif()
+include(configure.cmake)
 
 add_subdirectory(3rd)
 add_subdirectory(api)
