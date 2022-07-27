@@ -31,6 +31,23 @@ namespace yq {
         {
             return { red, green, blue, alpha };
         }
+
+        template <typename U>
+        requires (std::is_floating_point_v<T> && std::is_integral_v<U>)
+        constexpr explicit operator RGBA<U>() const noexcept
+        {
+            static constexpr const U    mx  = std::numeric_limits<U>::max();
+            static constexpr const T    half    = T(0.5);
+            return { (U)((red + half) * mx), (U)((green + half) * mx), (U)((blue + half) * mx), (U)((alpha + half) * mx) };
+        }
+        
+        template <typename U>
+        requires (std::is_integral_v<T> && std::is_floating_point_v<U>)
+        constexpr explicit operator RGBA<U>() const noexcept
+        {
+            static constexpr const U    mx  = U(std::numeric_limits<T>::max());
+            return { U(red) / mx, U(green) / mx, U(blue) / mx, U(alpha) / mx };
+        }
     };
 
 //  --------------------------------------------------------
