@@ -33,6 +33,16 @@ namespace yq {
                 i(a...);
         }
         
+        bool    empty() const 
+        {
+            return m_slots.empty();
+        }
+        
+        void    clear()
+        {
+            m_slots.clear();
+        }
+        
     private:
         std::vector<FN>     m_slots;
     };
