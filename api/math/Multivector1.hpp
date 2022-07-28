@@ -10,6 +10,9 @@
 #include <math/Vector1.hpp>
 
 namespace yq {
+
+    /*! \brief One dimensional multivector
+    */
     template <typename T>
     struct Multivector1 {
         unity_t<T>  a;

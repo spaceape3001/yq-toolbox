@@ -13,6 +13,9 @@
 #include <math/Quadvector4.hpp>
 
 namespace yq {
+
+    /*! \brief Four dimensional multivector
+    */
     template <typename T>
     struct Multivector4 {
         unity_t<T>      a;

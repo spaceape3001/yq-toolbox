@@ -11,6 +11,9 @@
 #include <math/Bivector2.hpp>
 
 namespace yq {
+
+    /*! \brief Two dimensional multivector
+    */
     template <typename T>
     struct Multivector2 {
         unity_t<T>      a;

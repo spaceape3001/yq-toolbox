@@ -12,6 +12,9 @@
 #include <math/Trivector3.hpp>
 
 namespace yq {
+
+    /*! \brief Three dimensional multivector
+    */
     template <typename T>
     struct Multivector3 {
         unity_t<T>      a;
