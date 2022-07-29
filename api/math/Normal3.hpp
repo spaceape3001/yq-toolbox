@@ -10,6 +10,10 @@
 #include <math/Vector3.hpp>
 
 namespace yq {
+    /*! \brief Represents a "normal" vector
+    
+        Container to mark a vector as being a normal
+    */
     template <typename T>
     struct Normal3 {
         using component_type    = T;
