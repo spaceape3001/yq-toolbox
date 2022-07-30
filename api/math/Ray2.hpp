@@ -10,6 +10,9 @@
 #include <math/Vector2.hpp>
 
 namespace yq {
+
+    /*! \brief Ray in two dimensions.
+    */
     template <typename T>
     struct Ray2 {
         using component_type    = T;

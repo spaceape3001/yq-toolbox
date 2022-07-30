@@ -10,6 +10,9 @@
 #include <math/Vector3.hpp>
 
 namespace yq {
+
+    /*! \brief Ray in three dimensions.
+    */
     template <typename T>
     struct Ray3 {
         using component_type    = T;

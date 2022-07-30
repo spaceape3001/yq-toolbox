@@ -10,6 +10,9 @@
 #include <math/Vector4.hpp>
 
 namespace yq {
+
+    /*! \brief Ray in four dimensions.
+    */
     template <typename T>
     struct Ray4 {
         using component_type    = T;

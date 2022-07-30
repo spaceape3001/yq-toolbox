@@ -9,6 +9,8 @@
 #include "Normal3.hpp"
 
 namespace yq {
+    /*! \brief A plane in three dimensions
+    */
     template <typename T>
     struct Plane3 {
         using component_type    = T;
