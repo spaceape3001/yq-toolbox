@@ -41,6 +41,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates 4x4 tensor from four Vector4 column vectors
+    */
     template <typename T>
     constexpr Tensor44<T>  columns(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z, const Vector4<T>&w)
     {
@@ -52,6 +54,10 @@ namespace yq {
         };
     }
 
+    /*! \brief Creates 4x4 tensor by specifying diagonal 
+    
+        This assumes the rest of the components are zero.
+    */
     template <typename T>
     constexpr Tensor44<T>  diagonal(const Vector4<T>&v)
     {
@@ -63,6 +69,10 @@ namespace yq {
         };
     }
     
+    /*! \brief Creates 4x4 tensor by specifying diagonal
+    
+        This assumes the rest of the components are zero.
+    */
     template <typename T>
     constexpr Tensor44<T>  diagonal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w)
     {
@@ -74,6 +84,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Creates 4x4 tensor by specifying the rows
+    */
     template <typename T>
     constexpr Tensor44<T>  rows(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z, const Vector4<T>&w)
     {
@@ -85,6 +97,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Creates 4x4 tensor from the GLM equivalent
+    */
     template <typename T, glm::qualifier Q>
     constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t)
     {
