@@ -8,6 +8,9 @@
 #include <math/preamble.hpp>
 
 namespace yq {
+
+    /*! \brief Store data for corners of 3D box
+    */
     template <typename T>
     struct AxCorners3 {
         using component_type    = T;

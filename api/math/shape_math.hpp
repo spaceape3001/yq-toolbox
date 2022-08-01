@@ -1092,6 +1092,50 @@ namespace yq {
     }
 
     template <typename T>
+    Vector1<T>      center(const AxBox1<T>& box)
+    {
+        if constexpr (std::is_floating_point_v<T>){
+            return ieee754_t<T>(0.5)*(box.lo+box.hi);
+        } else if(std::is_integral_v<T>){
+            return (box.lo+box.hi) / T(2);
+        } else
+            return {};
+    }
+    
+    template <typename T>
+    Vector2<T>      center(const AxBox2<T>& box)
+    {
+        if constexpr (std::is_floating_point_v<T>){
+            return ieee754_t<T>(0.5)*(box.lo+box.hi);
+        } else if(std::is_integral_v<T>){
+            return (box.lo+box.hi) / T(2);
+        } else
+            return {};
+    }
+
+    template <typename T>
+    Vector3<T>      center(const AxBox3<T>& box)
+    {
+        if constexpr (std::is_floating_point_v<T>){
+            return ieee754_t<T>(0.5)*(box.lo+box.hi);
+        } else if(std::is_integral_v<T>){
+            return (box.lo+box.hi) / T(2);
+        } else
+            return {};
+    }
+
+    template <typename T>
+    Vector4<T>      center(const AxBox4<T>& box)
+    {
+        if constexpr (std::is_floating_point_v<T>){
+            return ieee754_t<T>(0.5)*(box.lo+box.hi);
+        } else if(std::is_integral_v<T>){
+            return (box.lo+box.hi) / T(2);
+        } else
+            return {};
+    }
+
+    template <typename T>
     T   circumference(const Circle2<T>& a)
     {
         return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * a.radius;
