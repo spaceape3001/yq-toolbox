@@ -38,6 +38,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create 2x2 tensor by columns
+    */
     template <typename T>
     constexpr Tensor22<T>  columns(const Vector2<T>&x, const Vector2<T>&y)
     {
@@ -47,6 +49,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 2x2 tensor by its diagonal
+    */
     template <typename T>
     constexpr Tensor22<T>  diagonal(const Vector2<T>&v)
     {
@@ -56,6 +60,8 @@ namespace yq {
         };
     }
     
+    /*! \brief Create 2x2 tensor by its diagonal
+    */
     template <typename T>
     constexpr Tensor22<T>  diagonal(T x, std::type_identity_t<T> y)
     {
@@ -66,6 +72,8 @@ namespace yq {
     }
     
 
+    /*! \brief Create 2x2 tensor by rows
+    */
     template <typename T>
     constexpr Tensor22<T>  rows(const Vector2<T>&x, const Vector2<T>&y)
     {

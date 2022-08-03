@@ -28,6 +28,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create 1x1 tensor by columns
+    */
     template <typename T>
     constexpr Tensor11<T>  columns(const Vector1<T>&x)
     {
@@ -36,6 +38,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 1x1 tensor by its diagonal
+    */
     template <typename T>
     constexpr Tensor11<T>  diagonal(const Vector1<T>&v)
     {
@@ -44,6 +48,8 @@ namespace yq {
         };
     }
     
+    /*! \brief Create 1x1 tensor by its diagonal
+    */
     template <typename T>
     constexpr Tensor11<T>  diagonal(T x)
     {
@@ -52,6 +58,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 1x1 tensor by rows
+    */
     template <typename T>
     constexpr Tensor11<T>  rows(const Vector1<T>&x)
     {

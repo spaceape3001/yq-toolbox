@@ -40,6 +40,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create 3x3 tensor by columns
+    */
     template <typename T>
     constexpr Tensor33<T>  columns(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z)
     {
@@ -50,6 +52,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 3x3 tensor by its diagonal
+    */
     template <typename T>
     constexpr Tensor33<T>  diagonal(const Vector3<T>&v)
     {
@@ -60,6 +64,8 @@ namespace yq {
         };
     }
     
+    /*! \brief Create 3x3 tensor by its diagonal
+    */
     template <typename T>
     constexpr Tensor33<T>  diagonal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
@@ -70,6 +76,17 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 3x3 tensor by heading-pitch-roll
+    
+        A traditional rotation matrix in flight sims and other similar ventures, this creates a 3x3
+        matrix by specifying it's "heading-pitch-roll".
+        
+        \param[in] hdg      Yaw or Heading (ie rotation around "Z")
+        \param[in] pitch    Pitch up (ie rotation around "Y")
+        \param[in] roll     Roll (ie rotation around "X")
+
+        \return 3x3 rotation matrix
+    */
     template <typename T>
     Tensor33<T> hpr33(MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
     {
@@ -133,6 +150,8 @@ namespace yq {
     }
 
 
+    /*! \brief Create 3x3 tensor by rows
+    */
     template <typename T>
     constexpr Tensor33<T>  rows(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z)
     {
@@ -143,6 +162,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 3x3 tensor from GLM
+    */
     template <typename T, glm::qualifier Q>
     constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t)
     {

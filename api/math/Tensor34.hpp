@@ -31,6 +31,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create 3x4 tensor by columns
+    */
     template <typename T>
     constexpr Tensor34<T>  columns(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z, const Vector3<T>&w)
     {
@@ -41,6 +43,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 3x4 tensor by rows
+    */
     template <typename T>
     constexpr Tensor34<T>  rows(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z)
     {

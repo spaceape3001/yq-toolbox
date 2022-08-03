@@ -30,6 +30,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create 1x2 tensor by columns
+    */
     template <typename T>
     constexpr Tensor12<T>  columns(const Vector1<T>&x, const Vector1<T>&y)
     {
@@ -38,6 +40,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Create 1x2 tensor by rows
+    */
     template <typename T>
     constexpr Tensor12<T>  rows(const Vector2<T>&x)
     {
