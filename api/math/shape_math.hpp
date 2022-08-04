@@ -1054,43 +1054,50 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    /*! \brief Computes the area of a 2D axially aligned bounding box
+    */
     template <typename T>
     square_t<T>     area(const AxBox2<T>& ax)
     {
         return component_product(ax.hi-ax.lo);
     }
 
+
+    /*! \brief Computes the area of a 2D circle
+    */
     template <typename T>
     square_t<T> area(const Circle2<T>& a)
     {
         return std::numbers::pi_v<ieee754_t<T>> * (a.radius*a.radius);
     }
     
-
+    /*! \brief Computes the area of a 2D polygon
+    */
     template <typename T>
     square_t<T>    area(const Polygon2<T>& poly)
     {
         return 0.5*abs(point_area(poly.vertex));
     }
 
+    /*! \brief Computes the area of a 2D quatrilateral
+    */
     template <typename T>
     square_t<T>    area(const Quadrilateral2<T>& quad)
     {
         return 0.5*abs(point_area(quad));
     }
 
-    template <typename T>
-    square_t<T>     area(const Sphere3<T>& sp)
-    {
-        return 4.0*pi*(sp.radius*sp.radius);
-    }
 
+    /*! \brief Computes the area of a 2D triangle
+    */
     template <typename T>
     square_t<T>    area(const Triangle2<T>& tri)
     {
         return 0.5*abs(point_area(tri));
     }
 
+    /*! \brief Computes the center of a 1D axially aligned box
+    */
     template <typename T>
     Vector1<T>      center(const AxBox1<T>& box)
     {
@@ -1102,6 +1109,8 @@ namespace yq {
             return {};
     }
     
+    /*! \brief Computes the center of a 2D axially aligned box
+    */
     template <typename T>
     Vector2<T>      center(const AxBox2<T>& box)
     {
@@ -1113,6 +1122,8 @@ namespace yq {
             return {};
     }
 
+    /*! \brief Computes the center of a 3D axially aligned box
+    */
     template <typename T>
     Vector3<T>      center(const AxBox3<T>& box)
     {
@@ -1124,6 +1135,8 @@ namespace yq {
             return {};
     }
 
+    /*! \brief Computes the center of a 4D axially aligned box
+    */
     template <typename T>
     Vector4<T>      center(const AxBox4<T>& box)
     {
@@ -1135,24 +1148,32 @@ namespace yq {
             return {};
     }
 
+    /*! \brief Computes the circumference of a circle
+    */
     template <typename T>
-    T   circumference(const Circle2<T>& a)
+    T           circumference(const Circle2<T>& a)
     {
         return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * a.radius;
     }
 
+    /*! \brief Computes the diameter of a circle
+    */
     template <typename T>
     T           diameter(const Circle2<T>&a)
     {
         return a.radius + a.radius;
     }
 
+    /*! \brief Computes the diameter of a sphere
+    */
     template <typename T>
     T           diameter(const Sphere3<T>&a)
     {
         return a.radius + a.radius;
     }
 
+    /*! \brief Computes the diameter of a hyper sphere
+    */
     template <typename T>
     T           diameter(const Sphere4<T>&a)
     {
@@ -1238,24 +1259,32 @@ namespace yq {
         return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
     }
 
+    /*! \brief Checks if the point is inside (or touching) the box
+    */
     template <typename T>
     constexpr bool is_inside(const AxBox1<T>& bx, const Vector1<T>& pt)
     {
         return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
     }
     
+    /*! \brief Checks if the point is inside (or touching) the box
+    */
     template <typename T>
     constexpr bool is_inside(const AxBox2<T>& bx, const Vector2<T>& pt)
     {
         return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
     }
 
+    /*! \brief Checks if the point is inside (or touching) the box
+    */
     template <typename T>
     constexpr bool is_inside(const AxBox3<T>& bx, const Vector3<T>& pt)
     {
         return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
     }
 
+    /*! \brief Checks if the point is inside (or touching) the box
+    */
     template <typename T>
     constexpr bool is_inside(const AxBox4<T>& bx, const Vector4<T>& pt)
     {
@@ -1461,6 +1490,23 @@ namespace yq {
     Vector4<T>     point(const Segment4<T>& seg, ieee754_t<T> f)
     {
         return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
+    }
+
+    /*! \brief Computes the surface area of a 3D axially aligned bounding box
+    */
+    template <typename T>
+    square_t<T>    surface_area(const AxBox3<T>& ax)
+    {
+        Vector3<T>  del     = ax.hi - ax.lo;
+        return 2.0 * ((del.x*del.y)+(del.y*del.z)+(del.z*del.x));
+    }
+
+    /*! \brief Computes the surface area of a 3D sphere
+    */
+    template <typename T>
+    square_t<T>     surface_area(const Sphere3<T>& sp)
+    {
+        return 4.0*pi*(sp.radius*sp.radius);
     }
 
     template <typename T>
