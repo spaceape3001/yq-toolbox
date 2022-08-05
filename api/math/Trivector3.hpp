@@ -13,7 +13,7 @@ namespace yq {
     struct Trivector3 {
         using component_type = T;
         cube_t<T>     xyz;
-        auto operator<=>(const Trivector3&) const = default;
+        constexpr auto operator<=>(const Trivector3&) const noexcept = default;
     };
 
     YQ_IEEE754_1(Trivector3)
@@ -21,12 +21,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    constexpr Trivector3D   operator "" _xyz3(unsigned long long int v)
+    constexpr Trivector3D   operator "" _xyz3(unsigned long long int v) noexcept
     {
         return {(double) v};
     }
 
-    constexpr Trivector3D   operator "" _xyz3(long double v)
+    constexpr Trivector3D   operator "" _xyz3(long double v) noexcept
     {
         return {(double) v};
     }
@@ -47,7 +47,7 @@ namespace yq {
 //  POSITIVE
 
     template <typename T>
-    constexpr Trivector3<T> operator+(const Trivector3<T>&a)
+    constexpr Trivector3<T> operator+(const Trivector3<T>&a) noexcept
     {
         return a;
     }
@@ -57,7 +57,7 @@ namespace yq {
 //  NEGATIVE
 
     template <typename T>
-    constexpr Trivector3<T> operator-(const Trivector3<T>&a)
+    constexpr Trivector3<T> operator-(const Trivector3<T>&a) noexcept
     {
         return {-a.xyz};
     }
@@ -71,13 +71,13 @@ namespace yq {
 //  ADDITION
 
     template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector3<T>& a, const Trivector3<T>& b)
+    constexpr Trivector4<T> operator+(const Trivector3<T>& a, const Trivector3<T>& b) noexcept
     {
         return { a.xyz+b.xyz };
     }
 
     template <typename T>
-    Trivector4<T>& operator+=(Trivector3<T>& a, const Trivector3<T>& b)
+    Trivector4<T>& operator+=(Trivector3<T>& a, const Trivector3<T>& b) noexcept
     {
         a.xyz+=b.xyz;
         return a;
@@ -88,13 +88,13 @@ namespace yq {
 
 
     template <typename T>
-    constexpr Trivector3<T> operator-(const Trivector3<T>& a, const Trivector3<T>& b)
+    constexpr Trivector3<T> operator-(const Trivector3<T>& a, const Trivector3<T>& b) noexcept
     {
         return { a.xyz-b.xyz };
     }
 
     template <typename T>
-    Trivector3<T>& operator-=(Trivector3<T>& a, const Trivector3<T>& b)
+    Trivector3<T>& operator-=(Trivector3<T>& a, const Trivector3<T>& b) noexcept
     {
         a.xyz-=b.xyz;
         return a;
@@ -107,21 +107,21 @@ namespace yq {
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Trivector3<T> operator*(T a, const Trivector3<T>& b)
+    constexpr Trivector3<T> operator*(T a, const Trivector3<T>& b) noexcept
     {
         return { a*b.xyz };
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Trivector3<T> operator*(const Trivector3<T>& a, T b)
+    constexpr Trivector3<T> operator*(const Trivector3<T>& a, T b) noexcept
     {
         return { a.xyz*b };
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Trivector3<T>& operator*=(Trivector3<T>& a, T b)
+    Trivector3<T>& operator*=(Trivector3<T>& a, T b) noexcept
     {
         a.xyz *= b;
         return a;
@@ -132,14 +132,14 @@ namespace yq {
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Trivector3<T> operator/(const Trivector3<T>& a, T b)
+    constexpr Trivector3<T> operator/(const Trivector3<T>& a, T b) noexcept
     {
         return { a.xyz/b };
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Trivector3<T>& operator/=(Trivector3<T>& a, T b)
+    constexpr Trivector3<T>& operator/=(Trivector3<T>& a, T b) noexcept
     {
         a.xyz /= b;
         return a;
