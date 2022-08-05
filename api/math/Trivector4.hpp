@@ -213,6 +213,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+
 }
 
 YQ_TYPE_DECLARE(yq::Trivector4D)

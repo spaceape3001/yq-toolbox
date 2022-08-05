@@ -85,29 +85,7 @@ namespace yq {
         return ret;
     }
 
-    /*! \brief "Point area" of the points
-    
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
-    template <typename T>
-    square_t<T>    point_area(const Triangle2<T>& tri)
-    {
-        return delta_area(tri.b, tri.a) + delta_area(tri.c, tri.b) + delta_area(tri.a, tri.c);
-    }
 
-    /*! \brief "Point area" of the points
-    
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
-    template <typename T>
-    square_t<T>    point_area(const Quadrilateral2<T>& quad)
-    {
-        return delta_area(quad.b, quad.a) + delta_area(quad.c, quad.b) + delta_area(quad.d, quad.c) + delta_area(quad.a, quad.d);
-    }
 
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -155,59 +133,6 @@ namespace yq {
             ret.hi = max_elem(ret.hi, poly.vertex[i]);
         }
         return ret;
-    }
-
-    template <typename T>
-    AxBox2<T>   aabb(const Quadrilateral2<T>& quad)
-    {
-        return { 
-            min_elem(min_elem(quad.a, quad.b), min_elem(quad.c, quad.d)), 
-            max_elem(max_elem(quad.a, quad.b), min_elem(quad.c, quad.d))
-        };
-    }
-
-    template <typename T>
-    AxBox4<T>   aabb(const Sphere4<T>&a)
-    {
-        T       r   = abs(a.r);
-        return {{
-            a.pt.x - r,
-            a.pt.y - r,
-            a.pt.z - r,
-            a.pt.w - r
-        },{
-            a.pt.x + r,
-            a.pt.y + r,
-            a.pt.z + r,
-            a.pt.w + r
-        }};
-    }
-    
-    template <typename T>
-    AxBox2<T>   aabb(const Triangle2<T>& tri)
-    {
-        return { 
-            min_elem(min_elem(tri.a, tri.b), tri.c), 
-            max_elem(max_elem(tri.a, tri.b), tri.c)
-        };
-    }
-    
-    template <typename T>
-    AxBox3<T>   aabb(const Triangle3<T>& tri)
-    {
-        return { 
-            min_elem(min_elem(tri.a, tri.b), tri.c), 
-            max_elem(max_elem(tri.a, tri.b), tri.c)
-        };
-    }
-
-    template <typename T>
-    AxBox4<T>   aabb(const Triangle4<T>& tri)
-    {
-        return { 
-            min_elem(min_elem(tri.a, tri.b), tri.c), 
-            max_elem(max_elem(tri.a, tri.b), tri.c)
-        };
     }
 
     
@@ -293,11 +218,6 @@ namespace yq {
         return { { tri.a, tri.b, tri.c } };
     }
 
-    template <typename T>
-    Quadrilateral2<T> quadrilateral(const AxBox2<T>& ax)
-    {
-        return { southwest(ax), southeast(ax), northeast(ax), northwest(ax) };
-    }
 
     template <typename T>
     TriangleData<RGB<T>>     rgb(const TriangleData<RGBA<T>>& t)
@@ -312,47 +232,16 @@ namespace yq {
     }
     
 
-    template <typename T>
-    Sphere4<T>  sphere(const Vector4<T>& point, T radius)
-    {
-        return {point, radius};
-    }
 
     template <typename T>
     Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c, const Vector3<T>& d)
     {
-        return { a, b, c };
+        return { a, b, c, d };
     }
 
-    template <typename T>
-    Triangle2<T>    triangle(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c)
-    {
-        return { a, b, c };
-    }
     
-    template <typename T>
-    Triangle3<T>    triangle(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c)
-    {
-        return { a, b, c };
-    }
 
-    template <typename T>
-    Triangle4<T>    triangle(const Vector4<T>& a, const Vector4<T>& b, const Vector4<T>& c)
-    {
-        return { a, b, c };
-    }
 
-    template <typename T>
-    Triangle2<T>   xy(const Triangle3<T>& a)
-    {
-        return { xy(a.a), xy(a.b), xy(a.c) };
-    }
-    
-    template <typename T>
-    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z)
-    {
-        return { xy(a.a, z), xy(a.b, z), xy(a.c, z) };
-    }
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -858,12 +747,8 @@ namespace yq {
 //  UNIONS
 
 
-
-
 //  --------------------------------------------------------
 //  INTERSECTIONS
-
-
 
 
 //  --------------------------------------------------------
@@ -878,33 +763,6 @@ namespace yq {
         return 0.5*abs(point_area(poly.vertex));
     }
 
-    /*! \brief Computes the area of a 2D quatrilateral
-    */
-    template <typename T>
-    square_t<T>    area(const Quadrilateral2<T>& quad)
-    {
-        return 0.5*abs(point_area(quad));
-    }
-
-
-    /*! \brief Computes the area of a 2D triangle
-    */
-    template <typename T>
-    square_t<T>    area(const Triangle2<T>& tri)
-    {
-        return 0.5*abs(point_area(tri));
-    }
-
-
-
-
-    /*! \brief Computes the diameter of a hyper sphere
-    */
-    template <typename T>
-    T           diameter(const Sphere4<T>&a)
-    {
-        return a.radius + a.radius;
-    }
 
     template <typename T>
     bool    is_ccw(const Polygon2<T>& poly)
@@ -912,11 +770,6 @@ namespace yq {
         return point_area(poly.vertex) < zero_v<T>;
     }
 
-    template <typename T>
-    bool    is_ccw(const Triangle2<T>& tri)
-    {
-        return point_area(tri) < zero_v<T>;
-    }
 
     template <typename T>
     bool    is_clockwise(const Polygon2<T>& poly)
@@ -924,11 +777,6 @@ namespace yq {
         return point_area(poly.vertex) > zero_v<T>;
     }
     
-    template <typename T>
-    bool    is_clockwise(const Triangle2<T>& tri)
-    {
-        return point_area(tri) > zero_v<T>;
-    }
 
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
@@ -967,34 +815,6 @@ namespace yq {
         for(size_t i=0;i<n;++i)
             ret += length(poly.vertex[i+1]-poly.vertex[i]);
         return ret;
-    }
-    
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Quadrilateral2<T>& quad)
-    {
-        return length(quad.b-quad.a)+length(quad.c-quad.b)+length(quad.d-quad.c)+length(quad.a-quad.d);
-    }
-    
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Triangle2<T>& tri)
-    {
-        return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
-    }
-
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Triangle3<T>& tri)
-    {
-        return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
-    }
-
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Triangle4<T>& tri)
-    {
-        return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
     }
 
 }
