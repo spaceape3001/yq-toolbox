@@ -438,6 +438,17 @@ namespace yq {
         return a.x + a.y;
     }
 
+    /*! \brief "Delta Area"
+    
+        This is a building block for triangle & polygon area code, computes the "delta area" between two points
+        (almost the same as area(aabb(a,b)) but can be negative.)
+    */
+    template <typename T>
+    square_t<T>    delta_area(const Vector2<T>&a, const Vector2<T>& b)
+    {
+        return (b.x-a.x)*(b.y-a.y);
+    }
+
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector2<T>& actual, const Vector2<T>& expected)
     {

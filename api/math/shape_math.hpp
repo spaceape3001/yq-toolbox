@@ -6,6 +6,12 @@
 
 #pragma once
 
+/*
+    Even though shape functions are being moved closer to their structures,
+    this file will loiter for those routines requiring a complicated 
+    inclusion path.
+*/
+
 #include <math/AxBox1.hpp>
 #include <math/AxBox2.hpp>
 #include <math/AxBox3.hpp>
@@ -49,36 +55,6 @@ namespace yq {
 //
 //  These are functions that are needed for the others, so must be listed first
 
-
-    template <typename T>
-    constexpr AxBox1<T> aabb(const Vector1<T>& a, const Vector1<T>& b)
-    {
-        return { min_elem(a,b), max_elem(a,b) };
-    }
-
-    template <typename T>
-    constexpr AxBox2<T> aabb(const Vector2<T>& a, const Vector2<T>& b)
-    {
-        return { min_elem(a,b), max_elem(a,b) };
-    }
-
-    template <typename T>
-    constexpr AxBox3<T> aabb(const Vector3<T>& a, const Vector3<T>& b)
-    {
-        return { min_elem(a,b), max_elem(a,b) };
-    }
-
-    template <typename T>
-    constexpr AxBox4<T> aabb(const Vector4<T>& a, const Vector4<T>& b)
-    {
-        return { min_elem(a,b), max_elem(a,b) };
-    }
-
-    template <typename T>
-    square_t<T>    delta_area(const Vector2<T>&a, const Vector2<T>& b)
-    {
-        return (b.x-a.x)*(b.y-a.y);
-    }
 
 
         //  AREA HELPERS
@@ -169,30 +145,6 @@ namespace yq {
     //  AXBOX 2
     //  -------
     
-    template <typename T>
-    Vector2<T>  northeast(const AxBox2<T>& ax)
-    {
-        return ax.hi;
-    }
-
-    template <typename T>
-    Vector2<T>  northwest(const AxBox2<T>& ax)
-    {
-        return { ax.lo.x, ax.hi.y };
-    }
-
-    template <typename T>
-    Vector2<T>  southeast(const AxBox2<T>& ax)
-    {
-        return { ax.hi.x, ax.lo.y };
-    }
-
-    template <typename T>
-    Vector2<T>  southwest(const AxBox2<T>& ax)
-    {
-        return ax.lo;
-    }
-
     //  -------
     //  AXBOX 3
     //  -------
@@ -649,29 +601,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    template <typename T>
-    bool    valid(const AxBox1<T>& a)
-    {
-        return all_lees_equal(a.lo, a.hi);
-    }
 
-    template <typename T>
-    bool    valid(const AxBox2<T>& a)
-    {
-        return all_lees_equal(a.lo, a.hi);
-    }
-
-    template <typename T>
-    bool    valid(const AxBox3<T>& a)
-    {
-        return all_lees_equal(a.lo, a.hi);
-    }
-
-    template <typename T>
-    bool    valid(const AxBox4<T>& a)
-    {
-        return all_lees_equal(a.lo, a.hi);
-    }
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -1171,83 +1101,18 @@ namespace yq {
 //  --------------------------------------------------------
 //  UNIONS
 
-    /*! \brief Union of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox1<T> operator|(const AxBox1<T>&a, const AxBox1<T>&b)
-    {
-        return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
-    }
 
-    /*! \brief Union of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox2<T> operator|(const AxBox2<T>&a, const AxBox2<T>&b)
-    {
-        return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
-    }
 
-    /*! \brief Union of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox3<T> operator|(const AxBox3<T>&a, const AxBox3<T>&b)
-    {
-        return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
-    }
-
-    /*! \brief Union of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox4<T> operator|(const AxBox4<T>&a, const AxBox4<T>&b)
-    {
-        return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
-    }
 
 //  --------------------------------------------------------
 //  INTERSECTIONS
 
-    /*! \brief Intersection of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox1<T> operator&(const AxBox1<T>&a, const AxBox1<T>&b)
-    {
-        return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
-    }
 
-    /*! \brief Intersection of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox2<T> operator&(const AxBox2<T>&a, const AxBox2<T>&b)
-    {
-        return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
-    }
 
-    /*! \brief Intersection of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox3<T> operator&(const AxBox3<T>&a, const AxBox3<T>&b)
-    {
-        return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
-    }
-
-    /*! \brief Intersection of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox4<T> operator&(const AxBox4<T>&a, const AxBox4<T>&b)
-    {
-        return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
-    }
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
-    /*! \brief Computes the area of a 2D axially aligned bounding box
-    */
-    template <typename T>
-    square_t<T>     area(const AxBox2<T>& ax)
-    {
-        return component_product(ax.hi-ax.lo);
-    }
 
 
     /*! \brief Computes the area of a 2D circle
@@ -1283,57 +1148,7 @@ namespace yq {
         return 0.5*abs(point_area(tri));
     }
 
-    /*! \brief Computes the center of a 1D axially aligned box
-    */
-    template <typename T>
-    Vector1<T>      center(const AxBox1<T>& box)
-    {
-        if constexpr (std::is_floating_point_v<T>){
-            return ieee754_t<T>(0.5)*(box.lo+box.hi);
-        } else if(std::is_integral_v<T>){
-            return (box.lo+box.hi) / T(2);
-        } else
-            return {};
-    }
-    
-    /*! \brief Computes the center of a 2D axially aligned box
-    */
-    template <typename T>
-    Vector2<T>      center(const AxBox2<T>& box)
-    {
-        if constexpr (std::is_floating_point_v<T>){
-            return ieee754_t<T>(0.5)*(box.lo+box.hi);
-        } else if(std::is_integral_v<T>){
-            return (box.lo+box.hi) / T(2);
-        } else
-            return {};
-    }
 
-    /*! \brief Computes the center of a 3D axially aligned box
-    */
-    template <typename T>
-    Vector3<T>      center(const AxBox3<T>& box)
-    {
-        if constexpr (std::is_floating_point_v<T>){
-            return ieee754_t<T>(0.5)*(box.lo+box.hi);
-        } else if(std::is_integral_v<T>){
-            return (box.lo+box.hi) / T(2);
-        } else
-            return {};
-    }
-
-    /*! \brief Computes the center of a 4D axially aligned box
-    */
-    template <typename T>
-    Vector4<T>      center(const AxBox4<T>& box)
-    {
-        if constexpr (std::is_floating_point_v<T>){
-            return ieee754_t<T>(0.5)*(box.lo+box.hi);
-        } else if(std::is_integral_v<T>){
-            return (box.lo+box.hi) / T(2);
-        } else
-            return {};
-    }
 
     /*! \brief Computes the circumference of a circle
     */
@@ -1368,12 +1183,6 @@ namespace yq {
     }
 
     template <typename T>
-    fourth_t<T> hypervolume(const AxBox4<T>& bx)
-    {
-        return component_product(bx.hi-bx.lo);
-    }
-
-    template <typename T>
     bool    is_ccw(const Polygon2<T>& poly)
     {
         return point_area(poly.vertex) < zero_v<T>;
@@ -1395,127 +1204,6 @@ namespace yq {
     bool    is_clockwise(const Triangle2<T>& tri)
     {
         return point_area(tri) > zero_v<T>;
-    }
-
-    /*! \brief Checks for full occlusion
-    
-        A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-        \param[in] Big   The "bigger" box, if eclipsed
-        \param[in] Small The "smaller" box, if eclipsed
-    */
-    template <typename T>
-    constexpr bool is_eclipsed(const AxBox1<T>& big, const AxBox1<T>& small)
-    {
-        return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
-    }
-
-    
-    /*! \brief Checks for full occlusion
-    
-        A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-        \param[in] Big   The "bigger" box, if eclipsed
-        \param[in] Small The "smaller" box, if eclipsed
-    */
-    template <typename T>
-    constexpr bool is_eclipsed(const AxBox2<T>& big, const AxBox2<T>& small)
-    {
-        return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
-    }
-    
-    /*! \brief Checks for full occlusion
-    
-        A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-        \param[in] Big   The "bigger" box, if eclipsed
-        \param[in] Small The "smaller" box, if eclipsed
-    */
-    template <typename T>
-    constexpr bool is_eclipsed(const AxBox3<T>& big, const AxBox3<T>& small)
-    {
-        return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
-    }
-
-    /*! \brief Checks for full occlusion
-    
-        A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-        \param[in] Big   The "bigger" box, if eclipsed
-        \param[in] Small The "smaller" box, if eclipsed
-    */
-    template <typename T>
-    constexpr bool is_eclipsed(const AxBox4<T>& big, const AxBox4<T>& small)
-    {
-        return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
-    }
-
-    /*! \brief Checks if the point is inside (or touching) the box
-    */
-    template <typename T>
-    constexpr bool is_inside(const AxBox1<T>& bx, const Vector1<T>& pt)
-    {
-        return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
-    }
-    
-    /*! \brief Checks if the point is inside (or touching) the box
-    */
-    template <typename T>
-    constexpr bool is_inside(const AxBox2<T>& bx, const Vector2<T>& pt)
-    {
-        return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
-    }
-
-    /*! \brief Checks if the point is inside (or touching) the box
-    */
-    template <typename T>
-    constexpr bool is_inside(const AxBox3<T>& bx, const Vector3<T>& pt)
-    {
-        return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
-    }
-
-    /*! \brief Checks if the point is inside (or touching) the box
-    */
-    template <typename T>
-    constexpr bool is_inside(const AxBox4<T>& bx, const Vector4<T>& pt)
-    {
-        return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
-    }
-
-    /*! \brief Checks for any overlap
-    
-        This returns TRUE if *ANY* part of the boxes overlap (or touch)
-    */
-    template <typename T>
-    constexpr bool is_overlapped(const AxBox1<T>& a, const AxBox1<T>& b)
-    {
-        return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
-    }
-
-    /*! \brief Checks for any overlap
-    
-        This returns TRUE if *ANY* part of the boxes overlap (or touch)
-    */
-    template <typename T>
-    constexpr bool is_overlapped(const AxBox2<T>& a, const AxBox2<T>& b)
-    {
-        return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
-    }
-
-    /*! \brief Checks for any overlap
-    
-        This returns TRUE if *ANY* part of the boxes overlap (or touch)
-    */
-    template <typename T>
-    constexpr bool is_overlapped(const AxBox3<T>& a, const AxBox3<T>& b)
-    {
-        return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
-    }
-
-    /*! \brief Checks for any overlap
-    
-        This returns TRUE if *ANY* part of the boxes overlap (or touch)
-    */
-    template <typename T>
-    constexpr bool is_overlapped(const AxBox4<T>& a, const AxBox4<T>& b)
-    {
-        return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }
 
     template <typename T>
@@ -1572,11 +1260,6 @@ namespace yq {
     }
 
 
-    template <typename T>
-    T       perimeter(const AxBox2<T>& ax)
-    {
-        return 2. * component_sum(ax.hi-ax.lo);
-    }
     
     template <typename T>
     T   permimeter(const Circle2<T>& a)
@@ -1679,14 +1362,6 @@ namespace yq {
         return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
     }
 
-    /*! \brief Computes the surface area of a 3D axially aligned bounding box
-    */
-    template <typename T>
-    square_t<T>    surface_area(const AxBox3<T>& ax)
-    {
-        Vector3<T>  del     = ax.hi - ax.lo;
-        return 2.0 * ((del.x*del.y)+(del.y*del.z)+(del.z*del.x));
-    }
 
     /*! \brief Computes the surface area of a 3D sphere
     */
@@ -1696,11 +1371,6 @@ namespace yq {
         return 4.0*pi*(sp.radius*sp.radius);
     }
 
-    template <typename T>
-    cube_t<T>       volume(const AxBox3<T>& bx)
-    {
-        return component_product(bx.hi-bx.lo);
-    }
     
     template <typename T>
     cube_t<T>       volume(const Sphere3<T>&sp)
