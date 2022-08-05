@@ -31,7 +31,6 @@
 #include <math/Tensor42.hpp>
 #include <math/Tensor43.hpp>
 #include <math/Tensor44.hpp>
-#include <math/vector_math.hpp>
 
 namespace yq {
 

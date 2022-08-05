@@ -36,7 +36,10 @@
 #include <math/Triangle2.hpp>
 #include <math/Triangle3.hpp>
 #include <math/Triangle4.hpp>
-#include "vector_math.hpp"
+#include <math/Vector1.hpp>
+#include <math/Vector2.hpp>
+#include <math/Vector3.hpp>
+#include <math/Vector4.hpp>
 #include "tensor_math.hpp"
 
 namespace yq {
@@ -1702,7 +1705,7 @@ namespace yq {
     template <typename T>
     cube_t<T>       volume(const Sphere3<T>&sp)
     {
-        return (4.0/3.0)*pi*(sp.radius*sp.radius8sp.radius);
+        return (4.0/3.0)*pi*(sp.radius*sp.radius*sp.radius);
     }
 
 }

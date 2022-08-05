@@ -23,9 +23,15 @@ namespace yq {
     
     YQ_IEEE754_1(AxBox1)
     
+//  --------------------------------------------------------
+//  COMPOSITION
+
     YQ_NAN_1(AxBox1, { nan_v<Vector1<T>>, nan_v<Vector1<T>>});
     YQ_ZERO_1(AxBox1, { zero_v<Vector1<T>>, zero_v<Vector1<T>>});
 
+
+//  --------------------------------------------------------
+//  BASIC FUNCTIONS
 
     YQ_IS_FINITE_1( AxBox1, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox1, is_nan(v.lo) || is_nan(v.hi))

@@ -11,7 +11,7 @@
 #include <glm/glm.hpp>
 #include "ColorVertex2D.hpp"
 #include "ColorVertex3D.hpp"
-#include "vector_math.hpp"
+#include <math/Vector3.hpp>
 #include "RGBA.hpp"
 
 namespace yq {

@@ -25,7 +25,6 @@
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
-#include "vector_math.hpp"
 
 namespace yq {
 
