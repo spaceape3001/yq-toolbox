@@ -7,6 +7,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector4.hpp>
+#include <math/AxCorners4.hpp>
 
 namespace yq {
 
@@ -34,6 +35,36 @@ namespace yq {
 
     YQ_NAN_1(AxBox4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>});
     YQ_ZERO_1(AxBox4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>});
+
+//  --------------------------------------------------------
+//  GETTERS
+
+    template <typename T>
+    constexpr AxCorners4<Vector4<T>>  corners(const AxBox4<T>& v) noexcept
+    {
+        return { 
+            v.lo, 
+            
+            { v.lo.x, v.lo.y, v.lo.z, v.hi.w  }, 
+            { v.lo.x, v.lo.y, v.hi.z, v.lo.w  }, 
+            { v.lo.x, v.lo.y, v.hi.z, v.hi.w  }, 
+            { v.lo.x, v.hi.y, v.lo.z, v.lo.w  }, 
+            { v.lo.x, v.hi.y, v.lo.z, v.hi.w  }, 
+            { v.lo.x, v.hi.y, v.hi.z, v.lo.w  }, 
+            { v.lo.x, v.hi.y, v.hi.z, v.hi.w  }, 
+             
+            { v.hi.x, v.lo.y, v.lo.z, v.lo.w  }, 
+            { v.hi.x, v.lo.y, v.lo.z, v.hi.w  }, 
+            { v.hi.x, v.lo.y, v.hi.z, v.lo.w  }, 
+            { v.hi.x, v.lo.y, v.hi.z, v.hi.w  }, 
+            { v.hi.x, v.hi.y, v.lo.z, v.lo.w  }, 
+            { v.hi.x, v.hi.y, v.lo.z, v.hi.w  }, 
+            { v.hi.x, v.hi.y, v.hi.z, v.lo.w  }, 
+            
+            v.hi
+        };
+    }
+
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

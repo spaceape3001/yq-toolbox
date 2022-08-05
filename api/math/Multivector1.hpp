@@ -18,15 +18,315 @@ namespace yq {
         unity_t<T>  a;
         T           x;
         
-        bool operator==(const Multivector1&) const = default;
+        constexpr bool operator==(const Multivector1&) const noexcept = default;
     };
 
     YQ_IEEE754_1(Multivector1)
+
+//  --------------------------------------------------------
+//  COMPOSITION
+
     YQ_NAN_1(Multivector1, Multivector1<T>{nan_v<unity_t<T>>, nan_v<T>})
     YQ_ZERO_1(Multivector1, Multivector1<T>{zero_v<unity_t<T>>, zero_v<T>})
     
+//  --------------------------------------------------------
+//  GETTERS
+
+    template <typename T>
+    constexpr Vector1<T> vector(const Multivector1<T>& a) noexcept
+    {
+        return { a.x };
+    }
+
+//  --------------------------------------------------------
+//  BASIC FUNCTIONS
+
     YQ_IS_NAN_1(Multivector1, is_nan(v.a) || is_nan(v.x) )
     YQ_IS_FINITE_1(Multivector1, is_finite(v.a) && is_finite(v.x))
+
+//  --------------------------------------------------------
+//  POSITIVE
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(const Multivector1<T>& a) noexcept
+    {
+        return a;
+    }
+
+//  --------------------------------------------------------
+//  NEGATIVE
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(const Multivector1<T>& a) noexcept
+    {
+        return {-a.a, -a.x};
+    }
+
+//  --------------------------------------------------------
+//  NORMALIZATION
+
+
+//  --------------------------------------------------------
+//  ADDITION
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(const Multivector1<T>& a, const Multivector1<T>&  b) noexcept
+    {
+        return {
+            a.a+b.a,
+            a.x+b.x
+        };
+    }
+
+    template <typename T>
+    Multivector1<T>& operator+=(Multivector1<T>& a, const Multivector1<T>& b) noexcept
+    {
+        a.a += b.a;
+        a.x += b.x;
+        return a;
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(const Multivector1<T>& a, unity_t<T>  b) noexcept
+    {
+        return {
+            a.a+b,
+            a.x
+        };
+    }
+
+    template <typename T>
+    Multivector1<T>& operator+=(Multivector1<T>& a, unity_t<T>  b) noexcept
+    {
+        a.a += b;
+        return a;
+    }
+    
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(const Multivector1<T>& a, const Vector1<T>&  b) noexcept
+    {
+        return {
+            a.a,
+            a.x+b.x
+        };
+    }
+
+    template <typename T>
+    Multivector1<T>& operator+=(Multivector1<T>& a, const Vector1<T>& b) noexcept
+    {
+        a.x += b.x;
+        return a;
+    }
+    
+    template <typename T>
+    constexpr Multivector1<T> operator+(unity_t<T> a, const Multivector1<T>& b) noexcept
+    {
+        return { 
+            a+b.a, 
+            b.x 
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(unity_t<T> a, const Vector1<T>& b) noexcept
+    {
+        return { 
+            a, 
+            b.x 
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(Vector1<T> a, const Multivector1<T>& b) noexcept
+    {
+        return { 
+            b.a, 
+            a.x+b.x
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator+(Vector1<T> a, unity_t<T>  b) noexcept
+    {
+        return { 
+            b, 
+            a.x 
+        };
+    }
+    
+    
+//  --------------------------------------------------------
+//  SUBTRACTION
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(const Multivector1<T>& a, const Multivector1<T>& b) noexcept
+    {
+        return {
+            a.a-b.a,
+            a.x-b.x
+        };
+    }
+
+    template <typename T>
+    Multivector1<T>& operator-=(Multivector1<T>& a, const Multivector1<T>& b) noexcept
+    {
+        a.a -= b.a;
+        a.x -= b.x;
+        return a;
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(const Multivector1<T>& a, unity_t<T> b) noexcept
+    {
+        return {
+            a.a-b,
+            a.x
+        };
+    }
+
+    template <typename T>
+    Multivector1<T>& operator-=(Multivector1<T>& a, unity_t<T> b) noexcept
+    {
+        a.a -= b;
+        return a;
+    }
+    
+
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(const Multivector1<T>& a, const Vector1<T>& b) noexcept
+    {
+        return {
+            a.a,
+            a.x-b.x
+        };
+    }
+
+    template <typename T>
+    Multivector1<T>& operator-=(Multivector1<T>& a, const Vector1<T>& b) noexcept
+    {
+        a.x -= b.x;
+        return a;
+    }
+    
+    template <typename T>
+    constexpr Multivector1<T> operator-(unity_t<T> a, const Multivector1<T>& b) noexcept
+    {
+        return { 
+            a-b.a, 
+            -b.x 
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(unity_t<T> a, const Vector1<T>& b) noexcept
+    {
+        return { 
+            a, 
+            -b.x 
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(Vector1<T> a, const Multivector1<T>& b) noexcept
+    {
+        return { 
+            -b.a, 
+            a.x-b.x
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(Vector1<T> a, unity_t<T> b) noexcept
+    {
+        return { 
+            -b, 
+            a.x 
+        };
+    }
+
+
+//  --------------------------------------------------------
+//  MULTIPLICATION
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector1<T> operator*(T a, const Multivector1<T>&b) noexcept
+    {
+        return { a*b.a, a*b.x };
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector1<T> operator*(const Multivector1<T>& a, T b) noexcept
+    {
+        return { a.a*b, a.x*b };
+    }
+
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Multivector1<T>& operator*=(Multivector1<T>& a, T b) noexcept
+    {
+        a.a*=b; a.x*=b;
+        return a;
+    }
+
+//  --------------------------------------------------------
+//  DIVISION
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector1<T> operator/(const Multivector1<T>& a, T b) noexcept
+    {
+        return { a.a/b, a.x/b };
+    }
+
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Multivector1<T>& operator/=(Multivector1<T>& a, T b) noexcept
+    {
+        a.a/=b; a.x/=b;
+        return a;
+    }
+
+//  --------------------------------------------------------
+//  POWERS
+
+//  --------------------------------------------------------
+//  DOT PRODUCT
+
+
+//  --------------------------------------------------------
+//  INNER PRODUCT
+
+
+//  --------------------------------------------------------
+//  OUTER PRODUCT
+
+
+//  --------------------------------------------------------
+//  CROSS PRODUCT
+
+
+///  --------------------------------------------------------
+//  OTIMES PRODUCT
+
+//  --------------------------------------------------------
+//  UNIONS
+
+//  --------------------------------------------------------
+//  INTERSECTIONS
+
+
+//  --------------------------------------------------------
+//  PROJECTIONS
+
+//  --------------------------------------------------------
+//  ADVANCED FUNCTIONS
+
 }
 
 YQ_TYPE_DECLARE(Multivector1D)

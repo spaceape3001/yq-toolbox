@@ -33,12 +33,6 @@ namespace yq {
 
 
     template <typename T>
-    constexpr Bivector2<T> bivector(const Multivector2<T>& a)
-    {
-        return { a.xy };
-    }
-
-    template <typename T>
     constexpr Bivector3<T> bivector(const Multivector3<T>& a)
     {
         return { a.xy, a.yz, a.zx };
@@ -68,17 +62,7 @@ namespace yq {
         return { a.xyz, a.yzw, a.zwx, a.wxy };
     }
 
-    template <typename T>
-    constexpr Vector1<T> vector(const Multivector1<T>& a)
-    {
-        return { a.x };
-    }
 
-    template <typename T>
-    constexpr Vector2<T> vector(const Multivector2<T>& a)
-    {
-        return { a.x, a.y };
-    }
 
     template <typename T>
     constexpr Vector3<T> vector(const Multivector3<T>& a)
@@ -101,17 +85,7 @@ namespace yq {
 
 
     
-    template <typename T>
-    constexpr Trivector3<T> operator+(const Trivector3<T>&a)
-    {
-        return a;
-    }
     
-    template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector4<T>&a)
-    {
-        return a;
-    }
     
     template <typename T>
     constexpr Quadvector4<T> operator+(const Quadvector4<T>& a)
@@ -119,17 +93,7 @@ namespace yq {
         return a;
     }
     
-    template <typename T>
-    constexpr Multivector1<T> operator+(const Multivector1<T>& a)
-    {
-        return a;
-    }
 
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a)
-    {
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(const Multivector3<T>& a)
@@ -149,17 +113,7 @@ namespace yq {
 
 
     
-    template <typename T>
-    constexpr Trivector3<T> operator-(const Trivector3<T>&a)
-    {
-        return {-a.xyz};
-    }
     
-    template <typename T>
-    constexpr Trivector4<T> operator-(const Trivector4<T>&a)
-    {
-        return {-a.xyz, -a.yzw, -a.zwx, -a.wxy};
-    }
     
     template <typename T>
     constexpr Quadvector4<T> operator-(const Quadvector4<T>& a)
@@ -167,17 +121,6 @@ namespace yq {
         return {-a.xyzw};
     }
     
-    template <typename T>
-    constexpr Multivector1<T> operator-(const Multivector1<T>& a)
-    {
-        return {-a.a, -a.x};
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a)
-    {
-        return {-a.a, -a.x, -a.y, -a.xy};
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator-(const Multivector3<T>& a)
@@ -204,37 +147,6 @@ namespace yq {
     //  ADDITION
 
 
-
-    template <typename T>
-    constexpr Multivector3<T> operator+(Bivector2<T> a, const Multivector2<T>& b)
-    {
-        return { 
-            b.a, 
-            b.x, b.y,
-            a+b.xy
-        };
-    }
-
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(Bivector2<T> a, unity_t<T>  b)
-    {
-        return { 
-            b, 
-            {}, {},
-            a.xy
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(Bivector2<T> a, const Vector2<T>& b)
-    {
-        return { 
-            {}, 
-            b.x, b.y, 
-            a.xy 
-        };
-    }
 
 
     template <typename T>
@@ -346,127 +258,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Multivector1<T> operator+(const Multivector1<T>& a, const Multivector1<T>&  b)
-    {
-        return {
-            a.a+b.a,
-            a.x+b.x
-        };
-    }
-
-    template <typename T>
-    Multivector1<T>& operator+=(Multivector1<T>& a, const Multivector1<T>& b)
-    {
-        a.a += b.a;
-        a.x += b.x;
-        return a;
-    }
-
-    template <typename T>
-    constexpr Multivector1<T> operator+(const Multivector1<T>& a, unity_t<T>  b)
-    {
-        return {
-            a.a+b,
-            a.x
-        };
-    }
-
-    template <typename T>
-    Multivector1<T>& operator+=(Multivector1<T>& a, unity_t<T>  b)
-    {
-        a.a += b;
-        return a;
-    }
-    
-
-    template <typename T>
-    constexpr Multivector1<T> operator+(const Multivector1<T>& a, const Vector1<T>&  b)
-    {
-        return {
-            a.a,
-            a.x+b.x
-        };
-    }
-
-    template <typename T>
-    Multivector1<T>& operator+=(Multivector1<T>& a, const Vector1<T>& b)
-    {
-        a.x += b.x;
-        return a;
-    }
-    
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, const Bivector2<T>& b)
-    {
-        return {
-            a.a,
-            a.x, a.y,
-            a.xy + b.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, const Bivector2<T>& b)
-    {
-        a.xy += b.xy;
-        return a;
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, const Multivector2<T>&  b)
-    {
-        return {
-            a.a+b.a,
-            a.x+b.x, a.y+b.y,
-            a.xy+b.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, const Multivector2<T>& b)
-    {
-        a.a += b.a;
-        a.x += b.x; a.y += b.y; 
-        a.xy += b.xy;
-        return a;
-    }
-        
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, unity_t<T>  b)
-    {
-        return {
-            a.a+b,
-            a.x, a.y,
-            a.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, unity_t<T>  b)
-    {
-        a.a += b;
-        return a;
-    }
-
-
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, const Vector2<T>&  b)
-    {
-        return {
-            a.a,
-            a.x+b.x, a.y+b.y,
-            a.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, const Vector2<T>& b)
-    {
-        a.x += b.x; a.y += b.y; 
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(const Multivector3<T>& a, const Bivector3<T>& b)
@@ -709,18 +500,6 @@ namespace yq {
     }
     
     
-    template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector3<T>& a, const Trivector3<T>& b)
-    {
-        return { a.xyz+b.xyz };
-    }
-
-    template <typename T>
-    Trivector4<T>& operator+=(Trivector3<T>& a, const Trivector3<T>& b)
-    {
-        a.xyz+=b.xyz;
-        return a;
-    }
     
     template <typename T>
     constexpr Multivector3<T> operator+(Trivector3<T> a, unity_t<T>  b)
@@ -731,19 +510,6 @@ namespace yq {
             {}, {}, {}, 
             a.xyz 
         };
-    }
-
-    template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector4<T>& a, const Trivector4<T>& b)
-    {
-        return { a.xyz+b.xyz, a.yzw+b.yzw, a.zwx+b.zwx, a.wxy+b.wxy };
-    }
-
-    template <typename T>
-    Trivector4<T>& operator+(Trivector4<T>& a, const Trivector4<T>& b)
-    {
-        a.xyz+=b.xyz; a.yzw+=b.yzw; a.zwx+=b.zwx; a.wxy+=b.wxy;
-        return a;
     }
 
 
@@ -759,15 +525,6 @@ namespace yq {
         };
     }
         
-    template <typename T>
-    constexpr Multivector2<T> operator+(unity_t<T> a, const Bivector2<T>& b)
-    {
-        return { 
-            a, 
-            {}, {},
-            b 
-        };
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(unity_t<T> a, const Bivector3<T>& b)
@@ -792,25 +549,6 @@ namespace yq {
         };
     }
 
-
-    template <typename T>
-    constexpr Multivector1<T> operator+(unity_t<T> a, const Multivector1<T>& b)
-    {
-        return { 
-            a+b.a, 
-            b.x 
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(unity_t<T> a, const Multivector2<T>& b)
-    {
-        return { 
-            a+b.a, 
-            b.x, b.y, 
-            b.xy
-        };
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(unity_t<T> a, const Multivector3<T>& b)
@@ -872,25 +610,7 @@ namespace yq {
     }
 
 
-    template <typename T>
-    constexpr Multivector1<T> operator+(unity_t<T> a, const Vector1<T>& b)
-    {
-        return { 
-            a, 
-            b.x 
-        };
-    }
     
-    template <typename T>
-    constexpr Multivector2<T> operator+(unity_t<T> a, const Vector2<T>& b)
-    {
-        return { 
-            a, 
-            b.x, b.y, 
-            {} 
-        };
-    }
-
     template <typename T>
     constexpr Multivector3<T> operator+(unity_t<T> a, const Vector3<T>& b)
     {
@@ -914,54 +634,8 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Multivector1<T> operator+(Vector1<T> a, const Multivector1<T>& b)
-    {
-        return { 
-            b.a, 
-            a.x+b.x
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector1<T> operator+(Vector1<T> a, unity_t<T>  b)
-    {
-        return { 
-            b, 
-            a.x 
-        };
-    }
 
 
-    template <typename T>
-    constexpr Multivector2<T> operator+(Vector2<T> a, const Bivector2<T>& b)
-    {
-        return { 
-            {}, 
-            a.x, a.y, 
-            b.xy 
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(Vector2<T> a, const Multivector2<T>& b)
-    {
-        return { 
-            b.a, 
-            a.x+b.x, a.y+b.y,
-            b.xy
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator+(Vector2<T> a, unity_t<T>  b)
-    {
-        return { 
-            b, 
-            a.x, a.y, 
-            {} 
-        };
-    }
     
     template <typename T>
     constexpr Multivector3<T> operator+(Vector3<T> a, const Bivector3<T>& b)
@@ -1072,37 +746,6 @@ namespace yq {
     //  SUBTRACTION
 
     template <typename T>
-    constexpr Multivector3<T> operator-(Bivector2<T> a, const Multivector2<T>& b)
-    {
-        return { 
-            -b.a, 
-            -b.x, -b.y,
-            a-b.xy
-        };
-    }
-
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(Bivector2<T> a, unity_t<T> b)
-    {
-        return { 
-            -b, 
-            {}, {},
-            a.xy
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(Bivector2<T> a, const Vector2<T>& b)
-    {
-        return { 
-            {}, 
-            -b.x, -b.y, 
-            a.xy 
-        };
-    }
-
-    template <typename T>
     constexpr Multivector3<T> operator-(Bivector3<T> a, const Multivector3<T>& b)
     {
         return { 
@@ -1211,127 +854,8 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Multivector1<T> operator-(const Multivector1<T>& a, const Multivector1<T>& b)
-    {
-        return {
-            a.a-b.a,
-            a.x-b.x
-        };
-    }
-
-    template <typename T>
-    Multivector1<T>& operator-=(Multivector1<T>& a, const Multivector1<T>& b)
-    {
-        a.a -= b.a;
-        a.x -= b.x;
-        return a;
-    }
-
-    template <typename T>
-    constexpr Multivector1<T> operator-(const Multivector1<T>& a, unity_t<T> b)
-    {
-        return {
-            a.a-b,
-            a.x
-        };
-    }
-
-    template <typename T>
-    Multivector1<T>& operator-=(Multivector1<T>& a, unity_t<T> b)
-    {
-        a.a -= b;
-        return a;
-    }
     
-
-    template <typename T>
-    constexpr Multivector1<T> operator-(const Multivector1<T>& a, const Vector1<T>& b)
-    {
-        return {
-            a.a,
-            a.x-b.x
-        };
-    }
-
-    template <typename T>
-    Multivector1<T>& operator-=(Multivector1<T>& a, const Vector1<T>& b)
-    {
-        a.x -= b.x;
-        return a;
-    }
-    
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, const Bivector2<T>& b)
-    {
-        return {
-            a.a,
-            a.x, a.y,
-            a.xy - b.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, const Bivector2<T>& b)
-    {
-        a.xy -= b.xy;
-        return a;
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, const Multivector2<T>& b)
-    {
-        return {
-            a.a-b.a,
-            a.x-b.x, a.y-b.y,
-            a.xy-b.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, const Multivector2<T>& b)
-    {
-        a.a -= b.a;
-        a.x -= b.x; a.y -= b.y; 
-        a.xy -= b.xy;
-        return a;
-    }
-        
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, unity_t<T> b)
-    {
-        return {
-            a.a-b,
-            a.x, a.y,
-            a.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, unity_t<T> b)
-    {
-        a.a -= b;
-        return a;
-    }
-
-
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, const Vector2<T>& b)
-    {
-        return {
-            a.a,
-            a.x-b.x, a.y-b.y,
-            a.xy
-        };
-    }
-
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, const Vector2<T>& b)
-    {
-        a.x -= b.x; a.y -= b.y; 
-        return a;
-    }
+ 
 
     template <typename T>
     constexpr Multivector3<T> operator-(const Multivector3<T>& a, const Bivector3<T>& b)
@@ -1575,19 +1099,6 @@ namespace yq {
     
     
     template <typename T>
-    constexpr Trivector4<T> operator-(const Trivector3<T>& a, const Trivector3<T>& b)
-    {
-        return { a.xyz-b.xyz };
-    }
-
-    template <typename T>
-    Trivector4<T>& operator-=(Trivector3<T>& a, const Trivector3<T>& b)
-    {
-        a.xyz-=b.xyz;
-        return a;
-    }
-    
-    template <typename T>
     constexpr Multivector3<T> operator-(Trivector3<T> a, unity_t<T> b)
     {
         return { 
@@ -1596,19 +1107,6 @@ namespace yq {
             {}, {}, {}, 
             a.xyz 
         };
-    }
-
-    template <typename T>
-    constexpr Trivector4<T> operator-(const Trivector4<T>& a, const Trivector4<T>& b)
-    {
-        return { a.xyz-b.xyz, a.yzw-b.yzw, a.zwx-b.zwx, a.wxy-b.wxy };
-    }
-
-    template <typename T>
-    Trivector4<T>& operator-(Trivector4<T>& a, const Trivector4<T>& b)
-    {
-        a.xyz-=b.xyz; a.yzw-=b.yzw; a.zwx-=b.zwx; a.wxy-=b.wxy;
-        return a;
     }
 
 
@@ -1624,15 +1122,7 @@ namespace yq {
         };
     }
         
-    template <typename T>
-    constexpr Multivector2<T> operator-(unity_t<T> a, const Bivector2<T>& b)
-    {
-        return { 
-            a, 
-            {}, {},
-            -b 
-        };
-    }
+
 
     template <typename T>
     constexpr Multivector3<T> operator-(unity_t<T> a, const Bivector3<T>& b)
@@ -1658,24 +1148,6 @@ namespace yq {
     }
 
 
-    template <typename T>
-    constexpr Multivector1<T> operator-(unity_t<T> a, const Multivector1<T>& b)
-    {
-        return { 
-            a-b.a, 
-            -b.x 
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(unity_t<T> a, const Multivector2<T>& b)
-    {
-        return { 
-            a-b.a, 
-            -b.x, -b.y, 
-            -b.xy
-        };
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator-(unity_t<T> a, const Multivector3<T>& b)
@@ -1737,24 +1209,7 @@ namespace yq {
     }
 
 
-    template <typename T>
-    constexpr Multivector1<T> operator-(unity_t<T> a, const Vector1<T>& b)
-    {
-        return { 
-            a, 
-            -b.x 
-        };
-    }
     
-    template <typename T>
-    constexpr Multivector2<T> operator-(unity_t<T> a, const Vector2<T>& b)
-    {
-        return { 
-            a, 
-            -b.x, -b.y, 
-            {} 
-        };
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator-(unity_t<T> a, const Vector3<T>& b)
@@ -1779,54 +1234,7 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Multivector1<T> operator-(Vector1<T> a, const Multivector1<T>& b)
-    {
-        return { 
-            -b.a, 
-            a.x-b.x
-        };
-    }
 
-    template <typename T>
-    constexpr Multivector1<T> operator-(Vector1<T> a, unity_t<T> b)
-    {
-        return { 
-            -b, 
-            a.x 
-        };
-    }
-
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(Vector2<T> a, const Bivector2<T>& b)
-    {
-        return { 
-            {}, 
-            a.x, a.y, 
-            -b.xy 
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(Vector2<T> a, const Multivector2<T>& b)
-    {
-        return { 
-            -b.a, 
-            a.x-b.x, a.y-b.y,
-            -b.xy
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector2<T> operator-(Vector2<T> a, unity_t<T> b)
-    {
-        return { 
-            -b, 
-            a.x, a.y, 
-            {} 
-        };
-    }
     
     template <typename T>
     constexpr Multivector3<T> operator-(Vector3<T> a, const Bivector3<T>& b)
@@ -1939,21 +1347,6 @@ namespace yq {
 
 
 
-
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Trivector3<T> operator*(T a, const Trivector3<T>& b)
-    {
-        return { a*b.xyz };
-    }
-
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Trivector4<T> operator*(T a, const Trivector4<T>& b)
-    {
-        return { a*b.xyz, a*b.yzw, a*b.zwx, a*b.wxy, };
-    }
-
     template <typename T>
     requires std::is_floating_point_v<T>
     Quadvector4<T> operator*(T a, const Quadvector4<T>& b)
@@ -1961,23 +1354,6 @@ namespace yq {
         return { a*b.xyzw };
     }
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Multivector1<T> operator*(T a, const Multivector1<T>&b)
-    {
-        return { a*b.a, a*b.x };
-    }
-
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Multivector2<T> operator*(T a, const Multivector2<T>&b)
-    {
-        return { 
-            a*b.a, 
-            a*b.x, a*b.y, 
-            a*b.xy 
-        };
-    }
 
     template <typename T>
     requires std::is_floating_point_v<T>

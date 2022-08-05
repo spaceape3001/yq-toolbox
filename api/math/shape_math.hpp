@@ -109,71 +109,7 @@ namespace yq {
         return delta_area(quad.b, quad.a) + delta_area(quad.c, quad.b) + delta_area(quad.d, quad.c) + delta_area(quad.a, quad.d);
     }
 
-    //  ---------------------------------------
-    //  CORNERS, using an ENU coordinate system
-    //  ---------------------------------------
-    
-    //  -----------
-    //  RECTANGLE 2
-    //  -----------
-
-    //  -------
-    //  AXBOX 2
-    //  -------
-    
-    //  -------
-    //  AXBOX 3
-    //  -------
-
-
-    template <typename T>
-    Vector3<T>  northeast_bottom(const AxBox3<T>& ax)
-    {
-        return { ax.hi.x, ax.hi.y, ax.lo.z };
-   }
-
-    template <typename T>
-    Vector3<T>  northeast_top(const AxBox3<T>& ax)
-    {
-        return ax.hi;
-    }
-
-
-    template <typename T>
-    Vector3<T>  northwest_bottom(const AxBox3<T>& ax)
-    {
-        return { ax.lo.x, ax.hi.y, ax.lo.z };
-    }
-
-    template <typename T>
-    Vector3<T>  northwest_top(const AxBox3<T>& ax)
-    {
-        return { ax.lo.x, ax.hi.y, ax.hi.z };
-    }
-
-    template <typename T>
-    Vector3<T>  southeast_bottom(const AxBox2<T>& ax)
-    {
-        return { ax.hi.x, ax.lo.y, ax.lo.z };
-    }
-
-    template <typename T>
-    Vector3<T>  southeast_top(const AxBox2<T>& ax)
-    {
-        return { ax.hi.x, ax.lo.y, ax.hi.z };
-    }
-
-    template <typename T>
-    Vector3<T>  southwest_bottom(const AxBox2<T>& ax)
-    {
-        return ax.lo;
-    }
-
-    template <typename T>
-    Vector3<T>  southwest_top(const AxBox2<T>& ax)
-    {
-        return { ax.lo.x, ax.lo.y, ax.hi.z };
-    }
+ 
 
 
 //  --------------------------------------------------------
@@ -260,20 +196,6 @@ namespace yq {
         return aabb(a.lo, a.hi);
     }
     
-    template <typename T>
-    AxBox3<T>   aabb(const Sphere3<T>&a)
-    {
-        T       r   = abs(a.r);
-        return {{
-            a.pt.x - r,
-            a.pt.y - r,
-            a.pt.z - r
-        },{
-            a.pt.x + r,
-            a.pt.y + r,
-            a.pt.z + r
-        }};
-    }
     
     template <typename T>
     AxBox4<T>   aabb(const Sphere4<T>&a)
@@ -345,46 +267,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    AxCorners3<Vector3<T>>  corners(const AxBox3<T>& v)
-    {
-        return { 
-            v.lo,
-            { v.lo.x, v.lo.y, v.hi.z  }, 
-            { v.lo.x, v.hi.y, v.lo.z  }, 
-            { v.lo.x, v.hi.y, v.hi.z  }, 
-            { v.hi.x, v.lo.y, v.lo.z  }, 
-            { v.hi.x, v.lo.y, v.hi.z  }, 
-            { v.hi.x, v.hi.y, v.lo.z  }, 
-            v.hi
-        };
-    }
-
-    template <typename T>
-    AxCorners4<Vector4<T>>  corners(const AxBox4<T>& v)
-    {
-        return { 
-            v.lo, 
-            
-            { v.lo.x, v.lo.y, v.lo.z, v.hi.w  }, 
-            { v.lo.x, v.lo.y, v.hi.z, v.lo.w  }, 
-            { v.lo.x, v.lo.y, v.hi.z, v.hi.w  }, 
-            { v.lo.x, v.hi.y, v.lo.z, v.lo.w  }, 
-            { v.lo.x, v.hi.y, v.lo.z, v.hi.w  }, 
-            { v.lo.x, v.hi.y, v.hi.z, v.lo.w  }, 
-            { v.lo.x, v.hi.y, v.hi.z, v.hi.w  }, 
-             
-            { v.hi.x, v.lo.y, v.lo.z, v.lo.w  }, 
-            { v.hi.x, v.lo.y, v.lo.z, v.hi.w  }, 
-            { v.hi.x, v.lo.y, v.hi.z, v.lo.w  }, 
-            { v.hi.x, v.lo.y, v.hi.z, v.hi.w  }, 
-            { v.hi.x, v.hi.y, v.lo.z, v.lo.w  }, 
-            { v.hi.x, v.hi.y, v.lo.z, v.hi.w  }, 
-            { v.hi.x, v.hi.y, v.hi.z, v.lo.w  }, 
-            
-            v.hi
-        };
-    }
 
     template <typename T>
     Normal2<T>     normal(const Vector2<T>& dir) 
@@ -507,12 +389,6 @@ namespace yq {
     constexpr Segment4<T> segment(const Vector4<T>& a, const Vector4<T>& b)
     {
         return { a, b };
-    }
-
-    template <typename T>
-    Sphere3<T>  sphere(const Vector3<T>& point, T radius)
-    {
-        return {point, radius};
     }
 
     template <typename T>
@@ -1101,14 +977,6 @@ namespace yq {
 
 
 
-    /*! \brief Computes the diameter of a sphere
-    */
-    template <typename T>
-    T           diameter(const Sphere3<T>&a)
-    {
-        return a.radius + a.radius;
-    }
-
     /*! \brief Computes the diameter of a hyper sphere
     */
     template <typename T>
@@ -1291,21 +1159,6 @@ namespace yq {
         return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
     }
 
-
-    /*! \brief Computes the surface area of a 3D sphere
-    */
-    template <typename T>
-    square_t<T>     surface_area(const Sphere3<T>& sp)
-    {
-        return 4.0*pi*(sp.radius*sp.radius);
-    }
-
-    
-    template <typename T>
-    cube_t<T>       volume(const Sphere3<T>&sp)
-    {
-        return (4.0/3.0)*pi*(sp.radius*sp.radius*sp.radius);
-    }
 
 }
 

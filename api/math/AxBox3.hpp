@@ -7,6 +7,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector3.hpp>
+#include <math/AxCorners3.hpp>
 
 namespace yq {
 
@@ -37,6 +38,71 @@ namespace yq {
 
 //  --------------------------------------------------------
 //  GETTERS
+
+
+    template <typename T>
+    constexpr Vector3<T>  northeast_bottom(const AxBox3<T>& ax) noexcept
+    {
+        return { ax.hi.x, ax.hi.y, ax.lo.z };
+   }
+
+    template <typename T>
+    constexpr Vector3<T>  northeast_top(const AxBox3<T>& ax) noexcept
+    {
+        return ax.hi;
+    }
+
+
+    template <typename T>
+    constexpr Vector3<T>  northwest_bottom(const AxBox3<T>& ax) noexcept
+    {
+        return { ax.lo.x, ax.hi.y, ax.lo.z };
+    }
+
+    template <typename T>
+    constexpr Vector3<T>  northwest_top(const AxBox3<T>& ax) noexcept
+    {
+        return { ax.lo.x, ax.hi.y, ax.hi.z };
+    }
+
+    template <typename T>
+    constexpr Vector3<T>  southeast_bottom(const AxBox2<T>& ax) noexcept
+    {
+        return { ax.hi.x, ax.lo.y, ax.lo.z };
+    }
+
+    template <typename T>
+    constexpr Vector3<T>  southeast_top(const AxBox2<T>& ax) noexcept
+    {
+        return { ax.hi.x, ax.lo.y, ax.hi.z };
+    }
+
+    template <typename T>
+    constexpr Vector3<T>  southwest_bottom(const AxBox2<T>& ax) noexcept
+    {
+        return ax.lo;
+    }
+
+    template <typename T>
+    constexpr Vector3<T>  southwest_top(const AxBox2<T>& ax) noexcept
+    {
+        return { ax.lo.x, ax.lo.y, ax.hi.z };
+    }
+
+    template <typename T>
+    constexpr AxCorners3<Vector3<T>>  corners(const AxBox3<T>& v) noexcept
+    {
+        return { 
+            v.lo,
+            { v.lo.x, v.lo.y, v.hi.z  }, 
+            { v.lo.x, v.hi.y, v.lo.z  }, 
+            { v.lo.x, v.hi.y, v.hi.z  }, 
+            { v.hi.x, v.lo.y, v.lo.z  }, 
+            { v.hi.x, v.lo.y, v.hi.z  }, 
+            { v.hi.x, v.hi.y, v.lo.z  }, 
+            v.hi
+        };
+    }
 
 
 //  --------------------------------------------------------
