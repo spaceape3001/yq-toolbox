@@ -43,25 +43,25 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    Vector2<T>  northeast(const AxBox2<T>& ax)
+    constexpr Vector2<T>  northeast(const AxBox2<T>& ax) noexcept
     {
         return ax.hi;
     }
 
     template <typename T>
-    Vector2<T>  northwest(const AxBox2<T>& ax)
+    constexpr Vector2<T>  northwest(const AxBox2<T>& ax) noexcept
     {
         return { ax.lo.x, ax.hi.y };
     }
 
     template <typename T>
-    Vector2<T>  southeast(const AxBox2<T>& ax)
+    constexpr Vector2<T>  southeast(const AxBox2<T>& ax) noexcept
     {
         return { ax.hi.x, ax.lo.y };
     }
 
     template <typename T>
-    Vector2<T>  southwest(const AxBox2<T>& ax)
+    constexpr Vector2<T>  southwest(const AxBox2<T>& ax) noexcept
     {
         return ax.lo;
     }
@@ -74,7 +74,7 @@ namespace yq {
     YQ_IS_NAN_1(AxBox2, is_nan(v.lo) || is_nan(v.hi))
 
     template <typename T>
-    bool    valid(const AxBox2<T>& a)
+    constexpr bool    is_valid(const AxBox2<T>& a) noexcept
     {
         return all_less_equal(a.lo, a.hi);
     }

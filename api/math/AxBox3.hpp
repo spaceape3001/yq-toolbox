@@ -27,7 +27,7 @@ namespace yq {
 //  COMPOSITION
 
     template <typename T>
-    constexpr AxBox3<T> aabb(const Vector3<T>& a, const Vector3<T>& b)
+    constexpr AxBox3<T> aabb(const Vector3<T>& a, const Vector3<T>& b) noexcept
     {
         return { min_elem(a,b), max_elem(a,b) };
     }
@@ -46,7 +46,7 @@ namespace yq {
     YQ_IS_NAN_1(AxBox3, is_nan(v.lo) || is_nan(v.hi))
 
     template <typename T>
-    bool    valid(const AxBox3<T>& a)
+    constexpr bool    is_valid(const AxBox3<T>& a) noexcept
     {
         return all_less_equal(a.lo, a.hi);
     }
@@ -106,7 +106,7 @@ namespace yq {
     /*! \brief Union of two AABBs
     */
     template <typename T>
-    constexpr AxBox3<T> operator|(const AxBox3<T>&a, const AxBox3<T>&b)
+    constexpr AxBox3<T> operator|(const AxBox3<T>&a, const AxBox3<T>&b) noexcept
     {
         return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
     }
@@ -119,7 +119,7 @@ namespace yq {
     /*! \brief Intersection of two AABBs
     */
     template <typename T>
-    constexpr AxBox3<T> operator&(const AxBox3<T>&a, const AxBox3<T>&b)
+    constexpr AxBox3<T> operator&(const AxBox3<T>&a, const AxBox3<T>&b) noexcept
     {
         return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
     }
@@ -133,7 +133,7 @@ namespace yq {
     /*! \brief Computes the center of a 3D axially aligned box
     */
     template <typename T>
-    Vector3<T>      center(const AxBox3<T>& box)
+    constexpr Vector3<T>      center(const AxBox3<T>& box) noexcept
     {
         if constexpr (std::is_floating_point_v<T>){
             return ieee754_t<T>(0.5)*(box.lo+box.hi);
@@ -150,7 +150,7 @@ namespace yq {
         \param[in] Small The "smaller" box, if eclipsed
     */
     template <typename T>
-    constexpr bool is_eclipsed(const AxBox3<T>& big, const AxBox3<T>& small)
+    constexpr bool is_eclipsed(const AxBox3<T>& big, const AxBox3<T>& small) noexcept
     {
         return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
     }
@@ -159,7 +159,7 @@ namespace yq {
     /*! \brief Checks if the point is inside (or touching) the box
     */
     template <typename T>
-    constexpr bool is_inside(const AxBox3<T>& bx, const Vector3<T>& pt)
+    constexpr bool is_inside(const AxBox3<T>& bx, const Vector3<T>& pt) noexcept
     {
         return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
     }
@@ -169,7 +169,7 @@ namespace yq {
         This returns TRUE if *ANY* part of the boxes overlap (or touch)
     */
     template <typename T>
-    constexpr bool is_overlapped(const AxBox3<T>& a, const AxBox3<T>& b)
+    constexpr bool is_overlapped(const AxBox3<T>& a, const AxBox3<T>& b) noexcept
     {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }
@@ -177,14 +177,14 @@ namespace yq {
     /*! \brief Computes the surface area of a 3D axially aligned bounding box
     */
     template <typename T>
-    square_t<T>    surface_area(const AxBox3<T>& ax)
+    constexpr square_t<T>    surface_area(const AxBox3<T>& ax) noexcept
     {
         Vector3<T>  del     = ax.hi - ax.lo;
         return 2.0 * ((del.x*del.y)+(del.y*del.z)+(del.z*del.x));
     }
 
     template <typename T>
-    cube_t<T>       volume(const AxBox3<T>& bx)
+    constexpr cube_t<T>       volume(const AxBox3<T>& bx) noexcept
     {
         return component_product(bx.hi-bx.lo);
     }

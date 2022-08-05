@@ -34,25 +34,25 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    Vector2<T>  northeast(const Rectangle2<T>& rect)
+    constexpr Vector2<T>  northeast(const Rectangle2<T>& rect) noexcept
     {
         return { rect.position.x+rect.size.x, rect.position.y+rect.size.y };
     }
 
     template <typename T>
-    Vector2<T>  northwest(const Rectangle2<T>& rect)
+    constexpr Vector2<T>  northwest(const Rectangle2<T>& rect) noexcept
     {
         return { rect.position.x, rect.position.y+rect.size.y };
     }
 
     template <typename T>
-    Vector2<T>  southeast(const Rectangle2<T>& rect)
+    constexpr Vector2<T>  southeast(const Rectangle2<T>& rect) noexcept
     {
         return { rect.position.x+rect.size.x, rect.position.y };
     }
 
     template <typename T>
-    Vector2<T>  southwest(const Rectangle2<T>& rect)
+    constexpr Vector2<T>  southwest(const Rectangle2<T>& rect) noexcept
     {
         return { rect.position.x, rect.position.y };
     }
@@ -65,13 +65,13 @@ namespace yq {
     YQ_IS_FINITE_1(Rectangle2, is_finite(v.position) && is_finite(v.size))
 
     template <typename T>
-    AxBox2<T>   aabb(const Rectangle2<T>& rect)
+    constexpr AxBox2<T>   aabb(const Rectangle2<T>& rect) noexcept
     {
         return aabb(southwest(rect), northeast(rect));
     }
 
     template <typename T>
-    AxCorners2<Vector2<T>>  corners(const Rectangle2<T>& v)
+    constexpr AxCorners2<Vector2<T>>  corners(const Rectangle2<T>& v) noexcept
     {
         return { 
             southwest(v),

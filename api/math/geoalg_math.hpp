@@ -99,17 +99,7 @@ namespace yq {
     //  POSITIVE
     
 
-    template <typename T>
-    constexpr Bivector3<T> operator+(const Bivector3<T>& a)
-    {
-        return a;
-    }
 
-    template <typename T>
-    constexpr Bivector4<T> operator+(const Bivector4<T>& a)
-    {
-        return a;
-    }
     
     template <typename T>
     constexpr Trivector3<T> operator+(const Trivector3<T>&a)
@@ -157,17 +147,7 @@ namespace yq {
     //  NEGATIVE
 
 
-    template <typename T>
-    constexpr Bivector3<T> operator-(const Bivector3<T>& a)
-    {
-        return {-a.xy, -a.yz, -a.zx};
-    }
 
-    template <typename T>
-    constexpr Bivector4<T> operator-(const Bivector4<T>& a)
-    {
-        return {-a.xy, -a.yz, -a.zw, -a.wx, -a.xz, -a.yw};
-    }
     
     template <typename T>
     constexpr Trivector3<T> operator-(const Trivector3<T>&a)
@@ -256,18 +236,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Bivector3<T> operator+(const Bivector3<T>& a, const Bivector3<T>& b)
-    {
-        return {a.xy+b.xy, a.yz+b.yz, a.zx+b.zx};
-    }
-
-    template <typename T>
-    Bivector3<T>&       operator+=(Bivector3<T>&a, const Bivector3<T>&b)
-    {
-        a.xy+=b.xy; a.yz+=b.yz; a.zx+=b.zx;
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(Bivector3<T> a, const Multivector3<T>& b)
@@ -314,18 +282,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Bivector4<T> operator+(const Bivector4<T>& a, const Bivector4<T>& b)
-    {
-        return {a.xy+b.xy, a.yz+b.yz, a.zw+b.zw, a.wx+b.wx, a.xz+b.xz, a.yw+b.yw};
-    }
-
-    template <typename T>
-    Bivector4<T>&       operator+=(Bivector4<T>&a, const Bivector4<T>&b)
-    {
-        a.xy+=b.xy; a.yz+=b.yz; a.zw+=b.zw; a.wx+=b.wx; a.xz+=b.xz; a.yw+=b.yw;
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector4<T> operator+(Bivector4<T> a, const Multivector4<T>& b)
@@ -1147,19 +1103,6 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Bivector3<T> operator-(const Bivector3<T>& a, const Bivector3<T>& b)
-    {
-        return {a.xy-b.xy, a.yz-b.yz, a.zx-b.zx};
-    }
-
-    template <typename T>
-    Bivector3<T>&       operator-=(Bivector3<T>&a, const Bivector3<T>&b)
-    {
-        a.xy-=b.xy; a.yz-=b.yz; a.zx-=b.zx;
-        return a;
-    }
-
-    template <typename T>
     constexpr Multivector3<T> operator-(Bivector3<T> a, const Multivector3<T>& b)
     {
         return { 
@@ -1204,18 +1147,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Bivector4<T> operator-(const Bivector4<T>& a, const Bivector4<T>& b)
-    {
-        return {a.xy-b.xy, a.yz-b.yz, a.zw-b.zw, a.wx-b.wx, a.xz-b.xz, a.yw-b.yw};
-    }
-
-    template <typename T>
-    Bivector4<T>&       operator-=(Bivector4<T>&a, const Bivector4<T>&b)
-    {
-        a.xy-=b.xy; a.yz-=b.yz; a.zw-=b.zw; a.wx-=b.wx; a.xz-=b.xz; a.yw-=b.yw;
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector4<T> operator-(Bivector4<T> a, const Multivector4<T>& b)
@@ -2007,19 +1938,7 @@ namespace yq {
     //  MULTIPLICATION
 
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector3<T> operator*(T a, const Bivector3<T>& b)
-    {
-        return { a*b.xy, a*b.yz, a*b.zx };
-    }
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector4<T> operator*(T a, const Bivector4<T>& b)
-    {
-        return { a*b.xy, a*b.yz, a*b.zw, a*b.wx, a*b.xz, a*b.yw };
-    }
 
     template <typename T>
     requires std::is_floating_point_v<T>

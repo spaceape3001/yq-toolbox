@@ -9,11 +9,15 @@
 #include <math/preamble.hpp>
 
 namespace yq {
+    /*! \brief 2D Bivector
+    
+        Two dimensional bivector
+    */
     template <typename T>
     struct Bivector2 {
         using component_type = T;
         square_t<T>     xy;
-        auto operator<=>(const Bivector2&) const = default;
+        auto operator<=>(const Bivector2&) const noexcept = default;
     };
 
     YQ_IEEE754_1(Bivector2)
@@ -55,7 +59,7 @@ namespace yq {
 //  NEGATIVE
 
     template <typename T>
-    constexpr Bivector2<T> operator-(const Bivector2<T>& a)
+    constexpr Bivector2<T> operator-(const Bivector2<T>& a) noexcept
     {
         return {-a.xy};
     }
@@ -69,7 +73,7 @@ namespace yq {
 //  ADDITION
 
     template <typename T>
-    constexpr Bivector2<T> operator+(const Bivector2<T>& a, const Bivector2<T>& b)
+    constexpr Bivector2<T> operator+(const Bivector2<T>& a, const Bivector2<T>& b) noexcept
     {
         return {
             a.xy+b.xy
@@ -77,7 +81,7 @@ namespace yq {
     }
 
     template <typename T>
-    Bivector2<T>& operator+=(Bivector2<T>& a, const Bivector2<T>& b)
+    Bivector2<T>& operator+=(Bivector2<T>& a, const Bivector2<T>& b) noexcept
     {
         a.xy += b.xy;
         return a;
@@ -88,7 +92,7 @@ namespace yq {
 
 
     template <typename T>
-    constexpr Bivector2<T> operator-(const Bivector2<T>& a, const Bivector2<T>& b)
+    constexpr Bivector2<T> operator-(const Bivector2<T>& a, const Bivector2<T>& b) noexcept
     {
         return {
             a.xy-b.xy
@@ -96,7 +100,7 @@ namespace yq {
     }
 
     template <typename T>
-    Bivector2<T>& operator-=(Bivector2<T>& a, const Bivector2<T>& b)
+    Bivector2<T>& operator-=(Bivector2<T>& a, const Bivector2<T>& b) noexcept
     {
         a.xy -= b.xy;
         return a;
@@ -107,21 +111,21 @@ namespace yq {
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Bivector2<T> operator*(T a, const Bivector2<T>& b)
+    constexpr Bivector2<T> operator*(T a, const Bivector2<T>& b) noexcept
     {
         return { a*b.xy };
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Bivector2<T> operator*(const Bivector2<T>& a, T b)
+    constexpr Bivector2<T> operator*(const Bivector2<T>& a, T b) noexcept
     {
         return { a.xy*b };
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Bivector2<T> operator*=(Bivector2<T>& a, T b)
+    Bivector2<T> operator*=(Bivector2<T>& a, T b) noexcept
     {
         a.xy *= b;
         return a;
@@ -132,14 +136,14 @@ namespace yq {
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Bivector2<T> operator/(const Bivector2<T>& a, T b)
+    constexpr Bivector2<T> operator/(const Bivector2<T>& a, T b) noexcept
     {
         return { a.xy/b };
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Bivector2<T> operator/=(Bivector2<T>& a, T b)
+    Bivector2<T> operator/=(Bivector2<T>& a, T b) noexcept
     {
         a.xy /= b;
         return a;

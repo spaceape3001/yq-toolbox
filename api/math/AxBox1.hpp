@@ -43,7 +43,7 @@ namespace yq {
     YQ_IS_NAN_1(AxBox1, is_nan(v.lo) || is_nan(v.hi))
 
     template <typename T>
-    constexpr bool    valid(const AxBox1<T>& a) noexcept
+    constexpr bool    is_valid(const AxBox1<T>& a) noexcept
     {
         return all_less_equal(a.lo, a.hi);
     }

@@ -39,7 +39,7 @@ namespace yq {
     YQ_IS_NAN_1(Circle2, is_nan(v.point) || is_nan(v.radius))
 
     template <typename T>
-    AxBox2<T>   aabb(const Circle2<T>&a)
+    constexpr AxBox2<T>   aabb(const Circle2<T>&a) noexcept
     {
         T       r   = abs(a.r);
         return {{
@@ -49,6 +49,12 @@ namespace yq {
             a.pt.x + r,
             a.pt.y + r
         }};
+    }
+    
+    template <typename T>
+    constexpr bool  is_valid(const Circle2<T>&a) noexcept
+    {
+        return a.radius >= T{};
     }
 
 
