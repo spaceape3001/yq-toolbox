@@ -12,7 +12,7 @@
 #include <math/trig.hpp>
 
 namespace yq {
-    /*! \brief Vector of 4 dimension(s)
+    /*! \brief Vector of 4 dimensions
     
         This is a 4 dimensional cartesian vector of the given type.
         \tparam[T]  Data type to be used, recommended to be arithmetic in nature
@@ -22,26 +22,22 @@ namespace yq {
         //! Component data type argument to this structure (ie, template parameter T)
         using component_type = T;
         
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        /*! \brief Creates a unit-vector in the x-dimension.
         */
-        static consteval Vector4 unit_x();
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        static consteval Vector4 unit_x() noexcept;
+        /*! \brief Creates a unit-vector in the y-dimension.
         */
-        static consteval Vector4 unit_y();
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        static consteval Vector4 unit_y() noexcept;
+        /*! \brief Creates a unit-vector in the z-dimension.
         */
-        static consteval Vector4 unit_z();
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        static consteval Vector4 unit_z() noexcept;
+        /*! \brief Creates a unit-vector in the w-dimension.
         */
-        static consteval Vector4 unit_w();
+        static consteval Vector4 unit_w() noexcept;
 
-        //! Component for the $(bit)s dimension.
         T       x;
-        //! Component for the $(bit)s dimension.
         T       y;
-        //! Component for the $(bit)s dimension.
         T       z;
-        //! Component for the $(bit)s dimension.
         T       w;;
         
         //! Equality operator (using default)
@@ -65,77 +61,77 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector4<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w)
+    constexpr Vector4<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w) noexcept
     {
         return {x,y,z,w};
     }
     
     template <typename T, glm::qualifier Q>
-    constexpr Vector4<T> vector(const glm::vec<4,T,Q>& v)
+    constexpr Vector4<T> vector(const glm::vec<4,T,Q>& v) noexcept
     {
         return { v.x, v.y, v.z, v.w };
     }
 
     template <typename T>
-    consteval Vector4<T> Vector4<T>::unit_x()
+    consteval Vector4<T> Vector4<T>::unit_x() noexcept
     {
         return {one_v<T>,zero_v<T>,zero_v<T>,zero_v<T>};
     }
 
     template <typename T>
-    consteval Vector4<T> Vector4<T>::unit_y()
+    consteval Vector4<T> Vector4<T>::unit_y() noexcept
     {
         return {zero_v<T>,one_v<T>,zero_v<T>,zero_v<T>};
     }
 
     template <typename T>
-    consteval Vector4<T> Vector4<T>::unit_z()
+    consteval Vector4<T> Vector4<T>::unit_z() noexcept
     {
         return {zero_v<T>,zero_v<T>,one_v<T>,zero_v<T>};
     }
 
     template <typename T>
-    consteval Vector4<T> Vector4<T>::unit_w()
+    consteval Vector4<T> Vector4<T>::unit_w() noexcept
     {
         return {zero_v<T>,zero_v<T>,zero_v<T>,one_v<T>};
     }
 
-    constexpr Vector4D operator "" _x4(unsigned long long int v)
+    constexpr Vector4D operator "" _x4(unsigned long long int v) noexcept
     {
         return {(double) v, 0., 0., 0.};
     }
 
-    constexpr Vector4D operator "" _x4(long double v)
+    constexpr Vector4D operator "" _x4(long double v) noexcept
     {
         return {(double) v, 0., 0., 0.};
     }
 
-    constexpr Vector4D operator "" _y4(unsigned long long int v)
+    constexpr Vector4D operator "" _y4(unsigned long long int v) noexcept
     {
         return {0., (double) v, 0., 0.};
     }
 
-    constexpr Vector4D operator "" _y4(long double v)
+    constexpr Vector4D operator "" _y4(long double v) noexcept
     {
         return {0., (double) v, 0., 0.};
     }
 
-    constexpr Vector4D operator "" _z4(unsigned long long int v)
+    constexpr Vector4D operator "" _z4(unsigned long long int v) noexcept
     {
         return {0., 0., (double) v, 0.};
     }
 
-    constexpr Vector4D operator "" _z4(long double v)
+    constexpr Vector4D operator "" _z4(long double v) noexcept
     {
         return {0., 0., (double) v, 0.};
     }
 
-    constexpr Vector4D operator "" _w4(unsigned long long int v)
+    constexpr Vector4D operator "" _w4(unsigned long long int v) noexcept
     {
         return {0., 0., 0., (double) v};
     }
 
-    constexpr Vector4D operator "" _w4(long double v)
+    constexpr Vector4D operator "" _w4(long double v) noexcept
     {
         return {0., 0., 0., (double) v};
     }
@@ -154,7 +150,7 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length2(const Vector4<T>& a)
+    constexpr square_t<T> length2(const Vector4<T>& a) noexcept
     {
         return a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w;
     }    
@@ -174,7 +170,7 @@ namespace yq {
 //  POSITIVE
 
     template <typename T>
-    constexpr Vector4<T> operator+(const Vector4<T>& a)
+    constexpr Vector4<T> operator+(const Vector4<T>& a) noexcept
     {
         return a;
     }
@@ -183,7 +179,7 @@ namespace yq {
 //  NEGATIVE
 
     template <typename T>
-    constexpr Vector4<T> operator-(const Vector4<T>&a)
+    constexpr Vector4<T> operator-(const Vector4<T>&a) noexcept
     {
         return {-a.x,-a.y,-a.z,-a.w};
     }
@@ -204,24 +200,13 @@ namespace yq {
 
 
     template <typename T>
-    constexpr Vector4<T> operator+(const Vector4<T>& a, const Vector4<T>& b)
+    constexpr Vector4<T> operator+(const Vector4<T>& a, const Vector4<T>& b) noexcept
     {
         return {a.x+b.x, a.y+b.y, a.z+b.z, a.w+b.w};
     }
 
-    
-
     template <typename T>
-    Vector3<T>& operator+=(Vector3<T>& a, const Vector3<T>& b)
-    {
-        a.x += b.x;
-        a.y += b.y;
-        a.z += b.z;
-        return a;
-    }
-
-    template <typename T>
-    Vector4<T>& operator+=(Vector4<T>& a, const Vector4<T>& b)
+    Vector4<T>& operator+=(Vector4<T>& a, const Vector4<T>& b) noexcept
     {
         a.x += b.x;
         a.y += b.y;
@@ -234,13 +219,13 @@ namespace yq {
 //  SUBTRACTION
 
     template <typename T>
-    constexpr Vector4<T> operator-(const Vector4<T>& a, const Vector4<T>& b)
+    constexpr Vector4<T> operator-(const Vector4<T>& a, const Vector4<T>& b) noexcept
     {
         return {a.x-b.x, a.y-b.y, a.z-b.z, a.w-b.w};
     }
     
     template <typename T>
-    Vector4<T>& operator-=(Vector4<T>& a, const Vector4<T>& b)
+    Vector4<T>& operator-=(Vector4<T>& a, const Vector4<T>& b) noexcept
     {
         a.x -= b.x;
         a.y -= b.y;
@@ -255,21 +240,21 @@ namespace yq {
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr Vector4<product_t<T,U>> operator*(T a, const Vector4<U>&b)
+    constexpr Vector4<product_t<T,U>> operator*(T a, const Vector4<U>&b) noexcept
     {
         return {a*b.x, a*b.y, a*b.z, a*b.w};
     }
     
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr Vector4<product_t<T,U>> operator*(const Vector4<T>& a, U b)
+    constexpr Vector4<product_t<T,U>> operator*(const Vector4<T>& a, U b) noexcept
     {
         return {a.x*b, a.y*b, a.z*b, a.w*b};
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector4<T>& operator*=(Vector4<T>& a, T b)
+    Vector4<T>& operator*=(Vector4<T>& a, T b) noexcept
     {
         a.x *= b;
         a.y *= b;
@@ -279,7 +264,7 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Vector4<product_t<T,U>>    mul_elem(const Vector4<T>&a, const Vector4<T>&b)
+    constexpr Vector4<product_t<T,U>>    mul_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
         return {a.x*b.x, a.y*b.y, a.z*b.z, a.w*b.w};
     }
@@ -289,21 +274,21 @@ namespace yq {
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr  Vector4<quotient_t<T,U>> operator/(T a, const  Vector4<U>&b)
+    constexpr  Vector4<quotient_t<T,U>> operator/(T a, const  Vector4<U>&b) noexcept
     {
         return (a*b) / length2(b);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr  Vector4<quotient_t<T,U>> operator/(const  Vector4<T>& a, U b)
+    constexpr  Vector4<quotient_t<T,U>> operator/(const  Vector4<T>& a, U b) noexcept
     {
         return {a.x / b, a.y / b, a.z / b, a.w / b};
     }
     
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Vector4<T>& operator/=(Vector4<T>& a, U b)
+    Vector4<T>& operator/=(Vector4<T>& a, U b) noexcept
     {
         a.x /= b;
         a.y /= b;
@@ -313,7 +298,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<T>&b)
+    constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
         return {a.x/b.x, a.y/b.y, a.z/b.z, a.w/b.w};
     }
@@ -322,7 +307,7 @@ namespace yq {
 //  POWERS
 
     template <typename T>
-    constexpr square_t<T> operator^(const Vector4<T>& a,two_t)
+    constexpr square_t<T> operator^(const Vector4<T>& a,two_t) noexcept
     {
         return a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w;
     }    
@@ -331,7 +316,7 @@ namespace yq {
 //  DOT PRODUCT
 
     template <typename T, typename U>
-    constexpr product_t<T,U> operator DOT (const Vector4<T>& a, const Vector4<U>&b)
+    constexpr product_t<T,U> operator DOT (const Vector4<T>& a, const Vector4<U>&b) noexcept
     {
         return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
     }
@@ -340,7 +325,7 @@ namespace yq {
 //  INNER PRODUCT
 
     template <typename T, typename U>
-    constexpr product_t<T,U> operator INNER (const Vector4<T>& a, const Vector4<U>&b)
+    constexpr product_t<T,U> operator INNER (const Vector4<T>& a, const Vector4<U>&b) noexcept
     {
         return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
     }
@@ -363,35 +348,35 @@ namespace yq {
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    Vector4<T>   abs_elem(const Vector4<T>&a)
+    constexpr Vector4<T>   abs_elem(const Vector4<T>&a) noexcept
     {
         return { abs(a.x), abs(a.y), abs(a.z), abs(a.w) };
     }
 
     //! TRUE if every component of a is greater than b
     template <typename T>
-    constexpr bool        all_greater(const Vector4<T>& a, const Vector4<T>&b)
+    constexpr bool        all_greater(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
         return (a.x>b.x) && (a.y>b.y) && (a.z>b.z) && (a.w>b.w);
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
-    constexpr bool        all_greater_equal(const Vector4<T>& a, const Vector4<T>&b)
+    constexpr bool        all_greater_equal(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
         return (a.x>=b.x) && (a.y>=b.y) && (a.z>=b.z) && (a.w>=b.w);
     }
     
     //! TRUE if every component of a is less than b
     template <typename T>
-    constexpr bool        all_less(const Vector4<T>& a, const Vector4<T>&b)
+    constexpr bool        all_less(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
         return (a.x<b.x) && (a.y<b.y) && (a.z<b.z) && (a.w<b.w);
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
-    constexpr bool        all_less_equal(const Vector4<T>& a, const Vector4<T>&b)
+    constexpr bool        all_less_equal(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
         return (a.x<=b.x) && (a.y<=b.y) && (a.z<=b.z) && (a.w<=b.w);
     }
@@ -412,14 +397,25 @@ namespace yq {
     }
 
     template <typename T>
-    fourth_t<T>     component_product(const Vector4<T>& a)
+    constexpr T             component_max(const Vector4<T>&a) noexcept
+    {
+        return max(max(a.x, a.y), max(a.z, a.w));
+    }
+
+    template <typename T>
+    constexpr T             component_min(const Vector4<T>&a) noexcept
+    {
+        return min(min(a.x, a.y), min(a.z, a.w));
+    }
+
+    template <typename T>
+    constexpr fourth_t<T>     component_product(const Vector4<T>& a) noexcept
     {
         return a.x*a.y*a.z*a.w;
     }
-    
 
     template <typename T>
-    T   component_sum(const Vector4<T>& a)
+    constexpr T   component_sum(const Vector4<T>& a) noexcept
     {
         return a.x + a.y + a.z + a.w;
     }
@@ -438,13 +434,13 @@ namespace yq {
 
     
     template <typename T>
-    constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b)
+    constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
         return {max(a.x, b.x) && max(a.y, b.y) && max(a.z, b.z) && max(a.w, b.w)};
     }
     
     template <typename T>
-    constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b)
+    constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
         return {min(a.x, b.x) && min(a.y, b.y) && min(a.z, b.z) && min(a.w, b.w)};
     }

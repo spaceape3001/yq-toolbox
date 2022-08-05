@@ -117,30 +117,6 @@ namespace yq {
     //  RECTANGLE 2
     //  -----------
 
-    template <typename T>
-    Vector2<T>  northeast(const Rectangle2<T>& rect)
-    {
-        return { rect.position.x+rect.size.x, rect.position.y+rect.size.y };
-    }
-
-    template <typename T>
-    Vector2<T>  northwest(const Rectangle2<T>& rect)
-    {
-        return { rect.position.x, rect.position.y+rect.size.y };
-    }
-
-    template <typename T>
-    Vector2<T>  southeast(const Rectangle2<T>& rect)
-    {
-        return { rect.position.x+rect.size.x, rect.position.y };
-    }
-
-    template <typename T>
-    Vector2<T>  southwest(const Rectangle2<T>& rect)
-    {
-        return { rect.position.x, rect.position.y };
-    }
-
     //  -------
     //  AXBOX 2
     //  -------
@@ -204,18 +180,6 @@ namespace yq {
 //  COMPOSITION
 
 
-    template <typename T>
-    AxBox2<T>   aabb(const Circle2<T>&a)
-    {
-        T       r   = abs(a.r);
-        return {{
-            a.pt.x - r,
-            a.pt.y - r
-        },{
-            a.pt.x + r,
-            a.pt.y + r
-        }};
-    }
     
     template <typename T>
     AxBox2<T>   aabb(const Polygon2<T>&poly)
@@ -271,11 +235,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    AxBox2<T>   aabb(const Rectangle2<T>& rect)
-    {
-        return aabb(southwest(rect), northeast(rect));
-    }
 
     template <typename T>
     AxBox1<T>   aabb(const Segment1<T>& a)
@@ -1113,15 +1072,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
-
-
-    /*! \brief Computes the area of a 2D circle
-    */
-    template <typename T>
-    square_t<T> area(const Circle2<T>& a)
-    {
-        return std::numbers::pi_v<ieee754_t<T>> * (a.radius*a.radius);
-    }
     
     /*! \brief Computes the area of a 2D polygon
     */
@@ -1150,21 +1100,6 @@ namespace yq {
 
 
 
-    /*! \brief Computes the circumference of a circle
-    */
-    template <typename T>
-    T           circumference(const Circle2<T>& a)
-    {
-        return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * a.radius;
-    }
-
-    /*! \brief Computes the diameter of a circle
-    */
-    template <typename T>
-    T           diameter(const Circle2<T>&a)
-    {
-        return a.radius + a.radius;
-    }
 
     /*! \brief Computes the diameter of a sphere
     */
@@ -1259,13 +1194,7 @@ namespace yq {
         return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
     }
 
-
     
-    template <typename T>
-    T   permimeter(const Circle2<T>& a)
-    {
-        return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * a.radius;
-    }
 
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>

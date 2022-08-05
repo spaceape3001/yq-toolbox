@@ -98,11 +98,6 @@ namespace yq {
     //  --------------------------------------------------------
     //  POSITIVE
     
-    template <typename T>
-    constexpr Bivector2<T> operator+(const Bivector2<T>& a)
-    {
-        return a;
-    }
 
     template <typename T>
     constexpr Bivector3<T> operator+(const Bivector3<T>& a)
@@ -161,12 +156,6 @@ namespace yq {
     //  --------------------------------------------------------
     //  NEGATIVE
 
-
-    template <typename T>
-    constexpr Bivector2<T> operator-(const Bivector2<T>& a)
-    {
-        return {-a.xy};
-    }
 
     template <typename T>
     constexpr Bivector3<T> operator-(const Bivector3<T>& a)
@@ -235,20 +224,6 @@ namespace yq {
     //  ADDITION
 
 
-    template <typename T>
-    constexpr Bivector2<T> operator+(const Bivector2<T>& a, const Bivector2<T>& b)
-    {
-        return {
-            a.xy+b.xy
-        };
-    }
-
-    template <typename T>
-    Bivector2<T>& operator+=(Bivector2<T>& a, const Bivector2<T>& b)
-    {
-        a.xy += b.xy;
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(Bivector2<T> a, const Multivector2<T>& b)
@@ -1139,22 +1114,6 @@ namespace yq {
 
     //  --------------------------------------------------------
     //  SUBTRACTION
-
-
-    template <typename T>
-    constexpr Bivector2<T> operator-(const Bivector2<T>& a, const Bivector2<T>& b)
-    {
-        return {
-            a.xy-b.xy
-        };
-    }
-
-    template <typename T>
-    Bivector2<T>& operator-=(Bivector2<T>& a, const Bivector2<T>& b)
-    {
-        a.xy -= b.xy;
-        return a;
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator-(Bivector2<T> a, const Multivector2<T>& b)
@@ -2047,12 +2006,6 @@ namespace yq {
     //  --------------------------------------------------------
     //  MULTIPLICATION
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector2<T> operator*(T a, const Bivector2<T>& b)
-    {
-        return { a*b.xy };
-    }
 
     template <typename T>
     requires std::is_floating_point_v<T>

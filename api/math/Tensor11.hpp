@@ -313,6 +313,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    template <typename T>
+    auto determinant(const Tensor11<T>& a)
+    {
+        return a.xx;
+    }
+
     /*! \brief Trace of the 1 x 1 tensor
     
         \param[in] a    Tensor to take the trace of

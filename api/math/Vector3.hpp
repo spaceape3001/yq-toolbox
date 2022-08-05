@@ -13,7 +13,7 @@
 #include <math/Vector2.hpp>
 
 namespace yq {
-    /*! \brief Vector of 3 dimension(s)
+    /*! \brief Vector of 3 dimensions
     
         This is a 3 dimensional cartesian vector of the given type.
         \tparam[T]  Data type to be used, recommended to be arithmetic in nature
@@ -23,21 +23,18 @@ namespace yq {
         //! Component data type argument to this structure (ie, template parameter T)
         using component_type = T;
 
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        /*! \brief Creates a unit-vector in the x-dimension.
         */
-        static consteval Vector3 unit_x();
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        static consteval Vector3 unit_x() noexcept;
+        /*! \brief Creates a unit-vector in the y-dimension.
         */
-        static consteval Vector3 unit_y();
-        /*! \brief Creates a unit-vector in the $(bit)s dimension.
+        static consteval Vector3 unit_y() noexcept;
+        /*! \brief Creates a unit-vector in the z-dimension.
         */
-        static consteval Vector3 unit_z();
+        static consteval Vector3 unit_z() noexcept;
 
-        //! Component for the $(bit)s dimension.
         T       x;
-        //! Component for the $(bit)s dimension.
         T       y;
-        //! Component for the $(bit)s dimension.
         T       z;;
         
         //! Equality operator (using default)
@@ -61,61 +58,61 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector3<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z)
+    constexpr Vector3<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z) noexcept
     {
         return {x,y,z};
     }
     
     template <typename T, glm::qualifier Q>
-    constexpr Vector3<T> vector(const glm::vec<3,T,Q>& v)
+    constexpr Vector3<T> vector(const glm::vec<3,T,Q>& v) noexcept
     {
         return { v.x, v.y, v.z };
     }
 
     template <typename T>
-    consteval Vector3<T> Vector3<T>::unit_x()
+    consteval Vector3<T> Vector3<T>::unit_x() noexcept
     {
         return {one_v<T>,zero_v<T>,zero_v<T>};
     }
 
     template <typename T>
-    consteval Vector3<T> Vector3<T>::unit_y()
+    consteval Vector3<T> Vector3<T>::unit_y() noexcept
     {
         return {zero_v<T>,one_v<T>,zero_v<T>};
     }
 
     template <typename T>
-    consteval Vector3<T> Vector3<T>::unit_z()
+    consteval Vector3<T> Vector3<T>::unit_z() noexcept
     {
         return {zero_v<T>,zero_v<T>,one_v<T>};
     }
 
-    constexpr Vector3D operator "" _x3(unsigned long long int v)
+    constexpr Vector3D operator "" _x3(unsigned long long int v) noexcept
     {
         return {(double) v, 0., 0.};
     }
 
-    constexpr Vector3D operator "" _x3(long double v)
+    constexpr Vector3D operator "" _x3(long double v) noexcept
     {
         return {(double) v, 0., 0.};
     }
 
-    constexpr Vector3D operator "" _y3(unsigned long long int v)
+    constexpr Vector3D operator "" _y3(unsigned long long int v) noexcept
     {
         return {0., (double) v, 0.};
     }
 
-    constexpr Vector3D operator "" _y3(long double v)
+    constexpr Vector3D operator "" _y3(long double v) noexcept
     {
         return {0., (double) v, 0.};
     }
 
-    constexpr Vector3D operator "" _z3(unsigned long long int v)
+    constexpr Vector3D operator "" _z3(unsigned long long int v) noexcept
     {
         return {0., 0., (double) v};
     }
 
-    constexpr Vector3D operator "" _z3(long double v)
+    constexpr Vector3D operator "" _z3(long double v) noexcept
     {
         return {0., 0., (double) v};
     }
@@ -143,13 +140,13 @@ namespace yq {
     }
 
     template <typename T>
-    Vector2<T> xy( const Vector3<T>& a)
+    constexpr Vector2<T> xy( const Vector3<T>& a) noexcept
     {
         return { a.x, a.y };
     }
 
     template <typename T>
-    Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z)
+    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept
     {
         return { a.x, a.y, z };
     }
@@ -168,7 +165,7 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length2(const Vector3<T>& a)
+    constexpr square_t<T> length2(const Vector3<T>& a) noexcept
     {
         return a.x*a.x + a.y*a.y + a.z*a.z;
     }    
@@ -188,7 +185,7 @@ namespace yq {
 //  POSITIVE
 
     template <typename T>
-    constexpr Vector3<T> operator+(const Vector3<T>& a)
+    constexpr Vector3<T> operator+(const Vector3<T>& a) noexcept
     {
         return a;
     }
@@ -198,7 +195,7 @@ namespace yq {
 //  NEGATIVE
 
     template <typename T>
-    constexpr Vector3<T> operator-(const Vector3<T>&a)
+    constexpr Vector3<T> operator-(const Vector3<T>&a) noexcept
     {
         return {-a.x,-a.y,-a.z};
     }
@@ -218,22 +215,32 @@ namespace yq {
 //  ADDITION
 
     template <typename T>
-    constexpr Vector3<T> operator+(const Vector3<T>& a, const Vector3<T>& b)
+    constexpr Vector3<T> operator+(const Vector3<T>& a, const Vector3<T>& b) noexcept
     {
         return {a.x+b.x, a.y+b.y, a.z+b.z};
     }
+
+    template <typename T>
+    Vector3<T>& operator+=(Vector3<T>& a, const Vector3<T>& b) noexcept
+    {
+        a.x += b.x;
+        a.y += b.y;
+        a.z += b.z;
+        return a;
+    }
+
     
 //  --------------------------------------------------------
 //  SUBTRACTION
 
     template <typename T>
-    constexpr Vector3<T> operator-(const Vector3<T>& a, const Vector3<T>& b)
+    constexpr Vector3<T> operator-(const Vector3<T>& a, const Vector3<T>& b) noexcept
     {
         return {a.x-b.x, a.y-b.y, a.z-b.z};
     }
 
     template <typename T>
-    Vector3<T>& operator-=(Vector3<T>& a, const Vector3<T>& b)
+    Vector3<T>& operator-=(Vector3<T>& a, const Vector3<T>& b) noexcept
     {
         a.x -= b.x;
         a.y -= b.y;
@@ -246,21 +253,21 @@ namespace yq {
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b)
+    constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept
     {
         return {a*b.x, a*b.y, a*b.z};
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr Vector3<product_t<T,U>> operator*(const Vector3<T>& a, U b)
+    constexpr Vector3<product_t<T,U>> operator*(const Vector3<T>& a, U b) noexcept
     {
         return {a.x*b, a.y*b, a.z*b};
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector3<T>& operator*=(Vector3<T>& a, T b)
+    Vector3<T>& operator*=(Vector3<T>& a, T b) noexcept
     {
         a.x *= b;
         a.y *= b;
@@ -269,7 +276,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<T>&b)
+    constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
         return {a.x*b.x, a.y*b.y, a.z*b.z};
     }
@@ -279,21 +286,21 @@ namespace yq {
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b)
+    constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept
     {
         return (a*b) / length2(b);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr  Vector3<quotient_t<T,U>> operator/(const  Vector3<T>& a, U b)
+    constexpr  Vector3<quotient_t<T,U>> operator/(const  Vector3<T>& a, U b) noexcept
     {
         return {a.x / b, a.y / b, a.z / b};
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Vector3<T>& operator/=(Vector3<T>& a, U b)
+    Vector3<T>& operator/=(Vector3<T>& a, U b) noexcept
     {
         a.x /= b;
         a.y /= b;
@@ -303,7 +310,7 @@ namespace yq {
 
 
     template <typename T, typename U>
-    Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<T>&b)
+    constexpr Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
         return {a.x/b.x, a.y/b.y, a.z/b.z};
     }
@@ -312,7 +319,7 @@ namespace yq {
 //  POWERS
 
     template <typename T>
-    constexpr square_t<T> operator^(const Vector3<T>& a,two_t)
+    constexpr square_t<T> operator^(const Vector3<T>& a,two_t) noexcept
     {
         return a.x*a.x + a.y*a.y + a.z*a.z;
     }    
@@ -321,7 +328,7 @@ namespace yq {
 //  DOT PRODUCT
 
     template <typename T, typename U>
-    constexpr product_t<T,U> operator DOT (const Vector3<T>& a, const Vector3<U>&b)
+    constexpr product_t<T,U> operator DOT (const Vector3<T>& a, const Vector3<U>&b) noexcept
     {
         return a.x*b.x + a.y*b.y + a.z*b.z;
     }
@@ -331,7 +338,7 @@ namespace yq {
 //  INNER PRODUCT
 
     template <typename T, typename U>
-    constexpr product_t<T,U> operator INNER (const Vector3<T>& a, const Vector3<U>&b)
+    constexpr product_t<T,U> operator INNER (const Vector3<T>& a, const Vector3<U>&b) noexcept
     {
         return a.x*b.x + a.y*b.y + a.z*b.z;
     }
@@ -346,7 +353,7 @@ namespace yq {
 
 
     template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>> operator CROSS (const Vector3<T>& a, const Vector3<U>&b)
+    constexpr Vector3<product_t<T,U>> operator CROSS (const Vector3<T>& a, const Vector3<U>&b) noexcept
     {
         return { 
             a.y*b.z-a.z*b.y, 
@@ -365,35 +372,35 @@ namespace yq {
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    Vector3<T>   abs_elem(const Vector3<T>&a)
+    constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept
     {
         return { abs(a.x), abs(a.y), abs(a.z) };
     }
 
     //! TRUE if every component of a is greater than b
     template <typename T>
-    constexpr bool        all_greater(const Vector3<T>& a, const Vector3<T>&b)
+    constexpr bool        all_greater(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
         return (a.x>b.x) && (a.y>b.y) && (a.z>b.z);
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
-    constexpr bool        all_greater_equal(const Vector3<T>& a, const Vector3<T>&b)
+    constexpr bool        all_greater_equal(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
         return (a.x>=b.x) && (a.y>=b.y) && (a.z>=b.z);
     }
 
     //! TRUE if every component of a is less than b
     template <typename T>
-    constexpr bool        all_less(const Vector3<T>& a, const Vector3<T>&b)
+    constexpr bool        all_less(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
         return (a.x<b.x) && (a.y<b.y) && (a.z<b.z);
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
-    constexpr bool        all_less_equal(const Vector3<T>& a, const Vector3<T>&b)
+    constexpr bool        all_less_equal(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
         return (a.x<=b.x) && (a.y<=b.y) && (a.z<=b.z);
     }
@@ -458,13 +465,25 @@ namespace yq {
     }
 
     template <typename T>
-    cube_t<T>       component_product(const Vector3<T>& a)
+    constexpr T             component_max(const Vector3<T>&a) noexcept
+    {
+        return max(max(a.x, a.y), a.z);
+    }
+
+    template <typename T>
+    constexpr T             component_min(const Vector3<T>&a) noexcept
+    {
+        return max(max(a.x, a.y), a.z);
+    }
+
+    template <typename T>
+    constexpr cube_t<T>       component_product(const Vector3<T>& a) noexcept
     {
         return a.x*a.y*a.z;
     }
     
     template <typename T>
-    T   component_sum(const Vector3<T>& a)
+    constexpr T   component_sum(const Vector3<T>& a) noexcept
     {
         return a.x + a.y + a.z;
     }
@@ -482,13 +501,13 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b)
+    constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
         return {max(a.x, b.x) && max(a.y, b.y) && max(a.z, b.z)};
     }
 
     template <typename T>
-    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b)
+    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
         return {min(a.x, b.x) && min(a.y, b.y) && min(a.z, b.z)};
     }    

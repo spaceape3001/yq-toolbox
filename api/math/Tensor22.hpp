@@ -404,6 +404,22 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    template <typename T>
+    auto determinant(const Tensor22<T>& a)
+    {
+        return a.xx*a.yy-a.xy*a.yx;
+    }
+
+    template <typename T>
+    Tensor22<inverse_t<T>> inverse(const Tensor22<T>&a)
+    {
+        auto    di = one_v<T> / determinant(a);
+        return {
+             di * a.yy, -di * a.xy,
+            -di * a.yx,  di * a.xx
+        };
+    }
+
     /*! \brief Trace of the 2 x 2 tensor
     
         \param[in] a    Tensor to take the trace of

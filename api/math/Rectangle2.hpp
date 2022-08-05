@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <math/AxBox2.hpp>
+#include <math/AxCorners2.hpp>
 #include <math/Vector2.hpp>
 #include <math/Size2.hpp>
 
@@ -22,12 +24,127 @@ namespace yq {
     };
 
     YQ_IEEE754_1(Rectangle2)
+//  --------------------------------------------------------
+//  COMPOSITION
+
     YQ_NAN_1(Rectangle2, Rectangle2<T>{nan_v<Vector2<T>>, nan_v<Size2<T>>})
     YQ_ZERO_1(Rectangle2, Rectangle2<T>{zero_v<Vector2<T>>, zero_v<Size2<T>>})
-    
+
+//  --------------------------------------------------------
+//  GETTERS
+
+    template <typename T>
+    Vector2<T>  northeast(const Rectangle2<T>& rect)
+    {
+        return { rect.position.x+rect.size.x, rect.position.y+rect.size.y };
+    }
+
+    template <typename T>
+    Vector2<T>  northwest(const Rectangle2<T>& rect)
+    {
+        return { rect.position.x, rect.position.y+rect.size.y };
+    }
+
+    template <typename T>
+    Vector2<T>  southeast(const Rectangle2<T>& rect)
+    {
+        return { rect.position.x+rect.size.x, rect.position.y };
+    }
+
+    template <typename T>
+    Vector2<T>  southwest(const Rectangle2<T>& rect)
+    {
+        return { rect.position.x, rect.position.y };
+    }
+
+
+//  --------------------------------------------------------
+//  BASIC FUNCTIONS
 
     YQ_IS_NAN_1(Rectangle2, is_nan(v.position) || is_nan(v.size))
     YQ_IS_FINITE_1(Rectangle2, is_finite(v.position) && is_finite(v.size))
+
+    template <typename T>
+    AxBox2<T>   aabb(const Rectangle2<T>& rect)
+    {
+        return aabb(southwest(rect), northeast(rect));
+    }
+
+    template <typename T>
+    AxCorners2<Vector2<T>>  corners(const Rectangle2<T>& v)
+    {
+        return { 
+            southwest(v),
+            northwest(v),
+            southeast(v),
+            northeast(v)
+        };
+    }
+
+//  --------------------------------------------------------
+//  POSITIVE
+
+
+//  --------------------------------------------------------
+//  NEGATIVE
+
+
+//  --------------------------------------------------------
+//  NORMALIZATION
+
+
+//  --------------------------------------------------------
+//  ADDITION
+
+
+//  --------------------------------------------------------
+//  SUBTRACTION
+
+
+//  --------------------------------------------------------
+//  MULTIPLICATION
+
+
+//  --------------------------------------------------------
+//  DIVISION
+
+//  --------------------------------------------------------
+//  POWERS
+
+//  --------------------------------------------------------
+//  DOT PRODUCT
+
+
+//  --------------------------------------------------------
+//  INNER PRODUCT
+
+
+//  --------------------------------------------------------
+//  OUTER PRODUCT
+
+
+//  --------------------------------------------------------
+//  CROSS PRODUCT
+
+
+///  --------------------------------------------------------
+//  OTIMES PRODUCT
+
+//  --------------------------------------------------------
+//  UNIONS
+
+//  --------------------------------------------------------
+//  INTERSECTIONS
+
+
+//  --------------------------------------------------------
+//  PROJECTIONS
+
+//  --------------------------------------------------------
+//  ADVANCED FUNCTIONS
+
+
+
 }
 
 YQ_TYPE_DECLARE(yq::Rectangle2D)

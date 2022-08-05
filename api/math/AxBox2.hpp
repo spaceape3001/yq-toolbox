@@ -134,7 +134,7 @@ namespace yq {
     /*! \brief Union of two AABBs
     */
     template <typename T>
-    constexpr AxBox2<T> operator|(const AxBox2<T>&a, const AxBox2<T>&b)
+    constexpr AxBox2<T> operator|(const AxBox2<T>&a, const AxBox2<T>&b) noexcept
     {
         return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
     }
@@ -145,7 +145,7 @@ namespace yq {
     /*! \brief Intersection of two AABBs
     */
     template <typename T>
-    constexpr AxBox2<T> operator&(const AxBox2<T>&a, const AxBox2<T>&b)
+    constexpr AxBox2<T> operator&(const AxBox2<T>&a, const AxBox2<T>&b) noexcept
     {
         return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
     }
@@ -159,7 +159,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D axially aligned bounding box
     */
     template <typename T>
-    square_t<T>     area(const AxBox2<T>& ax)
+    constexpr square_t<T>     area(const AxBox2<T>& ax) noexcept
     {
         return component_product(ax.hi-ax.lo);
     }
@@ -167,7 +167,7 @@ namespace yq {
     /*! \brief Computes the center of a 2D axially aligned box
     */
     template <typename T>
-    Vector2<T>      center(const AxBox2<T>& box)
+    constexpr Vector2<T>      center(const AxBox2<T>& box) noexcept
     {
         if constexpr (std::is_floating_point_v<T>){
             return ieee754_t<T>(0.5)*(box.lo+box.hi);
@@ -185,7 +185,7 @@ namespace yq {
         \param[in] Small The "smaller" box, if eclipsed
     */
     template <typename T>
-    constexpr bool is_eclipsed(const AxBox2<T>& big, const AxBox2<T>& small)
+    constexpr bool is_eclipsed(const AxBox2<T>& big, const AxBox2<T>& small) noexcept
     {
         return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
     }
@@ -193,7 +193,7 @@ namespace yq {
     /*! \brief Checks if the point is inside (or touching) the box
     */
     template <typename T>
-    constexpr bool is_inside(const AxBox2<T>& bx, const Vector2<T>& pt)
+    constexpr bool is_inside(const AxBox2<T>& bx, const Vector2<T>& pt) noexcept
     {
         return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
     }
@@ -203,13 +203,13 @@ namespace yq {
         This returns TRUE if *ANY* part of the boxes overlap (or touch)
     */
     template <typename T>
-    constexpr bool is_overlapped(const AxBox2<T>& a, const AxBox2<T>& b)
+    constexpr bool is_overlapped(const AxBox2<T>& a, const AxBox2<T>& b) noexcept
     {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }    
 
     template <typename T>
-    T       perimeter(const AxBox2<T>& ax)
+    constexpr T       perimeter(const AxBox2<T>& ax) noexcept
     {
         return 2. * component_sum(ax.hi-ax.lo);
     }
