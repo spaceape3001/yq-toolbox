@@ -7,6 +7,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector1.hpp>
+#include <math/AxCorners1.hpp>
 
 namespace yq {
 
@@ -35,6 +36,17 @@ namespace yq {
     YQ_NAN_1(AxBox1, { nan_v<Vector1<T>>, nan_v<Vector1<T>>});
     YQ_ZERO_1(AxBox1, { zero_v<Vector1<T>>, zero_v<Vector1<T>>});
 
+//  --------------------------------------------------------
+//  GETTERS
+
+    template <typename T>
+    AxCorners1<Vector1<T>>  corners(const AxBox1<T>& v)
+    {
+        return { 
+            v.lo,
+            v.hi
+        };
+    }
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

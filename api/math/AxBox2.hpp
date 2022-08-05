@@ -7,6 +7,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
+#include <math/AxCorners2.hpp>
 
 namespace yq {
 
@@ -64,6 +65,17 @@ namespace yq {
     constexpr Vector2<T>  southwest(const AxBox2<T>& ax) noexcept
     {
         return ax.lo;
+    }
+
+    template <typename T>
+    AxCorners2<Vector2<T>>  corners(const AxBox2<T>& v)
+    {
+        return { 
+            v.lo,
+            { v.lo.x, v.hi.y }, 
+            { v.hi.x, v.lo.y }, 
+            v.hi
+        };
     }
 
 

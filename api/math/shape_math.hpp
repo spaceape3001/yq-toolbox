@@ -109,14 +109,9 @@ namespace yq {
         return delta_area(quad.b, quad.a) + delta_area(quad.c, quad.b) + delta_area(quad.d, quad.c) + delta_area(quad.a, quad.d);
     }
 
- 
-
-
 //  --------------------------------------------------------
 //  COMPOSITION
 
-
-    
     template <typename T>
     AxBox2<T>   aabb(const Polygon2<T>&poly)
     {
@@ -171,32 +166,6 @@ namespace yq {
         };
     }
 
-
-    template <typename T>
-    AxBox1<T>   aabb(const Segment1<T>& a)
-    {
-        return aabb(a.lo, a.hi);
-    }
-    
-    template <typename T>
-    AxBox2<T>   aabb(const Segment2<T>& a)
-    {
-        return aabb(a.lo, a.hi);
-    }
-    
-    template <typename T>
-    AxBox3<T>   aabb(const Segment3<T>& a)
-    {
-        return aabb(a.lo, a.hi);
-    }
-    
-    template <typename T>
-    AxBox4<T>   aabb(const Segment4<T>& a)
-    {
-        return aabb(a.lo, a.hi);
-    }
-    
-    
     template <typename T>
     AxBox4<T>   aabb(const Sphere4<T>&a)
     {
@@ -241,32 +210,7 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    Circle2<T>  circle(const Vector2<T>& point, T radius)
-    {
-        return {point, radius};
-    }
     
-    template <typename T>
-    AxCorners1<Vector1<T>>  corners(const AxBox1<T>& v)
-    {
-        return { 
-            v.lo,
-            v.hi
-        };
-    }
-
-    template <typename T>
-    AxCorners2<Vector2<T>>  corners(const AxBox2<T>& v)
-    {
-        return { 
-            v.lo,
-            { v.lo.x, v.hi.y }, 
-            { v.hi.x, v.lo.y }, 
-            v.hi
-        };
-    }
-
 
     template <typename T>
     Normal2<T>     normal(const Vector2<T>& dir) 
@@ -367,29 +311,6 @@ namespace yq {
         return { rgba(t.a, a), rgba(t.b, a), rgba(t.c, a)};
     }
     
-    template <typename T>
-    constexpr Segment1<T> segment(const Vector1<T>& a, const Vector1<T>& b)
-    {
-        return { a, b };
-    }
-    
-    template <typename T>
-    constexpr Segment2<T> segment(const Vector2<T>& a, const Vector2<T>& b)
-    {
-        return { a, b };
-    }
-    
-    template <typename T>
-    constexpr Segment3<T> segment(const Vector3<T>& a, const Vector3<T>& b)
-    {
-        return { a, b };
-    }
-    
-    template <typename T>
-    constexpr Segment4<T> segment(const Vector4<T>& a, const Vector4<T>& b)
-    {
-        return { a, b };
-    }
 
     template <typename T>
     Sphere4<T>  sphere(const Vector4<T>& point, T radius)
@@ -1010,61 +931,6 @@ namespace yq {
     }
 
     template <typename T>
-    T       length(const Segment1<T>& seg)
-    {
-        return length(seg.b-seg.a);
-    }
-    
-    template <typename T>
-    T       length(const Segment2<T>& seg)
-    {
-        return length(seg.b-seg.a);
-    }
-
-    template <typename T>
-    T       length(const Segment3<T>& seg)
-    {
-        return length(seg.b-seg.a);
-    }
-    
-
-    template <typename T>
-    T       length(const Segment4<T>& seg)
-    {
-        return length(seg.b-seg.a);
-    }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector1<T>     midpoint(const Segment1<T>& seg)
-    {
-        return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
-    }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector2<T>     midpoint(const Segment2<T>& seg)
-    {
-        return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
-    }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector3<T>     midpoint(const Segment3<T>& seg)
-    {
-        return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
-    }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector4<T>     midpoint(const Segment4<T>& seg)
-    {
-        return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
-    }
-
-    
-
-    template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Polygon2<T>& poly)
     {
@@ -1130,35 +996,6 @@ namespace yq {
     {
         return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
     }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector1<T>     point(const Segment1<T>& seg, ieee754_t<T> f)
-    {
-        return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
-    }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector2<T>     point(const Segment2<T>& seg, ieee754_t<T> f)
-    {
-        return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
-    }
-
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector3<T>     point(const Segment3<T>& seg, ieee754_t<T> f)
-    {
-        return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
-    }
-    
-    template <typename T>
-    requires has_ieee754_v<T>
-    Vector4<T>     point(const Segment4<T>& seg, ieee754_t<T> f)
-    {
-        return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
-    }
-
 
 }
 

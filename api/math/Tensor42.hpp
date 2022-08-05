@@ -35,7 +35,7 @@ namespace yq {
     /*! \brief Create 4x2 tensor by columns
     */
     template <typename T>
-    constexpr Tensor42<T>  columns(const Vector4<T>&x, const Vector4<T>&y)
+    constexpr Tensor42<T>  columns(const Vector4<T>&x, const Vector4<T>&y) noexcept
     {
         return {
             x.x, y.x,
@@ -48,7 +48,7 @@ namespace yq {
     /*! \brief Create 4x2 tensor by rows
     */
     template <typename T>
-    constexpr Tensor42<T>  rows(const Vector2<T>&x, const Vector2<T>&y, const Vector2<T>&z, const Vector2<T>&w)
+    constexpr Tensor42<T>  rows(const Vector2<T>&x, const Vector2<T>&y, const Vector2<T>&z, const Vector2<T>&w) noexcept
     {
         return {
             x.x, x.y,
@@ -101,37 +101,37 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    constexpr Vector4<T>  x_column(const Tensor42<T>&v) 
+    constexpr Vector4<T>  x_column(const Tensor42<T>&v)  noexcept
     {
         return {v.xx, v.yx, v.zx, v.wx};
     }
 
     template <typename T>
-    constexpr Vector4<T>  y_column(const Tensor42<T>&v) 
+    constexpr Vector4<T>  y_column(const Tensor42<T>&v)  noexcept
     {
         return {v.xy, v.yy, v.zy, v.wy};
     }
 
     template <typename T>
-    constexpr Vector2<T>  x_row(const Tensor42<T>&v)
+    constexpr Vector2<T>  x_row(const Tensor42<T>&v) noexcept
     {
         return {v.xx, v.xy};
     }
 
     template <typename T>
-    constexpr Vector2<T>  y_row(const Tensor42<T>&v)
+    constexpr Vector2<T>  y_row(const Tensor42<T>&v) noexcept
     {
         return {v.yx, v.yy};
     }
 
     template <typename T>
-    constexpr Vector2<T>  z_row(const Tensor42<T>&v)
+    constexpr Vector2<T>  z_row(const Tensor42<T>&v) noexcept
     {
         return {v.zx, v.zy};
     }
 
     template <typename T>
-    constexpr Vector2<T>  w_row(const Tensor42<T>&v)
+    constexpr Vector2<T>  w_row(const Tensor42<T>&v) noexcept
     {
         return {v.wx, v.wy};
     }
@@ -141,7 +141,7 @@ namespace yq {
 //  SETTERS
 
     template <typename T>
-    Tensor42<T>& set_x_column(Tensor42<T>&ten, const Vector2<T>& v)
+    Tensor42<T>& set_x_column(Tensor42<T>&ten, const Vector2<T>& v) noexcept
     {
         ten.xx = v.x;
         ten.yx = v.y;
@@ -151,7 +151,7 @@ namespace yq {
     }
 
     template <typename T>
-    Tensor42<T>& set_y_column(Tensor42<T>&ten, const Vector2<T>& v)
+    Tensor42<T>& set_y_column(Tensor42<T>&ten, const Vector2<T>& v) noexcept
     {
         ten.xy = v.x;
         ten.yy = v.y;
@@ -161,7 +161,7 @@ namespace yq {
     }
 
     template <typename T>
-    Tensor42<T>& set_x_row(Tensor42<T>&ten, const Vector4<T>& v)
+    Tensor42<T>& set_x_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
     {
         ten.xx = v.x;
         ten.xy = v.y;
@@ -169,7 +169,7 @@ namespace yq {
     }
 
     template <typename T>
-    Tensor42<T>& set_y_row(Tensor42<T>&ten, const Vector4<T>& v)
+    Tensor42<T>& set_y_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
     {
         ten.yx = v.x;
         ten.yy = v.y;
@@ -177,7 +177,7 @@ namespace yq {
     }
 
     template <typename T>
-    Tensor42<T>& set_z_row(Tensor42<T>&ten, const Vector4<T>& v)
+    Tensor42<T>& set_z_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
     {
         ten.zx = v.x;
         ten.zy = v.y;
@@ -185,7 +185,7 @@ namespace yq {
     }
 
     template <typename T>
-    Tensor42<T>& set_w_row(Tensor42<T>&ten, const Vector4<T>& v)
+    Tensor42<T>& set_w_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
     {
         ten.wx = v.x;
         ten.wy = v.y;
@@ -196,7 +196,7 @@ namespace yq {
 //  POSITIVE
 
     template <typename T>
-    constexpr Tensor42<T>  operator+(const Tensor42<T>& a) 
+    constexpr Tensor42<T>  operator+(const Tensor42<T>& a)  noexcept
     { 
         return a; 
     }
@@ -206,7 +206,7 @@ namespace yq {
 //  NEGATIVE
 
     template <typename T>
-    constexpr Tensor42<T>  operator-(const Tensor42<T>& a) 
+    constexpr Tensor42<T>  operator-(const Tensor42<T>& a)  noexcept
     {
         return {
             -a.xx, -a.xy,
@@ -221,7 +221,7 @@ namespace yq {
 //  ADDITION
 
     template <typename T>
-    constexpr Tensor42<T>   operator+ (const Tensor42<T> &a, const Tensor42<T> &b) 
+    constexpr Tensor42<T>   operator+ (const Tensor42<T> &a, const Tensor42<T> &b)  noexcept
     {
         return {
             a.xx+b.xx, a.xy+b.xy,
@@ -232,7 +232,7 @@ namespace yq {
     }
 
     template <typename T>
-    Tensor42<T>&   operator+=(Tensor42<T> &a, const Tensor42<T> &b) 
+    Tensor42<T>&   operator+=(Tensor42<T> &a, const Tensor42<T> &b)  noexcept
     {
         a.xx+=b.xx;  a.xy+=b.xy;
         a.yx+=b.yx;  a.yy+=b.yy;
@@ -246,7 +246,7 @@ namespace yq {
 //  SUBTRACTION
 
     template <typename T>
-    constexpr Tensor42<T>   operator- (const Tensor42<T> &a, const Tensor42<T> &b) 
+    constexpr Tensor42<T>   operator- (const Tensor42<T> &a, const Tensor42<T> &b)  noexcept
     {
         return {
             a.xx-b.xx, a.xy-b.xy,
@@ -258,7 +258,7 @@ namespace yq {
     
 
     template <typename T>
-    Tensor42<T>&   operator-=(Tensor42<T> &a, const Tensor42<T> &b) 
+    Tensor42<T>&   operator-=(Tensor42<T> &a, const Tensor42<T> &b)  noexcept
     {
         a.xx-=b.xx;  a.xy-=b.xy;
         a.yx-=b.yx;  a.yy-=b.yy;
@@ -272,7 +272,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    constexpr Tensor42<product_t<T,U>>  operator*(T a, const Tensor42<T>& b)
+    constexpr Tensor42<product_t<T,U>>  operator*(T a, const Tensor42<T>& b) noexcept
     {
         return {
             a*b.xx, a*b.xy,
@@ -285,7 +285,7 @@ namespace yq {
     
     template <typename T, typename U>
     requires std::is_arithmetic_v<U>
-    constexpr Tensor42<product_t<T,U>>  operator*(const Tensor42<T>& a, U b)
+    constexpr Tensor42<product_t<T,U>>  operator*(const Tensor42<T>& a, U b) noexcept
     {
         return {
             a.xx*b, a.xy*b,
@@ -297,7 +297,7 @@ namespace yq {
     
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor42<product_t<T,U>>  operator*=(const Tensor42<T>& a, U b)
+    Tensor42<product_t<T,U>>  operator*=(const Tensor42<T>& a, U b) noexcept
     {
         a.xx*=b; a.xy*=b;
         a.yx*=b; a.yy*=b;
@@ -308,7 +308,7 @@ namespace yq {
 
         
     template <typename T, typename U>
-    constexpr Vector4<product_t<T,U>> operator*(const Tensor42<T>&a, const Vector2<U>&b)
+    constexpr Vector4<product_t<T,U>> operator*(const Tensor42<T>&a, const Vector2<U>&b) noexcept
     {
         return {
             a.xx*b.x + a.xy*b.y,
@@ -319,7 +319,7 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    constexpr Vector2<product_t<T,U>> operator*(const Vector4<T>&a, const Tensor42<U>&b)
+    constexpr Vector2<product_t<T,U>> operator*(const Vector4<T>&a, const Tensor42<U>&b) noexcept
     {
         return {
             a.x*b.xx + a.y*b.yx + a.z*b.zx + a.w*b.wx,
@@ -333,7 +333,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<U>
-    constexpr Tensor42<quotient_t<T,U>>  operator/(const Tensor42<T>& a, U b)
+    constexpr Tensor42<quotient_t<T,U>>  operator/(const Tensor42<T>& a, U b) noexcept
     {
         return {
             a.xx/b, a.xy/b,
@@ -345,7 +345,7 @@ namespace yq {
     
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor42<quotient_t<T,U>>  operator/=(const Tensor42<T>& a, U b)
+    Tensor42<quotient_t<T,U>>  operator/=(const Tensor42<T>& a, U b) noexcept
     {
         a.xx/=b; a.xy/=b;
         a.yx/=b; a.yy/=b;
@@ -358,7 +358,7 @@ namespace yq {
 //  OTIMES PRODUCT
 
     template <typename T, typename U>
-    constexpr Tensor42<product_t<T,U>> operator OTIMES(const Vector4<T>&a, const Vector2<U>&b)
+    constexpr Tensor42<product_t<T,U>> operator OTIMES(const Vector4<T>&a, const Vector2<U>&b) noexcept
     {
         return {
             a.x+b.x, a.x+b.y,

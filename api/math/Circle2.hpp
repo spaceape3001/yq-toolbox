@@ -30,6 +30,11 @@ namespace yq {
     YQ_NAN_1(Circle2, { nan_v<Vector2<T>>, nan_v<T> })
     YQ_ZERO_1(Circle2, { zero_v<Vector2<T>>, zero_v<T> })
 
+    template <typename T>
+    Circle2<T>  circle(const Vector2<T>& point, T radius)
+    {
+        return {point, radius};
+    }
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
