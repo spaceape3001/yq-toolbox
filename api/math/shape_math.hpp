@@ -57,117 +57,11 @@ namespace yq {
 
 
 
-        //  AREA HELPERS
-
-    /*! \brief "Point area" of the points
-    
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
-    template <typename T>
-    square_t<T>    point_area(const std::vector<Vector2<T>>& vertex)
-    {
-        if(vertex.empty())
-            return square_t<T>{};
-        
-        auto cross = [&](size_t a, size_t b){
-            auto& va = vertex[a];
-            auto& vb = vertex[b];
-            return (vb.x-va.x)*(vb.y-va.y);
-        };
-        
-        size_t  n   = vertex.size();
-        square_t<T> ret = delta_area(vertex[n-1],vertex[0]);
-        --n;
-        for(size_t i=0;i<n;++n)
-            ret += delta_area(vertex[i], vertex[i+1]);
-        return ret;
-    }
-
 
 
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    template <typename T>
-    AxBox2<T>   aabb(const Polygon2<T>&poly)
-    {
-        if(poly.vertex.empty())
-            return nan_v<AxBox2<T>>;
-        AxBox2<T>   ret;
-        ret.lo = ret.hi = poly.vertex.front();
-        size_t n = poly.vertex.size();
-        for(size_t i=1;i<n;++i){
-            ret.lo = min_elem(ret.lo, poly.vertex[i]);
-            ret.hi = max_elem(ret.hi, poly.vertex[i]);
-        }
-        return ret;
-    }
-
-    template <typename T>
-    AxBox3<T>   aabb(const Polygon3<T>&poly)
-    {
-        if(poly.vertex.empty())
-            return nan_v<AxBox2<T>>;
-        AxBox3<T>   ret;
-        ret.lo = ret.hi = poly.vertex.front();
-        size_t n = poly.vertex.size();
-        for(size_t i=1;i<n;++i){
-            ret.lo = min_elem(ret.lo, poly.vertex[i]);
-            ret.hi = max_elem(ret.hi, poly.vertex[i]);
-        }
-        return ret;
-    }
-
-    template <typename T>
-    AxBox4<T>   aabb(const Polygon4<T>&poly)
-    {
-        if(poly.vertex.empty())
-            return nan_v<AxBox2<T>>;
-        AxBox4<T>   ret;
-        ret.lo = ret.hi = poly.vertex.front();
-        size_t n = poly.vertex.size();
-        for(size_t i=1;i<n;++i){
-            ret.lo = min_elem(ret.lo, poly.vertex[i]);
-            ret.hi = max_elem(ret.hi, poly.vertex[i]);
-        }
-        return ret;
-    }
-
-    
-
-    template <typename T>
-    Normal2<T>     normal(const Vector2<T>& dir) 
-    {
-        return { ~dir };
-    }
-
-    template <typename T>
-    Normal3<T>     normal(const Vector3<T>& dir) 
-    {
-        return { ~dir };
-    }
-    
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Normal2<T>     normal(T x, std::type_identity_t<T> y)
-    {
-        return { ~Vector2<T>{x,y} };
-    }
-
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Normal3<T>     normal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z)
-    {
-        return { ~Vector3<T>{x,y,z} };
-    }
-
-    template <typename T>
-    Polygon2<T> polygon(const AxBox2<T>& ax)
-    {
-        return { { southwest(ax), southeast(ax), northeast(ax), northwest(ax) } };
-    }
 
     template <typename T>
     Polygon2<T> polygon(const Quadrilateral2<T>& quad)
@@ -218,7 +112,6 @@ namespace yq {
         return { { tri.a, tri.b, tri.c } };
     }
 
-
     template <typename T>
     TriangleData<RGB<T>>     rgb(const TriangleData<RGBA<T>>& t)
     {
@@ -231,22 +124,8 @@ namespace yq {
         return { rgba(t.a, a), rgba(t.b, a), rgba(t.c, a)};
     }
     
-
-
-    template <typename T>
-    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c, const Vector3<T>& d)
-    {
-        return { a, b, c, d };
-    }
-
-    
-
-
-    
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
-
-
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -746,76 +625,11 @@ namespace yq {
 //  --------------------------------------------------------
 //  UNIONS
 
-
 //  --------------------------------------------------------
 //  INTERSECTIONS
 
-
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
-
-    
-    /*! \brief Computes the area of a 2D polygon
-    */
-    template <typename T>
-    square_t<T>    area(const Polygon2<T>& poly)
-    {
-        return 0.5*abs(point_area(poly.vertex));
-    }
-
-
-    template <typename T>
-    bool    is_ccw(const Polygon2<T>& poly)
-    {
-        return point_area(poly.vertex) < zero_v<T>;
-    }
-
-
-    template <typename T>
-    bool    is_clockwise(const Polygon2<T>& poly)
-    {
-        return point_area(poly.vertex) > zero_v<T>;
-    }
-    
-
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Polygon2<T>& poly)
-    {
-        if(poly.vertex.empty())
-            return T{};
-        T   ret = length(poly.vertex.back()-poly.vertex.front());
-        size_t n = poly.vertex.size() - 1;
-        for(size_t i=0;i<n;++i)
-            ret += length(poly.vertex[i+1]-poly.vertex[i]);
-        return ret;
-    }
-    
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Polygon3<T>& poly)
-    {
-        if(poly.vertex.empty())
-            return T{};
-        T   ret = length(poly.vertex.back()-poly.vertex.front());
-        size_t n = poly.vertex.size() - 1;
-        for(size_t i=0;i<n;++i)
-            ret += length(poly.vertex[i+1]-poly.vertex[i]);
-        return ret;
-    }
-    
-    template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Polygon4<T>& poly)
-    {
-        if(poly.vertex.empty())
-            return T{};
-        T   ret = length(poly.vertex.back()-poly.vertex.front());
-        size_t n = poly.vertex.size() - 1;
-        for(size_t i=0;i<n;++i)
-            ret += length(poly.vertex[i+1]-poly.vertex[i]);
-        return ret;
-    }
 
 }
 
