@@ -448,6 +448,12 @@ namespace yq {
         return a;
     }
 
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector2<T>   operator* (const Vector2<T>&a, const Vector2<T>&b) 
+    {
+        return { a.x*b.x+a.y*b.y, 0., 0., a.x*b.y-a.y*b.x };
+    }
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -471,6 +477,13 @@ namespace yq {
         a.x  /= b; a.y /= b; 
         a.xy /= b;
         return a;
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector2<T>   operator/ (const Vector2<T>&a, const Vector2<T>&b) 
+    {
+        return (a * b) / length2(b);
     }
 
 //  --------------------------------------------------------

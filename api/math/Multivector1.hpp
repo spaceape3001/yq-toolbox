@@ -273,6 +273,45 @@ namespace yq {
         return a;
     }
 
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector1<T> operator*(const Vector1<T>& a, const Multivector1<T>& b) noexcept
+    {
+        return Multivector1<T>( a.x * b.x, a.x * b.a);
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector1<T> operator*(const Multivector1<T>& a, const Vector1<T>& b) noexcept
+    {
+        return Multivector1<T>( a.x*b.x, a.a*b.x );
+    }
+
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Multivector1<T>& operator*=(Multivector1<T>& a, const Vector1<T>& b) noexcept
+    {
+        a.x *= b.x;
+        a.a *= b.x;
+        return a;
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Multivector1<T> operator*(const Multivector1<T>& a, const Multivector1<T>& b) noexcept
+    {
+        return Multivector1<T>( a.a*b.a+a.x*b.x, a.a*b.x+a.x*b.a );
+    }
+    
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Multivector1<T> operator*=(Multivector1<T>& a, const Multivector1<T>& b) noexcept
+    {
+        a   = a*b;
+        return a;
+    }
+
 //  --------------------------------------------------------
 //  DIVISION
 
@@ -302,6 +341,26 @@ namespace yq {
 //  --------------------------------------------------------
 //  INNER PRODUCT
 
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr double   operator INNER(const Multivector1<T>& a, const Multivector1<T>&b)  noexcept
+    {
+        return a.x * b.x;
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr double   operator INNER(const Multivector1<T>& a, const Vector1<T>&b)  noexcept
+    {
+        return a.x * b.x;
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr double   operator INNER(const Vector1<T>& a, const Multivector1<T>&b)  noexcept
+    {
+        return a.x * b.x;
+    }
 
 //  --------------------------------------------------------
 //  OUTER PRODUCT
