@@ -221,6 +221,13 @@ namespace yq {
 //  --------------------------------------------------------
 //  OUTER PRODUCT
 
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Bivector4<T> operator OUTER (const Vector4<T>&a, const Vector4<T>& b) noexcept
+    {
+        return { a.x*b.y-a.y*b.x, a.y*b.z-a.z*b.y, a.z*b.w-a.w*b.z, a.w*b.x-a.x*b.w, a.x*b.z-a.z*b.x, a.y*b.w-a.w*b.y };
+    }
+
 
 //  --------------------------------------------------------
 //  CROSS PRODUCT

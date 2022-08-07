@@ -14,7 +14,7 @@ namespace yq {
     /*! \brief Axially aligned box in 2 dimension(s).
     
         Note, lo vs hi isn't enforced, however it's expected that lo < hi, which 
-        is what "is_valid" of "shape_math.hpp" will check.
+        is what "is_valid" will check.
     */
     template <typename T>
     struct AxBox2 {
