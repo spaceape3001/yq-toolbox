@@ -24,8 +24,8 @@ namespace yq {
         constexpr bool    operator==(const Range&) const noexcept = default;
         
         //  see if the for() syntax will work?
-        constexpr T       begin() const { return lo; }
-        constexpr T       end() const { return hi; }
+        constexpr T       begin() const noexcept { return lo; }
+        constexpr T       end() const noexcept { return hi; }
     };
 
     YQ_IEEE754_1(Range)
@@ -38,19 +38,19 @@ namespace yq {
         This routine enforces lo <= hi by using the min/max functions
     */
     template <typename T>
-    constexpr Range<T> range(T a, T b)
+    constexpr Range<T> range(T a, T b) noexcept
     {
         return { min(a,b), max(a,b) };
     }
     
     template <typename T>
-    constexpr Range<T> range(std::initializer_list<T> them)
+    constexpr Range<T> range(std::initializer_list<T> them) noexcept
     {
         return { min(them), max(them) };
     }
     
     template <typename T>
-    constexpr Range<T> range(const Range<T>& a)
+    constexpr Range<T> range(const Range<T>& a) noexcept
     {
         return range(a.lo, a.hi);
     }
@@ -69,7 +69,7 @@ namespace yq {
 //  BASIC FUNCTIONS
 
     template <typename T>
-    bool    is_valid(const Range<T>& a)
+    constexpr bool    is_valid(const Range<T>& a) noexcept
     {
         return a.lo <= a.hi;
     }
@@ -140,13 +140,13 @@ namespace yq {
 //  SUBTRACTION
 
     template <typename T>
-    constexpr Range<T>  operator-(T a, const Range<T>& b)
+    constexpr Range<T>  operator-(T a, const Range<T>& b) noexcept
     {
         return range( a - b.hi, a - b.lo );
     }
 
     template <typename T>
-    constexpr Range<T>  operator-(const Range<T>&a, T b)
+    constexpr Range<T>  operator-(const Range<T>&a, T b) noexcept
     {
         return range( a.lo-b, a.hi-b );
     }
@@ -177,35 +177,35 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    Range<product_t<T,U>>    operator*(T a, const Range<U>& b)
+    constexpr Range<product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept
     {
         return range(a*b.lo, a*b.hi);
     }
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<U>
-    Range<product_t<T,U>>    operator*(const Range<T>& a, U b)
+    constexpr Range<product_t<T,U>>    operator*(const Range<T>& a, U b) noexcept
     {
         return range(a.lo*b, b.hi*b);
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Range<T>&    operator*=(const Range<T>& a, U b)
+    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>) 
+    Range<T>&    operator*=(const Range<T>& a, U b) noexcept
     {
         a   = a * b;
         return a;
     }
 
     template <typename T, typename U>
-    Range<product_t<T,U>>   operator*(const Range<T>&a, const Range<U>&b)
+    constexpr Range<product_t<T,U>>   operator*(const Range<T>&a, const Range<U>&b) noexcept
     {
         return range({a.lo*b.lo, a.lo*b.hi, a.hi*b.lo, a.hi*b.hi });
     }
 
     template <typename T, typename U>
     requires trait::self_mul_v<T,U>
-    Range<T>&    operator*=(const Range<T>& a, const Range<U>& b)
+    Range<T>&    operator*=(const Range<T>& a, const Range<U>& b) noexcept
     {
         a   = a * b;
         return a;
@@ -217,35 +217,35 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    Range<product_t<T,U>>    operator/(T a, const Range<U>& b)
+    constexpr Range<product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept
     {
         return range(a/b.lo, a/b.hi);
     }
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<U>
-    Range<product_t<T,U>>    operator/(const Range<T>& a, U b)
+    constexpr Range<product_t<T,U>>    operator/(const Range<T>& a, U b) noexcept
     {
         return range(a.lo/b, b.hi/b);
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Range<T>&    operator/=(const Range<T>& a, U b)
+    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>) 
+    Range<T>&    operator/=(const Range<T>& a, U b) noexcept
     {
         a   = a / b;
         return a;
     }
 
     template <typename T, typename U>
-    Range<product_t<T,U>>   operator/(const Range<T>&a, const Range<U>&b)
+    constexpr Range<product_t<T,U>>   operator/(const Range<T>&a, const Range<U>&b) noexcept
     {
         return range({a.lo/b.lo, a.lo/b.hi, a.hi/b.lo, a.hi/b.hi });
     }
 
     template <typename T, typename U>
     requires trait::self_mul_v<T,U>
-    Range<T>&    operator/=(const Range<T>& a, const Range<U>& b)
+    Range<T>&    operator/=(const Range<T>& a, const Range<U>& b) noexcept
     {
         a   = a / b;
         return a;
@@ -277,19 +277,19 @@ namespace yq {
 //  UNIONS
 
     template <typename T>
-    Range<T>    operator|(T a, const Range<T>& b)
+    constexpr Range<T>    operator|(T a, const Range<T>& b) noexcept
     {
         return range({ a, b.lo, b.hi });
     }
 
     template <typename T>
-    Range<T>    operator|(const Range<T>& a, std::type_identity_t<T>  b)
+    constexpr Range<T>    operator|(const Range<T>& a, std::type_identity_t<T>  b) noexcept
     {
         return range({ a.lo, a.hi, b });
     }
 
     template <typename T>
-    Range<T>    operator|=(Range<T>& a, std::type_identity_t<T>  b)
+    Range<T>    operator|=(Range<T>& a, std::type_identity_t<T>  b) noexcept
     {
         a = range({ a.lo, a.hi, b });
         return a;
@@ -305,14 +305,14 @@ namespace yq {
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    T   local_to_global(const Range<T>& r, T v)
+    constexpr T   local_to_global(const Range<T>& r, T v) noexcept
     {
         return (one_v<T>-v)*r.lo + v*r.hi;
     }
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    T   global_to_local(const Range<T>& r, T v)
+    constexpr T   global_to_local(const Range<T>& r, T v) noexcept
     {
         return (v-r.lo)/(r.hi-r.lo);
     }
@@ -323,19 +323,19 @@ namespace yq {
 
     template <typename T>
     requires std::is_floating_point_v<T>
-    Range<T>    center(const Range<T>& a)
+    constexpr Range<T>    center(const Range<T>& a) noexcept
     {
         return half_v<T>*(a.lo+a.hi);
     }
     
     template <typename T>
-    bool        is_inside(const Range<T>& a, T b)
+    constexpr bool        is_inside(const Range<T>& a, T b) noexcept
     {
         return (a.lo <= b) && (b <= a.hi);
     }
     
     template <typename T>
-    T           span(const Range<T>& a)
+    constexpr T           span(const Range<T>& a) noexcept
     {
         return a.hi - a.lo;
     }

@@ -6,6 +6,7 @@
 #pragma once
 
 #include <math/preamble.hpp>
+#include <math/Range.hpp>
 #include <math/Vector1.hpp>
 #include <math/AxCorners1.hpp>
 
@@ -46,6 +47,12 @@ namespace yq {
             v.lo,
             v.hi
         };
+    }
+
+    template <typename T>
+    constexpr Range<T>  x_range(const AxBox1<T>& v) noexcept
+    {
+        return range(v.lo.x, v.hi.x);
     }
 
 //  --------------------------------------------------------
