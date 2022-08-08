@@ -117,6 +117,7 @@ namespace yq {
         return all_less_equal(a.lo, a.hi);
     }
 
+
 //  --------------------------------------------------------
 //  POSITIVE
 
@@ -238,6 +239,12 @@ namespace yq {
     constexpr bool is_overlapped(const AxBox3<T>& a, const AxBox3<T>& b) noexcept
     {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    span(const AxBox3<T>&a) noexcept
+    {
+        return a.hi - a.lo;
     }
 
     /*! \brief Computes the surface area of a 3D axially aligned bounding box

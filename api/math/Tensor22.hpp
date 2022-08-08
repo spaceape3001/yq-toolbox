@@ -410,6 +410,9 @@ namespace yq {
         return a.xx*a.yy-a.xy*a.yx;
     }
 
+    //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
+    //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
+
     template <typename T>
     Tensor22<inverse_t<T>> inverse(const Tensor22<T>&a)
     {

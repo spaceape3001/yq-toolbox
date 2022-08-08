@@ -536,6 +536,11 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+
+    //  TODO: 4x4 determinant 
+    //  TODO: 4x4 inverse 
+    //  TODO: 4x4 eigenvalues, eigenvectors, & eigensystem
+
     /*! \brief Trace of the 4 x 4 tensor
     
         \param[in] a    Tensor to take the trace of

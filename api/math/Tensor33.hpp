@@ -540,7 +540,7 @@ namespace yq {
         return a.xx*(a.yy*a.zz-a.yz*a.zy)+a.xy*(a.zx*a.xz-a.yx*a.zz)+a.xz*(a.yx*a.zy-a.zx*a.yy);
     }
  
-    //  4x4 determinant is TODO....
+    //  TODO: 3x3 eigenvalues, eigenvectors, & eigensystem
     
     
     template <typename T>

@@ -39,6 +39,8 @@
 #include <math/Ray3.hpp>
 #include <math/Ray4.hpp>
 
+#include <math/Range.hpp>
+
 #include <math/Rectangle2.hpp>
 
 #include <math/Segment1.hpp>

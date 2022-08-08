@@ -226,6 +226,11 @@ namespace yq {
         return 2. * component_sum(ax.hi-ax.lo);
     }
 
+    template <typename T>
+    constexpr Vector2<T>    span(const AxBox2<T>&a) noexcept
+    {
+        return a.hi - a.lo;
+    }
 }
 
 YQ_TYPE_DECLARE(yq::AxBox2D)

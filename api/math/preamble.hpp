@@ -14,6 +14,7 @@
 
 #include <math/trait/has_abs.hpp>
 #include <math/trait/has_copysign.hpp>
+#include <math/trait/has_half.hpp>
 #include <math/trait/has_identity.hpp>
 #include <math/trait/has_is_finite.hpp>
 #include <math/trait/has_nan.hpp>
@@ -296,6 +297,7 @@ namespace yq {
     template <typename> struct Pose3;
     template <typename> struct Quadvector4;
     template <typename> struct Quaternion3;
+    template <typename> struct Range;
     template <typename> struct Ray2;
     template <typename> struct Ray3;
     template <typename> struct Ray4;
@@ -848,6 +850,11 @@ namespace yq {
     using Quadrilateral2F           = Quadrilateral2<float>;
     using Quadrilateral2I           = Quadrilateral2<int>;
     using Quadrilateral2U           = Quadrilateral2<unsigned>;
+    
+    using RangeD                    = Range<double>;
+    using RangeF                    = Range<float>;
+    using RangeI                    = Range<int>;
+    using RangeU                    = Range<unsigned>;
     
     using Ray2D                     = Ray2<double>;
     using Ray2F                     = Ray2<float>;

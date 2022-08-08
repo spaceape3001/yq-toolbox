@@ -60,7 +60,6 @@ namespace yq {
         return all_less_equal(a.lo, a.hi);
     }
 
-
 //  --------------------------------------------------------
 //  POSITIVE
 
@@ -181,6 +180,12 @@ namespace yq {
     constexpr bool is_overlapped(const AxBox1<T>& a, const AxBox1<T>& b) noexcept
     {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
+    }
+
+    template <typename T>
+    constexpr Vector1<T>    span(const AxBox1<T>&a) noexcept
+    {
+        return a.hi - a.lo;
     }
 }
 

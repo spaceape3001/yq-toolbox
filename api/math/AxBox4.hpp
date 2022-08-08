@@ -208,6 +208,12 @@ namespace yq {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }
 
+    template <typename T>
+    constexpr Vector4<T>    span(const AxBox4<T>&a) noexcept
+    {
+        return a.hi - a.lo;
+    }
+
 }
 
 YQ_TYPE_DECLARE(yq::AxBox4D)
