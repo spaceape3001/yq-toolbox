@@ -152,6 +152,7 @@ namespace yq {
     }
     
     YQ_NAN_1(Vector3, Vector3<T>{nan_v<T>, nan_v<T>, nan_v<T>})
+    YQ_ONE_1(Vector3, Vector3<T>{one_v<T>, one_v<T>, one_v<T>})
     YQ_ZERO_1(Vector3, Vector3<T>{zero_v<T>, zero_v<T>, zero_v<T>})
     
 //  --------------------------------------------------------

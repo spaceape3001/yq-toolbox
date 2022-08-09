@@ -213,6 +213,20 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Vector3<T>   local_to_global(const AxBox3<T>& bx, const Vector3<T>& v) noexcept
+    {
+        return mul_elem(one_v<Vector3<T>>-v, bx.lo) + mul_elem(v, bx.hi);
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    constexpr Vector3<T>   global_to_local(const AxBox3<T>& bx, const Vector3<T>& v) noexcept
+    {
+        return div_elem(v-bx.lo, bx.hi-bx.lo);
+    }
+
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 

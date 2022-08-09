@@ -76,6 +76,7 @@ namespace yq {
     }
 
     YQ_NAN_1(Vector1, Vector1<T>{nan_v<T>})
+    YQ_ONE_1(Vector1, Vector1<T>{one_v<T>})
     YQ_ZERO_1(Vector1, Vector1<T>{zero_v<T>})
     
 //  --------------------------------------------------------
