@@ -10,8 +10,6 @@ find_package(TBB REQUIRED)
 find_package(glm REQUIRED)
 find_package(SQLite3 REQUIRED)
 
-include(${YOUR_QUILL_EXTERNAL}/rapidxml.cmake)
-include(${YOUR_QUILL_EXTERNAL}/pstreams.cmake)
 include(${YOUR_QUILL_EXTERNAL}/json.cmake)
 
 message("INCLUDE ${SQLite3_INCLUDE_DIRS}")
