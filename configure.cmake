@@ -1,16 +1,4 @@
 if(NOT YOUR_QUILL_TOOLBOX)
-    if(NOT YOUR_QUILL_EXTERNAL)
-        if(exists ${CMAKE_CURRENT_LIST_DIR}/../external})
-            include(../external/configure.cmake)
-        elseif(exists ${CMAKE_CURRENT_LIST_DIR}/../yq-external})
-            include(../yq-external/configure.cmake)
-        elseif(exists "$ENV{YOUR_QUILL_EXTERNAL}")
-            include("$ENV{YOUR_QUILL_EXTERNAL}/configure.cmake")
-        else()
-            message(FATAL_ERROR "Unable to locate yq-external, install and set YOUR_QUILL_EXTERNAL environment variable")
-        endif()
-    endif()
-
     set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake ${CMAKE_MODULE_PATH})
 
     include(GroupFiles)
