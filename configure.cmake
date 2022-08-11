@@ -46,6 +46,7 @@ if(NOT YOUR_QUILL_TOOLBOX)
     #   WARNING DEFINITIONS
     add_definitions(
         -Wfatal-errors 
+        -Wno-error=suggest-override
         -Wno-error=unused-function 
         -Wno-error=unused-variable 
         -Wall 
