@@ -170,16 +170,16 @@ namespace yq {
     }
 
     template <typename T, typename C, typename A>
-    struct Changes {
+    struct SetChanges {
         std::set<T,C,A>     added;
         std::set<T,C,A>     same;
         std::set<T,C,A>     removed;
     };
 
     template <typename T, typename C, typename A>
-    Changes<T,C,A>    changes(const std::set<T,C,A>& from, const std::set<T,C,A>& to, C c=C())
+    SetChanges<T,C,A>    changes(const std::set<T,C,A>& from, const std::set<T,C,A>& to, C c=C())
     {
-        Changes<T,C,A>    ret;
+        SetChanges<T,C,A>    ret;
         set_changes(from.begin(), from.end(), to.begin(), to.end(), 
             std::inserter(ret.removed, ret.removed.end()), 
             std::inserter(ret.same, ret.same.end()), 
@@ -189,9 +189,9 @@ namespace yq {
     }
 
     template <typename T, typename C, typename A>
-    Changes<T,C,A>    add_remove(const std::set<T,C,A>& from, const std::set<T,C,A>& to, C c=C())
+    SetChanges<T,C,A>    add_remove(const std::set<T,C,A>& from, const std::set<T,C,A>& to, C c=C())
     {
-        Changes<T,C,A>    ret;
+        SetChanges<T,C,A>    ret;
         set_left_right(from.begin(), from.end(), to.begin(), to.end(), 
             std::inserter(ret.removed, ret.removed.end()), 
             std::inserter(ret.added, ret.added.end()), c);
