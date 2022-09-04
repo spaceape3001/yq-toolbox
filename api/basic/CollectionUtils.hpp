@@ -34,6 +34,18 @@ namespace yq {
     //  SET RELATED
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    /*! \brief Finds items that are exclusive to one set or the other
+    
+        \tparam InputIt1        Iterator type for container 1
+        \tparam InputIt2        Iterator type for container 2, should be comparable to Iterator type 1
+        \tparam OutputIt        Output iterator type, should be assignaable from either input iterator type
+        
+        \param[in] first1       First iterator of container 1
+        \param[in] last1        Last iterator of container 1
+        \param[in] first2       First iterator of container 2
+        \param[in] last2        Last iterator of container 2
+        \param[out] d_first     Insert iterator into output
+    */
     template<class InputIt1, class InputIt2, class OutputIt>
     void    set_exclusive(InputIt1 first1, InputIt1 last1,
                               InputIt2 first2, InputIt2 last2,
@@ -53,6 +65,26 @@ namespace yq {
         }
     }
     
+    /*! \brief Compare two containers
+    
+        This compares two containers and, for each item, will report whether it's in container 1, container 2, or both,
+        and will be put into the relevant output iterator.
+    
+        \tparam InputIt1        Iterator type for container 1
+        \tparam InputIt2        Iterator type for container 2, should be comparable to Iterator type 1
+        \tparam OutputIt        Output iterator type, should be assignaable from either input iterator type
+        \tparam Compare         Comparator type
+        
+        \param[in] first1       First iterator of container 1
+        \param[in] last1        Last iterator of container 1
+        \param[in] first2       First iterator of container 2
+        \param[in] last2        Last iterator of container 2
+        \param[in] comp         Comparator
+        
+        \param[out] d_left      Output iterator for things only in container 1
+        \param[out] d_middle    Output iterator for things in both containers
+        \param[out] d_right     Output iterator for things only in container 2
+    */
     template<class InputIt1, class InputIt2, class OutputIt, class Compare>
     void    set_changes(InputIt1 first1, InputIt1 last1,
                               InputIt2 first2, InputIt2 last2,
@@ -73,6 +105,24 @@ namespace yq {
         }
     }
                               
+    /*! \brief Compare two containers
+    
+        This compares two containers, reporting on items that are only in container one or container two.
+    
+        \tparam InputIt1        Iterator type for container 1
+        \tparam InputIt2        Iterator type for container 2, should be comparable to Iterator type 1
+        \tparam OutputIt        Output iterator type, should be assignaable from either input iterator type
+        \tparam Compare         Comparator type
+        
+        \param[in] first1       First iterator of container 1
+        \param[in] last1        Last iterator of container 1
+        \param[in] first2       First iterator of container 2
+        \param[in] last2        Last iterator of container 2
+        \param[in] comp         Comparator
+        
+        \param[out] d_left      Output iterator for things only in container 1
+        \param[out] d_right     Output iterator for things only in container 2
+    */
     template<class InputIt1, class InputIt2, class OutputIt, class Compare>
     void    set_left_right(InputIt1 first1, InputIt1 last1,
                               InputIt2 first2, InputIt2 last2,
@@ -93,6 +143,8 @@ namespace yq {
         }
     }
 
+    /*! \brief Merges two sets
+    */
     template <typename T, typename C, typename A>
     std::set<T, C, A>    operator+(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
@@ -101,6 +153,10 @@ namespace yq {
         return ret;
     }
     
+    /*! \brief Augment set
+    
+        This augments the set on the left with the contents of the right
+    */
     template <typename T, typename C, typename C2, typename A, typename A2>
     std::set<T, C, A>&    operator+=(std::set<T, C, A>& a, const std::set<T, C2, A2>& b)
     {
@@ -108,6 +164,11 @@ namespace yq {
         return a;
     }
 
+    /*! \brief Augment set, string view into string set
+    
+        This augments the set on the left with the contents of the right, allowing for string view set
+        to augment a string set.
+    */
     template <typename C, typename C2, typename A, typename A2>
     std::set<std::string, C, A>&    operator+=(std::set<std::string, C, A>& a, const std::set<std::string_view, C2, A2>& b)
     {
@@ -116,13 +177,21 @@ namespace yq {
     }
 
 
+    /*! \brief Augment set
+    
+        This augments the set on the left with the contents of the vector
+    */
     template <typename T, typename C, typename A, typename A2>
     std::set<T, C, A>&    operator+=(std::set<T, C, A>& a, const std::vector<T, A2>& b)
     {
         a.insert(b.begin(), b.end());
         return a;
     }
-
+    
+    /*! \brief "Difference" of the set
+    
+        In this case, the difference is items in A that aren't in B.
+    */
     template <typename T, typename C, typename A>
     std::set<T, C, A>    operator-(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
@@ -131,6 +200,10 @@ namespace yq {
         return ret;
     }
 
+    /*! \brief Merges two sets
+    
+        This returns the union of these two sets.
+    */
     template <typename T, typename C, typename A>
     std::set<T, C, A>    operator|(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
@@ -139,6 +212,10 @@ namespace yq {
         return ret;
     }
 
+    /*! \brief Intersection two sets
+    
+        This returns the intersection, ie, items in BOTH sets.
+    */
     template <typename T, typename C, typename A>
     std::set<T, C, A>    operator&(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
@@ -147,6 +224,10 @@ namespace yq {
         return ret;
     }
 
+    /*! \brief Exclusive XOR of the sets
+    
+        This returns the set of items that's in one or the other, but not BOTH sets
+    */
     template <typename T, typename C, typename A>
     std::set<T, C, A>    operator^(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
@@ -155,6 +236,10 @@ namespace yq {
         return ret;
     }
 
+    /*! \brief Insert into set
+    
+        Simple streaming operator to insert (copy) an item into a set.
+    */
     template <typename T, typename C, typename A>
     std::set<T,C,A>&    operator<<(std::set<T, C, A>& a, const T& b)
     {
@@ -162,6 +247,10 @@ namespace yq {
         return a;
     }
 
+    /*! \brief Insert into set
+    
+        Simple streaming operator to insert (move) an item into a set.
+    */
     template <typename T, typename C, typename A>
     std::set<T,C,A>&    operator<<(std::set<T, C, A>& a, T&& b)
     {
@@ -169,13 +258,22 @@ namespace yq {
         return a;
     }
 
+    /*! \brief Changes in two sets
+    
+        Simple structure to record the additions, the subtractions, and the same items.
+    */
     template <typename T, typename C, typename A>
     struct SetChanges {
-        std::set<T,C,A>     added;
-        std::set<T,C,A>     same;
-        std::set<T,C,A>     removed;
+        std::set<T,C,A>     added;      //!< Items that were added
+        std::set<T,C,A>     same;       //!< Items that are in both
+        std::set<T,C,A>     removed;    //!< Items that were removed
     };
 
+    /*! \brief Compute changes between sets
+    
+        Use this to determine what items were added, removed, and stayed the same between two
+        sets.
+    */
     template <typename T, typename C, typename A>
     SetChanges<T,C,A>    changes(const std::set<T,C,A>& from, const std::set<T,C,A>& to, C c=C())
     {
@@ -188,6 +286,10 @@ namespace yq {
         return ret;
     }
 
+    /*! \brief Compute changes between sets
+        
+        Use this to determine what items were added vs removed between two sets.
+    */
     template <typename T, typename C, typename A>
     SetChanges<T,C,A>    add_remove(const std::set<T,C,A>& from, const std::set<T,C,A>& to, C c=C())
     {
@@ -198,12 +300,14 @@ namespace yq {
         return ret;
     }
 
+    //! \brief Make a set from a vector
     template <typename T, typename A>
     std::set<T, std::less<T>, A>         make_set(const std::vector<T,A>& data)
     {
         return std::set<T, std::less<T>, A>(data.begin(), data.end(), std::less<T>(), data.get_allocator());
     }
     
+    //! \brief Make a set from a vector (with a custom comparison)
     template <typename T, typename C, typename A>
     std::set<T,C,A>      make_set(const std::vector<T, A>& data, const C& lesser)
     {
@@ -215,6 +319,8 @@ namespace yq {
     //  VECTOR RELATED
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    /*! \brief Add right vector into left
+    */
     template <typename T, typename A>
     std::vector<T, A>&    operator+=(std::vector<T, A>& a, const std::vector<T, A>& b)
     {
@@ -222,13 +328,17 @@ namespace yq {
         return a;
     }
     
-    template <typename A>
-    std::vector<std::string, A>&    operator+=(std::vector<std::string, A>& a, const std::vector<std::string_view, A>& b)
+    /*! \brief Add right string-view vector into left string vector
+    */
+    template <typename A, typename A2>
+    std::vector<std::string, A>&    operator+=(std::vector<std::string, A>& a, const std::vector<std::string_view, A2>& b)
     {
         a.insert(a.end(), b.begin(), b.end());
         return a;
     }
 
+    /*! \brief Append (copy) into vector
+    */
     template <typename T, typename A>
     std::vector<T,A>&    operator<<(std::vector<T, A>& a, const T& b)
     {
@@ -236,6 +346,8 @@ namespace yq {
         return a;
     }
 
+    /*! \brief Append (move) into vector
+    */
     template <typename T, typename A>
     std::vector<T,A>&    operator<<(std::vector<T, A>& a, T&& b)
     {
@@ -247,6 +359,7 @@ namespace yq {
     //  REVERSING!
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    //! \brief Class to switch the begin/end of a container
     template <typename T>
     struct ReverseIter {
         ReverseIter(const T& _c) : c(_c) {}
@@ -257,12 +370,17 @@ namespace yq {
         const T& c;
     };
 
+    /*! \brief Used to reverse-iterate a class
+    
+        This is useful in ranged for-loops.
+    */
     template <typename T>
     ReverseIter<T> reverse(const T& c) 
     { 
         return ReverseIter<T>(c); 
     }
 
+    /*! \brief Compares class with revere-iterator */
     template <typename T>
     bool  operator==(const T&a, const ReverseIter<T>& b)
     {
@@ -275,11 +393,5 @@ namespace yq {
                 return false;
         }
         return true;
-    }
-
-    template <typename T>
-    bool  operator!=(const T&a, const ReverseIter<T>& b)
-    {
-        return !(a==b);
     }
 }
