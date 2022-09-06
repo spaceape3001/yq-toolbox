@@ -107,15 +107,14 @@ namespace yq {
     }
     
     
-    template <typename T, uint8_t N>
-    constexpr bool  all_greater_equal(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
-    {
-        for(uint8_t n=0;n<N;++n)
-            if(get(lhs,n) < get(rhs,n))
-                return false;
-        return true;
-    }
-
+    /*! \brief Check if all elements are greater 
+    
+        This compares the elements and returns TRUE if ALL elements of LHS are greater to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if all elements are lhs > rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  all_greater(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
@@ -125,6 +124,32 @@ namespace yq {
         return true;
     }
 
+    /*! \brief Check if all elements are greater or equal
+    
+        This compares the elements and returns TRUE if ALL elements of LHS are greater or equal to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if all elements are lhs >= rhs
+    */
+    template <typename T, uint8_t N>
+    constexpr bool  all_greater_equal(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
+    {
+        for(uint8_t n=0;n<N;++n)
+            if(get(lhs,n) < get(rhs,n))
+                return false;
+        return true;
+    }
+
+    
+    /*! \brief Check if all elements are less
+    
+        This compares the elements and returns TRUE if ALL elements of LHS are less to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if all elements are lhs < rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  all_less(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
@@ -134,6 +159,15 @@ namespace yq {
         return true;
     }
 
+    
+    /*! \brief Check if all elements are lesser or equal
+    
+        This compares the elements and returns TRUE if ALL elements of LHS are lesser or equal to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if all elements are lhs <= rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  all_less_equal(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
@@ -143,6 +177,15 @@ namespace yq {
         return true;
     }
 
+    
+    /*! \brief Check if any elements are greater 
+    
+        This compares the elements and returns TRUE if ANY element of LHS are greater to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if any elements are lhs > rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  any_greater(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
@@ -152,6 +195,14 @@ namespace yq {
         return false;
     }
     
+    /*! \brief Check if any elements are greater or equal
+    
+        This compares the elements and returns TRUE if ANY element of LHS are greater or equal to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if any elements are lhs >= rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  any_greater_equal(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
@@ -161,6 +212,14 @@ namespace yq {
         return false;
     }
 
+    /*! \brief Check if any elements are lesser
+    
+        This compares the elements and returns TRUE if ANY element of LHS are less than RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if any elements are lhs < rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  any_less(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
@@ -170,6 +229,14 @@ namespace yq {
         return false;
     }
 
+    /*! \brief Check if any elements are lesser or equal
+    
+        This compares the elements and returns TRUE if ANY element of LHS are lessor or equal to RHS.
+        
+        \param[in] lhs  Left hand argument
+        \param[in] rhs  Right hand argument
+        return TRUE if any elements are lhs <= rhs
+    */
     template <typename T, uint8_t N>
     constexpr bool  any_less_equal(const Coord<T,N>& lhs, const Coord<T,N>& rhs)
     {
