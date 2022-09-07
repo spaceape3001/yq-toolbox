@@ -10,6 +10,10 @@
 
 namespace yq {
 
+    /*! \brief Six dimensional coordinate
+    
+        This is expanded in six diemnsions for the six-diemsnional coordinate.
+    */
     template <typename T>
     struct Coord<T,6> {
         using component_type    = T;
@@ -35,12 +39,14 @@ namespace yq {
     //  --------------------------------------------------------
     //  COMPOSITION
 
+    /*! \brief Composes a six dimensional coordinate from arguments */
     template <typename T>
     constexpr Coord6<T>    coord(T i, std::type_identity_t<T> j, std::type_identity_t<T> k, std::type_identity_t<T> l, std::type_identity_t<T> m, std::type_identity_t<T> n) noexcept
     {
         return { i, j, k, l, m, n };
     }
     
+    /*! \brief Construct a uniform 6-dimensional coordinate */
     template <typename T>
     constexpr Coord6<T>    coord6(T i)
     {
@@ -51,6 +57,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  BASIC FUNCTIONS
 
+    /*! \brief Max of two coordinates, done by element */
     template <typename T>
     constexpr Coord6<T> max(const Coord6<T>&a, const Coord6<T>& b)
     {
@@ -64,6 +71,7 @@ namespace yq {
         };
     }
 
+    /*! \brief Min of two coordinates, done by element */
     template <typename T>
     constexpr Coord6<T> min(const Coord6<T>&a, const Coord6<T>& b)
     {
@@ -77,12 +85,14 @@ namespace yq {
         };
     }
 
+    /*! \brief Product of the components */
     template <typename T>
     constexpr auto product(const Coord6<T>& a)
     {
         return a.i*a.j*a.k*a.l*a.m*a.n;
     }
 
+    /*! \brief Sum of the components */
     template <typename T>
     constexpr T sum(const Coord6<T>& a)
     {
@@ -96,6 +106,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  NEGATIVE
 
+    //! Negate the coordinate
     template <typename T>
     constexpr Coord6<T>    operator-(const Coord6<T>& a)
     {
@@ -110,12 +121,14 @@ namespace yq {
     //  --------------------------------------------------------
     //  ADDITION
     
+    //! Add two coordinates together
     template <typename T>
     constexpr Coord6<T> operator+(const Coord6<T>&a, const Coord6<T>&b)
     {
         return { a.i+b.i, a.j+b.j, a.k+b.k, a.l+b.l, a.m+b.m, a.n+b.n };
     }
     
+    //! Increment left coordinate with right
     template <typename T>
     Coord6<T>&  operator+=(Coord6<T>& a, const Coord6<T>& b)
     {
@@ -132,13 +145,14 @@ namespace yq {
     //  --------------------------------------------------------
     //  SUBTRACTION
 
-    
+    //! Subtract two coordinates
     template <typename T>
     constexpr Coord6<T> operator-(const Coord6<T>&a, const Coord6<T>&b)
     {
         return { a.i-b.i, a.j-b.j, a.k-b.k, a.l-b.l, a.m-b.m, a.n-b.n };
     }
     
+    //! Decrement the left coordinate with right
     template <typename T>
     Coord6<T>&  operator-=(Coord6<T>& a, const Coord6<T>& b)
     {
@@ -155,6 +169,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  MULTIPLICATION
 
+    //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
     constexpr Coord6<decltype(T()*U())> operator*(T a, const Coord6<U>&b)
@@ -162,6 +177,7 @@ namespace yq {
         return { a*b.i, a*b.j, a*b.k, a*b.l, a*b.m, a*b.n };
     }
     
+    //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Coord6<decltype(T()*U())> operator*(const Coord6<T>& a, U b)
@@ -169,6 +185,7 @@ namespace yq {
         return { a.i*b,  a.j*b, a.k*b, a.l*b, a.m*b, a.n*b };
     }
 
+    //! Self-scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
     Coord6<T>& operator*=(Coord6<T>& a, U b)
@@ -182,12 +199,14 @@ namespace yq {
         return a;
     }
 
+    //! Multiplies two coordinates together, term by term
     template <typename T, typename U>
     constexpr Coord6<decltype(T()*U())> operator*(const Coord6<T>& a, const Coord6<U>& b)
     {
         return { a.i*b.i, a.j*b.j, a.k*b.k, a.l*b.l, a.m*b.m, a.n*b.n };
     }
     
+    //! Self-Multiplies left coordinate with right, term by term
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()*U())>)
     Coord6<T>& operator*=(Coord6<T>&a, const Coord6<U>& b)
@@ -205,6 +224,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  DIVISION
 
+    //! Reduces the cooordinate, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Coord6<decltype(T()/U())> operator/(const Coord6<T>& a, U b)
@@ -212,6 +232,7 @@ namespace yq {
         return { a.i/b,  a.j/b, a.k/b, a.l/b, a.m/b, a.n/b };
     }
 
+    //! Reduces the cooordinate in place, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()/U())>)
     Coord6<T>& operator/=(Coord6<T>& a, U b)
@@ -225,12 +246,14 @@ namespace yq {
         return a;
     }
 
+    //! Divides two coordinates, term by term
     template <typename T, typename U>
     constexpr Coord6<decltype(T()/U())> operator/(const Coord6<T>& a, const Coord6<U>& b)
     {
         return { a.i/b.i, a.j/b.j, a.k/b.k, a.l/b.l, a.m/b.m, a.n/b.n };
     }
 
+    //! Self divides left coordinate by right
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()/U())>)
     Coord6<T>& operator/=(Coord6<T>& a, const Coord6<U>& b)
@@ -270,18 +293,21 @@ namespace yq {
     //  --------------------------------------------------------
     //  CONDITIONAL INCLUDES
 
+    //! Helper to stream out a coordinate
     template <typename S, typename I>
     S&  as_stream(S& s, const Coord6<I>& v)
     {
         return s << "[" << v.i << "," << v.j << "," << v.k << "," << v.l << "," << v.m << "," << v.n << "]";
     }
     
+    //! Helper to stream out a coordinate
     template <typename T>
     Stream& operator<<(Stream&s, const Coord6<T>& v)
     {
         return as_stream(s, v);
     }
 
+    //! Helper to log out a coordinate
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord6<T>& v)
     {
