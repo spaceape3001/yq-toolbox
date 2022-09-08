@@ -19,8 +19,11 @@ namespace yq {
         using component_type    = T;
         static constexpr const uint8_t  DIMS    = 6;
         T       i, j, k, l, m, n;
+        
+        //! Defaulted equality  operator
         constexpr bool operator==(const Coord&) const noexcept = default;
         
+        //! Conversion operator to other 6-dimensional coordinates
         template <typename U>
         requires (!std::is_same_v<T,U>)
         explicit constexpr operator Coord<U,6>() const noexcept
@@ -28,6 +31,7 @@ namespace yq {
             return { (U) i, (U) j, (U) k, (U) l, (U) m, (U) n };
         }
         
+        //! Allows for uniform coordinates.
         Coord& operator=(T v)
         {
             i = j = k = l = m = n = v;
