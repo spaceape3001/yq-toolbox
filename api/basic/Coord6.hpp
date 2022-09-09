@@ -31,7 +31,7 @@ namespace yq {
             return { (U) i, (U) j, (U) k, (U) l, (U) m, (U) n };
         }
         
-        //! Allows for uniform coordinates.
+        //! Allows for uniform coordinate assignments.
         Coord& operator=(T v)
         {
             i = j = k = l = m = n = v;
