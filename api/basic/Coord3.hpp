@@ -178,7 +178,7 @@ namespace yq {
         return { a.i*b, a.j*b, a.k*b };
     }
 
-    //! Scale the coordinate
+    //! Self-scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
     Coord3<T>& operator*=(Coord3<T>& a, U b)

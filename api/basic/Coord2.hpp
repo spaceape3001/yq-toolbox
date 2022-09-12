@@ -10,13 +10,20 @@
 
 namespace yq {
 
+    /*! \brief Two dimensional coordinate
+    
+        This is expanded in two diemnsions for the two-diemsnional coordinate.
+    */
     template <typename T>
     struct Coord<T,2> {
         using component_type    = T;
         static constexpr const uint8_t  DIMS    = 2;
         T       i, j;
+
+        //! Defaulted equality  operator
         constexpr bool operator==(const Coord&) const noexcept = default;
 
+        //! Conversion operator to other 2-dimensional coordinates
         template <typename U>
         requires (!std::is_same_v<T,U>)
         explicit constexpr operator Coord<U,2>() const noexcept
@@ -24,13 +31,17 @@ namespace yq {
             return { (U) i, (U) j };
         }
 
+        //! Allows for uniform coordinate assignments.
         Coord& operator=(T v)
         {
             i = j = v;
             return *this;
         }
         
+        //! Alias for row index (matrix-style)
         constexpr const T&    row() const noexcept { return i; }
+        
+        //! Alias for column index (matrix-style)
         constexpr const T&    column() const noexcept { return j; }
     };
 
@@ -38,12 +49,14 @@ namespace yq {
     //  --------------------------------------------------------
     //  COMPOSITION
 
+    /*! \brief Composes a two dimensional coordinate from arguments */
     template <typename T>
     constexpr Coord2<T>    coord(T i, std::type_identity_t<T> j) noexcept
     {
         return { i, j };
     }
     
+    /*! \brief Construct a uniform 2-dimensional coordinate */
     template <typename T>
     constexpr Coord2<T>    coord2(T i)
     {
@@ -54,6 +67,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  BASIC FUNCTIONS
 
+    /*! \brief Max of two coordinates, done by element */
     template <typename T>
     constexpr Coord2<T> max(const Coord2<T>&a, const Coord2<T>& b)
     {
@@ -63,6 +77,7 @@ namespace yq {
         };
     }
 
+    /*! \brief Min of two coordinates, done by element */
     template <typename T>
     constexpr Coord2<T> min(const Coord2<T>&a, const Coord2<T>& b)
     {
@@ -72,12 +87,14 @@ namespace yq {
         };
     }
 
+    /*! \brief Product of the components */
     template <typename T>
     constexpr auto product(const Coord2<T>& a)
     {
         return a.i*a.j;
     }
 
+    /*! \brief Sum of the components */
     template <typename T>
     constexpr T sum(const Coord2<T>& a)
     {
@@ -92,6 +109,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  NEGATIVE
 
+    //! Negate the coordinate
     template <typename T>
     constexpr Coord2<T>    operator-(const Coord2<T>& a)
     {
@@ -106,12 +124,14 @@ namespace yq {
     //  --------------------------------------------------------
     //  ADDITION
     
+    //! Add two coordinates together
     template <typename T>
     constexpr Coord2<T> operator+(const Coord2<T>&a, const Coord2<T>&b)
     {
         return { a.i+b.i, a.j+b.j };
     }
     
+    //! Increment left coordinate with right
     template <typename T>
     Coord2<T>&  operator+=(Coord2<T>& a, const Coord2<T>& b)
     {
@@ -125,12 +145,14 @@ namespace yq {
     //  SUBTRACTION
 
     
+    //! Subtract two coordinates
     template <typename T>
     constexpr Coord2<T> operator-(const Coord2<T>&a, const Coord2<T>&b)
     {
         return { a.i-b.i, a.j-b.j };
     }
     
+    //! Decrement the left coordinate with right
     template <typename T>
     Coord2<T>&  operator-=(Coord2<T>& a, const Coord2<T>& b)
     {
@@ -143,6 +165,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  MULTIPLICATION
 
+    //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
     constexpr Coord2<decltype(T()*U())> operator*(T a, const Coord2<U>&b)
@@ -150,6 +173,7 @@ namespace yq {
         return { a*b.i, a*b.j };
     }
     
+    //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Coord2<decltype(T()*U())> operator*(const Coord2<T>& a, U b)
@@ -157,6 +181,7 @@ namespace yq {
         return { a.i*b, a.j*b };
     }
 
+    //! Self-scale the left coordinate with the right
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
     Coord2<T>& operator*=(Coord2<T>& a, U b)
@@ -166,12 +191,14 @@ namespace yq {
         return a;
     }
 
+    //! Multiplies two coordinates together, term by term
     template <typename T, typename U>
     constexpr Coord2<decltype(T()*U())> operator*(const Coord2<T>& a, const Coord2<U>& b)
     {
         return { a.i*b.i, a.j*b.j };
     }
     
+    //! Self-Multiplies left coordinate with right, term by term
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()*U())>)
     Coord2<T>& operator*=(Coord2<T>&a, const Coord2<U>& b)
@@ -185,6 +212,7 @@ namespace yq {
     //  --------------------------------------------------------
     //  DIVISION
 
+    //! Reduces the cooordinate, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Coord2<decltype(T()/U())> operator/(const Coord2<T>& a, U b)
@@ -192,6 +220,7 @@ namespace yq {
         return { a.i/b, a.j/b };
     }
 
+    //! Reduces the cooordinate in place, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()/U())>)
     Coord2<T>& operator/=(Coord2<T>& a, U b)
@@ -201,12 +230,14 @@ namespace yq {
         return a;
     }
 
+    //! Divides two coordinates, term by term
     template <typename T, typename U>
     constexpr Coord2<decltype(T()/U())> operator/(const Coord2<T>& a, const Coord2<U>& b)
     {
         return { a.i/b.i, a.j/b.j };
     }
 
+    //! Self divides left coordinate by right
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()/U())>)
     Coord2<T>& operator/=(Coord2<T>& a, const Coord2<U>& b)
@@ -241,18 +272,21 @@ namespace yq {
     //  --------------------------------------------------------
     //  CONDITIONAL INCLUDES
 
+    //! Helper to stream out a coordinate
     template <typename S, typename I>
     S&  as_stream(S& s, const Coord2<I>& v)
     {
         return s << "[" << v.i << "," << v.j << "]";
     }
     
+    //! Helper to stream out a coordinate
     template <typename T>
     Stream& operator<<(Stream&s, const Coord2<T>& v)
     {
         return as_stream(s, v);
     }
 
+    //! Helper to log out a coordinate
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord2<T>& v)
     {
