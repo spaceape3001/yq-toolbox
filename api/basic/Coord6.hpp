@@ -12,7 +12,7 @@ namespace yq {
 
     /*! \brief Six dimensional coordinate
     
-        This is expanded in six diemnsions for the six-diemsnional coordinate.
+        This is expanded in six diemnsions for the six-dimensional coordinate.
     */
     template <typename T>
     struct Coord<T,6> {

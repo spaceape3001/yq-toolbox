@@ -12,7 +12,7 @@ namespace yq {
 
     /*! \brief Four dimensional coordinate
     
-        This is expanded in four diemnsions for the four-diemsnional coordinate.
+        This is expanded in four diemnsions for the four-dimensional coordinate.
     */
     template <typename T>
     struct Coord<T,4> {

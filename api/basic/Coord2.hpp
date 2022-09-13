@@ -12,7 +12,7 @@ namespace yq {
 
     /*! \brief Two dimensional coordinate
     
-        This is expanded in two diemnsions for the two-diemsnional coordinate.
+        This is expanded in two diemnsions for the two-dimensional coordinate.
     */
     template <typename T>
     struct Coord<T,2> {

@@ -12,7 +12,7 @@ namespace yq {
 
     /*! \brief Five dimensional coordinate
     
-        This is expanded in five diemnsions for the five-diemsnional arrays
+        This is expanded in five diemnsions for the five-dimensional arrays
     */
     template <typename T>
     struct Coord<T,5> {

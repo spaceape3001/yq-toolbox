@@ -12,7 +12,7 @@ namespace yq {
 
     /*! \brief Three dimensional coordinate
     
-        This is expanded in three diemnsions for the three-diemsnional coordinate.
+        This is expanded in three diemnsions for the three-dimensional coordinate.
     */
     template <typename T>
     struct Coord<T,3> {
@@ -178,7 +178,7 @@ namespace yq {
         return { a.i*b, a.j*b, a.k*b };
     }
 
-    //! Self-scale the coordinate
+    //! Self-scale the left coordinate with the right
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
     Coord3<T>& operator*=(Coord3<T>& a, U b)
