@@ -72,6 +72,12 @@ namespace yq {
         //! Number of free bytes available
         size_t              available() const { return N - m_size; }
         
+        //! "Clears" the buffer down to size of zero
+        void                clear()
+        {
+            m_size      = 0;
+        }
+        
         //! Start of data
         char*               data() { return m_buffer; }
 
