@@ -16,75 +16,98 @@ namespace yq {
         Buffer with fixed-data (ie, in the class)
         
         \tparam N   Number of bytes
+        
+        It'll have a size of the buffer, and a useful "count" that lets the caller
+        fill it in progressively.
     */
+    //  TODO -- rename, SIZE -> CAPACITY, and count -> size....
     template <size_t N>
     class BasicBuffer {
     public:
-        static constexpr const size_t  SIZE    = N;
+        //! Capture template parameter, maximum size of the buffer
+        static constexpr const size_t  CAPACITY    = N;
     
-        static consteval size_t size() { return N; }
+        //! Size of the buffer
+        static consteval size_t capacity() { return N; }
         
-        void    advance(size_t n)
+        //! Advances the count of the buffer
+        void                advance(size_t n)
         {
-            m_count = std::min(m_count+n, N);
+            m_size = std::min(m_size+n, N);
         }
         
-        void    append(const char*z, size_t cnt)
+        //!  Appends to the buffer, up to its capacity
+        void                append(const char*z, size_t cnt)
         {
             if(!z || !cnt)
                 return ;
-            if(m_count >= N)
+            if(m_size >= N)
                 return ;
                 
-            cnt     = std::min(N-m_count, cnt);
-            memcpy(m_buffer+m_count, z, cnt);
-            m_count += cnt;
+            cnt     = std::min(N-m_size, cnt);
+            memcpy(m_buffer+m_size, z, cnt);
+            m_size += cnt;
         }
-        
-        void    append(std::string_view sv)
+
+        //! Appends to the buffer, up to its capacity
+        void                append(std::string_view sv)
         {
             advance(sv.data(), sv.size());
         }
         
+        //! Buffer as a string view
         std::string_view    as_view() const
         {
-            return std::string_view(m_buffer, m_count);
+            return std::string_view(m_buffer, m_size);
         }
         
+        //! Buffer as a string view starting at N
         std::string_view    as_view(size_t n)
         {
-            if(n>=m_count)
-                n   = m_count;
-            return std::string_view(m_buffer+n, m_count-n);
+            if(n>=m_size)
+                n   = m_size;
+            return std::string_view(m_buffer+n, m_size-n);
         }
         
         //! Number of free bytes available
-        size_t  available() const { return N - m_count; }
-        char*       data() { return m_buffer; }
-        const char* data() const { return m_buffer; }
-        bool    empty() const { return !m_count; }
-        bool    full() const { return m_count >= N; }
-
-        char*   freespace()  { return m_buffer + m_count; }
-
-        size_t  count() const { return m_count; }
+        size_t              available() const { return N - m_size; }
         
-        void    count(size_t n)
+        //! Start of data
+        char*               data() { return m_buffer; }
+
+        //! Start of data
+        const char*         data() const { return m_buffer; }
+
+        //! TRUE if empty
+        bool                empty() const { return !m_size; }
+        
+        //! TRUE if full
+        bool                full() const { return m_size >= N; }
+
+        //! Pointer to start of free space
+        char*               freespace()  { return m_buffer + m_size; }
+
+        //! Number of bytes so far
+        size_t              size() const { return m_size; }
+        
+        //! Sets the count
+        void                size(size_t n)
         {
-            m_count = std::min(n, N);
+            m_size = std::min(n, N);
         }
         
+        //! Sets the buffer
         template <typename T>
-        BasicBuffer&    operator=(const T& data)
+        BasicBuffer&        operator=(const T& data)
         {
             static_assert(sizeof(T) <= N);
             memcpy(m_buffer, &data, sizeof(T));
-            m_count = sizeof(T);
+            m_size = sizeof(T);
             return *this;
         }
         
     protected:
-        size_t  m_count       = 0;
+        size_t  m_size       = 0;
         char    m_buffer[N];
     };
 }
