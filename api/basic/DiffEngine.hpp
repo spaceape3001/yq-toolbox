@@ -155,6 +155,20 @@ namespace yq {
         }
     };
 
+    /*! \param Invokes the difference engine
+    
+        This will compare two vectors, and will notify when things are different, the same, based on the equivalency
+        object.
+        
+        \tparam VA  This is the type of data on vector "A" 
+        \tparam VB  This is the type of data on vector "B"
+        \param[in] va       This is the vector of data "A"
+        \param[in] vb       This is the vector of data "B"
+        \param[in] equiv    Equivalency detector, returns TRUE when VA() == VB().
+        \param[out] add     Handler called when something is detected in vb that's not in va
+        \param[out] rem     Handler called when something is detected in va that's not in vb
+        \param[out] ut      Handler called when something is detected to exist in both va AND vb
+    */
     template <typename VA, typename VB, typename Equivalent, typename Added, typename Removed, typename Untouched> 
     bool    diff_it(const std::vector<VA>& va, const std::vector<VB>& vb, Equivalent equiv, Added add, Removed rem, Untouched ut)
     {
@@ -172,6 +186,14 @@ namespace yq {
         Mode        mode;
     };
 
+    /*! \brief Differencing
+    
+        This will difference two vectors, reporting back the changes.
+        
+        \param[in]  Old     The "old"/"original" vector of data
+        \param[in]  New     The "new"/"revised" vector of data
+        \return Report of lines things were added, removed, and are the same.
+    */
     template <typename T, typename CEQ = std::equal_to<T>>
     std::vector<DEResult>    diff_it(const std::vector<T>& Old, const std::vector<T>& New, CEQ cmp = CEQ())
     {
