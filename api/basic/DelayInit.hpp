@@ -21,23 +21,40 @@ namespace yq {
     public:
         struct Ctor;
         struct Invoke;
+        
+        /*! \brief Initializes all uninitialized
+        
+            This calls initialize() on all registered hooks.
+        
+            \note This routine takes a snapshot, operates on that snapshot.  
+            If an initialize() registers additional hooks, those will not be initialized 
+            unless fRepeat is TRUE.
+        
+            \param fRepeat  Keep initializing in a loop until no more hooks are registered
+        */
         static void         init_all(bool fRepeat=true);
 
     protected:
 
+        //! Default constructor (sets m_next)
         DelayInit();
+        
+        //! Override this to be initialized
         virtual void        initialize(){}
 
     private:
 
+        //! Returns the "current" (uses an atomic) and used for setting m_next
         static DelayInit*   current(DelayInit*);
         static bool         init_pass();
         
+            // not copyable/movable
         DelayInit(const DelayInit&) = delete;
         DelayInit(DelayInit&&) = delete;
         void    operator=(const DelayInit&) = delete;
         void    operator=(DelayInit&&) = delete;
      
+        //! "Next" hook in the chain, may be NULL
         DelayInit*      m_next;
     };
 
