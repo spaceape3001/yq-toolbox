@@ -10,6 +10,10 @@
 
 namespace yq {
 
+/*! \brief Macro to override th einfo
+
+    This overrides the "MyInfo" for a class (& base) to be the new type.
+*/
 #define YQ_OBJECT_INFO( info )     public: using MyInfo    = info;
 
 /*! \brief Declares an object type
@@ -62,6 +66,7 @@ public:                                                 \
         */
         static const ObjectInfo&    staticMetaInfo();
         
+        //! Destructor, virtual given the nature of this base class
         virtual ~Object(){}
     };
 
@@ -77,6 +82,11 @@ public:                                                 \
         static Info&       edit() { return const_cast<Info&>(Obj::staticMetaInfo()); }
     };
     
+    /*! \brief Final type-specific info class
+    
+        This is the final, derived class for the specific info system for the specified object.  
+        It's ultimate purpose is to make sure the template object can be created (if it's capable)
+    */
     template <typename Obj>
     struct ObjectFixer  : public Obj::MyInfo {
         ObjectFixer(std::string_view szName, typename Obj::MyBase::MyInfo& myBase, std::source_location sl=std::source_location::current()) :
@@ -84,11 +94,13 @@ public:                                                 \
         {
         }
         
+        //! Got the type, rig the size up
         virtual size_t  size() const override
         {
             return sizeof(Obj);
         }
         
+        //! Create the object (if legal)
         virtual Obj*    create() const override
         {
             if constexpr (std::is_default_constructible_v<Obj> && !std::is_abstract_v<Obj>) {
@@ -104,7 +116,11 @@ public:                                                 \
     
 }
 
+/*! \brief IMPLEMENTS meta for the specified object
 
+    This is the macro that is required to IMPLEMENT the meta for an object.  
+    \note Undefined linker errors will result if this macro isn't used in a SOURCE file.
+*/
 #define YQ_OBJECT_IMPLEMENT(name)                                                                                   \
     const name::MyInfo&     name::staticMetaInfo()                                                                  \
     {                                                                                                               \
