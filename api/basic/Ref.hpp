@@ -19,11 +19,15 @@ namespace yq {
     */
     class RefCount {
     public:
+    
+        //! Tests for uniqueness
         bool	unique() const 
         {
             return m_count <= 1;
         }
 
+        //! Current ref count
+        //! \note For debug info only, subject to change
         size_t	count() const 
         {
             return m_count;
@@ -64,8 +68,10 @@ namespace yq {
     class Ref {
     public:
 
+        //! Default constructor (null)
         Ref() : m_ptr(nullptr) {}
 
+        //! Takes in an object 
         Ref(T*ptr);
 
         Ref(const Ref& copy);
