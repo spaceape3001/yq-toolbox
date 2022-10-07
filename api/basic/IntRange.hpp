@@ -67,7 +67,7 @@ namespace yq {
         //! Equality operator
         constexpr bool operator==(const IntRange&) const noexcept = default;
 
-        const T         low, high;
+        T               low, high;      // while const was nice, it implicitly deleted copy & move operations :(
     };
 
 

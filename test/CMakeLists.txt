@@ -10,6 +10,7 @@ macro(toolbox_test name)
     add_test(NAME ${name} COMMAND test_${name} ${ARGN})
 endmacro()
 
+toolbox_test(diffengine)
 toolbox_test(encode64)
 toolbox_test(http)
 toolbox_test(strings)
