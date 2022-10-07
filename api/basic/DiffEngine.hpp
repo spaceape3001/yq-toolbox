@@ -287,6 +287,16 @@ namespace yq {
                 }
             }
         }
+
+        template <typename VA, typename VB, typename Equivalent, typename Untouched, typename Added, typename Removed> 
+        void    diff_engine(const std::vector<VA>& A, const std::vector<VB>& B, Equivalent equiv, Untouched untouched, Added add, Removed remove, unsigned int opts=0ULL)
+        {
+            diff_engine(
+                A, SizeRange{ 0ULL, A.size() }, 
+                B, SizeRange{ 0ULL, B.size() }, 
+                equiv, untouched, add, remove, opts
+            );
+        }
         
         /*! \brief Differencing that returns a vector of edits
         
