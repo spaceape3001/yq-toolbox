@@ -173,6 +173,8 @@ namespace yq {
             } else {
                 assert(false && "MIDDLE SNAKE FAILED!");
             }
+            
+            return {};  // It is a LOGIC ERROR to reach here, however, adding this in to hush the warning
         }
         
         template <typename T>
