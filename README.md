@@ -12,7 +12,7 @@ Your Quill uses CMake for build management and C++20 as the language standard.  
 
 ### Dependencies
 
-* C++ 20 compiler
+* C++ 23 compiler
 * Intel TBB (thread building blocks)
 * Log4Cpp
 * Curl (might vanish...)
