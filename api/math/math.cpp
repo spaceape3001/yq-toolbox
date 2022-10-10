@@ -204,11 +204,6 @@ YQ_TYPE_IMPLEMENT(yq::LCountI16)
 YQ_TYPE_IMPLEMENT(yq::LCountI32)
 YQ_TYPE_IMPLEMENT(yq::LCountI64)
 
-YQ_TYPE_IMPLEMENT(yq::LCountU8)
-YQ_TYPE_IMPLEMENT(yq::LCountU16)
-YQ_TYPE_IMPLEMENT(yq::LCountU32)
-YQ_TYPE_IMPLEMENT(yq::LCountU64)
-
 YQ_TYPE_IMPLEMENT(yq::Multivector1D)
 YQ_TYPE_IMPLEMENT(yq::Multivector1F)
 
@@ -957,18 +952,6 @@ YQ_INVOKE(
 
     auto lcountI64   = writer<LCountI64>();
     lcountI64.property("cnt", &LCountI64::cnt);
-    
-    auto lcountU8   = writer<LCountU8>();
-    lcountU8.property("cnt", &LCountU8::cnt);
-
-    auto lcountU16   = writer<LCountU16>();
-    lcountU16.property("cnt", &LCountU16::cnt);
-
-    auto lcountU32   = writer<LCountU32>();
-    lcountU32.property("cnt", &LCountU32::cnt);
-
-    auto lcountU64   = writer<LCountU64>();
-    lcountU64.property("cnt", &LCountU64::cnt);
     
 
     auto mul1d  = writer<Multivector1D>();
