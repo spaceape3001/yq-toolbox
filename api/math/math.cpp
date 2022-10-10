@@ -25,6 +25,8 @@
 
 #include <math/Circle2.hpp>
 
+#include <math/Count.hpp>
+
 #include <math/Multivector1.hpp>
 #include <math/Multivector2.hpp>
 #include <math/Multivector3.hpp>
@@ -168,6 +170,16 @@ YQ_TYPE_IMPLEMENT(yq::Coord2D)
 YQ_TYPE_IMPLEMENT(yq::Coord2F)
 YQ_TYPE_IMPLEMENT(yq::Coord2I)
 YQ_TYPE_IMPLEMENT(yq::Coord2U)
+
+YQ_TYPE_IMPLEMENT(yq::CountI8)
+YQ_TYPE_IMPLEMENT(yq::CountI16)
+YQ_TYPE_IMPLEMENT(yq::CountI32)
+YQ_TYPE_IMPLEMENT(yq::CountI64)
+
+YQ_TYPE_IMPLEMENT(yq::CountU8)
+YQ_TYPE_IMPLEMENT(yq::CountU16)
+YQ_TYPE_IMPLEMENT(yq::CountU32)
+YQ_TYPE_IMPLEMENT(yq::CountU64)
 
 YQ_TYPE_IMPLEMENT(yq::Dimension)
 
@@ -845,6 +857,31 @@ YQ_INVOKE(
     auto coord2u = writer<Coord2U>();
     coord2u.property("i", &Coord2U::i);
     coord2u.property("j", &Coord2U::j);
+    
+    auto countI8   = writer<CountI8>();
+    countI8.property("cnt", &CountI8::cnt);
+
+    auto countI16   = writer<CountI16>();
+    countI16.property("cnt", &CountI16::cnt);
+
+    auto countI32   = writer<CountI32>();
+    countI32.property("cnt", &CountI32::cnt);
+
+    auto countI64   = writer<CountI64>();
+    countI64.property("cnt", &CountI64::cnt);
+    
+    auto countU8   = writer<CountU8>();
+    countU8.property("cnt", &CountU8::cnt);
+
+    auto countU16   = writer<CountU16>();
+    countU16.property("cnt", &CountU16::cnt);
+
+    auto countU32   = writer<CountU32>();
+    countU32.property("cnt", &CountU32::cnt);
+
+    auto countU64   = writer<CountU64>();
+    countU64.property("cnt", &CountU64::cnt);
+    
 
     auto fraci  = writer<FractionI>();
     fraci.property("n", &FractionI::num);

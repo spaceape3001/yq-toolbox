@@ -968,6 +968,22 @@ namespace yq {
     
     struct SimpleSpace;
     
+    template <typename> struct Count;
+    
+    using CountI    = Count<int>;
+    using CountI8   = Count<int8_t>;
+    using CountI16  = Count<int16_t>;
+    using CountI32  = Count<int32_t>;
+    using CountI64  = Count<int64_t>;
+
+    using CountU    = Count<unsigned int>;
+    using CountU8   = Count<uint8_t>;
+    using CountU16  = Count<uint16_t>;
+    using CountU32  = Count<uint32_t>;
+    using CountU64  = Count<uint64_t>;
+
+    using CountZ    = Count<size_t>;
+
     //using Pose2D        = Pose2<double>;
     //using Pose2F        = Pose2<float>;
 
