@@ -25,7 +25,7 @@
 
 #include <math/Circle2.hpp>
 
-#include <math/Count.hpp>
+#include <math/Counter.hpp>
 
 #include <math/Multivector1.hpp>
 #include <math/Multivector2.hpp>
@@ -188,6 +188,26 @@ YQ_TYPE_IMPLEMENT(yq::FractionI)
 //YQ_TYPE_IMPLEMENT(yq::Frac16)
 //YQ_TYPE_IMPLEMENT(yq::Frac32)
 //YQ_TYPE_IMPLEMENT(yq::Frac64)
+
+YQ_TYPE_IMPLEMENT(yq::HCountI8)
+YQ_TYPE_IMPLEMENT(yq::HCountI16)
+YQ_TYPE_IMPLEMENT(yq::HCountI32)
+YQ_TYPE_IMPLEMENT(yq::HCountI64)
+
+YQ_TYPE_IMPLEMENT(yq::HCountU8)
+YQ_TYPE_IMPLEMENT(yq::HCountU16)
+YQ_TYPE_IMPLEMENT(yq::HCountU32)
+YQ_TYPE_IMPLEMENT(yq::HCountU64)
+
+YQ_TYPE_IMPLEMENT(yq::LCountI8)
+YQ_TYPE_IMPLEMENT(yq::LCountI16)
+YQ_TYPE_IMPLEMENT(yq::LCountI32)
+YQ_TYPE_IMPLEMENT(yq::LCountI64)
+
+YQ_TYPE_IMPLEMENT(yq::LCountU8)
+YQ_TYPE_IMPLEMENT(yq::LCountU16)
+YQ_TYPE_IMPLEMENT(yq::LCountU32)
+YQ_TYPE_IMPLEMENT(yq::LCountU64)
 
 YQ_TYPE_IMPLEMENT(yq::Multivector1D)
 YQ_TYPE_IMPLEMENT(yq::Multivector1F)
@@ -900,6 +920,56 @@ YQ_INVOKE(
     frac64.property("n", &Frac64::num);
     frac64.property("d", &Frac64::den);
 */
+
+    auto hcountI8   = writer<HCountI8>();
+    hcountI8.property("cnt", &HCountI8::cnt);
+
+    auto hcountI16   = writer<HCountI16>();
+    hcountI16.property("cnt", &HCountI16::cnt);
+
+    auto hcountI32   = writer<HCountI32>();
+    hcountI32.property("cnt", &HCountI32::cnt);
+
+    auto hcountI64   = writer<HCountI64>();
+    hcountI64.property("cnt", &HCountI64::cnt);
+    
+    auto hcountU8   = writer<HCountU8>();
+    hcountU8.property("cnt", &HCountU8::cnt);
+
+    auto hcountU16   = writer<HCountU16>();
+    hcountU16.property("cnt", &HCountU16::cnt);
+
+    auto hcountU32   = writer<HCountU32>();
+    hcountU32.property("cnt", &HCountU32::cnt);
+
+    auto hcountU64   = writer<HCountU64>();
+    hcountU64.property("cnt", &HCountU64::cnt);
+    
+
+    auto lcountI8   = writer<LCountI8>();
+    lcountI8.property("cnt", &LCountI8::cnt);
+
+    auto lcountI16   = writer<LCountI16>();
+    lcountI16.property("cnt", &LCountI16::cnt);
+
+    auto lcountI32   = writer<LCountI32>();
+    lcountI32.property("cnt", &LCountI32::cnt);
+
+    auto lcountI64   = writer<LCountI64>();
+    lcountI64.property("cnt", &LCountI64::cnt);
+    
+    auto lcountU8   = writer<LCountU8>();
+    lcountU8.property("cnt", &LCountU8::cnt);
+
+    auto lcountU16   = writer<LCountU16>();
+    lcountU16.property("cnt", &LCountU16::cnt);
+
+    auto lcountU32   = writer<LCountU32>();
+    lcountU32.property("cnt", &LCountU32::cnt);
+
+    auto lcountU64   = writer<LCountU64>();
+    lcountU64.property("cnt", &LCountU64::cnt);
+    
 
     auto mul1d  = writer<Multivector1D>();
     mul1d.property("a", &Multivector1D::a);

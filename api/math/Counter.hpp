@@ -29,30 +29,30 @@ namespace yq {
 
     /*! \brief Simple count that's always zero-initialized
     */
-    template <typename T>
-    struct Count {
+    template <typename T, T R>
+    struct Counter {
         static constexpr const T    MIN  = std::numeric_limits<T>::min();
         static constexpr const T    MAX  = std::numeric_limits<T>::max();
     
-        T   cnt   = T(0);
+        T   cnt   = R;
         
             //! Comparison spaceship operator
-        constexpr auto  operator<=>(const Count&) const noexcept = default;
+        constexpr auto  operator<=>(const Counter&) const noexcept = default;
         
             //! Implicit cast operator
         constexpr operator T() const noexcept { return cnt; }
         
             //! Pre-fix Increment operator
-        Count operator++() { return Count{ ++cnt }; }
+        Counter operator++() { return Counter{ ++cnt }; }
 
             //! Post-fix Increment operator
-        Count operator++(int)  { return Count{ cnt++ }; }
+        Counter operator++(int)  { return Counter{ cnt++ }; }
 
             //! Pre-fix Deccrement operator
-        Count operator--() { return Count{ --cnt }; }
+        Counter operator--() { return Counter{ --cnt }; }
 
             //! Post-fix Deccrement operator
-        Count operator--(int)  { return Count{ cnt-- }; }
+        Counter operator--(int)  { return Counter{ cnt-- }; }
 
         void    increment()
         {
@@ -78,3 +78,23 @@ YQ_TYPE_DECLARE(yq::CountU8)
 YQ_TYPE_DECLARE(yq::CountU16)
 YQ_TYPE_DECLARE(yq::CountU32)
 YQ_TYPE_DECLARE(yq::CountU64)
+
+YQ_TYPE_DECLARE(yq::HCountI8)
+YQ_TYPE_DECLARE(yq::HCountI16)
+YQ_TYPE_DECLARE(yq::HCountI32)
+YQ_TYPE_DECLARE(yq::HCountI64)
+
+YQ_TYPE_DECLARE(yq::HCountU8)
+YQ_TYPE_DECLARE(yq::HCountU16)
+YQ_TYPE_DECLARE(yq::HCountU32)
+YQ_TYPE_DECLARE(yq::HCountU64)
+
+YQ_TYPE_DECLARE(yq::LCountI8)
+YQ_TYPE_DECLARE(yq::LCountI16)
+YQ_TYPE_DECLARE(yq::LCountI32)
+YQ_TYPE_DECLARE(yq::LCountI64)
+
+YQ_TYPE_DECLARE(yq::LCountU8)
+YQ_TYPE_DECLARE(yq::LCountU16)
+YQ_TYPE_DECLARE(yq::LCountU32)
+YQ_TYPE_DECLARE(yq::LCountU64)
