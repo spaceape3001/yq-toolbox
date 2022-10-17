@@ -43,7 +43,7 @@ namespace yq {
                 first_write();
                 m_triggered = true;
             }
-            return write(z, cb);
+            return m_stream.write(z, cb);
         }
     }
 }
