@@ -19,14 +19,23 @@ namespace yq {
         */
         class LineCol : public Stream {
         public:
+        
+            //! Constructor with other stream that must remain valid throughout the duration of this class
             LineCol(Stream&);
             
+            //! Current line
             unsigned int    line() const { return m_line; }
+            
+            //! Current column
             unsigned int    column() const { return m_column; }
             
+            //! Close the underlying stream
             void    close() override;
+            
+            //! Writes data to other stream
             bool    write(const char* z, size_t cb) override;
             
+            //! TRUE if the stream is open
             bool    is_open() const override;
             
         private:
