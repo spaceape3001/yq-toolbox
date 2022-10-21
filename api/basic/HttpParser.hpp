@@ -11,17 +11,26 @@
 
 namespace yq {
 
+    /*! \brief Method, URI, Version triple
+    */
     struct MethodUriVersion {
         std::string_view    method, uri, version;
         bool    operator==(const MethodUriVersion&) const = default;
     };
 
+    //! Parses all parameters from a URL query string
     StringViewMultiMap      parse_parameters(std::string_view);
+    
+    //! Parses the method/uri/version from the appropriate http intro declaration
     MethodUriVersion        parse_method_uri(std::string_view);
 
+    //! Parses an HTTP header line into key/value
     KVView                  parse_header_line(std::string_view);
+    
+    //! Parses the HTTP cookie line
     StringViewMultiMap      parse_cookie(std::string_view);
     
+    //! Return result for stripped query, the value and the rest of the line
     struct QueryStripped {
         std::string     value;
         std::string     rest;
