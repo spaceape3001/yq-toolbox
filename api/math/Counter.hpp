@@ -53,13 +53,29 @@ namespace yq {
 
             //! Post-fix Deccrement operator
         Counter operator--(int)  { return Counter{ cnt-- }; }
+        
+            //! sets to the smaller
+        void    set_smaller(Counter r)
+        {
+            if(r.cnt<cnt)
+                cnt = r.cnt;
+        }
+        
+            //! Sets to the biggger
+        void    set_bigger(Counter r)
+        {
+            if(r.cnt>cnt)
+                cnt = r.cnt;
+        }
 
+            //! Increments but stops at max value
         void    increment()
         {
             if(cnt < MAX)
                 ++cnt;
         }
         
+            //! Decrements but stops at min value
         void    decrement()
         {
             if(cnt > MIN)
