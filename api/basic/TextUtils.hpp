@@ -65,6 +65,14 @@ namespace yq {
     */
     std::string  capitalize(std::string_view s);
     
+    /*! \brief Conctenates two strings
+    
+        Concatenates two strings together.
+        
+        \param[in] a    First string
+        \param[in] b    Second string
+        \return new string of the concatenation
+    */
     std::string concat(std::string_view a, std::string_view b);
 
     /*! \brief Checks if the haystack has the needle
@@ -227,14 +235,80 @@ namespace yq {
     */
     std::string_view  fmt_hex(uint64_t n, char f='0');
     
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint8_t n);
+
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint16_t n);
+
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint32_t n);
+
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint64_t n);
 
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \param[in] f    Fill character for leading characters
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint8_t n, char f);
+
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \param[in] f    Fill character for leading characters
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint16_t n, char f);
+
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \param[in] f    Fill character for leading characters
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint32_t n, char f);
+
+    /*! \brief Formats the given number as octal
+    
+        \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
+
+        \param[in] n    Value to format
+        \param[in] f    Fill character for leading characters
+        \result Formatted string
+    */
     std::string_view  fmt_octal(uint64_t n, char f);
 
 
@@ -934,7 +1008,13 @@ namespace yq {
     */
     const char*  strnchr(const char*s, size_t n, char ch);
 
-    const char*  strnchr(std::string_view, char ch);
+    /*! \brief Finds the next character 
+    
+        \param[in] s    std::string view
+        \param[in] ch   Character being searched for
+        \return pointer to character if found, NULL if not.
+    */
+    const char*  strnchr(std::string_view s, char ch);
 
     /*! \brief Finds the next character 
     
@@ -1366,17 +1446,25 @@ namespace yq {
         return s;
     }
 
+    /*! \brief Converts u32string to std::string
+    */
     std::string         to_string(const std::u32string&s);
     
     /*! \brief Converts to std::string
     */
     std::string         to_string(const std::u32string_view&s);
 
+    /*! \brief Converts wstring to std::string
+    */
     std::string         to_string(const std::wstring&);
 
+    /*! \brief Converts wstring_view to std::string
+    */
     std::string         to_string(const std::wstring_view&);
 
 
+    /*! \brief Concatenates vector of T to std::string
+    */
     template <typename T>
     auto  to_string(const std::vector<T>& input)
     {
@@ -1450,11 +1538,17 @@ namespace yq {
     */
     std::string_view  to_string_view(int64_t);
 
+    //! Simple to-string-view for a string
+    //!
+    //! Yes, it's defined on the class, however, this allows for templated "T" expectations to work
     inline std::string_view to_string_view( const std::string& sv)
     {
         return sv;
     }
 
+    //! Simple to-string-view for a string_view
+    //!
+    //! Yes, it's a noop, however, this allows for templated "T" expectations to work
     inline std::string_view to_string_view( std::string_view sv)
     {
         return sv;
@@ -1484,6 +1578,8 @@ namespace yq {
     */
     std::string_view    to_string_view(uint64_t);
     
+    /*! \brief Formats a time to a string
+    */
     std::string         to_time_string(std::time_t, const char* fmt="yyyy-MM-dd HH:mm:ss");
 
     /*! \brief Decodes the given string into an unsigned integer
@@ -1741,6 +1837,15 @@ namespace yq {
         return return_t();
     }
 
+    /*! \brief Split via visitor pattern
+    
+        This "splits" the string, but uses a lambda visitor instead of return vector.  Note, matched
+        character will NOT be echoed.
+        
+        \param[in]      s    Pointer to the string
+        \param[in]      ch   Character to split on
+        \param[in,out]  pred Function-like object, taking a std::string_view.
+    */
     template <typename Pred>
     auto            vsplit(const char* s, char ch, Pred pred)
     {
@@ -1906,6 +2011,16 @@ namespace yq {
     }
     
 
+    /*! Joins a collection into a separator
+    
+        Joins a collection of whatever into a resulting string, so long as it has either a "to_string" or 
+        a "to_string_view" function defined for it.
+        
+        \param[in] collection   The collection which must be iterable, and the type of the collection can be 
+                                std::string, std::string_view, or have to_string/to_string_view defined for it.
+        \param[in] separator    This goes between the elements of the collection
+        \return string with the result
+    */
     template <template <typename...> class Tmpl, typename... T>
     std::string     join(const Tmpl<T...>& collection, std::string_view separator)
     {
@@ -1945,6 +2060,16 @@ namespace yq {
         return ret;
     }
     
+    /*! Joins a collection into a separator
+    
+        Joins a collection of whatever into a resulting string, so long as it has either a "to_string" or 
+        a "to_string_view" function defined for it.
+        
+        \param[in] collection   The collection which must be iterable, and the type of the collection can be 
+                                std::string, std::string_view, or have to_string/to_string_view defined for it.
+        \param[in] separator    This goes between the elements of the collection
+        \return string with the result
+    */
     template <template <typename...> class Tmpl, typename... T>
     std::string     join(const Tmpl<T...>& collection, char separator)
     {
