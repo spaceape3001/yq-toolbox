@@ -10,8 +10,6 @@
 
 namespace yq {
 
-
-
         size_t  count_children(const XmlNode*xn, const char* pszTag)
         {
             size_t cnt=0;
