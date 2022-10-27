@@ -22,10 +22,17 @@ namespace yq {
     */
     class Iter32 {
     public:
+    
+        //! Constructor with a string view
         Iter32(std::string_view s) : Iter32(s.data(), s.size()) {}
+        
+        //! Defaulted move constructor
         Iter32(Iter32&&) = default;
+        
+        //! Defaulted move operator
         Iter32&  operator=(Iter32&&) = default;
         
+        //! Gets the next character in the sequence as char32_t
         char32_t  next()
         {
             char32_t ret = 0;
@@ -40,18 +47,28 @@ namespace yq {
             return ret;
         }
         
+        //! Gets the current (byte) position in the string
         size_t  position() const
         {
             return m_data - m_begin;
         }
         
+        //! TRUE if we've gone through the entire string
         bool  done() const { return m_data >= m_end; }
+        
+        //! TRUE if there's more characters to come
         bool  more() const { return (m_data < m_end) && !m_error; }
+        
+        //! TRUE if a parsing error was detected
         bool  error() const { return m_error; }
         
+        //! TRUE if there's (possibly) more to come
         operator bool () const { return more(); }
+        
+        //! Current parse pointer
         operator const char*() const { return m_data; }
         
+        //! Constructor taking a pointer and a size
         constexpr Iter32(const char*z, size_t n) :
             m_begin(z), 
             m_data(z), 
@@ -63,8 +80,12 @@ namespace yq {
         }
         
     private:
+    
+        //! DELETED r-value refernece constructor (ie prohibiting temporary strings)
         Iter32(std::string_view&&) = delete;
+        //! DELETED copy constructor
         Iter32(const Iter32&) = delete;
+        //! DELETED copy operator
         Iter32& operator=(const Iter32&) = delete;
         
         const char*     m_begin;
