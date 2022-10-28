@@ -30,10 +30,17 @@ namespace yq {
     */
     class IterUtf8 {
     public:
+    
+        //! Constructor...note this must remain valid through the usage of this class
         IterUtf8(std::string_view s) : IterUtf8(s.data(), s.size()) {}
+        
+        //! Defaulted move constructor
         IterUtf8(IterUtf8&&) = default;
+        
+        //! Defaulted move operator
         IterUtf8&  operator=(IterUtf8&&) = default;
         
+        //! Gets the next character
         char32_t  next()
         {
             char32_t ret = 0;
@@ -48,18 +55,28 @@ namespace yq {
             return ret;
         }
         
+        //! Current position of the read
         size_t  position() const
         {
             return m_data - m_begin;
         }
         
+        //! TRUE if this class has reached the end
         bool  done() const { return m_data >= m_end; }
+        
+        //! True if there's more to read
         bool  more() const { return (m_data < m_end) && !m_error; }
+        
+        //! True if there's been an error
         bool  error() const { return m_error; }
         
+        //! TRUE if there's more
         operator bool () const { return more(); }
+        
+        //! Current pointer
         operator const char*() const { return m_data; }
         
+        //! Constructs from char* and size
         constexpr IterUtf8(const char*z, size_t n) :
             m_begin(z), 
             m_data(z), 
@@ -67,6 +84,13 @@ namespace yq {
             m_error(false)
         {
             assert(z || !n);
+        }
+        
+        //! Resets the iterator back to the start and clears the error flag
+        void    reset()
+        {
+            m_data  = m_begin;
+            m_error = false;
         }
         
     private:
