@@ -13,6 +13,7 @@ namespace yq {
     class ArgInfo : public Meta {
     public:
     
+        //! Type of the argument
         const Meta&        type() const { return m_type; }
     
     private:
