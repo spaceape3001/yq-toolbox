@@ -80,6 +80,10 @@ namespace yq {
         P       m_data;
     };
     
+    /* !\brief PropGetter for a member getter (of return)
+    
+        PropGetter for the scenario of a member function on an object.
+    */
     template <typename C, typename T>
     class IFV_PropGetter : public DynamicPropGetter<C,T> {
     public:
@@ -116,6 +120,10 @@ namespace yq {
     };
     
     
+    /* !\brief PropGetter for a member getter (of const return reference)
+    
+        PropGetter for the scenario of a member function on an object.
+    */
     template <typename C, typename T>
     class IFR_PropGetter : public DynamicPropGetter<C,T> {
     public:
@@ -151,4 +159,90 @@ namespace yq {
         FN      m_function;
     };
 
+    /* !\brief PropGetter for a member getter (of parameter return)
+    
+        PropGetter for the scenario of a member function on an object.
+    */
+    template <typename C, typename T>
+    class IFP_PropGetter : public DynamicPropGetter<C,T> {
+    public:
+        typedef void (C::*FN)(T&) const;
+        IFP_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        {
+            assert(function);
+        }
+        
+        virtual bool        get(void* dst, const void* obj) const override
+        {
+            assert(dst);
+            assert(obj);
+            (((const C*) obj)->*m_function)(*(T*) dst);
+            return true;
+        }
+        
+        virtual bool            print(Stream&str, const void*obj) const override
+        {
+            assert(obj);
+            T   data;
+            (((const C*) obj)->*m_function)(data);
+            TypeInfo::print(data, str);
+            return true;
+        }
+        
+        virtual bool            write(Stream&str, const void*obj) const override
+        {
+            assert(obj);
+            T   data;
+            (((const C*) obj)->*m_function)(data);
+            TypeInfo::write(data, str);
+            return true;
+        }
+
+    private:
+        FN      m_function;
+    };
+
+    /* !\brief PropGetter for a member getter (of parameter return)
+    
+        PropGetter for the scenario of a member function on an object.
+    */
+    template <typename C, typename T>
+    class IFPB_PropGetter : public DynamicPropGetter<C,T> {
+    public:
+        typedef bool (C::*FN)(T&) const;
+        IFPB_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        {
+            assert(function);
+        }
+        
+        virtual bool        get(void* dst, const void* obj) const override
+        {
+            assert(dst);
+            assert(obj);
+            return (((const C*) obj)->*m_function)(*(T*) dst);
+        }
+        
+        virtual bool            print(Stream&str, const void*obj) const override
+        {
+            assert(obj);
+            T   data;
+            if(!(((const C*) obj)->*m_function)(data))
+                return false;
+            TypeInfo::print(data, str);
+            return true;
+        }
+        
+        virtual bool            write(Stream&str, const void*obj) const override
+        {
+            assert(obj);
+            T   data;
+            if(!(((const C*) obj)->*m_function)(data))
+                return false;
+            TypeInfo::write(data, str);
+            return true;
+        }
+
+    private:
+        FN      m_function;
+    };
 }
