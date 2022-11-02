@@ -30,10 +30,22 @@ namespace yq {
             \param[in] value    String-form of a property
         */
         virtual bool            set(void*obj, std::string_view) const = 0;
+        
+        //! Data type for the setter
         virtual const Meta&     data() const = 0;
+        
+        //! Object type for the setter
         virtual const Meta&     object() const = 0;
+        
+        //! Property info this belongs to
         const PropertyInfo* property() const;
     protected:
-        PropSetter(PropertyInfo*, const std::source_location& sl);
+    
+        /*! \brief Constructor
+        
+            \param[in] propInfo Property to attach this setter to
+            \param[in] sl       Source location it's defined
+        */
+        PropSetter(PropertyInfo* propInfo, const std::source_location& sl);
     };
 }
