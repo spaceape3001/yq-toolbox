@@ -63,6 +63,7 @@ namespace yq {
     template <typename> class Touched;
     
         // TEMPLATE STRUCTS
+    template <typename> struct Created;
     template <typename> struct IntRange;
     template <typename> struct Result;
     template <typename> struct Span;
