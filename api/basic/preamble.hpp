@@ -227,6 +227,8 @@ namespace yq {
     using string_view_vector_t  = Vector<std::string_view>;
     using path_vector_t         = Vector<std::filesystem::path>;
 
+    using string_view_initializer_list_t       = std::initializer_list<std::string_view>;
+
         // TODO move these to use std::filesystem::path
     #if defined(__APPLE__) || defined(WIN32)
         using PathSet   = StringSet;
