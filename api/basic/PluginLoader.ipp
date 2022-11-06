@@ -30,9 +30,14 @@ namespace yq {
         #ifdef NDEBUG
         try {
         #endif
+            
+            #if defined(WIN32)
+            #error "This code is not yet defined for windows!"
+            #else
             if(!dlopen(pth.c_str(), YQ_DBGREL(RTLD_LAZY|RTLD_LOCAL, RTLD_NOW|RTLD_LOCAL)))
                 yError() << "Plugin (" << pth << ") failed to load.";
             return true;
+            #endif
             
         #ifdef NDEBUG
         } catch(...){
