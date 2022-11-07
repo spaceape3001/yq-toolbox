@@ -361,6 +361,7 @@ namespace yq {
     struct SetChanges {
         std::set<T,C,A>     added;      //!< Items that were added
         std::set<T,C,A>     same;       //!< Items that are in both
+        std::set<T,C,A>     modified;   //!< Items that were modified (but are otherwise the same)
         std::set<T,C,A>     removed;    //!< Items that were removed
     };
 
