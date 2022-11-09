@@ -11,13 +11,12 @@
 #include <basic/meta/CompoundInfoDynamic.hpp>
 #include <basic/trait/has_less.hpp>
 #include <basic/trait/is_template.hpp>
-#include <basic/List.hpp>
-#include <basic/Hash.hpp>
-#include <basic/Map.hpp>
-#include <basic/MultiMap.hpp>
-#include <basic/Set.hpp>
-#include <basic/Vector.hpp>
 #include <basic/StreamOps.hpp>
+#include <list>
+#include <map>
+#include <set>
+#include <vector>
+#include <unordered_map>
 
 namespace yq {
 
@@ -73,10 +72,23 @@ namespace yq {
         }
     };
     #endif
-
+    
+    /*! \brief  Basic first level of type information
+    
+        Several derivations are being used to control how the meta type information is being generated.  
+        The "Typed" is the first one, it provides the basics that everybody utilizes.
+        
+    */
     template <typename T>
     class TypeInfo::Typed : public type_info_t<T> {
     protected:
+    
+        /*! \brief Constructor, protected
+        
+            \param[in] zName    name of the type, should be from a char* in the program strings table, ie "" not dynamic.
+            \param[in] sl       Source location to the instantiation (final uses default-parameter to get it)
+            \param[in] i        ID to override, but most types will use AUTO
+        */
         Typed(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : type_info_t<T>(zName, sl, i)
         {
             options_t   opts    = 0;
@@ -145,14 +157,19 @@ namespace yq {
         }
     };
     
+    /*! \brief Specialization meta
+    
+        This is the auto-deduction specialization derivation for the type.  It'll set options based
+        on the template type, like hashes, lists, etc
+    */
     template <typename T>
     class TypeInfo::Special : public Typed<T> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<T>(zName, sl, i) {}
     };
     
-    template <typename K, typename V>
-    class TypeInfo::Special<Hash<K,V>> : public Typed<Hash<K,V>> {
+    template <typename K, typename V, typename H, class KQ, class A>
+    class TypeInfo::Special<std::unordered_map<K,V,H,KQ,A>> : public Typed<std::unordered_map<K,V,H,KQ,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Hash<K,V>>(zName, sl, i)
         {
@@ -160,8 +177,8 @@ namespace yq {
         }
     };
 
-    template <typename T>
-    class TypeInfo::Special<List<T>> : public Typed<List<T>> {
+    template <typename T, typename A>
+    class TypeInfo::Special<std::list<T,A>> : public Typed<std::list<T,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<List<T>>(zName, sl, i) 
         {
@@ -169,8 +186,8 @@ namespace yq {
         }
     };
     
-    template <typename K, typename V, typename C>
-    class TypeInfo::Special<Map<K,V,C>> : public Typed<Map<K,V,C>> {
+    template <typename K, typename V, typename C, typename A>
+    class TypeInfo::Special<std::map<K,V,C,A>> : public Typed<std::map<K,V,C,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Map<K,V,C>>(zName, sl, i)
         {
@@ -178,8 +195,8 @@ namespace yq {
         }
     };
 
-    template <typename K, typename V, typename C>
-    class TypeInfo::Special<MultiMap<K,V,C>> : public Typed<MultiMap<K,V,C>> {
+    template <typename K, typename V, typename C, typename A>
+    class TypeInfo::Special<std::multimap<K,V,C,A>> : public Typed<std::multimap<K,V,C,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<MultiMap<K,V,C>>(zName, sl, i)
         {
@@ -187,8 +204,8 @@ namespace yq {
         }
     };
 
-    template <typename T, typename C>
-    class TypeInfo::Special<Set<T,C>> : public Typed<Set<T,C>> {
+    template <typename T, typename C, typename A>
+    class TypeInfo::Special<std::set<T,C,A>> : public Typed<std::set<T,C,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Set<T,C>>(zName, sl, i) 
         {
@@ -196,8 +213,8 @@ namespace yq {
         }
     };
 
-    template <typename T>
-    class TypeInfo::Special<Vector<T>> : public Typed<Vector<T>> {
+    template <typename T, typename A>
+    class TypeInfo::Special<std::vector<T,A>> : public Typed<std::vector<T,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Vector<T>>(zName, sl, i) 
         {
@@ -206,7 +223,11 @@ namespace yq {
     };
     
 
-    //! The FINAL storage class, the one that's generic
+    /*! The FINAL storage class, the one that's generic
+    
+        This is the class that does the actual storage for type information as a private static member, but allows
+        the infobinder to access it.
+    */
     template <typename T>
     class TypeInfo::Final : public Special<T> {
     private:
@@ -215,21 +236,38 @@ namespace yq {
         static TypeInfo&       s_save;
     };
 
-
+    /*! \brief Conditional writer base
+    
+        Trying to do class operations on a simple type causes problems, so we have this alias used for the 
+        base type, allows for the rest of the code to be the same.
+    */
     template <typename T>
     using TypeInfoWriterBase    = std::conditional<std::is_class_v<T>, CompoundInfo::Dynamic<T>, Meta::Writer>::type;
 
+
+    /*! \brief Basic type information writer
+    
+        This is what allows for the user-code to modify a type information. 
+        
+        \note it's STRONGLY advised to be in a thread-safe environment.  The `thread_safe_write()` is a sentienel
+        but might not be perfect.
+    */
     template <typename T>
     class TypeInfo::Writer : public TypeInfoWriterBase<T> {
     public:
         static_assert( InfoBinder<T>::IsType, "T must be meta-type declared!");
     
-    
+        //! Adds an alias to the type
+        //! \note the provided parameter is expected to be from the program strings table
         void    alias(std::string_view a)
         {
-            static_cast<TypeInfo*>(Meta::Writer::m_meta) -> add_alias(a);
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta) -> add_alias(a);
+            }
         }
     
+        //! Allows for an any conversion by cast
+        //! \tparam[U] other type
         template <typename U>
         requires std::is_nothrow_convertible_v<U,T>
         void casts()
@@ -242,10 +280,13 @@ namespace yq {
             }
         }
         
+        /*! \brief Conversion with routine
+            This registers a conversion via function to another type
+        */
         template <typename U, U(*FN)(T)>
         void converts()
         {
-            static_assert(is_type_v<U>, "U must be meta-type decalred!");
+            static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
                 static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
                     *(U*) dst = FN( *(const T*) src);
@@ -253,10 +294,14 @@ namespace yq {
             }
         }
         
+        
+        /*! \brief Conversion with routine
+            This registers a conversion via function to another type
+        */
         template <typename U, U(*FN)(const T&)>
         void converts()
         {
-            static_assert(is_type_v<U>, "U must be meta-type decalred!");
+            static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
                 static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
                     *(U*) dst = FN( *(const T*) src);
@@ -264,10 +309,14 @@ namespace yq {
             }
         }
 
+        
+        /*! \brief Conversion with routine
+            This registers a conversion via function to another type
+        */
         template <typename U, void (*FN)(U&, const T&)>
         void converts()
         {
-            static_assert(is_type_v<U>, "U must be meta-type decalred!");
+            static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
                 static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
                     FN(*(U*) dst,  *(const T*) src);
@@ -275,6 +324,8 @@ namespace yq {
             }
         }
         
+        /*! \brief Registers IO text stream formatting handler
+        */
         template <std::string(*FN)(T)>
         void    format()
         {
@@ -285,6 +336,8 @@ namespace yq {
             }
         }
         
+        /*! \brief Registers IO text stream formatting handler
+        */
         template <std::string(*FN)(const T&)>
         void    format()
         {
@@ -296,6 +349,8 @@ namespace yq {
         }
         
         
+        /*! \brief Registers IO stream parsing handler
+        */
         template <bool (*FN)(T&, const std::string_view&)>
         void    parse()
         {
@@ -306,6 +361,8 @@ namespace yq {
             }
         }
 
+        /*! \brief Registers IO string parsing handler
+        */
         template <bool (*FN)(const std::string_view&, T&)>
         void    parse()
         {
@@ -316,6 +373,8 @@ namespace yq {
             }
         }
 
+        /*! \brief Registers IO string parsing handler
+        */
         template <Result<T> (*FN)(const std::string_view&)>
         void    parse()
         {
@@ -328,6 +387,8 @@ namespace yq {
             }
         }
 
+        /*! \brief Registers debug string formatting handler.
+        */
         template <std::string(*FN)(T)>
         void    print()
         {
@@ -338,6 +399,8 @@ namespace yq {
             }
         }
         
+        /*! \brief Registers debug string formatting handler.
+        */
         template <std::string(*FN)(const T&)>
         void    print()
         {
@@ -348,6 +411,10 @@ namespace yq {
             }
         }
 
+        /*! \brief Registers debug stream formatting handler.
+        
+            The stream based ones are preferred
+        */
         template <void(*FN)(Stream&, const T&)>
         void    print()
         {
@@ -358,6 +425,10 @@ namespace yq {
             }
         }
 
+        /*! \brief Registers debug stream formatting handler.
+        
+            The stream based ones are preferred
+        */
         template <void(*FN)(Stream&, T)>
         void    print()
         {
@@ -368,7 +439,10 @@ namespace yq {
             }
         }
 
+        //! Construct from pointer
         Writer(TypeInfo* ti) : TypeInfoWriterBase<T>(ti) {}
+        
+        //! Construct from reference (common)
         Writer(TypeInfo& ti) : TypeInfoWriterBase<T>(&ti) {}
     };
 }
