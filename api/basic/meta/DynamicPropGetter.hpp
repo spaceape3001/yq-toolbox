@@ -24,17 +24,26 @@ namespace yq {
         static_assert(InfoBinder<T>::Defined, "Type must be meta defined!");
         static_assert(is_defined_v<T>, "Type must be meta defined!");
 
+        //! Data meta type
         virtual const Meta&     data() const override
         {
             return meta<T>();
         }
 
+        //! Object meta type
         virtual const Meta&     object() const override
         {
             return meta<C>();
         }
 
     protected:
+    
+        /*! \brief Constructor
+            This constructs a dynamic prop getter.
+            
+            \param[in] propInfo The property we're being associated with.
+            \param[in] sl       Source location where this property getter is being associated at.
+        */
         DynamicPropGetter(PropertyInfo* propInfo, const std::source_location& sl) : PropGetter(propInfo, sl) 
         {
         }
@@ -48,12 +57,30 @@ namespace yq {
     template <typename C, typename T>
     class IPM_PropGetter : public DynamicPropGetter<C,T> {
     public:
+    
+        //! Member variable pointer
         typedef const T (C::*P);
+        
+        /*! \brief Constructor
+            
+            \param[in] propInfo The property we're being associated with.
+            \param[in] sl       Source location where this property getter is being associated at.
+            \param[in] pointer  Pointer to the member variable
+        
+            \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
+        */
         IPM_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, P pointer) : DynamicPropGetter<C,T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
 
+    private:
+    
+        /*! \brief Gets the value of the object
+            \param[out] dst Destination pointer, assumed to be mapped correctly
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            get(void*dst, const void*obj) const override
         {
             assert(dst);
@@ -62,6 +89,11 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the object's value to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -69,6 +101,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Writes the object's value to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -76,7 +113,6 @@ namespace yq {
             return true;
         }
         
-    private:
         P       m_data;
     };
     
@@ -87,12 +123,29 @@ namespace yq {
     template <typename C, typename T>
     class IFV_PropGetter : public DynamicPropGetter<C,T> {
     public:
+    
+        //! Member function pointer
         typedef T (C::*FN)() const;
+
+        /*! \brief Constructor
+            
+            \param[in] propInfo The property we're being associated with.
+            \param[in] sl       Source location where this property getter is being associated at.
+            \param[in] function Member function to get the property value
+        
+            \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
+        */
         IFV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
         
+    private:
+        /*! \brief Gets the property of the object
+            \param[out] dst Destination pointer, assumed to be mapped correctly
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool        get(void* dst, const void* obj) const override
         {
             assert(dst);
@@ -101,6 +154,11 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -108,6 +166,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Writes the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -115,7 +178,6 @@ namespace yq {
             return true;
         }
         
-    private:
         FN      m_function;
     };
     
@@ -128,11 +190,26 @@ namespace yq {
     class IFR_PropGetter : public DynamicPropGetter<C,T> {
     public:
         typedef const T& (C::*FN)() const;
+
+        /*! \brief Constructor
+            
+            \param[in] propInfo The property we're being associated with.
+            \param[in] sl       Source location where this property getter is being associated at.
+            \param[in] function Member function to get the property value
+        
+            \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
+        */
         IFR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
         
+    private:
+        /*! \brief Gets the property of the object
+            \param[out] dst Destination pointer, assumed to be mapped correctly
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool        get(void* dst, const void* obj) const override
         {
             assert(dst);
@@ -141,6 +218,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Prints the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -148,6 +230,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Writes the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -155,7 +242,6 @@ namespace yq {
             return true;
         }
 
-    private:
         FN      m_function;
     };
 
@@ -166,12 +252,29 @@ namespace yq {
     template <typename C, typename T>
     class IFP_PropGetter : public DynamicPropGetter<C,T> {
     public:
+
+        //! Member function pointer
         typedef void (C::*FN)(T&) const;
+
+        /*! \brief Constructor
+            
+            \param[in] propInfo The property we're being associated with.
+            \param[in] sl       Source location where this property getter is being associated at.
+            \param[in] function Member function to get the property value
+        
+            \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
+        */
         IFP_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
         
+    private:
+        /*! \brief Gets the property of the object
+            \param[out] dst Destination pointer, assumed to be mapped correctly
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool        get(void* dst, const void* obj) const override
         {
             assert(dst);
@@ -180,6 +283,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Prints the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -189,6 +297,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Writes the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -198,7 +311,6 @@ namespace yq {
             return true;
         }
 
-    private:
         FN      m_function;
     };
 
@@ -209,12 +321,29 @@ namespace yq {
     template <typename C, typename T>
     class IFPB_PropGetter : public DynamicPropGetter<C,T> {
     public:
+
+        //! Member function pointer
         typedef bool (C::*FN)(T&) const;
+
+        /*! \brief Constructor
+            
+            \param[in] propInfo The property we're being associated with.
+            \param[in] sl       Source location where this property getter is being associated at.
+            \param[in] function Member function to get the property value
+        
+            \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
+        */
         IFPB_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
         
+    private:
+        /*! \brief Gets the property of the object
+            \param[out] dst Destination pointer, assumed to be mapped correctly
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool        get(void* dst, const void* obj) const override
         {
             assert(dst);
@@ -222,6 +351,11 @@ namespace yq {
             return (((const C*) obj)->*m_function)(*(T*) dst);
         }
         
+        /*! \brief Prints the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -232,6 +366,11 @@ namespace yq {
             return true;
         }
         
+        /*! \brief Writes the object's property to the given stream.
+            \param[out] str Destination stream
+            \param[in]  obj Object pointer, assumed to be mapped correctly
+            \return TRUE (always)
+        */
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
@@ -242,7 +381,6 @@ namespace yq {
             return true;
         }
 
-    private:
         FN      m_function;
     };
 }

@@ -58,12 +58,14 @@ namespace yq {
             \param[in] propInfo     Property we're a setter for
             \param[in] sl           Source location that it was declared
             \param[in] pointer      The member variable pointer
+            \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
         IPM_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, P pointer) : DynamicPropSetter<C,T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
         
+    private:
         /*! \brief Sets the property
         
             \param[in] obj      Pointer to object
@@ -92,7 +94,6 @@ namespace yq {
             return TypeInfo::parse(((C*) obj)->*m_data, value);
         }
         
-    private:
         P      m_data;
     };
     
@@ -111,12 +112,14 @@ namespace yq {
             \param[in] propInfo     Property we're a setter for
             \param[in] sl           Source location that it was declared
             \param[in] function     The member function pointer
+            \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
         IFV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
         
+    private:
         /*! \brief Sets the property
         
             \param[in] obj      Pointer to object
@@ -147,7 +150,6 @@ namespace yq {
             return true;
         }
 
-    private:
         FN      m_function;
     };
 
@@ -167,12 +169,14 @@ namespace yq {
             \param[in] propInfo     Property we're a setter for
             \param[in] sl           Source location that it was declared
             \param[in] function     The member function pointer
+            \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
         IFBV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
         
+    private:
         /*! \brief Sets the property
         
             \param[in] obj      Pointer to object
@@ -203,7 +207,6 @@ namespace yq {
             return (((C*) obj)->*m_function)(tmp);
         }
 
-    private:
         FN      m_function;
     };
 
@@ -222,12 +225,14 @@ namespace yq {
             \param[in] propInfo     Property we're a setter for
             \param[in] sl           Source location that it was declared
             \param[in] function     The member function pointer
+            \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
         IFR_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
         
+    private:
         /*! \brief Sets the property
         
             \param[in] obj      Pointer to object
@@ -260,7 +265,6 @@ namespace yq {
             return true;
         }
 
-    private:
         FN      m_function;
     };
 
@@ -279,12 +283,14 @@ namespace yq {
             \param[in] propInfo     Property we're a setter for
             \param[in] sl           Source location that it was declared
             \param[in] function     The member function pointer
+            \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
         IFBR_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
         
+    private:
         /*! \brief Sets the property
         
             \param[in] obj      Pointer to object
@@ -315,7 +321,6 @@ namespace yq {
             return (((C*) obj)->*m_function)(tmp);
         }
 
-    private:
         FN      m_function;
     };
 }
