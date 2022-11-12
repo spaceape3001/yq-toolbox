@@ -24,6 +24,7 @@ namespace yq {
         cube_t<T>       xyz, yzw, zwx, wxy;
         fourth_t<T>     xyzw;
         
+        //! Equality (defaulted) 
         constexpr bool operator==(const Multivector4&) const noexcept = default;
     };
 
@@ -39,6 +40,7 @@ namespace yq {
         nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>,
         nan_v<fourth_t<T>>
     })
+    
     YQ_ZERO_1(Multivector4, Multivector4<T>{
         zero_v<unity_t<T>>, 
         zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
@@ -50,25 +52,32 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    /*! \brief Extracts the bivector component from the multivector
+    */
     template <typename T>
     constexpr Bivector4<T> bivector(const Multivector4<T>& a) noexcept
     {
         return { a.xy, a.yz, a.zw, a.wx, a.xz, a.yw };
     }
 
+    /*! \brief Extracts the quadvector component from the multivector
+    */
     template <typename T>
     constexpr Quadvector4<T> quadvector(const Multivector4<T>& a) noexcept
     {
         return { a.xyzw };
     }
 
-
+    /*! \brief Extracts the trivector component from the multivector
+    */
     template <typename T>
     constexpr Trivector4<T> trivector(const Multivector4<T>& a) noexcept
     {
         return { a.xyz, a.yzw, a.zwx, a.wxy };
     }
 
+    /*! \brief Extracts the vector component from the multivector
+    */
     template <typename T>
     constexpr Vector4<T> vector(const Multivector4<T>& a) noexcept
     {
@@ -98,6 +107,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
+    /*! \brief Affirmation operator
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a) noexcept
     {
@@ -107,6 +118,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  NEGATIVE
 
+    /*! Negation operator
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a) noexcept
     {
@@ -126,6 +139,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    /*! Bivector/multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Bivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -139,6 +154,8 @@ namespace yq {
         };
     }
 
+    /*! Quadvector/multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Bivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -152,6 +169,8 @@ namespace yq {
     }
 
 
+    /*! Bivector/triivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Bivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -164,6 +183,8 @@ namespace yq {
         };
     }
 
+    /*! Bivector/number addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Bivector4<T>& a, unity_t<T>  b) noexcept
     {
@@ -177,6 +198,8 @@ namespace yq {
     }
 
 
+    /*! Bivector/vector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Bivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -190,6 +213,8 @@ namespace yq {
     }
 
 
+    /*! Multivector/Bivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -202,6 +227,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/Bivector self-addition
+    */
     template <typename T>
     Multivector4<T>& operator+=(Multivector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -209,6 +236,8 @@ namespace yq {
         return a;
     }
     
+    /*! Multivector/Multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a, const Multivector4<T>&  b) noexcept
     {
@@ -221,6 +250,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/Multivector self addition
+    */
     template <typename T>
     Multivector4<T>& operator+=(Multivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -232,6 +263,8 @@ namespace yq {
         return a;
     }
 
+    /*! Multivector/quadvector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -244,6 +277,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/quadvector self addition
+    */
     template <typename T>
     Multivector4<T>& operator+=(Multivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -251,6 +286,8 @@ namespace yq {
         return a;
     }
     
+    /*! Multivector/trivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -263,6 +300,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/trivector self-addition
+    */
     template <typename T>
     Multivector4<T>& operator+=(Multivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -270,7 +309,8 @@ namespace yq {
         return a;
     }
     
-    
+    /*! Multivector/scalar addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a, unity_t<T>  b) noexcept
     {
@@ -282,7 +322,9 @@ namespace yq {
             a.xyzw
         };
     }
-
+    
+    /*! Multivector/scalar self addition
+    */
     template <typename T>
     Multivector4<T>& operator+=(Multivector4<T>& a, unity_t<T>  b) noexcept
     {
@@ -290,7 +332,8 @@ namespace yq {
         return a;
     }
 
-
+    /*! Multivector/vector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Multivector4<T>& a, const Vector4<T>&  b) noexcept
     {
@@ -303,6 +346,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/vector self addition
+    */
     template <typename T>
     Multivector4<T>& operator+=(Multivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -310,6 +355,8 @@ namespace yq {
         return a;
     }
 
+    /*! Quadvector/bivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(Quadvector4<T> a, const Bivector4<T>& b) noexcept
     {
@@ -322,6 +369,8 @@ namespace yq {
         };
     }
     
+    /*! Quadvector/multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(Quadvector4<T> a, const Multivector4<T>& b) noexcept
     {
@@ -334,6 +383,8 @@ namespace yq {
         };
     }
 
+    /*! Quadvector/trivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(Quadvector4<T> a, const Trivector4<T>& b) noexcept
     {
@@ -346,6 +397,8 @@ namespace yq {
         };
     }
 
+    /*! Quadvector/scalar addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(Quadvector4<T> a, unity_t<T>  b) noexcept
     {
@@ -358,6 +411,8 @@ namespace yq {
         };
     }
     
+    /*! Quadvector/vector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(Quadvector4<T> a, const Vector4<T>& b) noexcept
     {
@@ -370,6 +425,8 @@ namespace yq {
         };
     }
 
+    /*! Trivector/bivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -382,6 +439,8 @@ namespace yq {
         };
     }
 
+    /*! Trivector/multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -394,6 +453,8 @@ namespace yq {
         };
     }
 
+    /*! Trivector/quadvector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -406,6 +467,8 @@ namespace yq {
         };
     }
 
+    /*! Trivector/scalar addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Trivector4<T>& a, unity_t<T>  b) noexcept
     {
@@ -419,6 +482,8 @@ namespace yq {
     }
         
 
+    /*! Trivector/vector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -431,6 +496,8 @@ namespace yq {
         };
     }
 
+    /*! Scalar/bivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(unity_t<T> a, const Bivector4<T>& b) noexcept
     {
@@ -443,7 +510,8 @@ namespace yq {
         };
     }
 
-
+    /*! scalar/multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(unity_t<T> a, const Multivector4<T>& b) noexcept
     {
@@ -456,7 +524,8 @@ namespace yq {
         };
     }
 
-
+    /*! scalar/quadvector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(unity_t<T> a, const Quadvector4<T>& b) noexcept
     {
@@ -469,6 +538,8 @@ namespace yq {
         };
     }
 
+    /*! Scalar/trivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(unity_t<T> a, const Trivector4<T>& b) noexcept
     {
@@ -481,7 +552,8 @@ namespace yq {
         };
     }
 
-
+    /*! Scalar/vector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(unity_t<T> a, const Vector4<T>& b) noexcept
     {
@@ -494,6 +566,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/bivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Vector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -506,6 +580,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/multivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Vector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -518,6 +594,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/quadvector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Vector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -530,6 +608,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/trivector addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Vector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -542,6 +622,8 @@ namespace yq {
         };
     }    
 
+    /*! Vector/scalar addition
+    */
     template <typename T>
     constexpr Multivector4<T> operator+(const Vector4<T>& a, unity_t<T>  b) noexcept
     {
@@ -558,6 +640,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  SUBTRACTION
 
+    /*! Bivector/multivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Bivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -571,6 +655,8 @@ namespace yq {
         };
     }
 
+    /*! Bivector/quadvector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Bivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -584,6 +670,8 @@ namespace yq {
     }
 
 
+    /*! Bivector/trivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Bivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -596,6 +684,8 @@ namespace yq {
         };
     }
 
+    /*! Bivector/scalar subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Bivector4<T>& a, unity_t<T> b) noexcept
     {
@@ -609,6 +699,8 @@ namespace yq {
     }
 
 
+    /*! Bivector/vector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Bivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -621,7 +713,8 @@ namespace yq {
         };
     }
 
-
+    /*! Multivector/bivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -634,6 +727,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/bivector self subtraction
+    */
     template <typename T>
     Multivector4<T>& operator-=(Multivector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -641,6 +736,8 @@ namespace yq {
         return a;
     }
     
+    /*! Multivector/multivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -653,6 +750,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/multivector self subtraction
+    */
     template <typename T>
     Multivector4<T>& operator-=(Multivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -664,6 +763,8 @@ namespace yq {
         return a;
     }
 
+    /*! Multivector/quadvector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -676,6 +777,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/quadvector self-subtraction
+    */
     template <typename T>
     Multivector4<T>& operator-=(Multivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -683,6 +786,8 @@ namespace yq {
         return a;
     }
     
+    /*! Multivector/trivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -695,14 +800,17 @@ namespace yq {
         };
     }
 
+    /*! Multivector/trivector self subtraction
+    */
     template <typename T>
     Multivector4<T>& operator-=(Multivector4<T>& a, const Trivector4<T>& b) noexcept
     {
         a.xyz-=b.xyz; a.yzw-=b.yzw; a.zwx-=b.zwx; a.wxy-=b.wxy;
         return a;
     }
-    
-    
+        
+    /*! Multivector/scalar subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a, unity_t<T> b) noexcept
     {
@@ -715,6 +823,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/scalar self subtraction
+    */
     template <typename T>
     Multivector4<T>& operator-=(Multivector4<T>& a, unity_t<T> b) noexcept
     {
@@ -722,7 +832,8 @@ namespace yq {
         return a;
     }
 
-
+    /*! Multivector/vector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Multivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -735,6 +846,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/vector self subtraction
+    */
     template <typename T>
     Multivector4<T>& operator-=(Multivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -743,6 +856,8 @@ namespace yq {
     }
 
 
+    /*! Quadvector/bivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(Quadvector4<T> a, const Bivector4<T>& b) noexcept
     {
@@ -755,6 +870,8 @@ namespace yq {
         };
     }
     
+    /*! Quadvector/multivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(Quadvector4<T> a, const Multivector4<T>& b) noexcept
     {
@@ -767,6 +884,8 @@ namespace yq {
         };
     }
 
+    /*! Quadvector/trivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(Quadvector4<T> a, const Trivector4<T>& b) noexcept
     {
@@ -779,6 +898,8 @@ namespace yq {
         };
     }
 
+    /*! Quadvector/scalar subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(Quadvector4<T> a, unity_t<T> b) noexcept
     {
@@ -791,6 +912,8 @@ namespace yq {
         };
     }
 
+    /*! Quadvector/vector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(Quadvector4<T> a, const Vector4<T>& b) noexcept
     {
@@ -803,7 +926,8 @@ namespace yq {
         };
     }
 
-    
+    /*! Trivector/bivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -816,6 +940,8 @@ namespace yq {
         };
     }
 
+    /*! Trivector/multivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -828,6 +954,8 @@ namespace yq {
         };
     }
 
+    /*! Trivector/quadvector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -840,8 +968,8 @@ namespace yq {
         };
     }
     
-
-
+    /*! Trivector/scalar subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Trivector4<T>& a, unity_t<T> b) noexcept
     {
@@ -854,6 +982,8 @@ namespace yq {
         };
     }
         
+    /*! Trivector/vector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -866,8 +996,8 @@ namespace yq {
         };
     }
 
-
-
+    /*! Scalar/bivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(unity_t<T> a, const Bivector4<T>& b) noexcept
     {
@@ -880,8 +1010,8 @@ namespace yq {
         };
     }
 
-
-
+    /*! Scalar/multivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(unity_t<T> a, const Multivector4<T>& b) noexcept
     {
@@ -894,7 +1024,8 @@ namespace yq {
         };
     }
 
-
+    /*! Scalar/quadvector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(unity_t<T> a, const Quadvector4<T>& b) noexcept
     {
@@ -907,7 +1038,8 @@ namespace yq {
         };
     }
 
-
+    /*! Scalar/trivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(unity_t<T> a, const Trivector4<T>& b) noexcept
     {
@@ -920,6 +1052,8 @@ namespace yq {
         };
     }
 
+    /*! Scalar/vector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(unity_t<T> a, const Vector4<T>& b) noexcept
     {
@@ -932,10 +1066,8 @@ namespace yq {
         };
     }
 
-
-    
-
-
+    /*! Vector/bivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Vector4<T>& a, const Bivector4<T>& b) noexcept
     {
@@ -948,6 +1080,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/multivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Vector4<T>& a, const Multivector4<T>& b) noexcept
     {
@@ -960,6 +1094,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/quadvector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Vector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -972,6 +1108,8 @@ namespace yq {
         };
     }
 
+    /*! Vector/trivector subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Vector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -984,6 +1122,8 @@ namespace yq {
         };
     }    
 
+    /*! Vector/scalar subtraction
+    */
     template <typename T>
     constexpr Multivector4<T> operator-(const Vector4<T>& a, unity_t<T> b) noexcept
     {
@@ -996,11 +1136,11 @@ namespace yq {
         };
     }
 
-
-
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    /*! Scalar/multivector multiplication
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector4<T> operator*(T a, const Multivector4<T>&b) noexcept
@@ -1014,6 +1154,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/Scalar multiplication
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector4<T> operator*(const Multivector4<T>&a, T b) noexcept
@@ -1027,6 +1169,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/Scalar self-multiplication
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Multivector4<T>& operator*=(Multivector4<T>& a, T b) noexcept
@@ -1039,6 +1183,10 @@ namespace yq {
         return a;
     }
 
+    /*! \brief Geometric product (vector*vector)
+    
+        This is the foundation of geometric algebra.
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector4<T>   operator* (const Vector4<T>&a, const Vector4<T>&b) 
@@ -1053,6 +1201,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
+    /*! Multivector/Scalar division
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector4<T> operator/(const Multivector4<T>&a, T b) noexcept
@@ -1066,6 +1216,8 @@ namespace yq {
         };
     }
 
+    /*! Multivector/Scalar self-division
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Multivector4<T>& operator/=(Multivector4<T>& a, T b) noexcept
@@ -1078,6 +1230,10 @@ namespace yq {
         return a;
     }
 
+    /*! Vector/vector division
+    
+        Yes, legal in geometric algebra!
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector4<T>   operator/ (const Vector4<T>&a, const Vector4<T>&b) 
