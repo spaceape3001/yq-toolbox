@@ -23,32 +23,65 @@ namespace yq {
     class StaticPropGetter : public PropGetter {
     public:
     
+        /*! \brief Data type for this getter
+        */
         virtual const Meta&     data() const override
         {
             return meta<T>();
         }
 
+        /*! \brief Invalid object type
+        
+            As there's no object for the data, it's always invalid.
+        */
         virtual const Meta&     object() const override
         {
             return invalid();
         }
 
     protected:
+        
+        /*! \brief Constructor
+        
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+        */
         StaticPropGetter(PropertyInfo* propInfo, const std::source_location& sl) : PropGetter(propInfo, sl) 
         {
         }
     };
     
+    /*! \brief Getter for an explicit pointer
+    
+        This maintains an explicit pointer to the global variable, 
+        and binds it to the property getter.
+    */
     template <typename T>
     class XPV_PropGetter : public StaticPropGetter<T> {
     public:
+    
+        //! Variable pointer (always const in the geters)
         typedef const T* P;
         
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] pointer  Pointer to variable
+        */
         XPV_PropGetter(PropertyInfo*propInfo, const std::source_location& sl, P pointer) : StaticPropGetter<T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
     
+    private:
+    
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return Always TRUE
+        */
         virtual bool            get(void*dst, const void*) const override
         {
             assert(dst);
@@ -56,31 +89,58 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo print function returned true
+        */
         virtual bool            print(Stream&str, const void*) const override
         {
-            TypeInfo::print(*m_data, str);
-            return true;
+            return TypeInfo::print(*m_data, str);
         }
         
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo write function returned true
+        */
         virtual bool            write(Stream&str, const void*) const override
         {
-            TypeInfo::write(*m_data, str);
-            return true;
+            return TypeInfo::write(*m_data, str);
         }
 
-    private:
         P      m_data;
     };
     
+    /*! \brief Variable getter using function
+    
+        This implements the variable by ways of a function pointer.
+    */
     template <typename T>
     class XFV_PropGetter : public StaticPropGetter<T> {
     public:
+    
+        //! Function pointer
         typedef T (*FN)();
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
         XFV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
-        
+
+    private:
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return Always TRUE
+        */
         virtual bool    get(void* dst, const void*) const  override
         {
             assert(dst);
@@ -88,29 +148,58 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo print function returned true
+        */
         virtual bool            print(Stream&str, const void*) const override
         {
             return TypeInfo::print(m_function(), str);
         }
         
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo write function returned true
+        */
         virtual bool            write(Stream&str, const void*) const override
         {
             return TypeInfo::write(m_function(), str);
         }
 
-    private:
         FN      m_function;
     };
     
+    /*! \brief Variable getter using function
+    
+        This implements the variable by ways of a function pointer.
+    */
     template <typename T>
     class XFR_PropGetter : public StaticPropGetter<T> {
     public:
+        //! Function pointer
         typedef T& (*FN)();
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
         XFR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
-        
+    
+    private:
+
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return Always TRUE
+        */
         virtual bool    get(void* dst, const void*) const  override
         {
             assert(dst);
@@ -118,29 +207,59 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo print function returned true
+        */
         virtual bool            print(Stream&str, const void*) const override
         {
             return TypeInfo::print(m_function(), str);
         }
         
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo write function returned true
+        */
         virtual bool            write(Stream&str, const void*) const override
         {
             return TypeInfo::write(m_function(), str);
         }
 
-    private:
         FN      m_function;
     };
 
+    /*! \brief Variable getter using function
+    
+        This implements the variable by ways of a function pointer.
+    */
     template <typename T>
     class XFCR_PropGetter : public StaticPropGetter<T> {
     public:
+
+        //! Function pointer
         typedef const T& (*FN)();
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
         XFCR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
         
+    private:
+
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return Always TRUE
+        */
         virtual bool    get(void* dst, const void*) const  override
         {
             assert(dst);
@@ -148,29 +267,59 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo print function returned true
+        */
         virtual bool            print(Stream&str, const void*) const override
         {
             return TypeInfo::print(m_function(), str);
         }
         
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo write function returned true
+        */
         virtual bool            write(Stream&str, const void*) const override
         {
             return TypeInfo::write(m_function(), str);
         }
 
-    private:
         FN      m_function;
     };
 
+    /*! \brief Variable getter using function
+    
+        This implements the variable by ways of a function pointer.
+    */
     template <typename T>
     class XFVR_PropGetter : public StaticPropGetter<T> {
     public:
+
+        //! Function pointer
         typedef void (*FN)(T&);
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
         XFVR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
 
+    private:
+
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return Always TRUE
+        */
         virtual bool            get(void* dst, const void*) const override
         {
             assert(dst);
@@ -178,6 +327,11 @@ namespace yq {
             return true;
         }
 
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo print function returned true
+        */
         virtual bool            print(Stream&str, const void*) const override
         {
             T   tmp;
@@ -185,6 +339,11 @@ namespace yq {
             return TypeInfo::print(tmp, str);
         }
         
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the TypeInfo write function returned true
+        */
         virtual bool            write(Stream&str, const void*) const override
         {
             T   tmp;
@@ -192,26 +351,50 @@ namespace yq {
             return TypeInfo::print(tmp, str);
         }
 
-
-    private:
         FN      m_function;
     };
     
+    /*! \brief Variable getter using function
+    
+        This implements the variable by ways of a function pointer.
+    */
     template <typename T>
     class XFBR_PropGetter : public StaticPropGetter<T> {
     public:
+
+        //! Function pointer
         typedef bool (*FN)(T&);
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
         XFBR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
         
+    private:
+
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return TRUE if the function returns true
+        */
         virtual bool    get(void* dst, const void*) const override
         {
             assert(dst);
             return m_function(*(T*) dst);
         }
 
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the getter function AND TypeInfo print function returned true
+        */
         virtual bool            print(Stream&str, const void*) const override
         {
             T   tmp;
@@ -220,6 +403,11 @@ namespace yq {
             return TypeInfo::print(tmp, str);
         }
         
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the getter function AND TypeInfo write function returned true
+        */
         virtual bool            write(Stream&str, const void*) const override
         {
             T   tmp;
@@ -228,7 +416,6 @@ namespace yq {
             return TypeInfo::print(tmp, str);
         }
 
-    private:
         FN      m_function;
     };
     
