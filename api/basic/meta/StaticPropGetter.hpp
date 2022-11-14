@@ -15,7 +15,7 @@ namespace yq {
     /*! \brief Abstract static/global getter of type
     
         This is an abstract getter bound to a specific data type.  Derived getters from this class only
-        need to implement the "GET" routine and the constructor.
+        need to implement the "GET", "PRINT" & "WRITE" routines and the constructor.
         
         \tparam T   data type being bound to
     */
