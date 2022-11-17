@@ -15,7 +15,11 @@ namespace yq {
         This becomes true when the error drops beneath the threshhold.
     */
     struct Absolute {
+    
+        //! Threshold for detection (pass/failure)
         double      threshhold;
+        
+        //! Does the actual compoutation, passing if the error doesn't exceed the threshhold.
         bool operator()(double error, double) const
         {
             return fabs(error) <= threshhold;
