@@ -13,13 +13,22 @@
 namespace yq {
 
     /*! \brief Axially aligned box in 1 dimension(s).
+    
+        \note default construction does not enforce that lo <= hi
     */
     template <typename T>
     struct AxBox1 {
+    
+        //! Component type (ie, capture our argument)
         using component_t   = T;
         
-        Vector1<T>  lo, hi;
+        //! Our low corner 
+        Vector1<T>  lo;
         
+        //! Our high corner
+        Vector1<T>  hi;
+        
+        //! Defaulted equatlity operator
         constexpr bool operator==(const AxBox1&) const noexcept = default;
     };
     
@@ -28,11 +37,22 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates an axially alligned box from one corner vertex
+    */
+    template <typename T>
+    constexpr AxBox1<T> aabb(const Vector1<T>& a) noexcept
+    {
+        return { a, a };
+    }
+
+    /*! \brief Creates an axially alligned box from two corner vertices
+    */
     template <typename T>
     constexpr AxBox1<T> aabb(const Vector1<T>& a, const Vector1<T>& b) noexcept
     {
         return { min_elem(a,b), max_elem(a,b) };
     }
+
 
     YQ_NAN_1(AxBox1, { nan_v<Vector1<T>>, nan_v<Vector1<T>>});
     YQ_ZERO_1(AxBox1, { zero_v<Vector1<T>>, zero_v<Vector1<T>>});
@@ -40,6 +60,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    /*! \brief Returns the enumerated corners of the box
+    */
     template <typename T>
     AxCorners1<Vector1<T>>  corners(const AxBox1<T>& v)
     {
@@ -49,6 +71,8 @@ namespace yq {
         };
     }
 
+    /*! \brief Returns the x-range of the box
+    */
     template <typename T>
     constexpr Range<T>  x_range(const AxBox1<T>& v) noexcept
     {
@@ -61,6 +85,7 @@ namespace yq {
     YQ_IS_FINITE_1( AxBox1, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox1, is_nan(v.lo) || is_nan(v.hi))
 
+    /*! \brief Tests for a valid box */
     template <typename T>
     constexpr bool    is_valid(const AxBox1<T>& a) noexcept
     {
@@ -144,6 +169,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
+    /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
+    
+        \param[in] bx   The axially aligned box
+        \param[in] v    The local coordinate
+        \return The global coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector1<T>   local_to_global(const AxBox1<T>& bx, const Vector1<T>& v) noexcept
@@ -151,6 +182,12 @@ namespace yq {
         return mul_elem(one_v<Vector1<T>>-v, bx.lo) + mul_elem(v, bx.hi);
     }
 
+    /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
+
+        \param[in] bx   The axially aligned box
+        \param[in] v    The global coordinate
+        \return The local coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector1<T>   global_to_local(const AxBox1<T>& bx, const Vector1<T>& v) noexcept
