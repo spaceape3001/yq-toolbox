@@ -19,11 +19,13 @@ namespace yq {
     */
     template <typename T>
     struct AxBox2 {
+        //! Component type (ie, the argument)
         using component_t   = T;
         
         Vector2<T>  lo; //!< Lower bounds
         Vector2<T>  hi; //!< Upper bounds
         
+        //! Equality operator (defaulted)
         constexpr bool operator==(const AxBox2&) const noexcept = default;
     };
 
@@ -32,42 +34,57 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a 2D axially aligned box from one vector
+    */
+    template <typename T>
+    constexpr AxBox2<T> aabb(const Vector2<T>& a)
+    {
+        return { a, a };
+    }
+    
+    /*! \brief Creates a 2D axially aligned box from two vectors
+    */
     template <typename T>
     constexpr AxBox2<T> aabb(const Vector2<T>& a, const Vector2<T>& b)
     {
         return { min_elem(a,b), max_elem(a,b) };
     }
-    
+
     YQ_NAN_1(AxBox2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>});
     YQ_ZERO_1(AxBox2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>});
 
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Northeast corner of the box
     template <typename T>
     constexpr Vector2<T>  northeast(const AxBox2<T>& ax) noexcept
     {
         return ax.hi;
     }
 
+    //! Northwest corner of the box
     template <typename T>
     constexpr Vector2<T>  northwest(const AxBox2<T>& ax) noexcept
     {
         return { ax.lo.x, ax.hi.y };
     }
 
+    //! Souttheast corner of the box
     template <typename T>
     constexpr Vector2<T>  southeast(const AxBox2<T>& ax) noexcept
     {
         return { ax.hi.x, ax.lo.y };
     }
 
+    //! Soutthwest corner of the box
     template <typename T>
     constexpr Vector2<T>  southwest(const AxBox2<T>& ax) noexcept
     {
         return ax.lo;
     }
 
+    //! Corners of the box
     template <typename T>
     AxCorners2<Vector2<T>>  corners(const AxBox2<T>& v)
     {
@@ -79,12 +96,14 @@ namespace yq {
         };
     }
 
+    //! X Range of the box
     template <typename T>
     constexpr Range<T>  x_range(const AxBox2<T>& v) noexcept
     {
         return range(v.lo.x, v.hi.x);
     }
 
+    //! Y Range of the box
     template <typename T>
     constexpr Range<T>  y_range(const AxBox2<T>& v) noexcept
     {
@@ -97,6 +116,7 @@ namespace yq {
     YQ_IS_FINITE_1( AxBox2, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox2, is_nan(v.lo) || is_nan(v.hi))
 
+    //! Checks for validity (hi >= lo)
     template <typename T>
     constexpr bool    is_valid(const AxBox2<T>& a) noexcept
     {
@@ -177,6 +197,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
+    /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
+    
+        \param[in] bx   The axially aligned box
+        \param[in] v    The local coordinate
+        \return The global coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector2<T>   local_to_global(const AxBox2<T>& bx, const Vector2<T>& v) noexcept
@@ -184,6 +210,12 @@ namespace yq {
         return mul_elem(one_v<Vector2<T>>-v, bx.lo) + mul_elem(v, bx.hi);
     }
 
+    /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
+
+        \param[in] bx   The axially aligned box
+        \param[in] v    The global coordinate
+        \return The local coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector2<T>   global_to_local(const AxBox2<T>& bx, const Vector2<T>& v) noexcept
@@ -214,7 +246,6 @@ namespace yq {
         } else
             return {};
     }
-
     
     /*! \brief Checks for full occlusion
     
@@ -246,12 +277,15 @@ namespace yq {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }    
 
+    /*! \brief Computes the perimeter of the box */
     template <typename T>
     constexpr T       perimeter(const AxBox2<T>& ax) noexcept
     {
         return 2. * component_sum(ax.hi-ax.lo);
     }
 
+    /*! \brief Returns the span (dimensions) of the box
+    */
     template <typename T>
     constexpr Vector2<T>    span(const AxBox2<T>&a) noexcept
     {
