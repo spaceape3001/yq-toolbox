@@ -13,13 +13,23 @@
 namespace yq {
 
     /*! \brief Axially aligned box in 3 dimension(s).
+
+        Note, lo vs hi isn't enforced, however it's expected that lo < hi, which 
+        is what "is_valid" will check.
     */
     template <typename T>
     struct AxBox3 {
+    
+        //! Component type (capturing the template argument)
         using component_t   = T;
         
-        Vector3<T>  lo, hi;
+        //! Low corner
+        Vector3<T>  lo;
         
+        //! High corner
+        Vector3<T>  hi;
+        
+        //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox3&) const noexcept = default;
     };
 
@@ -28,6 +38,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a 3D axially aligned box from one vector
+    */
+    template <typename T>
+    constexpr AxBox3<T> aabb(const Vector3<T>& a) noexcept
+    {
+        return { a, a };
+    }
+
+    /*! \brief Creates a 3D axially aligned box from two vectors
+    */
     template <typename T>
     constexpr AxBox3<T> aabb(const Vector3<T>& a, const Vector3<T>& b) noexcept
     {
@@ -40,13 +60,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
-
+    /*! \brief Returns the north east bottom corner
+    */
     template <typename T>
     constexpr Vector3<T>  northeast_bottom(const AxBox3<T>& ax) noexcept
     {
         return { ax.hi.x, ax.hi.y, ax.lo.z };
    }
 
+    /*! \brief Returns the north east top corner
+    */
     template <typename T>
     constexpr Vector3<T>  northeast_top(const AxBox3<T>& ax) noexcept
     {
@@ -54,11 +77,15 @@ namespace yq {
     }
 
 
+    /*! \brief Returns the north west bottom corner
+    */
     template <typename T>
     constexpr Vector3<T>  northwest_bottom(const AxBox3<T>& ax) noexcept
     {
         return { ax.lo.x, ax.hi.y, ax.lo.z };
     }
+    /*! \brief Returns the north west top corner
+    */
 
     template <typename T>
     constexpr Vector3<T>  northwest_top(const AxBox3<T>& ax) noexcept
@@ -66,30 +93,40 @@ namespace yq {
         return { ax.lo.x, ax.hi.y, ax.hi.z };
     }
 
+    /*! \brief Returns the south east bottom corner
+    */
     template <typename T>
     constexpr Vector3<T>  southeast_bottom(const AxBox2<T>& ax) noexcept
     {
         return { ax.hi.x, ax.lo.y, ax.lo.z };
     }
 
+    /*! \brief Returns the south east top corner
+    */
     template <typename T>
     constexpr Vector3<T>  southeast_top(const AxBox2<T>& ax) noexcept
     {
         return { ax.hi.x, ax.lo.y, ax.hi.z };
     }
 
+    /*! \brief Returns the south west bottom corner
+    */
     template <typename T>
     constexpr Vector3<T>  southwest_bottom(const AxBox2<T>& ax) noexcept
     {
         return ax.lo;
     }
 
+    /*! \brief Returns the south west top corner
+    */
     template <typename T>
     constexpr Vector3<T>  southwest_top(const AxBox2<T>& ax) noexcept
     {
         return { ax.lo.x, ax.lo.y, ax.hi.z };
     }
 
+    /*! \brief Returns ALL the corners of the box 
+    */
     template <typename T>
     constexpr AxCorners3<Vector3<T>>  corners(const AxBox3<T>& v) noexcept
     {
@@ -105,19 +142,21 @@ namespace yq {
         };
     }
 
-
+    //! X Range of the box
     template <typename T>
     constexpr Range<T>  x_range(const AxBox3<T>& v) noexcept
     {
         return range(v.lo.x, v.hi.x);
     }
 
+    //! Y Range of the box
     template <typename T>
     constexpr Range<T>  y_range(const AxBox3<T>& v) noexcept
     {
         return range(v.lo.y, v.hi.y);
     }
 
+    //! Z Range of the box
     template <typename T>
     constexpr Range<T>  z_range(const AxBox3<T>& v) noexcept
     {
@@ -130,6 +169,7 @@ namespace yq {
     YQ_IS_FINITE_1( AxBox3, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox3, is_nan(v.lo) || is_nan(v.hi))
 
+    //! Checks for validity (hi >= lo)
     template <typename T>
     constexpr bool    is_valid(const AxBox3<T>& a) noexcept
     {
@@ -213,6 +253,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
+    /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
+    
+        \param[in] bx   The axially aligned box
+        \param[in] v    The local coordinate
+        \return The global coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector3<T>   local_to_global(const AxBox3<T>& bx, const Vector3<T>& v) noexcept
@@ -220,6 +266,12 @@ namespace yq {
         return mul_elem(one_v<Vector3<T>>-v, bx.lo) + mul_elem(v, bx.hi);
     }
 
+    /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
+
+        \param[in] bx   The axially aligned box
+        \param[in] v    The global coordinate
+        \return The local coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector3<T>   global_to_local(const AxBox3<T>& bx, const Vector3<T>& v) noexcept
@@ -274,6 +326,8 @@ namespace yq {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }
 
+    /*! \brief Returns the span (dimensions) of the box
+    */
     template <typename T>
     constexpr Vector3<T>    span(const AxBox3<T>&a) noexcept
     {
@@ -289,6 +343,8 @@ namespace yq {
         return 2.0 * ((del.x*del.y)+(del.y*del.z)+(del.z*del.x));
     }
 
+    /*! \brief Computes the volume of the box
+    */
     template <typename T>
     constexpr cube_t<T>       volume(const AxBox3<T>& bx) noexcept
     {
