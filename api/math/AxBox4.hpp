@@ -16,10 +16,16 @@ namespace yq {
     */
     template <typename T>
     struct AxBox4 {
+        //! Component type (ie, the argument)
         using component_t   = T;
         
-        Vector4<T>  lo, hi;
+        //! Low corner
+        Vector4<T>  lo;
+
+        //! High corner
+        Vector4<T>  hi;
         
+        //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox4&) const noexcept = default;
     };
     
@@ -28,6 +34,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a 4D axially aligned box from one vector
+    */
+    template <typename T>
+    constexpr AxBox4<T> aabb(const Vector4<T>& a) noexcept
+    {
+        return { a, a };
+    }
+
+    /*! \brief Creates a 4D axially aligned box from two vectors
+    */
     template <typename T>
     constexpr AxBox4<T> aabb(const Vector4<T>& a, const Vector4<T>& b) noexcept
     {
@@ -40,6 +56,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    /*! \brief Returns ALL the corners of the box 
+    */
     template <typename T>
     constexpr AxCorners4<Vector4<T>>  corners(const AxBox4<T>& v) noexcept
     {
@@ -66,24 +84,28 @@ namespace yq {
         };
     }
 
+    //! X Range of the box
     template <typename T>
     constexpr Range<T>  x_range(const AxBox4<T>& v) noexcept
     {
         return range(v.lo.x, v.hi.x);
     }
 
+    //! Y Range of the box
     template <typename T>
     constexpr Range<T>  y_range(const AxBox4<T>& v) noexcept
     {
         return range(v.lo.y, v.hi.y);
     }
 
+    //! Z Range of the box
     template <typename T>
     constexpr Range<T>  z_range(const AxBox4<T>& v) noexcept
     {
         return range(v.lo.z, v.hi.z);
     }
 
+    //! W Range of the box
     template <typename T>
     constexpr Range<T>  w_range(const AxBox4<T>& v) noexcept
     {
@@ -97,6 +119,7 @@ namespace yq {
     YQ_IS_NAN_1(AxBox4, is_nan(v.lo) || is_nan(v.hi))
 
 
+    //! Checks for validity (hi >= lo)
     template <typename T>
     constexpr bool    is_valid(const AxBox4<T>& a) noexcept
     {
@@ -178,6 +201,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
+    /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
+    
+        \param[in] bx   The axially aligned box
+        \param[in] v    The local coordinate
+        \return The global coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector4<T>   local_to_global(const AxBox4<T>& bx, const Vector4<T>& v) noexcept
@@ -185,6 +214,12 @@ namespace yq {
         return mul_elem(one_v<Vector4<T>>-v, bx.lo) + mul_elem(v, bx.hi);
     }
 
+    /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
+
+        \param[in] bx   The axially aligned box
+        \param[in] v    The global coordinate
+        \return The local coordinate
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Vector4<T>   global_to_local(const AxBox4<T>& bx, const Vector4<T>& v) noexcept
@@ -209,6 +244,8 @@ namespace yq {
             return {};
     }
 
+    /*! \brief Computes the hyper volume of the box
+    */
     template <typename T>
     constexpr fourth_t<T> hypervolume(const AxBox4<T>& bx) noexcept
     {
@@ -246,6 +283,8 @@ namespace yq {
         return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
     }
 
+    /*! \brief Returns the span (dimensions) of the box
+    */
     template <typename T>
     constexpr Vector4<T>    span(const AxBox4<T>&a) noexcept
     {
