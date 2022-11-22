@@ -24,14 +24,18 @@ namespace yq {
             This defines a GLOBAL variable for the given scope, read/write.
             
             \tparam T   type
+            \param[in] szName       Property name... needs to be a string that persists
+            \param[in] pointer      Pointer to the variable
+            \param[in] isReadOnly   TRUE for read-only variable
         */
         template <typename T>
-        PropertyInfo::Writer<T>       variable(std::string_view szName, T* pointer, const std::source_location& sl=std::source_location::current())
+        PropertyInfo::Writer<T>       variable(std::string_view szName, T* pointer, bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
             PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
             new XPV_PropGetter<T>(ret, sl, pointer);
-            new XPV_PropSetter<T>(ret, sl, pointer);
+            if(!isReadOnly)
+                new XPV_PropSetter<T>(ret, sl, pointer);
             return PropertyInfo::Writer<T>{ret};
         }
 

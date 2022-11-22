@@ -21,15 +21,17 @@ namespace yq {
             This defines a property for the type/object
         
             \tparam T       type
-            \param  pointer Pointer to class/type member
+            \param pointer          Pointer to class/type member
+            \param[in] isReadOnly   Set to TRUE to make this read-only property
         */
         template <typename T>
-        PropertyInfo::Writer<T>     property(std::string_view szName, T (C::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyInfo::Writer<T>     property(std::string_view szName, T (C::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
             PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATE);
             new IPM_PropGetter<C,T>(ret, sl, pointer);
-            new IPM_PropSetter<C,T>(ret, sl, pointer);
+            if(!isReadOnly)
+                new IPM_PropSetter<C,T>(ret, sl, pointer);
             return PropertyInfo::Writer<T>{ret};
         }
         
