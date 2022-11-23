@@ -19,7 +19,7 @@ namespace yq {
 
     template <typename T>
     requires trait::has_sqrt_v<T>
-    bool sqrt(const T& v) 
+    auto sqrt(const T& v) 
     {
         return sqrt_eval<T>::compute(v);
     }
