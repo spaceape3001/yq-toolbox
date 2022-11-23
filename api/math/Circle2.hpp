@@ -151,6 +151,17 @@ namespace yq {
         return std::numbers::pi_v<ieee754_t<T>> * (a.radius*a.radius);
     }
     
+    /*! \brief Computes smallest circle containing the given box
+    
+        \note The resulting circle will be centered within the box
+    */
+    template <typename T>
+    constexpr Circle2<T>    circumcircle(const AxBox2<T>& a) 
+    {
+        static constexpr const T half_v  = T{0.5};
+        return { half_v * (a.hi+a.lo), 0.5*length(a.hi-a.lo) };
+    }
+    
     /*! \brief Computes the circumference of a circle
     */
     template <typename T>
