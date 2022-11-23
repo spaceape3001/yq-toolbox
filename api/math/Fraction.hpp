@@ -38,7 +38,7 @@ namespace yq {
 //  BASIC/CRITICAL FUNCTIONS
     
     template <typename I>
-    bool        is_valid(Fraction<I> a)
+    constexpr bool        is_valid(Fraction<I> a)
     {
         return a.den != I{0};
     }

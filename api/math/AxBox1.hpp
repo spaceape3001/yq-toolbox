@@ -82,7 +82,14 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    YQ_IS_FINITE_1( AxBox1, is_finite(v.lo) && is_finite(v.hi))
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const AxBox1<T>&v)
+    {
+        return is_finite(v.lo) && is_finite(v.hi);
+    }
+
     YQ_IS_NAN_1(AxBox1, is_nan(v.lo) || is_nan(v.hi))
 
     /*! \brief Tests for a valid box */

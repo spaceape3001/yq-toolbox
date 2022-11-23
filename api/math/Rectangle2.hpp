@@ -62,7 +62,6 @@ namespace yq {
 //  BASIC FUNCTIONS
 
     YQ_IS_NAN_1(Rectangle2, is_nan(v.position) || is_nan(v.size))
-    YQ_IS_FINITE_1(Rectangle2, is_finite(v.position) && is_finite(v.size))
 
     template <typename T>
     constexpr AxBox2<T>   aabb(const Rectangle2<T>& rect) noexcept
@@ -79,6 +78,12 @@ namespace yq {
             southeast(v),
             northeast(v)
         };
+    }
+
+    template <typename T>
+    bool is_finite(const Rectangle2<T>& v)
+    {
+        return is_finite(v.position) && is_finite(v.size());
     }
 
 //  --------------------------------------------------------

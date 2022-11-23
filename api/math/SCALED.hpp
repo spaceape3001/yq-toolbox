@@ -70,13 +70,13 @@ namespace yq {
 //  BASIC FUNCTIONS
 
     template <typename T, typename DIM, double K>
-    bool is_finite(const SCALED<T,DIM,K>& v)
+    constexpr bool is_finite(const SCALED<T,DIM,K>& v)
     {
         return is_finite(v.value);
     }
 
     template <typename T, typename DIM, double K>
-    bool is_nan(const SCALED<T,DIM,K>& v)
+    constexpr bool is_nan(const SCALED<T,DIM,K>& v)
     {
         return is_nan(v.value);
     }

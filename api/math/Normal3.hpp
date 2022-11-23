@@ -45,10 +45,18 @@ namespace yq {
         return { ~Vector3<T>{x,y,z} };
     }
 
+//  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const Normal3<T>&v)
+    { 
+        return is_finite(v.direction);
+    }
+
     YQ_IS_NAN_1(Normal3, is_nan(v.direction))
-    YQ_IS_FINITE_1(Normal3, is_finite(v.direction))
 
 //  --------------------------------------------------------
 //  POSITIVE

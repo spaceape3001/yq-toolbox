@@ -179,7 +179,7 @@ namespace yq {
     
 
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
+    requires has_sqrt_v<square_t<T>>
     T       perimeter(const Polygon2<T>& poly)
     {
         if(poly.vertex.empty())

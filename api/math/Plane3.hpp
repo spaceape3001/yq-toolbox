@@ -38,7 +38,14 @@ namespace yq {
     YQ_ZERO_1(Plane3, { zero_v<Normal3<ieee754_t<T>>>, zero_v<T> })
     
     
-    YQ_IS_FINITE_1(Plane3, is_finite(v.normal) && is_finite(v.distance))
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const Plane3<T>&v)
+    { 
+        return is_finite(v.normal) && is_finite(v.distance);
+    }
+
     YQ_IS_NAN_1(Plane3, is_nan(v.normal) || is_nan(v.distance))
 }
 

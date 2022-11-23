@@ -49,8 +49,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const Trivector3<T>&v)
+    { 
+        return is_finite(v.xyz);
+    }
+
     YQ_IS_NAN_1(Trivector3, is_nan(v.xyz))
-    YQ_IS_FINITE_1(Trivector3, is_finite(v.xyz))
 
 //  --------------------------------------------------------
 //  POSITIVE

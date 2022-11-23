@@ -22,5 +22,18 @@ namespace yq {
         
         bool operator==(const AxCorners2&) const noexcept = default;
     };
+
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const AxCorners2<T>&v)
+    {
+        return 
+            is_finite(v.ll) && 
+            is_finite(v.lh) &&
+            is_finite(v.hl) && 
+            is_finite(v.hh)
+        ;
+    }
 }
 

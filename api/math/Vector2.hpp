@@ -120,9 +120,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const Vector2<T>&v)
+    { 
+        return is_finite(v.x) && is_finite(v.y);
+    }
+
     YQ_IS_NAN_1(Vector2, is_nan(v.x) || is_nan(v.y))
-    YQ_IS_FINITE_1(Vector2, is_finite(v.x) && is_finite(v.y))
-        
 
     /*! \brief Square of the vector's length
     
@@ -139,9 +145,10 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    requires trait::has_sqrt_v<T>
+    requires has_sqrt_v<T>
     auto    length(const Vector2<T>& a)
     {
+        //  consider std::hypot instead....
         return sqrt(length2(a));
     }
 
@@ -170,7 +177,7 @@ namespace yq {
 
 
     template <typename T>
-    requires trait::has_sqrt_v<T>
+    requires has_sqrt_v<T>
     Vector2<quotient_t<T,T>> operator~(const Vector2<T>& a)
     {
         auto l = one_v<T>/length(a);
@@ -365,7 +372,7 @@ namespace yq {
     }
 
     template <typename T>
-    requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
+    requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian       angle(const Vector2<T>&a, const Vector2<T>& b)
     {
         return acos( std::clamp<T>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
@@ -373,7 +380,7 @@ namespace yq {
 
 
     template <typename T, typename DIM1, typename DIM2>
-    requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
+    requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian      angle(const Vector2<MKS<T,DIM1>>&a, const Vector2<MKS<T,DIM2>>& b)
     {
         using one_t = MKS<T,dim::None>;

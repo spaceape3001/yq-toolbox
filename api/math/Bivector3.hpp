@@ -63,8 +63,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const Bivector3<T>&v)
+    {
+        return is_finite(v.xy) && is_finite(v.yz) && is_finite(v.zx);
+    }
+
     YQ_IS_NAN_1(Bivector3, is_nan(v.xy) || is_nan(v.yz) || is_nan(v.zx))
-    YQ_IS_FINITE_1(Bivector3, is_finite(v.xy) && is_finite(v.yz) && is_finite(v.zx))
 
 
 //  --------------------------------------------------------

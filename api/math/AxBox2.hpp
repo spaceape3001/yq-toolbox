@@ -50,6 +50,7 @@ namespace yq {
         return { min_elem(a,b), max_elem(a,b) };
     }
 
+
     YQ_NAN_1(AxBox2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>});
     YQ_ZERO_1(AxBox2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>});
 
@@ -113,7 +114,14 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    YQ_IS_FINITE_1( AxBox2, is_finite(v.lo) && is_finite(v.hi))
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const AxBox2<T>&v)
+    {
+        return is_finite(v.lo) && is_finite(v.hi);
+    }
+
     YQ_IS_NAN_1(AxBox2, is_nan(v.lo) || is_nan(v.hi))
 
     //! Checks for validity (hi >= lo)

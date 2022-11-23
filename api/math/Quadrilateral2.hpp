@@ -33,7 +33,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    YQ_IS_FINITE_1(Quadrilateral2, is_finite(v.a) && is_finite(v.b) && is_finite(v.c) && is_finite(v.d))
+//  --------------------------------------------------------
+//  BASIC FUNCTIONS
+
+    template <typename T>
+    constexpr bool is_finite(const Quadrilateral2<T>& v)
+    {
+        return is_finite(v.a) && is_finite(v.b) && is_finite(v.c) && is_finite(v.d);
+    }
+
     YQ_IS_NAN_1(Quadrilateral2, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) || is_nan(v.d) )
 
     template <typename T>
@@ -78,7 +86,7 @@ namespace yq {
     }
 
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
+    requires has_sqrt_v<square_t<T>>
     T       perimeter(const Quadrilateral2<T>& quad)
     {
         return length(quad.b-quad.a)+length(quad.c-quad.b)+length(quad.d-quad.c)+length(quad.a-quad.d);

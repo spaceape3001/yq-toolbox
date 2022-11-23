@@ -83,11 +83,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Checks for finiteness
+    */
+    template <typename T>
+    constexpr bool is_finite(const Tensor11<T>&v)
+    { 
+        return 
+            is_finite(v.xx)
+        ;
+    }
 
-    YQ_IS_FINITE_1(Tensor11, 
-        is_finite(v.xx)
-    )
-    
     YQ_IS_NAN_1(Tensor11,  
         is_nan(v.xx)
     )
