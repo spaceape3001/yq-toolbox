@@ -84,6 +84,13 @@ namespace yq {
         }
 
 
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
         template <typename T>
         PropertyInfo::PropW<C,T>    property(std::string_view szName, void (C::*function)(T&) const, const std::source_location& sl=std::source_location::current())
         {
@@ -94,6 +101,13 @@ namespace yq {
         }
         
     
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
         template <typename T>
         PropertyInfo::PropW<C,T>    property(std::string_view szName, bool (C::*function)(T&) const, const std::source_location& sl=std::source_location::current())
         {
@@ -103,6 +117,70 @@ namespace yq {
             return PropertyInfo::PropW<C,T>{ret};
         }
         
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
+        template <typename T>
+        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (*function)(C), const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            new ZFVV_PropGetter<C,T>(ret, sl, function);
+            return PropertyInfo::PropW<C,T>{ret};
+        }
+
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
+        template <typename T>
+        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (*function)(const C&), const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            new ZFRV_PropGetter<C,T>(ret, sl, function);
+            return PropertyInfo::PropW<C,T>{ret};
+        }
+
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
+        template <typename T>
+        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (*function)(C), const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            new ZFVR_PropGetter<C,T>(ret, sl, function);
+            return PropertyInfo::PropW<C,T>{ret};
+        }
+
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
+        template <typename T>
+        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (*function)(const C&), const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            new ZFRR_PropGetter<C,T>(ret, sl, function);
+            return PropertyInfo::PropW<C,T>{ret};
+        }
+
         template <typename ... Args>
         MethodInfo::Writer          method(std::string_view szName, void (C::*function)(Args...), const std::source_location& sl=std::source_location::current());
         
