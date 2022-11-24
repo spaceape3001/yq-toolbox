@@ -20,7 +20,7 @@ namespace yq {
     template <typename T>
     struct AxBox2 {
         //! Component type (ie, the argument)
-        using component_t   = T;
+        using component_type    = T;
         
         Vector2<T>  lo; //!< Lower bounds
         Vector2<T>  hi; //!< Upper bounds
@@ -76,7 +76,8 @@ namespace yq {
     constexpr Vector2<T>  southeast(const AxBox2<T>& ax) noexcept
     {
         return { ax.hi.x, ax.lo.y };
-    }
+    }    //! Tests for finiteness
+
 
     //! Soutthwest corner of the box
     template <typename T>

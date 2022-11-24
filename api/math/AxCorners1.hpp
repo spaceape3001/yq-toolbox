@@ -24,7 +24,7 @@ namespace yq {
         T   h;
         
         //! Equality operator
-        bool operator==(const AxCorners1&) const noexcept = default;
+        constexpr bool operator==(const AxCorners1&) const noexcept = default;
     };
 
     /*! \brief Checks for finiteness

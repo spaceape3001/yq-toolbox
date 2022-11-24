@@ -20,7 +20,7 @@ namespace yq {
     struct AxBox1 {
     
         //! Component type (ie, capture our argument)
-        using component_t   = T;
+        using component_type    = T;
         
         //! Our low corner 
         Vector1<T>  lo;

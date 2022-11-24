@@ -27,6 +27,7 @@ namespace yq {
         }
     };
 
+    //! Tests for finiteness
     inline constexpr bool is_finite(const Absolute& v)
     {
         return is_finite(v.threshhold);

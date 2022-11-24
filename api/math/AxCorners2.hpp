@@ -13,14 +13,24 @@ namespace yq {
     */
     template <typename T>
     struct AxCorners2 {
+    
+        //! Component type (captures the argument)
         using component_type    = T;
     
+        //! Lower-lower corner
         T   ll;
+
+        //! Lower-upper corner
         T   lh;
+
+        //! Upper-lower corner
         T   hl;
+
+        //! Upper-upper corner
         T   hh;
         
-        bool operator==(const AxCorners2&) const noexcept = default;
+        //! Equality operator (defaulted)
+        constexpr bool operator==(const AxCorners2&) const noexcept = default;
     };
 
     /*! \brief Checks for finiteness

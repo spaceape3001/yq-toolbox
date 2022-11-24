@@ -17,7 +17,7 @@ namespace yq {
     template <typename T>
     struct AxBox4 {
         //! Component type (ie, the argument)
-        using component_t   = T;
+        using component_type    = T;
         
         //! Low corner
         Vector4<T>  lo;
