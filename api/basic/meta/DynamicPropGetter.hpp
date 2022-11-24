@@ -416,7 +416,7 @@ namespace yq {
         {
             assert(dst);
             assert(obj);
-            *(T*) dst   = (*m_function)((const C*) obj);
+            *(T*) dst   = (*m_function)(*(const C*) obj);
             return true;
         }
         
@@ -428,7 +428,7 @@ namespace yq {
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)((const C*) obj), str);
+            TypeInfo::print((*m_function)(*(const C*) obj), str);
             return true;
         }
         
@@ -440,7 +440,7 @@ namespace yq {
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)((const C*) obj), str);
+            TypeInfo::write((*m_function)(*(const C*) obj), str);
             return true;
         }
 
@@ -479,7 +479,7 @@ namespace yq {
         {
             assert(dst);
             assert(obj);
-            *(T*) dst   = (*m_function)((const C*) obj);
+            *(T*) dst   = (*m_function)(*(const C*) obj);
             return true;
         }
         
@@ -491,7 +491,7 @@ namespace yq {
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)((const C*) obj), str);
+            TypeInfo::print((*m_function)(*(const C*) obj), str);
             return true;
         }
         
@@ -503,7 +503,7 @@ namespace yq {
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)((const C*) obj), str);
+            TypeInfo::write((*m_function)(*(const C*) obj), str);
             return true;
         }
 
@@ -542,7 +542,7 @@ namespace yq {
         {
             assert(dst);
             assert(obj);
-            *(T*) dst   = (*m_function)((const C*) obj);
+            *(T*) dst   = (*m_function)(*(const C*) obj);
             return true;
         }
         
@@ -554,7 +554,7 @@ namespace yq {
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)((const C*) obj), str);
+            TypeInfo::print((*m_function)(*(const C*) obj), str);
             return true;
         }
         
@@ -566,7 +566,7 @@ namespace yq {
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)((const C*) obj), str);
+            TypeInfo::write((*m_function)(*(const C*) obj), str);
             return true;
         }
 
@@ -605,7 +605,7 @@ namespace yq {
         {
             assert(dst);
             assert(obj);
-            *(T*) dst   = (*m_function)((const C*) obj);
+            *(T*) dst   = (*m_function)(*(const C*) obj);
             return true;
         }
         
@@ -617,7 +617,7 @@ namespace yq {
         virtual bool            print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)((const C*) obj), str);
+            TypeInfo::print((*m_function)(*(const C*) obj), str);
             return true;
         }
         
@@ -629,7 +629,7 @@ namespace yq {
         virtual bool            write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)((const C*) obj), str);
+            TypeInfo::write((*m_function)(*(const C*) obj), str);
             return true;
         }
 
