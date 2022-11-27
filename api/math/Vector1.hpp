@@ -82,15 +82,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Vector1<T>&v)
-    { 
-        return is_finite(v.x);
-    }
-
     YQ_IS_NAN_1(Vector1, is_nan(v.x))
+    YQ_IS_FINITE_1(Vector1, is_finite(v.x))
         
     /*! \brief Square of the vector's length
     
@@ -108,7 +101,7 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    requires has_abs_v<T>
+    requires trait::has_abs_v<T>
     constexpr auto    length(const Vector1<T>& a) noexcept
     {
         return abs(a.x);

@@ -35,16 +35,8 @@ namespace yq {
     
     
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
-
-    template <typename T>
-    constexpr bool is_finite(const Pose2<T>& v)
-    {
-        return is_finite(v.position) && is_finite(v.orientation);
-    }
-
-//  --------------------------------------------------------
 //  PROJECTIONS
+
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

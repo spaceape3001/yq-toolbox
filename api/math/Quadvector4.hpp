@@ -40,13 +40,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
     
-    template <typename T>
-    constexpr bool is_finite(const Quadvector4<T>& v)
-    {
-        return is_finite(v.xyzw);
-    }
-
     YQ_IS_NAN_1(Quadvector4, is_nan(v.xyzw))
+    YQ_IS_FINITE_1(Quadvector4, is_finite(v.xyzw))
 
 
 //  --------------------------------------------------------

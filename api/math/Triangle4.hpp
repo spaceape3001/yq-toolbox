@@ -30,6 +30,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    YQ_IS_FINITE_1(Triangle4, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle4, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
     template <typename T>
@@ -41,20 +42,11 @@ namespace yq {
         };
     }
 
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Triangle4<T>&v)
-    { 
-        return is_finite(v.a) && is_finite(v.b) && is_finite(v.c);
-    }
-
-
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    requires has_sqrt_v<square_t<T>>
+    requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Triangle4<T>& tri)
     {
         return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);

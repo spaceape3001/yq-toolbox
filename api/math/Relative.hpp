@@ -7,7 +7,6 @@
 #pragma once
 
 #include <cmath>
-#include <math/preamble.hpp>
 
 namespace yq {
 
@@ -22,9 +21,4 @@ namespace yq {
             return fabs((error)/expected) <= threshhold;
         }
     };
-
-    constexpr inline bool is_finite(const Relative& v)
-    {
-        return is_finite(v.threshhold);
-    }
 }

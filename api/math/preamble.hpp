@@ -12,11 +12,14 @@
 #include <basic/meta/InfoBinder.hpp>
 #include <basic/trait/always_false.hpp>
 
+#include <math/trait/has_abs.hpp>
 #include <math/trait/has_copysign.hpp>
 #include <math/trait/has_half.hpp>
 #include <math/trait/has_identity.hpp>
+#include <math/trait/has_is_finite.hpp>
 #include <math/trait/has_nan.hpp>
 #include <math/trait/has_one.hpp>
+#include <math/trait/has_sqrt.hpp>
 #include <math/trait/has_zero.hpp>
 #include <math/trait/ieee754.hpp>
 
@@ -28,7 +31,6 @@
 #include <limits>
 #include <numbers>
 #include <utility>
-#include <type_traits>
 
 #include <log4cpp/CategoryStream.hh>
 
@@ -120,48 +122,7 @@ namespace std {
 
 
 namespace yq {
-
-    //  =======================================
-    //  assimilating some of the standard math
     
-    using namespace std::numbers;
-    using std::abs;
-    using std::sqrt;
-    using std::hypot;
-    
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr bool is_finite(T v)
-    {
-        return std::isfinite(v);
-    }
-    
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr bool is_infinite(T v)
-    {
-        return std::isinf(v);
-    }
-
-#if 0
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr bool is_nan(T v)
-    {
-        return std::isnan(v);
-    }
-#endif
-    
-    //  =======================================
-    //  TRAITS
-
-    template <typename T> static constexpr const bool has_abs_v = std::is_invocable_v<abs, T>;
-    template <typename T> static constexpr const bool has_is_finite_v = std::is_invocable_v<is_finite, T>;
-    template <typename T> static constexpr const bool has_is_nan_v = std::is_invocable_v<is_nan, T>;
-    template <typename T> static constexpr const bool has_sqrt_v = std::is_invocable_v<sqrt, T>;
-    
-    //  =======================================
-    //  CONSTANTS
 
     static constexpr const double   pi      = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862;
     static constexpr const double   sqrt2   = 1.4142135623730950488016887242096980785696718753769480731766797379907324784621;
@@ -174,10 +135,6 @@ namespace yq {
     
     static constexpr const two_t        ²;
     static constexpr const three_t      ³;
-    
-    
-    //  =======================================
-    //  UNIT CONSTANT DEFINITIONS
 
     namespace def {
         static constexpr const long double   long_pi     = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862;
@@ -261,9 +218,6 @@ namespace yq {
         static constexpr const long double   exa²        = exa * exa;
         static constexpr const long double   exa³        = exa² * exa;
     }
-
-
-    //  =======================================
 
     template <typename F, typename S>
     S       greatest(const std::pair<F,S>& a, const std::pair<F,S>& b)

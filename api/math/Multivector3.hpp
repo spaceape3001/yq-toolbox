@@ -67,24 +67,17 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
     
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Multivector3<T>&v)
-    { 
-        return
-            is_finite(v.a) && 
-            is_finite(v.x) && is_finite(v.y) && is_finite(v.z) && 
-            is_finite(v.xy) && is_finite(v.yz) && is_finite(v.zx) && 
-            is_finite(v.xyz)
-        ;
-    }
-
     YQ_IS_NAN_1(Multivector3, 
         is_nan(v.a) || 
         is_nan(v.x) || is_nan(v.y) || is_nan(v.z) || 
         is_nan(v.xy) || is_nan(v.yz) || is_nan(v.zx) || 
         is_nan(v.xyz)
+    )
+    YQ_IS_FINITE_1(Multivector3, 
+        is_finite(v.a) && 
+        is_finite(v.x) && is_finite(v.y) && is_finite(v.z) && 
+        is_finite(v.xy) && is_finite(v.yz) && is_finite(v.zx) && 
+        is_finite(v.xyz)
     )
 
 

@@ -42,6 +42,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    YQ_IS_FINITE_1(Sphere3, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Sphere3, is_nan(v.point) || is_nan(v.radius))
 
     template <typename T>
@@ -57,14 +58,6 @@ namespace yq {
             a.pt.y + r,
             a.pt.z + r
         }};
-    }
-
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Sphere3<T>&v)
-    { 
-        return is_finite(v.point) && is_finite(v.radius);
     }
 
 //  --------------------------------------------------------

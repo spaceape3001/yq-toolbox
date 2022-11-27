@@ -51,14 +51,7 @@ namespace yq {
 //  BASIC FUNCTIONS
 
     
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Circle2<T>&v)
-    { 
-        return is_finite(v.point) && is_finite(v.radius);
-    }
-    
+    YQ_IS_FINITE_1(Circle2, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Circle2, is_nan(v.point) || is_nan(v.radius))
 
     /*! \brief Bounding box for a circle

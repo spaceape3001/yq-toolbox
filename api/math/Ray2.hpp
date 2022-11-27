@@ -33,13 +33,9 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    template <typename T>
-    bool is_finite(const Ray2<T>& v)
-    {
-        return is_finite(v.point) && is_finite(v.direction);
-    }
-
     YQ_IS_NAN_1(Ray2, is_nan(v.point) || is_nan(v.direction))
+    YQ_IS_FINITE_1(Ray2, is_finite(v.point) && is_finite(v.direction))
+    
     
 }
 

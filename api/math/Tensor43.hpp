@@ -82,18 +82,13 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Tensor43<T>&v)
-    { 
-        return 
-            is_finite(v.xx) && is_finite(v.xy) && is_finite(v.xz) &&
-            is_finite(v.yx) && is_finite(v.yy) && is_finite(v.yz) &&
-            is_finite(v.zx) && is_finite(v.zy) && is_finite(v.zz) &&
-            is_finite(v.wx) && is_finite(v.wy) && is_finite(v.wz)
-        ;
-    }
+
+    YQ_IS_FINITE_1(Tensor43, 
+        is_finite(v.xx) && is_finite(v.xy) && is_finite(v.xz) &&
+        is_finite(v.yx) && is_finite(v.yy) && is_finite(v.yz) &&
+        is_finite(v.zx) && is_finite(v.zy) && is_finite(v.zz) &&
+        is_finite(v.wx) && is_finite(v.wy) && is_finite(v.wz)
+    )
     
     YQ_IS_NAN_1(Tensor43,  
         is_nan(v.xx) || is_nan(v.xy) || is_nan(v.xz) ||

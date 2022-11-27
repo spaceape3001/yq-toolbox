@@ -86,20 +86,15 @@ namespace yq {
     }
 
     template <typename T>
-    requires has_sqrt_v<T>
+    requires trait::has_sqrt_v<T>
     constexpr T  length(const Quaternion3<T>&a) 
     {
         return sqrt(length2(a));
     }
     
-    
-    template <typename T>
-    constexpr bool is_finite(const Quaternion3<T>& v)
-    {
-        return is_finite(v.x) && is_finite(v.y) && is_finite(v.z) && is_finite(v.w);
-    }
 
     YQ_IS_NAN_1(Quaternion3, is_nan(v.x) || is_nan(v.y) || is_nan(v.z) || is_nan(v.w))
+    YQ_IS_FINITE_1(Quaternion3, is_finite(v.x) && is_finite(v.y) && is_finite(v.z) && is_finite(v.w))
         
 
 //  --------------------------------------------------------

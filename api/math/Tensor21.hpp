@@ -70,16 +70,11 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Tensor21<T>&v)
-    { 
-        return 
-            is_finite(v.xx) &&
-            is_finite(v.yx)
-        ;
-    }
+
+    YQ_IS_FINITE_1(Tensor21, 
+        is_finite(v.xx) &&
+        is_finite(v.yx)
+    )
     
     YQ_IS_NAN_1(Tensor21,  
         is_nan(v.xx) ||

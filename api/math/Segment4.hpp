@@ -31,18 +31,13 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    YQ_IS_FINITE_1( Segment4, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment4, is_nan(v.a) || is_nan(v.b))
     
     template <typename T>
     constexpr AxBox4<T>   aabb(const Segment4<T>& a) noexcept
     {
         return aabb(a.lo, a.hi);
-    }
-
-    template <typename T>
-    constexpr bool is_finite(const Segment4<T>& v)
-    {
-        return is_finite(v.a) && is_finite(v.b);
     }
 
 //  --------------------------------------------------------

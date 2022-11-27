@@ -102,17 +102,10 @@ namespace yq {
         is_nan(v.xy) || is_nan(v.yz) || is_nan(v.zw) || 
         is_nan(v.wx) || is_nan(v.xz) || is_nan(v.yw)
     )
-
-    /*! \brief Checks for finiteness
-    */
-    template <typename T>
-    constexpr bool is_finite(const Bivector4<T>&v)
-    {
-        return 
-            is_finite(v.xy) && is_finite(v.yz) && is_finite(v.zw) && 
-            is_finite(v.wx) && is_finite(v.xz) && is_finite(v.yw)
-        ;
-    }
+    YQ_IS_FINITE_1(Bivector4, 
+        is_finite(v.xy) && is_finite(v.yz) && is_finite(v.zw) && 
+        is_finite(v.wx) && is_finite(v.xz) && is_finite(v.yw)
+    )
 
 
 //  --------------------------------------------------------

@@ -96,7 +96,7 @@ namespace yq {
 //  BASIC FUNCTIONS
 
     template <typename T, typename DIM>
-    constexpr MKS<T,DIM> abs(const MKS<T,DIM>& v)
+    MKS<T,DIM> abs(const MKS<T,DIM>& v)
     {
         return { abs(v.value) };
     }
@@ -109,7 +109,7 @@ namespace yq {
     }
 
     template <typename T, typename DIM>
-    constexpr auto cube(const MKS<T,DIM>& v)
+    auto cube(const MKS<T,DIM>& v)
     {
         return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
     }
@@ -121,19 +121,19 @@ namespace yq {
     }
 
     template <typename T, typename DIM>
-    constexpr bool is_finite(const MKS<T,DIM>& v)
+    bool is_finite(const MKS<T,DIM>& v)
     {
         return is_finite(v.value);
     }
 
     template <typename T, typename DIM>
-    constexpr bool is_nan(const MKS<T,DIM>& v)
+    bool is_nan(const MKS<T,DIM>& v)
     {
         return is_nan(v.value);
     }
     
     template <typename T, typename DIM>
-    requires has_sqrt_v<T>
+    requires trait::has_sqrt_v<T>
     auto sqrt(const MKS<T,DIM>& v)
     {
         auto ret    = sqrt(v.value);
@@ -141,7 +141,7 @@ namespace yq {
     }
 
     template <typename T, typename DIM>
-    constexpr auto square(const MKS<T,DIM>& v)
+    auto square(const MKS<T,DIM>& v)
     {
         return MKS<square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
     }
@@ -156,7 +156,7 @@ namespace yq {
 //  POSITIVE
 
     template <typename T, typename DIM>
-    constexpr MKS<T,DIM> operator+(const MKS<T,DIM>& a)
+    MKS<T,DIM> operator+(const MKS<T,DIM>& a)
     {
         return a;
     }
@@ -166,7 +166,7 @@ namespace yq {
 //  NEGATIVE
 
     template <typename T, typename DIM>
-    constexpr MKS<T,DIM> operator-(const MKS<T,DIM>& a)
+    MKS<T,DIM> operator-(const MKS<T,DIM>& a)
     {
         return { -a.value };
     }
@@ -179,7 +179,7 @@ namespace yq {
 //  ADDITION
 
     template <typename T, typename DIM>
-    constexpr MKS<T,DIM> operator+(const MKS<T,DIM>& a, const MKS<T,DIM>& b)
+    MKS<T,DIM> operator+(const MKS<T,DIM>& a, const MKS<T,DIM>& b)
     {
         return { a.value + b.value };
     }
@@ -195,7 +195,7 @@ namespace yq {
 //  SUBTRACTION
 
     template <typename T, typename DIM>
-    constexpr MKS<T,DIM> operator-(const MKS<T,DIM>& a, const MKS<T,DIM>& b)
+    MKS<T,DIM> operator-(const MKS<T,DIM>& a, const MKS<T,DIM>& b)
     {
         return { a.value - b.value };
     }
@@ -213,14 +213,14 @@ namespace yq {
 
     template <typename T, typename DIM>
     requires trait::is_basic_v<T>
-    constexpr MKS<T,DIM> operator*(T a, const MKS<T,DIM>& b)
+    MKS<T,DIM> operator*(T a, const MKS<T,DIM>& b)
     {
         return { a * b.value };
     }
     
     template <typename T, typename DIM>
     requires trait::is_basic_v<T>
-    constexpr MKS<T,DIM> operator*(const MKS<T,DIM>& a, T  b)
+    MKS<T,DIM> operator*(const MKS<T,DIM>& a, T  b)
     {
         return { a.value * b };
     }
@@ -234,7 +234,7 @@ namespace yq {
     }
 
     template <typename T, typename U, typename DIMT, typename DIMU>
-    constexpr MKS<product_t<T,U>,typename DIMT::template _mult_<DIMU>> operator*(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
+    MKS<product_t<T,U>,typename DIMT::template _mult_<DIMU>> operator*(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
     {
         return { a.value * b.value };
     }
@@ -245,14 +245,14 @@ namespace yq {
 
     template <typename T, typename DIM>
     requires trait::is_basic_v<T>
-    constexpr MKS<T,typename DIM::template _pow_<-1,1>> operator/(T a, const MKS<T,DIM>& b)
+    MKS<T,typename DIM::template _pow_<-1,1>> operator/(T a, const MKS<T,DIM>& b)
     {
         return { a / b.value };
     }
     
     template <typename T, typename DIM>
     requires trait::is_basic_v<T>
-    constexpr MKS<T,DIM> operator/(const MKS<T,DIM>& a, T  b)
+    MKS<T,DIM> operator/(const MKS<T,DIM>& a, T  b)
     {
         return { a.value / b };
     }
@@ -266,7 +266,7 @@ namespace yq {
     }
 
     template <typename T, typename U, typename DIMT, typename DIMU>
-    constexpr MKS<quotient_t<T,U>,typename DIMT::template _div_<DIMU>> operator/(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
+    MKS<quotient_t<T,U>,typename DIMT::template _div_<DIMU>> operator/(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
     {
         return { a.value / b.value };
     }

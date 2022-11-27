@@ -74,13 +74,8 @@ namespace yq {
         return a.lo <= a.hi;
     }
 
-    template <typename T>
-    bool is_finite(const Range<T>& v)
-    {
-        return is_finite(v.lo) && is_finite(v.hi);
-    }
-
     YQ_IS_NAN_1(Range, is_nan(v.lo) || is_nan(v.hi))
+    YQ_IS_FINITE_1(Range, is_finite(v.lo) && is_finite(v.hi))
 
 
 //  --------------------------------------------------------

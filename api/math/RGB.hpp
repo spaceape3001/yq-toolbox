@@ -65,13 +65,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    template <typename T>
-    constexpr bool is_finite(const RGB<T>& v)
-    {
-        return is_finite(v.red) && is_finite(v.green) && is_finite(v.blue);
-    }
-
     YQ_IS_NAN_1(RGB, is_nan(v.red) || is_nan(v.green) || is_nan(v.blue))
+    YQ_IS_FINITE_1(RGB, is_finite(v.red) && is_finite(v.green) && is_finite(v.blue))
     
 }
 
