@@ -20,7 +20,7 @@ namespace yq {
     
     template <typename T>
     requires trait::has_is_finite_v<T>
-    bool is_finite(const T& v) 
+    constexpr bool is_finite(const T& v) 
     {
         return is_finite_eval<T>::compute(v);
     }

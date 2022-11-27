@@ -25,7 +25,6 @@ namespace yq {
         {
             return fabs(error) <= threshhold;
         }
-        
-        YQ_IS_FINITE(Absolute, is_finite(v.threshhold) )
     };
+    YQ_IS_FINITE(Absolute, is_finite(v.threshhold) )
 }
