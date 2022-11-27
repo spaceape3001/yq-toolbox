@@ -7,6 +7,7 @@
 #pragma once
 
 #include <cmath>
+#include <math/trait/has_is_finite.hpp>
 
 namespace yq {
     
@@ -24,5 +25,7 @@ namespace yq {
         {
             return fabs(error) <= threshhold;
         }
+        
+        YQ_IS_FINITE(Absolute, is_finite(v.threshhold) )
     };
 }
