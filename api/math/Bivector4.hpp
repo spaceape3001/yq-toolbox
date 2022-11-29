@@ -15,8 +15,14 @@ namespace yq {
     */
     template <typename T>
     struct Bivector4 {
+
+        //! Component type
         using component_type = T;
+        
+        //! Components
         square_t<T>     xy, yz, zw, wx, xz, yw;
+
+        //! Defaulted comparison operator
         bool operator==(const Bivector4&) const noexcept = default;
     };
     
@@ -26,61 +32,85 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _xy4(unsigned long long int v) noexcept
     {
         return {(double) v, 0., 0., 0., 0., 0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _xy4(long double v) noexcept
     {
         return {(double) v, 0., 0., 0., 0., 0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _yz4(unsigned long long int v) noexcept
     {
         return {0., (double) v,  0., 0., 0., 0.}; 
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _yz4(long double v) noexcept
     {
         return {0., (double) v, 0., 0., 0., 0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _zw4(unsigned long long int v) noexcept
     {
         return {0., 0., (double) v,  0., 0., 0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _xw4(long double v) noexcept
     {
         return {0., 0., (double) v, 0., 0., 0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _wx4(unsigned long long int v) noexcept
     {
         return {0., 0., 0., (double) v,  0., 0. };
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _wx4(long double v) noexcept
     {
         return {0., 0., 0., (double) v, 0., 0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _xz4(unsigned long long int v) noexcept
     {
         return {0., 0., 0., 0., (double) v,  0. };
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _xz4(long double v) noexcept
     {
         return {0., 0., 0., 0., (double) v,  0.};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _yw4(unsigned long long int v) noexcept
     {
         return {0., 0., 0., 0., 0., (double) v};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Bivector4D   operator "" _yw4(long double v) noexcept
     {
         return {0., 0., 0., 0., 0., (double) v};
@@ -111,6 +141,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
+    /*! \brief Affirmation (positive) operator
+    
+        \note Here to complement the negation operator
+    */
     template <typename T>
     constexpr Bivector4<T> operator+(const Bivector4<T>& a) noexcept
     {
@@ -120,6 +154,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  NEGATIVE
 
+    /*! \brief Negation operator of a bivector
+    */
     template <typename T>
     constexpr Bivector4<T> operator-(const Bivector4<T>& a) noexcept
     {
@@ -134,12 +170,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    /*! \brief Addition operator
+    */
     template <typename T>
     constexpr Bivector4<T> operator+(const Bivector4<T>& a, const Bivector4<T>& b) noexcept
     {
         return {a.xy+b.xy, a.yz+b.yz, a.zw+b.zw, a.wx+b.wx, a.xz+b.xz, a.yw+b.yw};
     }
 
+    /*! \brief Self-Addition operator
+    */
     template <typename T>
     Bivector4<T>&       operator+=(Bivector4<T>&a, const Bivector4<T>&b) noexcept
     {
@@ -150,12 +190,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  SUBTRACTION
 
+    /*! \brief Subtraction operator
+    */
     template <typename T>
     constexpr Bivector4<T> operator-(const Bivector4<T>& a, const Bivector4<T>& b) noexcept
     {
         return {a.xy-b.xy, a.yz-b.yz, a.zw-b.zw, a.wx-b.wx, a.xz-b.xz, a.yw-b.yw};
     }
 
+    /*! \brief Self-subtraction operator 
+    */
     template <typename T>
     Bivector4<T>&       operator-=(Bivector4<T>&a, const Bivector4<T>&b) noexcept
     {
@@ -166,6 +210,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    /*! \brief Scaling multiplication operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Bivector4<T> operator*(T a, const Bivector4<T>& b) noexcept
@@ -173,6 +221,10 @@ namespace yq {
         return { a*b.xy, a*b.yz, a*b.zw, a*b.wx, a*b.xz, a*b.yw };
     }
 
+    /*! \brief Scaling multiplication operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Bivector4<T> operator*(const Bivector4<T>& a, T b) noexcept
@@ -180,6 +232,10 @@ namespace yq {
         return { a.xy*b, a.yz*b, a.zw*b, a.wx*b, a.xz*b, a.yw*b };
     }
 
+    /*! \brief Self-scaling multiplication operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Bivector4<T>& operator*=(Bivector4<T>& a, T b) noexcept
@@ -192,6 +248,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
+    /*! \brief Scaling division operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Bivector4<T> operator/(const Bivector4<T>& a, T b) noexcept
@@ -199,6 +259,10 @@ namespace yq {
         return { a.xy/b, a.yz/b, a.zw/b, a.wx/b, a.xz/b, a.yw/b };
     }
 
+    /*! \brief Self-scaling division operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Bivector4<T>& operator/=(Bivector4<T>& a, T b) noexcept
@@ -221,6 +285,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  OUTER PRODUCT
 
+    /*! \brief Outer product for 4 dimensional vectors
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Bivector4<T> operator OUTER (const Vector4<T>&a, const Vector4<T>& b) noexcept
