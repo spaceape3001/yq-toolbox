@@ -9,10 +9,21 @@
 #include <math/preamble.hpp>
 
 namespace yq {
+
+    /*! \brief Four dimensional quadvector
+    
+        Quadvector for four dimensions.  (ie a measure of hypervolume)
+    */
     template <typename T>
     struct Quadvector4 {
+
+        //! Component type
         using component_type = T;
+
+        //! Component
         fourth_t<T>     xyzw;
+
+        //! Defaulted comparison operator
         constexpr auto operator<=>(const Quadvector4&) const noexcept = default;
     };
 
@@ -21,11 +32,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Literal constructor
+    */
     constexpr Quadvector4D   operator "" _xyzw4(unsigned long long int v) noexcept
     {
         return {(double) v};
     }
 
+    /*! \brief Literal constructor
+    */
     constexpr Quadvector4D   operator "" _xyzw4(long double v) noexcept
     {
         return {(double) v};
@@ -47,7 +62,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
-
+    /*! \brief Affirmation (positive) operator
+    
+        \note Here to complement the negation operator
+    */
     template <typename T>
     constexpr Quadvector4<T> operator+(const Quadvector4<T>& a) noexcept
     {
@@ -57,6 +75,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  NEGATIVE
 
+    /*! \brief Negation operator of a bivector
+    */
     template <typename T>
     constexpr Quadvector4<T> operator-(const Quadvector4<T>& a) noexcept
     {
@@ -71,12 +91,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    /*! \brief Addition operator
+    */
     template <typename T>
     constexpr Quadvector4<T> operator+(const Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
     {
         return { a.xyzw + b.xyzw };
     }
 
+    /*! \brief Self-Addition operator
+    */
     template <typename T>
     Quadvector4<T>& operator+=(Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -88,12 +112,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  SUBTRACTION
 
+    /*! \brief Subtraction operator
+    */
     template <typename T>
     constexpr Quadvector4<T> operator-(const Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
     {
         return { a.xyzw - b.xyzw };
     }
 
+    /*! \brief Self-subtraction operator 
+    */
     template <typename T>
     Quadvector4<T>& operator-=(Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
     {
@@ -104,6 +132,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    /*! \brief Scaling multiplication operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Quadvector4<T> operator*(T a, const Quadvector4<T>& b) noexcept
@@ -111,6 +143,10 @@ namespace yq {
         return { a*b.xyzw };
     }
 
+    /*! \brief Scaling multiplication operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Quadvector4<T> operator*(const Quadvector4<T>& a, T b) noexcept
@@ -118,6 +154,10 @@ namespace yq {
         return { a.xyzw*b };
     }
 
+    /*! \brief Self-scaling multiplication operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Quadvector4<T> operator*=(Quadvector4<T>& a, T b) noexcept
@@ -130,6 +170,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
+    /*! \brief Scaling division operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Quadvector4<T> operator/(const Quadvector4<T>& a, T b) noexcept
@@ -137,6 +181,10 @@ namespace yq {
         return { a.xyzw/b };
     }
 
+    /*! \brief Self-scaling division operator
+    
+        \note currently limited to floating points due to uncertainty 
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Quadvector4<T> operator/=(Quadvector4<T>& a, T b) noexcept
