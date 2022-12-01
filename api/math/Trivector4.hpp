@@ -9,10 +9,15 @@
 #include <math/preamble.hpp>
 
 namespace yq {
+    /*! \brief 4D Tri-vector */
     template <typename T>
     struct Trivector4 {
+
+        //! Component type
         using component_type = T;
         cube_t<T>     xyz, yzw, zwx, wxy;
+
+        //! Defaulted comparison operator
         constexpr bool operator==(const Trivector4&) const noexcept = default;
     };
 
@@ -22,41 +27,57 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _xyz4(unsigned long long int v) noexcept
     {
         return {(double) v, 0., 0., 0.};
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _xyz4(long double v) noexcept
     {
         return {(double) v, 0., 0., 0.};
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _yzw4(unsigned long long int v) noexcept
     {
         return {0., (double) v, 0., 0.};
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _yzw4(long double v) noexcept
     {
         return {0., (double) v, 0., 0.};
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _zwx4(unsigned long long int v) noexcept
     {
         return {0., 0.,  (double) v, 0.};
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _zwx4(long double v) noexcept
     {
         return {0., 0., (double) v,  0.};
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _wxy4(unsigned long long int v) noexcept
     {
         return {0., 0.,  0., (double) v };
     }
 
+    /*! \brief Literal to construct a trivector
+    */
     constexpr Trivector4D   operator "" _wxy4(long double v) noexcept
     {
         return {0., 0., 0., (double) v};
@@ -80,6 +101,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
+    /*! \brief Affirmation (positive) operator
+    
+        \note Here to complement the negation operator
+    */
     template <typename T>
     constexpr Trivector4<T> operator+(const Trivector4<T>&a) noexcept
     {
@@ -89,6 +114,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  NEGATIVE
 
+    /*! \brief Negation operator
+    */
     template <typename T>
     constexpr Trivector4<T> operator-(const Trivector4<T>&a) noexcept
     {
@@ -103,12 +130,18 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    /*! \brief Addition of two trivectors
+    */
     template <typename T>
     constexpr Trivector4<T> operator+(const Trivector4<T>& a, const Trivector4<T>& b) noexcept
     {
         return { a.xyz+b.xyz, a.yzw+b.yzw, a.zwx+b.zwx, a.wxy+b.wxy };
     }
 
+    /*! \brief Self-addition operator
+    
+        Adds the right to the left term.
+    */
     template <typename T>
     Trivector4<T>& operator+(Trivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -116,17 +149,21 @@ namespace yq {
         return a;
     }
 
-
-
 //  --------------------------------------------------------
 //  SUBTRACTION
 
+    /*! \brief Subtraction of two trivectors
+    */
     template <typename T>
     constexpr Trivector4<T> operator-(const Trivector4<T>& a, const Trivector4<T>& b) noexcept
     {
         return { a.xyz-b.xyz, a.yzw-b.yzw, a.zwx-b.zwx, a.wxy-b.wxy };
     }
 
+    /*! \brief Self-subtraction operator
+        
+        Subtracts the right from the left term.
+    */
     template <typename T>
     Trivector4<T>& operator-(Trivector4<T>& a, const Trivector4<T>& b) noexcept
     {
@@ -137,6 +174,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    /*! \brief Scaling multiplication of trivector
+    
+        This will (scale) multiply a trivector, returns the result.
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Trivector4<T> operator*(T a, const Trivector4<T>& b) noexcept
@@ -144,6 +185,10 @@ namespace yq {
         return { a*b.xyz, a*b.yzw, a*b.zwx, a*b.wxy, };
     }
 
+    /*! \brief Scaling multiplication of trivector
+    
+        This will (scale) multiply a trivector, returns the result.
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Trivector4<T> operator*(const Trivector4<T>& a, T b) noexcept
@@ -151,6 +196,10 @@ namespace yq {
         return { a.xyz*b, a.yzw*b, a.zwx*b, a.wxy*b, };
     }
 
+    /*! \brief Scaling self-multiplication of trivector
+        
+        This multiplies the trivector (in place) with the right term, returns a reference.
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Trivector4<T>& operator*=(Trivector4<T>& a, T b) noexcept
@@ -162,6 +211,10 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
+    /*! \brief Scaling division of trivector
+        
+        This scale divides the trivector with the right.
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Trivector4<T> operator/(const Trivector4<T>& a, T b) noexcept
@@ -169,6 +222,11 @@ namespace yq {
         return { a.xyz/b, a.yzw/b, a.zwx/b, a.wxy/b, };
     }
 
+    /*! \brief Self-scaling division of trivector
+    
+        This reduces the trivector (in place) with the right,
+        returns reference to the trivector.
+    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Trivector4<T>& operator/=(Trivector4<T>& a, T b) noexcept
