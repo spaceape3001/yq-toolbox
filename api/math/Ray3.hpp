@@ -15,10 +15,17 @@ namespace yq {
     */
     template <typename T>
     struct Ray3 {
+
+        //! Component type
         using component_type    = T;
+
+        //! Point on the ray
         Vector3<T>              point;
+
+        //! Direction of the ray
         Vector3<ieee754_t<T>>   direction;
         
+        //! Defaulted equality operator
         constexpr bool operator==(const Ray3& rhs) const noexcept = default;
     };
     
