@@ -11,13 +11,21 @@
 
 namespace yq {
 
+    /*! \brief Simple fraction
+    
+        \tparam I   integer type
+    */
     template <typename I=int>
     struct Fraction {
         static_assert(std::is_integral_v<I>, "Template parameter I must be an integer!");
     
+        //! Numerator
         I   num = I{0};
+        
+        //! Denominator
         I   den = I{1};
 
+        //! Converts to an double
         constexpr operator double() const { return (double) num / (double) den; }
     };
 
@@ -25,24 +33,27 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a fraction from a templated fraction
+    */
     template <int N, int D>
     consteval Fraction<int>  fraction(const FRACTION<N,D>&)
     {
         return Fraction<int>{N,D};
     }
 
-
     YQ_ZERO_1(Fraction, { zero_v<T>, one_v<T> })
 
 //  --------------------------------------------------------
 //  BASIC/CRITICAL FUNCTIONS
     
+    //! Tests for a non-zero denominator
     template <typename I>
     bool        is_valid(Fraction<I> a)
     {
         return a.den != I{0};
     }
 
+    //! Reduces numerator and denominator by a common divisor
     template <typename I>
     Fraction<I>  simplified(Fraction<I> a)
     {
@@ -52,6 +63,9 @@ namespace yq {
         return Fraction<I>{ n, d };
     }
    
+    //! Raises the input by the specified power
+    //! \note it's very easy to get integer overflows with this routine, at which point, 
+    //! the result will be invalid.
     template <typename I>
     constexpr auto i_power(std::make_signed_t<I> base, std::make_unsigned_t<I> exp)
     {
@@ -67,8 +81,9 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
+    //! Affirmative operator
     template <typename I>
-    constexpr Fraction<I> operator+(Fraction<I> a)
+    constexpr Fraction<I> operator+(Fraction<I> a) noexcept
     {
         return a;
     }
@@ -76,8 +91,9 @@ namespace yq {
 //  --------------------------------------------------------
 //  NEGATIVE
 
+    //! Negation operator
     template <typename I>
-    constexpr Fraction<I> operator-(Fraction<I> a)
+    constexpr Fraction<I> operator-(Fraction<I> a) noexcept
     {
         return { -a.num, a.den };
     }
@@ -88,12 +104,18 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    /*! \brief Adds two fractions
+    */
     template <typename I>
-    constexpr Fraction<I> operator+(Fraction<I> a, Fraction<I> b)
+    constexpr Fraction<I> operator+(Fraction<I> a, Fraction<I> b) noexcept
     {
         return Fraction<I>{ a.num*b.den+a.den*b.num, a.den*b.den };
     }
 
+    /*! \brief Self-addition operator
+    
+        Adds the right term into the left fraction
+    */
     template <typename I>
     Fraction<I>&  operator+=(Fraction<I>&a, Fraction<I>b)
     {
@@ -104,12 +126,18 @@ namespace yq {
 //  --------------------------------------------------------
 //  SUBTRACTION
 
+    /*! \brief Subtracts two fractions
+    */
     template <typename I>
-    constexpr Fraction<I> operator-(Fraction<I> a, Fraction<I> b)
+    constexpr Fraction<I> operator-(Fraction<I> a, Fraction<I> b) noexcept
     {
         return Fraction<I>{ a.num*b.den-a.den*b.num, a.den*b.den };
     }
     
+    /*! \brief Self-subtraction operator
+    
+        Subtracts the right term from th e left fraction
+    */
     template <typename I>
     Fraction<I>&  operator-=(Fraction<I>&a, Fraction<I>b)
     {
@@ -120,12 +148,18 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    /*! \brief Multiplies two fractions
+    */
     template <typename I>
-    constexpr Fraction<I> operator*(Fraction<I> a, Fraction<I>b)
+    constexpr Fraction<I> operator*(Fraction<I> a, Fraction<I>b) noexcept
     {
         return Fraction<I>{ a.num*b.num, a.den*b.den };
     }
 
+    /*! \brief Self-multiplication operator
+        
+        Multiplies the left term by the right.
+    */
     template <typename I>
     Fraction<I>&  operator*=(Fraction<I>&a, Fraction<I>b)
     {
@@ -136,13 +170,18 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
-
+    /*! \brief Divides two fractions
+    */
     template <typename I>
-    constexpr Fraction<I> operator/(Fraction<I> a, Fraction<I>b)
+    constexpr Fraction<I> operator/(Fraction<I> a, Fraction<I>b) noexcept
     {
         return Fraction<I>{ a.num*b.den, a.den*b.num };
     }
 
+    /*! \brief Self-division operator
+        
+        Divides the left term by the right
+    */
     template <typename I>
     Fraction<I>&  operator/=(Fraction<I>&a, Fraction<I>b)
     {
@@ -153,6 +192,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  POWERS
 
+    /*! \brief Raises the left fraction to the right power */
     template <typename I>
     constexpr Fraction<I> operator^(Fraction<I>a, std::type_identity_t<I> b)
     {
@@ -169,6 +209,10 @@ namespace yq {
         return Fraction<I>{n,d};
     }
 
+    /*! \brief Self-power operator
+    
+        Raises the left term to the right power
+    */
     template <typename I>
     Fraction<I>&  operator^=(Fraction<I>&a, I b)
     {
@@ -176,20 +220,27 @@ namespace yq {
         return a;
     }
 
-    template <typename I>
-    constexpr std::strong_ordering   operator<=>(Fraction<I>&a, Fraction<I>b)
-    {
-        auto    lt  = a.num*b.den;
-        auto    rt  = a.den*b.den;
+    /*! \brief Comparison operator
+    
+        This compares the two fractions for equality.
         
-        if(lt == rt)
-            return std::strong_ordering::equal;
-        return (lt < rt) ? std::strong_ordering::less : std::strong_ordering::greater;
+        \note this will show that (1/2) == (2/4)
+    */
+    template <typename I>
+    constexpr std::strong_ordering   operator<=>(const Fraction<I>&a, const Fraction<I>&b) noexcept
+    {
+        return a.num*b.den <=> a.den*b.num;
     }
     
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
    
+    /*! \brief Streaming fraction to the given stream like object
+    
+        \tparam S   type of the stream
+        \param[s]   Stream
+        \param[f]   Fraction
+    */
     template <typename S, typename I>
     S&  as_stream(S& s, Fraction<I> f)
     {
@@ -207,12 +258,14 @@ namespace yq {
         return s;
     }
     
+    /*! \brief Streams to the given stream */
     template <typename I>
     Stream&     operator<<(Stream& s, Fraction<I> f)
     {
         return as_stream(s, f);
     }
    
+    /*! \brief Streams to the given logger */
     template <typename I>
     log4cpp::CategoryStream&     operator<<(log4cpp::CategoryStream& s, Fraction<I> f)
     {
