@@ -17,9 +17,13 @@ namespace yq {
     */
     template <typename T>
     struct Normal2 {
+        //! Component type (captures the template parameter)
         using component_type    = T;
+        
+        //! Direction vector
         Vector2<T>              direction;
         
+        //! Defaulted comparison operator
         constexpr bool operator==(const Normal2& rhs) const noexcept = default;
     };
     
@@ -28,12 +32,14 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    //! Creates a normal from a vector
     template <typename T>
     Normal2<T>     normal(const Vector2<T>& dir) 
     {
         return { ~dir };
     }
 
+    //! Creates a normal from two parameters
     template <typename T>
     requires std::is_floating_point_v<T>
     Normal2<T>     normal(T x, std::type_identity_t<T> y)
