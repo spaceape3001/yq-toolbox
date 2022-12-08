@@ -13,10 +13,11 @@
 namespace yq {
     YQ_IEEE754_1(Segment1)
 
-
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a segment from two points
+    */
     template <typename T>
     constexpr Segment1<T> segment(const Vector1<T>& a, const Vector1<T>& b) noexcept
     {
@@ -32,6 +33,8 @@ namespace yq {
     YQ_IS_FINITE_1( Segment1, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment1, is_nan(v.a) || is_nan(v.b))
 
+    /*! \brief Creates an axially aligned bounding box from a segment
+    */
     template <typename T>
     constexpr AxBox1<T>   aabb(const Segment1<T>& a) noexcept
     {
