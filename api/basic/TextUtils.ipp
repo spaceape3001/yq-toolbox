@@ -1733,6 +1733,14 @@ namespace yq {
         return std::string_view(buf, (p-buf));
     }
 
+    string_view_set_t  to_string_view_set(const string_set_t& vals)
+    {
+        string_view_set_t  ret;
+        for(const std::string& v : vals)
+            ret.insert(v);
+        return ret;
+    }
+
     std::string     to_time_string(std::time_t ct, const char* fmt)
     {
         std::tm     gt;

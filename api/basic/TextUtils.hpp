@@ -1578,6 +1578,11 @@ namespace yq {
     */
     std::string_view    to_string_view(uint64_t);
     
+    /*! \brief Converts the string set to a string view set
+        \note Contents of the return set are REFERENCES to the original set data
+    */
+    string_view_set_t   to_string_view_set(const string_set_t&);
+
     /*! \brief Formats a time to a string
     */
     std::string         to_time_string(std::time_t, const char* fmt="yyyy-MM-dd HH:mm:ss");
@@ -1805,6 +1810,7 @@ namespace yq {
     /*! \brief String not starting with whitespace specified character
     */
     std::string_view    trimmed_start(std::string_view, char);
+
 
     /*! \brief Split via visitor pattern
     
