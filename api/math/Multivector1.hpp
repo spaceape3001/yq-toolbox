@@ -15,9 +15,17 @@ namespace yq {
     */
     template <typename T>
     struct Multivector1 {
+        
+        //! Captures the template parameter
+        using component_type    = T;
+    
+        //! Scalar
         unity_t<T>  a;
+        
+        //! X
         T           x;
         
+        //! Defaulted equality
         constexpr bool operator==(const Multivector1&) const noexcept = default;
     };
 
@@ -32,6 +40,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Extracts the vector part
     template <typename T>
     constexpr Vector1<T> vector(const Multivector1<T>& a) noexcept
     {
@@ -46,7 +55,8 @@ namespace yq {
 
 //  --------------------------------------------------------
 //  POSITIVE
-
+    
+    //! Affirmation operator (to complement the negative)
     template <typename T>
     constexpr Multivector1<T> operator+(const Multivector1<T>& a) noexcept
     {
@@ -56,6 +66,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  NEGATIVE
 
+    //! Negation operatpr
     template <typename T>
     constexpr Multivector1<T> operator-(const Multivector1<T>& a) noexcept
     {
@@ -69,6 +80,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    //! Adds two multivectors together
     template <typename T>
     constexpr Multivector1<T> operator+(const Multivector1<T>& a, const Multivector1<T>&  b) noexcept
     {
@@ -78,6 +90,7 @@ namespace yq {
         };
     }
 
+    //! Self-addition operator (right added into left term)
     template <typename T>
     Multivector1<T>& operator+=(Multivector1<T>& a, const Multivector1<T>& b) noexcept
     {
@@ -86,6 +99,7 @@ namespace yq {
         return a;
     }
 
+    //! Adds left multivector with right scalar
     template <typename T>
     constexpr Multivector1<T> operator+(const Multivector1<T>& a, unity_t<T>  b) noexcept
     {
@@ -95,6 +109,7 @@ namespace yq {
         };
     }
 
+    //! Self-addition operator, adding right scalar into left multivector
     template <typename T>
     Multivector1<T>& operator+=(Multivector1<T>& a, unity_t<T>  b) noexcept
     {
@@ -103,6 +118,7 @@ namespace yq {
     }
     
 
+    //! Adds left multivector with right vector
     template <typename T>
     constexpr Multivector1<T> operator+(const Multivector1<T>& a, const Vector1<T>&  b) noexcept
     {
@@ -112,6 +128,7 @@ namespace yq {
         };
     }
 
+    //! Self-addition operator, adding right vector into left multivector
     template <typename T>
     Multivector1<T>& operator+=(Multivector1<T>& a, const Vector1<T>& b) noexcept
     {
@@ -119,6 +136,7 @@ namespace yq {
         return a;
     }
     
+    //! Adds left scalar with right multivector
     template <typename T>
     constexpr Multivector1<T> operator+(unity_t<T> a, const Multivector1<T>& b) noexcept
     {
@@ -128,6 +146,7 @@ namespace yq {
         };
     }
 
+    //! Adds left scalar with right vector, returns multivector
     template <typename T>
     constexpr Multivector1<T> operator+(unity_t<T> a, const Vector1<T>& b) noexcept
     {
@@ -137,6 +156,7 @@ namespace yq {
         };
     }
 
+    //! Adds left vector with right multivector, returns multivector
     template <typename T>
     constexpr Multivector1<T> operator+(Vector1<T> a, const Multivector1<T>& b) noexcept
     {
@@ -146,6 +166,7 @@ namespace yq {
         };
     }
 
+    //! Adds left vector with right scalar, returns multivector
     template <typename T>
     constexpr Multivector1<T> operator+(Vector1<T> a, unity_t<T>  b) noexcept
     {
@@ -159,6 +180,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  SUBTRACTION
 
+    //! Subtracts two multivectors
     template <typename T>
     constexpr Multivector1<T> operator-(const Multivector1<T>& a, const Multivector1<T>& b) noexcept
     {
@@ -168,6 +190,7 @@ namespace yq {
         };
     }
 
+    //! Self-subtraction operator, subtracting right term from left-in-place
     template <typename T>
     Multivector1<T>& operator-=(Multivector1<T>& a, const Multivector1<T>& b) noexcept
     {
@@ -175,7 +198,8 @@ namespace yq {
         a.x -= b.x;
         return a;
     }
-
+    
+    //! Subtracts scalar from multivector
     template <typename T>
     constexpr Multivector1<T> operator-(const Multivector1<T>& a, unity_t<T> b) noexcept
     {
@@ -185,6 +209,7 @@ namespace yq {
         };
     }
 
+    //! Self-subtraction operator, subtracting right scalar from left multivector in-place
     template <typename T>
     Multivector1<T>& operator-=(Multivector1<T>& a, unity_t<T> b) noexcept
     {
@@ -192,8 +217,7 @@ namespace yq {
         return a;
     }
     
-
-
+    //! Subtracts vector from multivector
     template <typename T>
     constexpr Multivector1<T> operator-(const Multivector1<T>& a, const Vector1<T>& b) noexcept
     {
@@ -203,6 +227,7 @@ namespace yq {
         };
     }
 
+    //! Self-subtraction operator, subtracting right vector from left multivector in-place
     template <typename T>
     Multivector1<T>& operator-=(Multivector1<T>& a, const Vector1<T>& b) noexcept
     {
@@ -210,6 +235,7 @@ namespace yq {
         return a;
     }
     
+    //! Subtracts multivector from scalar
     template <typename T>
     constexpr Multivector1<T> operator-(unity_t<T> a, const Multivector1<T>& b) noexcept
     {
@@ -219,6 +245,7 @@ namespace yq {
         };
     }
 
+    //! Subtracts vector from scalar
     template <typename T>
     constexpr Multivector1<T> operator-(unity_t<T> a, const Vector1<T>& b) noexcept
     {
@@ -228,6 +255,7 @@ namespace yq {
         };
     }
 
+    //! Subtracts multivector from vector
     template <typename T>
     constexpr Multivector1<T> operator-(Vector1<T> a, const Multivector1<T>& b) noexcept
     {
@@ -237,6 +265,7 @@ namespace yq {
         };
     }
 
+    //! Subtracts scalar from vector
     template <typename T>
     constexpr Multivector1<T> operator-(Vector1<T> a, unity_t<T> b) noexcept
     {
@@ -250,6 +279,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    //! Multiplies scalar with multivector
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector1<T> operator*(T a, const Multivector1<T>&b) noexcept
@@ -257,6 +287,7 @@ namespace yq {
         return { a*b.a, a*b.x };
     }
 
+    //! Multiplies multivector with scalar
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector1<T> operator*(const Multivector1<T>& a, T b) noexcept
@@ -264,7 +295,7 @@ namespace yq {
         return { a.a*b, a.x*b };
     }
 
-
+    //! Self-scaling multiplication of multivector with scalar
     template <typename T>
     requires std::is_floating_point_v<T>
     Multivector1<T>& operator*=(Multivector1<T>& a, T b) noexcept
@@ -273,6 +304,7 @@ namespace yq {
         return a;
     }
 
+    //! Multiplies vector with multivector
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector1<T> operator*(const Vector1<T>& a, const Multivector1<T>& b) noexcept
@@ -280,6 +312,7 @@ namespace yq {
         return Multivector1<T>( a.x * b.x, a.x * b.a);
     }
 
+    //! Multiplies multivecotr with vector
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector1<T> operator*(const Multivector1<T>& a, const Vector1<T>& b) noexcept
@@ -287,7 +320,7 @@ namespace yq {
         return Multivector1<T>( a.x*b.x, a.a*b.x );
     }
 
-
+    //! Self-multiplication, multiplying left term (in place) with right vector
     template <typename T>
     requires std::is_floating_point_v<T>
     Multivector1<T>& operator*=(Multivector1<T>& a, const Vector1<T>& b) noexcept
@@ -297,6 +330,7 @@ namespace yq {
         return a;
     }
 
+    //! Multiplies two multivectors
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector1<T> operator*(const Multivector1<T>& a, const Multivector1<T>& b) noexcept
@@ -304,6 +338,7 @@ namespace yq {
         return Multivector1<T>( a.a*b.a+a.x*b.x, a.a*b.x+a.x*b.a );
     }
     
+    //! Self-multiplication, multiplies left term (in place) with right multivector
     template <typename T>
     requires std::is_floating_point_v<T>
     Multivector1<T> operator*=(Multivector1<T>& a, const Multivector1<T>& b) noexcept
@@ -315,6 +350,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
+    //! Scaling division, dividing multivector by scalar
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr Multivector1<T> operator/(const Multivector1<T>& a, T b) noexcept
@@ -322,7 +358,7 @@ namespace yq {
         return { a.a/b, a.x/b };
     }
 
-
+    //! Self-scaling division, dividing the left multivector in place with scalar
     template <typename T>
     requires std::is_floating_point_v<T>
     Multivector1<T>& operator/=(Multivector1<T>& a, T b) noexcept
@@ -330,9 +366,13 @@ namespace yq {
         a.a/=b; a.x/=b;
         return a;
     }
+    
+    //  NOTE we're missing some others divisions... TODO
 
 //  --------------------------------------------------------
 //  POWERS
+
+    //  Exponentials could be interesting... TODO
 
 //  --------------------------------------------------------
 //  DOT PRODUCT
@@ -341,6 +381,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  INNER PRODUCT
 
+    //! Inner product of two multivectors
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr double   operator INNER(const Multivector1<T>& a, const Multivector1<T>&b)  noexcept
@@ -348,6 +389,7 @@ namespace yq {
         return a.x * b.x;
     }
 
+    //! Inner product of a multivector and vector
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr double   operator INNER(const Multivector1<T>& a, const Vector1<T>&b)  noexcept
@@ -355,6 +397,7 @@ namespace yq {
         return a.x * b.x;
     }
 
+    //! Inner product of vector and multivector
     template <typename T>
     requires std::is_floating_point_v<T>
     constexpr double   operator INNER(const Vector1<T>& a, const Multivector1<T>&b)  noexcept
@@ -365,10 +408,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  OUTER PRODUCT
 
+    // one dimensional space has no non-zero outer products
 
 //  --------------------------------------------------------
 //  CROSS PRODUCT
 
+    // one dimensional space has no non-zero cross products
 
 ///  --------------------------------------------------------
 //  OTIMES PRODUCT
