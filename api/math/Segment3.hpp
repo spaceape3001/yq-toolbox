@@ -19,6 +19,8 @@ namespace yq {
     YQ_NAN_1(Segment3, { nan_v<Vector3<T>>, nan_v<Vector3<T>>});
     YQ_ZERO_1(Segment3, { zero_v<Vector3<T>>, zero_v<Vector3<T>>});
 
+    /*! \brief Creates segment from two points
+    */
     template <typename T>
     constexpr Segment3<T> segment(const Vector3<T>& a, const Vector3<T>& b) noexcept
     {
@@ -34,6 +36,8 @@ namespace yq {
     YQ_IS_FINITE_1( Segment3, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment3, is_nan(v.a) || is_nan(v.b))
 
+    /*! \brief Creates axially aligned bounding box from the segment
+    */
     template <typename T>
     constexpr AxBox3<T>   aabb(const Segment3<T>& a) noexcept
     {
@@ -102,12 +106,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    /*! \brief Comptues the length of the segmetn
+    */
     template <typename T>
     T       length(const Segment3<T>& seg)
     {
         return length(seg.b-seg.a);
     }
 
+    /*! \brief Computes the midpoint of the segmetn
+    */
     template <typename T>
     requires has_ieee754_v<T>
     constexpr Vector3<T>     midpoint(const Segment3<T>& seg) noexcept
@@ -115,6 +123,11 @@ namespace yq {
         return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
     }
 
+    /*! \brief Computes a point along the segment based on a fractional position
+    
+        \param[in]  seg Segment
+        \param[in]  f   Fractional point
+    */
     template <typename T>
     requires has_ieee754_v<T>
     constexpr Vector3<T>     point(const Segment3<T>& seg, ieee754_t<T> f) noexcept
