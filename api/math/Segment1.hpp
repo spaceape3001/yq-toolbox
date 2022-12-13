@@ -104,12 +104,16 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    /*! \brief Computes the length of the segmetn
+    */
     template <typename T>
     T       length(const Segment1<T>& seg)
     {
         return length(seg.b-seg.a);
     }
     
+    /*! \brief Computes the midpoint of the segmetn
+    */
     template <typename T>
     requires has_ieee754_v<T>
     constexpr Vector1<T>     midpoint(const Segment1<T>& seg) noexcept
@@ -117,6 +121,11 @@ namespace yq {
         return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
     }
 
+    /*! \brief Computes a point along the segment based on a fractional position
+    
+        \param[in]  seg Segment
+        \param[in]  f   Fractional point
+    */
     template <typename T>
     requires has_ieee754_v<T>
     constexpr Vector1<T>     point(const Segment1<T>& seg, ieee754_t<T> f) noexcept

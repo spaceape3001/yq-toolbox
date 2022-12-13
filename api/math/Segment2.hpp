@@ -107,7 +107,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
-    /*! \brief Comptues the length of the segmetn
+    /*! \brief Computes the length of the segmetn
     */
     template <typename T>
     T       length(const Segment2<T>& seg)
