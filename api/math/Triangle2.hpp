@@ -21,6 +21,7 @@ namespace yq {
     YQ_NAN_1(Triangle2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>, nan_v<Vector2<T>> })
     YQ_ZERO_1(Triangle2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>, zero_v<Vector2<T>> })
 
+    /*! \brief Create a triangle from three points */
     template <typename T>
     Triangle2<T>    triangle(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c)
     {
@@ -37,6 +38,7 @@ namespace yq {
     YQ_IS_FINITE_1(Triangle2, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle2, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
+    /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
     AxBox2<T>   aabb(const Triangle2<T>& tri)
     {
@@ -131,18 +133,24 @@ namespace yq {
         return 0.5*abs(point_area(tri));
     }
 
+    /*! \brief TRUE if the triangle is defined in a counter-clockwise fashion
+    */
     template <typename T>
     bool    is_ccw(const Triangle2<T>& tri)
     {
         return point_area(tri) < zero_v<T>;
     }
 
+    /*! \brief TRUE if the triangle is defined in a clockwise fashion
+    */
     template <typename T>
     bool    is_clockwise(const Triangle2<T>& tri)
     {
         return point_area(tri) > zero_v<T>;
     }
 
+    /*! \brief Computes the perimeter of the triangle
+    */
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Triangle2<T>& tri)
