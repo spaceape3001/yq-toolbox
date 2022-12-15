@@ -18,6 +18,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create a triangle from three points */
     template <typename T>
     Triangle3<T>    triangle(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c)
     {
@@ -34,6 +35,7 @@ namespace yq {
     YQ_IS_NAN_1(Triangle3, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
     
+    /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
     AxBox3<T>   aabb(const Triangle3<T>& tri)
     {
@@ -43,12 +45,14 @@ namespace yq {
         };
     }
 
+    /*! \brief Reduces 3D triangle into 2D along xy plane */
     template <typename T>
     Triangle2<T>   xy(const Triangle3<T>& a)
     {
         return { xy(a.a), xy(a.b), xy(a.c) };
     }
     
+    /*! \brief Promotes 2D triangle to 3D triangle */
     template <typename T>
     Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z)
     {
@@ -58,6 +62,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    /*! \brief Computes the perimeter of the triangle
+    */
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Triangle3<T>& tri)
