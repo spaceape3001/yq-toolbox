@@ -18,6 +18,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Create a triangle from three points */
     template <typename T>
     Triangle4<T>    triangle(const Vector4<T>& a, const Vector4<T>& b, const Vector4<T>& c)
     {
@@ -33,6 +34,7 @@ namespace yq {
     YQ_IS_FINITE_1(Triangle4, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle4, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
+    /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
     AxBox4<T>   aabb(const Triangle4<T>& tri)
     {
@@ -45,6 +47,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    /*! \brief Computes the perimeter of the triangle
+    */
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Triangle4<T>& tri)
