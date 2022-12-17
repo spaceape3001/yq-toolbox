@@ -16,6 +16,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a polygon from a box
+    */
     template <typename T>
     Polygon2<T> polygon(const AxBox2<T>& ax)
     {
@@ -28,6 +30,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Create an axially aligned bounding box from a polygon
+    */
     template <typename T>
     AxBox2<T>   aabb(const Polygon2<T>&poly)
     {
@@ -43,6 +47,7 @@ namespace yq {
         return ret;
     }
 
+    //! Tests that all vertices are finite
     template <typename T>
     bool is_finite(const Polygon2<T>& poly)
     {
@@ -52,6 +57,7 @@ namespace yq {
         return true;
     }
     
+    //! Tests for any vertice that is not-a-number
     template <typename T>
     bool is_nan(const Polygon2<T>& poly)
     {
@@ -163,7 +169,7 @@ namespace yq {
         return 0.5*abs(point_area(poly.vertex));
     }
 
-
+    //! \brief Tests the polygon to determine if it's points are counter clockwise order
     template <typename T>
     bool    is_ccw(const Polygon2<T>& poly)
     {
@@ -171,13 +177,14 @@ namespace yq {
     }
 
 
+    //! \brief Tests the polygon to determine if it's points are clockwise order
     template <typename T>
     bool    is_clockwise(const Polygon2<T>& poly)
     {
         return point_area(poly.vertex) > zero_v<T>;
     }
     
-
+    //! Computes the perimeter of the polygon
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Polygon2<T>& poly)
