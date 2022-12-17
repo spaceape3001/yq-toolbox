@@ -16,6 +16,11 @@ namespace yq {
 
     bool SqlQuery::exec(SqlLite&db, const std::string& sql)
     {
+        if(!db.db()){
+            dbError  << "SqlQuery(" << sql << "): Database is CLOSED!";
+            return false;
+        }
+        
         char* zErrMsg   = nullptr;
         if( sqlite3_exec(db.db(), sql.c_str(), nullptr, nullptr, &zErrMsg) != SQLITE_OK){
             dbError << "SqlQuery::exec(" << sql << "): " << zErrMsg;
@@ -26,9 +31,9 @@ namespace yq {
     }
 
 
-    SqlQuery::SqlQuery(SqlLite&db, std::string_view sql, bool isPersistent) : m_db(db), m_stmt(nullptr)
+    SqlQuery::SqlQuery(SqlLite&db, std::string_view sql, bool isPersistent) : m_db(db.db()), m_stmt(nullptr)
     {
-        if(!db.db()){
+        if(!m_db){
             dbError  << "SqlQuery(" << sql << "): Database is CLOSED!";
             return;
         }
@@ -40,7 +45,7 @@ namespace yq {
         int flags = 0;
         if(isPersistent)
             flags |= SQLITE_PREPARE_PERSISTENT;
-        int r = sqlite3_prepare_v3(db.db(), sql.data(), sql.size(), flags, &m_stmt, nullptr);
+        int r = sqlite3_prepare_v3(m_db, sql.data(), sql.size(), flags, &m_stmt, nullptr);
         if(r!= SQLITE_OK){
             dbError << "SqlQuery(" << sql << "): " << SqlError(r);
             if(m_stmt){
@@ -57,10 +62,10 @@ namespace yq {
     
     SqlQuery::~SqlQuery()
     {
-        if(m_stmt){
+        if(m_stmt && m_autoDelete)
             sqlite3_finalize(m_stmt);
-            m_stmt = nullptr;
-        }
+        m_stmt  = nullptr;
+        m_db    = nullptr;
     }
     
     //SqlQuery&   SqlQuery::operator=(SqlQuery&&mv)
@@ -297,7 +302,9 @@ namespace yq {
 
     int64_t  SqlQuery::last_id() const
     {
-        return sqlite3_last_insert_rowid(m_db.db());
+        if(!m_db)
+            return 0;
+        return sqlite3_last_insert_rowid(m_db);
     }
 
     void  SqlQuery::reset()
@@ -317,35 +324,35 @@ namespace yq {
             return std::string_view();
     }
 
-    SqlQuery::Result SqlQuery::step(bool noisy)
+    SQResult SqlQuery::step(bool noisy)
     {
         if(!m_stmt){
             dbError <<"SqlQuery::step(): Calling on an uninitalized statement!";
-            return Error;
+            return SQResult::Error;
         }
         
         int r   = sqlite3_step(m_stmt);
         switch(r){
         case SQLITE_OK:
         case SQLITE_DONE:
-            return Done;
+            return SQResult::Done;
         case SQLITE_ROW:
-            return Row;
+            return SQResult::Row;
         case SQLITE_BUSY:
             if(noisy){
                 dbError << "SqlQuery::step(): BUSY, try again later.";
             }
-            return Busy;
+            return SQResult::Busy;
         default:
-            if(noisy){
-                r   = sqlite3_extended_errcode(m_db.db());
+            if(noisy && m_db){
+                r   = sqlite3_extended_errcode(m_db);
                 dbError << "SqlQuery::step("
                 #ifndef NDEBUG
                     << m_sql <<
                 #endif
-                "): " << SqlError{r} << "\n" << sqlite3_errmsg(m_db.db());
+                "): " << SqlError{r} << "\n" << sqlite3_errmsg(m_db);
             }
-            return Error;
+            return SQResult::Error;
         }
     }
 

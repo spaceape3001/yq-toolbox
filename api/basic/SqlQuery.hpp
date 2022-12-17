@@ -11,11 +11,20 @@
 #include <basic/trait/not_copyable.hpp>
 #include <span>
 
+struct sqlite3;
 struct sqlite3_stmt;
 
 namespace yq {
     class SqlLite;
     class ByteArray;
+    
+    enum class SQResult : int8_t {
+        Error   = -2,
+        Busy    = -1,
+        Done    = 0,
+        Row     = 1
+    };
+    
     
     /*! \brief SQL "Query" class
 
@@ -25,27 +34,28 @@ namespace yq {
     */
     class SqlQuery : trait::not_moveable, trait::not_copyable {
     public:
-        enum Result {
-            Error   = -2,
-            Busy    = -1,
-            Done    = 0,
-            Row     = 1
-        };
-        
         static bool exec(SqlLite&, const std::string&);
     
         SqlQuery(SqlLite&, std::string_view, bool isPersistent=true);
+        
+        /*! \brief Creates a SQL QUERY by pointers
+            \note Setting the database to null will disable some features.
+        */
+        SqlQuery(sqlite3_stmt*s, sqlite3* db=nullptr, bool autoDeleteStmt=false) : 
+            m_db(db), m_stmt(s), m_autoDelete(autoDeleteStmt){}
+
         ~SqlQuery();
         
         bool                valid() const { return m_stmt != nullptr; }
         sqlite3_stmt*       stmt() const { return m_stmt; }
+        sqlite3*            database() const { return m_db; }
         std::string_view    sql() const;
         
         //! Reset for a new bind/values
         void                reset();
         
         //! Steps/executes the statement
-        Result              step(bool noisy=false);
+        SQResult            step(bool noisy=false);
         
         //! Binds NULL to column
         //! 
@@ -108,7 +118,10 @@ namespace yq {
         //! \brief Conviences to is_good(step())
         //bool                exec(bool noisy=true);
         
-        //! Returns the last ID (database-connection-wide)
+        /*! \brief Returns the last ID (database-connection-wide)
+        
+            \note this will NOT work if the database-pointer is NULL
+        */
         int64_t             last_id() const;
 
         //! \brief Result value as double
@@ -147,11 +160,12 @@ namespace yq {
         AutoFinish  af();
         AutoFinish  autoFinish();
     private:
-        SqlLite&                 m_db;
-        mutable sqlite3_stmt    *m_stmt = nullptr;
+        mutable sqlite3*        m_db       = nullptr;
+        mutable sqlite3_stmt   *m_stmt     = nullptr;
     #ifndef NDEBUG
         std::string             m_sql;
     #endif
+        bool                    m_autoDelete    = true;
     };
 
     struct SqlQuery::AutoFinish : trait::not_copyable {
@@ -165,8 +179,8 @@ namespace yq {
         AutoFinish(SqlQuery* _q);
     };
     
-    inline constexpr bool is_good(SqlQuery::Result r)
+    inline constexpr bool is_good(SQResult r)
     {
-        return (r==SqlQuery::Done) || (r==SqlQuery::Row);
+        return (r==SQResult::Done) || (r==SQResult::Row);
     }
 }

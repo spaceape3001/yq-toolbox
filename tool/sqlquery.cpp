@@ -47,10 +47,11 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    SQResult    r;
     int     cc  = sql.column_count();
     if(cc<=0){
-        int r   = sql.step();
-        if(r == SqlQuery::Done){
+        r   = sql.step();
+        if(r == SQResult::Done){
             std::cout << "Qapla'!\n";
             return 0;
         }
@@ -62,10 +63,9 @@ int main(int argc, char **argv)
     for(int i=0;i<cc; ++i)
         data << Column(sql.column_name(i+1));
     
-    SqlQuery::Result        r;
     int              count = 0;
     
-    while((r = sql.step()) == SqlQuery::Row){
+    while((r = sql.step()) == SQResult::Row){
         ++ count;
         for(int i=0;i<cc;++i)
             data[i].add( sql.v_text(i+1));

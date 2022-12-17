@@ -53,7 +53,7 @@ namespace yq {
     {
         SqlQuery    sql((SqlLite&) *this, "SELECT COUNT(1) FROM sqlite_master WHERE type='table' AND name=?");
         sql.bind(1, s);
-        if(sql.step() == SqlQuery::Row){
+        if(sql.step() == SQResult::Row){
             return sql.v_bool(1);
         } else
             return false;
