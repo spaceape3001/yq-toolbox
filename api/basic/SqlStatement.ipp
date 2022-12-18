@@ -29,7 +29,12 @@ namespace yq {
         }
         return true;
     }
-
+    
+    void    SqlStatement::_kill(sqlite3_stmt*s)
+    {
+        if(s)
+            sqlite3_finalize(s);
+    }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -48,12 +53,17 @@ namespace yq {
 
     bool    SqlStatement::_prepare(std::string_view sql, bool isPersistent)
     {
+        return _prepare(m_stmt, sql, isPersistent);
+    }
+
+    bool    SqlStatement::_prepare(sqlite3_stmt*& stmt, std::string_view sql, bool isPersistent)
+    {
         if(!m_db){
             dbError  << "SqlStatement(" << sql << "): Database is CLOSED!";
             return false;
         }
 
-        if(m_stmt){
+        if(stmt){
             dbError  << "SqlStatement(" << sql << "): Statement already in USE!";
             return false;
         }
@@ -62,14 +72,14 @@ namespace yq {
         if(isPersistent)
             flags |= SQLITE_PREPARE_PERSISTENT;
 
-        int r = sqlite3_prepare_v3(m_db, sql.data(), sql.size(), flags, &m_stmt, nullptr);
+        int r = sqlite3_prepare_v3(m_db, sql.data(), sql.size(), flags, &stmt, nullptr);
         if(r== SQLITE_OK) [[likely]]
             return true;
         
         dbError << "SqlStatement(" << sql << "): " << SqlError(r);
-        if(m_stmt){
-            sqlite3_finalize(m_stmt);
-            m_stmt = nullptr;
+        if(stmt){
+            sqlite3_finalize(stmt);
+            stmt = nullptr;
         }
         return false;
     }

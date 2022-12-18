@@ -7,6 +7,8 @@
 #pragma once
 
 #include <basic/preamble.hpp>
+#include <basic/trait/not_copyable.hpp>
+#include <span>
 
 struct sqlite3;
 struct sqlite3_stmt;
@@ -40,8 +42,8 @@ namespace yq {
 
         class AutoFinish;
         
-        static bool exec(SqlLite&, const std::string&);
-
+        static bool             exec(SqlLite&, const std::string&);
+        
         
         
         AutoFinish  af();
@@ -163,19 +165,12 @@ namespace yq {
         //! \note COPY this off ASAP if desired to be kept or passed-along
         //! \param[in] col  Parameter/column index, starts at ONE
         std::string_view    v_text(int col) const;
-        
 
     protected:
-        SqlStatement(sqlite3_stmt* stmt=nullptr, sqlite3* db=nullptr) : m_db(db), m_stmt(stmt) {}
-        ~SqlStatement(){}
 
-        sqlite3*            m_db;
-        sqlite3_stmt*       m_stmt;
+        sqlite3*            m_db    = nullptr;
+        sqlite3_stmt*       m_stmt  = nullptr;
 
-        #ifndef NDEBUG
-        std::string_view    m_sql;
-        #endif
-        
         void    _database(SqlLite&);
         
         /*! \brief Finalizing Destructor
@@ -184,6 +179,8 @@ namespace yq {
         */
         void    _destroy();
         
+        static void     _kill(sqlite3_stmt*);
+
         /*! \brief Prepares the statement
         
             This routine assumes m_db is correct, uses it to prepare a statement.
@@ -191,6 +188,8 @@ namespace yq {
             \param[in] isPersistent set to make the statement persistent (ie, used a LOT...good default)
         */
         bool    _prepare(std::string_view sql, bool isPersistent=true);
+
+        bool    _prepare(sqlite3_stmt*&, std::string_view sql, bool isPersistent=true);
     };
 
 
