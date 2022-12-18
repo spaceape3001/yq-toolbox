@@ -34,7 +34,6 @@
 #include "Revision.ipp"
 #include "SqlError.ipp"
 #include "SqlLite.ipp"
-#include "SqlQuery.ipp"
 #include "SqlStatement.ipp"
 #include "SqlUtils.ipp"
 #include "Stream.ipp"

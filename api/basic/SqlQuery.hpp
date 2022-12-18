@@ -23,12 +23,22 @@ namespace yq {
         
         \note COLUMNS & PARAMETERS are 1-based, so they go 1...N
     */
-    class SqlQuery : public SqlStatement, trait::not_moveable, trait::not_copyable {
+    template <typename S>
+    class SqlQueryImpl : public S, trait::not_moveable, trait::not_copyable {
     public:
     
-        SqlQuery(SqlLite&, std::string_view, bool isPersistent=true);
-        ~SqlQuery();
+        static_assert(std::is_base_of_v<SqlStatement, S>);
+    
+        SqlQueryImpl(SqlLite&db, std::string_view sql, bool isPersistent=true)
+        {
+            SqlStatement::_database(db);
+            SqlStatement::_prepare(sql, isPersistent);
+        }
         
+        ~SqlQueryImpl()
+        {
+            SqlStatement::_destroy();
+        }
         
     };
     

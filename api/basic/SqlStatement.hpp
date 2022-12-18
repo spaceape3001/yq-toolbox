@@ -176,6 +176,8 @@ namespace yq {
         std::string_view    m_sql;
         #endif
         
+        void    _database(SqlLite&);
+        
         /*! \brief Finalizing Destructor
         
             This destroys the statement and sets the points to null

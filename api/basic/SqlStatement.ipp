@@ -33,6 +33,11 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    void    SqlStatement::_database(SqlLite&db)
+    {
+        m_db        = db.db();
+    }
+
     void    SqlStatement::_destroy()
     {
         if(m_stmt)
@@ -407,12 +412,12 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-    SqlQuery::AutoFinish::AutoFinish(AutoFinish&&mv) : q(mv.q)
+    SqlStatement::AutoFinish::AutoFinish(AutoFinish&&mv) : q(mv.q)
     {
         mv.q    = nullptr;
     }
     
-    SqlQuery::AutoFinish& SqlQuery::AutoFinish::operator=(AutoFinish&&mv)
+    SqlStatement::AutoFinish& SqlStatement::AutoFinish::operator=(AutoFinish&&mv)
     {
         if(this != &mv){
             if(q)
@@ -423,7 +428,7 @@ namespace yq {
         return *this;
     }
     
-    SqlQuery::AutoFinish::~AutoFinish()
+    SqlStatement::AutoFinish::~AutoFinish()
     {
         if(q){
             q -> reset();

@@ -31,7 +31,7 @@ namespace yq {
         
         for(std::string_view sql : split(buffer, ';')){
             std::string s = copy(trimmed(sql));
-            if(!SqlQuery::exec(db, s))
+            if(!SqlStatement::exec(db, s))
                 return false;
         }
         return true;

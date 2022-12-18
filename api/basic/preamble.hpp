@@ -67,7 +67,7 @@ namespace yq {
     template <typename> struct IntRange;
     template <typename> struct Result;
     template <typename> struct Span;
-    
+        
         // COORDINATES
     template <typename, uint8_t>    struct Coord;
     
@@ -161,6 +161,11 @@ namespace yq {
     template <typename T> struct Span;
     template <typename T> class Stack;
     template <typename T> class Vector;
+
+        //  SQL
+    struct SqlStatement;
+    template <typename S> class SqlQueryImpl;
+    using SqlQuery = SqlQueryImpl<SqlStatement>;
     
 
         // RESULTS
