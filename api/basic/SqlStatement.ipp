@@ -38,6 +38,15 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    SqlStatement::SqlStatement(sqlite3* _db, sqlite3_stmt* _stmt) : 
+        m_db(_db), m_stmt(_stmt) 
+    {
+    }
+
+    SqlStatement::~SqlStatement()
+    {
+    }
+
     void    SqlStatement::_database(SqlLite&db)
     {
         m_db        = db.db();

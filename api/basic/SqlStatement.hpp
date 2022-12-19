@@ -166,10 +166,13 @@ namespace yq {
         //! \param[in] col  Parameter/column index, starts at ONE
         std::string_view    v_text(int col) const;
 
+        SqlStatement(sqlite3* _db=nullptr, sqlite3_stmt* _stmt=nullptr);
+        ~SqlStatement();
+
     protected:
 
-        sqlite3*            m_db    = nullptr;
-        sqlite3_stmt*       m_stmt  = nullptr;
+        sqlite3*            m_db;
+        sqlite3_stmt*       m_stmt;
 
         void    _database(SqlLite&);
         
