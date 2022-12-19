@@ -22,25 +22,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    template <typename T>
-    bool is_finite(const Polygon3<T>& poly)
-    {
-        for(auto& v : poly.vertex)
-            if(!is_finite(v))
-                return false;
-        return true;
-    }
-    
-    template <typename T>
-    bool is_nan(const Polygon3<T>& poly)
-    {
-        for(auto& v : poly.vertex)
-            if(is_nan(v))
-                return true;
-        return false;
-    }
-
-
+    /*! \brief Create an axially aligned bounding box from a polygon
+    */
     template <typename T>
     AxBox3<T>   aabb(const Polygon3<T>&poly)
     {
@@ -55,6 +38,27 @@ namespace yq {
         }
         return ret;
     }
+
+    //! Tests that all vertices are finite
+    template <typename T>
+    bool is_finite(const Polygon3<T>& poly)
+    {
+        for(auto& v : poly.vertex)
+            if(!is_finite(v))
+                return false;
+        return true;
+    }
+    
+    //! Tests for any vertice that is not-a-number
+    template <typename T>
+    bool is_nan(const Polygon3<T>& poly)
+    {
+        for(auto& v : poly.vertex)
+            if(is_nan(v))
+                return true;
+        return false;
+    }
+
 
 //  --------------------------------------------------------
 //  POSITIVE
@@ -118,6 +122,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    //! Computes the perimeter of the polygon
     template <typename T>
     requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Polygon3<T>& poly)
