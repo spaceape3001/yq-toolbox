@@ -11,13 +11,23 @@
 #include <math/Vector3.hpp>
 
 namespace yq {
+
+    /*! \brief Sphere in three dimensions
+    
+        This structure represents a sphere with an origin/point and a radius
+    */
     template <typename T>
     struct Sphere3 {
+        //! Our component type (captures the template parameter)
         using component_t   = T;
 
+        //! Point/origin of the sphere
         Vector3<T>  point;
+        
+        //! Radius of the sphere
         T           radius;
         
+        //! Defaulted equality operator
         constexpr bool operator==(const Sphere3&) const noexcept = default;
     };
 
@@ -29,9 +39,9 @@ namespace yq {
     YQ_NAN_1(Sphere3, { nan_v<Vector3<T>>, nan_v<T> })
     YQ_ZERO_1(Sphere3, { zero_v<Vector3<T>>, zero_v<T> })
 
-
+    //! Creates a sphere from a point and radius
     template <typename T>
-    constexpr Sphere3<T>  sphere(const Vector3<T>& point, T radius) noexcept
+    constexpr Sphere3<T>  sphere(const Vector3<T>& point, std::type_identity_t<T> radius) noexcept
     {
         return {point, radius};
     }
@@ -45,6 +55,7 @@ namespace yq {
     YQ_IS_FINITE_1(Sphere3, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Sphere3, is_nan(v.point) || is_nan(v.radius))
 
+    //! Returns the axially aligned box of a sphere
     template <typename T>
     constexpr AxBox3<T>   aabb(const Sphere3<T>&a) noexcept
     {
@@ -139,7 +150,8 @@ namespace yq {
         return 4.0*pi*(sp.radius*sp.radius);
     }
 
-    
+    /*! \brief Computes the volume of a 3D sphere
+    */
     template <typename T>
     constexpr cube_t<T>       volume(const Sphere3<T>&sp) noexcept
     {
