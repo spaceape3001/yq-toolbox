@@ -16,11 +16,16 @@ namespace yq {
     */
     template <typename T>
     struct Sphere4 {
+        //! Our component type (captures the template parameter)
         using component_t   = T;
 
+        //! Point/origin of the hypersphere
         Vector4<T>  point;
+
+        //! Radius of the hypersphere
         T           radius;
         
+        //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
     };
 
@@ -30,12 +35,19 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    //! Creates a hypersphere from a point and radius
+    template <typename T>
+    Sphere4<T>  hypersphere(const Vector4<T>& point, T radius)
+    {
+        return {point, radius};
+    }
+
+    //! Creates a hypersphere from a point and radius
     template <typename T>
     Sphere4<T>  sphere(const Vector4<T>& point, T radius)
     {
         return {point, radius};
     }
-
 
     YQ_NAN_1(Sphere4, { nan_v<Vector4<T>>, nan_v<T> })
     YQ_ZERO_1(Sphere4, { zero_v<Vector4<T>>, zero_v<T> })
@@ -49,6 +61,7 @@ namespace yq {
     YQ_IS_FINITE_1(Sphere4, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Sphere4, is_nan(v.point) || is_nan(v.radius))
 
+    //! Returns the axially aligned box of a sphere
     template <typename T>
     AxBox4<T>   aabb(const Sphere4<T>&a)
     {
