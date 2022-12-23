@@ -25,7 +25,7 @@ namespace yq {
         RGB3U8          color;
         
         //! Equality operator
-        bool operator==(const ColorVertex2D&) const = default;
+        constexpr bool operator==(const ColorVertex2D&) const = default;
         
         //! Operator to reduce to color vertex data (GLM)
         operator ColorVertexData() const;
