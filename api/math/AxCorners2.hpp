@@ -17,17 +17,17 @@ namespace yq {
         //! Component type (captures the argument)
         using component_type    = T;
     
-        //! Lower-lower corner
-        T   ll;
+        //! Lower-lower corner 
+        T   ll; //  southwest
 
         //! Lower-upper corner
-        T   lh;
+        T   lh; //  northwest
 
         //! Upper-lower corner
-        T   hl;
+        T   hl; //  southeast
 
         //! Upper-upper corner
-        T   hh;
+        T   hh; //  northeast
         
         //! Equality operator (defaulted)
         constexpr bool operator==(const AxCorners2&) const noexcept = default;
