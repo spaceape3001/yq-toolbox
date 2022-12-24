@@ -35,7 +35,7 @@ namespace yq {
             return { min_elem(lo, b.lo), max_elem(hi, b.hi) };
         }
 
-        //! Union
+        //! Union in a box
         AxBox2& operator|=(const AxBox2& b) 
         {
             lo  = min_elem(lo, b.lo);
@@ -43,6 +43,7 @@ namespace yq {
             return *this;
         }
 
+        //! Unions in a vector
         AxBox2& operator|=(const Vector2<T>& b) 
         {
             lo  = min_elem(lo, b);
@@ -81,7 +82,8 @@ namespace yq {
             return {};
         }
 
-        
+        /*! \brief Our corners
+        */
         constexpr AxCorners2<Vector2<T>>    corners() const noexcept 
         {
             return { 
@@ -213,6 +215,28 @@ namespace yq {
     constexpr AxBox2<T> aabb(const Vector2<T>& a, const Vector2<T>& b)
     {
         return { min_elem(a,b), max_elem(a,b) };
+    }
+
+    /*! \brief Creates a 2D axially aligned box from container of Vector2's
+    */
+    template <typename T>
+    AxBox2<T> aabb(const std::vector<Vector2<T>>& vals)
+    {
+        switch(vals.size()){
+        case 0:
+            return {};
+        case 1:
+            return aabb(vals[0]);
+        case 2:
+            return aabb(vals[0],vals[1]);
+        default:
+            break;
+        }
+
+        AxBox2<T>   ret = aabb(vals[0], vals[1]);
+        for(size_t i=2;i<vals.size();++i)
+            ret |= vals[i];
+        return vals;
     }
 
     YQ_NAN_1(AxBox2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>});
