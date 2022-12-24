@@ -242,163 +242,14 @@ namespace yq {
     YQ_NAN_1(AxBox2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>});
     YQ_ZERO_1(AxBox2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>});
 
-//  --------------------------------------------------------
-//  GETTERS
-
-    //! Northeast corner of the box
-    template <typename T>
-    constexpr Vector2<T>  northeast(const AxBox2<T>& ax) noexcept
-    {
-        return ax.northeast();
-    }
-
-    //! Northwest corner of the box
-    template <typename T>
-    constexpr Vector2<T>  northwest(const AxBox2<T>& ax) noexcept
-    {
-        return ax.northwest();
-    }
-
-    //! Souttheast corner of the box
-    template <typename T>
-    constexpr Vector2<T>  southeast(const AxBox2<T>& ax) noexcept
-    {
-        return ax.southwest();
-    }
-
-
-    //! Soutthwest corner of the box
-    template <typename T>
-    constexpr Vector2<T>  southwest(const AxBox2<T>& ax) noexcept
-    {
-        return ax.southwest();
-    }
-
-    //! Corners of the box
-    template <typename T>
-    AxCorners2<Vector2<T>>  corners(const AxBox2<T>& v)
-    {
-        return v.corners();
-    }
-
-    //! X Range of the box
-    template <typename T>
-    constexpr Range<T>  x_range(const AxBox2<T>& v) noexcept
-    {
-        return v.x_range();
-    }
-
-    //! Y Range of the box
-    template <typename T>
-    constexpr Range<T>  y_range(const AxBox2<T>& v) noexcept
-    {
-        return v.y_range();
-    }
-
-//  --------------------------------------------------------
-//  BASIC FUNCTIONS
-
     YQ_IS_FINITE_1( AxBox2, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox2, is_nan(v.lo) || is_nan(v.hi))
 
-    //! Checks for validity (hi >= lo)
-    template <typename T>
-    constexpr bool    is_valid(const AxBox2<T>& a) noexcept
-    {
-        return a.is_valid();
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-    /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
-    
-        \param[in] bx   The axially aligned box
-        \param[in] v    The local coordinate
-        \return The global coordinate
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Vector2<T>   local_to_global(const AxBox2<T>& bx, const Vector2<T>& v) noexcept
-    {
-        return bx.project(v);
-    }
-
-    /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
-
-        \param[in] bx   The axially aligned box
-        \param[in] v    The global coordinate
-        \return The local coordinate
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Vector2<T>   global_to_local(const AxBox2<T>& bx, const Vector2<T>& v) noexcept
-    {
-        return bx.unproject(v);
-    }
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
 
     /*! \brief Computes the area of a 2D axially aligned bounding box
     */
     template <typename T>
-    constexpr square_t<T>     area(const AxBox2<T>& ax) noexcept
+    constexpr square_t<T>   area(const AxBox2<T>& ax) noexcept
     {
         return ax.area();
     }
@@ -406,44 +257,21 @@ namespace yq {
     /*! \brief Computes the center of a 2D axially aligned box
     */
     template <typename T>
-    constexpr Vector2<T>      center(const AxBox2<T>& box) noexcept
+    constexpr Vector2<T>    center(const AxBox2<T>& box) noexcept
     {
         return box.center();
     }
-    
-    /*! \brief Checks for full occlusion
-    
-        A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-        \param[in] Big   The "bigger" box, if eclipsed
-        \param[in] Small The "smaller" box, if eclipsed
-    */
-    template <typename T>
-    constexpr bool is_eclipsed(const AxBox2<T>& big, const AxBox2<T>& small) noexcept
-    {
-        return big.eclipses(small);
-    }
-    
-    /*! \brief Checks if the point is inside (or touching) the box
-    */
-    template <typename T>
-    constexpr bool is_inside(const AxBox2<T>& bx, const Vector2<T>& pt) noexcept
-    {
-        return bx.eclipses(pt);
-    }
 
-    /*! \brief Checks for any overlap
-    
-        This returns TRUE if *ANY* part of the boxes overlap (or touch)
-    */
+    //! Checks for validity (hi >= lo)
     template <typename T>
-    constexpr bool is_overlapped(const AxBox2<T>& a, const AxBox2<T>& b) noexcept
+    constexpr bool          is_valid(const AxBox2<T>& a) noexcept
     {
-        return a.overlaps(b);
-    }    
+        return a.is_valid();
+    }
 
     /*! \brief Computes the perimeter of the box */
     template <typename T>
-    constexpr T       perimeter(const AxBox2<T>& ax) noexcept
+    constexpr T             perimeter(const AxBox2<T>& ax) noexcept
     {
         return ax.perimeter();
     }
