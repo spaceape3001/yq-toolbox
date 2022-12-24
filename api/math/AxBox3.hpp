@@ -62,6 +62,14 @@ namespace yq {
             return { max_elem(lo, b.lo), min_elem(hi, b.hi) };
         }
 
+        //! Intersection into self 
+        AxBox3& operator&=(const AxBox3& b) 
+        {
+            lo  = max_elem(lo, b.lo);
+            hi  = min_elem(hi, b.hi);
+            return *this;
+        }
+
         /*! \brief Computes the center of a 3D axially aligned box
         */
         constexpr Vector3<T>      center() const noexcept

@@ -27,13 +27,183 @@ namespace yq {
         
         //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox4&) const noexcept = default;
+
+        /*! \brief Union of two AABBs
+        */
+        constexpr AxBox4<T> operator|(const AxBox4<T>&b) const noexcept
+        {
+            return { min_elem(lo, b.lo), max_elem(hi, b.hi) };
+        }
+
+        //! Union in a box
+        AxBox4& operator|=(const AxBox4& b) 
+        {
+            lo  = min_elem(lo, b.lo);
+            hi  = max_elem(hi, b.hi);
+            return *this;
+        }
+
+        //! Unions in a vector
+        AxBox4& operator|=(const Vector4<T>& b) 
+        {
+            lo  = min_elem(lo, b);
+            hi  = max_elem(hi, b);
+            return *this;
+        }
+
+        /*! \brief Intersection of two AABBs
+        */
+        constexpr AxBox4<T> operator&(const AxBox4<T>&b) const noexcept
+        {
+            return { max_elem(lo, b.lo), min_elem(hi, b.hi) };
+        }
+
+        //! Intersection into self 
+        AxBox4& operator&=(const AxBox4& b) 
+        {
+            lo  = max_elem(lo, b.lo);
+            hi  = min_elem(hi, b.hi);
+            return *this;
+        }
+
+        /*! \brief Computes the center of a 4D axially aligned box
+        */
+        constexpr Vector4<T>      center() const noexcept
+        {
+            if constexpr (std::is_floating_point_v<T>)
+                return ieee754_t<T>(0.5)*(lo+hi);
+            if constexpr (std::is_integral_v<T>)
+                return (lo+hi) / T(2);
+            return {};
+        }
+
+        /*! \brief Returns ALL the corners of the box 
+        */
+        constexpr AxCorners4<Vector4<T>>  corners() const noexcept
+        {
+            return { 
+                lo, 
+                
+                { lo.x, lo.y, lo.z, hi.w  }, 
+                { lo.x, lo.y, hi.z, lo.w  }, 
+                { lo.x, lo.y, hi.z, hi.w  }, 
+                { lo.x, hi.y, lo.z, lo.w  }, 
+                { lo.x, hi.y, lo.z, hi.w  }, 
+                { lo.x, hi.y, hi.z, lo.w  }, 
+                { lo.x, hi.y, hi.z, hi.w  }, 
+                 
+                { hi.x, lo.y, lo.z, lo.w  }, 
+                { hi.x, lo.y, lo.z, hi.w  }, 
+                { hi.x, lo.y, hi.z, lo.w  }, 
+                { hi.x, lo.y, hi.z, hi.w  }, 
+                { hi.x, hi.y, lo.z, lo.w  }, 
+                { hi.x, hi.y, lo.z, hi.w  }, 
+                { hi.x, hi.y, hi.z, lo.w  }, 
+                
+                hi
+            };
+        }
+
+        /*! \brief Checks for full occlusion
+        
+            A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
+            \param[in] Big   The "bigger" box, if eclipsed
+            \param[in] Small The "smaller" box, if eclipsed
+        */
+        constexpr bool eclipses(const AxBox4<T>& small) const noexcept
+        {
+            return all_less_equal(lo, small.lo) && all_greater_equal(hi, small.hi);
+        }
+        
+        /*! \brief Checks if the point is inside (or touching) the box
+        */
+        constexpr bool eclipses(const Vector4<T>& pt) const noexcept
+        {
+            return all_less_equal(lo, pt) && all_less_equal(pt, hi);
+        }
+
+        /*! \brief Computes the hyper volume of the box
+        */
+        constexpr fourth_t<T> hypervolume() const noexcept
+        {
+            return component_product(hi-lo);
+        }
+
+        //! Checks for validity (hi >= lo)
+        constexpr bool    is_valid() const noexcept
+        {
+            return all_less_equal(lo, hi);
+        }
+
+        /*! \brief Checks for any overlap
+        
+            This returns TRUE if *ANY* part of the boxes overlap (or touch)
+        */
+        constexpr bool overlaps(const AxBox4<T>& b) const noexcept
+        {
+            return all_less_equal(lo, b.hi) && all_greater_equal(hi, b.lo);
+        }
+
+        /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
+        
+            \param[in] bx   The axially aligned box
+            \param[in] v    The local coordinate
+            \return The global coordinate
+        */
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        constexpr Vector4<T>   project(const Vector4<T>& v) const noexcept
+        {
+            return mul_elem(one_v<Vector4<T>>-v, lo) + mul_elem(v, hi);
+        }
+
+        /*! \brief Returns the span (dimensions) of the box
+        */
+        constexpr Vector4<T>    span() const noexcept
+        {
+            return hi - lo;
+        }
+
+        /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
+
+            \param[in] bx   The axially aligned box
+            \param[in] v    The global coordinate
+            \return The local coordinate
+        */
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        constexpr Vector4<T>   unproject(const Vector4<T>& v) const noexcept
+        {
+            return div_elem(v-lo, hi-lo);
+        }
+
+        //! X Range of the box
+        constexpr Range<T>  x_range() const noexcept
+        {
+            return range(lo.x, hi.x);
+        }
+
+        //! Y Range of the box
+        constexpr Range<T>  y_range() const noexcept
+        {
+            return range(lo.y, hi.y);
+        }
+
+        //! Z Range of the box
+        constexpr Range<T>  z_range() const noexcept
+        {
+            return range(lo.z, hi.z);
+        }
+
+        //! W Range of the box
+        constexpr Range<T>  w_range() const noexcept
+        {
+            return range(lo.w, hi.w);
+        }
     };
     
     YQ_IEEE754_1(AxBox4)
     
-//  --------------------------------------------------------
-//  COMPOSITION
-
     /*! \brief Creates a 4D axially aligned box from one vector
     */
     template <typename T>
@@ -50,246 +220,67 @@ namespace yq {
         return { min_elem(a,b), max_elem(a,b) };
     }
 
-    YQ_NAN_1(AxBox4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>});
-    YQ_ZERO_1(AxBox4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>});
-
-//  --------------------------------------------------------
-//  GETTERS
-
-    /*! \brief Returns ALL the corners of the box 
+    /*! \brief Creates a 4D axially aligned box from container of Vector4's
     */
     template <typename T>
-    constexpr AxCorners4<Vector4<T>>  corners(const AxBox4<T>& v) noexcept
+    AxBox4<T> aabb(const std::vector<Vector4<T>>& vals)
     {
-        return { 
-            v.lo, 
-            
-            { v.lo.x, v.lo.y, v.lo.z, v.hi.w  }, 
-            { v.lo.x, v.lo.y, v.hi.z, v.lo.w  }, 
-            { v.lo.x, v.lo.y, v.hi.z, v.hi.w  }, 
-            { v.lo.x, v.hi.y, v.lo.z, v.lo.w  }, 
-            { v.lo.x, v.hi.y, v.lo.z, v.hi.w  }, 
-            { v.lo.x, v.hi.y, v.hi.z, v.lo.w  }, 
-            { v.lo.x, v.hi.y, v.hi.z, v.hi.w  }, 
-             
-            { v.hi.x, v.lo.y, v.lo.z, v.lo.w  }, 
-            { v.hi.x, v.lo.y, v.lo.z, v.hi.w  }, 
-            { v.hi.x, v.lo.y, v.hi.z, v.lo.w  }, 
-            { v.hi.x, v.lo.y, v.hi.z, v.hi.w  }, 
-            { v.hi.x, v.hi.y, v.lo.z, v.lo.w  }, 
-            { v.hi.x, v.hi.y, v.lo.z, v.hi.w  }, 
-            { v.hi.x, v.hi.y, v.hi.z, v.lo.w  }, 
-            
-            v.hi
-        };
+        switch(vals.size()){
+        case 0:
+            return {};
+        case 1:
+            return aabb(vals[0]);
+        case 2:
+            return aabb(vals[0],vals[1]);
+        default:
+            break;
+        }
+
+        AxBox4<T>   ret = aabb(vals[0], vals[1]);
+        for(size_t i=2;i<vals.size();++i)
+            ret |= vals[i];
+        return vals;
     }
 
-    //! X Range of the box
-    template <typename T>
-    constexpr Range<T>  x_range(const AxBox4<T>& v) noexcept
-    {
-        return range(v.lo.x, v.hi.x);
-    }
-
-    //! Y Range of the box
-    template <typename T>
-    constexpr Range<T>  y_range(const AxBox4<T>& v) noexcept
-    {
-        return range(v.lo.y, v.hi.y);
-    }
-
-    //! Z Range of the box
-    template <typename T>
-    constexpr Range<T>  z_range(const AxBox4<T>& v) noexcept
-    {
-        return range(v.lo.z, v.hi.z);
-    }
-
-    //! W Range of the box
-    template <typename T>
-    constexpr Range<T>  w_range(const AxBox4<T>& v) noexcept
-    {
-        return range(v.lo.w, v.hi.w);
-    }
-
-//  --------------------------------------------------------
-//  BASIC FUNCTIONS
+    YQ_NAN_1(AxBox4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>});
+    YQ_ZERO_1(AxBox4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>});
 
     YQ_IS_FINITE_1( AxBox4, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox4, is_nan(v.lo) || is_nan(v.hi))
 
-
-    //! Checks for validity (hi >= lo)
-    template <typename T>
-    constexpr bool    is_valid(const AxBox4<T>& a) noexcept
-    {
-        return all_less_equal(a.lo, a.hi);
-    }
-    
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-    /*! \brief Union of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox4<T> operator|(const AxBox4<T>&a, const AxBox4<T>&b) noexcept
-    {
-        return { min_elem(a.lo, b.lo), max_elem(a.hi, b.hi) };
-    }
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-    /*! \brief Intersection of two AABBs
-    */
-    template <typename T>
-    constexpr AxBox4<T> operator&(const AxBox4<T>&a, const AxBox4<T>&b) noexcept
-    {
-        return { max_elem(a.lo, b.lo), min_elem(a.hi, b.hi) };
-    }
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-    /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
-    
-        \param[in] bx   The axially aligned box
-        \param[in] v    The local coordinate
-        \return The global coordinate
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Vector4<T>   local_to_global(const AxBox4<T>& bx, const Vector4<T>& v) noexcept
-    {
-        return mul_elem(one_v<Vector4<T>>-v, bx.lo) + mul_elem(v, bx.hi);
-    }
-
-    /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
-
-        \param[in] bx   The axially aligned box
-        \param[in] v    The global coordinate
-        \return The local coordinate
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Vector4<T>   global_to_local(const AxBox4<T>& bx, const Vector4<T>& v) noexcept
-    {
-        return div_elem(v-bx.lo, bx.hi-bx.lo);
-    }
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-    
 
     /*! \brief Computes the center of a 4D axially aligned box
     */
     template <typename T>
     constexpr Vector4<T>      center(const AxBox4<T>& box) noexcept
     {
-        if constexpr (std::is_floating_point_v<T>){
-            return ieee754_t<T>(0.5)*(box.lo+box.hi);
-        } else if(std::is_integral_v<T>){
-            return (box.lo+box.hi) / T(2);
-        } else
-            return {};
+        return box.center();
     }
 
     /*! \brief Computes the hyper volume of the box
     */
     template <typename T>
-    constexpr fourth_t<T> hypervolume(const AxBox4<T>& bx) noexcept
+    constexpr fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept
     {
-        return component_product(bx.hi-bx.lo);
+        return box.hypervolume();
     }
 
 
-    /*! \brief Checks for full occlusion
-    
-        A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-        \param[in] Big   The "bigger" box, if eclipsed
-        \param[in] Small The "smaller" box, if eclipsed
-    */
+    //! Checks for validity (hi >= lo)
     template <typename T>
-    constexpr bool is_eclipsed(const AxBox4<T>& big, const AxBox4<T>& small) noexcept
+    constexpr bool    is_valid(const AxBox4<T>& box) noexcept
     {
-        return all_less_equal(big.lo, small.lo) && all_greater_equal(big.hi, small.hi);
-    }
-    
-    /*! \brief Checks if the point is inside (or touching) the box
-    */
-    template <typename T>
-    constexpr bool is_inside(const AxBox4<T>& bx, const Vector4<T>& pt) noexcept
-    {
-        return all_less_equal(bx.lo, pt) && all_less_equal(pt, bx.hi);
-    }
-
-    /*! \brief Checks for any overlap
-    
-        This returns TRUE if *ANY* part of the boxes overlap (or touch)
-    */
-    template <typename T>
-    constexpr bool is_overlapped(const AxBox4<T>& a, const AxBox4<T>& b) noexcept
-    {
-        return all_less_equal(a.lo, b.hi) && all_greater_equal(a.hi, b.lo);
+        return box.is_valid();
     }
 
     /*! \brief Returns the span (dimensions) of the box
     */
     template <typename T>
-    constexpr Vector4<T>    span(const AxBox4<T>&a) noexcept
+    constexpr Vector4<T>    span(const AxBox4<T>&box) noexcept
     {
-        return a.hi - a.lo;
+        return box.span();
     }
+
 
 }
 
