@@ -51,12 +51,13 @@ namespace yq {
             return *this;
         }
 
-        //! \Intersection 
+        //! Intersection 
         constexpr AxBox2 operator&(const AxBox2<T>&b) const noexcept
         {
             return { max_elem(lo, b.lo), min_elem(hi, b.hi) };
         }
         
+        //! Intersection into self 
         AxBox2& operator&=(const AxBox2& b) 
         {
             lo  = max_elem(lo, b.lo);

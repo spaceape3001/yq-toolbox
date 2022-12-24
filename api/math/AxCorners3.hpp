@@ -18,7 +18,7 @@ namespace yq {
         using component_type    = T;
     
         //! Lower-lower-lower corner
-        T   lll;
+        T   lll;    // south west bottom
 
         //! Lower-lower-upper corner
         T   llh;
