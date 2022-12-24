@@ -29,12 +29,6 @@ namespace yq {
         //! Defaulted comparsion operator
         constexpr bool    operator==(const Size2&) const noexcept = default;
         
-        //! Width
-        constexpr T   width() const { return x; }
-        
-        //! Height
-        constexpr T   height() const { return y; }
-        
         /*! \brief Implicit Conversion to floating point sizes
         */
         template <typename U>
@@ -43,7 +37,72 @@ namespace yq {
         {
             return { (U) x, (U) y };
         }
+      
+        //! Returns the area
+        constexpr auto      area() const noexcept
+        {
+            return x*y;
+        }
+
+        //! Tests to see if the left fully encloses the right
+        bool                eclipses(const Size2& b) const noexcept
+        {
+            return (x >= b.x) && (y >= b.y);
+        }
         
+        //! Height
+        constexpr T         height() const { return y; }
+
+        //! Width
+        constexpr T         width() const { return x; }
+
+        /*! \brief Shrinks to fit the given frame
+
+            This shrinks a size to fit the given frame (no spillage), preserving aspect ratio.
+
+            \param[in]  frame   Desired frame
+        */
+        Size2               shrink_to_fit(const Size2& frame) const
+        {
+            using sq_t  = decltype(T()*T());
+            
+            //  --------------------------------------
+            //  Check for reasons to not do the math...
+        
+            if(frame.eclipses(*this))           // we already fit
+                return *this;
+            if(frame.area() == zero_v<sq_t>)     // frame is bogus
+                return *this;
+            if(area() == zero_v<sq_t>)    // dims is bogus
+                return *this;
+
+            /*
+                The relative "shrink" factor in each dimension
+                
+                fx = dims.x / frame.x
+                fy = dims.y / frame.y
+                
+                And the greater one dictates which axis is held constant 
+                while the other is shrunk by the same amount.  However
+                the above would decimate precision with integer numbers,
+                therefore we need to rewrite the conditional to avoid.
+                
+                dims.y      dims.x
+                -------  > --------
+                frame.y     frame.x
+                
+                dims.y * frame.x > dim.x * frame.y
+                
+                Still have the issue of integer overflow... 
+                address that later if that becomes a concern.
+            */
+            
+            if(y*frame.x > x*frame.y){
+                return Size2<T>{ (x * frame.y)/y , frame.y };
+            } else {
+                return Size2<T>{ frame.x, (y*frame.x)/x };
+            }
+        }
     };
 
     YQ_NAN_1(Size2, Size2<T>{ nan_v<T>, nan_v<T> })
@@ -73,41 +132,7 @@ namespace yq {
     template <typename T>
     Size2<T>  shrink_to_fit_within(const Size2<T>& dims, const Size2<T>& frame)
     {
-        using sq_t  = decltype(T()*T());
-    
-        if(within(frame, dims))
-            return dims;
-        if(area(frame) == zero_v<sq_t>)  // frame is bogus
-            return dims;
-        if(area(dims) == zero_v<sq_t>)    // dims is bogus
-            return dims;
-
-        /*
-            The relative "shrink" factor in each dimension
-            
-            fx = dims.x / frame.x
-            fy = dims.y / frame.y
-            
-            And the greater one dictates which axis is held constant 
-            while the other is shrunk by the same amount.  However
-            the above would decimate precision with integer numbers,
-            therefore we need to rewrite the conditional to avoid.
-            
-            dims.y      dims.x
-            -------  > --------
-            frame.y     frame.x
-            
-            dims.y * frame.x > dim.x * frame.y
-            
-            Still have the issue of integer overflow... 
-            address that later if that becomes a concern.
-        */
-        
-        if(dims.y*frame.x > dims.x*frame.y){
-            return Size2<T>{ (dims.x * frame.y)/dims.y , frame.y };
-        } else {
-            return Size2<T>{ frame.x, (dims.y*frame.x)/dims.x };
-        }
+        return dims.shrink_to_fit(frame);
         
     }
 
@@ -115,7 +140,7 @@ namespace yq {
     template <typename T>
     constexpr bool   within(const Size2<T>& big, const Size2<T>& small)
     {
-        return (big.x >= small.x) && (big.y >= small.y);
+        return big.eclipses(small);
     }
 
     /*! \brief Streams the size to a stream-like object */
