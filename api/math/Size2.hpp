@@ -10,18 +10,33 @@
 
 namespace yq {
 
-    /*! Size object
+    /*! Size object to hold a simple x/y dimensions
+    
+        This implicitly defines a region of zero to X-/Y-.
     */
     template <typename T>
     struct Size2 {
+        
+        //! Capture our template argument
+        using component_type    = T;
+    
+        //! X-size
         T   x;
+        
+        //! Y-size
         T   y;
         
-        bool    operator==(const Size2&) const noexcept = default;
+        //! Defaulted comparsion operator
+        constexpr bool    operator==(const Size2&) const noexcept = default;
         
+        //! Width
         constexpr T   width() const { return x; }
+        
+        //! Height
         constexpr T   height() const { return y; }
         
+        /*! \brief Implicit Conversion to floating point sizes
+        */
         template <typename U>
         requires (std::is_integral_v<T> && std::is_floating_point_v<U> && !std::is_same_v<T,U>)
         constexpr operator Size2<U>() const 
@@ -40,8 +55,10 @@ namespace yq {
     template <typename T>
     constexpr bool    within(const Size2<T>& big, const Size2<T>& small);
     
+    /*! \brief Computes the area of this size
+    */
     template <typename T>
-    constexpr auto    area(const Size2<T>& sz)
+    constexpr auto    area(const Size2<T>& sz) noexcept
     {
         return sz.x*sz.y;
     }
@@ -94,24 +111,30 @@ namespace yq {
         
     }
 
+    /*! \brief TRUE if the left size is bigger than the right in all dimensions */
     template <typename T>
     constexpr bool   within(const Size2<T>& big, const Size2<T>& small)
     {
         return (big.x >= small.x) && (big.y >= small.y);
     }
 
+    /*! \brief Streams the size to a stream-like object */
     template <typename S, typename T>
     S&  as_stream(S& s, const Size2<T>& v)
     {
         return s << "[" << v.x << "x" << v.y << "]";
     }
     
+    /*! \brief Streams to a stream
+    */
     template <typename T>
     Stream& operator<<(Stream&s, const Size2<T>& v)
     {
         return as_stream(s, v);
     }
 
+    /*! \brief Streams to to a logging stream
+    */
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size2<T>& v)
     {
