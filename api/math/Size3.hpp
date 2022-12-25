@@ -14,16 +14,24 @@ namespace yq {
     */
     template <typename T>
     struct Size3 {
+
+        //! Capture our template argument
+        using component_type    = T;
+
+        //! X-size
         T   x;
+        
+        //! Y-size
         T   y;
+        
+        //! Z-size
         T   z;
         
-        bool    operator==(const Size3&) const noexcept = default;
+        //! Defaulted comparison operator
+        constexpr bool    operator==(const Size3&) const noexcept = default;
         
-        constexpr T   width() const { return x; }
-        constexpr T   height() const { return y; }
-        constexpr T   depth() const { return z; }
-        
+        /*! \brief Implicit Conversion to floating point sizes
+        */
         template <typename U>
         requires (std::is_integral_v<T> && std::is_floating_point_v<U> && !std::is_same_v<T,U>)
         constexpr operator Size3<U>() const 
@@ -31,6 +39,29 @@ namespace yq {
             return { (U) x, (U) y, (U) z };
         }
         
+        //! Depth (Z-dimension)
+        constexpr T   depth() const { return z; }
+        
+        //! Detects if this object eclipses the other
+        constexpr bool   eclipses(const Size3<T>& small) const noexcept
+        {
+            return (x >= small.x) && (y >= small.y) && (z >= small.z );
+        }
+
+        //! Height (Y-dimension)
+        constexpr T   height() const { return y; }
+
+        //! Volume of this size
+        constexpr cube_t<T> volume() const noexcept
+        {
+            return x*y*z;
+        }
+
+        //! Width (X-dimension)
+        constexpr T   width() const { return x; }
+        
+        //! Swizzles the x/y components to a Size2
+        constexpr Size2<T>  xy() const noexcept { return { x, y }; }
     };
 
     YQ_NAN_1(Size3, Size3<T>{ nan_v<T>, nan_v<T>, nan_v<T>  })
@@ -38,27 +69,11 @@ namespace yq {
     YQ_IS_FINITE_1(Size3, is_finite(v.x) && is_finite(v.y) && is_finite(v.z) )
     YQ_ZERO_1(Size3, Size3<T>{ zero_v<T>, zero_v<T>, zero_v<T> })
     
+    //! Computes volume of the size
     template <typename T>
-    Size2<T>        xy(const Size3<T>&a)
+    constexpr auto    volume(const Size3<T>& size) noexcept
     {
-        return { a.x, a.y };
-    }
-
-    
-    template <typename T>
-    constexpr bool    within(const Size3<T>& big, const Size3<T>& small);
-    
-    template <typename T>
-    constexpr auto    volume(const Size3<T>& sz)
-    {
-        return sz.x*sz.y*sz.z;
-    }
-
-
-    template <typename T>
-    constexpr bool   within(const Size3<T>& big, const Size3<T>& small)
-    {
-        return (big.x >= small.x) && (big.y >= small.y) && (big.z >= small.z );
+        return size.volume();
     }
 
     template <typename S, typename T>

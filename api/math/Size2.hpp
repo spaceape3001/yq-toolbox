@@ -50,10 +50,10 @@ namespace yq {
             return (x >= b.x) && (y >= b.y);
         }
         
-        //! Height
+        //! Height (Y-dimension)
         constexpr T         height() const { return y; }
 
-        //! Width
+        //! Width (X-dimension)
         constexpr T         width() const { return x; }
 
         /*! \brief Shrinks to fit the given frame
@@ -111,9 +111,6 @@ namespace yq {
     YQ_ZERO_1(Size2, Size2<T>{ zero_v<T>, zero_v<T> })
     
     
-    template <typename T>
-    constexpr bool    within(const Size2<T>& big, const Size2<T>& small);
-    
     /*! \brief Computes the area of this size
     */
     template <typename T>
@@ -135,14 +132,7 @@ namespace yq {
         return dims.shrink_to_fit(frame);
         
     }
-
-    /*! \brief TRUE if the left size is bigger than the right in all dimensions */
-    template <typename T>
-    constexpr bool   within(const Size2<T>& big, const Size2<T>& small)
-    {
-        return big.eclipses(small);
-    }
-
+    
     /*! \brief Streams the size to a stream-like object */
     template <typename S, typename T>
     S&  as_stream(S& s, const Size2<T>& v)
