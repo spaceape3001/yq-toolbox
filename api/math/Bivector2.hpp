@@ -24,6 +24,22 @@ namespace yq {
         
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Bivector2&) const noexcept = default;
+        
+        /*! \brief Affirmation (positive) operator
+        
+            \note Here to complement the negation operator
+        */
+        constexpr Bivector2 operator+() const noexcept 
+        { 
+            return *this; 
+        }
+
+        /*! \brief Negation operator of a bivector
+        */
+        constexpr Bivector2 operator-() const noexcept
+        {
+            return {-xy};
+        }
     };
 
     YQ_IEEE754_1(Bivector2)
@@ -59,27 +75,9 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
-    /*! \brief Affirmation (positive) operator
-    
-        \note Here to complement the negation operator
-    */
-    template <typename T>
-    constexpr Bivector2<T> operator+(const Bivector2<T>& a) noexcept
-    {
-        return a;
-    }
-
-
 //  --------------------------------------------------------
 //  NEGATIVE
 
-    /*! \brief Negation operator of a bivector
-    */
-    template <typename T>
-    constexpr Bivector2<T> operator-(const Bivector2<T>& a) noexcept
-    {
-        return {-a.xy};
-    }
 
 
 //  --------------------------------------------------------

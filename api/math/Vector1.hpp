@@ -29,10 +29,29 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector1&) const noexcept = default;
 
+        constexpr Vector1 operator+() const noexcept
+        {
+            return *this;
+        }
+
+        constexpr Vector1 operator-() const noexcept
+        {
+            return {-x};
+        }
+
         constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept
         {
             return { x  };
         }
+
+        /*! \brief Square of the vector's length
+        
+            This returns the SQUARE of the given vector's length.
+        */
+        constexpr square_t<T> length2() const noexcept
+        {
+            return x*x;
+        }    
     };
 
     YQ_IEEE754_1(Vector1)
@@ -90,9 +109,9 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length2(const Vector1<T>& a) noexcept
+    constexpr square_t<T> length2(const Vector1<T>& vec) noexcept
     {
-        return a.x*a.x;
+        return vec.length2();
     }    
     
 
@@ -110,21 +129,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  POSITIVE
 
-    template <typename T>
-    constexpr Vector1<T> operator+(const Vector1<T>& a) noexcept
-    {
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Vector1<T> operator-(const Vector1<T>&a) noexcept
-    {
-        return {-a.x};
-    }
 
 
 //  --------------------------------------------------------

@@ -17,7 +17,7 @@ namespace yq {
     template <typename T>
     struct Sphere4 {
         //! Our component type (captures the template parameter)
-        using component_t   = T;
+        using component_type   = T;
 
         //! Point/origin of the hypersphere
         Vector4<T>  point;
@@ -27,6 +27,13 @@ namespace yq {
         
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
+
+        /*! \brief Computes the diameter of a hyper sphere
+        */
+        constexpr T     diameter() const noexcept
+        {
+            return radius + radius;
+        }
     };
 
     YQ_IEEE754_1(Sphere4)
@@ -145,9 +152,9 @@ namespace yq {
     /*! \brief Computes the diameter of a hyper sphere
     */
     template <typename T>
-    T           diameter(const Sphere4<T>&a)
-    {
-        return a.radius + a.radius;
+    constexpr T  diameter(const Sphere4<T>& sph) noexcept
+    {   
+        return sph.diameter();
     }
 
 

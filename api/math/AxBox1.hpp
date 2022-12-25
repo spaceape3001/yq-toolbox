@@ -225,6 +225,7 @@ namespace yq {
         return box.is_valid();
     }
 
+    //! Computes the span for a given box
     template <typename T>
     constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept
     {
