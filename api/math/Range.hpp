@@ -21,11 +21,82 @@ namespace yq {
         T   lo, hi;
         
         //! Default comparison object
-        constexpr bool    operator==(const Range&) const noexcept = default;
+        constexpr bool      operator==(const Range&) const noexcept = default;
         
+        constexpr Range<T>  operator+() const noexcept
+        {
+            return *this;
+        }
+
+        constexpr Range<T>  operator-() const noexcept
+        {
+            return range( -hi, -lo );
+        }
+
         //  see if the for() syntax will work?
+        
+        //! low value (for-loops)
         constexpr T       begin() const noexcept { return lo; }
+        
+        /*! \brief Computes the center of this range */
+        constexpr Range<T>    center() const noexcept
+        {
+            if constexpr (std::is_floating_point_v<T>)
+                return ieee754_t<T>(0.5)*(lo+hi);
+            if constexpr (std::is_integral_v<T>)
+                return (lo+hi) / T(2);
+            return {};
+        }
+        
+        //! Checks if value is within range
+        constexpr bool        eclipses(T b) const noexcept
+        {
+            return (lo <= b) && (b <= hi);
+        }
+    
+        //! Checks if provided range is entirely within this range
+        constexpr bool        eclipses(const Range& b) const noexcept
+        {
+            return (lo <= b.lo) && (b.hi <= hi);
+        }
+
+        //! high value (for-loops)
         constexpr T       end() const noexcept { return hi; }
+        
+        //! Checks for validity
+        constexpr bool    is_valid() const noexcept
+        {
+            return lo <= hi;
+        }
+
+        /*! \brief Projects a local [0,1] coordinate to a global coordinate
+            \param[in] v    The local coordinate
+            \return The global coordinate
+        */
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        constexpr T   project(T v) const noexcept
+        {
+            return (one_v<T>-v)*lo + v*hi;
+        }
+
+        //! Computes the span of the range
+        constexpr T     span() const noexcept
+        {
+            return hi - lo;
+        }
+
+        /*! \brief Projects a global coordinate to a local [0,1] coordinate
+            \param[in] v    The global coordinate
+            \return The local coordinate
+        */
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        constexpr T   unproject(T v) const noexcept
+        {
+            return (v-lo)/(hi-lo);
+        }
+
     };
 
     YQ_IEEE754_1(Range)
@@ -71,34 +142,12 @@ namespace yq {
     template <typename T>
     constexpr bool    is_valid(const Range<T>& a) noexcept
     {
-        return a.lo <= a.hi;
+        return a.is_valid();
     }
 
     YQ_IS_NAN_1(Range, is_nan(v.lo) || is_nan(v.hi))
     YQ_IS_FINITE_1(Range, is_finite(v.lo) && is_finite(v.hi))
 
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Range<T> operator+(const Range<T>& a) noexcept
-    {
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Range<T> operator-(const Range<T>&a) noexcept
-    {
-        return range( -a.hi, -a.lo );
-    }
-
-//  --------------------------------------------------------
-//  NORMALIZATION
 
 
 //  --------------------------------------------------------
@@ -303,40 +352,20 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr T   local_to_global(const Range<T>& r, T v) noexcept
-    {
-        return (one_v<T>-v)*r.lo + v*r.hi;
-    }
-
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr T   global_to_local(const Range<T>& r, T v) noexcept
-    {
-        return (v-r.lo)/(r.hi-r.lo);
-    }
 
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    requires std::is_floating_point_v<T>
     constexpr Range<T>    center(const Range<T>& a) noexcept
     {
-        return half_v<T>*(a.lo+a.hi);
-    }
-    
-    template <typename T>
-    constexpr bool        is_inside(const Range<T>& a, T b) noexcept
-    {
-        return (a.lo <= b) && (b <= a.hi);
+        return a.center();
     }
     
     template <typename T>
     constexpr T           span(const Range<T>& a) noexcept
     {
-        return a.hi - a.lo;
+        return a.span();
     }
 }

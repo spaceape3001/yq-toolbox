@@ -123,10 +123,9 @@ namespace yq {
             return all_less_equal(lo, b.hi) && all_greater_equal(hi, b.lo);
         }
 
-        /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
+        /*! \brief Projects a local [0,1] coordinate to a global coordinate
         
             \param[in] bx   The axially aligned box
-            \param[in] v    The local coordinate
             \return The global coordinate
         */
         template <typename=void>
@@ -141,9 +140,7 @@ namespace yq {
             return hi - lo;
         }
 
-        /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
-
-            \param[in] bx   The axially aligned box
+        /*! \brief Projects a global coordinate to a local [0,1] coordinate
             \param[in] v    The global coordinate
             \return The local coordinate
         */
