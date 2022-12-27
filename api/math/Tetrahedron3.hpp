@@ -27,12 +27,50 @@ namespace yq {
 
         //! Defaulted comparson operator
         constexpr bool operator==(const Tetrahedron3&) const noexcept = default;
+        
+        constexpr Vector3<T>    centroid() const noexcept
+        {
+            if constexpr (std::is_floating_point_v<T>)
+                return ((a+b)+(c+d)) * T(0.25);
+            if constexpr (std::is_integral_v<T>)
+                return ((a+b)+(c+d)) / T(4);
+            return {};
+        }
+        
+        template <typename=void>
+        requires trait::has_sqrt_v<square_t<T>>
+        static Tetrahedron3  make_unit()
+        {
+            //  formula taken from https://en.wikipedia.org/wiki/Tetrahedron
+            const T third    = T(1./3.);
+            const T sq29    = sqrt(square_t<T>(2./9.));
+            const T sq89    = sqrt(square_t<T>(8./9.));
+            const T sq23    = sqrt(square_t<T>(2./2.));
+            
+            return { 
+                { sq89, T(0.), -third },
+                { -sq29, sq23, -third },
+                { -sq29, -sq23, -third },
+                { T(0.), T(0.), T(1.) }
+            };
+        }
+
+        template <typename=void>
+        requires trait::has_sqrt_v<square_t<T>>
+        static const Tetrahedron3&  unit()
+        {
+            static const Tetrahedron3 ret = make_unit();
+            return ret;
+        }
+        
+        constexpr cube_t<T>   volume() const noexcept
+        {
+            return abs((a-d) DOT ((b-d) CROSS (c-d))) / ieee754_t<T>(6.);
+        }
     };
 
     YQ_IEEE754_1(Tetrahedron3)
 
-//  --------------------------------------------------------
-//  COMPOSITION
 
     template <typename T>
     Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c, const Vector3<T>& d)
@@ -43,76 +81,21 @@ namespace yq {
     YQ_NAN_1(Tetrahedron3, { nan_v<Vector3<T>>, nan_v<Vector3<T>>, nan_v<Vector3<T>>, nan_v<Vector3<T>> })
     YQ_ZERO_1(Tetrahedron3, { zero_v<Vector3<T>>, zero_v<Vector3<T>>, zero_v<Vector3<T>>, zero_v<Vector3<T>> })
 
-//  --------------------------------------------------------
-//  BASIC FUNCTIONS
-
 
     YQ_IS_FINITE_1(Tetrahedron3, is_finite(v.a) && is_finite(v.b) && is_finite(v.c) && is_finite(v.d))
     YQ_IS_NAN_1(Tetrahedron3, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) || is_nan(v.d))
 
+    template <typename T>
+    constexpr Vector3<T>  centroid(const Tetrahedron3<T>& tetra) noexcept
+    {
+        return tetra.centroid();
+    }
 
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
+    template <typename T>
+    constexpr cube_t<T>   volume(const Tetrahedron3<T>& tetra) noexcept
+    {
+        return tetra.volume();
+    }
 }
 
 YQ_TYPE_DECLARE(yq::Tetrahedron3D)
