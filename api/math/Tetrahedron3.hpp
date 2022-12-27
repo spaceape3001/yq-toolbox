@@ -12,6 +12,23 @@
 
 namespace yq {
 
+    /*! \brief Tetrahedron
+    
+        \note This isn't required to be a *REGULAR* tetrahedron, simply
+        any four cornered polyhedra is considered okay
+    */
+    template <typename T>
+    struct Tetrahedron3 {
+        //!  Capture the template parameter
+        using component_type    = T;
+    
+        //!     Corners (call 'em a, b, c, & d)
+        Vector3<T>     a, b, c, d;
+
+        //! Defaulted comparson operator
+        constexpr bool operator==(const Tetrahedron3&) const noexcept = default;
+    };
+
     YQ_IEEE754_1(Tetrahedron3)
 
 //  --------------------------------------------------------

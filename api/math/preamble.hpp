@@ -324,6 +324,7 @@ namespace yq {
     template <typename> struct Tensor42;
     template <typename> struct Tensor43;
     template <typename> struct Tensor44;
+    template <typename> struct Tetrahedron3;
     template <typename> struct Trivector3;
     template <typename> struct Trivector4;
     template <typename> struct Vector1;
@@ -335,7 +336,6 @@ namespace yq {
     template <typename T> using Segment2        = SegmentData<Vector2<T>>;
     template <typename T> using Segment3        = SegmentData<Vector3<T>>;
     template <typename T> using Segment4        = SegmentData<Vector4<T>>;
-    template <typename T> using Tetrahedron3    = TetrahedronData<Vector3<T>>;
     template <typename T> using Triangle2       = TriangleData<Vector2<T>>;
     template <typename T> using Triangle3       = TriangleData<Vector3<T>>;
     template <typename T> using Triangle4       = TriangleData<Vector4<T>>;
