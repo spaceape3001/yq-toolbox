@@ -28,6 +28,7 @@ namespace yq {
         //! Defaulted comparson operator
         constexpr bool operator==(const Tetrahedron3&) const noexcept = default;
         
+        //! Computes the centroid of the tetrahedron
         constexpr Vector3<T>    centroid() const noexcept
         {
             if constexpr (std::is_floating_point_v<T>)
@@ -37,6 +38,11 @@ namespace yq {
             return {};
         }
         
+        /*! \brief Makes a regular tetrahedron 
+            
+            This makes a regular tetrahedron whose points 
+            are on the unit sphere.
+        */
         template <typename=void>
         requires trait::has_sqrt_v<square_t<T>>
         static Tetrahedron3  make_unit()
@@ -55,6 +61,7 @@ namespace yq {
             };
         }
 
+        //! Returns a regular tetrahedron whose points are on the unit sphere */
         template <typename=void>
         requires trait::has_sqrt_v<square_t<T>>
         static const Tetrahedron3&  unit()
@@ -63,6 +70,7 @@ namespace yq {
             return ret;
         }
         
+        //! Computes the volume of this tetrahedron
         constexpr cube_t<T>   volume() const noexcept
         {
             return abs((a-d) DOT ((b-d) CROSS (c-d))) / ieee754_t<T>(6.);
@@ -71,9 +79,9 @@ namespace yq {
 
     YQ_IEEE754_1(Tetrahedron3)
 
-
+    //! Creates a tetrahedron from four points
     template <typename T>
-    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c, const Vector3<T>& d)
+    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const std::type_identity_t<Vector3<T>>& b, const std::type_identity_t<Vector3<T>>& c, const std::type_identity_t<Vector3<T>>& d)
     {
         return { a, b, c, d };
     }
@@ -85,12 +93,14 @@ namespace yq {
     YQ_IS_FINITE_1(Tetrahedron3, is_finite(v.a) && is_finite(v.b) && is_finite(v.c) && is_finite(v.d))
     YQ_IS_NAN_1(Tetrahedron3, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) || is_nan(v.d))
 
+    //! Computes the centroid of the given tetrahedron
     template <typename T>
     constexpr Vector3<T>  centroid(const Tetrahedron3<T>& tetra) noexcept
     {
         return tetra.centroid();
     }
 
+    //! Computes the volume of the given tetrahedron
     template <typename T>
     constexpr cube_t<T>   volume(const Tetrahedron3<T>& tetra) noexcept
     {
