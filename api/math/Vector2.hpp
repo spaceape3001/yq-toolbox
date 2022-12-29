@@ -37,6 +37,15 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector2&) const noexcept = default;
 
+        template <typename=void>
+        requires trait::has_sqrt_v<T>
+        Vector2<quotient_t<T,T>> operator~() const
+        {
+            auto l = one_v<T>/length();
+            return {x/l, y/l};
+        }
+        
+
         constexpr operator glm::vec<2, T, glm::defaultp>() const noexcept
         {
             return { x, y  };
@@ -110,7 +119,7 @@ namespace yq {
         }
 
         //! Element by element absolute value
-        constexpr Vector2<T>   eabs() const noexcept
+        constexpr Vector2   eabs() const noexcept
         {
             return { abs(x), abs(y) };
         }
@@ -123,25 +132,25 @@ namespace yq {
         }
 
         //! Element by element maximum
-        constexpr Vector2<T>   emax(const Vector2&b) const noexcept
+        constexpr Vector2   emax(const Vector2&b) const noexcept
         {
             return {max(x, b.x), max(y, b.y)};
         }
 
         //! Element by element minimum
-        constexpr Vector2<T>   emax(T b) const noexcept
+        constexpr Vector2   emax(T b) const noexcept
         {
             return {max(x, b), max(y, b)};
         }
 
         //! Element by element minimum
-        constexpr Vector2<T>   emin(const Vector2&b) const noexcept
+        constexpr Vector2   emin(const Vector2&b) const noexcept
         {
             return {min(x, b.x), min(y, b.y)};
         }
 
         //! Element by element minimum
-        constexpr Vector2<T>   emin(T b) const noexcept
+        constexpr Vector2   emin(T b) const noexcept
         {
             return {min(x, b), min(y, b)};
         }
@@ -283,14 +292,6 @@ namespace yq {
 //  NORMALIZATION
 
 
-    template <typename T>
-    requires trait::has_sqrt_v<T>
-    Vector2<quotient_t<T,T>> operator~(const Vector2<T>& a)
-    {
-        auto l = one_v<T>/length(a);
-        return {a.x/l, a.y/l};
-    }
-    
 //  --------------------------------------------------------
 //  ADDITION
 

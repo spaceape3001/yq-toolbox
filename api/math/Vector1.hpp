@@ -8,6 +8,7 @@
 
 #define YQ__API__MATH__VECTOR_1__HPP 1
 #include <math/preamble.hpp>
+#include <math/Absolute.hpp>
 
 namespace yq {
     /*! \brief Vector of 1 dimension
@@ -29,6 +30,12 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector1&) const noexcept = default;
 
+        //! Implicit conversion to GLM vector
+        constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept
+        {
+            return { x  };
+        }
+
         //! Affirmation operator
         constexpr Vector1 operator+() const noexcept
         {
@@ -49,10 +56,35 @@ namespace yq {
             return Vector1<T>(copysign(one_v<T>, x));
         }
 
-        //! Implicit conversion to GLM vector
-        constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept
+        //! TRUE if every component of this vector is greater to b
+        constexpr bool  agreat(const Vector1&b) const noexcept
         {
-            return { x  };
+            return (x>b.x);
+        }
+
+        //! TRUE if every component of this vector is greater or equal to b
+        constexpr bool  agequal(const Vector1&b) const noexcept
+        {
+            return (x>=b.x);
+        }
+
+        //! TRUE if every component of this vector is less than b
+        constexpr bool  aless(const Vector1&b) const noexcept
+        {
+            return (x<b.x);
+        }
+
+        //! TRUE if every component of a this vector is less than (or equal to) b
+        constexpr bool  alequal(const Vector1&b) const noexcept
+        {
+            return (x<=b.x);
+        }
+        
+                //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
+        template <typename R=Absolute>
+        constexpr bool close(const Vector1&b, R compare) const 
+        {
+            return compare((*this-b).length(), b.length());
         }
 
         //! Component-wise max value
@@ -78,12 +110,58 @@ namespace yq {
         {
             return x;
         }
+        
+            //   the e's are here for consistency... not like they're really needed on 1D vectors
+
+        //! Element by element absolute value
+        constexpr Vector1   eabs() const noexcept
+        {
+            return { abs(x) };
+        }
+
+        //! Element by element division
+        template <typename U>
+        constexpr Vector1<quotient_t<T,U>>    ediv(const Vector1&b) const noexcept
+        {
+            return {x/b.x};
+        }
+
+        //! Element by element maximum
+        constexpr Vector1   emax(const Vector1&b) const noexcept
+        {
+            return {max(x, b.x)};
+        }
+
+        //! Element by element minimum
+        constexpr Vector1   emax(T b) const noexcept
+        {
+            return {max(x, b)};
+        }
+
+        //! Element by element minimum
+        constexpr Vector1   emin(const Vector1&b) const noexcept
+        {
+            return {min(x, b.x)};
+        }
+
+        //! Element by element minimum
+        constexpr Vector1   emin(T b) const noexcept
+        {
+            return {min(x, b)};
+        }
+
+        //! Element by element multiplication
+        template <typename U>
+        constexpr Vector1<product_t<T,U>>    emul(const Vector1<U>&b) const noexcept
+        {
+            return {x*b.x};
+        }
 
         /*! \brief Square of the vector's length
         
             This returns the SQUARE of the given vector's length.
         */
-        constexpr square_t<T> length2() const noexcept
+        constexpr square_t<T> length²() const noexcept
         {
             return x*x;
         }    
@@ -157,9 +235,9 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length2(const Vector1<T>& vec) noexcept
+    constexpr square_t<T> length²(const Vector1<T>& vec) noexcept
     {
-        return vec.length2();
+        return vec.length²();
     }    
     
 
@@ -168,7 +246,7 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    constexpr auto    length(const Vector1<T>& vec) noexcept
+    constexpr T  length(const Vector1<T>& vec) noexcept
     {
         return vec.length();
     }
@@ -330,35 +408,35 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T>   abs_elem(const Vector1<T>&a) noexcept
     {
-        return {abs(a.x)};
+        return a.eabs();
     }
 
     //! TRUE if every component of a is greater than b
     template <typename T>
     constexpr bool        all_greater(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return (a.x>b.x);
+        return a.agreat(b);
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
     constexpr bool        all_greater_equal(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return (a.x>=b.x);
+        return a.agequal(b);
     }
 
     //! TRUE if every component of a is less than b
     template <typename T>
     constexpr bool        all_less(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return (a.x<b.x);
+        return a.aless(b);
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
     constexpr bool        all_less_equal(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return (a.x<=b.x);
+        return a.alequal(b);
     }
   
     template <typename T>
@@ -400,13 +478,13 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T>   max_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
     {
-        return {max(a.x, b.x)};
+        return a.emax(b);
     }
 
     template <typename T>
     constexpr Vector1<T>   min_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
     {
-        return {min(a.x, b.x)};
+        return a.emin(b);
     }
 }
 
