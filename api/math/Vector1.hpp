@@ -29,19 +29,54 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector1&) const noexcept = default;
 
+        //! Affirmation operator
         constexpr Vector1 operator+() const noexcept
         {
             return *this;
         }
 
+        //! Negation operator
         constexpr Vector1 operator-() const noexcept
         {
             return {-x};
         }
 
+        //! Normalizes the vector
+        template <typename=void>
+        requires trait::has_copysign_v<T>
+        constexpr Vector1<T> operator~() const noexcept
+        {
+            return Vector1<T>(copysign(one_v<T>, x));
+        }
+
+        //! Implicit conversion to GLM vector
         constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept
         {
             return { x  };
+        }
+
+        //! Component-wise max value
+        constexpr T cmax() const noexcept
+        {
+            return x;
+        }
+        
+        //! Component-wise min value
+        constexpr T cmin() const noexcept
+        {
+            return x;
+        }
+
+        //! Component-wise product
+        constexpr T cproduct() const noexcept
+        {
+            return x;
+        }
+
+        //! Component-wise sum
+        constexpr T csum() const noexcept
+        {
+            return x;
         }
 
         /*! \brief Square of the vector's length
@@ -52,6 +87,19 @@ namespace yq {
         {
             return x*x;
         }    
+
+        /*! \brief Length of the vector
+            
+            This returns the length of the given vector.
+        */
+        constexpr T    length() const noexcept
+        {
+            if constexpr (trait::has_abs_v<T>)
+                return abs(x);
+            if(x < T{})
+                return -x;
+            return x;
+        }
     };
 
     YQ_IEEE754_1(Vector1)
@@ -120,26 +168,11 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    requires trait::has_abs_v<T>
-    constexpr auto    length(const Vector1<T>& a) noexcept
+    constexpr auto    length(const Vector1<T>& vec) noexcept
     {
-        return abs(a.x);
+        return vec.length();
     }
 
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-    template <typename T>
-    requires trait::has_copysign_v<T>
-    constexpr Vector1<T> operator~(const Vector1<T>& a) noexcept
-    {
-        return Vector1<T>(copysign(one_v<T>, a.x));
-    }
 
 //  --------------------------------------------------------
 //  ADDITION
