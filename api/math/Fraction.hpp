@@ -27,6 +27,18 @@ namespace yq {
 
         //! Converts to an double
         constexpr operator double() const { return (double) num / (double) den; }
+
+        //! Affirmative operator
+        constexpr Fraction operator+() const noexcept
+        {
+            return *this;
+        }
+
+        //! Negation operator
+        constexpr Fraction operator-() noexcept
+        {
+            return { -num, den };
+        }
     };
 
 
@@ -77,29 +89,6 @@ namespace yq {
         }
         return result;
     }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    //! Affirmative operator
-    template <typename I>
-    constexpr Fraction<I> operator+(Fraction<I> a) noexcept
-    {
-        return a;
-    }
-   
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    //! Negation operator
-    template <typename I>
-    constexpr Fraction<I> operator-(Fraction<I> a) noexcept
-    {
-        return { -a.num, a.den };
-    }
-    
-//  --------------------------------------------------------
-//  NORMALIZATION
 
 //  --------------------------------------------------------
 //  ADDITION
