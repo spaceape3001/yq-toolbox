@@ -8,9 +8,71 @@
 #include <math/preamble.hpp>
 #include <math/AxBox1.hpp>
 #include <math/Vector1.hpp>
-#include "SegmentData.hpp"
+#include <math/SegmentData.hpp>
 
 namespace yq {
+    /*! \brief Data for a segment
+    
+        \note Can be the vertex themselves, or other data.
+    */
+    template <typename T>
+    struct Segment1 {
+    
+        //! Capture the template parameter
+        using component_type    = T;
+        
+        Vector1<T>   a, b;
+        
+        //! Defaulted equality operator
+        constexpr bool operator==(const Segment1&) const noexcept = default;
+        
+        constexpr operator SegmentData<Vector1<T>>() const noexcept
+        {
+            return { a, b };
+        }
+        
+        //! Net displacement
+        constexpr Vector1<T>  delta() const noexcept
+        {
+            return b - a;
+        }
+
+        //! Square of the length
+        constexpr square_t<T> length²() const noexcept
+        {
+            return (a-b).length²();
+        }
+        
+        //! Segment mid-point
+        Vector1<T>  midpoint() const
+        {
+            if constexpr (has_ieee754_v<T>)
+                return ieee754_t<T>(0.5)*(a+b);
+            else if constexpr (std::is_integral_v<T>)
+                return (a+b) / T(2);
+            else
+                return {};
+        }
+        
+        //! Length of the segment
+        T   length() const 
+        { 
+            return (a-b).length(); 
+        }
+
+        /*! \brief Computes a point along the segment based on a fractional position
+        
+            \param[in]  seg Segment
+            \param[in]  f   Fractional point
+        */
+        template <typename=void>
+        requires has_ieee754_v<T>
+        constexpr Vector1<T>     point(ieee754_t<T> f) const noexcept
+        {
+            return (one_v<ieee754_t<T>> - f) * a + f * b;
+        }
+    };
+
     YQ_IEEE754_1(Segment1)
 
 //  --------------------------------------------------------
@@ -36,9 +98,9 @@ namespace yq {
     /*! \brief Creates an axially aligned bounding box from a segment
     */
     template <typename T>
-    constexpr AxBox1<T>   aabb(const Segment1<T>& a) noexcept
+    constexpr AxBox1<T>   aabb(const Segment1<T>& seg) noexcept
     {
-        return aabb(a.lo, a.hi);
+        return aabb(seg.a, seg.b);
     }
 
 
@@ -104,21 +166,20 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
-    /*! \brief Computes the length of the segmetn
+    /*! \brief Computes the length of the segment
     */
     template <typename T>
     T       length(const Segment1<T>& seg)
     {
-        return length(seg.b-seg.a);
+        return seg.length();
     }
     
     /*! \brief Computes the midpoint of the segmetn
     */
     template <typename T>
-    requires has_ieee754_v<T>
     constexpr Vector1<T>     midpoint(const Segment1<T>& seg) noexcept
     {
-        return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
+        return seg.midpoint();
     }
 
     /*! \brief Computes a point along the segment based on a fractional position
@@ -130,7 +191,7 @@ namespace yq {
     requires has_ieee754_v<T>
     constexpr Vector1<T>     point(const Segment1<T>& seg, ieee754_t<T> f) noexcept
     {
-        return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
+        return seg.point(f);
     }
 
 }
