@@ -12,6 +12,9 @@
 #include <math/trig.hpp>
 
 namespace yq {
+
+    template <typename T> constexpr Vector4<T> operator-(const Vector4<T>& a, const Vector4<T>& b) noexcept;
+    
     /*! \brief Vector of 4 dimensions
     
         This is a 4 dimensional cartesian vector of the given type.
@@ -43,9 +46,192 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector4&) const noexcept = default;
         
+        //! Affirmation (positive) operator
+        constexpr Vector4 operator+() const noexcept
+        {
+            return *this;
+        }
+
+        //! Negation
+        constexpr Vector4 operator-() const noexcept
+        {
+            return {-x,-y,-z,-w};
+        }
+
+        //! Normalization
+        Vector4<quotient_t<T,T>> operator~() const
+        {
+            auto l = one_v<T>/length();
+            return {x/l, y/l, z/l, w/l};
+        }
+
+        //! Conversion to GLM library
         constexpr operator glm::vec<4, T, glm::defaultp>() const noexcept
         {
             return { x, y, z, w };
+        }
+
+        constexpr Vector4 operator+(const Vector4& b) const noexcept
+        {
+            return {x+b.x, y+b.y, z+b.z, w+b.w};
+        }
+
+        Vector4& operator+=(const Vector4& b) noexcept
+        {
+            x += b.x;
+            y += b.y;
+            z += b.z;
+            w += b.w;
+            return *this;
+        }
+
+        constexpr Vector4 operator-(const Vector4& b) const noexcept
+        {
+            return {x-b.x, y-b.y, z-b.z, w-b.w};
+        }
+        
+        Vector4& operator-=(const Vector4& b) noexcept
+        {
+            x -= b.x;
+            y -= b.y;
+            z -= b.z;
+            w -= b.w;
+            return *this;
+        }
+
+        //! TRUE if every component of a is less than b
+        constexpr bool operator<<(const Vector4& b) const noexcept
+        {
+            return (x<b.x) && (y<b.y) && (z<b.z) && (w<b.w);
+        }
+
+        //! TRUE if every component of a is less than b
+        constexpr bool operator<<(T b) const noexcept
+        {
+            return (x<b) && (y<b) && (z<b) && (w<b);
+        }
+
+        //! TRUE if every component of a is less than b
+        friend constexpr bool operator<<(T a, const Vector4& b) noexcept
+        {
+            return (a<b.x) && (a<b.y) && (a<b.z) && (a<b.w);
+        }
+
+        //! TRUE if every component of a is less than (or equal to) b
+        constexpr bool operator<<=(const Vector4& b) const noexcept
+        {
+            return (x<=b.x) && (y<=b.y) && (z<=b.z) && (w<=b.w);
+        }
+
+        //! TRUE if every component of a is less than (or equal to) b
+        constexpr bool operator<<=(T b) const noexcept
+        {
+            return (x<=b) && (y<=b) && (z<=b) && (w<=b);
+        }
+
+        //! TRUE if every component of a is less than (or equal to) b
+        friend constexpr bool operator<<=(T a, const Vector4& b) noexcept
+        {
+            return (a<=b.x) && (a<=b.y) && (a<=b.z) && (a<=b.w);
+        }
+
+        //! TRUE if every component of a is greater than b
+        constexpr bool operator>>(const Vector4& b) const noexcept
+        {
+            return (x>b.x) && (y>b.y) && (z>b.z) && (w>b.w);
+        }
+
+        //! TRUE if every component of a is greater than b
+        constexpr bool operator>>(T b) const noexcept
+        {
+            return (x>b) && (y>b) && (z>b) && (w>b);
+        }
+
+        //! TRUE if every component of a is greater than b
+        friend constexpr bool operator>>(T a, const Vector4& b) noexcept
+        {
+            return (a>b.x) && (a>b.y) && (a>b.z) && (a>b.w);
+        }
+
+        //! TRUE if every component of a is greater or equal to b
+        constexpr bool operator>>=(const Vector4& b) const noexcept
+        {
+            return (x>=b.x) && (y>=b.y) && (z>=b.z) && (w>=b.w);
+        }
+
+        template <typename R>
+        bool close(const Vector4& expected, const R& compare)
+        {
+            return compare((*this-expected).length(), expected.length());
+        }
+
+        constexpr T             cmax() const noexcept
+        {
+            return max(max(x, y), max(z, w));
+        }
+
+        constexpr T             cmin() const noexcept
+        {
+            return min(min(x, y), min(z, w));
+        }
+
+        constexpr fourth_t<T>   cproduct() const noexcept
+        {
+            return x*y*z*w;
+        }
+
+        constexpr T             csum() const noexcept
+        {
+            return x + y + z + w;
+        }
+
+        constexpr Vector4   eabs() const noexcept
+        {
+            return { abs(x), abs(y), abs(z), abs(w) };
+        }
+
+        //! Element by element division
+        template <typename U>
+        constexpr Vector4<quotient_t<T,U>>  ediv(const Vector4&b) const noexcept
+        {
+            return {x/b.x, y/b.y, z/b.z, w/b.w};
+        }
+
+        constexpr Vector4   emax(const Vector4<T>&b) const noexcept
+        {
+            return {max(x, b.x) && max(y, b.y) && max(z, b.z) && max(w, b.w)};
+        }
+        
+        constexpr Vector4   emin(const Vector4<T>&b) const noexcept
+        {
+            return {min(x, b.x) && min(y, b.y) && min(z, b.z) && min(w, b.w)};
+        }
+
+        //! Element by element multiplication
+        template <typename U>
+        constexpr Vector4<product_t<T,U>>   emul(const Vector4&b) const noexcept
+        {
+            return {x*b.x, y*b.y, z*b.z, w*b.w};
+        }
+
+        /*! \brief Square of the vector's length
+        
+            This returns the SQUARE of the given vector's length.
+        */
+        constexpr square_t<T> length²() const noexcept
+        {
+            return x*x + y*y + z*z + w*w;
+        }    
+
+        /*! \brief Length of the vector
+            
+            This returns the length of the given vector.
+        */
+        T    length() const
+        {
+            if constexpr (trait::has_sqrt_v<T>)
+                return sqrt(length²());
+            return {};
         }
     };
     
@@ -55,7 +241,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    /*! \brief Creates a 4 dimensioal vector
+    /*! \brief Creates a 4 dimensional vector
     
         Helper function to create a 4 dimensional cartesian vector where the component type is deduced from
         the first argument.
@@ -151,9 +337,9 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length2(const Vector4<T>& a) noexcept
+    constexpr square_t<T> length²(const Vector4<T>& a) noexcept
     {
-        return a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w;
+        return a.length²();
     }    
 
     /*! \brief Length of the vector
@@ -161,80 +347,10 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    requires trait::has_sqrt_v<T>
     auto    length(const Vector4<T>& a)
     {
-        return sqrt(length2(a));
+        return a.length();
     }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Vector4<T> operator+(const Vector4<T>& a) noexcept
-    {
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Vector4<T> operator-(const Vector4<T>&a) noexcept
-    {
-        return {-a.x,-a.y,-a.z,-a.w};
-    }
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-    template <typename T>
-    requires trait::has_sqrt_v<T>
-    Vector4<quotient_t<T,T>> operator~(const Vector4<T>& a)
-    {
-        auto l = one_v<T>/length(a);
-        return {a.x/l, a.y/l, a.z/l, a.w/l};
-    }
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-    template <typename T>
-    constexpr Vector4<T> operator+(const Vector4<T>& a, const Vector4<T>& b) noexcept
-    {
-        return {a.x+b.x, a.y+b.y, a.z+b.z, a.w+b.w};
-    }
-
-    template <typename T>
-    Vector4<T>& operator+=(Vector4<T>& a, const Vector4<T>& b) noexcept
-    {
-        a.x += b.x;
-        a.y += b.y;
-        a.z += b.z;
-        a.w += b.w;
-        return a;
-    }
-    
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    template <typename T>
-    constexpr Vector4<T> operator-(const Vector4<T>& a, const Vector4<T>& b) noexcept
-    {
-        return {a.x-b.x, a.y-b.y, a.z-b.z, a.w-b.w};
-    }
-    
-    template <typename T>
-    Vector4<T>& operator-=(Vector4<T>& a, const Vector4<T>& b) noexcept
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        a.z -= b.z;
-        a.w -= b.w;
-        return a;
-    }
-
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -267,7 +383,7 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector4<product_t<T,U>>    mul_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
-        return {a.x*b.x, a.y*b.y, a.z*b.z, a.w*b.w};
+        return a.emul(b);
     }
     
 //  --------------------------------------------------------
@@ -301,7 +417,7 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
-        return {a.x/b.x, a.y/b.y, a.z/b.z, a.w/b.w};
+        return a.ediv(b);
     }
 
 //  --------------------------------------------------------
@@ -351,35 +467,35 @@ namespace yq {
     template <typename T>
     constexpr Vector4<T>   abs_elem(const Vector4<T>&a) noexcept
     {
-        return { abs(a.x), abs(a.y), abs(a.z), abs(a.w) };
+        return a.eabs();
     }
 
     //! TRUE if every component of a is greater than b
     template <typename T>
     constexpr bool        all_greater(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return (a.x>b.x) && (a.y>b.y) && (a.z>b.z) && (a.w>b.w);
+        return a >> b;
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
     constexpr bool        all_greater_equal(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return (a.x>=b.x) && (a.y>=b.y) && (a.z>=b.z) && (a.w>=b.w);
+        return a >>= b;
     }
     
     //! TRUE if every component of a is less than b
     template <typename T>
     constexpr bool        all_less(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return (a.x<b.x) && (a.y<b.y) && (a.z<b.z) && (a.w<b.w);
+        return a << b;
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
     constexpr bool        all_less_equal(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return (a.x<=b.x) && (a.y<=b.y) && (a.z<=b.z) && (a.w<=b.w);
+        return a <<= b;
     }
 
     template <typename T>
@@ -400,25 +516,25 @@ namespace yq {
     template <typename T>
     constexpr T             component_max(const Vector4<T>&a) noexcept
     {
-        return max(max(a.x, a.y), max(a.z, a.w));
+        return a.cmax();
     }
 
     template <typename T>
     constexpr T             component_min(const Vector4<T>&a) noexcept
     {
-        return min(min(a.x, a.y), min(a.z, a.w));
+        return a.cmin();
     }
 
     template <typename T>
     constexpr fourth_t<T>     component_product(const Vector4<T>& a) noexcept
     {
-        return a.x*a.y*a.z*a.w;
+        return a.cproduct();
     }
 
     template <typename T>
     constexpr T   component_sum(const Vector4<T>& a) noexcept
     {
-        return a.x + a.y + a.z + a.w;
+        return a.csum();
     }
 
     template <typename T, typename R>
@@ -437,13 +553,13 @@ namespace yq {
     template <typename T>
     constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
-        return {max(a.x, b.x) && max(a.y, b.y) && max(a.z, b.z) && max(a.w, b.w)};
+        return a.emax(b);
     }
     
     template <typename T>
     constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
-        return {min(a.x, b.x) && min(a.y, b.y) && min(a.z, b.z) && min(a.w, b.w)};
+        return a.emin(b);
     }
 
 }

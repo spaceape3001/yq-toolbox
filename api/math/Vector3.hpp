@@ -65,29 +65,104 @@ namespace yq {
             return {x/l, y/l, z/l};
         }
 
-        //! TRUE if every component of a is greater than b
-        constexpr bool        agreat(const Vector3&b) const noexcept
+        constexpr Vector3 operator+(const Vector3& b) const noexcept
         {
-            return (x>b.x) && (y>b.y) && (z>b.z);
+            return {x+b.x, y+b.y, z+b.z};
         }
 
-        //! TRUE if every component of a is greater or equal to b
-        constexpr bool        agequal(const Vector3&b) const noexcept
+        Vector3& operator+=(const Vector3& b) noexcept
         {
-            return (x>=b.x) && (y>=b.y) && (z>=b.z);
+            x += b.x;
+            y += b.y;
+            z += b.z;
+            return *this;
+        }
+        
+        constexpr Vector3 operator-(const Vector3& b) const noexcept
+        {
+            return {x-b.x, y-b.y, z-b.z};
+        }
+
+        Vector3& operator-=(const Vector3& b) noexcept
+        {
+            x -= b.x;
+            y -= b.y;
+            z -= b.z;
+            return *this;
         }
 
         //! TRUE if every component of a is less than b
-        constexpr bool        aless(const Vector3&b) const noexcept
+        constexpr bool operator<<(const Vector3& b) const noexcept
         {
             return (x<b.x) && (y<b.y) && (z<b.z);
         }
 
+        //! TRUE if every component of a is less than b
+        friend constexpr bool operator<<(T a, const Vector3& b) noexcept
+        {
+            return (a<b.x) && (a<b.y) && (a<b.z);
+        }
+
+        //! TRUE if every component of a is less than b
+        constexpr bool operator<<(T b) const noexcept
+        {
+            return (x<b) && (y<b) && (z<b);
+        }
+
         //! TRUE if every component of a is less than (or equal to) b
-        constexpr bool        alequal(const Vector3&b) const noexcept
+        constexpr bool operator<<=(const Vector3& b) const noexcept
         {
             return (x<=b.x) && (y<=b.y) && (z<=b.z);
         }
+
+        //! TRUE if every component of a is less than (or equal to) b
+        friend constexpr bool operator<<=(T a, const Vector3& b) noexcept
+        {
+            return (a<=b.x) && (a<=b.y) && (a<=b.z);
+        }
+
+        //! TRUE if every component of a is less than (or equal to) b
+        constexpr bool operator<<=(T b) const noexcept
+        {
+            return (x<=b) && (y<=b) && (z<=b);
+        }
+
+        //! TRUE if every component of a is greater than b
+        constexpr bool operator>>(const Vector3& b) const noexcept
+        {
+            return (x>b.x) && (y>b.y) && (z>b.z);
+        }
+
+        //! TRUE if every component of a is greater than b
+        friend constexpr bool operator>>(T a, const Vector3& b) noexcept
+        {
+            return (a>b.x) && (a>b.y) && (a>b.z);
+        }
+
+        //! TRUE if every component of a is greater than b
+        constexpr bool operator>>(T b) const noexcept
+        {
+            return (x>b) && (y>b) && (z>b);
+        }
+
+        //! TRUE if every component of a is greater or equal to b
+        constexpr bool operator>>=(const Vector3& b) const noexcept
+        {
+            return (x>=b.x) && (y>=b.y) && (z>=b.z);
+        }
+
+        //! TRUE if every component of a is greater or equal to b
+        friend constexpr bool operator>>=(T a, const Vector3& b) noexcept
+        {
+            return (a>=b.x) && (a>=b.y) && (a>=b.z);
+        }
+
+        //! TRUE if every component of a is greater or equal to b
+        constexpr bool operator>>=(T b) const noexcept
+        {
+            return (x>=b) && (y>=b) && (z>=b);
+        }
+
             
         template <typename R>
         bool close(const Vector3& expected, const R& compare) const
@@ -322,39 +397,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Vector3<T> operator+(const Vector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        return {a.x+b.x, a.y+b.y, a.z+b.z};
-    }
-
-    template <typename T>
-    Vector3<T>& operator+=(Vector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        a.x += b.x;
-        a.y += b.y;
-        a.z += b.z;
-        return a;
-    }
-
-    
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    template <typename T>
-    constexpr Vector3<T> operator-(const Vector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        return {a.x-b.x, a.y-b.y, a.z-b.z};
-    }
-
-    template <typename T>
-    Vector3<T>& operator-=(Vector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        a.z -= b.z;
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -489,7 +531,7 @@ namespace yq {
     template <typename T>
     constexpr bool        all_greater(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
-        return a.agreat(b);
+        return a.agreater(b);
     }
 
     //! TRUE if every component of a is greater or equal to b

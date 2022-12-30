@@ -49,38 +49,108 @@ namespace yq {
         }
 
         //! Normalizes the vector
-        template <typename=void>
-        requires trait::has_copysign_v<T>
         constexpr Vector1<T> operator~() const noexcept
         {
-            return Vector1<T>(copysign(one_v<T>, x));
+            if constexpr (trait::has_copysign_v<T>)
+                return Vector1<T>(copysign(one_v<T>, x));
+            return {};
         }
 
-        //! TRUE if every component of this vector is greater to b
-        constexpr bool  agreat(const Vector1&b) const noexcept
+        constexpr Vector1 operator+(const Vector1& b) const noexcept
         {
-            return (x>b.x);
+            return {x+b.x};
         }
 
-        //! TRUE if every component of this vector is greater or equal to b
-        constexpr bool  agequal(const Vector1&b) const noexcept
+        Vector1& operator+=(const Vector1& b) noexcept
         {
-            return (x>=b.x);
+            x += b.x;
+            return *this;
+        }
+
+        constexpr Vector1 operator-(const Vector1& b) const noexcept
+        {
+            return {x-b.x};
+        }
+
+        Vector1& operator-=(const Vector1& b) noexcept
+        {
+            x -= b.x;
+            return *this;
         }
 
         //! TRUE if every component of this vector is less than b
-        constexpr bool  aless(const Vector1&b) const noexcept
+        constexpr bool operator<<(const Vector1& b) const noexcept
         {
             return (x<b.x);
         }
 
+        //! TRUE if every component of this vector is less than b
+        constexpr bool operator<<(T b) const noexcept
+        {
+            return (x<b);
+        }
+
+        //! TRUE if every component of this vector is less than b
+        friend constexpr bool operator<<(T a, const Vector1& b) noexcept
+        {
+            return (a<b.x);
+        }
+
         //! TRUE if every component of a this vector is less than (or equal to) b
-        constexpr bool  alequal(const Vector1&b) const noexcept
+        constexpr bool operator<<=(const Vector1& b) const noexcept
         {
             return (x<=b.x);
         }
+
+        //! TRUE if every component of a this vector is less than (or equal to) b
+        constexpr bool operator<<=(T b) const noexcept
+        {
+            return (x<=b);
+        }
+
+        //! TRUE if every component of a this vector is less than (or equal to) b
+        friend constexpr bool operator<<=(T a, const Vector1& b) noexcept
+        {
+            return (a<=b.x);
+        }
+
+        //! TRUE if every component of this vector is greater to b
+        constexpr bool operator>>(const Vector1& b) const noexcept
+        {
+            return (x>b.x);
+        }
+
+        //! TRUE if every component of this vector is greater to b
+        constexpr bool operator>>(T b) const noexcept
+        {
+            return (x>b);
+        }
+
+        //! TRUE if every component of this vector is greater to b
+        friend constexpr bool operator>>(T a, const Vector1& b) noexcept
+        {
+            return (a>b.x);
+        }
+
+        //! TRUE if every component of this vector is greater or equal to b
+        constexpr bool operator>>=(const Vector1& b) const noexcept
+        {
+            return (x>=b.x);
+        }
+
+        //! TRUE if every component of this vector is greater or equal to b
+        constexpr bool operator>>=(T b) const noexcept
+        {
+            return (x>=b);
+        }
         
-                //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
+        //! TRUE if every component of this vector is greater or equal to b
+        friend constexpr bool operator>>=(T a, const Vector1& b) noexcept
+        {
+            return (a>=b.x);
+        }
+
+        //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
         bool close(const Vector1&b, R compare) const 
         {
@@ -255,34 +325,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Vector1<T> operator+(const Vector1<T>& a, const Vector1<T>& b) noexcept
-    {
-        return {a.x+b.x};
-    }
-
-    template <typename T>
-    Vector1<T>& operator+=(Vector1<T>& a, const Vector1<T>& b) noexcept
-    {
-        a.x += b.x;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    template <typename T>
-    constexpr Vector1<T> operator-(const Vector1<T>& a, const Vector1<T>& b) noexcept
-    {
-        return {a.x-b.x};
-    }
-
-    template <typename T>
-    Vector1<T>& operator-=(Vector1<T>& a, const Vector1<T>& b) noexcept
-    {
-        a.x -= b.x;
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -415,28 +457,28 @@ namespace yq {
     template <typename T>
     constexpr bool        all_greater(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return a.agreat(b);
+        return a >> b;
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
     constexpr bool        all_greater_equal(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return a.agequal(b);
+        return a >>= b;
     }
 
     //! TRUE if every component of a is less than b
     template <typename T>
     constexpr bool        all_less(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return a.aless(b);
+        return a << b;
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
     constexpr bool        all_less_equal(const Vector1<T>& a, const Vector1<T>&b) noexcept
     {
-        return a.alequal(b);
+        return a <<= b;
     }
   
     template <typename T>
