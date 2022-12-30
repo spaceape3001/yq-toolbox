@@ -93,25 +93,24 @@ namespace yq {
         /*! \brief Checks for full occlusion
         
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
-            \param[in] Big   The "bigger" box, if eclipsed
-            \param[in] Small The "smaller" box, if eclipsed
+            \param[in] b     The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox1<T>& small) const noexcept
+        constexpr bool eclipses(const AxBox1<T>& b) const noexcept
         {
-            return all_less_equal(lo, small.lo) && all_greater_equal(hi, small.hi);
+            return (lo <<= b.lo) && (b.hi <<= hi);
         }
 
         /*! \brief Checks if the point is inside (or touching) the box
         */
-        constexpr bool eclipses(const Vector1<T>& pt) const noexcept
+        constexpr bool inside(const Vector1<T>& pt) const noexcept
         {
-            return all_less_equal(lo, pt) && all_less_equal(pt, hi);
+            return (lo <<= pt) && (pt <<= hi);
         }
 
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept
         {
-            return all_less_equal(lo, hi);
+            return lo <<= hi;
         }
 
         /*! \brief Checks for any overlap
@@ -120,7 +119,7 @@ namespace yq {
         */
         constexpr bool overlaps(const AxBox1<T>& b) const noexcept
         {
-            return all_less_equal(lo, b.hi) && all_greater_equal(hi, b.lo);
+            return (lo <<= b.hi) && (b.lo <<= hi);
         }
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate

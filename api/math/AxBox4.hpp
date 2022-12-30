@@ -110,29 +110,29 @@ namespace yq {
             \param[in] Big   The "bigger" box, if eclipsed
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox4<T>& small) const noexcept
+        constexpr bool eclipses(const AxBox4<T>& b) const noexcept
         {
-            return all_less_equal(lo, small.lo) && all_greater_equal(hi, small.hi);
+            return (lo <<= b.lo) && (b.hi <<= hi);
         }
         
         /*! \brief Checks if the point is inside (or touching) the box
         */
-        constexpr bool eclipses(const Vector4<T>& pt) const noexcept
+        constexpr bool inside(const Vector4<T>& pt) const noexcept
         {
-            return all_less_equal(lo, pt) && all_less_equal(pt, hi);
+            return (lo <<= pt) && (pt <<= hi);
         }
 
         /*! \brief Computes the hyper volume of the box
         */
         constexpr fourth_t<T> hypervolume() const noexcept
         {
-            return component_product(hi-lo);
+            return (hi-lo).cproduct();
         }
 
         //! Checks for validity (hi >= lo)
         constexpr bool    is_valid() const noexcept
         {
-            return all_less_equal(lo, hi);
+            return lo <<= hi;
         }
 
         /*! \brief Checks for any overlap
@@ -141,7 +141,7 @@ namespace yq {
         */
         constexpr bool overlaps(const AxBox4<T>& b) const noexcept
         {
-            return all_less_equal(lo, b.hi) && all_greater_equal(hi, b.lo);
+            return (lo <<= b.hi) && (b.lo <<= hi);
         }
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box

@@ -69,7 +69,7 @@ namespace yq {
         */
         constexpr square_t<T>               area() const noexcept
         {
-            return component_product(hi-lo);
+            return (hi-lo).cproduct();
         }
 
         /*! \brief Computes the center
@@ -100,22 +100,22 @@ namespace yq {
             A small box is "eclipsed" if it's wholy contained (or touching edges) by this box.
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool          eclipses(const AxBox2<T>& small) const noexcept
+        constexpr bool          eclipses(const AxBox2<T>& b) const noexcept
         {
-            return all_less_equal(lo, small.lo) && all_greater_equal(hi, small.hi);
+            return (lo <<= b.lo) && (b.hi <<= hi);
         }
 
         /*! \brief Checks if the point is inside (or touching) the box
         */
-        constexpr bool eclipses(const Vector2<T>& pt) const noexcept
+        constexpr bool          inside(const Vector2<T>& pt) const noexcept
         {
-            return all_less_equal(lo, pt) && all_less_equal(pt, hi);
+            return (lo <<= pt) && (pt <<= hi);
         }
 
         //! Tests this box for validness
         constexpr bool          is_valid() const noexcept 
         {
-            return all_less_equal(lo, hi);
+            return lo <<= hi;
         }
             
         //! Returns the northeast corner of the box
@@ -130,13 +130,13 @@ namespace yq {
         */
         constexpr bool          overlaps(const AxBox2<T>& b) noexcept
         {
-            return all_less_equal(lo, b.hi) && all_greater_equal(hi, b.lo);
+            return (lo <<= b.hi) && (b.lo <<= hi);
         }    
 
         /*! \brief Computes the perimeter of the box */
         constexpr T             perimeter() const noexcept
         {
-            return T(2) * component_sum(hi-lo);
+            return T(2) * (hi-lo).csum();
         }
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
