@@ -202,6 +202,54 @@ namespace yq {
     }
     
 //  --------------------------------------------------------
+//  MULTIPLICATION
+
+    template <typename T, typename DIM1, double K1, typename DIM2, double K2>
+    auto operator*(const SCALED<T,DIM1,K1>& a, const SCALED<T,DIM2,K2>& b)
+    {
+        using dim_t  = typename DIM1::template _mult_<DIM2>;
+        return MKS<T,dim_t>( a.value * b.value * K1 * K2);
+    }
+
+    template <typename T, typename DIM1, double K1, typename DIM2>
+    auto operator*(const SCALED<T,DIM1,K1>& a, const MKS<T,DIM2>& b)
+    {
+        using dim_t  = typename DIM1::template _mult_<DIM2>;
+        return MKS<T,dim_t>( a.value * b.value * K1);
+    }
+
+    template <typename T, typename DIM1, typename DIM2, double K2>
+    auto operator*(const MKS<T,DIM1>& a, const SCALED<T,DIM2,K2>& b)
+    {
+        using dim_t  = typename DIM1::template _mult_<DIM2>;
+        return MKS<T,dim_t>( a.value * b.value * K2);
+    }
+
+//  --------------------------------------------------------
+//  DIVISION
+
+    template <typename T, typename DIM1, double K1, typename DIM2, double K2>
+    auto operator/(const SCALED<T,DIM1,K1>& a, const SCALED<T,DIM2,K2>& b)
+    {
+        using dim_t  = typename DIM1::template _div_<DIM2>;
+        return MKS<T,dim_t>( (a.value * K1) / (b.value * K2) );
+    }
+
+    template <typename T, typename DIM1, double K1, typename DIM2>
+    auto operator/(const SCALED<T,DIM1,K1>& a, const MKS<T,DIM2>& b)
+    {
+        using dim_t  = typename DIM1::template _div_<DIM2>;
+        return MKS<T,dim_t>( (a.value * K1) / b.value );
+    }
+
+    template <typename T, typename DIM1, typename DIM2, double K2>
+    auto operator/(const MKS<T,DIM1>& a, const SCALED<T,DIM2,K2>& b)
+    {
+        using dim_t  = typename DIM1::template _div_<DIM2>;
+        return MKS<T,dim_t>( a.value / (b.value * K2) );
+    }
+
+//  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
     template <typename T, typename DIM, double K, typename R>

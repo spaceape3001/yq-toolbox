@@ -82,7 +82,7 @@ namespace yq {
         
                 //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
-        constexpr bool close(const Vector1&b, R compare) const 
+        bool close(const Vector1&b, R compare) const 
         {
             return compare((*this-b).length(), b.length());
         }

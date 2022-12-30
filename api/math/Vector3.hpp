@@ -8,6 +8,7 @@
 
 #define YQ__API__MATH__VECTOR_3__HPP 1
 #include <math/preamble.hpp>
+#include <math/Absolute.hpp>
 #include <math/Units.hpp>
 #include <math/trig.hpp>
 #include <math/Vector2.hpp>
@@ -35,7 +36,7 @@ namespace yq {
 
         T       x;
         T       y;
-        T       z;;
+        T       z;
         
         //! Equality operator (using default)
         constexpr bool operator==(const Vector3&) const noexcept = default;
@@ -43,6 +44,129 @@ namespace yq {
         constexpr operator glm::vec<3, T, glm::defaultp>() const noexcept
         {
             return { x, y, z };
+        }
+
+        //! Affirmation
+        constexpr Vector3 operator+() const noexcept
+        {
+            return *this;
+        }
+
+        //! Negation
+        constexpr Vector3 operator-() const noexcept
+        {
+            return {-x,-y,-z};
+        }
+
+        //! Normalizations operator
+        Vector3<quotient_t<T,T>> operator~() const
+        {
+            auto l = one_v<T>/length();
+            return {x/l, y/l, z/l};
+        }
+
+        //! TRUE if every component of a is greater than b
+        constexpr bool        agreat(const Vector3&b) const noexcept
+        {
+            return (x>b.x) && (y>b.y) && (z>b.z);
+        }
+
+        //! TRUE if every component of a is greater or equal to b
+        constexpr bool        agequal(const Vector3&b) const noexcept
+        {
+            return (x>=b.x) && (y>=b.y) && (z>=b.z);
+        }
+
+        //! TRUE if every component of a is less than b
+        constexpr bool        aless(const Vector3&b) const noexcept
+        {
+            return (x<b.x) && (y<b.y) && (z<b.z);
+        }
+
+        //! TRUE if every component of a is less than (or equal to) b
+        constexpr bool        alequal(const Vector3&b) const noexcept
+        {
+            return (x<=b.x) && (y<=b.y) && (z<=b.z);
+        }
+            
+        template <typename R>
+        bool close(const Vector3& expected, const R& compare) const
+        {
+            return compare(length(*this-expected), length(expected));
+        }
+
+        //! Most positive component of the vector
+        constexpr T cmax() const noexcept
+        {
+            return max(max(x, y), z);
+        }
+
+        //! Most negative component of the vector
+        constexpr T cmin() const noexcept
+        {
+            return min(min(x, y), z);
+        }
+
+        //! Product of the vector's components
+        constexpr cube_t<T>     cproduct() const noexcept
+        {
+            return x*y*z;
+        }
+        
+        //! Sum of the vector's components
+        constexpr T   csum() const noexcept
+        {
+            return x + y + z;
+        }
+        
+        //! Absolute value of each component
+        constexpr Vector3   eabs() const noexcept
+        {
+            return { abs(x), abs(y), abs(z) };
+        }
+
+        //! Element by element division
+        template <typename U>
+        constexpr Vector3<quotient_t<T,U>>    ediv(const Vector3&b) const noexcept
+        {
+            return {x/b.x, y/b.y, z/b.z};
+        }
+
+        constexpr Vector3   emax(const Vector3&b) const noexcept
+        {
+            return {max(x, b.x) && max(y, b.y) && max(z, b.z)};
+        }
+
+        constexpr Vector3   emin(const Vector3&b) const noexcept
+        {
+            return {min(x, b.x) && min(y, b.y) && min(z, b.z)};
+        }    
+
+        //! Element by element multiplication
+        template <typename U>
+        constexpr Vector3<product_t<T,U>>    emul(const Vector3&b) const noexcept
+        {
+            return {x*b.x, y*b.y, z*b.z};
+        }
+ 
+        /*! \brief Square of the vector's length
+        
+            This returns the SQUARE of the given vector's length.
+        */
+        constexpr square_t<T> length²() const noexcept
+        {
+            return x*x + y*y + z*z;
+        }    
+        
+        /*! \brief Length of the vector
+            
+            This returns the length of this vector.
+        */
+        T       length() const
+        {
+            if constexpr (trait::has_sqrt_v<square_t<T>>)
+                return sqrt(length²());
+            return {};
         }
     };
 
@@ -117,6 +241,12 @@ namespace yq {
         return {0., 0., (double) v};
     }
 
+    template <typename T>
+    constexpr Vector3<T> Vector2<T>::z(T _z) const noexcept
+    {
+        return { x, y, _z };
+    }
+
 
     //! Creates a three dimension unit vector
     //!
@@ -166,9 +296,9 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length2(const Vector3<T>& a) noexcept
+    constexpr square_t<T> length²(const Vector3<T>& a) noexcept
     {
-        return a.x*a.x + a.y*a.y + a.z*a.z;
+        return a.length²();
     }    
     
     /*! \brief Length of the vector
@@ -176,41 +306,18 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    requires trait::has_sqrt_v<T>
-    auto    length(const Vector3<T>& a)
+    T       length(const Vector3<T>& a)
     {
-        return sqrt(length2(a));
+        return a.length();
     }
         
 //  --------------------------------------------------------
 //  POSITIVE
 
-    template <typename T>
-    constexpr Vector3<T> operator+(const Vector3<T>& a) noexcept
-    {
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Vector3<T> operator-(const Vector3<T>&a) noexcept
-    {
-        return {-a.x,-a.y,-a.z};
-    }
 
 //  --------------------------------------------------------
 //  NORMALIZATION
 
-    template <typename T>
-    requires trait::has_sqrt_v<T>
-    Vector3<quotient_t<T,T>> operator~(const Vector3<T>& a)
-    {
-        auto l = one_v<T>/length(a);
-        return {a.x/l, a.y/l, a.z/l};
-    }
 
 //  --------------------------------------------------------
 //  ADDITION
@@ -279,7 +386,7 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
-        return {a.x*b.x, a.y*b.y, a.z*b.z};
+        return a.emul(b);
     }
     
 //  --------------------------------------------------------
@@ -313,7 +420,7 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
-        return {a.x/b.x, a.y/b.y, a.z/b.z};
+        return a.ediv(b);
     }
 
 //  --------------------------------------------------------
@@ -375,35 +482,35 @@ namespace yq {
     template <typename T>
     constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept
     {
-        return { abs(a.x), abs(a.y), abs(a.z) };
+        return a.eabs();
     }
 
     //! TRUE if every component of a is greater than b
     template <typename T>
     constexpr bool        all_greater(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
-        return (a.x>b.x) && (a.y>b.y) && (a.z>b.z);
+        return a.agreat(b);
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
     constexpr bool        all_greater_equal(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
-        return (a.x>=b.x) && (a.y>=b.y) && (a.z>=b.z);
+        return a.agequal(b);
     }
 
     //! TRUE if every component of a is less than b
     template <typename T>
     constexpr bool        all_less(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
-        return (a.x<b.x) && (a.y<b.y) && (a.z<b.z);
+        return a.aless(b);
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
     constexpr bool        all_less_equal(const Vector3<T>& a, const Vector3<T>&b) noexcept
     {
-        return (a.x<=b.x) && (a.y<=b.y) && (a.z<=b.z);
+        return a.alequal(b);
     }
 
     template <typename T>
@@ -468,25 +575,25 @@ namespace yq {
     template <typename T>
     constexpr T             component_max(const Vector3<T>&a) noexcept
     {
-        return max(max(a.x, a.y), a.z);
+        return a.cmax();
     }
 
     template <typename T>
     constexpr T             component_min(const Vector3<T>&a) noexcept
     {
-        return max(max(a.x, a.y), a.z);
+        return a.cmin();
     }
 
     template <typename T>
     constexpr cube_t<T>       component_product(const Vector3<T>& a) noexcept
     {
-        return a.x*a.y*a.z;
+        return a.cproduct();
     }
     
     template <typename T>
     constexpr T   component_sum(const Vector3<T>& a) noexcept
     {
-        return a.x + a.y + a.z;
+        return a.csum();
     }
 
     template <typename T, typename R>
@@ -504,13 +611,13 @@ namespace yq {
     template <typename T>
     constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
-        return {max(a.x, b.x) && max(a.y, b.y) && max(a.z, b.z)};
+        return a.emax(b);
     }
 
     template <typename T>
     constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
-        return {min(a.x, b.x) && min(a.y, b.y) && min(a.z, b.z)};
+        return a.emin(b);
     }    
 }
 

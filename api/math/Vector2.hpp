@@ -32,13 +32,12 @@ namespace yq {
         static consteval Vector2 unit_y() noexcept;
 
         T       x;
-        T       y;;
+        T       y;
         
         //! Equality operator (using default)
         constexpr bool operator==(const Vector2&) const noexcept = default;
 
         template <typename=void>
-        requires trait::has_sqrt_v<T>
         Vector2<quotient_t<T,T>> operator~() const
         {
             auto l = one_v<T>/length();
@@ -89,7 +88,7 @@ namespace yq {
         
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
-        constexpr bool close(const Vector2&b, R compare) const 
+        bool close(const Vector2&b, R compare) const 
         {
             return compare((*this-b).length(), b.length());
         }
@@ -177,10 +176,12 @@ namespace yq {
         */
         T       length() const
         {
-            if constexpr (trait::has_sqrt_v<T>)
+            if constexpr (trait::has_sqrt_v<square_t<T>>)
                 return sqrt(length²());
             return {};
         }
+        
+        constexpr Vector3<T> z(T _z=T{}) const noexcept;
     };
 
     YQ_IEEE754_1(Vector2)
