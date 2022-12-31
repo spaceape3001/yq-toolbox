@@ -6,12 +6,48 @@
 
 #pragma once
 
-#include "TriangleData.hpp"
 #include <math/preamble.hpp>
 #include <math/AxBox4.hpp>
 #include <math/Vector4.hpp>
+#include <math/TriangleData.hpp>
 
 namespace yq {
+
+    /*! \brief 3D triangle
+    */
+    template <typename T>
+    struct Triangle4 {
+        //! Capture the template parameter
+        using component_type    = T;
+    
+        Vector4<T>   a, b, c;
+        
+        //! Defaulted equality operator
+        constexpr bool operator==(const Triangle4&) const noexcept = default;
+        
+        //! Implicit conversion to triangle data
+        constexpr operator TriangleData<Vector4<T>> () const noexcept 
+        { 
+            return { a, b, c }; 
+        }
+
+        /*! \brief Returns the bounding box for this triangle
+        */
+        constexpr AxBox4<T>   bounds() const noexcept
+        {
+            return {
+                min_elem(min_elem(a, b), c), 
+                max_elem(max_elem(a, b), c)
+            };
+        }
+
+        //! Perimeter of this triangel
+        //! \note Might not be reliable for non-floating point types
+        T       perimeter() const
+        {
+            return (b-a).length() + (c-b).length() + (a-c).length();
+        }
+    };
 
     YQ_IEEE754_1(Triangle4)
 
@@ -25,8 +61,8 @@ namespace yq {
         return { a, b, c };
     }
 
-    YQ_NAN_1(Triangle4, { nan_v<Vector3<T>>, nan_v<Vector3<T>>, nan_v<Vector3<T>> })
-    YQ_ZERO_1(Triangle4, { zero_v<Vector3<T>>, zero_v<Vector3<T>>, zero_v<Vector3<T>> })
+    YQ_NAN_1(Triangle4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>, nan_v<Vector4<T>> })
+    YQ_ZERO_1(Triangle4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>, zero_v<Vector4<T>> })
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -36,12 +72,9 @@ namespace yq {
 
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
-    AxBox4<T>   aabb(const Triangle4<T>& tri)
+    constexpr AxBox4<T>   aabb(const Triangle4<T>& tri) noexcept
     {
-        return { 
-            min_elem(min_elem(tri.a, tri.b), tri.c), 
-            max_elem(max_elem(tri.a, tri.b), tri.c)
-        };
+        return tri.bounds();
     }
 
 //  --------------------------------------------------------
@@ -50,10 +83,9 @@ namespace yq {
     /*! \brief Computes the perimeter of the triangle
     */
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
-    T       perimeter(const Triangle4<T>& tri)
+    constexpr T       perimeter(const Triangle4<T>& tri)noexcept
     {
-        return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
+        return tri.perimeter();
     }
 
 }

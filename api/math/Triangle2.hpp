@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include "TriangleData.hpp"
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
 #include <math/TriangleData.hpp>

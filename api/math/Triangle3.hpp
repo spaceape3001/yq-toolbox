@@ -6,13 +6,48 @@
 
 #pragma once
 
-#include "TriangleData.hpp"
 #include <math/preamble.hpp>
 #include <math/AxBox3.hpp>
 #include <math/Triangle2.hpp>
 #include <math/Vector3.hpp>
 
 namespace yq {
+    /*! \brief 3D triangle
+    */
+    template <typename T>
+    struct Triangle3 {
+        //! Capture the template parameter
+        using component_type    = T;
+    
+        Vector3<T>   a, b, c;
+        
+        //! Defaulted equality operator
+        constexpr bool operator==(const Triangle3&) const noexcept = default;
+        
+        //! Implicit conversion to triangle data
+        constexpr operator TriangleData<Vector3<T>> () const noexcept 
+        { 
+            return { a, b, c }; 
+        }
+
+        /*! \brief Returns the bounding box for this triangle
+        */
+        constexpr AxBox3<T>   bounds() const noexcept
+        {
+            return {
+                min_elem(min_elem(a, b), c), 
+                max_elem(max_elem(a, b), c)
+            };
+        }
+
+        //! Perimeter of this triangel
+        //! \note Might not be reliable for non-floating point types
+        T       perimeter() const
+        {
+            return (b-a).length() + (c-b).length() + (a-c).length();
+        }
+    };
+    
     YQ_IEEE754_1(Triangle3)
 
 //  --------------------------------------------------------
@@ -37,12 +72,9 @@ namespace yq {
     
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
-    AxBox3<T>   aabb(const Triangle3<T>& tri)
+    constexpr AxBox3<T>   aabb(const Triangle3<T>& tri) noexcept
     {
-        return { 
-            min_elem(min_elem(tri.a, tri.b), tri.c), 
-            max_elem(max_elem(tri.a, tri.b), tri.c)
-        };
+        return tri.bounds();
     }
 
     /*! \brief Reduces 3D triangle into 2D along xy plane */
@@ -65,10 +97,9 @@ namespace yq {
     /*! \brief Computes the perimeter of the triangle
     */
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Triangle3<T>& tri)
     {
-        return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
+        return tri.perimeter();
     }
 
 }
