@@ -13,6 +13,83 @@
 
 namespace yq {
 
+    /*! \brief Structure for polygon data
+    */
+    template <typename T>
+    struct Polygon2 {
+        //! Capture the template parameter
+        using component_type    = T;
+        
+        //! Vertex data
+        std::vector<Vector2<T>>  vertex;
+        
+        //! Defaulted equality operator
+        constexpr bool operator==(const Polygon2&) const noexcept = default;
+        
+        operator PolygonData<Vector2<T>>() const 
+        {
+            return { vertex };
+        }
+        
+        /*! \brief Computes the area of a 2D polygon
+        */
+        square_t<T>    area() const
+        {
+            return 0.5*abs(point_area());
+        }
+
+        //! Compute the bounding box to this polygon
+        AxBox2<T>   bounds() const 
+        {
+            if(vertex.empty())
+                return nan_v<AxBox2<T>>;
+            AxBox2<T>   ret;
+            ret.lo = ret.hi = vertex.front();
+            size_t n = vertex.size();
+            for(size_t i=1;i<n;++i)
+                ret |= vertex[i];
+            return ret;
+        }
+
+        //! \brief Tests the polygon to determine if it's points are counter clockwise order
+        bool    is_ccw() const
+        {
+            return point_area() < zero_v<T>;
+        }
+
+
+        //! \brief Tests the polygon to determine if it's points are clockwise order
+        bool    is_clockwise() const
+        {
+            return point_area() > zero_v<T>;
+        }
+        
+        //! Computes the perimeter of the polygon
+        //! \note May be less accurate with non-floating point types
+        T       perimeter() const
+        {
+            if(vertex.empty())
+                return T{};
+            T   ret = (vertex.back()-vertex.front()).length();
+            size_t n = vertex.size() - 1;
+            for(size_t i=0;i<n;++i)
+                ret += (vertex[i+1]-vertex[i]).length();
+            return ret;
+        }
+
+        /*! \brief "Point area" of the points
+        
+            This is a helper to area and other functions, 
+            simply does an "area" of the point deltas, 
+            no sign correction, no scaling.
+        */
+        square_t<T>    point_area() const
+        {
+            return delta_area(vertex);
+        }
+    };
+
+
 //  --------------------------------------------------------
 //  COMPOSITION
 
@@ -35,16 +112,7 @@ namespace yq {
     template <typename T>
     AxBox2<T>   aabb(const Polygon2<T>&poly)
     {
-        if(poly.vertex.empty())
-            return nan_v<AxBox2<T>>;
-        AxBox2<T>   ret;
-        ret.lo = ret.hi = poly.vertex.front();
-        size_t n = poly.vertex.size();
-        for(size_t i=1;i<n;++i){
-            ret.lo = min_elem(ret.lo, poly.vertex[i]);
-            ret.hi = max_elem(ret.hi, poly.vertex[i]);
-        }
-        return ret;
+        return poly.bounds();
     }
 
     //! Tests that all vertices are finite
@@ -71,32 +139,6 @@ namespace yq {
 //  UTILITY FUNCTIONS (FOR OTHER ADVANCED THINGS TO WORK)
 
         //  AREA HELPERS
-
-    /*! \brief "Point area" of the points
-    
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
-    template <typename T>
-    square_t<T>    point_area(const std::vector<Vector2<T>>& vertex)
-    {
-        if(vertex.empty())
-            return square_t<T>{};
-        
-        auto cross = [&](size_t a, size_t b){
-            auto& va = vertex[a];
-            auto& vb = vertex[b];
-            return (vb.x-va.x)*(vb.y-va.y);
-        };
-        
-        size_t  n   = vertex.size();
-        square_t<T> ret = delta_area(vertex[n-1],vertex[0]);
-        --n;
-        for(size_t i=0;i<n;++n)
-            ret += delta_area(vertex[i], vertex[i+1]);
-        return ret;
-    }
 
 //  --------------------------------------------------------
 //  POSITIVE
@@ -166,14 +208,14 @@ namespace yq {
     template <typename T>
     square_t<T>    area(const Polygon2<T>& poly)
     {
-        return 0.5*abs(point_area(poly.vertex));
+        return poly.area();
     }
 
     //! \brief Tests the polygon to determine if it's points are counter clockwise order
     template <typename T>
     bool    is_ccw(const Polygon2<T>& poly)
     {
-        return point_area(poly.vertex) < zero_v<T>;
+        return poly.is_ccw();
     }
 
 
@@ -181,21 +223,14 @@ namespace yq {
     template <typename T>
     bool    is_clockwise(const Polygon2<T>& poly)
     {
-        return point_area(poly.vertex) > zero_v<T>;
+        return poly.is_clockwise();
     }
     
     //! Computes the perimeter of the polygon
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Polygon2<T>& poly)
     {
-        if(poly.vertex.empty())
-            return T{};
-        T   ret = length(poly.vertex.back()-poly.vertex.front());
-        size_t n = poly.vertex.size() - 1;
-        for(size_t i=0;i<n;++i)
-            ret += length(poly.vertex[i+1]-poly.vertex[i]);
-        return ret;
+        return poly.perimeter();
     }
     
 }

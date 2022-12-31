@@ -293,6 +293,7 @@ namespace yq {
     template <typename> struct Normal2;
     template <typename> struct Normal3;
     template <typename> struct Plane3;
+    template <typename> struct Polygon2;
     //template <typename> struct Pose2;
     template <typename> struct Pose3;
     template <typename> struct Quadvector4;
@@ -340,7 +341,6 @@ namespace yq {
     template <typename> struct Vector4;
 
     template <typename T> using Quadrilateral2  = QuadrilateralData<Vector2<T>>;
-    template <typename T> using Polygon2        = PolygonData<Vector2<T>>;
     template <typename T> using Polygon3        = PolygonData<Vector3<T>>;
     template <typename T> using Polygon4        = PolygonData<Vector4<T>>;
 

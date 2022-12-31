@@ -606,6 +606,27 @@ namespace yq {
         return (b-a).cproduct();
     }
 
+    /*! \brief "Point area" of the points
+    
+        This is a helper to area and other functions, 
+        simply does an "area" of the point deltas, 
+        no sign correction, no scaling.
+    */
+    template <typename T>
+    square_t<T>    delta_area(const std::vector<Vector2<T>>& vertex)
+    {
+        if(vertex.empty())
+            return square_t<T>{};
+
+        size_t  n   = vertex.size();
+        square_t<T> ret = delta_area(vertex[n-1],vertex[0]);
+        --n;
+        for(size_t i=0;i<n;++n)
+            ret += delta_area(vertex[i], vertex[i+1]);
+        return ret;
+    }
+
+
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector2<T>& actual, const Vector2<T>& expected)
     {
@@ -642,6 +663,7 @@ namespace yq {
         else
             return {};
     }
+
 
 }
 
