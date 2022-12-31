@@ -31,6 +31,11 @@ namespace yq {
             return { a, b };
         }
         
+        constexpr AxBox1<T>     bounds() const noexcept
+        {
+            return aabb(a, b);
+        }
+        
         //! Net displacement
         constexpr Vector1<T>  delta() const noexcept
         {

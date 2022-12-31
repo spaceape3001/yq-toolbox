@@ -7,7 +7,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector3.hpp>
-#include "SegmentData.hpp"
+#include <math/SegmentData.hpp>
 
 namespace yq {
 
@@ -26,8 +26,13 @@ namespace yq {
             return { a, b };
         }
 
+        constexpr AxBox3<T>     bounds() const noexcept
+        {
+            return aabb(a, b);
+        }
+
         //! Net displacement
-        constexpr Vector1<T>  delta() const noexcept
+        constexpr Vector3<T>  delta() const noexcept
         {
             return b - a;
         }
@@ -97,9 +102,9 @@ namespace yq {
     /*! \brief Creates axially aligned bounding box from the segment
     */
     template <typename T>
-    constexpr AxBox3<T>   aabb(const Segment3<T>& a) noexcept
+    constexpr AxBox3<T>   aabb(const Segment3<T>& seg) noexcept
     {
-        return aabb(a.lo, a.hi);
+        return aabb(seg.a, seg.b);
     }
 
 //  --------------------------------------------------------

@@ -8,7 +8,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
-#include "SegmentData.hpp"
+#include <math/SegmentData.hpp>
 
 namespace yq {
 
@@ -27,8 +27,13 @@ namespace yq {
             return { a, b };
         }
 
+        constexpr AxBox2<T>     bounds() const noexcept
+        {
+            return aabb(a, b);
+        }
+
         //! Net displacement
-        constexpr Vector1<T>  delta() const noexcept
+        constexpr Vector2<T>  delta() const noexcept
         {
             return b - a;
         }
@@ -99,7 +104,7 @@ namespace yq {
     template <typename T>
     constexpr AxBox2<T>   aabb(const Segment2<T>& seg) noexcept
     {
-        return aabb(seg.lo, seg.hi);
+        return aabb(seg.a, seg.b);
     }
     
 
