@@ -11,6 +11,64 @@
 #include "SegmentData.hpp"
 
 namespace yq {
+
+    template <typename T>
+    struct Segment2 {
+        //! Capture the template parameter
+        using component_type    = T;
+    
+        Vector2<T>  a, b;
+        
+        //! Defaulted equality
+        constexpr bool operator==(const Segment2&) const noexcept = default;
+
+        constexpr operator SegmentData<Vector2<T>>() const noexcept
+        {
+            return { a, b };
+        }
+
+        //! Net displacement
+        constexpr Vector1<T>  delta() const noexcept
+        {
+            return b - a;
+        }
+        
+        //! Length of the segment
+        T   length() const 
+        { 
+            return delta().length(); 
+        }
+
+        //! Square of the length
+        constexpr square_t<T> length²() const noexcept
+        {
+            return delta().length²();
+        }
+        
+        //! Segment mid-point
+        Vector2<T>  midpoint() const
+        {
+            if constexpr (has_ieee754_v<T>)
+                return ieee754_t<T>(0.5)*(a+b);
+            else if constexpr (std::is_integral_v<T>)
+                return (a+b) / T(2);
+            else
+                return {};
+        }
+
+        /*! \brief Computes a point along the segment based on a fractional position
+        
+            \param[in]  f   Fractional point
+        */
+        template <typename=void>
+        requires has_ieee754_v<T>
+        constexpr Vector2<T>     point(ieee754_t<T> f) const noexcept
+        {
+            return (one_v<ieee754_t<T>> - f) * a + f * b;
+        }
+
+    };
+
     YQ_IEEE754_1(Segment2)
 
 //  --------------------------------------------------------
@@ -39,9 +97,9 @@ namespace yq {
     /*! \brief Creates axially aligned bounding box from the segment
     */
     template <typename T>
-    constexpr AxBox2<T>   aabb(const Segment2<T>& a) noexcept
+    constexpr AxBox2<T>   aabb(const Segment2<T>& seg) noexcept
     {
-        return aabb(a.lo, a.hi);
+        return aabb(seg.lo, seg.hi);
     }
     
 
@@ -112,16 +170,15 @@ namespace yq {
     template <typename T>
     T       length(const Segment2<T>& seg)
     {
-        return length(seg.b-seg.a);
+        return seg.length();
     }
 
     /*! \brief Computes the midpoint of the segmetn
     */
     template <typename T>
-    requires has_ieee754_v<T>
     constexpr Vector2<T>     midpoint(const Segment2<T>& seg) noexcept
     {
-        return ieee754_t<T>(0.5)*(seg.hi+seg.lo);
+        return seg.midpoint();
     }
 
     /*! \brief Computes a point along the segment based on a fractional position
@@ -133,7 +190,7 @@ namespace yq {
     requires has_ieee754_v<T>
     constexpr Vector2<T>     point(const Segment2<T>& seg, ieee754_t<T> f) noexcept
     {
-        return (one_v<ieee754_t<T>> - f) * seg.a + f * seg.b;
+        return seg.point(f);
     }
 }
 

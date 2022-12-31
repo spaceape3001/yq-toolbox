@@ -37,10 +37,16 @@ namespace yq {
             return b - a;
         }
 
+        //! Length of the segment
+        T   length() const 
+        { 
+            return delta().length(); 
+        }
+
         //! Square of the length
         constexpr square_t<T> length²() const noexcept
         {
-            return (a-b).length²();
+            return delta().length²();
         }
         
         //! Segment mid-point
@@ -54,15 +60,8 @@ namespace yq {
                 return {};
         }
         
-        //! Length of the segment
-        T   length() const 
-        { 
-            return (a-b).length(); 
-        }
-
         /*! \brief Computes a point along the segment based on a fractional position
         
-            \param[in]  seg Segment
             \param[in]  f   Fractional point
         */
         template <typename=void>
