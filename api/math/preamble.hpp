@@ -1050,7 +1050,19 @@ namespace yq {
         template <typename T, typename U>  static constexpr const bool self_div_v = std::is_same_v<T,quotient_t<T,U>>;
         
         template <typename T>   static constexpr const bool is_basic_v = std::is_floating_point_v<T>;
-        
+    }
+    
+    /*! \brief Mid-way divide two numbers
+    */
+    template <typename T>
+    constexpr T     middivide(T a, T b) noexcept
+    {
+        if constexpr (has_ieee754_v<T>)
+            return ieee754_t<T>(0.5)*(a+b);
+        else if constexpr (std::is_integral_v<T>)
+            return (a+b) / T(2);
+        else
+            return {};
     }
 }
 

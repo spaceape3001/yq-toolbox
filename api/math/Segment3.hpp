@@ -50,14 +50,9 @@ namespace yq {
         }
         
         //! Segment mid-point
-        Vector3<T>  midpoint() const
+        constexpr Vector3<T>  midpoint() const noexcept
         {
-            if constexpr (has_ieee754_v<T>)
-                return ieee754_t<T>(0.5)*(a+b);
-            else if constexpr (std::is_integral_v<T>)
-                return (a+b) / T(2);
-            else
-                return {};
+            return midvector(a, b);
         }
 
         /*! \brief Computes a point along the segment based on a fractional position

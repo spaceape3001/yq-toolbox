@@ -630,6 +630,18 @@ namespace yq {
         return a.emin(b);
     }
 
+    /*! \brief Mid-way divide two vectors
+    */
+    template <typename T>
+    constexpr T     midvector(const Vector2<T>& a, const Vector1<T>& b) noexcept
+    {
+        if constexpr (has_ieee754_v<T>)
+            return ieee754_t<T>(0.5)*(a+b);
+        else if constexpr (std::is_integral_v<T>)
+            return (a+b) / T(2);
+        else
+            return {};
+    }
 
 }
 
