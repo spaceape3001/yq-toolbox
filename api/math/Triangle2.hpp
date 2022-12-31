@@ -9,8 +9,74 @@
 #include "TriangleData.hpp"
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
+#include <math/TriangleData.hpp>
 
 namespace yq {
+
+    /*! \brief 2D triangle
+    */
+    template <typename T>
+    struct Triangle2 {
+        //! Capture the template parameter
+        using component_type    = T;
+    
+        Vector2<T>   a, b, c;
+        
+        //! Defaulted equality operator
+        constexpr bool operator==(const Triangle2&) const noexcept = default;
+        
+        //! Implicit conversion to triangle data
+        constexpr operator TriangleData<Vector2<T>> () const noexcept 
+        { 
+            return { a, b, c }; 
+        }
+
+        //! Area of this triangle
+        constexpr square_t<T>    area() const noexcept
+        {
+            return middivice(abs(point_area()));
+        }
+        
+        /*! \brief Returns the bounding box for this triangle
+        */
+        constexpr AxBox2<T>   bounds() const noexcept
+        {
+            return {
+                min_elem(min_elem(a, b), c), 
+                max_elem(max_elem(a, b), c)
+            };
+        }
+        
+        //! TRUE if this triangle is wound in counter-clockwise with its points
+        constexpr bool    is_ccw() const noexcept
+        {
+            return point_area() < zero_v<T>;
+        }
+        
+        //! TRUE if this triangle is wound in clockwise with its points
+        constexpr bool      is_clockwise() const noexcept
+        {
+            return point_area() > zero_v<T>;
+        }
+        
+        //! Perimeter of this triangel
+        //! \note Might not be reliable for non-floating point types
+        T       perimeter() const
+        {
+            return (b-a).length() + (c-b).length() + (a-c).length();
+        }
+
+        /*! \brief "Point area" of the points
+        
+            This is a helper to area and other functions, 
+            simply does an "area" of the point deltas, 
+            no sign correction, no scaling.
+        */
+        constexpr square_t<T>   point_area() const noexcept
+        {
+            return delta_area(b, a) + delta_area(c, b) + delta_area(a, c);
+        }
+    };
 
     YQ_IEEE754_1(Triangle2)
 
@@ -40,72 +106,11 @@ namespace yq {
 
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
-    AxBox2<T>   aabb(const Triangle2<T>& tri)
+    constexpr AxBox2<T>   aabb(const Triangle2<T>& tri) noexcept
     {
-        return { 
-            min_elem(min_elem(tri.a, tri.b), tri.c), 
-            max_elem(max_elem(tri.a, tri.b), tri.c)
-        };
+        return tri.bounds();
     }
 
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
 
 //  --------------------------------------------------------
 //  UTILITY FUNCTIONS (FOR OTHER ADVANCED THINGS TO WORK)
@@ -119,7 +124,7 @@ namespace yq {
     template <typename T>
     square_t<T>    point_area(const Triangle2<T>& tri)
     {
-        return delta_area(tri.b, tri.a) + delta_area(tri.c, tri.b) + delta_area(tri.a, tri.c);
+        return tri.point_area();
     }
 
 //  --------------------------------------------------------
@@ -128,17 +133,17 @@ namespace yq {
     /*! \brief Computes the area of a 2D triangle
     */
     template <typename T>
-    square_t<T>    area(const Triangle2<T>& tri)
+    constexpr square_t<T>    area(const Triangle2<T>& tri) noexcept
     {
-        return 0.5*abs(point_area(tri));
+        return tri.area();
     }
 
     /*! \brief TRUE if the triangle is defined in a counter-clockwise fashion
     */
     template <typename T>
-    bool    is_ccw(const Triangle2<T>& tri)
+    constexpr bool    is_ccw(const Triangle2<T>& tri)noexcept
     {
-        return point_area(tri) < zero_v<T>;
+        return tri.is_ccw();
     }
 
     /*! \brief TRUE if the triangle is defined in a clockwise fashion
@@ -146,16 +151,15 @@ namespace yq {
     template <typename T>
     bool    is_clockwise(const Triangle2<T>& tri)
     {
-        return point_area(tri) > zero_v<T>;
+        return tri.is_clockwise();
     }
 
     /*! \brief Computes the perimeter of the triangle
     */
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
     T       perimeter(const Triangle2<T>& tri)
-    {
-        return length(tri.b-tri.a)+length(tri.c-tri.b)+length(tri.a-tri.c);
+    {   
+        return tri.perimeter();
     }
 
 

@@ -12,8 +12,6 @@
 #include <math/trig.hpp>
 
 namespace yq {
-
-    template <typename T> constexpr Vector4<T> operator-(const Vector4<T>& a, const Vector4<T>& b) noexcept;
     
     /*! \brief Vector of 4 dimensions
     

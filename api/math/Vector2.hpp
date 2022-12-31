@@ -603,7 +603,7 @@ namespace yq {
     template <typename T>
     constexpr square_t<T>    delta_area(const Vector2<T>&a, const Vector2<T>& b) noexcept
     {
-        return (b.x-a.x)*(b.y-a.y);
+        return (b-a).cproduct();
     }
 
     template <typename T, typename R>
