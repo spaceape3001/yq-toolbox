@@ -306,6 +306,7 @@ namespace yq {
     template <typename> struct RGBA;
     template <typename> struct Segment1;
     template <typename> struct Segment2;
+    template <typename> struct Segment3;
     template <typename> struct Size2;
     template <typename> struct Size3;
     template <typename> struct Sphere3;
@@ -334,7 +335,6 @@ namespace yq {
     template <typename> struct Vector3;
     template <typename> struct Vector4;
 
-    template <typename T> using Segment3        = SegmentData<Vector3<T>>;
     template <typename T> using Segment4        = SegmentData<Vector4<T>>;
     template <typename T> using Triangle2       = TriangleData<Vector2<T>>;
     template <typename T> using Triangle3       = TriangleData<Vector3<T>>;
