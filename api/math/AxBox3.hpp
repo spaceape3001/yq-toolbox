@@ -227,6 +227,12 @@ namespace yq {
             return div_elem(v-lo, hi-lo);
         }
 
+        //! Tests this box for validness
+        constexpr bool          valid() const noexcept 
+        {
+            return lo <<= hi;
+        }
+
         /*! \brief Computes the volume of the box
         */
         constexpr cube_t<T>       volume() const noexcept

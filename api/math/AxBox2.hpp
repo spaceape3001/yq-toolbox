@@ -184,6 +184,12 @@ namespace yq {
             return div_elem(v-lo, span());
         }
 
+        //! Tests this box for validness
+        constexpr bool          valid() const noexcept 
+        {
+            return lo <<= hi;
+        }
+
         //! X Range of the box
         constexpr Range<T>      x_range() const noexcept { return { lo.x, hi.x }; }
         

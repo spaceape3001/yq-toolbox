@@ -150,6 +150,12 @@ namespace yq {
             return div_elem(v-lo, hi-lo);
         }
 
+        //! Tests this box for validness
+        constexpr bool          valid() const noexcept 
+        {
+            return lo <<= hi;
+        }
+
         /*! \brief Returns the x-range of the box
         */
         constexpr Range<T>  x_range() const noexcept
