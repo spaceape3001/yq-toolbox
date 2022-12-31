@@ -83,6 +83,11 @@ namespace yq {
             return {};
         }
 
+        /*! \brief Computes smallest circle that contains the box
+            \note The resulting circle will be centered within the box
+        */
+        Circle2<T>  circumcircle() const;
+
         /*! \brief Our corners
         */
         constexpr AxCorners2<Vector2<T>>    corners() const noexcept 
@@ -104,6 +109,11 @@ namespace yq {
         {
             return (lo <<= b.lo) && (b.hi <<= hi);
         }
+
+        /*! \brief Computes largest circle that's inside the box
+            \note The resulting circle will be centered within the box
+        */
+        constexpr Circle2<T>  incircle() const noexcept;
 
         /*! \brief Checks if the point is inside (or touching) the box
         */

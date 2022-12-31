@@ -1055,7 +1055,7 @@ namespace yq {
     /*! \brief Mid-way divide two numbers
     */
     template <typename T>
-    constexpr T     middivide(T a, T b) noexcept
+    constexpr T     middivide(T a, T b=T{}) noexcept
     {
         if constexpr (has_ieee754_v<T>)
             return ieee754_t<T>(0.5)*(a+b);

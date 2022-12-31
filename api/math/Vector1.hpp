@@ -532,7 +532,7 @@ namespace yq {
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr T     midvector(const Vector1<T>& a, const Vector1<T>& b) noexcept
+    constexpr T     midvector(const Vector1<T>& a, const Vector1<T>& b=Vector1<T>{}) noexcept
     {
         if constexpr (has_ieee754_v<T>)
             return ieee754_t<T>(0.5)*(a+b);
