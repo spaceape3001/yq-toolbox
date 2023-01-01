@@ -19,6 +19,21 @@ namespace yq {
         
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Trivector3&) const noexcept = default;
+
+        /*! \brief Affirmation (positive) operator
+        */
+        constexpr Trivector3 operator+() const noexcept
+        {
+            return *this;
+        }
+
+        /*! \brief Negation operator
+        */
+        constexpr Trivector3 operator-() const noexcept
+        {
+            return {-xyz};
+        }
+
     };
 
     YQ_IEEE754_1(Trivector3)
@@ -51,33 +66,6 @@ namespace yq {
 
     YQ_IS_NAN_1(Trivector3, is_nan(v.xyz))
     YQ_IS_FINITE_1(Trivector3, is_finite(v.xyz))
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    /*! \brief Affirmation (positive) operator
-    */
-    template <typename T>
-    constexpr Trivector3<T> operator+(const Trivector3<T>&a) noexcept
-    {
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    /*! \brief Negation operator
-    */
-    template <typename T>
-    constexpr Trivector3<T> operator-(const Trivector3<T>&a) noexcept
-    {
-        return {-a.xyz};
-    }
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
 
 
 //  --------------------------------------------------------
@@ -203,7 +191,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  OUTER PRODUCT
 
-
+ 
 //  --------------------------------------------------------
 //  CROSS PRODUCT
 
