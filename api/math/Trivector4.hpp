@@ -19,6 +19,22 @@ namespace yq {
 
         //! Defaulted comparison operator
         constexpr bool operator==(const Trivector4&) const noexcept = default;
+
+        /*! \brief Affirmation (positive) operator
+        
+            \note Here to complement the negation operator
+        */
+        constexpr Trivector4 operator+() const noexcept
+        {
+            return *this;
+        }
+
+        /*! \brief Negation operator
+        */
+        constexpr Trivector4 operator-() const noexcept
+        {
+            return {-xyz, -yzw, -zwx, -wxy};
+        }
     };
 
     YQ_IEEE754_1(Trivector4)
@@ -97,30 +113,6 @@ namespace yq {
     YQ_IS_NAN_1(Trivector4, is_nan(v.xyz) || is_nan(v.yzw) || is_nan(v.zwx) || is_nan(v.wxy))
     YQ_IS_FINITE_1(Trivector4, is_finite(v.xyz) && is_finite(v.yzw) && is_finite(v.zwx) && is_finite(v.wxy))
 
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    /*! \brief Affirmation (positive) operator
-    
-        \note Here to complement the negation operator
-    */
-    template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector4<T>&a) noexcept
-    {
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    /*! \brief Negation operator
-    */
-    template <typename T>
-    constexpr Trivector4<T> operator-(const Trivector4<T>&a) noexcept
-    {
-        return {-a.xyz, -a.yzw, -a.zwx, -a.wxy};
-    }
 
 
 //  --------------------------------------------------------
