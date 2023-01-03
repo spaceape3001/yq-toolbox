@@ -35,6 +35,15 @@ ut::suite tests = []{
         expect( 5*Vector4U(1,3,2,3) == Vector4U(5,15,10,15) );
         expect( 5*Vector4U(3,1,2,2) == Vector4U(15,5,10,10) );
     };
+
+    "comparison"_test = [](){
+        Vector4D    v{1.,2., 3.,4.};
+        
+        expect( true == ( any(v) < 1.5 ) );
+        expect( false == ( any(v) < 0.5 ) );
+        expect( true == ( all(v) < 4.5) );
+        expect( false  == ( all(v) < 2.5) );
+    };
 };
 
 int main(){

@@ -12,6 +12,8 @@
 #include <math/Units.hpp>
 #include <math/trig.hpp>
 #include <math/Vector2.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
 
 namespace yq {
     /*! \brief Vector of 3 dimensions
@@ -153,7 +155,7 @@ namespace yq {
         template <typename Pred>
         constexpr bool all_test(T b, Pred pred) const noexcept
         {
-            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+            return pred(x, b) && pred(y, b) && pred(z, b);
         }
 
         
@@ -192,7 +194,7 @@ namespace yq {
         template <typename Pred>
         constexpr bool any_test(T b, Pred pred) const noexcept
         {
-            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
+            return pred(x, b) || pred(y, b) || pred(z, b);
         }
 
             
@@ -241,12 +243,12 @@ namespace yq {
 
         constexpr Vector3   emax(const Vector3&b) const noexcept
         {
-            return {max(x, b.x) && max(y, b.y) && max(z, b.z)};
+            return {max(x, b.x), max(y, b.y), max(z, b.z)};
         }
 
         constexpr Vector3   emin(const Vector3&b) const noexcept
         {
-            return {min(x, b.x) && min(y, b.y) && min(z, b.z)};
+            return {min(x, b.x), min(y, b.y), min(z, b.z)};
         }    
 
         //! Element by element multiplication
@@ -705,6 +707,18 @@ namespace yq {
             return (a+b) / T(2);
         else
             return {};
+    }
+
+    template <typename T>
+    AllComponents<Vector3<T>>   all(const Vector3<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Vector3<T>>   any(const Vector3<T>& val)
+    {
+        return { val };
     }
 }
 

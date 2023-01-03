@@ -10,6 +10,8 @@
 #include <math/preamble.hpp>
 #include <math/Units.hpp>
 #include <math/trig.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
 
 namespace yq {
     
@@ -161,7 +163,7 @@ namespace yq {
         template <typename Pred>
         constexpr bool all_test(T b, Pred pred) const noexcept
         {
-            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z) && pred(w, b.w);
+            return pred(x, b) && pred(y, b) && pred(z, b) && pred(w, b);
         }
 
         
@@ -200,7 +202,7 @@ namespace yq {
         template <typename Pred>
         constexpr bool any_test(T b, Pred pred) const noexcept
         {
-            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
+            return pred(x, b) || pred(y, b) || pred(z, b) || pred(w, b);
         }
 
         //! Compares this vector to the other vector
@@ -444,13 +446,13 @@ namespace yq {
         //! Maximum applied to each component
         constexpr Vector4   emax(const Vector4<T>&b) const noexcept
         {
-            return {max(x, b.x) && max(y, b.y) && max(z, b.z) && max(w, b.w)};
+            return {max(x, b.x), max(y, b.y), max(z, b.z), max(w, b.w)};
         }
         
         //! Minimum applied to each component
         constexpr Vector4   emin(const Vector4<T>&b) const noexcept
         {
-            return {min(x, b.x) && min(y, b.y) && min(z, b.z) && min(w, b.w)};
+            return {min(x, b.x), min(y, b.y), min(z, b.z), min(w, b.w)};
         }
 
         //! Element by element multiplication
@@ -819,6 +821,18 @@ namespace yq {
             return (a+b) / T(2);
         else
             return {};
+    }
+
+    template <typename T>
+    AllComponents<Vector4<T>>   all(const Vector4<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Vector4<T>>   any(const Vector4<T>& val)
+    {
+        return { val };
     }
 }
 

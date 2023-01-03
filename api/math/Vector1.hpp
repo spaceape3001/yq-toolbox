@@ -9,6 +9,8 @@
 #define YQ__API__MATH__VECTOR_1__HPP 1
 #include <math/preamble.hpp>
 #include <math/Absolute.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
 
 namespace yq {
     /*! \brief Vector of 1 dimension
@@ -78,32 +80,6 @@ namespace yq {
             return *this;
         }
         
-
-        //! TRUE if every component of this vector is less than b
-        constexpr bool operator<<(const Vector1& b) const noexcept
-        {
-            return (x<b.x);
-        }
-
-        //! TRUE if every component of a this vector is less than (or equal to) b
-        constexpr bool operator<<=(const Vector1& b) const noexcept
-        {
-            return (x<=b.x);
-        }
-
-
-        //! TRUE if every component of this vector is greater to b
-        constexpr bool operator>>(const Vector1& b) const noexcept
-        {
-            return (x>b.x);
-        }
-
-
-        //! TRUE if every component of this vector is greater or equal to b
-        constexpr bool operator>>=(const Vector1& b) const noexcept
-        {
-            return (x>=b.x);
-        }
 
        /*! Tests every element
             This applies the given test to every component, 
@@ -565,6 +541,18 @@ namespace yq {
             return (a+b) / T(2);
         else
             return {};
+    }
+
+    template <typename T>
+    AllComponents<Vector1<T>>   all(const Vector1<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Vector1<T>>   any(const Vector1<T>& val)
+    {
+        return { val };
     }
 }
 

@@ -6,6 +6,8 @@
 
 #include <boost/ut.hpp>
 #include <math/Vector2.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -33,6 +35,15 @@ ut::suite tests = []{
         expect( 5*Vector2U(1,1) == Vector2U(5,5) );
         expect( 5*Vector2U(1,3) == Vector2U(5,15) );
         expect( 5*Vector2U(3,1) == Vector2U(15,5) );
+    };
+    
+    "comparison"_test = [](){
+        Vector2D    v{1.,2.};
+        
+        expect( true == ( any(v) < 1.5 ) );
+        expect( false == ( any(v) < 0.5 ) );
+        expect( true == ( all(v) < 2.5) );
+        expect( false  == ( all(v) < 1.5) );
     };
 };
 

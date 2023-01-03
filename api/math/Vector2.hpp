@@ -10,6 +10,8 @@
 
 #include <math/preamble.hpp>
 #include <math/Absolute.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
 #include <math/Units.hpp>
 #include <math/trig.hpp>
 
@@ -148,7 +150,7 @@ namespace yq {
         template <typename Pred>
         constexpr bool all_test(T b, Pred pred) const noexcept
         {
-            return pred(x, b.x) && pred(y, b.y);
+            return pred(x, b) && pred(y, b);
         }
 
         
@@ -187,7 +189,7 @@ namespace yq {
         template <typename Pred>
         constexpr bool any_test(T b, Pred pred) const noexcept
         {
-            return pred(x, b.x) || pred(y, b.y);
+            return pred(x, b) || pred(y, b);
         }
         
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
@@ -701,6 +703,18 @@ namespace yq {
             return {};
     }
 
+    template <typename T>
+    AllComponents<Vector2<T>>   all(const Vector2<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Vector2<T>>   any(const Vector2<T>& val)
+    {
+        return { val };
+    }
+    
 
 }
 
