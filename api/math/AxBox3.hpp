@@ -81,6 +81,13 @@ namespace yq {
             return {};
         }
 
+        /*! \brief Checks if the point is inside (or touching) the box
+        */
+        constexpr bool contains(const Vector3<T>& pt) const noexcept
+        {
+            return (all(lo) <= pt) && (all(pt) <<= hi);
+        }
+
         /*! \brief Returns ALL the corners of the box 
         */
         constexpr AxCorners3<Vector3<T>>  corners() const noexcept
@@ -105,21 +112,14 @@ namespace yq {
         */
         constexpr bool eclipses(const AxBox3<T>& b) const noexcept
         {
-            return (lo <<= b.lo) && (b.hi <<= hi);
-        }
-
-        /*! \brief Checks if the point is inside (or touching) the box
-        */
-        constexpr bool inside(const Vector3<T>& pt) const noexcept
-        {
-            return (lo <<= pt) && (pt <<= hi);
+            return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
 
 
         //! Check for validity
         constexpr bool    is_valid() const noexcept
         {
-            return lo <<= hi;
+            return all(lo) <= hi;
         }
 
        /*! \brief Returns the north east bottom corner
@@ -156,7 +156,7 @@ namespace yq {
         */
         constexpr bool overlaps(const AxBox3<T>& b) const noexcept
         {
-            return (lo <<= b.hi) && (b.lo <<= hi);
+            return (all(lo) <= b.hi) && (all(b.lo) <= hi);
         }
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
@@ -230,7 +230,7 @@ namespace yq {
         //! Tests this box for validness
         constexpr bool          valid() const noexcept 
         {
-            return lo <<= hi;
+            return all(lo) <= hi;
         }
 
         /*! \brief Computes the volume of the box

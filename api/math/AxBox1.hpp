@@ -80,6 +80,13 @@ namespace yq {
             return {};
         }
 
+        /*! \brief Checks if the point is inside (or touching) the box
+        */
+        constexpr bool contains(const Vector1<T>& pt) const noexcept
+        {
+            return (all(lo) <= pt) && (all(pt) <<= hi);
+        }
+
         /*! \brief Returns the enumerated corners of the box
         */
         constexpr AxCorners1<Vector1<T>>  corners() const noexcept
@@ -97,20 +104,14 @@ namespace yq {
         */
         constexpr bool eclipses(const AxBox1<T>& b) const noexcept
         {
-            return (lo <<= b.lo) && (b.hi <<= hi);
+            return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
 
-        /*! \brief Checks if the point is inside (or touching) the box
-        */
-        constexpr bool inside(const Vector1<T>& pt) const noexcept
-        {
-            return (lo <<= pt) && (pt <<= hi);
-        }
 
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept
         {
-            return lo <<= hi;
+            return all(lo) <= hi;
         }
 
         /*! \brief Checks for any overlap
@@ -119,7 +120,7 @@ namespace yq {
         */
         constexpr bool overlaps(const AxBox1<T>& b) const noexcept
         {
-            return (lo <<= b.hi) && (b.lo <<= hi);
+            return (all(lo) <= b.hi) && (all(b.lo) <= hi);
         }
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate
@@ -153,7 +154,7 @@ namespace yq {
         //! Tests this box for validness
         constexpr bool          valid() const noexcept 
         {
-            return lo <<= hi;
+            return all(lo) <= hi;
         }
 
         /*! \brief Returns the x-range of the box

@@ -93,32 +93,6 @@ namespace yq {
             return *this;
         }
 
-        //! TRUE if every component of a is less than b
-        constexpr bool operator<<(const Vector3& b) const noexcept
-        {
-            return (x<b.x) && (y<b.y) && (z<b.z);
-        }
-
-
-        //! TRUE if every component of a is less than (or equal to) b
-        constexpr bool operator<<=(const Vector3& b) const noexcept
-        {
-            return (x<=b.x) && (y<=b.y) && (z<=b.z);
-        }
-
-        //! TRUE if every component of a is greater than b
-        constexpr bool operator>>(const Vector3& b) const noexcept
-        {
-            return (x>b.x) && (y>b.y) && (z>b.z);
-        }
-
-
-        //! TRUE if every component of a is greater or equal to b
-        constexpr bool operator>>=(const Vector3& b) const noexcept
-        {
-            return (x>=b.x) && (y>=b.y) && (z>=b.z);
-        }
-
        /*! Tests every element
             
             This applies the given test to every component, 
@@ -559,34 +533,6 @@ namespace yq {
     constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept
     {
         return a.eabs();
-    }
-
-    //! TRUE if every component of a is greater than b
-    template <typename T>
-    constexpr bool        all_greater(const Vector3<T>& a, const Vector3<T>&b) noexcept
-    {
-        return a.agreater(b);
-    }
-
-    //! TRUE if every component of a is greater or equal to b
-    template <typename T>
-    constexpr bool        all_greater_equal(const Vector3<T>& a, const Vector3<T>&b) noexcept
-    {
-        return a.agequal(b);
-    }
-
-    //! TRUE if every component of a is less than b
-    template <typename T>
-    constexpr bool        all_less(const Vector3<T>& a, const Vector3<T>&b) noexcept
-    {
-        return a.aless(b);
-    }
-
-    //! TRUE if every component of a is less than (or equal to) b
-    template <typename T>
-    constexpr bool        all_less_equal(const Vector3<T>& a, const Vector3<T>&b) noexcept
-    {
-        return a.alequal(b);
     }
 
     template <typename T>

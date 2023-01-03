@@ -88,6 +88,13 @@ namespace yq {
         */
         Circle2<T>  circumcircle() const;
 
+        /*! \brief Checks if the point is inside (or touching) the box
+        */
+        constexpr bool          constins(const Vector2<T>& pt) const noexcept
+        {
+            return (all(lo) <= pt) && (all(pt) <<= hi);
+        }
+
         /*! \brief Our corners
         */
         constexpr AxCorners2<Vector2<T>>    corners() const noexcept 
@@ -107,7 +114,7 @@ namespace yq {
         */
         constexpr bool          eclipses(const AxBox2<T>& b) const noexcept
         {
-            return (lo <<= b.lo) && (b.hi <<= hi);
+            return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
 
         /*! \brief Computes largest circle that's inside the box
@@ -115,17 +122,10 @@ namespace yq {
         */
         constexpr Circle2<T>  incircle() const noexcept;
 
-        /*! \brief Checks if the point is inside (or touching) the box
-        */
-        constexpr bool          inside(const Vector2<T>& pt) const noexcept
-        {
-            return (lo <<= pt) && (pt <<= hi);
-        }
-
         //! Tests this box for validness
         constexpr bool          is_valid() const noexcept 
         {
-            return lo <<= hi;
+            return all(lo) <= hi;
         }
             
         //! Returns the northeast corner of the box
@@ -140,7 +140,7 @@ namespace yq {
         */
         constexpr bool          overlaps(const AxBox2<T>& b) noexcept
         {
-            return (lo <<= b.hi) && (b.lo <<= hi);
+            return (all(lo) <= b.hi) && (all(b.lo) <= hi);
         }    
 
         /*! \brief Computes the perimeter of the box */
@@ -197,7 +197,7 @@ namespace yq {
         //! Tests this box for validness
         constexpr bool          valid() const noexcept 
         {
-            return lo <<= hi;
+            return all(lo) <= hi;
         }
 
         //! X Range of the box

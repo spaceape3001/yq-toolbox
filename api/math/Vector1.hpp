@@ -454,34 +454,6 @@ namespace yq {
         return a.eabs();
     }
 
-    //! TRUE if every component of a is greater than b
-    template <typename T>
-    constexpr bool        all_greater(const Vector1<T>& a, const Vector1<T>&b) noexcept
-    {
-        return a >> b;
-    }
-
-    //! TRUE if every component of a is greater or equal to b
-    template <typename T>
-    constexpr bool        all_greater_equal(const Vector1<T>& a, const Vector1<T>&b) noexcept
-    {
-        return a >>= b;
-    }
-
-    //! TRUE if every component of a is less than b
-    template <typename T>
-    constexpr bool        all_less(const Vector1<T>& a, const Vector1<T>&b) noexcept
-    {
-        return a << b;
-    }
-
-    //! TRUE if every component of a is less than (or equal to) b
-    template <typename T>
-    constexpr bool        all_less_equal(const Vector1<T>& a, const Vector1<T>&b) noexcept
-    {
-        return a <<= b;
-    }
-  
     template <typename T>
     constexpr T             component_max(const Vector1<T>&a) noexcept
     {
