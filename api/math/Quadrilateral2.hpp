@@ -12,6 +12,27 @@
 #include <math/AxBox2.hpp>
 
 namespace yq {
+    /*! \brief Quadrilateral in two dimensions
+    */
+    template <typename T>
+    struct Quadrilateral2 {
+        //! Capture the template paremater
+        using component_type = T;
+    
+        Vector2<T>     a, b, c, d;
+
+        constexpr AxBox2<T>   bounds() const
+        {
+            return { 
+                min_elem(min_elem(a, b), min_elem(c, d)), 
+                max_elem(max_elem(a, b), max_elem(c, d))
+            };
+        }
+
+        //! Defaulted comparison operator
+        constexpr bool operator==(const Quadrilateral2&) const noexcept = default;
+    };
+
 //  --------------------------------------------------------
 //  COMPOSITION
 

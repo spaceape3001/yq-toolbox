@@ -300,6 +300,7 @@ namespace yq {
     template <typename> struct Pose3;
     template <typename> struct Quadvector4;
     template <typename> struct Quaternion3;
+    template <typename> struct Quadrilateral2;
     template <typename> struct Range;
     template <typename> struct Ray2;
     template <typename> struct Ray3;
@@ -341,8 +342,6 @@ namespace yq {
     template <typename> struct Vector2;
     template <typename> struct Vector3;
     template <typename> struct Vector4;
-
-    template <typename T> using Quadrilateral2  = QuadrilateralData<Vector2<T>>;
 
     //  ------------------------------------------------
     //  COMPLEX NUMBERS
