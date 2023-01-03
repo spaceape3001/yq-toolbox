@@ -69,11 +69,13 @@ namespace yq {
             return { x, y, z, w };
         }
 
+        //! Addition
         constexpr Vector4 operator+(const Vector4& b) const noexcept
         {
             return {x+b.x, y+b.y, z+b.z, w+b.w};
         }
 
+        //! Self-addition
         Vector4& operator+=(const Vector4& b) noexcept
         {
             x += b.x;
@@ -83,11 +85,13 @@ namespace yq {
             return *this;
         }
 
+        //! Subtraction
         constexpr Vector4 operator-(const Vector4& b) const noexcept
         {
             return {x-b.x, y-b.y, z-b.z, w-b.w};
         }
         
+        //! Self-subtraction
         Vector4& operator-=(const Vector4& b) noexcept
         {
             x -= b.x;
@@ -100,89 +104,331 @@ namespace yq {
         //! TRUE if every component of a is less than b
         constexpr bool operator<<(const Vector4& b) const noexcept
         {
-            return (x<b.x) && (y<b.y) && (z<b.z) && (w<b.w);
-        }
-
-        //! TRUE if every component of a is less than b
-        constexpr bool operator<<(T b) const noexcept
-        {
-            return (x<b) && (y<b) && (z<b) && (w<b);
-        }
-
-        //! TRUE if every component of a is less than b
-        friend constexpr bool operator<<(T a, const Vector4& b) noexcept
-        {
-            return (a<b.x) && (a<b.y) && (a<b.z) && (a<b.w);
+            return all_less(b);
         }
 
         //! TRUE if every component of a is less than (or equal to) b
         constexpr bool operator<<=(const Vector4& b) const noexcept
         {
-            return (x<=b.x) && (y<=b.y) && (z<=b.z) && (w<=b.w);
-        }
-
-        //! TRUE if every component of a is less than (or equal to) b
-        constexpr bool operator<<=(T b) const noexcept
-        {
-            return (x<=b) && (y<=b) && (z<=b) && (w<=b);
-        }
-
-        //! TRUE if every component of a is less than (or equal to) b
-        friend constexpr bool operator<<=(T a, const Vector4& b) noexcept
-        {
-            return (a<=b.x) && (a<=b.y) && (a<=b.z) && (a<=b.w);
+            return all_less_equal(b);
         }
 
         //! TRUE if every component of a is greater than b
         constexpr bool operator>>(const Vector4& b) const noexcept
         {
-            return (x>b.x) && (y>b.y) && (z>b.z) && (w>b.w);
-        }
-
-        //! TRUE if every component of a is greater than b
-        constexpr bool operator>>(T b) const noexcept
-        {
-            return (x>b) && (y>b) && (z>b) && (w>b);
-        }
-
-        //! TRUE if every component of a is greater than b
-        friend constexpr bool operator>>(T a, const Vector4& b) noexcept
-        {
-            return (a>b.x) && (a>b.y) && (a>b.z) && (a>b.w);
+            return all_greater(b);
         }
 
         //! TRUE if every component of a is greater or equal to b
         constexpr bool operator>>=(const Vector4& b) const noexcept
         {
+            return all_greater_equal(b);
+        }
+
+        /*! Tests every element
+            
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y, z, w component tests may be skipped if the x-component test fails.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(Pred pred) const noexcept
+        {
+            return pred(x) && pred(y) && pred(z) && pred(w);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y, z, w component tests may be skipped if the x-component test fails.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(const Vector4& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z) && pred(w, b.w);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y, z, w component tests may be skipped if the x-component test fails.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z) && pred(w, b.w);
+        }
+
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y, z, w component tests may be skipped if the x-component test passes.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(Pred pred) const noexcept
+        {
+            return pred(x) || pred(y) || pred(z) || pred(w);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y, z, w component tests may be skipped if the x-component test passes.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(const Vector4& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y, z, w component tests may be skipped if the x-component test passes.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
+        }
+
+        //! Compares this vector to the other vector
+        //! Equivalent to operator==
+        constexpr bool all_equal(const Vector4& b) const noexcept
+        {
+            return (x==b.x) && (y==b.y) && (z==b.z) && (w==b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_equal(T b) const noexcept
+        {
+            return (x==b) && (y==b) && (z==b) && (w==b);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool all_greater(const Vector4& b) const noexcept
+        {
+            return (x>b.x) && (y>b.y) && (z>b.z) && (w>b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_greater(T b) const noexcept
+        {
+            return (x>b) && (y>b) && (z>b) && (w>b);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_greater_reverse(T b) const noexcept
+        {
+            return (b>x) && (b>y) && (b>z) && (b>w);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool all_greater_equal(const Vector4& b) const noexcept
+        {
             return (x>=b.x) && (y>=b.y) && (z>=b.z) && (w>=b.w);
         }
 
+        //! Compares this vector to the value
+        constexpr bool all_greater_equal_reverse(T b) const noexcept
+        {
+            return (b>=x) && (b>=y) && (b>=z) && (b>=w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_greater_equal(T b) const noexcept
+        {
+            return (x>=b) && (y>=b) && (z>=b) && (w>=b);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool all_less(const Vector4& b) const noexcept
+        {
+            return (x<b.x) && (y<b.y) && (z<b.z) && (w<b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_less(T b) const noexcept
+        {
+            return (x<b) && (y<b) && (z<b) && (w<b);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_less_reverse(T b) const noexcept
+        {
+            return (b<x) && (b<y) && (b<z) && (b<w);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool all_less_equal(const Vector4& b) const noexcept
+        {
+            return (x<=b.x) && (y<=b.y) && (z<=b.z) && (w<=b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_less_equal(T b) const noexcept
+        {
+            return (x<=b) && (y<=b) && (z<=b) && (w<=b);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_less_equal_reverse(T b) const noexcept
+        {
+            return (b<=x) && (b<=y) && (b<=z) && (b<=w);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool all_not_equal(const Vector4& b) const noexcept
+        {
+            return (x!=b.x) && (y!=b.y) && (z!=b.z) && (w!=b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool all_not_equal(T b) const noexcept
+        {
+            return (x!=b) && (y!=b) && (z!=b) && (w!=b);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool any_equal(const Vector4& b) const noexcept
+        {
+            return (x==b.x) || (y==b.y) || (z==b.z) || (w==b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_equal(T b) const noexcept
+        {
+            return (x==b) || (y==b) || (z==b) || (w==b);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool any_greater(const Vector4& b) const noexcept
+        {
+            return (x>b.x) || (y>b.y) || (z>b.z) || (w>b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_greater(T b) const noexcept
+        {
+            return (x>b) || (y>b) || (z>b) || (w>b);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_greater_reverse(T b) const noexcept
+        {
+            return (b>x) || (b>y) || (b>z) || (b>w);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool any_greater_equal(const Vector4& b) const noexcept
+        {
+            return (x>=b.x) || (y>=b.y) || (z>=b.z) || (w>=b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_greater_equal_reverse(T b) const noexcept
+        {
+            return (b>=x) || (b>=y) || (b>=z) || (b>=w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_greater_equal(T b) const noexcept
+        {
+            return (x>=b) || (y>=b) || (z>=b) || (w>=b);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool any_less(const Vector4& b) const noexcept
+        {
+            return (x<b.x) || (y<b.y) || (z<b.z) || (w<b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_less(T b) const noexcept
+        {
+            return (x<b) || (y<b) || (z<b) || (w<b);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_less_reverse(T b) const noexcept
+        {
+            return (b<x) || (b<y) || (b<z) || (b<w);
+        }
+
+        //! Compares this vector to the other vector
+        constexpr bool any_less_equal(const Vector4& b) const noexcept
+        {
+            return (x<=b.x) || (y<=b.y) || (z<=b.z) || (w<=b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_less_equal(T b) const noexcept
+        {
+            return (x<=b) || (y<=b) || (z<=b) || (w<=b);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_less_equal_reverse(T b) const noexcept
+        {
+            return (b<=x) || (b<=y) || (b<=z) || (b<=w);
+        }
+
+        //! Compares this vector to the other vector
+        //! Equivalent to operator!=
+        constexpr bool any_not_equal(const Vector4& b) const noexcept
+        {
+            return (x!=b.x) || (y!=b.y) || (z!=b.z) || (w!=b.w);
+        }
+
+        //! Compares this vector to the value
+        constexpr bool any_not_equal(T b) const noexcept
+        {
+            return (x!=b) || (y!=b) || (z!=b) || (w!=b);
+        }
+
+        //! Tests to see if this vector is "close" to the other
         template <typename R>
         bool close(const Vector4& expected, const R& compare)
         {
             return compare((*this-expected).length(), expected.length());
         }
 
+        //! Returns the most positive of the components
         constexpr T             cmax() const noexcept
         {
             return max(max(x, y), max(z, w));
         }
 
+        //! Returns the most negative of the components
         constexpr T             cmin() const noexcept
         {
             return min(min(x, y), min(z, w));
         }
 
+        //! Returns the product of all components
         constexpr fourth_t<T>   cproduct() const noexcept
         {
             return x*y*z*w;
         }
 
+        //! Returns the sum of all components
         constexpr T             csum() const noexcept
         {
             return x + y + z + w;
         }
 
+        //! Absolute value of each component
         constexpr Vector4   eabs() const noexcept
         {
             return { abs(x), abs(y), abs(z), abs(w) };
@@ -195,11 +441,13 @@ namespace yq {
             return {x/b.x, y/b.y, z/b.z, w/b.w};
         }
 
+        //! Maximum applied to each component
         constexpr Vector4   emax(const Vector4<T>&b) const noexcept
         {
             return {max(x, b.x) && max(y, b.y) && max(z, b.z) && max(w, b.w)};
         }
         
+        //! Minimum applied to each component
         constexpr Vector4   emin(const Vector4<T>&b) const noexcept
         {
             return {min(x, b.x) && min(y, b.y) && min(z, b.z) && min(w, b.w)};
@@ -472,28 +720,28 @@ namespace yq {
     template <typename T>
     constexpr bool        all_greater(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return a >> b;
+        return a.all_greater(b);
     }
 
     //! TRUE if every component of a is greater or equal to b
     template <typename T>
     constexpr bool        all_greater_equal(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return a >>= b;
+        return a.all_greater_equal(b);
     }
     
     //! TRUE if every component of a is less than b
     template <typename T>
     constexpr bool        all_less(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return a << b;
+        return a.all_less(b);
     }
 
     //! TRUE if every component of a is less than (or equal to) b
     template <typename T>
     constexpr bool        all_less_equal(const Vector4<T>& a, const Vector4<T>&b) noexcept
     {
-        return a <<= b;
+        return a.all_less_equal(b);
     }
 
     template <typename T>

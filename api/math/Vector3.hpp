@@ -97,34 +97,11 @@ namespace yq {
             return (x<b.x) && (y<b.y) && (z<b.z);
         }
 
-        //! TRUE if every component of a is less than b
-        friend constexpr bool operator<<(T a, const Vector3& b) noexcept
-        {
-            return (a<b.x) && (a<b.y) && (a<b.z);
-        }
-
-        //! TRUE if every component of a is less than b
-        constexpr bool operator<<(T b) const noexcept
-        {
-            return (x<b) && (y<b) && (z<b);
-        }
 
         //! TRUE if every component of a is less than (or equal to) b
         constexpr bool operator<<=(const Vector3& b) const noexcept
         {
             return (x<=b.x) && (y<=b.y) && (z<=b.z);
-        }
-
-        //! TRUE if every component of a is less than (or equal to) b
-        friend constexpr bool operator<<=(T a, const Vector3& b) noexcept
-        {
-            return (a<=b.x) && (a<=b.y) && (a<=b.z);
-        }
-
-        //! TRUE if every component of a is less than (or equal to) b
-        constexpr bool operator<<=(T b) const noexcept
-        {
-            return (x<=b) && (y<=b) && (z<=b);
         }
 
         //! TRUE if every component of a is greater than b
@@ -133,17 +110,6 @@ namespace yq {
             return (x>b.x) && (y>b.y) && (z>b.z);
         }
 
-        //! TRUE if every component of a is greater than b
-        friend constexpr bool operator>>(T a, const Vector3& b) noexcept
-        {
-            return (a>b.x) && (a>b.y) && (a>b.z);
-        }
-
-        //! TRUE if every component of a is greater than b
-        constexpr bool operator>>(T b) const noexcept
-        {
-            return (x>b) && (y>b) && (z>b);
-        }
 
         //! TRUE if every component of a is greater or equal to b
         constexpr bool operator>>=(const Vector3& b) const noexcept
@@ -151,16 +117,82 @@ namespace yq {
             return (x>=b.x) && (y>=b.y) && (z>=b.z);
         }
 
-        //! TRUE if every component of a is greater or equal to b
-        friend constexpr bool operator>>=(T a, const Vector3& b) noexcept
+       /*! Tests every element
+            
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y & z component tests may be skipped if the x-component test fails.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(Pred pred) const noexcept
         {
-            return (a>=b.x) && (a>=b.y) && (a>=b.z);
+            return pred(x) && pred(y) && pred(z);
         }
 
-        //! TRUE if every component of a is greater or equal to b
-        constexpr bool operator>>=(T b) const noexcept
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y & z component tests may be skipped if the x-component test fails.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(const Vector3& b, Pred pred) const noexcept
         {
-            return (x>=b) && (y>=b) && (z>=b);
+            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y & z component tests may be skipped if the x-component test fails.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+        }
+
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y & z component tests may be skipped if the x-component test passes.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(Pred pred) const noexcept
+        {
+            return pred(x) || pred(y) || pred(z);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y & z component tests may be skipped if the x-component test passes.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(const Vector3& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y & z component tests may be skipped if the x-component test passes.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
         }
 
             

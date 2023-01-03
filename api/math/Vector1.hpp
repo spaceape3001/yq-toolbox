@@ -77,23 +77,12 @@ namespace yq {
             x -= b.x;
             return *this;
         }
+        
 
         //! TRUE if every component of this vector is less than b
         constexpr bool operator<<(const Vector1& b) const noexcept
         {
             return (x<b.x);
-        }
-
-        //! TRUE if every component of this vector is less than b
-        constexpr bool operator<<(T b) const noexcept
-        {
-            return (x<b);
-        }
-
-        //! TRUE if every component of this vector is less than b
-        friend constexpr bool operator<<(T a, const Vector1& b) noexcept
-        {
-            return (a<b.x);
         }
 
         //! TRUE if every component of a this vector is less than (or equal to) b
@@ -102,17 +91,6 @@ namespace yq {
             return (x<=b.x);
         }
 
-        //! TRUE if every component of a this vector is less than (or equal to) b
-        constexpr bool operator<<=(T b) const noexcept
-        {
-            return (x<=b);
-        }
-
-        //! TRUE if every component of a this vector is less than (or equal to) b
-        friend constexpr bool operator<<=(T a, const Vector1& b) noexcept
-        {
-            return (a<=b.x);
-        }
 
         //! TRUE if every component of this vector is greater to b
         constexpr bool operator>>(const Vector1& b) const noexcept
@@ -120,17 +98,6 @@ namespace yq {
             return (x>b.x);
         }
 
-        //! TRUE if every component of this vector is greater to b
-        constexpr bool operator>>(T b) const noexcept
-        {
-            return (x>b);
-        }
-
-        //! TRUE if every component of this vector is greater to b
-        friend constexpr bool operator>>(T a, const Vector1& b) noexcept
-        {
-            return (a>b.x);
-        }
 
         //! TRUE if every component of this vector is greater or equal to b
         constexpr bool operator>>=(const Vector1& b) const noexcept
@@ -138,18 +105,76 @@ namespace yq {
             return (x>=b.x);
         }
 
-        //! TRUE if every component of this vector is greater or equal to b
-        constexpr bool operator>>=(T b) const noexcept
+       /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(Pred pred) const noexcept
         {
-            return (x>=b);
-        }
-        
-        //! TRUE if every component of this vector is greater or equal to b
-        friend constexpr bool operator>>=(T a, const Vector1& b) noexcept
-        {
-            return (a>=b.x);
+            return pred(x);
         }
 
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(const Vector1& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b.x);
+        }
+
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(Pred pred) const noexcept
+        {
+            return pred(x);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(const Vector1& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b.x);
+        }
+        
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
         bool close(const Vector1&b, R compare) const 
