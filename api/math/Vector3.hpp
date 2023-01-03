@@ -93,83 +93,7 @@ namespace yq {
             return *this;
         }
 
-       /*! Tests every element
-            
-            This applies the given test to every component, 
-            returns TRUE if all tests are true.
-            \note y & z component tests may be skipped if the x-component test fails.
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept
-        {
-            return pred(x) && pred(y) && pred(z);
-        }
 
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if all tests are true.
-            \note y & z component tests may be skipped if the x-component test fails.
-            \param[in] b The other vector
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool all_test(const Vector3& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
-        }
-
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if all tests are true.
-            \note y & z component tests may be skipped if the x-component test fails.
-            \param[in] b The other value
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) && pred(y, b) && pred(z, b);
-        }
-
-        
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if any test is true.
-            \note y & z component tests may be skipped if the x-component test passes.
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept
-        {
-            return pred(x) || pred(y) || pred(z);
-        }
-        
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if any test is true.
-            \note y & z component tests may be skipped if the x-component test passes.
-            \param[in] b The other vector
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool any_test(const Vector3& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
-        }
-        
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if any test is true.
-            \note y & z component tests may be skipped if the x-component test passes.
-            \param[in] b The other value
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) || pred(y, b) || pred(z, b);
-        }
 
             
         template <typename R>
@@ -250,6 +174,98 @@ namespace yq {
             if constexpr (trait::has_sqrt_v<square_t<T>>)
                 return sqrt(length²());
             return {};
+        }
+
+            //  ===================================================================================================
+            //  AllComponents Adapters
+            //  
+            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  returning true if all elements are successful
+            //  ===================================================================================================
+
+       /*! Tests every element
+            
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y & z component tests may be skipped if the x-component test fails.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(Pred pred) const noexcept
+        {
+            return pred(x) && pred(y) && pred(z);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y & z component tests may be skipped if the x-component test fails.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(const Vector3& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y & z component tests may be skipped if the x-component test fails.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b) && pred(y, b) && pred(z, b);
+        }
+
+
+            //  ===================================================================================================
+            //  AnyComponents Adapters
+            //  
+            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  returning true if all elements are successful
+            //  ===================================================================================================
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y & z component tests may be skipped if the x-component test passes.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(Pred pred) const noexcept
+        {
+            return pred(x) || pred(y) || pred(z);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y & z component tests may be skipped if the x-component test passes.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(const Vector3& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y & z component tests may be skipped if the x-component test passes.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b) || pred(y, b) || pred(z, b);
         }
     };
 
