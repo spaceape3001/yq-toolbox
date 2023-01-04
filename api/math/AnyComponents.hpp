@@ -199,5 +199,6 @@ namespace yq {
         {
             return rhs.value.any_test(lhs, [](component_type a, component_type b) -> bool { return b != a; } );
         }
+
     };
 }

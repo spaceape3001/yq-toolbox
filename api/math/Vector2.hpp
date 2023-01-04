@@ -189,10 +189,21 @@ namespace yq {
 
             //  ===================================================================================================
             //  AllComponents Adapters
-            //  
-            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
-            //  returning true if all elements are successful
             //  ===================================================================================================
+
+        /*! Adds a value to all the components
+        */
+        constexpr Vector2 all_add(T b) const noexcept
+        {
+            return { x+b, y+b };
+        }
+        
+        /*! \brief Subtracts value to all components
+        */
+        constexpr Vector2 all_subtract(T b) const noexcept
+        {
+            return { x-b, x-b };
+        }
 
        /*! Tests every element
             This applies the given test to every component, 
@@ -231,6 +242,7 @@ namespace yq {
         {
             return pred(x, b) && pred(y, b);
         }
+
 
             //  ===================================================================================================
             //  AnyComponents Adapters
@@ -277,6 +289,12 @@ namespace yq {
             return pred(x, b) || pred(y, b);
         }
         
+            //  ===================================================================================================
+            //  ElemComponents Adapters
+            //  
+            //  The following are for the ElemComponents Adapters
+            //  ===================================================================================================
+
     };
 
     YQ_IEEE754_1(Vector2)
@@ -670,6 +688,12 @@ namespace yq {
         return { val };
     }
     
+    template <typename T>
+    AllComponents<Vector2<T>>   elem(const Vector2<T>& val)
+    {
+        return { val };
+    }
+
     template <typename T>
     AnyComponents<Vector2<T>>   any(const Vector2<T>& val)
     {
