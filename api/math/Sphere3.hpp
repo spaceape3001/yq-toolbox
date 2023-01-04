@@ -29,6 +29,36 @@ namespace yq {
         
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere3&) const noexcept = default;
+        
+        constexpr AxBox3<T> bounds() const noexcept
+        {
+            T       r   = abs(radius);
+            return {
+                all(point) - r,
+                all(point) + r
+            };
+        }
+
+        /*! \brief Computes the diameter of a sphere
+        */
+        constexpr T           diameter() const noexcept
+        {
+            return radius + radius;
+        }
+
+        /*! \brief Computes the surface area of a 3D sphere
+        */
+        constexpr square_t<T>     surface_area() const noexcept
+        {
+            return 4.0*pi*(radius*radius);
+        }
+
+        /*! \brief Computes the volume of a 3D sphere
+        */
+        constexpr cube_t<T>       volume() const noexcept
+        {
+            return (4.0/3.0)*pi*(radius*radius*radius);
+        }
     };
 
     YQ_IEEE754_1(Sphere3)
@@ -57,18 +87,9 @@ namespace yq {
 
     //! Returns the axially aligned box of a sphere
     template <typename T>
-    constexpr AxBox3<T>   aabb(const Sphere3<T>&a) noexcept
+    constexpr AxBox3<T>   aabb(const Sphere3<T>& sph) noexcept
     {
-        T       r   = abs(a.r);
-        return {{
-            a.pt.x - r,
-            a.pt.y - r,
-            a.pt.z - r
-        },{
-            a.pt.x + r,
-            a.pt.y + r,
-            a.pt.z + r
-        }};
+        return sph.bounds();
     }
 
 //  --------------------------------------------------------
@@ -137,25 +158,25 @@ namespace yq {
     /*! \brief Computes the diameter of a sphere
     */
     template <typename T>
-    constexpr T           diameter(const Sphere3<T>&a) noexcept
+    constexpr T           diameter(const Sphere3<T>&sph) noexcept
     {
-        return a.radius + a.radius;
+        return sph.diameter();
     }
 
     /*! \brief Computes the surface area of a 3D sphere
     */
     template <typename T>
-    constexpr square_t<T>     surface_area(const Sphere3<T>& sp) noexcept
+    constexpr square_t<T>     surface_area(const Sphere3<T>& sph) noexcept
     {
-        return 4.0*pi*(sp.radius*sp.radius);
+        return sph.surface_area();
     }
 
     /*! \brief Computes the volume of a 3D sphere
     */
     template <typename T>
-    constexpr cube_t<T>       volume(const Sphere3<T>&sp) noexcept
+    constexpr cube_t<T>       volume(const Sphere3<T>&sph) noexcept
     {
-        return (4.0/3.0)*pi*(sp.radius*sp.radius*sp.radius);
+        return sph.volume();
     }
 }
 
