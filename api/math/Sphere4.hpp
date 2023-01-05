@@ -28,6 +28,13 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
 
+        //! Returns the bounding box for this sphere
+        constexpr AxBox4<T>   bounds() const noexcept
+        {
+            T       r   = abs(radius);
+            return { all(point) - r, all(point) + r };
+        }
+
         /*! \brief Computes the diameter of a hyper sphere
         */
         constexpr T     diameter() const noexcept
@@ -35,7 +42,7 @@ namespace yq {
             return radius + radius;
         }
     };
-
+    
     YQ_IEEE754_1(Sphere4)
 
 
@@ -70,20 +77,9 @@ namespace yq {
 
     //! Returns the axially aligned box of a sphere
     template <typename T>
-    AxBox4<T>   aabb(const Sphere4<T>&a)
+    AxBox4<T>   aabb(const Sphere4<T>& sph)
     {
-        T       r   = abs(a.r);
-        return {{
-            a.pt.x - r,
-            a.pt.y - r,
-            a.pt.z - r,
-            a.pt.w - r
-        },{
-            a.pt.x + r,
-            a.pt.y + r,
-            a.pt.z + r,
-            a.pt.w + r
-        }};
+        return sph.bounds();
     }
 
 //  --------------------------------------------------------
