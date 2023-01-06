@@ -17,10 +17,135 @@ namespace yq {
     */
     template <typename T>
     struct Tensor11 {
+    
+        //! Component type captures the template parameter
         using component_type = T;
         T xx;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor11&) const noexcept = default;
+        
+        constexpr Tensor11  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        constexpr Tensor11  operator-() const noexcept
+        {
+            return {
+                -xx
+            };
+        }
+
+        constexpr Tensor11   operator+ (const Tensor11 &b) const noexcept
+        {
+            return {
+                xx+b.xx
+            };
+        }
+
+        Tensor11&   operator+=(const Tensor11 &b) 
+        {
+            xx+=b.xx;
+            return *this;
+        }
+
+        constexpr Tensor11   operator- (const Tensor11 &b) const noexcept
+        {
+            return {
+                xx-b.xx
+            };
+        }
+        
+        Tensor11&   operator-=(const Tensor11 &b) 
+        {
+            xx-=b.xx;
+            return *this;
+        }
+    
+            //! Returns the determinant
+        constexpr T determinant() const noexcept
+        {
+            return xx;
+        }
+
+            //! Returns the trace
+        constexpr T     trace() const noexcept
+        {
+            return xx;
+        }
+
+        //! Transpose, which is itself for a 1x1
+        constexpr Tensor11 transpose() const 
+        { 
+            return { xx }; 
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! Gets the diagonal as a vector
+            constexpr Vector1<T>  diagonal() const noexcept
+            {
+                return {xx};
+            }
+
+            //! Gets the x-column as a vector
+            constexpr Vector1<T>  x_column()  const noexcept
+            {
+                return {xx};
+            }
+
+            //! Gets the x-row as a vector
+            constexpr Vector1<T>  x_row() const noexcept
+            {
+                return {xx};
+            }
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets the diagonal
+            Tensor11&   diagonal(const Vector1<T>& v)
+            {        
+                xx = v.x;
+                return *this;
+            }
+
+            //! Sets the diagonal
+            Tensor11&   diagonal(T _xx)
+            {        
+                xx = _xx;
+                return *this;
+            }
+
+            //! Sets the x-column
+            Tensor11& x_column(const Vector1<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            //! Sets the x-column
+            Tensor11& x_column(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
+
+            //! Sets the x-row
+            Tensor11& x_row(const Vector1<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            //! Sets the x-row
+            Tensor11& x_row(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
     };
 
     YQ_IEEE754_1(Tensor11)
@@ -106,106 +231,22 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T>  diagonal(const Tensor11<T>& v)
     {
-        return {v.xx};
+        return v.diagonal();
     }
 
     template <typename T>
     constexpr Vector1<T>  x_column(const Tensor11<T>&v) 
     {
-        return {v.xx};
+        return v.x_column();
     }
 
     template <typename T>
     constexpr Vector1<T>  x_row(const Tensor11<T>&v)
     {
-        return {v.xx};
+        return v.x_row();
     }
 
 
-//  --------------------------------------------------------
-//  SETTERS
-
-            
-    template <typename T>
-    Tensor11<T>&  set_diagonal(Tensor11<T>& ten, const Vector1<T>& v)
-    {        ten.xx = v.x;
-        return ten;
-    }
-
-
-    template <typename T>
-    Tensor11<T>& set_x_column(Tensor11<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor11<T>& set_x_row(Tensor11<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor11<T>  operator+(const Tensor11<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor11<T>  operator-(const Tensor11<T>& a) 
-    {
-        return {
-            -a.xx
-        };
-    }
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-    template <typename T>
-    constexpr Tensor11<T>   operator+ (const Tensor11<T> &a, const Tensor11<T> &b) 
-    {
-        return {
-            a.xx+b.xx
-        };
-    }
-
-    template <typename T>
-    Tensor11<T>&   operator+=(Tensor11<T> &a, const Tensor11<T> &b) 
-    {
-        a.xx+=b.xx;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor11<T>   operator- (const Tensor11<T> &a, const Tensor11<T> &b) 
-    {
-        return {
-            a.xx-b.xx
-        };
-    }
-    
-
-    template <typename T>
-    Tensor11<T>&   operator-=(Tensor11<T> &a, const Tensor11<T> &b) 
-    {
-        a.xx-=b.xx;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -314,9 +355,9 @@ namespace yq {
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    auto determinant(const Tensor11<T>& a)
+    constexpr T determinant(const Tensor11<T>& a)
     {
-        return a.xx;
+        return a.determinant();
     }
 
     /*! \brief Trace of the 1 x 1 tensor
@@ -326,7 +367,7 @@ namespace yq {
     template <typename T>
     constexpr T     trace(const Tensor11<T>& a)
     {
-        return a.xx;
+        return a.trace();
     }
 
 }
