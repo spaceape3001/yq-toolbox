@@ -19,10 +19,90 @@ namespace yq {
     */
     template <typename T>
     struct Tensor12 {
+    
+        //! Component type
         using component_type = T;
+        
         T xx, xy;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor12&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr Tensor12  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+
+        //! Negation
+        constexpr Tensor12  operator-() const noexcept
+        {
+            return {
+                -xx, -xy
+            };
+        }
+
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            constexpr Vector1<T>  x_column() const noexcept
+            {
+                return {xx};
+            }
+
+            constexpr Vector1<T>  y_column() const noexcept
+            {
+                return {xy};
+            }
+
+            constexpr Vector2<T>  x_row() const noexcept
+            {
+                return {xx, xy};
+            }
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            Tensor12& x_column(const Vector2<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            Tensor12& x_column(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
+
+            Tensor12& y_column(const Vector2<T>& v)
+            {
+                xy = v.x;
+                return *this;
+            }
+
+            Tensor12& y_column(T _xy)
+            {
+                xy = _xy;
+                return *this;
+            }
+
+            Tensor12& x_row(const Vector1<T>& v)
+            {
+                xx = v.x;
+                xy = v.y;
+                return *this;
+            }
+
+            Tensor12& x_row(T _xx, T _xy)
+            {
+                xx = _xx;
+                xy = _xy;
+                return *this;
+            }
+
     };
 
     YQ_IEEE754_1(Tensor12)
@@ -78,70 +158,22 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    constexpr Vector1<T>  x_column(const Tensor12<T>&v) 
+    constexpr Vector1<T>  x_column(const Tensor12<T>&ten) 
     {
-        return {v.xx};
+        return ten.x_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  y_column(const Tensor12<T>&v) 
+    constexpr Vector1<T>  y_column(const Tensor12<T>&ten) 
     {
-        return {v.xy};
+        return ten.y_column();
     }
 
     template <typename T>
-    constexpr Vector2<T>  x_row(const Tensor12<T>&v)
-    {
-        return {v.xx, v.xy};
+    constexpr Vector2<T>  x_row(const Tensor12<T>&ten)
+    {   
+        return ten.x_row();
     }
-
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor12<T>& set_x_column(Tensor12<T>&ten, const Vector2<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor12<T>& set_y_column(Tensor12<T>&ten, const Vector2<T>& v)
-    {
-        ten.xy = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor12<T>& set_x_row(Tensor12<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor12<T>  operator+(const Tensor12<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor12<T>  operator-(const Tensor12<T>& a) 
-    {
-        return {
-            -a.xx, -a.xy
-        };
-    }
-
 
 //  --------------------------------------------------------
 //  ADDITION
