@@ -47,16 +47,19 @@ namespace yq {
         //  --------------------------------------------------------
         //  GETTERS
 
+            //! Gets the x-column as a vector
             constexpr Vector1<T>  x_column() const noexcept
             {
                 return {xx};
             }
 
+            //! Gets the y-column as a vector
             constexpr Vector1<T>  y_column() const noexcept
             {
                 return {xy};
             }
 
+            //! Gets the x-row as a vector
             constexpr Vector2<T>  x_row() const noexcept
             {
                 return {xx, xy};
@@ -65,37 +68,43 @@ namespace yq {
         //  --------------------------------------------------------
         //  SETTERS
 
-            Tensor12& x_column(const Vector2<T>& v)
+            //! Sets the X-column
+            Tensor12& x_column(const Vector1<T>& v)
             {
                 xx = v.x;
                 return *this;
             }
 
+            //! Sets the X-column
             Tensor12& x_column(T _xx)
             {
                 xx = _xx;
                 return *this;
             }
 
-            Tensor12& y_column(const Vector2<T>& v)
+            //! Sets the Y-column
+            Tensor12& y_column(const Vector1<T>& v)
             {
                 xy = v.x;
                 return *this;
             }
 
+            //! Sets the Y-column
             Tensor12& y_column(T _xy)
             {
                 xy = _xy;
                 return *this;
             }
 
-            Tensor12& x_row(const Vector1<T>& v)
+            //! Sets the X-row
+            Tensor12& x_row(const Vector2<T>& v)
             {
                 xx = v.x;
                 xy = v.y;
                 return *this;
             }
 
+            //! Sets the X-row
             Tensor12& x_row(T _xx, T _xy)
             {
                 xx = _xx;

@@ -18,10 +18,108 @@ namespace yq {
     */
     template <typename T>
     struct Tensor13 {
+    
+        //! Component type (captures the template parameter)
         using component_type = T;
         T xx, xy, xz;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor13&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr Tensor13  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation operator
+        constexpr Tensor13  operator-() const noexcept
+        {
+            return {
+                -xx, -xy, -xz
+            };
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            constexpr Vector1<T>  x_column() const noexcept
+            {
+                return {xx};
+            }
+
+            constexpr Vector1<T>  y_column() const noexcept
+            {
+                return {xy};
+            }
+
+            constexpr Vector1<T>  z_column() const noexcept
+            {
+                return {xz};
+            }
+
+            constexpr Vector3<T>  x_row() const noexcept
+            {
+                return {xx, xy, xz};
+            }
+
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            Tensor13& x_column(const Vector1<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            Tensor13& x_column(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
+
+            Tensor13& y_column(const Vector1<T>& v)
+            {
+                xy = v.x;
+                return *this;
+            }
+
+            Tensor13& y_column(T _xy)
+            {
+                xy = _xy;
+                return *this;
+            }
+
+            Tensor13& z_column(const Vector1<T>& v)
+            {
+                xz = v.x;
+                return *this;
+            }
+
+
+            Tensor13& z_column(T _xz)
+            {
+                xz = _xz;
+                return *this;
+            }
+
+            Tensor13& x_row(const Vector3<T>& v)
+            {
+                xx = v.x;
+                xy = v.y;
+                xz = v.z;
+                return *this;
+            }
+
+            Tensor13& x_row(T _xx, T _xy, T _xz)
+            {
+                xx = _xx;
+                xy = _xy;
+                xz = _xz;
+                return *this;
+            }
     };
 
     YQ_IEEE754_1(Tensor13)
@@ -77,83 +175,29 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    constexpr Vector1<T>  x_column(const Tensor13<T>&v) 
+    constexpr Vector1<T>  x_column(const Tensor13<T>&ten) 
     {
-        return {v.xx};
+        return ten.x_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  y_column(const Tensor13<T>&v) 
+    constexpr Vector1<T>  y_column(const Tensor13<T>&ten) 
     {
-        return {v.xy};
+        return ten.y_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  z_column(const Tensor13<T>&v) 
+    constexpr Vector1<T>  z_column(const Tensor13<T>&ten) 
     {
-        return {v.xz};
+        return ten.z_column();
     }
 
     template <typename T>
-    constexpr Vector3<T>  x_row(const Tensor13<T>&v)
+    constexpr Vector3<T>  x_row(const Tensor13<T>&ten)
     {
-        return {v.xx, v.xy, v.xz};
+        return ten.x_row();
     }
 
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor13<T>& set_x_column(Tensor13<T>&ten, const Vector3<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor13<T>& set_y_column(Tensor13<T>&ten, const Vector3<T>& v)
-    {
-        ten.xy = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor13<T>& set_z_column(Tensor13<T>&ten, const Vector3<T>& v)
-    {
-        ten.xz = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor13<T>& set_x_row(Tensor13<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        ten.xz = v.z;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor13<T>  operator+(const Tensor13<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor13<T>  operator-(const Tensor13<T>& a) 
-    {
-        return {
-            -a.xx, -a.xy, -a.xz
-        };
-    }
 
 
 //  --------------------------------------------------------
