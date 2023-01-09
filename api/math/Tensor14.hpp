@@ -18,10 +18,142 @@ namespace yq {
     */
     template <typename T>
     struct Tensor14 {
+        //! Component type (captures the template parameter)
         using component_type = T;
+        
         T xx, xy, xz, xw;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor14&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr Tensor14<T>  operator+() const noexcept 
+        { 
+            return *this; 
+        }
+
+        //! Negation operator
+        constexpr Tensor14<T>  operator-() const noexcept
+        {
+            return {
+                -xx, -xy, -xz, -xw
+            };
+        }
+
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! Gets the x-column
+            constexpr Vector1<T>  x_column() const noexcept
+            {
+                return {xx};
+            }
+
+            //! Gets the y-column
+            constexpr Vector1<T>  y_column() const noexcept
+            {
+                return {xy};
+            }
+
+            //! Gets the z-column
+            constexpr Vector1<T>  z_column() const noexcept
+            {
+                return {xz};
+            }
+
+            //! Gets the w-column
+            constexpr Vector1<T>  w_column() const noexcept
+            {
+                return {xw};
+            }
+
+            //! Gets the x-row
+            constexpr Vector4<T>  x_row() const noexcept
+            {
+                return {xx, xy, xz, xw};
+            }
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets the x-column
+            Tensor14<T>& x_column(const Vector1<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            //! Sets the x-column
+            Tensor14<T>& x_column(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
+
+            //! Sets the y-column
+            Tensor14<T>& y_column(const Vector1<T>& v)
+            {
+                xy = v.x;
+                return *this;
+            }
+
+            //! Sets the y-column
+            Tensor14<T>& y_column(T _xy)
+            {
+                xy = _xy;
+                return *this;
+            }
+
+            //! Sets the z-column
+            Tensor14<T>& z_column(const Vector1<T>& v)
+            {
+                xz = v.x;
+                return *this;
+            }
+
+            //! Sets the z-column
+            Tensor14<T>& z_column(T _xz)
+            {
+                xz = _xz;
+                return *this;
+            }
+
+            //! Sets the w-column
+            Tensor14<T>& w_column(const Vector1<T>& v)
+            {
+                xw = v.x;
+                return *this;
+            }
+
+            //! Sets the w-column
+            Tensor14<T>& w_column(T _xw)
+            {
+                xw = _xw;
+                return *this;
+            }
+
+            //! Sets the x-row
+            Tensor14<T>& x_row(const Vector4<T>& v)
+            {
+                xx = v.x;
+                xy = v.y;
+                xz = v.z;
+                xw = v.w;
+                return *this;
+            }
+
+            //! Sets the x-row
+            Tensor14<T>& x_row(T _xx, T _xy, T _xz, T _xw)
+            {
+                xx = _xx;
+                xy = _xy;
+                xz = _xz;
+                xw = _xw;
+                return *this;
+            }
+
+
     };
 
     YQ_IEEE754_1(Tensor14)
@@ -77,96 +209,33 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    constexpr Vector1<T>  x_column(const Tensor14<T>&v) 
+    constexpr Vector1<T>  x_column(const Tensor14<T>&ten) 
     {
-        return {v.xx};
+        return ten.x_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  y_column(const Tensor14<T>&v) 
+    constexpr Vector1<T>  y_column(const Tensor14<T>&ten) 
     {
-        return {v.xy};
+        return ten.y_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  z_column(const Tensor14<T>&v) 
+    constexpr Vector1<T>  z_column(const Tensor14<T>&ten) 
     {
-        return {v.xz};
+        return ten.z_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  w_column(const Tensor14<T>&v) 
+    constexpr Vector1<T>  w_column(const Tensor14<T>&ten) 
     {
-        return {v.xw};
+        return ten.w_column();
     }
 
     template <typename T>
-    constexpr Vector4<T>  x_row(const Tensor14<T>&v)
+    constexpr Vector4<T>  x_row(const Tensor14<T>&ten)
     {
-        return {v.xx, v.xy, v.xz, v.xw};
-    }
-
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor14<T>& set_x_column(Tensor14<T>&ten, const Vector4<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor14<T>& set_y_column(Tensor14<T>&ten, const Vector4<T>& v)
-    {
-        ten.xy = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor14<T>& set_z_column(Tensor14<T>&ten, const Vector4<T>& v)
-    {
-        ten.xz = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor14<T>& set_w_column(Tensor14<T>&ten, const Vector4<T>& v)
-    {
-        ten.xw = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor14<T>& set_x_row(Tensor14<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        ten.xz = v.z;
-        ten.xw = v.w;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor14<T>  operator+(const Tensor14<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor14<T>  operator-(const Tensor14<T>& a) 
-    {
-        return {
-            -a.xx, -a.xy, -a.xz, -a.xw
-        };
+        return ten.x_row();
     }
 
 
