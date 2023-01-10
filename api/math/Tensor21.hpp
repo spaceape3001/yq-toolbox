@@ -18,11 +18,90 @@ namespace yq {
     */
     template <typename T>
     struct Tensor21 {
+    
+        //! Component type (captures template parameter)
         using component_type = T;
         T xx;
         T yx;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor21&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr Tensor21  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation operator
+        constexpr Tensor21  operator-() const noexcept
+        {
+            return {
+                -xx,
+                -yx
+            };
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            constexpr Vector2<T>  x_column() const noexcept
+            {
+                return {xx, yx};
+            }
+
+            constexpr Vector1<T>  x_row() const noexcept
+            {
+                return {xx};
+            }
+
+            constexpr Vector1<T>  y_row() const noexcept
+            {
+                return {yx};
+            }
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            Tensor21& x_column(const Vector2<T>& v)
+            {
+                xx = v.x;
+                yx = v.y;
+                return *this;
+            }
+
+            Tensor21& x_column(T _xx, T _yx)
+            {
+                xx = _xx;
+                yx = _yx;
+                return *this;
+            }
+
+            Tensor21& x_row(const Vector1<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            Tensor21& x_row(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
+
+            Tensor21& y_row(const Vector1<T>& v)
+            {
+                yx = v.x;
+                return *this;
+            }
+
+            Tensor21& y_row(T _yx)
+            {
+                yx = _yx;
+                return *this;
+            }
+
+
     };
 
     YQ_IEEE754_1(Tensor21)
@@ -85,70 +164,23 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    constexpr Vector2<T>  x_column(const Tensor21<T>&v) 
+    constexpr Vector2<T>  x_column(const Tensor21<T>&ten) 
     {
-        return {v.xx, v.yx};
+        return ten.x_column();
     }
 
     template <typename T>
-    constexpr Vector1<T>  x_row(const Tensor21<T>&v)
+    constexpr Vector1<T>  x_row(const Tensor21<T>&ten)
     {
-        return {v.xx};
+        return ten.x_row();
     }
 
     template <typename T>
-    constexpr Vector1<T>  y_row(const Tensor21<T>&v)
+    constexpr Vector1<T>  y_row(const Tensor21<T>&ten)
     {
-        return {v.yx};
+        return ten.y_row();
     }
 
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor21<T>& set_x_column(Tensor21<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor21<T>& set_x_row(Tensor21<T>&ten, const Vector2<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor21<T>& set_y_row(Tensor21<T>&ten, const Vector2<T>& v)
-    {
-        ten.yx = v.x;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor21<T>  operator+(const Tensor21<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor21<T>  operator-(const Tensor21<T>& a) 
-    {
-        return {
-            -a.xx,
-            -a.yx
-        };
-    }
 
 
 //  --------------------------------------------------------
