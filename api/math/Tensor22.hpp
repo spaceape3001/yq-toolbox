@@ -36,22 +36,15 @@ namespace yq {
             };
         }
 
-        constexpr Tensor22  transpose() const noexcept
-        {
-            return {
-                xx, yx,
-                xy, yy
-            };
-        }
 
-
-
+        //! Positive (affirmation) operator
         constexpr Tensor22  operator+() const noexcept
         { 
             return *this; 
         }
 
 
+        //! Negation operator
         constexpr Tensor22  operator-() const noexcept
         {
             return {
@@ -60,6 +53,7 @@ namespace yq {
             };
         }
 
+        //! Computes the determinant of this matrix
         constexpr square_t<T> determinant() const noexcept
         {
             return xx*yy-xy*yx;
@@ -68,6 +62,7 @@ namespace yq {
         //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
         //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
 
+        //! Computes the inverse of this matrix
         constexpr Tensor22<inverse_t<T>> inverse() const noexcept
         {
             auto    di = one_v<T> / determinant();
@@ -86,30 +81,44 @@ namespace yq {
             return xx+yy;
         }
 
+        //! Transpose of this matrix
+        constexpr Tensor22  transpose() const noexcept
+        {
+            return {
+                xx, yx,
+                xy, yy
+            };
+        }
+
 
         //  --------------------------------------------------------
         //  GETTERS
 
+            //! Returns the diagonal
             constexpr Vector2<T>  diagonal() const noexcept
             {
                 return {xx, yy};
             }
 
+            //! X-column of this tensor
             constexpr Vector2<T>  x_column() const noexcept
             {
                 return {xx, yx};
             }
 
+            //! Y-column of this tensor
             constexpr Vector2<T>  y_column() const noexcept
             {
                 return {xy, yy};
             }
 
+            //! X-row of this tensor
             constexpr Vector2<T>  x_row() const noexcept
             {
                 return {xx, xy};
             }
 
+            //! Y-row of this tensor
             constexpr Vector2<T>  y_row() const noexcept
             {
                 return {yx, yy};
@@ -119,7 +128,7 @@ namespace yq {
         //  --------------------------------------------------------
         //  SETTERS
 
-                    
+            //! Sets the diagonal
             Tensor22<T>&  diagonal(const Vector2<T>& v)
             {        
                 xx = v.x;
@@ -127,6 +136,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the diagonal
             Tensor22<T>&  diagonal(T _xx, T _yy)
             {        
                 xx = _xx;
@@ -134,7 +144,7 @@ namespace yq {
                 return *this;
             }
 
-
+            //! Sets the X-column
             Tensor22<T>& x_column(const Vector2<T>& v)
             {
                 xx = v.x;
@@ -142,6 +152,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the X-column
             Tensor22<T>& x_column(T _xx, T _yx)
             {
                 xx = _xx;
@@ -149,6 +160,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Y-column
             Tensor22<T>& y_column(const Vector2<T>& v)
             {
                 xy = v.x;
@@ -156,6 +168,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Y-column
             Tensor22<T>& y_column(T _xy, T _yy)
             {
                 xy = _xy;
@@ -163,6 +176,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the X-row
             Tensor22<T>& x_row(const Vector2<T>& v)
             {
                 xx = v.x;
@@ -170,6 +184,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the X-row
             Tensor22<T>& x_row(T _xx, T _xy)
             {
                 xx = _xx;
@@ -177,6 +192,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Y-row
             Tensor22<T>& y_row(const Vector2<T>& v)
             {
                 yx = v.x;
@@ -184,6 +200,7 @@ namespace yq {
                 return *this;
             }
     
+            //! Sets the Y-row
             Tensor22<T>& y_row(T _yx, T _yy)
             {
                 yx = _yx;
@@ -294,6 +311,8 @@ namespace yq {
         is_nan(v.yx) || is_nan(v.yy)
     )
 
+    /*! \brief Transpose of a 2x2 tensor
+    */
     template <typename T>
     constexpr Tensor22<T>  transpose(const Tensor22<T>& ten)
     {
@@ -303,30 +322,40 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    /*! \brief Diagonal of the given tensor
+    */
     template <typename T>
     constexpr Vector2<T>  diagonal(const Tensor22<T>& ten)
     {
         return ten.diagonal();
     }
 
+    /*! \brief X-column of the given tensor
+    */
     template <typename T>
     constexpr Vector2<T>  x_column(const Tensor22<T>&ten) 
     {
         return ten.x_column();
     }
 
+    /*! \brief Y-column of the given tensor
+    */
     template <typename T>
     constexpr Vector2<T>  y_column(const Tensor22<T>&ten) 
     {
         return ten.y_column();
     }
 
+    /*! \brief X-row of the given tensor
+    */
     template <typename T>
     constexpr Vector2<T>  x_row(const Tensor22<T>&ten)
     {
         return ten.x_row();
     }
 
+    /*! \brief Y-row of the given tensor
+    */
     template <typename T>
     constexpr Vector2<T>  y_row(const Tensor22<T>&ten)
     {
@@ -494,6 +523,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    //! Determinant of a 2x2 tensor
     template <typename T>
     square_t<T> determinant(const Tensor22<T>& ten)
     {
@@ -503,6 +533,7 @@ namespace yq {
     //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
     //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
 
+    //! Inverse of a 2x2 tensor
     template <typename T>
     auto inverse(const Tensor22<T>&ten)
     {
