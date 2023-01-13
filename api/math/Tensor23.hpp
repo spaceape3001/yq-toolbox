@@ -18,11 +18,137 @@ namespace yq {
     */
     template <typename T>
     struct Tensor23 {
+    
+        //! Component type (captures template parameter)
         using component_type = T;
         T xx, xy, xz;
         T yx, yy, yz;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor23&) const noexcept = default;
+
+        //! Positive (affirmation) oeprator
+        constexpr Tensor23<T>  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation
+        constexpr Tensor23<T>  operator-() const noexcept
+        {
+            return {
+                -xx, -xy, -xz,
+                -yx, -yy, -yz
+            };
+        }
+
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            constexpr Vector2<T>  x_column() const noexcept
+            {
+                return {xx, yx};
+            }
+
+            constexpr Vector2<T>  y_column() const noexcept
+            {
+                return {xy, yy};
+            }
+
+            constexpr Vector2<T>  z_column() const noexcept
+            {
+                return {xz, yz};
+            }
+
+            constexpr Vector3<T>  x_row() const noexcept
+            {
+                return {xx, xy, xz};
+            }
+
+            constexpr Vector3<T>  y_row() const noexcept
+            {
+                return {yx, yy, yz};
+            }
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            Tensor23& x_column(const Vector2<T>& v)
+            {
+                xx = v.x;
+                yx = v.y;
+                return *this;
+            }
+
+            Tensor23& x_column(T _xx, T _yx)
+            {
+                xx = _xx;
+                yx = _yx;
+                return *this;
+            }
+
+
+            Tensor23& y_column(const Vector2<T>& v)
+            {
+                xy = v.x;
+                yy = v.y;
+                return *this;
+            }
+
+            Tensor23& y_column(T _xy, T _yy)
+            {
+                xy = _xy;
+                yy = _yy;
+                return *this;
+            }
+
+            Tensor23& z_column(const Vector2<T>& v)
+            {
+                xz = v.x;
+                yz = v.y;
+                return *this;
+            }
+
+            Tensor23& z_column(T _xz, T _yz)
+            {
+                xz = _xz;
+                yz = _yz;
+                return *this;
+            }
+
+            Tensor23& x_row(const Vector3<T>& v)
+            {
+                xx = v.x;
+                xy = v.y;
+                xz = v.z;
+                return *this;
+            }
+
+            Tensor23& x_row(T _xx, T _xy, T _xz)
+            {
+                xx = _xx;
+                xy = _xy;
+                xz = _xz;
+                return *this;
+            }
+
+            Tensor23& y_row(const Vector3<T>& v)
+            {
+                yx = v.x;
+                yy = v.y;
+                yz = v.z;
+                return *this;
+            }
+
+            Tensor23& y_row(T _yx, T _yy, T _yz)
+            {
+                yx = _yx;
+                yy = _yy;
+                yz = _yz;
+                return *this;
+            }
     };
 
     YQ_IEEE754_1(Tensor23)
@@ -85,102 +211,35 @@ namespace yq {
 //  GETTERS
 
     template <typename T>
-    constexpr Vector2<T>  x_column(const Tensor23<T>&v) 
+    constexpr Vector2<T>  x_column(const Tensor23<T>&ten) 
     {
-        return {v.xx, v.yx};
+        return ten.x_column();
     }
 
     template <typename T>
-    constexpr Vector2<T>  y_column(const Tensor23<T>&v) 
+    constexpr Vector2<T>  y_column(const Tensor23<T>&ten) 
     {
-        return {v.xy, v.yy};
+        return ten.y_column();
     }
 
     template <typename T>
-    constexpr Vector2<T>  z_column(const Tensor23<T>&v) 
+    constexpr Vector2<T>  z_column(const Tensor23<T>&ten) 
     {
-        return {v.xz, v.yz};
+        return ten.z_column();
     }
 
     template <typename T>
-    constexpr Vector3<T>  x_row(const Tensor23<T>&v)
+    constexpr Vector3<T>  x_row(const Tensor23<T>&ten)
     {
-        return {v.xx, v.xy, v.xz};
+        return ten.x_row();
     }
 
     template <typename T>
-    constexpr Vector3<T>  y_row(const Tensor23<T>&v)
+    constexpr Vector3<T>  y_row(const Tensor23<T>&ten)
     {
-        return {v.yx, v.yy, v.yz};
+        return ten.y_row();
     }
 
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor23<T>& set_x_column(Tensor23<T>&ten, const Vector3<T>& v)
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor23<T>& set_y_column(Tensor23<T>&ten, const Vector3<T>& v)
-    {
-        ten.xy = v.x;
-        ten.yy = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor23<T>& set_z_column(Tensor23<T>&ten, const Vector3<T>& v)
-    {
-        ten.xz = v.x;
-        ten.yz = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor23<T>& set_x_row(Tensor23<T>&ten, const Vector2<T>& v)
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        ten.xz = v.z;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor23<T>& set_y_row(Tensor23<T>&ten, const Vector2<T>& v)
-    {
-        ten.yx = v.x;
-        ten.yy = v.y;
-        ten.yz = v.z;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor23<T>  operator+(const Tensor23<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor23<T>  operator-(const Tensor23<T>& a) 
-    {
-        return {
-            -a.xx, -a.xy, -a.xz,
-            -a.yx, -a.yy, -a.yz
-        };
-    }
 
 
 //  --------------------------------------------------------
