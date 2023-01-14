@@ -98,10 +98,10 @@ namespace yq {
         \return An element from the vector.
     */
     template <typename T>
-    T           random(const std::vector<T>& vec, T def=T())
+    T           random_pick(const std::vector<T>& vec, T def=T())
     {
         if(vec.empty())
             return def;
-        return vec[random(0, vec.size())];
+        return vec[random(0ULL, (uint64_t) vec.size())];
     }
 }
