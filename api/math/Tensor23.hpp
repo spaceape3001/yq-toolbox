@@ -46,26 +46,31 @@ namespace yq {
         //  --------------------------------------------------------
         //  GETTERS
 
+            //! X-column of this tensor
             constexpr Vector2<T>  x_column() const noexcept
             {
                 return {xx, yx};
             }
 
+            //! Y-column of this tensor
             constexpr Vector2<T>  y_column() const noexcept
             {
                 return {xy, yy};
             }
 
+            //! Z-column of this tensor
             constexpr Vector2<T>  z_column() const noexcept
             {
                 return {xz, yz};
             }
 
+            //! X-row of this tensor
             constexpr Vector3<T>  x_row() const noexcept
             {
                 return {xx, xy, xz};
             }
 
+            //! Y-row of this tensor
             constexpr Vector3<T>  y_row() const noexcept
             {
                 return {yx, yy, yz};
@@ -75,6 +80,7 @@ namespace yq {
         //  --------------------------------------------------------
         //  SETTERS
 
+            //! Sets the X-column of this tensor
             Tensor23& x_column(const Vector2<T>& v)
             {
                 xx = v.x;
@@ -82,6 +88,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the X-column of this tensor
             Tensor23& x_column(T _xx, T _yx)
             {
                 xx = _xx;
@@ -90,6 +97,7 @@ namespace yq {
             }
 
 
+            //! Sets the Y-column of this tensor
             Tensor23& y_column(const Vector2<T>& v)
             {
                 xy = v.x;
@@ -97,6 +105,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Y-column of this tensor
             Tensor23& y_column(T _xy, T _yy)
             {
                 xy = _xy;
@@ -104,6 +113,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Z-column of this tensor
             Tensor23& z_column(const Vector2<T>& v)
             {
                 xz = v.x;
@@ -111,6 +121,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Z-column of this tensor
             Tensor23& z_column(T _xz, T _yz)
             {
                 xz = _xz;
@@ -118,6 +129,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the X-row of this tensor
             Tensor23& x_row(const Vector3<T>& v)
             {
                 xx = v.x;
@@ -126,6 +138,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the X-row of this tensor
             Tensor23& x_row(T _xx, T _xy, T _xz)
             {
                 xx = _xx;
@@ -134,6 +147,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Y-row of this tensor
             Tensor23& y_row(const Vector3<T>& v)
             {
                 yx = v.x;
@@ -142,6 +156,7 @@ namespace yq {
                 return *this;
             }
 
+            //! Sets the Y-row of this tensor
             Tensor23& y_row(T _yx, T _yy, T _yz)
             {
                 yx = _yx;
@@ -210,30 +225,35 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Gets the X-column of the provided tensor
     template <typename T>
     constexpr Vector2<T>  x_column(const Tensor23<T>&ten) 
     {
         return ten.x_column();
     }
 
+    //! Gets the Y-column of the provided tensor
     template <typename T>
     constexpr Vector2<T>  y_column(const Tensor23<T>&ten) 
     {
         return ten.y_column();
     }
 
+    //! Gets the Z-column of the provided tensor
     template <typename T>
     constexpr Vector2<T>  z_column(const Tensor23<T>&ten) 
     {
         return ten.z_column();
     }
 
+    //! Gets the X-row of the provided tensor
     template <typename T>
     constexpr Vector3<T>  x_row(const Tensor23<T>&ten)
     {
         return ten.x_row();
     }
 
+    //! Gets the Y-row of the provided tensor
     template <typename T>
     constexpr Vector3<T>  y_row(const Tensor23<T>&ten)
     {
