@@ -2026,12 +2026,12 @@ namespace yq {
                                 std::string, std::string_view, or have to_string/to_string_view defined for it.
         \return string with the result
     */
-    template <template <typename...> class Tmpl, typename... T>
-    std::string     join(const Tmpl<T...>& collection)
+    template <typename T>
+    std::string     concat(const std::initializer_list<T> collection)
     {
         std::string    ret;
 
-        using value_t                       = typename Tmpl<T...>::value_type;
+        using value_t                       = T;
         static constexpr bool   is_string   = std::is_same_v<value_t, std::string> || std::is_same_v<value_t, std::string_view>;
         
         if constexpr ( is_string ){
