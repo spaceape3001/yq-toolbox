@@ -2017,6 +2017,48 @@ namespace yq {
     }
     
 
+    /*! Joins a collection (no separator)
+    
+        Joins a collection of whatever into a resulting string, so long as it has either a "to_string" or 
+        a "to_string_view" function defined for it.
+        
+        \param[in] collection   The collection which must be iterable, and the type of the collection can be 
+                                std::string, std::string_view, or have to_string/to_string_view defined for it.
+        \return string with the result
+    */
+    template <template <typename...> class Tmpl, typename... T>
+    std::string     join(const Tmpl<T...>& collection)
+    {
+        std::string    ret;
+
+        using value_t                       = typename Tmpl<T...>::value_type;
+        static constexpr bool   is_string   = std::is_same_v<value_t, std::string> || std::is_same_v<value_t, std::string_view>;
+        
+        if constexpr ( is_string ){
+            size_t  n   = 0;
+            for(const auto& s : collection)
+                n += s.size();
+            ret.reserve(n);
+        }
+        
+        for(const auto&s : collection){
+            if constexpr (is_string) {
+                ret += s;
+            } 
+            if constexpr (!is_string){
+                if constexpr ( trait::has_to_string_view_v<value_t> ){
+                    ret += to_string_view(s);
+                } else if constexpr ( trait::has_to_string_v<value_t> ){ 
+                    ret += to_string(s);
+                } else {
+                    static_assert(trait::always_false_v<value_t>, "Argument deduction failed");
+                }
+            }
+        }
+        return ret;
+    }
+    
+
     /*! Joins a collection into a separator
     
         Joins a collection of whatever into a resulting string, so long as it has either a "to_string" or 
