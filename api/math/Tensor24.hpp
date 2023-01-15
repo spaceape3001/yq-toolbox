@@ -18,11 +18,177 @@ namespace yq {
     */
     template <typename T>
     struct Tensor24 {
+    
+        //! Component type
         using component_type = T;
+
         T xx, xy, xz, xw;
         T yx, yy, yz, yw;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor24&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr Tensor24  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation
+        constexpr Tensor24  operator-() const noexcept
+        {
+            return {
+                -xx, -xy, -xz, -xw,
+                -yx, -yy, -yz, -yw
+            };
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! X-column of this tensor
+            constexpr Vector2<T>  x_column() const noexcept 
+            {
+                return {xx, yx};
+            }
+
+            //! Y-column of this tensor
+            constexpr Vector2<T>  y_column() const noexcept 
+            {
+                return {xy, yy};
+            }
+
+            //! Z-column of this tensor
+            constexpr Vector2<T>  z_column() const noexcept 
+            {
+                return {xz, yz};
+            }
+
+            //! W-column of this tensor
+            constexpr Vector2<T>  w_column() const noexcept 
+            {
+                return {xw, yw};
+            }
+
+            //! X-row of this tensor
+            constexpr Vector4<T>  x_row() const noexcept 
+            {
+                return {xx, xy, xz, xw};
+            }
+
+            //! Y-row of this tensor
+            constexpr Vector4<T>  y_row() const noexcept 
+            {
+                return {yx, yy, yz, yw};
+            }
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets the x-column of this tensor
+            Tensor24& x_column(const Vector2<T>& v)
+            {
+                xx = v.x;
+                yx = v.y;
+                return *this;
+            }
+
+            //! Sets the x-column of this tensor
+            Tensor24& x_column(T _xx, T _yx)
+            {
+                xx = _xx;
+                yx = _yx;
+                return *this;
+            }
+
+            //! Sets the y-column of this tensor
+            Tensor24& y_column(const Vector2<T>& v)
+            {
+                xy = v.x;
+                yy = v.y;
+                return *this;
+            }
+
+            //! Sets the y-column of this tensor
+            Tensor24& y_column(T _xy, T _yy)
+            {
+                xy = _xy;
+                yy = _yy;
+                return *this;
+            }
+
+            //! Sets the z-column of this tensor
+            Tensor24& z_column(const Vector2<T>& v)
+            {
+                xz = v.x;
+                yz = v.y;
+                return *this;
+            }
+
+            //! Sets the z-column of this tensor
+            Tensor24& z_column(T _xz, T _yz)
+            {
+                xz = _xz;
+                yz = _yz;
+                return *this;
+            }
+
+            //! Sets the w-column of this tensor
+            Tensor24& w_column(const Vector2<T>& v)
+            {
+                xw = v.x;
+                yw = v.y;
+                return *this;
+            }
+
+            //! Sets the w-column of this tensor
+            Tensor24& w_column(T _xw, T _yw)
+            {
+                xw = _xw;
+                yw = _yw;
+                return *this;
+            }
+
+            //! Sets the x-row of this tensor
+            Tensor24& x_row(const Vector4<T>& v)
+            {
+                xx = v.x;
+                xy = v.y;
+                xz = v.z;
+                xw = v.w;
+                return *this;
+            }
+
+            //! Sets the x-row of this tensor
+            Tensor24& x_row(T _xx, T _xy, T _xz, T _xw)
+            {
+                xx = _xx;
+                xy = _xy;
+                xz = _xz;
+                xw = _xw;
+                return *this;
+            }
+
+            //! Sets the y-row of this tensor
+            Tensor24& y_row(const Vector4<T>& v)
+            {
+                yx = v.x;
+                yy = v.y;
+                yz = v.z;
+                yw = v.w;
+                return *this;
+            }
+
+            //! Sets the y-row of this tensor
+            Tensor24& y_row(T _yx, T _yy, T _yz, T _yw)
+            {
+                yx = _yx;
+                yy = _yy;
+                yz = _yz;
+                yw = _yw;
+                return *this;
+            }
     };
 
     YQ_IEEE754_1(Tensor24)
@@ -84,120 +250,47 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Gets the x-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  x_column(const Tensor24<T>&v) 
+    constexpr Vector2<T>  x_column(const Tensor24<T>&ten) 
     {
-        return {v.xx, v.yx};
+        return ten.x_column();
     }
 
+    //! Gets the y-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  y_column(const Tensor24<T>&v) 
+    constexpr Vector2<T>  y_column(const Tensor24<T>&ten) 
     {
-        return {v.xy, v.yy};
+        return ten.y_column();
     }
 
+    //! Gets the z-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  z_column(const Tensor24<T>&v) 
+    constexpr Vector2<T>  z_column(const Tensor24<T>&ten) 
     {
-        return {v.xz, v.yz};
+        return ten.z_column();
     }
 
+    //! Gets the w-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  w_column(const Tensor24<T>&v) 
+    constexpr Vector2<T>  w_column(const Tensor24<T>&ten) 
     {
-        return {v.xw, v.yw};
+        return ten.w_column();
     }
 
+    //! Gets the x-row of the provided tensor
     template <typename T>
-    constexpr Vector4<T>  x_row(const Tensor24<T>&v)
+    constexpr Vector4<T>  x_row(const Tensor24<T>&ten)
     {
-        return {v.xx, v.xy, v.xz, v.xw};
+        return ten.x_row();
     }
 
+    //! Gets the y-row of the provided tensor
     template <typename T>
-    constexpr Vector4<T>  y_row(const Tensor24<T>&v)
+    constexpr Vector4<T>  y_row(const Tensor24<T>&ten)
     {
-        return {v.yx, v.yy, v.yz, v.yw};
+        return ten.y_row();
     }
-
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor24<T>& set_x_column(Tensor24<T>&ten, const Vector4<T>& v)
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor24<T>& set_y_column(Tensor24<T>&ten, const Vector4<T>& v)
-    {
-        ten.xy = v.x;
-        ten.yy = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor24<T>& set_z_column(Tensor24<T>&ten, const Vector4<T>& v)
-    {
-        ten.xz = v.x;
-        ten.yz = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor24<T>& set_w_column(Tensor24<T>&ten, const Vector4<T>& v)
-    {
-        ten.xw = v.x;
-        ten.yw = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor24<T>& set_x_row(Tensor24<T>&ten, const Vector2<T>& v)
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        ten.xz = v.z;
-        ten.xw = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor24<T>& set_y_row(Tensor24<T>&ten, const Vector2<T>& v)
-    {
-        ten.yx = v.x;
-        ten.yy = v.y;
-        ten.yz = v.z;
-        ten.yw = v.w;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor24<T>  operator+(const Tensor24<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor24<T>  operator-(const Tensor24<T>& a) 
-    {
-        return {
-            -a.xx, -a.xy, -a.xz, -a.xw,
-            -a.yx, -a.yy, -a.yz, -a.yw
-        };
-    }
-
 
 //  --------------------------------------------------------
 //  ADDITION
