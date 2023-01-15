@@ -2017,21 +2017,23 @@ namespace yq {
     }
     
 
-    /*! Joins a collection (no separator)
+
+    /*! Joins a collection into a separator (no separator)
     
         Joins a collection of whatever into a resulting string, so long as it has either a "to_string" or 
         a "to_string_view" function defined for it.
         
         \param[in] collection   The collection which must be iterable, and the type of the collection can be 
                                 std::string, std::string_view, or have to_string/to_string_view defined for it.
+        \param[in] separator    This goes between the elements of the collection
         \return string with the result
     */
-    template <typename T>
-    std::string     concat(const std::initializer_list<T> collection)
+    template <template <typename...> class Tmpl, typename... T>
+    std::string     join(const Tmpl<T...>& collection)
     {
         std::string    ret;
 
-        using value_t                       = T;
+        using value_t                       = typename Tmpl<T...>::value_type;
         static constexpr bool   is_string   = std::is_same_v<value_t, std::string> || std::is_same_v<value_t, std::string_view>;
         
         if constexpr ( is_string ){
@@ -2058,6 +2060,20 @@ namespace yq {
         return ret;
     }
     
+    /*! Concatenates string
+    
+        Joins a collection of whatever into a resulting string, so long as it has either a "to_string" or 
+        a "to_string_view" function defined for it.
+        
+        \param[in] collection   The collection which must be iterable, and the type of the collection can be 
+                                std::string, std::string_view, or have to_string/to_string_view defined for it.
+        \return string with the result
+    */
+    template <typename T>
+    std::string     concat(const std::initializer_list<T> collection)
+    {
+        return join(collection);
+    }
 
     /*! Joins a collection into a separator
     
