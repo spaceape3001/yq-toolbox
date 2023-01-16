@@ -18,12 +18,123 @@ namespace yq {
     */
     template <typename T>
     struct Tensor31 {
+    
+        //! Component type (captures template parameter)
         using component_type = T;
+        
         T xx;
         T yx;
         T zx;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor31&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr const Tensor31&  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation
+        constexpr Tensor31  operator-() const noexcept
+        {
+            return {
+                -xx,
+                -yx,
+                -zx
+            };
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! X-column of this vector
+            constexpr Vector3<T>  x_column() const noexcept
+            {
+                return {xx, yx, zx};
+            }
+
+            //! X-row of this vector
+            constexpr Vector1<T>  x_row() const noexcept
+            {
+                return {xx};
+            }
+
+            //! Y-row of this vector
+            constexpr Vector1<T>  y_row() const noexcept
+            {
+                return {yx};
+            }
+
+            //! Z-row of this vector
+            constexpr Vector1<T>  z_row() const noexcept
+            {
+                return {zx};
+            }
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets the x-column
+            Tensor31& x_column(const Vector3<T>& v)
+            {
+                xx = v.x;
+                yx = v.y;
+                zx = v.z;
+                return *this;
+            }
+
+            //! Sets the x-column
+            Tensor31& x_column(T _xx, T _yx, T _zx)
+            {
+                xx = _xx;
+                yx = _yx;
+                zx = _zx;
+                return *this;
+            }
+
+            //! Sets the x-row
+            Tensor31& x_row(const Vector1<T>& v)
+            {
+                xx = v.x;
+                return *this;
+            }
+
+            //! Sets the x-row
+            Tensor31& x_row(T _xx)
+            {
+                xx = _xx;
+                return *this;
+            }
+
+            //! Sets the y-row
+            Tensor31& y_row(const Vector1<T>& v)
+            {
+                yx = v.x;
+                return *this;
+            }
+
+            //! Sets the y-row
+            Tensor31& y_row(T _yx)
+            {
+                yx = _yx;
+                return *this;
+            }
+
+            //! Sets the z-row
+            Tensor31& z_row(const Vector1<T>& v)
+            {
+                zx = v.x;
+                return *this;
+            }    
+
+            //! Sets the z-row
+            Tensor31& z_row(T _zx)
+            {
+                zx = _zx;
+                return *this;
+            }    
     };
 
     YQ_IEEE754_1(Tensor31)
@@ -92,85 +203,32 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! X-column of given tensor
     template <typename T>
-    constexpr Vector3<T>  x_column(const Tensor31<T>&v) 
+    constexpr Vector3<T>  x_column(const Tensor31<T>&ten) 
     {
-        return {v.xx, v.yx, v.zx};
+        return ten.x_column();
     }
 
+    //! X-row of given tensor
     template <typename T>
-    constexpr Vector1<T>  x_row(const Tensor31<T>&v)
+    constexpr Vector1<T>  x_row(const Tensor31<T>&ten)
     {
-        return {v.xx};
+        return ten.x_row();
     }
 
+    //! Y-row of given tensor
     template <typename T>
-    constexpr Vector1<T>  y_row(const Tensor31<T>&v)
+    constexpr Vector1<T>  y_row(const Tensor31<T>&ten)
     {
-        return {v.yx};
+        return ten.y_row();
     }
 
+    //! Z-row of given tensor
     template <typename T>
-    constexpr Vector1<T>  z_row(const Tensor31<T>&v)
+    constexpr Vector1<T>  z_row(const Tensor31<T>&ten)
     {
-        return {v.zx};
-    }
-
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor31<T>& set_x_column(Tensor31<T>&ten, const Vector1<T>& v)
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        ten.zx = v.z;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor31<T>& set_x_row(Tensor31<T>&ten, const Vector3<T>& v)
-    {
-        ten.xx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor31<T>& set_y_row(Tensor31<T>&ten, const Vector3<T>& v)
-    {
-        ten.yx = v.x;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor31<T>& set_z_row(Tensor31<T>&ten, const Vector3<T>& v)
-    {
-        ten.zx = v.x;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor31<T>  operator+(const Tensor31<T>& a) 
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor31<T>  operator-(const Tensor31<T>& a) 
-    {
-        return {
-            -a.xx,
-            -a.yx,
-            -a.zx
-        };
+        return ten.z_row();
     }
 
 
