@@ -1,6 +1,6 @@
 #   Simple cmake to configure rapid XML as an "interface" library
 if(NOT TARGET RapidXml)
-    file( GLOB rapidxml_dir ${CMAKE_CURRENT_LIST_DIR}/rapidxml-*)
+    set(rapidxml_dir ${CMAKE_CURRENT_LIST_DIR}/rapidxml)
     add_library(RapidXml INTERFACE)
     target_sources(RapidXml INTERFACE
         ${rapidxml_dir}/rapidxml.hpp 

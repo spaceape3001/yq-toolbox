@@ -4,3 +4,6 @@
 [submodule "3rd/json"]
 	path = 3rd/json
 	url = https://github.com/nlohmann/json
+[submodule "3rd/rapidxml"]
+	path = 3rd/rapidxml
+	url = https://github.com/spaceape3001/rapidxml.git
