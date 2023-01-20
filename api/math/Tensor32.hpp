@@ -29,6 +29,7 @@ namespace yq {
         //! Default equality operator
         constexpr bool operator==(const Tensor32&) const noexcept = default;
 
+        //! Positive (affirmation) operator
         constexpr Tensor32  operator+() const noexcept
         { 
             return *this; 

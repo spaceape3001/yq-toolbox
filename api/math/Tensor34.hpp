@@ -18,12 +18,212 @@ namespace yq {
     */
     template <typename T>
     struct Tensor34 {
+        //! Component type (captures template parameter)
         using component_type = T;
+        
         T xx, xy, xz, xw;
         T yx, yy, yz, yw;
         T zx, zy, zz, zw;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor34&) const noexcept = default;
+
+        //! Positive (affirmation) operator
+        constexpr Tensor34<T>  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation operator
+        constexpr Tensor34<T>  operator-() const noexcept
+        {
+            return {
+                -xx, -xy, -xz, -xw,
+                -yx, -yy, -yz, -yw,
+                -zx, -zy, -zz, -zw
+            };
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! X-column of this tensor
+            constexpr Vector3<T>  x_column() const noexcept
+            {
+                return {xx, yx, zx};
+            }
+
+            //! Y-column of this tensor
+            constexpr Vector3<T>  y_column() const noexcept
+            {
+                return {xy, yy, zy};
+            }
+
+            //! Z-column of this tensor
+            constexpr Vector3<T>  z_column() const noexcept
+            {
+                return {xz, yz, zz};
+            }
+
+            //! W-column of this tensor
+            constexpr Vector3<T>  w_column() const noexcept
+            {
+                return {xw, yw, zw};
+            }
+
+            //! X-row of this tensor
+            constexpr Vector4<T>  x_row() const noexcept
+            {
+                return {xx, xy, xz, xw};
+            }
+
+            //! Y-row of this tensor
+            constexpr Vector4<T>  y_row() const noexcept
+            {
+                return {yx, yy, yz, yw};
+            }
+
+            //! Z-row of this tensor
+            constexpr Vector4<T>  z_row() const noexcept
+            {
+                return {zx, zy, zz, zw};
+            }
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets the X-column
+            Tensor34<T>& x_column(const Vector4<T>& v) noexcept
+            {
+                xx = v.x;
+                yx = v.y;
+                zx = v.z;
+                return *this;
+            }
+
+            //! Sets the X-column
+            Tensor34<T>& x_column(T _xx, T _yx, T _zx) noexcept
+            {
+                xx = _xx;
+                yx = _yx;
+                zx = _zx;
+                return *this;
+            }
+
+            //! Sets the Y-column
+            Tensor34<T>& y_column(const Vector4<T>& v) noexcept
+            {
+                xy = v.x;
+                yy = v.y;
+                zy = v.z;
+                return *this;
+            }
+
+            //! Sets the Y-column
+            Tensor34<T>& y_column(T _xy, T _yy, T _zy) noexcept
+            {
+                xy = _xy;
+                yy = _yy;
+                zy = _zy;
+                return *this;
+            }
+
+            //! Sets the Z-column
+            Tensor34<T>& z_column(const Vector4<T>& v) noexcept
+            {
+                xz = v.x;
+                yz = v.y;
+                zz = v.z;
+                return *this;
+            }
+
+            //! Sets the Z-column
+            Tensor34<T>& z_column(T _xz, T _yz, T _zz) noexcept
+            {
+                xz = _xz;
+                yz = _yz;
+                zz = _zz;
+                return *this;
+            }
+
+            //! Sets the W-column
+            Tensor34<T>& w_column(const Vector4<T>& v) noexcept
+            {
+                xw = v.x;
+                yw = v.y;
+                zw = v.z;
+                return *this;
+            }
+
+            //! Sets the W-column
+            Tensor34<T>& w_column(T _xw, T _yw, T _zw) noexcept
+            {
+                xw = _xw;
+                yw = _yw;
+                zw = _zw;
+                return *this;
+            }
+
+            //! Sets the X-row
+            Tensor34<T>& x_row(const Vector3<T>& v) noexcept
+            {
+                xx = v.x;
+                xy = v.y;
+                xz = v.z;
+                xw = v.w;
+                return *this;
+            }
+
+            //! Sets the X-row
+            Tensor34<T>& x_row(T _xx, T _xy, T _xz, T _xw) noexcept
+            {
+                xx = _xx;
+                xy = _xy;
+                xz = _xz;
+                xw = _xw;
+                return *this;
+            }
+
+            //! Sets the Y-row
+            Tensor34<T>& y_row(const Vector3<T>& v) noexcept
+            {
+                yx = v.x;
+                yy = v.y;
+                yz = v.z;
+                yw = v.w;
+                return *this;
+            }
+
+            //! Sets the Y-row
+            Tensor34<T>& y_row(T _yx, T _yy, T _yz, T _yw) noexcept
+            {
+                yx = _yx;
+                yy = _yy;
+                yz = _yz;
+                yw = _yw;
+                return *this;
+            }
+
+            //! Sets the Z-row
+            Tensor34<T>& z_row(const Vector3<T>& v) noexcept
+            {
+                zx = v.x;
+                zy = v.y;
+                zz = v.z;
+                zw = v.w;
+                return *this;
+            }
+
+            //! Sets the Z-row
+            Tensor34<T>& z_row(T _zx, T _zy, T _zz, T _zw) noexcept
+            {
+                zx = _zx;
+                zy = _zy;
+                zz = _zz;
+                zw = _zw;
+                return *this;
+            }
     };
 
     YQ_IEEE754_1(Tensor34)
@@ -92,140 +292,55 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! X-column of given tensor
     template <typename T>
-    constexpr Vector3<T>  x_column(const Tensor34<T>&v)  noexcept
+    constexpr Vector3<T>  x_column(const Tensor34<T>&ten)  noexcept
     {
-        return {v.xx, v.yx, v.zx};
+        return ten.x_column();
     }
 
+    //! Y-column of given tensor
     template <typename T>
-    constexpr Vector3<T>  y_column(const Tensor34<T>&v) noexcept
+    constexpr Vector3<T>  y_column(const Tensor34<T>&ten) noexcept
     {
-        return {v.xy, v.yy, v.zy};
+        return ten.y_column();
     }
 
+    //! Z-column of given tensor
     template <typename T>
-    constexpr Vector3<T>  z_column(const Tensor34<T>&v)  noexcept
+    constexpr Vector3<T>  z_column(const Tensor34<T>&ten)  noexcept
     {
-        return {v.xz, v.yz, v.zz};
+        return ten.z_column();
     }
 
+    //! W-column of given tensor
     template <typename T>
-    constexpr Vector3<T>  w_column(const Tensor34<T>&v)  noexcept
+    constexpr Vector3<T>  w_column(const Tensor34<T>&ten)  noexcept
     {
-        return {v.xw, v.yw, v.zw};
+        return ten.w_column();
     }
 
+    //! X-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  x_row(const Tensor34<T>&v) noexcept
+    constexpr Vector4<T>  x_row(const Tensor34<T>&ten) noexcept
     {
-        return {v.xx, v.xy, v.xz, v.xw};
+        return ten.x_row();
     }
 
+    //! Y-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  y_row(const Tensor34<T>&v) noexcept
+    constexpr Vector4<T>  y_row(const Tensor34<T>&ten) noexcept
     {
-        return {v.yx, v.yy, v.yz, v.yw};
+        return ten.y_row();
     }
 
+    //! Z-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  z_row(const Tensor34<T>&v) noexcept
+    constexpr Vector4<T>  z_row(const Tensor34<T>&ten) noexcept
     {
-        return {v.zx, v.zy, v.zz, v.zw};
+        return ten.z_row();
     }
 
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor34<T>& set_x_column(Tensor34<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        ten.zx = v.z;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor34<T>& set_y_column(Tensor34<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xy = v.x;
-        ten.yy = v.y;
-        ten.zy = v.z;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor34<T>& set_z_column(Tensor34<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xz = v.x;
-        ten.yz = v.y;
-        ten.zz = v.z;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor34<T>& set_w_column(Tensor34<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xw = v.x;
-        ten.yw = v.y;
-        ten.zw = v.z;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor34<T>& set_x_row(Tensor34<T>&ten, const Vector3<T>& v) noexcept
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        ten.xz = v.z;
-        ten.xw = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor34<T>& set_y_row(Tensor34<T>&ten, const Vector3<T>& v) noexcept
-    {
-        ten.yx = v.x;
-        ten.yy = v.y;
-        ten.yz = v.z;
-        ten.yw = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor34<T>& set_z_row(Tensor34<T>&ten, const Vector3<T>& v) noexcept
-    {
-        ten.zx = v.x;
-        ten.zy = v.y;
-        ten.zz = v.z;
-        ten.zw = v.w;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor34<T>  operator+(const Tensor34<T>& a)  noexcept
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor34<T>  operator-(const Tensor34<T>& a)  noexcept
-    {
-        return {
-            -a.xx, -a.xy, -a.xz, -a.xw,
-            -a.yx, -a.yy, -a.yz, -a.yw,
-            -a.zx, -a.zy, -a.zz, -a.zw
-        };
-    }
 
 
 //  --------------------------------------------------------
