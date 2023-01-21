@@ -18,13 +18,182 @@ namespace yq {
     */
     template <typename T>
     struct Tensor42 {
+        //! Component type (captures template parameter)
         using component_type = T;
+        
         T xx, xy;
         T yx, yy;
         T zx, zy;
         T wx, wy;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor42&) const noexcept = default;
+
+
+        //! Positive (affirmation) operator
+        constexpr Tensor42<T>  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+
+        //! Negation operator
+        constexpr Tensor42<T>  operator-() const noexcept
+        {
+            return {
+                -xx, -xy,
+                -yx, -yy,
+                -zx, -zy,
+                -wx, -wy
+            };
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! X-column of this tensor
+            constexpr Vector4<T>  x_column() const noexcept
+            {
+                return {xx, yx, zx, wx};
+            }
+
+            //! Y-column of this tensor
+            constexpr Vector4<T>  y_column() const noexcept
+            {
+                return {xy, yy, zy, wy};
+            }
+
+            //! X-row of this tensor
+            constexpr Vector2<T>  x_row() const noexcept
+            {
+                return {xx, xy};
+            }
+
+            //! Y-row of this tensor
+            constexpr Vector2<T>  y_row() const noexcept
+            {
+                return {yx, yy};
+            }
+
+            //! Z-row of this tensor
+            constexpr Vector2<T>  z_row() const noexcept
+            {
+                return {zx, zy};
+            }
+
+            //! W-row of this tensor
+            constexpr Vector2<T>  w_row() const noexcept
+            {
+                return {wx, wy};
+            }
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets x-column
+            Tensor42& x_column(const Vector4<T>& v) noexcept
+            {
+                xx = v.x;
+                yx = v.y;
+                zx = v.z;
+                wx = v.w;
+                return *this;
+            }
+
+            //! Sets x-column
+            Tensor42& x_column(T _xx, T _yx, T _zx, T _wx) noexcept
+            {
+                xx = _xx;
+                yx = _yx;
+                zx = _zx;
+                wx = _wx;
+                return *this;
+            }
+
+            //! Sets y-column
+            Tensor42& y_column(const Vector4<T>& v) noexcept
+            {
+                xy = v.x;
+                yy = v.y;
+                zy = v.z;
+                wy = v.w;
+                return *this;
+            }
+
+            //! Sets y-column
+            Tensor42& y_column(T _xy, T _yy, T _zy, T _wy) noexcept
+            {
+                xy = _xy;
+                yy = _yy;
+                zy = _zy;
+                wy = _wy;
+                return *this;
+            }
+
+            //! Sets x-row
+            Tensor42& x_row(const Vector2<T>& v) noexcept
+            {
+                xx = v.x;
+                xy = v.y;
+                return *this;
+            }
+
+            //! Sets x-row
+            Tensor42& x_row(T _xx, T _xy) noexcept
+            {
+                xx = _xx;
+                xy = _xy;
+                return *this;
+            }
+
+            //! Sets y-row
+            Tensor42& y_row(const Vector2<T>& v) noexcept
+            {
+                yx = v.x;
+                yy = v.y;
+                return *this;
+            }
+
+            //! Sets y-row
+            Tensor42& y_row(T _yx, T _yy) noexcept
+            {
+                yx = _yx;
+                yy = _yy;
+                return *this;
+            }
+
+            //! Sets z-row
+            Tensor42& z_row(const Vector2<T>& v) noexcept
+            {
+                zx = v.x;
+                zy = v.y;
+                return *this;
+            }
+
+            //! Sets z-row
+            Tensor42& z_row(T _zx, T _zy) noexcept
+            {
+                zx = _zx;
+                zy = _zy;
+                return *this;
+            }
+
+            //! Sets z-row
+            Tensor42& w_row(const Vector2<T>& v) noexcept
+            {
+                wx = v.x;
+                wy = v.y;
+                return *this;
+            }
+
+            //! Sets z-row
+            Tensor42& w_row(T _wx, T _wy) noexcept
+            {
+                wx = _wx;
+                wy = _wy;
+                return *this;
+            }
     };
 
     YQ_IEEE754_1(Tensor42)
@@ -97,124 +266,52 @@ namespace yq {
         is_nan(v.wx) || is_nan(v.wy)
     )
 
+
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! X-column of given tensor
     template <typename T>
-    constexpr Vector4<T>  x_column(const Tensor42<T>&v)  noexcept
+    constexpr Vector4<T>  x_column(const Tensor42<T>&ten)  noexcept
     {
-        return {v.xx, v.yx, v.zx, v.wx};
+        return ten.x_column();
     }
 
+    //! Y-column of given tensor
     template <typename T>
-    constexpr Vector4<T>  y_column(const Tensor42<T>&v)  noexcept
+    constexpr Vector4<T>  y_column(const Tensor42<T>&ten)  noexcept
     {
-        return {v.xy, v.yy, v.zy, v.wy};
+        return ten.y_column();
     }
 
+    //! X-row of given tensor
     template <typename T>
-    constexpr Vector2<T>  x_row(const Tensor42<T>&v) noexcept
+    constexpr Vector2<T>  x_row(const Tensor42<T>&ten) noexcept
     {
-        return {v.xx, v.xy};
+        return ten.x_row();
     }
 
+    //! Y-row of given tensor
     template <typename T>
-    constexpr Vector2<T>  y_row(const Tensor42<T>&v) noexcept
+    constexpr Vector2<T>  y_row(const Tensor42<T>&ten) noexcept
     {
-        return {v.yx, v.yy};
+        return ten.y_row();
     }
 
+    //! Z-row of given tensor
     template <typename T>
-    constexpr Vector2<T>  z_row(const Tensor42<T>&v) noexcept
+    constexpr Vector2<T>  z_row(const Tensor42<T>&ten) noexcept
     {
-        return {v.zx, v.zy};
+        return ten.z_row();
     }
 
+    //! W-row of given tensor
     template <typename T>
-    constexpr Vector2<T>  w_row(const Tensor42<T>&v) noexcept
+    constexpr Vector2<T>  w_row(const Tensor42<T>&ten) noexcept
     {
-        return {v.wx, v.wy};
+        return ten.w_row();
     }
 
-
-//  --------------------------------------------------------
-//  SETTERS
-
-    template <typename T>
-    Tensor42<T>& set_x_column(Tensor42<T>&ten, const Vector2<T>& v) noexcept
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        ten.zx = v.z;
-        ten.wx = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor42<T>& set_y_column(Tensor42<T>&ten, const Vector2<T>& v) noexcept
-    {
-        ten.xy = v.x;
-        ten.yy = v.y;
-        ten.zy = v.z;
-        ten.wy = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor42<T>& set_x_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor42<T>& set_y_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.yx = v.x;
-        ten.yy = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor42<T>& set_z_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.zx = v.x;
-        ten.zy = v.y;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor42<T>& set_w_row(Tensor42<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.wx = v.x;
-        ten.wy = v.y;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor42<T>  operator+(const Tensor42<T>& a)  noexcept
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor42<T>  operator-(const Tensor42<T>& a)  noexcept
-    {
-        return {
-            -a.xx, -a.xy,
-            -a.yx, -a.yy,
-            -a.zx, -a.zy,
-            -a.wx, -a.wy
-        };
-    }
 
 
 //  --------------------------------------------------------
