@@ -12,6 +12,15 @@ find_package(SQLite3 REQUIRED)
 
 message("INCLUDE ${SQLite3_INCLUDE_DIRS}")
 
+set(META_BIN "${CMAKE_CURRENT_BINARY_DIR}")
+
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/basic/Errors.hpp ${CMAKE_CURRENT_BINARY_DIR}/basic/Errors.ipp
+    COMMAND python ${CMAKE_CURRENT_LIST_DIR}/basic/Errors.py ${CMAKE_CURRENT_BINARY_DIR}/basic
+    DEPENDS ${CMAKE_CURRENT_LIST_DIR}/basic/Errors.py
+    VERBATIM
+)
+
 
 #   This is a testing file, excluded from GIT, used for quick test compilation 
 #   of code before sliding it into the appropriate spot of the build.
@@ -21,7 +30,8 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
 endif()
 
 add_library(yqtoolbox SHARED 
-#    ${core_test_source}
+    #${core_test_source}
+    ${CMAKE_CURRENT_BINARY_DIR}/basic/Errors.hpp ${CMAKE_CURRENT_BINARY_DIR}/basic/Errors.ipp
     ./basic/basic.cpp
     ./chemistry/chemistry.cpp
     ./earth/earth.cpp
@@ -56,6 +66,7 @@ target_link_libraries(yqtoolbox
 target_include_directories(yqtoolbox
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
         ${TBB_INCLUDE_DIR}
         ${LOG4CPP_INCLUDE_DIR}
         ${SQLite3_INCLUDE_DIRS}

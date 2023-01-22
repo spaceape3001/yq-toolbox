@@ -212,6 +212,8 @@ namespace yq {
     static constexpr float    INFf    = std::numeric_limits<float>::infinity();
 
 
+    using any_error_t           = std::pair<Any, std::error_code>;
+
 
         //  Common permutations (Qt will go away...eventually)
     using StringMap             = Map<std::string,std::string,IgCase>;

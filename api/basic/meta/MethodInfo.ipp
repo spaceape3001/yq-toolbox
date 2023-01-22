@@ -6,9 +6,10 @@
 
 #include <basic/meta/MethodInfo.hpp>
 #include <basic/meta/MetaWriter.hpp>
-#include <basic/meta/Global.hpp>
+#include <basic/meta/GlobalInfo.hpp>
 #include <basic/meta/ObjectInfo.hpp>
 #include <basic/meta/TypeInfo.hpp>
+#include <basic/Any.hpp>
 
 #include <basic/Logging.hpp>
 
@@ -61,6 +62,13 @@ namespace yq {
             w.description(zDescription);
         if(opts)
             w.options(opts);
+    }
+
+    //  INVOKATION
+
+    any_error_t      MethodInfo::invoke(void* obj, std::span<Any> args) const 
+    {
+        return { Any(), errors::todo() };
     }
 }
 

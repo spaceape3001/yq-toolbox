@@ -23,13 +23,13 @@ namespace yq {
             \param[out] obj     Pointer to object to set, can be null on a static object
             \param[in] value    Pointer to value to use on set, assumed to match data()
         */
-        virtual bool            set(void*obj, const void*value) const = 0;
+        virtual std::error_code set(void*obj, const void*value) const = 0;
         /*! \brief "Sets" a property
         
             \param[out] obj     Pointer to object to set, can be null on a static object
             \param[in] value    String-form of a property
         */
-        virtual bool            set(void*obj, std::string_view) const = 0;
+        virtual std::error_code set(void*obj, std::string_view) const = 0;
         
         //! Data type for the setter
         virtual const Meta&     data() const = 0;

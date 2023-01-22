@@ -22,7 +22,7 @@ namespace yq {
     class Any {
     public:
 
-        static Any      parse_me(const TypeInfo&, const std::string_view&);
+        static any_error_t      parse_me(const TypeInfo&, std::string_view);
 
         Any();
         Any(const Any&);
@@ -78,10 +78,10 @@ namespace yq {
         bool            can_convert() const;
 
         //! Returns a variant that's been converted
-        Any         convert(const TypeInfo&) const;
+        any_error_t     convert(const TypeInfo&) const;
 
         template <typename T>
-        Any         convert() const;
+        any_error_t     convert() const;
 
 
         bool            is_valid() const;
@@ -90,14 +90,14 @@ namespace yq {
         
         /*! \brief Parses into the variant, overwriting
         */
-        bool             parse(const TypeInfo&, const std::string_view&);
+        std::error_code parse(const TypeInfo&, const std::string_view&);
         
         
         /*! \brief Parses into the variant, overwriting
         
             Type info is assumed to be STRING if variant is invalid.
         */
-        bool             parse(const std::string_view&);
+        std::error_code parse(const std::string_view&);
         
         
         
@@ -106,7 +106,7 @@ namespace yq {
             This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
             therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
         */
-        bool            print(Stream&) const;
+        std::error_code print(Stream&) const;
         
         
         /*! \brief "Printable" version for debugging/general-output
@@ -154,7 +154,7 @@ namespace yq {
             
             \brief TRUE if properly delegated
         */
-        bool            write(Stream&) const;
+        std::error_code write(Stream&) const;
 
 
         /*! \brief The "I-KNOW-WHAT-I'M-DOING" constructor
@@ -178,8 +178,8 @@ namespace yq {
         template <typename T>
         void    set(T&&val);
         
-        void    set(std::string_view&&);
-        void    set(const std::string_view&);
+        void    set(std::string&&);
+        void    set(std::string_view);
         
         void    set(const TypeInfo&, const void*);
         void    clear();

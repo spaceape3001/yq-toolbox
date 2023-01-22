@@ -71,16 +71,20 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    Pointer to value
         */
-        virtual bool            set(void*obj, const void*value) const override
+        virtual std::error_code      set(void*obj, const void*value) const override
         {
             //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
+            if(!obj)
+                return errors::null_object();
             assert(value);
+            if(!value)
+                return errors::null_value();
             
             //  Types have already been checked, therefore C-style casts are fine
             (((C*) obj)->*m_data) =  *(const T*) value;
-            return true;
+            return std::error_code();
         }
     
         /*! \brief Sets the property by string
@@ -88,9 +92,11 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    String representation of the value
         */
-        virtual bool            set(void*obj, std::string_view value) const override
+        virtual std::error_code set(void*obj, std::string_view value) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
             return TypeInfo::parse(((C*) obj)->*m_data, value);
         }
         
@@ -125,14 +131,20 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    Pointer to value
         */
-        virtual bool            set(void* obj, const void* value) const override
+        virtual std::error_code set(void* obj, const void* value) const override
         {
             //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+                
             assert(value);
+            if(!value)
+                return errors::null_value();
+
             (((C*) obj)->*m_function)(*(const T*) value);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Sets the property by string
@@ -140,14 +152,18 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    String representation of the value
         */
-        virtual bool            set(void*obj, std::string_view value) const override
+        virtual std::error_code set(void*obj, std::string_view value) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
             (((C*) obj)->*m_function)(tmp);
-            return true;
+            return std::error_code();
         }
 
         FN      m_function;
@@ -182,15 +198,21 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    Pointer to value
         */
-        virtual bool            set(void* obj, const void* value) const override
+        virtual std::error_code set(void* obj, const void* value) const override
         {
             //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
+            if(!obj)
+                return errors::null_object();
             assert(value);
+            if(!value)
+                return errors::null_value();
 
             //  Types have already been checked, therefore C-style casts are fine
-            return (((C*) obj)->*m_function)(*(const T*) value);
+            if(!(((C*) obj)->*m_function)(*(const T*) value))
+                return errors::setter_failed();
+            return std::error_code();
         }
         
         /*! \brief Sets the property by string
@@ -198,13 +220,19 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    String representation of the value
         */
-        virtual bool            set(void*obj, std::string_view value) const override
+        virtual std::error_code set(void*obj, std::string_view value) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
-            return (((C*) obj)->*m_function)(tmp);
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
+            if(! (((C*) obj)->*m_function)(tmp))
+                return errors::setter_failed();
+            return std::error_code();
         }
 
         FN      m_function;
@@ -238,16 +266,20 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    Pointer to value
         */
-        virtual bool            set(void* obj, const void* value) const override
+        virtual std::error_code set(void* obj, const void* value) const override
         {
             //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
+            if(!obj)
+                return errors::null_object();
             assert(value);
+            if(!value)
+                return errors::null_value();
             
             //  Types have already been checked, therefore C-style casts are fine
             (((C*) obj)->*m_function)(*(const T*) value);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Sets the property by string
@@ -255,14 +287,18 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    String representation of the value
         */
-        virtual bool            set(void*obj, std::string_view value) const override
+        virtual std::error_code set(void*obj, std::string_view value) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
             (((C*) obj)->*m_function)(tmp);
-            return true;
+            return std::error_code();
         }
 
         FN      m_function;
@@ -296,15 +332,21 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    Pointer to value
         */
-        virtual bool            set(void* obj, const void* value) const override
+        virtual std::error_code set(void* obj, const void* value) const override
         {
             //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
+            if(!obj)
+                return errors::null_object();
             assert(value);
+            if(!value)
+                return errors::null_value();
 
             //  Types have already been checked, therefore C-style casts are fine
-            return (((C*) obj)->*m_function)(*(const T*) value);
+            if(! (((C*) obj)->*m_function)(*(const T*) value))
+                return errors::setter_failed();
+            return std::error_code();
         }
         
         /*! \brief Sets the property by string
@@ -312,13 +354,19 @@ namespace yq {
             \param[in] obj      Pointer to object
             \param[in] value    String representation of the value
         */
-        virtual bool            set(void*obj, std::string_view value) const override
+        virtual std::error_code set(void*obj, std::string_view value) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
-            return (((C*) obj)->*m_function)(tmp);
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
+            if(! (((C*) obj)->*m_function)(tmp))
+                return errors::setter_failed();
+            return std::error_code();
         }
 
         FN      m_function;

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <basic/meta/Global.hpp>
+#include <basic/meta/GlobalInfo.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/meta/ReservedIDs.hpp>
 

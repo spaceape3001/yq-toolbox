@@ -82,11 +82,13 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return Always TRUE
         */
-        virtual bool            get(void*dst, const void*) const override
+        virtual std::error_code  get(void*dst, const void*) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             *(T*) dst   = *m_data;
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the data
@@ -94,7 +96,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo print function returned true
         */
-        virtual bool            print(Stream&str, const void*) const override
+        virtual std::error_code     print(Stream&str, const void*) const override
         {
             return TypeInfo::print(*m_data, str);
         }
@@ -104,7 +106,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo write function returned true
         */
-        virtual bool            write(Stream&str, const void*) const override
+        virtual std::error_code      write(Stream&str, const void*) const override
         {
             return TypeInfo::write(*m_data, str);
         }
@@ -141,11 +143,13 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return Always TRUE
         */
-        virtual bool    get(void* dst, const void*) const  override
+        virtual std::error_code    get(void* dst, const void*) const  override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             *(T*) dst   = std::move(m_function());
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the data
@@ -153,7 +157,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo print function returned true
         */
-        virtual bool            print(Stream&str, const void*) const override
+        virtual std::error_code     print(Stream&str, const void*) const override
         {
             return TypeInfo::print(m_function(), str);
         }
@@ -163,7 +167,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo write function returned true
         */
-        virtual bool            write(Stream&str, const void*) const override
+        virtual std::error_code     write(Stream&str, const void*) const override
         {
             return TypeInfo::write(m_function(), str);
         }
@@ -200,11 +204,13 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return Always TRUE
         */
-        virtual bool    get(void* dst, const void*) const  override
+        virtual std::error_code    get(void* dst, const void*) const  override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             *(T*) dst   = m_function();
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the data
@@ -212,7 +218,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo print function returned true
         */
-        virtual bool            print(Stream&str, const void*) const override
+        virtual std::error_code print(Stream&str, const void*) const override
         {
             return TypeInfo::print(m_function(), str);
         }
@@ -222,7 +228,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo write function returned true
         */
-        virtual bool            write(Stream&str, const void*) const override
+        virtual std::error_code write(Stream&str, const void*) const override
         {
             return TypeInfo::write(m_function(), str);
         }
@@ -260,11 +266,13 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return Always TRUE
         */
-        virtual bool    get(void* dst, const void*) const  override
+        virtual std::error_code get(void* dst, const void*) const  override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             *(T*) dst   = m_function();
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the data
@@ -272,7 +280,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo print function returned true
         */
-        virtual bool            print(Stream&str, const void*) const override
+        virtual std::error_code print(Stream&str, const void*) const override
         {
             return TypeInfo::print(m_function(), str);
         }
@@ -282,7 +290,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo write function returned true
         */
-        virtual bool            write(Stream&str, const void*) const override
+        virtual std::error_code write(Stream&str, const void*) const override
         {
             return TypeInfo::write(m_function(), str);
         }
@@ -320,11 +328,13 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return Always TRUE
         */
-        virtual bool            get(void* dst, const void*) const override
+        virtual std::error_code get(void* dst, const void*) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             m_function(*(T*) dst);
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the data
@@ -332,7 +342,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo print function returned true
         */
-        virtual bool            print(Stream&str, const void*) const override
+        virtual std::error_code print(Stream&str, const void*) const override
         {
             T   tmp;
             m_function(tmp);
@@ -344,7 +354,7 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the TypeInfo write function returned true
         */
-        virtual bool            write(Stream&str, const void*) const override
+        virtual std::error_code write(Stream&str, const void*) const override
         {
             T   tmp;
             m_function(tmp);
@@ -384,10 +394,13 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the function returns true
         */
-        virtual bool    get(void* dst, const void*) const override
+        virtual std::error_code get(void* dst, const void*) const override
         {
-            assert(dst);
-            return m_function(*(T*) dst);
+            if(!dst)
+                return errors::null_destination();
+            if(!m_function(*(T*) dst))
+                return errors::getter_failed();
+            return std::error_code();
         }
 
         /*! \brief Prints the data
@@ -395,11 +408,11 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the getter function AND TypeInfo print function returned true
         */
-        virtual bool            print(Stream&str, const void*) const override
+        virtual std::error_code print(Stream&str, const void*) const override
         {
             T   tmp;
             if(!m_function(tmp))
-                return false;
+                return errors::getter_failed();
             return TypeInfo::print(tmp, str);
         }
         
@@ -408,15 +421,82 @@ namespace yq {
             \note The const void* object pointer is ignored.
             \return TRUE if the getter function AND TypeInfo write function returned true
         */
-        virtual bool            write(Stream&str, const void*) const override
+        virtual std::error_code write(Stream&str, const void*) const override
         {
             T   tmp;
             if(!m_function(tmp))
-                return false;
+                return errors::getter_failed();
             return TypeInfo::print(tmp, str);
         }
 
         FN      m_function;
     };
     
+    /*! \brief Variable getter using function
+    
+        This implements the variable by ways of a function pointer.
+    */
+    template <typename T>
+    class XFER_PropGetter : public StaticPropGetter<T> {
+    public:
+
+        //! Function pointer
+        typedef std::error_code (*FN)(T&);
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
+        XFER_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
+        {
+            assert(function);
+        }
+        
+    private:
+
+        /*! \brief Gets the data
+            \param[out] dst Pointer to the destination data, must be valid
+            \note The const void* object pointer is ignored.
+            \return TRUE if the function returns true
+        */
+        virtual std::error_code get(void* dst, const void*) const override
+        {
+            if(!dst)
+                return errors::null_destination();
+            return m_function(*(T*) dst);
+        }
+
+        /*! \brief Prints the data
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the getter function AND TypeInfo print function returned true
+        */
+        virtual std::error_code print(Stream&str, const void*) const override
+        {
+            T   tmp;
+            std::error_code ec = m_function(tmp);
+            if(ec != std::error_code())
+                return ec;
+            return TypeInfo::print(tmp, str);
+        }
+        
+        /*! \brief Writes the data for data I/O purposes
+            \param[out] str Stream to print to.
+            \note The const void* object pointer is ignored.
+            \return TRUE if the getter function AND TypeInfo write function returned true
+        */
+        virtual std::error_code write(Stream&str, const void*) const override
+        {
+            T   tmp;
+            std::error_code ec = m_function(tmp);
+            if(ec != std::error_code())
+                return ec;
+            return TypeInfo::print(tmp, str);
+        }
+
+        FN      m_function;
+    };
 }

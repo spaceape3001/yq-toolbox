@@ -21,21 +21,8 @@ namespace yq {
         class Static;
 
         template <typename C> class Dynamic;
-    
-        //! All methods for this info
-        const auto&             methods() const { return m_methods; }
-        
-        //! All properties
-        const auto&             properties() const { return m_properties; }
-    
+
     protected:
-        friend class Global;
-        
-        //! Lookup/Container for the methods
-        LUC<MethodInfo>         m_methods;
-        
-        //! Lookup/Container for the properties
-        LUC<PropertyInfo>       m_properties;
         
         //! Constructor
         //! \param[in] zName    The name of the object
@@ -55,6 +42,7 @@ namespace yq {
 
         //! Used to gather the properties from the children meta
         void        gather(LUC<PropertyInfo>&);
+        
 
     };
 }

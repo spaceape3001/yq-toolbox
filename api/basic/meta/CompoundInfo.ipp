@@ -38,4 +38,5 @@ namespace yq {
                 res << static_cast<const PropertyInfo*>(m);
         }
     }
+
 }

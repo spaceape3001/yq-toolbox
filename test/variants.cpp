@@ -20,7 +20,7 @@ bool    string_test(const char* z)
 int    parse_int(int n)
 {
     std::string     z   = to_string(n);
-    Any v   = Any::parse_me(meta<int>(), z);
+    auto [ v, ec ]   = Any::parse_me(meta<int>(), z);
     return v.value<int>();
 }
 

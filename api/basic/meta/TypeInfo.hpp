@@ -7,6 +7,7 @@
 #pragma once
 #include <basic/meta/InfoBinder.hpp>
 #include <basic/meta/CompoundInfo.hpp>
+#include <basic/Errors.hpp>
 #include <basic/preamble.hpp>
 #include <unordered_map>
 
@@ -86,7 +87,7 @@ namespace yq {
             
         */
         template <typename T>
-        static bool parse(T&data, std::string_view str);
+        static std::error_code parse(T&data, std::string_view str);
         
         /*! \brief Writing helper
         
@@ -98,7 +99,7 @@ namespace yq {
             \return TRUE if successful (ie, type is registered with formatting function.
         */
         template <typename T>
-        static bool write(const T&data, Stream&str);
+        static std::error_code write(const T&data, Stream&str);
         
         /*! \brief Printing helper
         
@@ -110,7 +111,7 @@ namespace yq {
             \return TRUE if successful (ie, type is registered with formatting function.
         */
         template <typename T>
-        static bool print(const T&data, Stream&str);
+        static std::error_code print(const T&data, Stream&str);
         
     protected:
     
@@ -134,7 +135,7 @@ namespace yq {
         virtual void    sweep_impl() override;
 
         //! Function to convert between types
-        typedef void        (*FNConvert)(void*, const void*);
+        typedef std::error_code  (*FNConvert)(void*, const void*);
         
         //! Function to copy the data, block to block
         typedef void        (*FNCopyBlkBlk)(DataBlock&, const DataBlock&);
@@ -163,19 +164,19 @@ namespace yq {
         //! Function to format to stream
         typedef void        (*FNFormat)(Stream&, const void*);
         //! Function to parse from string
-        typedef bool        (*FNParse)(void*, const std::string_view&);
+        typedef std::error_code  (*FNParse)(void*, const std::string_view&);
 
         //! Function to write to XML
         typedef void        (*FNXmlBaseWrite)(XmlBase*, const void*);
         
         //! Function to read from XML
-        typedef bool        (*FNXmlBaseRead)(void*, const XmlBase*);
+        typedef std::error_code  (*FNXmlBaseRead)(void*, const XmlBase*);
 
         //! Function to write to XML Node
         typedef void        (*FNXmlNodeWrite)(XmlNode*, const void*);
         
         //! Function to read from XML Node
-        typedef bool        (*FNXmlNodeRead)(void*, const XmlNode*);
+        typedef std::error_code (*FNXmlNodeRead)(void*, const XmlNode*);
 
         //! Converter hash
         using ConvertHash   = Hash<const TypeInfo*, FNConvert>;
@@ -276,35 +277,35 @@ namespace yq {
     }
 
     template <typename T>
-    bool TypeInfo::parse(T&value, std::string_view sv)
+    std::error_code TypeInfo::parse(T&value, std::string_view sv)
     {
         static_assert( is_defined_v<T>, "T must be meta-type capable!");
         const TypeInfo& ti  = meta<T>();
-        if(ti.m_parse)
-            return ti.m_parse(&value, sv);
-        return false;
+        if(!ti.m_parse)
+            return errors::no_handler();
+        return ti.m_parse(&value, sv);
     }
 
     template <typename T>
-    bool TypeInfo::print(const T&value, Stream&str)
+    std::error_code TypeInfo::print(const T&value, Stream&str)
     {
         static_assert( is_defined_v<T>, "T must be meta-type capable!");
         const TypeInfo& ti  = meta<T>();
         if(!ti.m_print)
-            return false;
+            return errors::no_handler();
         ti.m_print(str, &value);
-        return true;
+        return {};
     }
 
     template <typename T>
-    bool TypeInfo::write(const T&value, Stream&str)
+    std::error_code TypeInfo::write(const T&value, Stream&str)
     {
         static_assert( is_defined_v<T>, "T must be meta-type capable!");
         const TypeInfo& ti  = meta<T>();
         if(!ti.m_write)
-            return false;
+            return errors::no_handler();
         ti.m_write(str, &value);
-        return true;
+        return {};
     }
     
     

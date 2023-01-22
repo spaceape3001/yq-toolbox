@@ -12,9 +12,10 @@ endmacro()
 
 toolbox_test(diffengine)
 toolbox_test(encode64)
+toolbox_test(globals)
 toolbox_test(http)
-toolbox_test(strings)
 toolbox_test(refs)
+toolbox_test(strings)
 toolbox_test(variants)
 
 toolbox_test(fraction)

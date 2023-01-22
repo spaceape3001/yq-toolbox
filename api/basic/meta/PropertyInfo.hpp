@@ -42,28 +42,29 @@ namespace yq {
         
         //! Gets the property/variable
         //! \param[in]  pointer Pointer to the object (can be null for statics)
-        Any                 get(const void* obj) const;
+        any_error_t         get(const void* obj) const;
         
         //! Write for saving
         //!
         //! \param[in]  pointer Pointer to the object (can be null for statics)
         //! \param[out]  str     Stream to write to
-        bool                write(const void* obj, Stream&str) const;
+        std::error_code     write(const void* obj, Stream&str) const;
         
         //! Write for printing
         //!
         //! \param[in]      pointer Pointer to the object (can be null for statics)
         //! \param[in,out]  str     Stream to write to
-        bool                print(const void*, Stream&) const;
+        std::error_code     print(const void*, Stream&) const;
         
         //! Sets the property with Any
         //! \param[in,out]  pointer Pointer to the object (can be null for statics)
         //! \param[in]      value   Any value to assign to the property
-        bool                set(void*obj, const Any&value) const;
+        std::error_code     set(void*obj, const Any&value) const;
+        
         //! Sets the property with string
         //! \param[in,out]  pointer Pointer to the object (can be null for statics)
         //! \param[in]      value   String value to assign to the property
-        bool                set(void*obj, std::string_view value) const;
+        std::error_code     set(void*obj, std::string_view value) const;
         
         //! Our getter
         const PropGetter*   getter() const { return m_getter; }
@@ -81,6 +82,8 @@ namespace yq {
         //! A global or static is one that lives outside a particular object, but is instead defined singularly
         //! For the entire application
         bool                is_static() const;
+        
+        bool                is_const() const { return flags() & CONST; }
 
             // best know what you're doing....
             

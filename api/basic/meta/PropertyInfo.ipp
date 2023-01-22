@@ -5,13 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <basic/meta/PropertyInfo.hpp>
-#include <basic/meta/Global.hpp>
+#include <basic/meta/GlobalInfo.hpp>
 #include <basic/meta/ObjectInfo.hpp>
 #include <basic/meta/TypeInfo.hpp>
 #include <basic/meta/PropGetter.hpp>
 #include <basic/meta/PropSetter.hpp>
 
 #include <basic/Any.hpp>
+#include <basic/Errors.hpp>
 #include <basic/Logging.hpp>
 #include <cassert>
 
@@ -43,14 +44,16 @@ namespace yq {
         }
     }
 
-    Any     PropertyInfo::get(const void* obj) const
+    any_error_t     PropertyInfo::get(const void* obj) const
     {
-        if(m_getter){
-            Any ret(m_type);
-            if(m_getter -> get(ret.raw_ptr(), obj))
-                return ret;
-        }
-        return Any();
+        if(!m_getter)
+            return { Any(), errors::no_getter() };
+        
+        Any ret(m_type);
+        std::error_code     ec  = m_getter -> get(ret.raw_ptr(), obj);
+        if(ec != std::error_code())
+            return { Any(), ec };
+        return { ret, ec };
     }
 
     bool        PropertyInfo::is_state() const
@@ -63,37 +66,39 @@ namespace yq {
         return static_cast<bool>(flags() & STATIC);
     }
     
-    bool        PropertyInfo::print(const void*obj, Stream&str) const
+    std::error_code PropertyInfo::print(const void*obj, Stream&str) const
     {
-        if(m_getter)
-            return m_getter -> print(str, obj);
-        return false;
+        if(!m_getter)
+            return errors::no_getter();
+        return m_getter -> print(str, obj);
     }
 
-    bool        PropertyInfo::set(void* obj, const Any&var) const
+    std::error_code PropertyInfo::set(void* obj, const Any&var) const
     {
         if(!m_setter)
-            return false;
+            return errors::no_setter();
         if(var.type().id() == m_type.id())
             return m_setter -> set(obj, var.raw_ptr());
-        Any v2  = var.convert(m_type);
-        if(v2.is_valid())
-            return m_setter -> set(obj, v2.raw_ptr());
-        return false;
+        auto [v2, ec]  = var.convert(m_type);
+        if(!v2.is_valid())
+            return errors::incompatible_types();
+        if( ec != std::error_code())
+            return ec;
+        return m_setter -> set(obj, v2.raw_ptr());
     }
 
-    bool    PropertyInfo::set(void* obj, std::string_view var) const
+    std::error_code PropertyInfo::set(void* obj, std::string_view var) const
     {
-        if(m_setter)
-            return m_setter -> set(obj, var);
-        return false;
+        if(!m_setter)
+            return errors::no_setter();
+        return m_setter -> set(obj, var);
     }
 
-    bool        PropertyInfo::write(const void*obj, Stream&str) const
+    std::error_code PropertyInfo::write(const void*obj, Stream&str) const
     {
-        if(m_getter)
-            return m_getter -> write(str, obj);
-        return false;
+        if(!m_getter)
+            return errors::no_getter();
+        return m_getter -> write(str, obj);
     }
         
 

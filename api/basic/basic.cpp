@@ -4,6 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <basic/Errors.ipp>
+
+#include "Global.ipp"
+
 #include "Created.hpp"
 
 #include "AbstractFile.ipp"
@@ -50,7 +54,7 @@
 
 #include "meta/ArgInfo.ipp"
 #include "meta/CompoundInfo.ipp"
-#include "meta/Global.ipp"
+#include "meta/GlobalInfo.ipp"
 #include "meta/Meta.ipp"
 #include "meta/MetaRepo.ipp"
 #include "meta/MetaWriter.ipp"

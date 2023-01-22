@@ -9,7 +9,7 @@
 #include <basic/meta/InfoBinder.hpp>
 #include <basic/meta/CompoundInfoDynamic.hpp>
 #include <basic/meta/CompoundInfoStatic.hpp>
-#include <basic/meta/Global.hpp>
+#include <basic/meta/GlobalInfo.hpp>
 #include <basic/meta/GlobalInfoWriter.hpp>
 #include <basic/meta/MetaWriter.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>

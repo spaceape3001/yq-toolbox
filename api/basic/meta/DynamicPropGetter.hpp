@@ -81,12 +81,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            get(void*dst, const void*obj) const override
+        virtual std::error_code get(void*dst, const void*obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (((const C*) obj)->*m_data);
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the object's value to the given stream.
@@ -94,11 +99,13 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print(((const C*) obj)->*m_data, str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+
+            return TypeInfo::print(((const C*) obj)->*m_data, str);
         }
         
         /*! \brief Writes the object's value to the given stream.
@@ -106,11 +113,13 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write(((const C*) obj)->*m_data, str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+
+            return TypeInfo::write(((const C*) obj)->*m_data, str);
         }
         
         P       m_data;
@@ -146,12 +155,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (((const C*) obj)->*m_function)();
-            return true;
+            return std::error_code();
         }
 
         /*! \brief Prints the object's property to the given stream.
@@ -159,11 +173,13 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((((const C*) obj)->*m_function)(), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+
+            return TypeInfo::print((((const C*) obj)->*m_function)(), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -171,11 +187,13 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((((const C*) obj)->*m_function)(), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+
+            return TypeInfo::write((((const C*) obj)->*m_function)(), str);
         }
         
         FN      m_function;
@@ -210,12 +228,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (((const C*) obj)->*m_function)();
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -223,11 +246,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((((const C*) obj)->*m_function)(), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::print((((const C*) obj)->*m_function)(), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -235,11 +259,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((((const C*) obj)->*m_function)(), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::write((((const C*) obj)->*m_function)(), str);
         }
 
         FN      m_function;
@@ -275,12 +300,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             (((const C*) obj)->*m_function)(*(T*) dst);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -288,13 +318,15 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   data;
             (((const C*) obj)->*m_function)(data);
-            TypeInfo::print(data, str);
-            return true;
+            return TypeInfo::print(data, str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -302,13 +334,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
             T   data;
             (((const C*) obj)->*m_function)(data);
-            TypeInfo::write(data, str);
-            return true;
+            return TypeInfo::write(data, str);
         }
 
         FN      m_function;
@@ -344,11 +375,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
-            return (((const C*) obj)->*m_function)(*(T*) dst);
+            if(!obj)
+                return errors::null_object();
+            if(!(((const C*) obj)->*m_function)(*(T*) dst))
+                return errors::getter_failed();
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -356,14 +393,16 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   data;
             if(!(((const C*) obj)->*m_function)(data))
-                return false;
-            TypeInfo::print(data, str);
-            return true;
+                return errors::getter_failed();
+            return TypeInfo::print(data, str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -371,14 +410,16 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             T   data;
             if(!(((const C*) obj)->*m_function)(data))
-                return false;
-            TypeInfo::write(data, str);
-            return true;
+                return errors::getter_failed();
+            return TypeInfo::write(data, str);
         }
 
         FN      m_function;
@@ -412,12 +453,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (*m_function)(*(const C*) obj);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -425,11 +471,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::print((*m_function)(*(const C*) obj), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -437,11 +484,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::write((*m_function)(*(const C*) obj), str);
         }
 
         FN      m_function;
@@ -475,12 +523,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (*m_function)(*(const C*) obj);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -488,11 +541,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::print((*m_function)(*(const C*) obj), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -500,11 +554,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::write((*m_function)(*(const C*) obj), str);
         }
 
         FN      m_function;
@@ -538,12 +593,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (*m_function)(*(const C*) obj);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -551,11 +611,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::print((*m_function)(*(const C*) obj), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -563,11 +624,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::write((*m_function)(*(const C*) obj), str);
         }
 
         FN      m_function;
@@ -601,12 +663,17 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool        get(void* dst, const void* obj) const override
+        virtual std::error_code get(void* dst, const void* obj) const override
         {
             assert(dst);
+            if(!dst)
+                return errors::null_destination();
             assert(obj);
+            if(!obj)
+                return errors::null_object();
+
             *(T*) dst   = (*m_function)(*(const C*) obj);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Prints the object's property to the given stream.
@@ -614,11 +681,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            print(Stream&str, const void*obj) const override
+        virtual std::error_code print(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::print((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::print((*m_function)(*(const C*) obj), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -626,11 +694,12 @@ namespace yq {
             \param[in]  obj Object pointer, assumed to be mapped correctly
             \return TRUE (always)
         */
-        virtual bool            write(Stream&str, const void*obj) const override
+        virtual std::error_code write(Stream&str, const void*obj) const override
         {
             assert(obj);
-            TypeInfo::write((*m_function)(*(const C*) obj), str);
-            return true;
+            if(!obj)
+                return errors::null_object();
+            return TypeInfo::write((*m_function)(*(const C*) obj), str);
         }
 
         FN      m_function;

@@ -61,7 +61,10 @@ namespace yq {
             define_signature<R,Args...>();
         }
 
-        struct Writer;
+        void            _invoke(void* res, void* obj, const void** args) const override final
+        {
+            // TODO
+        }
 
     private:
         FN      m_function;
@@ -90,7 +93,10 @@ namespace yq {
             define_signature<R,Args...>();
         }
 
-        struct Writer;
+        void            _invoke(void* res, void* obj, const void** args) const override final
+        {
+            // TODO
+        }
 
     private:
         FN      m_function;
@@ -118,6 +124,11 @@ namespace yq {
             MethodInfo(zName, sl, parent, opts), m_function(function)
         {
             define_signature<R,Args...>();
+        }
+
+        void            _invoke(void* res, void* obj, const void** args) const override final
+        {
+            // TODO
         }
 
     private:

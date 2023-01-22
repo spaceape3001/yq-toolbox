@@ -20,11 +20,13 @@ namespace yq {
     }
 
 
-    Any      Any::parse_me(const TypeInfo& ti, const std::string_view&txt)
+    any_error_t  Any::parse_me(const TypeInfo& ti, std::string_view txt)
     {
         Any ret;
-        bool    f   = ret.parse(ti, txt);
-        return f ? ret : Any();
+        std::error_code ec   = ret.parse(ti, txt);
+        if( ec != std::error_code())
+            ret = Any();
+        return { ret, ec };
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -195,26 +197,28 @@ namespace yq {
     }
     
 
-    Any         Any::convert(const TypeInfo& newType) const
+    any_error_t     Any::convert(const TypeInfo& newType) const
     {
         assert(m_type);
-
+        if(!m_type)
+            return { Any(), errors::null_any_type() };
+            
         if(&newType == m_type)
-            return *this;
+            return { *this, {} };
         if(&newType == &invalid())
-            return Any();
-        if(m_type == &invalid())
-            return Any();
+            return { Any(), {} };
         if(&newType == &any())
-            return *this;
+            return { *this, {} };
+        if(m_type == &invalid())
+            return { Any(), errors::invalid_conversion() };;
             
         auto fn = m_type -> m_convert.get(&newType, nullptr);
         if(!fn)
-            return Any();
+            return { Any(), errors::no_conversion_handler() };
         
         Any ret(newType);
-        fn(ret.raw_ptr(), raw_ptr());
-        return ret;
+        std::error_code ec = fn(ret.raw_ptr(), raw_ptr());
+        return { ret, ec };
     }
 
 
@@ -223,9 +227,12 @@ namespace yq {
         return m_type && (m_type != &invalid());
     }
 
-    bool            Any::parse(const TypeInfo&newType, const std::string_view&txt)
+    std::error_code Any::parse(const TypeInfo&newType, const std::string_view&txt)
     {   
         assert(m_type);
+        if(!m_type)
+            return errors::null_any_type();
+        
         if(&newType != m_type){
             assert(good(newType));
             assert(m_type->m_dtor);
@@ -234,18 +241,21 @@ namespace yq {
         }
         
         (m_type->m_ctorCopyB)(m_data, m_type->m_default);
+        if(!(m_type->m_parse))
+            return errors::no_handler();
         return (m_type->m_parse)(raw_ptr(), txt);
     }
     
 
-    bool            Any::print(Stream& str) const
+    std::error_code Any::print(Stream& str) const
     {
         assert(m_type);
-        if(m_type->m_print){
-            (m_type->m_print)(str, raw_ptr());
-            return true;
-        }
-        return false;
+        if(!m_type)
+            return errors::null_any_type();
+        if(!(m_type->m_print))
+            return errors::no_print_handler();
+        (m_type->m_print)(str, raw_ptr());
+        return std::error_code();
     }
 
     std::string          Any::printable() const
@@ -286,14 +296,15 @@ namespace yq {
             m_type -> m_ctorCopyB(m_data, m_type->m_default);
     }
 
-    bool        Any::write(Stream&str) const
+    std::error_code Any::write(Stream&str) const
     {
         assert(m_type);
-        if(m_type -> m_write){
-            (m_type->m_write)(str, raw_ptr());
-            return true;
-        }
-        return false;
+        if(!m_type)
+            return errors::null_any_type();
+        if(!(m_type -> m_write))
+            return errors::no_write_handler();
+        (m_type->m_write)(str, raw_ptr());
+        return std::error_code();
     }
     
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

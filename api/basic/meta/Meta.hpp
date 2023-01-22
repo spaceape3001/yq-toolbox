@@ -80,6 +80,7 @@ namespace yq {
         LESS            = 1ULL << 30, //!< Can compare
         TODO            = 1ULL << 40,
         ABSTRACT        = 1ULL << 41,
+        CONST           = 1ULL << 42, //!< Method/property is CONSTANT/READONLY
 
         LOCAL_ONLY      = 1ULL << 56,
         LOGIN_REQ       = 1ULL << 57,
@@ -179,10 +180,10 @@ namespace yq {
         const Meta*                     parent() const { return m_parent; }
 
         //! \brief Source location of this definition
-        const std::source_location& source() const { return m_source; }
+        const std::source_location&     source() const { return m_source; }
         
         //  TODO
-        const Any&                  tag(std::string_view) const;
+        const Any&                      tag(std::string_view) const;
         
         //! \brief Marked as "TODO" on this object (reminder for future work)
         bool                            todo() const { return (m_flags&TODO) != 0; }

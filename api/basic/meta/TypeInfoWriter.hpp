@@ -274,8 +274,9 @@ namespace yq {
         {
             static_assert( is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = U( *(const T*) src);
+                    return std::error_code();
                 };
             }
         }
@@ -288,8 +289,9 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = FN( *(const T*) src);
+                    return std::error_code();
                 };
             }
         }
@@ -303,8 +305,9 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = FN( *(const T*) src);
+                    return std::error_code();
                 };
             }
         }
@@ -318,8 +321,9 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src)  -> std::error_code {
                     FN(*(U*) dst,  *(const T*) src);
+                    return std::error_code();
                 };
             }
         }
@@ -355,7 +359,21 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> bool {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    if(! FN(*(T*) dst, src))
+                        return errors::parser_failed();
+                    return std::error_code();
+                };
+            }
+        }
+
+        /*! \brief Registers IO stream parsing handler
+        */
+        template <std::error_code (*FN)(T&, const std::string_view&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(*(T*) dst, src);
                 };
             }
@@ -367,7 +385,19 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> bool {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    return FN(src, *(T*) dst) ? std::error_code() : errors::parser_failed();
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
+        template <std::error_code (*FN)(const std::string_view&, T&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(src, *(T*) dst);
                 };
             }
@@ -379,10 +409,24 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> bool {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     Result<T>   r   = FN(src);
                     *(T*) dst = std::move(r.value);
-                    return r.good;
+                    return r.good ? std::error_code() : errors::parser_failed();
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
+        template <std::pair<T,std::error_code> (*FN)(const std::string_view&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    auto [ data, ec ] = FN(src);
+                    *(T) dst = std::move(data);
+                    return ec;
                 };
             }
         }

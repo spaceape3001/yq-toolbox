@@ -56,7 +56,7 @@ namespace yq {
     }
 
     template <typename T>
-    Any     Any::convert() const
+    any_error_t     Any::convert() const
     {
         static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
         return convert_to(meta<T>());
@@ -111,17 +111,17 @@ namespace yq {
         }
     }
 
-    inline void    Any::set(const std::string_view&cp)
+    inline void    Any::set(std::string_view cp)
     {
         static const TypeInfo*  mtString    = &meta<std::string>();
         m_data.reference<std::string>() = std::string(cp);
         m_type  = mtString;
     }
 
-    inline void    Any::set(std::string_view&&cp)
+    inline void    Any::set(std::string&&mv)
     {
         static const TypeInfo*  mtString    = &meta<std::string>();
-        m_data.reference<std::string>() = std::string(cp);
+        m_data.reference<std::string>() = std::move(mv);
         m_type  = mtString;
     }
 

@@ -7,6 +7,7 @@
 #pragma once
 #include <basic/meta/Meta.hpp>
 #include <basic/meta/ArgInfo.hpp>
+#include <span>
 
 namespace yq {
     class MethodInfo : public Meta {
@@ -24,8 +25,13 @@ namespace yq {
         const ArgInfo*          result() const { return m_result; }
     
         //! Invoke with flexibility if the any can convert to the appropriate type
-        //virtual bool            invoke(Any& res, void* obj, const std::vector<Any>&args) const = 0;
+        any_error_t             invoke(void* obj, std::span<Any> args) const ;
     
+        //! TRUE if this is a const method
+        bool                    is_const() const { return flags() & CONST; }
+        
+        bool                    is_static() const { return flags() & STATIC; }
+
     private:
         const ArgInfo*              m_result;
         std::vector<const ArgInfo*> m_args;
@@ -39,7 +45,7 @@ namespace yq {
             \param[in]      obj     Pointer to the object
             \param[in]      args    Pointer to the arguments
         */
-        virtual bool            _invoke(void* res, void* obj, const void** args) const = 0;
+        virtual void            _invoke(void* res, void* obj, const void** args) const = 0;
         
         template <typename...> struct DefineArg;
         template <typename R, typename...> void define_signature(options_t options=0);

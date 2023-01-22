@@ -79,18 +79,21 @@ namespace yq {
             \param[in] The value to set to (assumed to be of the correct type)
             \return TRUE
         */
-        virtual bool            set(void*, const void*value) const override
+        virtual std::error_code set(void*, const void*value) const override
         {
             assert(value);
+            if(!value)
+                return errors::null_value();
+
             *m_data = *(const T*) value;
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Sets the variable from the string value
             \param[in] The string value to set to
             \return TRUE if the parsing succeeds
         */
-        virtual bool            set(void*, std::string_view value) const override
+        virtual std::error_code set(void*, std::string_view value) const override
         {
             return TypeInfo::parse(*m_data, value);
         }
@@ -127,24 +130,28 @@ namespace yq {
             \param[in] The value to set to (assumed to be of the correct type)
             \return TRUE
         */
-        virtual bool            set(void*, const void*value) const override
+        virtual std::error_code set(void*, const void*value) const override
         {
             assert(value);
+            if(!value)
+                return errors::null_value();
+
             (*m_function)(*(const T*) value);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Sets the variable from the string value
             \param[in] The string value to set to
             \return TRUE if the parsing succeeds
         */
-        virtual bool            set(void*, std::string_view value) const override
+        virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
+            std::error_code  ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
             (*m_function)(tmp);
-            return true;
+            return std::error_code();
         }
 
         FN      m_function;
@@ -178,9 +185,70 @@ namespace yq {
             \param[in] The value to set to (assumed to be of the correct type)
             \return TRUE if the setter function returns true
         */
-        virtual bool            set(void*, const void*value) const override
+        virtual std::error_code set(void*, const void*value) const override
         {
             assert(value);
+            if(!value)
+                return errors::null_value();
+
+            if((*m_function)(*(const T*) value))
+                return errors::setter_failed();
+            return std::error_code();
+        }
+        
+        /*! \brief Sets the variable from the string value
+            \param[in] The string value to set to
+            \return TRUE if the parsing and setter succeed
+        */
+        virtual std::error_code set(void*, std::string_view value) const override
+        {
+            T   tmp;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
+            if(!(*m_function)(tmp))
+                return errors::setter_failed();
+            return std::error_code();
+        }
+
+        FN      m_function;
+    };
+
+
+    /*! \brief Setter using a function
+    
+        This uses the given function to "set" the variable.
+    */
+    template <typename T>
+    class XFEV_PropSetter : public StaticPropSetter<T> {
+    public:
+        //! Function pointer
+        typedef std::error_code (*FN)(T);
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
+        XFEV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropSetter<T>(propInfo, sl), m_function(function) 
+        {
+            assert(function);
+        }
+        
+    private:
+
+        /*! \brief Sets the variable from the value
+            \param[in] The value to set to (assumed to be of the correct type)
+            \return TRUE if the setter function returns true
+        */
+        virtual std::error_code set(void*, const void*value) const override
+        {
+            assert(value);
+            if(!value)
+                return errors::null_value();
+
             return (*m_function)(*(const T*) value);
         }
         
@@ -188,17 +256,18 @@ namespace yq {
             \param[in] The string value to set to
             \return TRUE if the parsing and setter succeed
         */
-        virtual bool            set(void*, std::string_view value) const override
+        virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
             return (*m_function)(tmp);
         }
 
         FN      m_function;
     };
-
+    
     /*! \brief Setter using a function
     
         This uses the given function to "set" the variable.
@@ -226,24 +295,28 @@ namespace yq {
             \param[in] The value to set to (assumed to be of the correct type)
             \return TRUE
         */
-        virtual bool            set(void*, const void*value) const override
+        virtual std::error_code set(void*, const void*value) const override
         {
             assert(value);
+            if(!value)
+                return errors::null_value();
+
             (*m_function)(*(const T*) value);
-            return true;
+            return std::error_code();
         }
         
         /*! \brief Sets the variable from the string value
             \param[in] The string value to set to
             \return TRUE if the parsing succeeds
         */
-        virtual bool            set(void*, std::string_view value) const override
+        virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
             (*m_function)(tmp);
-            return true;
+            return std::error_code();
         }
 
         FN      m_function;
@@ -278,9 +351,69 @@ namespace yq {
             \param[in] The value to set to (assumed to be of the correct type)
             \return TRUE if the setter function returns true
         */
-        virtual bool            set(void*, const void*value) const override
+        virtual std::error_code set(void*, const void*value) const override
         {
             assert(value);
+            if(!value)
+                return errors::null_value();
+
+            if(! (*m_function)(*(const T*) value))
+                return errors::setter_failed();
+            return std::error_code();
+        }
+        
+        /*! \brief Sets the variable from the string value
+            \param[in] The string value to set to
+            \return TRUE if the parsing and setter succeed
+        */
+        virtual std::error_code set(void*, std::string_view value) const override
+        {
+            T   tmp;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
+            if(! (*m_function)(tmp))
+                return errors::setter_failed();
+            return std::error_code();
+        }
+
+        FN      m_function;
+    };
+
+    /*! \brief Setter using a function
+    
+        This uses the given function to "set" the variable.
+    */
+    template <typename T>
+    class XFER_PropSetter : public StaticPropSetter<T> {
+    public:
+    
+        //! Function pointer
+        typedef std::error_code (*FN)(const T&);
+
+        /*! \brief Constructor
+        
+            \note Don't use, let the helpers maintain this.
+            \param[in] propInfo Property information
+            \param[in] sl       Source location
+            \param[in] function Function pointer
+        */
+        XFER_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropSetter<T>(propInfo, sl), m_function(function) 
+        {
+            assert(function);
+        }
+    
+    private:        
+        /*! \brief Sets the variable from the value
+            \param[in] The value to set to (assumed to be of the correct type)
+            \return TRUE if the setter function returns true
+        */
+        virtual std::error_code set(void*, const void*value) const override
+        {
+            assert(value);
+            if(!value)
+                return errors::null_value();
+
             return (*m_function)(*(const T*) value);
         }
         
@@ -288,11 +421,12 @@ namespace yq {
             \param[in] The string value to set to
             \return TRUE if the parsing and setter succeed
         */
-        virtual bool            set(void*, std::string_view value) const override
+        virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            if(!TypeInfo::parse(tmp, value))
-                return false;
+            std::error_code ec = TypeInfo::parse(tmp, value);
+            if(ec != std::error_code())
+                return ec;
             return (*m_function)(tmp);
         }
 
