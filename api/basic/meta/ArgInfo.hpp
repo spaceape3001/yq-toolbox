@@ -18,9 +18,10 @@ namespace yq {
         
         template <typename T> class Typed;
     
+    protected:
+        ArgInfo(const std::source_location& sl, const Meta&, Meta*, options_t opts);
+        
     private:
-        ArgInfo(const std::source_location& sl, const Meta&, Meta*);
-
         const Meta&     m_type;
         DataBlock       m_defaultData;
         const void*     m_default;

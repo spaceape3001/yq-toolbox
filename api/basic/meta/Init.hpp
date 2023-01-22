@@ -12,6 +12,7 @@
 #include <basic/meta/GlobalInfo.hpp>
 #include <basic/meta/GlobalInfoWriter.hpp>
 #include <basic/meta/MetaWriter.hpp>
+#include <basic/meta/MethodInfoWriter.hpp>
 #include <basic/meta/ObjectInfoWriter.hpp>
 #include <basic/meta/PropertyInfoWriter.hpp>
 #include <basic/meta/TypeInfoWriter.hpp>

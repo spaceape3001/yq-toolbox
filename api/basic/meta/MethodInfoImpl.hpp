@@ -14,16 +14,17 @@ namespace yq {
 
     template <typename...> 
     struct MethodInfo::DefineArg {
-        void    define(const std::source_location&, Meta*, options_t options)
+        static void    define(const std::source_location&, Meta*, options_t options)
         {
         }
     };
     
     template <typename T, typename... Args> 
     struct MethodInfo::DefineArg<T, Args...> {
-        void    define(const std::source_location&sl, Meta*parent, options_t options)
+        static void    define(const std::source_location&sl, Meta*parent, options_t options)
         {
-            m_args.push_back( new ArgInfo::Typed<T>(sl, parent, options));
+            using act_type  = std::remove_cvref_t<T>;
+            static_cast<MethodInfo*>(parent)->m_args.push_back( new ArgInfo::Typed<act_type>(sl, parent, options));
             DefineArg<Args...>::define(sl, parent, options);
         }
     };

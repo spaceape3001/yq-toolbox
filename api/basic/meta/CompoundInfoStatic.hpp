@@ -33,11 +33,14 @@ namespace yq {
         PropertyInfo::Writer<T>       variable(std::string_view szName, T* pointer, bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
-            new XPV_PropGetter<T>(ret, sl, pointer);
-            if(!isReadOnly)
-                new XPV_PropSetter<T>(ret, sl, pointer);
-            return PropertyInfo::Writer<T>{ret};
+            if(pointer && Meta::Writer::m_meta && thread_safe_write()){
+                PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                new XPV_PropGetter<T>(ret, sl, pointer);
+                if(!isReadOnly)
+                    new XPV_PropSetter<T>(ret, sl, pointer);
+                return PropertyInfo::Writer<T>{ret};
+            }
+            return nullptr;
         }
 
         /*! \brief Defines a global variable
@@ -50,9 +53,12 @@ namespace yq {
         PropertyInfo::Writer<T>       variable(std::string_view szName, const T* pointer, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
-            new XPV_PropGetter<T>(ret, sl, pointer);
-            return PropertyInfo::Writer<T>{ret};
+            if(pointer && Meta::Writer::m_meta && thread_safe_write()){
+                PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                new XPV_PropGetter<T>(ret, sl, pointer);
+                return PropertyInfo::Writer<T>{ret};
+            }
+            return nullptr;
         }
 
         /*! \brief Defines a global variable
@@ -65,9 +71,12 @@ namespace yq {
         PropertyInfo::VarW<T>           variable(std::string_view szName, T (*function)(), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
-            new XFV_PropGetter<T>(ret, sl, function);
-            return PropertyInfo::VarW<T>(ret);
+            if(function && Meta::Writer::m_meta && thread_safe_write()){
+                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                new XFV_PropGetter<T>(ret, sl, function);
+                return PropertyInfo::VarW<T>(ret);
+            }
+            return nullptr;
         }
 
         /*! \brief Defines a global variable
@@ -80,9 +89,12 @@ namespace yq {
         PropertyInfo::VarW<T>           variable(std::string_view szName, const T& (*function)(), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
-            new XFCR_PropGetter<T>(ret, sl, function);
-            return PropertyInfo::VarW<T>(ret);
+            if(function && Meta::Writer::m_meta && thread_safe_write()){
+                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                new XFCR_PropGetter<T>(ret, sl, function);
+                return PropertyInfo::VarW<T>(ret);
+            }
+            return nullptr;
         }
 
         /*! \brief Defines a global variable
@@ -95,9 +107,12 @@ namespace yq {
         PropertyInfo::VarW<T>           variable(std::string_view szName, void (*function)(T&), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
-            new XFVR_PropGetter<T>(ret, sl, function);
-            return PropertyInfo::VarW<T>(ret);
+            if(function && Meta::Writer::m_meta && thread_safe_write()){
+                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                new XFVR_PropGetter<T>(ret, sl, function);
+                return PropertyInfo::VarW<T>(ret);
+            }
+            return nullptr;
         }
         
 
@@ -111,9 +126,12 @@ namespace yq {
         PropertyInfo::VarW<T>           variable(std::string_view szName, bool (*function)(T&), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*   ret = new PropertyInfo(szName, meta<T>(), sl, m_meta, STATIC);
-            new XFBR_PropGetter<T>(ret, sl, function);
-            return PropertyInfo::VarW<T>(ret);
+            if(function && Meta::Writer::m_meta && thread_safe_write()){
+                PropertyInfo*   ret = new PropertyInfo(szName, meta<T>(), sl, m_meta, STATIC);
+                new XFBR_PropGetter<T>(ret, sl, function);
+                return PropertyInfo::VarW<T>(ret);
+            }
+            return nullptr;
         }
 
 
@@ -124,7 +142,15 @@ namespace yq {
             \tparam R   result type (can be void)
         */
         template <typename R, typename ... Args>
-        MethodInfo::Writer<R, Args...>  function(std::string_view szName, R(*)(Args...), const std::source_location& sl=std::source_location::current());
+        MethodInfo::Writer<R, Args...>  function(std::string_view szName, R(*function)(Args...), const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            if(function && Meta::Writer::m_meta && thread_safe_write()){
+                MethodInfo* ret = new MethodInfo::Static<R,Args...>(function, szName, sl, Meta::Writer::m_meta);
+                return MethodInfo::Writer<R, Args...>(ret, 0ULL);
+            }
+            return MethodInfo::Writer<R, Args...>();
+        }
 
         Static( CompoundInfo* compound ) : Meta::Writer(compound) {}
     };
