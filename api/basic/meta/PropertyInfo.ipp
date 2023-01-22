@@ -48,12 +48,11 @@ namespace yq {
     {
         if(!m_getter)
             return { Any(), errors::no_getter() };
-        
         Any ret(m_type);
         std::error_code     ec  = m_getter -> get(ret.raw_ptr(), obj);
         if(ec != std::error_code())
             return { Any(), ec };
-        return { ret, ec };
+        return { std::move(ret), ec };
     }
 
     bool        PropertyInfo::is_state() const
