@@ -17,6 +17,14 @@ namespace yq {
 
 
     template <typename T>
+    Any  Any::from(T&& val)
+    {
+        Any   ret;
+        ret.set(std::move(val));
+        return ret;
+    }
+
+    template <typename T>
     requires (!std::is_same_v<T, Any>)
     Any::Any(T&& val) : m_type(nullptr)
     {

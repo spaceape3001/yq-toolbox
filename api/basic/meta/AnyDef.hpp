@@ -166,6 +166,9 @@ namespace yq {
 
         const DataBlock&    data() const { return m_data; }
 
+        template <typename T>
+        static Any  from(T&&);
+
     private:
         Any(TypeInfo&&) = delete;   // prohibt temporary metatypes
 
