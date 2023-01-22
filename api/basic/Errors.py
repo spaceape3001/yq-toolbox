@@ -17,9 +17,13 @@ class ErrorCode:
         self.name   = k
         self.text   = txt
         ErrorCode.ALL.append(self)
-
+        
+ErrorCode("bad_argument", "Bad argument provided")
+ErrorCode("const_object_violation", "Constant object violated")
 ErrorCode("getter_failed", "Getter function returned false.")
 ErrorCode("incompatible_types", "Incompatible types" )
+ErrorCode("insufficient_arguments", "Not enough arguments for method call")
+ErrorCode("internal_error", "Internal consistency error")
 ErrorCode("invalid_conversion", "Cannot convert invalid to anything else")
 ErrorCode("name_lookup_failed", "Name Lookup Failed" )
 ErrorCode("no_getter", "No getter exists" )
@@ -32,6 +36,7 @@ ErrorCode("null_any_type", "Null type in Any detected" )
 ErrorCode("null_destination", "Destination is a NULL pointer")
 ErrorCode("null_object", "Object is a NULL pointer" )
 ErrorCode("null_pointer", "Null pointer not allowed" )
+ErrorCode("null_result", "Result is a NULL pointer" )
 ErrorCode("null_value", "Value is a NULL pointer" )
 ErrorCode("parser_failed", "Parser failed to parse string")
 ErrorCode("setter_failed", "Setter function returned false.")

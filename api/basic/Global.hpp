@@ -33,7 +33,7 @@ namespace yq {
         namespace variable {
 
             //! Gets the variable (as Any)
-            std::pair<Any,std::error_code>  get(std::string_view);
+            any_error_t                     get(std::string_view);
         
             //! ALL variable names
             const string_view_set_t&        names();

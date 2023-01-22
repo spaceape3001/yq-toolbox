@@ -31,19 +31,30 @@ namespace yq {
             }
             
             //! Invokes the specified name
-            std::pair<Any,std::error_code>  invoke(std::string_view k)
+            any_error_t invoke(std::string_view k)
             {
-                return { Any(), errors::todo() };
+                const MethodInfo*   mi  = info(k);
+                if(!mi)
+                    return { Any{}, errors::name_lookup_failed() };
+            
+                return mi->invoke(const_any_span_t());
             }
             
-            std::pair<Any,std::error_code>  invoke(std::string_view k, const std::vector<Any>&)
+            any_error_t invoke(std::string_view k, const std::vector<Any>& args)
             {
-                return { Any(), errors::todo() };
+                const MethodInfo*   mi  = info(k);
+                if(!mi)
+                    return { Any{}, errors::name_lookup_failed() };
+                return mi->invoke(args);
             }
             
-            std::pair<Any,std::error_code>  invoke(std::string_view k, std::initializer_list<Any>)
+            any_error_t invoke(std::string_view k, std::initializer_list<Any> args)
             {
-                return { Any(), errors::todo() };
+                const MethodInfo*   mi  = info(k);
+                if(!mi)
+                    return { Any{}, errors::name_lookup_failed() };
+
+                return mi->invoke(args);
             }
     
             //! ALL function names
@@ -55,7 +66,7 @@ namespace yq {
 
         namespace variable {
 
-            std::pair<Any,std::error_code>  get(std::string_view k)
+            any_error_t get(std::string_view k)
             {
                 const PropertyInfo* pi  = info(k);
                 if(!pi)

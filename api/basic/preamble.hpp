@@ -8,6 +8,7 @@
 
 #include <chrono>
 #include <filesystem>
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -213,6 +214,8 @@ namespace yq {
 
 
     using any_error_t           = std::pair<Any, std::error_code>;
+    using any_span_t            = std::span<Any>;
+    using const_any_span_t      = std::span<const Any>;
 
 
         //  Common permutations (Qt will go away...eventually)

@@ -8,9 +8,16 @@
 
 #include <basic/meta/MethodInfo.hpp>
 #include <basic/meta/TypedArgInfo.hpp>
+#include <basic/trait/indices.hpp>
+#include <basic/Errors.hpp>
 #include <type_traits>
 
 namespace yq {
+
+    namespace trait {
+        template <typename T>
+        static constexpr bool is_returnable_v   = !(std::is_same_v<T,void> || std::is_same_v<T,std::error_code>);
+    }
 
     template <typename...> 
     struct MethodInfo::DefineArg {
@@ -32,7 +39,7 @@ namespace yq {
     template <typename R, typename...Args> 
     void MethodInfo::define_signature(options_t opts)
     {
-        if constexpr (!std::is_same_v<R,void>){
+        if constexpr (trait::is_returnable_v<R>){
             m_result    = new ArgInfo::Typed<R>(source(), this);
         }
     
@@ -45,6 +52,8 @@ namespace yq {
     template <typename R, typename Obj, typename... Args>
     class MethodInfo::Const : public MethodInfo {
     public:
+
+        static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
 
         typedef R (Obj::*FN)(Args...) const;
     
@@ -59,12 +68,20 @@ namespace yq {
         Const(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
             MethodInfo(zName, sl, parent, opts), m_function(function)
         {
-            define_signature<R,Args...>();
+            define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        void            _invoke(void* res, void* obj, const void** args) const override final
+        std::error_code  _invoke(void* res, void* obj, const void** args) const override final
         {
-            // TODO
+            if(!obj)
+                return errors::null_object();
+
+            return errors::todo();
+        }
+
+        virtual size_t          arg_count() const noexcept override final
+        {
+            return ARG_COUNT;
         }
 
     private:
@@ -78,6 +95,7 @@ namespace yq {
     class MethodInfo::Dynamic : public MethodInfo {
     public:
 
+        static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
         typedef R (Obj::*FN)(Args...);
     
         /*! \brief Constructor 
@@ -91,12 +109,20 @@ namespace yq {
         Dynamic(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
             MethodInfo(zName, sl, parent, opts), m_function(function)
         {
-            define_signature<R,Args...>();
+            define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        void            _invoke(void* res, void* obj, const void** args) const override final
+        std::error_code   _invoke(void* res, void* obj, const void** args) const override final
         {
-            // TODO
+            if(!obj)
+                return errors::null_object();
+        
+            return errors::todo();
+        }
+
+        virtual size_t          arg_count() const noexcept override final
+        {
+            return ARG_COUNT;
         }
 
     private:
@@ -107,11 +133,28 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
+    namespace impl {
+        template <typename R, typename... Args, unsigned... Is>
+        std::error_code    invokeStatic(R* res, R(*fn)(Args...), const void** args, trait::indices<Is...>)
+        {
+            if constexpr (std::is_same_v<R, std::error_code>){
+                return (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+            } else  if constexpr (!std::is_same_v<R,void>){
+                *(R*) res = (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                return std::error_code();
+            } else {
+                (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                return std::error_code();
+            }
+        }
+    }
+    
     template <typename R, typename... Args>
     class MethodInfo::Static : public MethodInfo {
     public:
     
         typedef R (*FN)(Args...);
+        static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
         
         /*! \brief Constructor 
             \note   Only use directly this if you know what you're doing, otherwise, stay away
@@ -124,12 +167,21 @@ namespace yq {
         Static(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
             MethodInfo(zName, sl, parent, opts), m_function(function)
         {
-            define_signature<R,Args...>();
+            define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        void            _invoke(void* res, void* obj, const void** args) const override final
+        std::error_code            _invoke(void* res, void* obj, const void** args) const override final
         {
-            // TODO
+            if constexpr (trait::is_returnable_v<R>){
+                if(!res)
+                    return errors::null_result();
+            }
+            return impl::invokeStatic(res, m_function, args, trait::indices_gen<ARG_COUNT>() );
+        }
+
+        virtual size_t          arg_count() const noexcept override final
+        {
+            return ARG_COUNT;
         }
 
     private:

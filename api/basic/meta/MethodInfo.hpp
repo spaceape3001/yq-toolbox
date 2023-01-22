@@ -25,17 +25,25 @@ namespace yq {
         const ArgInfo*          result() const { return m_result; }
     
         //! Invoke with flexibility if the any can convert to the appropriate type
-        any_error_t             invoke(void* obj, std::span<Any> args) const ;
+        any_error_t             invoke(void* obj, std::span<const Any> args) const;
+        any_error_t             invoke(const void* obj, std::span<const Any> args) const;
+        
+        //! Invokes for a static function (will error if not)
+        any_error_t             invoke(std::span<const Any> args) const;
     
         //! TRUE if this is a const method
         bool                    is_const() const { return flags() & CONST; }
         
         bool                    is_static() const { return flags() & STATIC; }
 
+        virtual size_t          arg_count() const noexcept = 0;
+
     private:
         const ArgInfo*              m_result;
         std::vector<const ArgInfo*> m_args;
         MethodInfo(std::string_view zName, const std::source_location& sl, Meta*, options_t opts=0);
+
+        any_error_t             invoke(void* obj, std::span<const Any> args, bool constPtr) const;
 
         /*! Invoke with the exact types
         
@@ -45,7 +53,7 @@ namespace yq {
             \param[in]      obj     Pointer to the object
             \param[in]      args    Pointer to the arguments
         */
-        virtual void            _invoke(void* res, void* obj, const void** args) const = 0;
+        virtual std::error_code _invoke(void* res, void* obj, const void** args) const = 0;
         
         template <typename...> struct DefineArg;
         template <typename R, typename...> void define_signature(options_t options=0);
