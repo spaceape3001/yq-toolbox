@@ -49,6 +49,22 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    namespace impl {
+        template <typename R, typename Obj, typename... Args, unsigned... Is>
+        std::error_code    invokeConst(R* res, const Obj*obj, R(Obj::*fn)(Args...) const, const void** args, trait::indices<Is...>)
+        {
+            if constexpr (std::is_same_v<R, std::error_code>){
+                return (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+            } else  if constexpr (!std::is_same_v<R,void>){
+                *(R*) res = (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                return std::error_code();
+            } else {
+                (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                return std::error_code();
+            }
+        }
+    }
+
     template <typename R, typename Obj, typename... Args>
     class MethodInfo::Const : public MethodInfo {
     public:
@@ -75,8 +91,13 @@ namespace yq {
         {
             if(!obj)
                 return errors::null_object();
+                
+            if constexpr (trait::is_returnable_v<R>){
+                if(!res)
+                    return errors::null_result();
+            }
 
-            return errors::todo();
+            return impl::invokeConst((R*) res, (const Obj*) obj, m_function, args, trait::indices_gen<ARG_COUNT>() );
         }
 
         virtual size_t          arg_count() const noexcept override final
@@ -90,6 +111,22 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    namespace impl {
+        template <typename R, typename Obj, typename... Args, unsigned... Is>
+        std::error_code    invokeDynamic(R* res, Obj*obj, R(Obj::*fn)(Args...) const, const void** args, trait::indices<Is...>)
+        {
+            if constexpr (std::is_same_v<R, std::error_code>){
+                return (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+            } else  if constexpr (!std::is_same_v<R,void>){
+                *(R*) res = (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                return std::error_code();
+            } else {
+                (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                return std::error_code();
+            }
+        }
+    }
 
     template <typename R, typename Obj, typename... Args>
     class MethodInfo::Dynamic : public MethodInfo {
@@ -116,8 +153,13 @@ namespace yq {
         {
             if(!obj)
                 return errors::null_object();
+
+            if constexpr (trait::is_returnable_v<R>){
+                if(!res)
+                    return errors::null_result();
+            }
         
-            return errors::todo();
+            return impl::invokeDynamic((R*) res, (Obj*) obj, m_function, args, trait::indices_gen<ARG_COUNT>() );
         }
 
         virtual size_t          arg_count() const noexcept override final
@@ -176,7 +218,7 @@ namespace yq {
                 if(!res)
                     return errors::null_result();
             }
-            return impl::invokeStatic(res, m_function, args, trait::indices_gen<ARG_COUNT>() );
+            return impl::invokeStatic((R*) res, m_function, args, trait::indices_gen<ARG_COUNT>() );
         }
 
         virtual size_t          arg_count() const noexcept override final

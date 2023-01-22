@@ -841,7 +841,7 @@ YQ_INVOKE(
 
 
     auto complexD = writer<ComplexD>();
-    complexD.property("real", (double (ComplexD::*)() const) &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real);
+    complexD.property("re", (double (ComplexD::*)() const) &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real);
     complexD.property("im", (double (ComplexD::*)() const) &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag);
 
     auto complexF = writer<ComplexF>();
@@ -1992,9 +1992,11 @@ YQ_INVOKE(
 
     auto vec1d = writer<Vector1D>();
     vec1d.property("x", &Vector1D::x);
+    vec1d.method("len", &Vector1D::length);
 
     auto vec1f = writer<Vector1F>();
     vec1f.property("x", &Vector1F::x);
+    vec1f.method("len", &Vector1F::length);
 
     auto vec1i = writer<Vector1I>();
     vec1i.property("x", &Vector1I::x);
@@ -2006,10 +2008,12 @@ YQ_INVOKE(
     auto vec2d = writer<Vector2D>();
     vec2d.property("x", &Vector2D::x);
     vec2d.property("y", &Vector2D::y);
+    vec2d.method("len", &Vector2D::length);
 
     auto vec2f = writer<Vector2F>();
     vec2f.property("x", &Vector2F::x);
     vec2f.property("y", &Vector2F::y);
+    vec2f.method("len", &Vector2F::length);
 
     auto vec2i = writer<Vector2I>();
     vec2i.property("x", &Vector2I::x);
@@ -2024,11 +2028,13 @@ YQ_INVOKE(
     vec3d.property("x", &Vector3D::x);
     vec3d.property("y", &Vector3D::y);
     vec3d.property("z", &Vector3D::z);
+    vec3d.method("len", &Vector3D::length);
 
     auto vec3f = writer<Vector3F>();
     vec3f.property("x", &Vector3F::x);
     vec3f.property("y", &Vector3F::y);
     vec3f.property("z", &Vector3F::z);
+    vec3f.method("len", &Vector3F::length);
 
     auto vec3i = writer<Vector3I>();
     vec3i.property("x", &Vector3I::x);
@@ -2046,12 +2052,14 @@ YQ_INVOKE(
     vec4d.property("y", &Vector4D::y);
     vec4d.property("z", &Vector4D::z);
     vec4d.property("w", &Vector4D::w);
+    vec4d.method("len", &Vector4D::length);
 
     auto vec4f = writer<Vector4F>();
     vec4f.property("x", &Vector4F::x);
     vec4f.property("y", &Vector4F::y);
     vec4f.property("z", &Vector4F::z);
     vec4f.property("w", &Vector4F::w);
+    vec4f.method("len", &Vector4F::length);
 
     auto vec4i = writer<Vector4I>();
     vec4i.property("x", &Vector4I::x);

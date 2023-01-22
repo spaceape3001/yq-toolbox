@@ -183,9 +183,18 @@ namespace yq {
 
         template <typename R, typename ... Args>
         MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (C::*function)(Args...), const std::source_location& sl=std::source_location::current());
-        
+
         template <typename R, typename ... Args>
-        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (C::*function)(Args...) const, const std::source_location& sl=std::source_location::current());
+        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (C::*function)(Args...) const, const std::source_location& sl=std::source_location::current())
+        {
+            assert(function);
+            if(function && Meta::Writer::m_meta && thread_safe_write()){
+                MethodInfo* ret = new MethodInfo::Const<R,C,Args...>(function, szName, sl, Meta::Writer::m_meta);
+                return MethodInfo::Writer<R, Args...>(ret, 0ULL);
+            }
+            return MethodInfo::Writer<R, Args...>();
+        }
+        
         
         Dynamic(CompoundInfo* c) : Static(c) {}
     };

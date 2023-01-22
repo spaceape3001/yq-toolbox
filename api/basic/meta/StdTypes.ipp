@@ -240,6 +240,7 @@ namespace yq {
                 w.alias("String");
                 w.parse<parse_string>();
                 w.print<print_string>();
+                w.method("len", &std::string::size);
             }
         }
     }
