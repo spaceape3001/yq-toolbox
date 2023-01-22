@@ -82,7 +82,7 @@ namespace yq {
             \param[in] opts     Options
         */
         Const(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
-            MethodInfo(zName, sl, parent, opts), m_function(function)
+            MethodInfo(zName, sl, parent, opts|CONST), m_function(function)
         {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
@@ -207,7 +207,7 @@ namespace yq {
             \param[in] opts     Options
         */
         Static(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
-            MethodInfo(zName, sl, parent, opts), m_function(function)
+            MethodInfo(zName, sl, parent, opts|STATIC), m_function(function)
         {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
