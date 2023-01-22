@@ -17,14 +17,18 @@ namespace yq {
     */
     template <typename T>
     struct Tensor44 {
+        //! Component type
         using component_type = T;
+        
         T xx, xy, xz, xw;
         T yx, yy, yz, yw;
         T zx, zy, zz, zw;
         T wx, wy, wz, ww;
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Tensor44&) const noexcept = default;
         
+        //! Conversion to GLM
         operator glm::mat<4,4,T,glm::defaultp>() const noexcept 
         {
             return {
@@ -34,6 +38,288 @@ namespace yq {
                 xw, yw, zw, ww
             };
         }
+
+
+        //! Positive (affirmation) operator
+        constexpr Tensor44  operator+() const noexcept
+        { 
+            return *this; 
+        }
+
+        //! Negation operator
+        constexpr Tensor44  operator-() const noexcept
+        {
+            return {
+                -xx, -xy, -xz, -xw,
+                -yx, -yy, -yz, -yw,
+                -zx, -zy, -zz, -zw,
+                -wx, -wy, -wz, -ww
+            };
+        }
+    
+        //! Takes the transpose
+        constexpr Tensor44 transpose() const noexcept
+        {
+            return {
+                xx, yx, zx, wx,
+                xy, yy, zy, wy,
+                xz, yz, zz, wz,
+                xw, yw, zw, ww
+            };
+        }
+
+
+        //  TODO: 4x4 determinant 
+        //  TODO: 4x4 inverse 
+        //  TODO: 4x4 eigenvalues, eigenvectors, & eigensystem
+
+        //! \brief Trace of this tensor
+        constexpr T     trace() const noexcept
+        {
+            return xx+yy+zz+ww;
+        }
+
+        //  --------------------------------------------------------
+        //  GETTERS
+
+            //! Diagonal of this vector
+            constexpr Vector4<T>  diagonal() const noexcept
+            {
+                return {xx, yy, zz, ww};
+            }
+
+            //! X-column of this vector
+            constexpr Vector4<T>  x_column() const noexcept
+            {
+                return {xx, yx, zx, wx};
+            }
+
+            //! Y-column of this vector
+            constexpr Vector4<T>  y_column() const noexcept
+            {
+                return {xy, yy, zy, wy};
+            }
+
+            //! Z-column of this vector
+            constexpr Vector4<T>  z_column() const noexcept
+            {
+                return {xz, yz, zz, wz};
+            }
+
+            //! W-column of this vector
+            constexpr Vector4<T>  w_column() const noexcept
+            {
+                return {xw, yw, zw, ww};
+            }
+
+            //! X-row of this vector
+            constexpr Vector4<T>  x_row() const noexcept
+            {
+                return {xx, xy, xz, xw};
+            }
+
+            //! Y-row of this vector
+            constexpr Vector4<T>  y_row() const noexcept
+            {
+                return {yx, yy, yz, yw};
+            }
+
+            //! Z-row of this vector
+            constexpr Vector4<T>  z_row() const noexcept
+            {
+                return {zx, zy, zz, zw};
+            }
+
+            //! W-row of this vector
+            constexpr Vector4<T>  w_row() const noexcept
+            {
+                return {wx, wy, wz, ww};
+            }
+
+
+        //  --------------------------------------------------------
+        //  SETTERS
+
+            //! Sets the diagonal
+            Tensor44&  diagonal(const Vector4<T>& v) noexcept
+            {        
+                xx = v.x;
+                yy = v.y;
+                zz = v.z;
+                ww = v.w;
+                return *this;
+            }
+
+            //! Sets the diagonal
+            Tensor44&  diagonal(T _xx, T _yy, T _zz, T _ww) noexcept
+            {        
+                xx = _xx;
+                yy = _yy;
+                zz = _zz;
+                ww = _ww;
+                return *this;
+            }
+
+            //! Sets the X-column
+            Tensor44& x_column(const Vector4<T>& v) noexcept
+            {
+                xx = v.x;
+                yx = v.y;
+                zx = v.z;
+                wx = v.w;
+                return *this;
+            }
+
+            //! Sets the X-column
+            Tensor44& x_column(T _xx, T _yx, T _zx, T _wx) noexcept
+            {
+                xx = _xx;
+                yx = _yx;
+                zx = _zx;
+                wx = _wx;
+                return *this;
+            }
+
+            //! Sets the Y-column
+            Tensor44& y_column(const Vector4<T>& v) noexcept
+            {
+                xy = v.x;
+                yy = v.y;
+                zy = v.z;
+                wy = v.w;
+                return *this;
+            }
+
+            //! Sets the Y-column
+            Tensor44& y_column(T _xy, T _yy, T _zy, T _wy) noexcept
+            {
+                xy = _xy;
+                yy = _yy;
+                zy = _zy;
+                wy = _wy;
+                return *this;
+            }
+
+            //! Sets the Z-column
+            Tensor44& z_column(const Vector4<T>& v) noexcept
+            {
+                xz = v.x;
+                yz = v.y;
+                zz = v.z;
+                wz = v.w;
+                return *this;
+            }
+
+            //! Sets the Z-column
+            Tensor44& z_column(T _xz, T _yz, T _zz, T _wz) noexcept
+            {
+                xz = _xz;
+                yz = _yz;
+                zz = _zz;
+                wz = _wz;
+                return *this;
+            }
+
+            //! Sets the W-column
+            Tensor44& w_column(const Vector4<T>& v) noexcept
+            {
+                xw = v.x;
+                yw = v.y;
+                zw = v.z;
+                ww = v.w;
+                return *this;
+            }
+
+            //! Sets the W-column
+            Tensor44& w_column(T _xw, T _yw, T _zw, T _ww) noexcept
+            {
+                xw = _xw;
+                yw = _yw;
+                zw = _zw;
+                ww = _ww;
+                return *this;
+            }
+
+            //! Sets the X-row
+            Tensor44& x_row(const Vector4<T>& v) noexcept
+            {
+                xx = v.x;
+                xy = v.y;
+                xz = v.z;
+                xw = v.w;
+                return *this;
+            }
+
+            //! Sets the X-row
+            Tensor44& x_row(T _xx, T _xy, T _xz, T _xw) noexcept
+            {
+                xx = _xx;
+                xy = _xy;
+                xz = _xz;
+                xw = _xw;
+                return *this;
+            }
+
+            //! Sets the Y-row
+            Tensor44& y_row(const Vector4<T>& v) noexcept
+            {
+                yx = v.x;
+                yy = v.y;
+                yz = v.z;
+                yw = v.w;
+                return *this;
+            }
+
+            //! Sets the Y-row
+            Tensor44& y_row(T _yx, T _yy, T _yz, T _yw) noexcept
+            {
+                yx = _yx;
+                yy = _yy;
+                yz = _yz;
+                yw = _yw;
+                return *this;
+            }
+
+            //! Sets the Z-row
+            Tensor44& z_row(const Vector4<T>& v) noexcept
+            {
+                zx = v.x;
+                zy = v.y;
+                zz = v.z;
+                zw = v.w;
+                return *this;
+            }
+
+            //! Sets the Z-row
+            Tensor44& z_row(T _zx, T _zy, T _zz, T _zw) noexcept
+            {
+                zx = _zx;
+                zy = _zy;
+                zz = _zz;
+                zw = _zw;
+                return *this;
+            }
+
+            //! Sets the W-row
+            Tensor44& w_row(const Vector4<T>& v) noexcept
+            {
+                wx = v.x;
+                wy = v.y;
+                wz = v.z;
+                ww = v.w;
+                return *this;
+            }
+
+            //! Sets the W-row
+            Tensor44& w_row(T _wx, T _wy, T _wz, T _ww) noexcept
+            {
+                wx = _wx;
+                wy = _wy;
+                wz = _wz;
+                ww = _ww;
+                return *this;
+            }
+    
     };
         
     YQ_IEEE754_1(Tensor44)
@@ -149,192 +435,77 @@ namespace yq {
         is_nan(v.wx) || is_nan(v.wy) || is_nan(v.wz) || is_nan(v.ww)
     )
 
+    //! Transpose of given tensor
     template <typename T>
-    constexpr Tensor44<T>  transpose(const Tensor44<T>&v) noexcept
+    constexpr Tensor44<T>  transpose(const Tensor44<T>&ten) noexcept
     {
-        return {
-            v.xx, v.yx, v.zx, v.wx,
-            v.xy, v.yy, v.zy, v.wy,
-            v.xz, v.yz, v.zz, v.wz,
-            v.xw, v.yw, v.zw, v.ww
-        };
+        return ten.transpose();
     }
 
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Diagonal of given tensor
     template <typename T>
-    constexpr Vector4<T>  diagonal(const Tensor44<T>& v) noexcept
+    constexpr Vector4<T>  diagonal(const Tensor44<T>&ten) noexcept
     {
-        return {v.xx, v.yy, v.zz, v.ww};
+        return ten.diagonal();
     }
 
+    //! X-column of given tensor
     template <typename T>
-    constexpr Vector4<T>  x_column(const Tensor44<T>&v)  noexcept
+    constexpr Vector4<T>  x_column(const Tensor44<T>&ten)  noexcept
     {
-        return {v.xx, v.yx, v.zx, v.wx};
+        return ten.x_column();
     }
 
+    //! Y-column of given tensor
     template <typename T>
-    constexpr Vector4<T>  y_column(const Tensor44<T>&v)  noexcept
+    constexpr Vector4<T>  y_column(const Tensor44<T>&ten)  noexcept
     {
-        return {v.xy, v.yy, v.zy, v.wy};
+        return ten.y_column();
     }
 
+    //! Z-column of given tensor
     template <typename T>
-    constexpr Vector4<T>  z_column(const Tensor44<T>&v)  noexcept
+    constexpr Vector4<T>  z_column(const Tensor44<T>&ten)  noexcept
     {
-        return {v.xz, v.yz, v.zz, v.wz};
+        return ten.z_column();
     }
 
+    //! W-column of given tensor
     template <typename T>
-    constexpr Vector4<T>  w_column(const Tensor44<T>&v)  noexcept
+    constexpr Vector4<T>  w_column(const Tensor44<T>&ten)  noexcept
     {
-        return {v.xw, v.yw, v.zw, v.ww};
+        return ten.w_column();
     }
 
+    //! X-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  x_row(const Tensor44<T>&v) noexcept
+    constexpr Vector4<T>  x_row(const Tensor44<T>&ten) noexcept
     {
-        return {v.xx, v.xy, v.xz, v.xw};
+        return ten.x_row();
     }
 
+    //! Y-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  y_row(const Tensor44<T>&v) noexcept
+    constexpr Vector4<T>  y_row(const Tensor44<T>&ten) noexcept
     {
-        return {v.yx, v.yy, v.yz, v.yw};
+        return ten.y_row();
     }
 
+    //! Z-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  z_row(const Tensor44<T>&v) noexcept
+    constexpr Vector4<T>  z_row(const Tensor44<T>&ten) noexcept
     {
-        return {v.zx, v.zy, v.zz, v.zw};
+        return ten.z_row();
     }
 
+    //! W-row of given tensor
     template <typename T>
-    constexpr Vector4<T>  w_row(const Tensor44<T>&v) noexcept
+    constexpr Vector4<T>  w_row(const Tensor44<T>&ten) noexcept
     {
-        return {v.wx, v.wy, v.wz, v.ww};
-    }
-
-
-//  --------------------------------------------------------
-//  SETTERS
-
-            
-    template <typename T>
-    Tensor44<T>&  set_diagonal(Tensor44<T>& ten, const Vector4<T>& v) noexcept
-    {        
-        ten.xx = v.x;
-        ten.yy = v.y;
-        ten.zz = v.z;
-        ten.ww = v.w;
-        return ten;
-    }
-
-
-    template <typename T>
-    Tensor44<T>& set_x_column(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xx = v.x;
-        ten.yx = v.y;
-        ten.zx = v.z;
-        ten.wx = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_y_column(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xy = v.x;
-        ten.yy = v.y;
-        ten.zy = v.z;
-        ten.wy = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_z_column(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xz = v.x;
-        ten.yz = v.y;
-        ten.zz = v.z;
-        ten.wz = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_w_column(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xw = v.x;
-        ten.yw = v.y;
-        ten.zw = v.z;
-        ten.ww = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_x_row(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.xx = v.x;
-        ten.xy = v.y;
-        ten.xz = v.z;
-        ten.xw = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_y_row(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.yx = v.x;
-        ten.yy = v.y;
-        ten.yz = v.z;
-        ten.yw = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_z_row(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.zx = v.x;
-        ten.zy = v.y;
-        ten.zz = v.z;
-        ten.zw = v.w;
-        return ten;
-    }
-
-    template <typename T>
-    Tensor44<T>& set_w_row(Tensor44<T>&ten, const Vector4<T>& v) noexcept
-    {
-        ten.wx = v.x;
-        ten.wy = v.y;
-        ten.wz = v.z;
-        ten.ww = v.w;
-        return ten;
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-    template <typename T>
-    constexpr Tensor44<T>  operator+(const Tensor44<T>& a)  noexcept
-    { 
-        return a; 
-    }
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    template <typename T>
-    constexpr Tensor44<T>  operator-(const Tensor44<T>& a)  noexcept
-    {
-        return {
-            -a.xx, -a.xy, -a.xz, -a.xw,
-            -a.yx, -a.yy, -a.yz, -a.yw,
-            -a.zx, -a.zy, -a.zz, -a.zw,
-            -a.wx, -a.wy, -a.wz, -a.ww
-        };
+        return ten.z_row();
     }
 
 
@@ -541,14 +712,14 @@ namespace yq {
     //  TODO: 4x4 inverse 
     //  TODO: 4x4 eigenvalues, eigenvectors, & eigensystem
 
-    /*! \brief Trace of the 4 x 4 tensor
+    /*! \brief Trace of the given 4 x 4 tensor
     
         \param[in] a    Tensor to take the trace of
     */
     template <typename T>
-    constexpr T     trace(const Tensor44<T>& a) noexcept
+    constexpr T     trace(const Tensor44<T>& ten) noexcept
     {
-        return a.xx+a.yy+a.zz+a.ww;
+        return ten.trace();
     }
 
 }
