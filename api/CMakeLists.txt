@@ -9,14 +9,11 @@ find_package(Log4cpp REQUIRED)
 find_package(TBB REQUIRED)
 find_package(glm REQUIRED)
 find_package(SQLite3 REQUIRED)
-
-message("INCLUDE ${SQLite3_INCLUDE_DIRS}")
-
-set(META_BIN "${CMAKE_CURRENT_BINARY_DIR}")
+find_package(Python REQUIRED)
 
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/basic/Errors.hpp ${CMAKE_CURRENT_BINARY_DIR}/basic/Errors.ipp
-    COMMAND python ${CMAKE_CURRENT_LIST_DIR}/basic/Errors.py ${CMAKE_CURRENT_BINARY_DIR}/basic
+    COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/basic/Errors.py ${CMAKE_CURRENT_BINARY_DIR}/basic
     DEPENDS ${CMAKE_CURRENT_LIST_DIR}/basic/Errors.py
     VERBATIM
 )
