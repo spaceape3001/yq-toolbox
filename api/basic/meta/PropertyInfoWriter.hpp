@@ -33,7 +33,7 @@ namespace yq {
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
             if(Meta::Writer::m_meta && thread_safe_write()){
-                static_cast<PropertyInfo*>(m_meta) -> m_default.reference<T>() = val;
+                static_cast<PropertyInfo*>(Meta::Writer::m_meta) -> m_default.reference<T>() = val;
             }
             return *this;
         }
@@ -50,7 +50,7 @@ namespace yq {
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
             if(Meta::Writer::m_meta && thread_safe_write()){
-                static_cast<PropertyInfo*>(m_meta) -> m_default.reference<T>() = std::move(val);
+                static_cast<PropertyInfo*>(Meta::Writer::m_meta) -> m_default.reference<T>() = std::move(val);
             }
             return *this;
         }

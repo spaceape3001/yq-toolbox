@@ -37,6 +37,20 @@ namespace yq {
         return *this;
     }
     
+    Meta::Writer&     Meta::Writer::name(std::string_view zName)
+    {
+        if(m_meta)
+            m_meta -> m_name = std::string_view(zName);
+        return *this;
+    }
+
+    Meta::Writer&     Meta::Writer::options(options_t opts)
+    {
+        if(m_meta)
+            m_meta -> m_flags |= opts;
+        return *this;
+    }
+
     Meta::Writer&     Meta::Writer::tag(std::string_view zKey)
     {
         if(m_meta){

@@ -50,6 +50,21 @@ namespace yq {
         */
         Writer&     label(std::string_view zLabel);
         
+        /*! \brief Overrides the given name
+        
+            This overrides the given name from th econstructor
+            
+            \note   Provided zLabel *MUST* remain valid throughout the program execution, so it's expected
+                    to be a program string "char[]"
+            \param[in] zName   Name string
+            \return Reference to this writer object
+        */
+        Writer&     name(std::string_view zName);
+        
+        /*! \brief Applies new options 
+        */
+        Writer&     options(options_t);
+
         /*! \brief Tags the meta
         
             This adds a tag to this meta, the value will be set to TRUE.
@@ -93,11 +108,12 @@ namespace yq {
         */
         Writer&     todo(); //!< Marks this as needing TODO work
     
+        //! Constructor from proper meta
+        //! \note Only use if you KNOW what you're up to
+        Writer(Meta* myMeta);
+
     protected:
             //  In proper usage, should never be null, however, guard!
         Meta* const m_meta = nullptr;
-        
-        //! Constructor from proper meta
-        Writer(Meta* myMeta);
     };
 }

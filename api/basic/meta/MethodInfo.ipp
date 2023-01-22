@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <basic/meta/MethodInfo.hpp>
+#include <basic/meta/MetaWriter.hpp>
 #include <basic/meta/Global.hpp>
 #include <basic/meta/ObjectInfo.hpp>
 #include <basic/meta/TypeInfo.hpp>
@@ -36,6 +37,30 @@ namespace yq {
                 yCritical() << "Duplicate method on type (" << type -> name() << "): " << zName;
             type->m_methods << this;
         }
+    }
+    
+    void    MethodInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription, options_t opts)
+    {
+        if(n < m_args.size()){
+            Meta::Writer w{ const_cast<ArgInfo*>(m_args[n])};
+            if(!zName.empty())
+                w.name(zName);
+            if(!zDescription.empty())
+                w.description(zDescription);
+            if(opts)
+                w.options(opts);
+        }
+    }
+
+    void    MethodInfo::fill_result_info(std::string_view zName, std::string_view zDescription, options_t opts)
+    {
+        Meta::Writer w{ const_cast<ArgInfo*>(m_result) };
+        if(!zName.empty())
+            w.name(zName);
+        if(!zDescription.empty())
+            w.description(zDescription);
+        if(opts)
+            w.options(opts);
     }
 }
 

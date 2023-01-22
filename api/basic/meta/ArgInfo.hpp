@@ -14,12 +14,15 @@ namespace yq {
     public:
     
         //! Type of the argument
-        const Meta&        type() const { return m_type; }
+        const Meta&         type() const { return m_type; }
+        
+        template <typename T> class Typed;
     
     private:
-        ArgInfo(std::string_view zName, const std::source_location& sl, const Meta&, Meta*);
-        
-        const Meta&             m_type;
-        DataBlock               m_default;
+        ArgInfo(const std::source_location& sl, const Meta&, Meta*);
+
+        const Meta&     m_type;
+        DataBlock       m_defaultData;
+        const void*     m_default;
     };
 }

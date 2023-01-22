@@ -181,17 +181,11 @@ namespace yq {
             return PropertyInfo::PropW<C,T>{ret};
         }
 
-        template <typename ... Args>
-        MethodInfo::Writer          method(std::string_view szName, void (C::*function)(Args...), const std::source_location& sl=std::source_location::current());
+        template <typename R, typename ... Args>
+        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (C::*function)(Args...), const std::source_location& sl=std::source_location::current());
         
-        template <typename ... Args>
-        MethodInfo::Writer          method(std::string_view szName, void (C::*function)(Args...) const, const std::source_location& sl=std::source_location::current());
-
-        template <typename T, typename ... Args>
-        MethodInfo::Writer          method(std::string_view szName, T (C::*function)(Args...), const std::source_location& sl=std::source_location::current());
-        
-        template <typename T, typename ... Args>
-        MethodInfo::Writer          method(std::string_view szName, T (C::*function)(Args...) const, const std::source_location& sl=std::source_location::current());
+        template <typename R, typename ... Args>
+        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (C::*function)(Args...) const, const std::source_location& sl=std::source_location::current());
         
         Dynamic(CompoundInfo* c) : Static(c) {}
     };

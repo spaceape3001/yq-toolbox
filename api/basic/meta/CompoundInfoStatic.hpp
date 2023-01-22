@@ -8,6 +8,7 @@
 
 #include <basic/meta/CompoundInfo.hpp>
 #include <basic/meta/MetaWriter.hpp>
+#include <basic/meta/MethodInfoImpl.hpp>
 #include <basic/meta/MethodInfoWriter.hpp>
 #include <basic/meta/StaticPropGetter.hpp>
 #include <basic/meta/StaticPropSetter.hpp>
@@ -116,24 +117,14 @@ namespace yq {
         }
 
 
-
-        /*! \brief Defines a global variable
+        /*! \brief Defines a global method
         
-            This defines a GLOBAL variable for the given scope, read/write.
+            This defines a GLOBAL method for the given scope
             
-            \tparam T   type
+            \tparam R   result type (can be void)
         */
-        template <typename ... Args>
-        MethodInfo::Writer              function(std::string_view szName, void(*)(Args...), const std::source_location& sl=std::source_location::current());
-
-        /*! \brief Defines a global variable
-        
-            This defines a GLOBAL variable for the given scope, read/write.
-            
-            \tparam T   type
-        */
-        template <typename T, typename ... Args>
-        MethodInfo::Writer              function(std::string_view szName, T(*)(Args...), const std::source_location& sl=std::source_location::current());
+        template <typename R, typename ... Args>
+        MethodInfo::Writer<R, Args...>  function(std::string_view szName, R(*)(Args...), const std::source_location& sl=std::source_location::current());
 
         Static( CompoundInfo* compound ) : Meta::Writer(compound) {}
     };
