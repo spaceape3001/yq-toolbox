@@ -281,6 +281,9 @@ namespace yq {
         ptr     = other;
         other   = nullptr;
     }
+    
+    //! Used for detection of overrides
+    struct disabled {};
 }
 
 

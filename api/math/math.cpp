@@ -719,74 +719,86 @@ YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond²3D)
 
 YQ_INVOKE(
 
-
     auto axbox1d = writer<AxBox1D>();
     axbox1d.property("lo", &AxBox1D::lo);
     axbox1d.property("hi", &AxBox1D::hi);
+    axbox1d.method("center", &AxBox1D::center);
 
     auto axbox1f = writer<AxBox1F>();
     axbox1f.property("lo", &AxBox1F::lo);
     axbox1f.property("hi", &AxBox1F::hi);
+    axbox1f.method("center", &AxBox1F::center);
 
     auto axbox1i = writer<AxBox1I>();
     axbox1i.property("lo", &AxBox1I::lo);
     axbox1i.property("hi", &AxBox1I::hi);
+    axbox1i.method("center", &AxBox1I::center);
 
     auto axbox1u = writer<AxBox1U>();
     axbox1u.property("lo", &AxBox1U::lo);
     axbox1u.property("hi", &AxBox1U::hi);
-
+    axbox1u.method("center", &AxBox1U::center);
 
     auto axbox2d = writer<AxBox2D>();
     axbox2d.property("lo", &AxBox2D::lo);
     axbox2d.property("hi", &AxBox2D::hi);
+    axbox2d.method("center", &AxBox2D::center);
 
     auto axbox2f = writer<AxBox2F>();
     axbox2f.property("lo", &AxBox2F::lo);
     axbox2f.property("hi", &AxBox2F::hi);
+    axbox2f.method("center", &AxBox2F::center);
 
     auto axbox2i = writer<AxBox2I>();
     axbox2i.property("lo", &AxBox2I::lo);
     axbox2i.property("hi", &AxBox2I::hi);
+    axbox2i.method("center", &AxBox2I::center);
 
     auto axbox2u = writer<AxBox2U>();
     axbox2u.property("lo", &AxBox2U::lo);
     axbox2u.property("hi", &AxBox2U::hi);
+    axbox2u.method("center", &AxBox2U::center);
 
 
     auto axbox3d = writer<AxBox3D>();
     axbox3d.property("lo", &AxBox3D::lo);
     axbox3d.property("hi", &AxBox3D::hi);
+    axbox3d.method("center", &AxBox3D::center);
 
     auto axbox3f = writer<AxBox3F>();
     axbox3f.property("lo", &AxBox3F::lo);
     axbox3f.property("hi", &AxBox3F::hi);
+    axbox3f.method("center", &AxBox3F::center);
 
     auto axbox3i = writer<AxBox3I>();
     axbox3i.property("lo", &AxBox3I::lo);
     axbox3i.property("hi", &AxBox3I::hi);
+    axbox3i.method("center", &AxBox3I::center);
 
     auto axbox3u = writer<AxBox3U>();
     axbox3u.property("lo", &AxBox3U::lo);
     axbox3u.property("hi", &AxBox3U::hi);
-
+    axbox3u.method("center", &AxBox3U::center);
 
     auto axbox4d = writer<AxBox4D>();
     axbox4d.property("lo", &AxBox4D::lo);
     axbox4d.property("hi", &AxBox4D::hi);
+    axbox4d.method("center", &AxBox4D::center);
 
     auto axbox4f = writer<AxBox4F>();
     axbox4f.property("lo", &AxBox4F::lo);
     axbox4f.property("hi", &AxBox4F::hi);
+    axbox4f.method("center", &AxBox4F::center);
 
     auto axbox4i = writer<AxBox4I>();
     axbox4i.property("lo", &AxBox4I::lo);
     axbox4i.property("hi", &AxBox4I::hi);
+    axbox4i.method("center", &AxBox4I::center);
 
     auto axbox4u = writer<AxBox4U>();
     axbox4u.property("lo", &AxBox4U::lo);
     axbox4u.property("hi", &AxBox4U::hi);
-
+    axbox4u.method("center", &AxBox4U::center);
 
     auto bivec2d = writer<Bivector2D>();
     bivec2d.property("xy", &Bivector2D::xy);
