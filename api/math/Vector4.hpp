@@ -144,26 +144,26 @@ namespace yq {
 
         //! Element by element division
         template <typename U>
-        constexpr Vector4<quotient_t<T,U>>  ediv(const Vector4&b) const noexcept
+        constexpr Vector4<quotient_t<T,U>>  ediv(const Vector4<U>&b) const noexcept
         {
             return {x/b.x, y/b.y, z/b.z, w/b.w};
         }
 
         //! Maximum applied to each component
-        constexpr Vector4   emax(const Vector4<T>&b) const noexcept
+        constexpr Vector4   emax(const Vector4&b) const noexcept
         {
             return {max(x, b.x), max(y, b.y), max(z, b.z), max(w, b.w)};
         }
         
         //! Minimum applied to each component
-        constexpr Vector4   emin(const Vector4<T>&b) const noexcept
+        constexpr Vector4   emin(const Vector4&b) const noexcept
         {
             return {min(x, b.x), min(y, b.y), min(z, b.z), min(w, b.w)};
         }
 
         //! Element by element multiplication
         template <typename U>
-        constexpr Vector4<product_t<T,U>>   emul(const Vector4&b) const noexcept
+        constexpr Vector4<product_t<T,U>>   emul(const Vector4<U>&b) const noexcept
         {
             return {x*b.x, y*b.y, z*b.z, w*b.w};
         }
@@ -449,7 +449,7 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr  Vector4<quotient_t<T,U>> operator/(T a, const  Vector4<U>&b) noexcept
     {
-        return (a*b) / length2(b);
+        return (a*b) / b.length²();
     }
 
     template <typename T, typename U>
@@ -471,7 +471,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
+    constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<U>&b) noexcept
     {
         return a.ediv(b);
     }

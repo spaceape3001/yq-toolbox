@@ -85,7 +85,7 @@ namespace yq {
         */
         constexpr bool contains(const Vector3<T>& pt) const noexcept
         {
-            return (all(lo) <= pt) && (all(pt) <<= hi);
+            return (all(lo) <= pt) && (all(pt) <= hi);
         }
 
         /*! \brief Returns ALL the corners of the box 
@@ -168,7 +168,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         constexpr Vector3<T>   project(const Vector3<T>& v) const noexcept
         {
-            return mul_elem(one_v<Vector3<T>>-v, lo) + mul_elem(v, hi);
+            return (one_v<Vector3<T>>-v).emul(lo) + v.emul(hi);
         }
 
         /*! \brief Returns the south east bottom corner

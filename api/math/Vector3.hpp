@@ -134,7 +134,7 @@ namespace yq {
 
         //! Element by element division
         template <typename U>
-        constexpr Vector3<quotient_t<T,U>>    ediv(const Vector3&b) const noexcept
+        constexpr Vector3<quotient_t<T,U>>    ediv(const Vector3<U>&b) const noexcept
         {
             return {x/b.x, y/b.y, z/b.z};
         }
@@ -151,7 +151,7 @@ namespace yq {
 
         //! Element by element multiplication
         template <typename U>
-        constexpr Vector3<product_t<T,U>>    emul(const Vector3&b) const noexcept
+        constexpr Vector3<product_t<T,U>>    emul(const Vector3<U>&b) const noexcept
         {
             return {x*b.x, y*b.y, z*b.z};
         }
@@ -462,7 +462,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
+    constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
     {
         return a.emul(b);
     }
@@ -474,7 +474,7 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept
     {
-        return (a*b) / length2(b);
+        return (a*b) / b.length²();
     }
 
     template <typename T, typename U>
@@ -496,7 +496,7 @@ namespace yq {
 
 
     template <typename T, typename U>
-    constexpr Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
+    constexpr Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
     {
         return a.ediv(b);
     }

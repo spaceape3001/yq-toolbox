@@ -90,9 +90,9 @@ namespace yq {
 
         /*! \brief Checks if the point is inside (or touching) the box
         */
-        constexpr bool          constins(const Vector2<T>& pt) const noexcept
+        constexpr bool          contains(const Vector2<T>& pt) const noexcept
         {
-            return (all(lo) <= pt) && (all(pt) <<= hi);
+            return (all(lo) <= pt) && (all(pt) <= hi);
         }
 
         /*! \brief Our corners
@@ -158,7 +158,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         constexpr Vector2<T>    project(const Vector2<T>& v) const noexcept
         {
-            return mul_elem(one_v<Vector2<T>>-v, lo) + mul_elem(v, hi);
+            return (one_v<Vector2<T>>-v).emul(lo) + v.emul(hi);
         }
 
         //! Returns the southeast corner of the box

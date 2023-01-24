@@ -84,7 +84,7 @@ namespace yq {
         */
         constexpr bool contains(const Vector1<T>& pt) const noexcept
         {
-            return (all(lo) <= pt) && (all(pt) <<= hi);
+            return (all(lo) <= pt) && (all(pt) <= hi);
         }
 
         /*! \brief Returns the enumerated corners of the box
@@ -132,7 +132,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         constexpr Vector1<T>   project(const Vector1<T>& v) const noexcept
         {
-            return mul_elem(one_v<Vector1<T>>-v, lo) + mul_elem(v, hi);
+            return (one_v<Vector1<T>>-v).emul(lo) + v.emul(hi);
         }
 
         constexpr Vector1<T>    span() const noexcept

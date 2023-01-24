@@ -121,7 +121,7 @@ namespace yq {
 
         //! Element by element division
         template <typename U>
-        constexpr Vector1<quotient_t<T,U>>    ediv(const Vector1&b) const noexcept
+        constexpr Vector1<quotient_t<T,U>>    ediv(const Vector1<U>&b) const noexcept
         {
             return {x/b.x};
         }
@@ -384,7 +384,7 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    constexpr Vector1<product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
+    constexpr Vector1<product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
     {
         return {a.x*b.x};
     }
@@ -396,7 +396,7 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr  Vector1<quotient_t<T,U>> operator/(T a, const  Vector1<U>&b) noexcept
     {
-        return (a*b) / length2(b);
+        return (a*b) / b.length²();
     }
 
     template <typename T, typename U>
@@ -421,7 +421,7 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    constexpr Vector1<quotient_t<T,U>>    div_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
+    constexpr Vector1<quotient_t<T,U>>    div_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
     {
         return {a.x/b.x};
     }

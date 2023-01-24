@@ -129,7 +129,7 @@ namespace yq {
 
         //! Element by element division
         template <typename U>
-        constexpr Vector2<quotient_t<T,U>>    ediv(const Vector2&b) const noexcept
+        constexpr Vector2<quotient_t<T,U>>    ediv(const Vector2<U>&b) const noexcept
         {
             return {x/b.x, y/b.y};
         }
@@ -443,7 +443,7 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr  Vector2<quotient_t<T,U>> operator/(T a, const  Vector2<U>&b) noexcept
     {
-        return (a*b) / length²(b);
+        return (a*b) / b.length²();
     }
 
 
