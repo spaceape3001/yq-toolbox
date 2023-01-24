@@ -67,6 +67,20 @@ namespace yq {
             return PropertyInfo::PropW<C,T>{ret};
         }
         
+
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
+        template <typename T>
+        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (C::*function)() const noexcept, const std::source_location& sl=std::source_location::current())
+        {
+            return property(szName, (T (C::*)() const) function, sl);
+        }
+
         /*! \brief Defines a property
         
             This defines a property for the type/object
@@ -83,6 +97,18 @@ namespace yq {
             return PropertyInfo::PropW<C,T>{ret};
         }
 
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param  p       Function pointer to getter (const & returns)
+        */
+        template <typename T>
+        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (C::*function)() const noexcept, const std::source_location& sl=std::source_location::current())
+        {
+            return property(szName, (const T& (C::*)() const) function, sl);
+        }
 
         /*! \brief Defines a property
         
