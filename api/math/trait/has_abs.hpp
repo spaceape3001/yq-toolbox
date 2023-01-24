@@ -39,16 +39,18 @@ namespace yq {
         IMPL_YQ_ABS(type, __VA_ARGS__)
         
     #define YQ_ABS_1(type, ...)                                 \
-        template <typename T> requires trait::has_abs_v<T>      \
+        template <typename T>                                   \
         IMPL_YQ_ABS(type<T>, __VA_ARGS__)
         
-    template <typename T>
-    requires std::is_arithmetic_v<T>
-    struct abs_eval<T> : public std::true_type {         
-        static  auto compute(T v)        
-        {                                                   
-            return std::abs(v);
-        }                                                   
-    };
-    
+    YQ_ABS(uint8_t, v )
+    YQ_ABS(uint16_t, v )
+    YQ_ABS(uint32_t, v )
+    YQ_ABS(uint64_t, v )
+    YQ_ABS(double, std::abs(v) )
+    YQ_ABS(float, std::abs(v) )
+    YQ_ABS(int8_t, std::abs(v) )
+    YQ_ABS(int16_t, std::abs(v) )
+    YQ_ABS(int32_t, std::abs(v) )
+    YQ_ABS(int64_t, std::abs(v) )
 }
+
