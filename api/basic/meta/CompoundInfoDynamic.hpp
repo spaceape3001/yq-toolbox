@@ -221,6 +221,11 @@ namespace yq {
             return MethodInfo::Writer<R, Args...>();
         }
         
+        template <typename R, typename ... Args>
+        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (C::*function)(Args...) const noexcept, const std::source_location& sl=std::source_location::current())
+        {
+            return method(szName, (R (C::*)(Args...) const) function, sl);
+        }
         
         Dynamic(CompoundInfo* c) : Static(c) {}
     };

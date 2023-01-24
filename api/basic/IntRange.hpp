@@ -73,7 +73,7 @@ namespace yq {
 
     /*! \brief Creates an iterable object from the specified range */
     template <typename T>
-    constexpr IntRange<T> range(T a, T b) noexcept
+    constexpr IntRange<T> int_range(T a, T b) noexcept
     {
         return IntRange<T>{a,b};
     }

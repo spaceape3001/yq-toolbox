@@ -240,7 +240,8 @@ namespace yq {
                 w.alias("String");
                 w.parse<parse_string>();
                 w.print<print_string>();
-                w.method("len", &std::string::size);
+                w.property("len", &std::string::size).description("Current length of this string");
+                w.method("sub", &std::string::substr);
             }
         }
     }

@@ -28,17 +28,10 @@ namespace yq {
             g->m_methods << this;
         }
         
-        if(ObjectInfo* obj = to_object(parentMeta)){
-            if(obj->m_local.methods.keys.has(zName))
-                yCritical() << "Duplicate method on object (" << obj -> name() << "): " << zName;
+        if(ObjectInfo* obj = to_object(parentMeta))
             obj->m_local.methods << this;
-        }
-        
-        if(TypeInfo* type = to_type(parentMeta)){
-            if(type -> m_methods.keys.has(zName))
-                yCritical() << "Duplicate method on type (" << type -> name() << "): " << zName;
+        if(TypeInfo* type = to_type(parentMeta))
             type->m_methods << this;
-        }
     }
     
     void    MethodInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription, options_t opts)

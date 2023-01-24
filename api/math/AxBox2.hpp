@@ -112,7 +112,7 @@ namespace yq {
             A small box is "eclipsed" if it's wholy contained (or touching edges) by this box.
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool          eclipses(const AxBox2<T>& b) const noexcept
+        constexpr bool          contains(const AxBox2<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
@@ -161,6 +161,15 @@ namespace yq {
             return (one_v<Vector2<T>>-v).emul(lo) + v.emul(hi);
         }
 
+        /*! \brief Returns the size of the box
+        */
+        constexpr Size2<T> size() const noexcept 
+        {
+            auto s = span();
+            return Size2<T>{ s.x, s.y, s.z }; 
+        }
+
+
         //! Returns the southeast corner of the box
         constexpr Vector2<T>    southeast() const noexcept { return { hi.x, lo.y }; }
         
@@ -174,12 +183,6 @@ namespace yq {
             return hi - lo;
         }
         
-        /*! \brief Returns the size of the box
-        */
-        constexpr Size2<T>      size() const noexcept
-        {
-            return { x_size(), y_size() };
-        }
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
 

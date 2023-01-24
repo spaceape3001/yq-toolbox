@@ -369,3 +369,10 @@ namespace yq {
         return a.span();
     }
 }
+
+YQ_TYPE_DECLARE(yq::RangeD)
+YQ_TYPE_DECLARE(yq::RangeF)
+YQ_TYPE_DECLARE(yq::RangeI)
+YQ_TYPE_DECLARE(yq::RangeU)
+
+

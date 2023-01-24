@@ -7,6 +7,7 @@
 
 #include <math/preamble.hpp>
 #include <math/Range.hpp>
+#include <math/Size4.hpp>
 #include <math/Vector4.hpp>
 #include <math/AxCorners4.hpp>
 
@@ -117,7 +118,7 @@ namespace yq {
             \param[in] Big   The "bigger" box, if eclipsed
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox4<T>& b) const noexcept
+        constexpr bool contains(const AxBox4<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
@@ -156,6 +157,12 @@ namespace yq {
         constexpr Vector4<T>   project(const Vector4<T>& v) const noexcept
         {
             return (one_v<Vector4<T>>-v).emul(lo) + v.emul(hi);
+        }
+
+        constexpr Size4<T> size() const noexcept 
+        {
+            auto s = span();
+            return Size4<T>{ s.x, s.y, s.z, s.w  }; 
         }
 
         /*! \brief Returns the span (dimensions) of the box

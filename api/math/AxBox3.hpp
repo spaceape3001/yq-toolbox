@@ -110,7 +110,7 @@ namespace yq {
             \param[in] Big   The "bigger" box, if eclipsed
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox3<T>& b) const noexcept
+        constexpr bool contains(const AxBox3<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
@@ -169,6 +169,12 @@ namespace yq {
         constexpr Vector3<T>   project(const Vector3<T>& v) const noexcept
         {
             return (one_v<Vector3<T>>-v).emul(lo) + v.emul(hi);
+        }
+
+        constexpr Size3<T> size() const noexcept 
+        {
+            auto s = span();
+            return Size3<T>{ s.x, s.y, s.z }; 
         }
 
         /*! \brief Returns the south east bottom corner

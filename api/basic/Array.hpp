@@ -272,7 +272,7 @@ namespace yq {
         requires (DIMS == 2)
         range_type          columns() const
         {
-            return range(m_calc.softLo.j, m_calc.softHi.j);
+            return int_range(m_calc.softLo.j, m_calc.softHi.j);
         }
 
 
@@ -377,14 +377,14 @@ namespace yq {
 
         constexpr ranges_type hard_ranges() const noexcept
         {
-            return range(m_calc.hardLo, m_calc.hardHi);
+            return int_range(m_calc.hardLo, m_calc.hardHi);
         }
 
         constexpr ranges_type hard_ranges(const coord_type& bumper) const noexcept
         {
             coord_type   L   = hard_low();
             coord_type   U   = hard_upper() - bumper;
-            return range(L, max(L,U));
+            return int_range(L, max(L,U));
         }
 
         constexpr ranges_type hard_ranges(index_type bumper) const noexcept
@@ -514,7 +514,7 @@ namespace yq {
         
         constexpr ranges_type ranges() const noexcept
         {
-            return range(low(), high());
+            return int_range(low(), high());
         }
 
         /*! \brief Ranges with a bumper
@@ -525,7 +525,7 @@ namespace yq {
         {
             coord_type   L   = low();
             coord_type   U   = high() - bumper;
-            return range(L, max(L,U));
+            return int_range(L, max(L,U));
         }
 
         /*! \brief Ranges with a bumper
@@ -565,7 +565,7 @@ namespace yq {
         requires (DIMS == 2)
         range_type          rows() const
         {
-            return range(m_calc.softLo.i, m_calc.softHi.i);
+            return int_range(m_calc.softLo.i, m_calc.softHi.i);
         }
 
         /*! \brief Set the counts for the array
@@ -807,14 +807,14 @@ namespace yq {
 
         constexpr ranges_type soft_ranges() const noexcept
         {
-            return range(soft_low(), soft_high());
+            return int_range(soft_low(), soft_high());
         }
         
         constexpr ranges_type soft_ranges(const coord_type& bumper) const noexcept
         {
             coord_type L = soft_low();
             coord_type U = soft_high() - bumper;
-            return range(L, max(L,U));
+            return int_range(L, max(L,U));
         }
 
         constexpr ranges_type  soft_ranges(index_type bumper) const noexcept

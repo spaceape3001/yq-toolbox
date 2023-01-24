@@ -312,8 +312,10 @@ namespace yq {
     template <typename> struct Segment2;
     template <typename> struct Segment3;
     template <typename> struct Segment4;
+    template <typename> struct Size1;
     template <typename> struct Size2;
     template <typename> struct Size3;
+    template <typename> struct Size4;
     template <typename> struct Sphere3;
     template <typename> struct Sphere4;
     template <typename> struct Tensor11;
@@ -889,6 +891,20 @@ namespace yq {
     using Segment4I                 = Segment4<int>;
     using Segment4U                 = Segment4<unsigned>;
     
+    using Size1D                    = Size1<double>;
+    using Size1F                    = Size1<float>;
+    using Size1I                    = Size1<int>;
+    using Size1I8                   = Size1<int8_t>;
+    using Size1I16                  = Size1<int16_t>;
+    using Size1I32                  = Size1<int32_t>;
+    using Size1I64                  = Size1<int64_t>;
+    using Size1U                    = Size1<unsigned>;
+    using Size1U8                   = Size1<int8_t>;
+    using Size1U16                  = Size1<int16_t>;
+    using Size1U32                  = Size1<int32_t>;
+    using Size1U64                  = Size1<int64_t>;
+    using Size1Z                    = Size1<size_t>;
+
     using Size2D                    = Size2<double>;
     using Size2F                    = Size2<float>;
     using Size2I                    = Size2<int>;
@@ -916,6 +932,20 @@ namespace yq {
     using Size3U33                  = Size3<int32_t>;
     using Size3U64                  = Size3<int64_t>;
     using Size3Z                    = Size3<size_t>;
+
+    using Size4D                    = Size4<double>;
+    using Size4F                    = Size4<float>;
+    using Size4I                    = Size4<int>;
+    using Size4I8                   = Size4<int8_t>;
+    using Size4I16                  = Size4<int16_t>;
+    using Size4I32                  = Size4<int32_t>;
+    using Size4I64                  = Size4<int64_t>;
+    using Size4U                    = Size4<unsigned>;
+    using Size4U8                   = Size4<int8_t>;
+    using Size4U16                  = Size4<int16_t>;
+    using Size4U32                  = Size4<int32_t>;
+    using Size4U64                  = Size4<int64_t>;
+    using Size4Z                    = Size4<size_t>;
 
     using Sphere3D                  = Sphere3<double>;
     using Sphere3F                  = Sphere3<float>;

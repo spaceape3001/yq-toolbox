@@ -50,8 +50,10 @@
 #include <math/Segment3.hpp>
 #include <math/Segment4.hpp>
 
+#include <math/Size1.hpp>
 #include <math/Size2.hpp>
 #include <math/Size3.hpp>
+#include <math/Size4.hpp>
 
 #include <math/Sphere3.hpp>
 #include <math/Sphere4.hpp>
@@ -248,6 +250,11 @@ YQ_TYPE_IMPLEMENT(yq::Ray3F)
 YQ_TYPE_IMPLEMENT(yq::Ray4D)
 YQ_TYPE_IMPLEMENT(yq::Ray4F)
 
+YQ_TYPE_IMPLEMENT(yq::RangeD)
+YQ_TYPE_IMPLEMENT(yq::RangeF)
+YQ_TYPE_IMPLEMENT(yq::RangeI)
+YQ_TYPE_IMPLEMENT(yq::RangeU)
+
 YQ_TYPE_IMPLEMENT(yq::RGB3D)
 YQ_TYPE_IMPLEMENT(yq::RGB3F)
 YQ_TYPE_IMPLEMENT(yq::RGB3U8)
@@ -283,6 +290,11 @@ YQ_TYPE_IMPLEMENT(yq::Segment4F)
 YQ_TYPE_IMPLEMENT(yq::Segment4I)
 YQ_TYPE_IMPLEMENT(yq::Segment4U)
 
+YQ_TYPE_IMPLEMENT(yq::Size1D)
+YQ_TYPE_IMPLEMENT(yq::Size1F)
+YQ_TYPE_IMPLEMENT(yq::Size1I)
+YQ_TYPE_IMPLEMENT(yq::Size1U)
+
 YQ_TYPE_IMPLEMENT(yq::Size2D)
 YQ_TYPE_IMPLEMENT(yq::Size2F)
 YQ_TYPE_IMPLEMENT(yq::Size2I)
@@ -292,6 +304,11 @@ YQ_TYPE_IMPLEMENT(yq::Size3D)
 YQ_TYPE_IMPLEMENT(yq::Size3F)
 YQ_TYPE_IMPLEMENT(yq::Size3I)
 YQ_TYPE_IMPLEMENT(yq::Size3U)
+
+YQ_TYPE_IMPLEMENT(yq::Size4D)
+YQ_TYPE_IMPLEMENT(yq::Size4F)
+YQ_TYPE_IMPLEMENT(yq::Size4I)
+YQ_TYPE_IMPLEMENT(yq::Size4U)
 
 YQ_TYPE_IMPLEMENT(yq::Sphere3D)
 YQ_TYPE_IMPLEMENT(yq::Sphere3F)
@@ -716,90 +733,334 @@ YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond3D)
 YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond²3D)
 
 
+//  Grammaer to below
 
-YQ_INVOKE(
-
-    auto axbox1d = writer<AxBox1D>();
-    axbox1d.property("lo", &AxBox1D::lo);
-    axbox1d.property("hi", &AxBox1D::hi);
-    axbox1d.method("center", &AxBox1D::center);
-
-    auto axbox1f = writer<AxBox1F>();
-    axbox1f.property("lo", &AxBox1F::lo);
-    axbox1f.property("hi", &AxBox1F::hi);
-    axbox1f.method("center", &AxBox1F::center);
-
-    auto axbox1i = writer<AxBox1I>();
-    axbox1i.property("lo", &AxBox1I::lo);
-    axbox1i.property("hi", &AxBox1I::hi);
-    axbox1i.method("center", &AxBox1I::center);
-
-    auto axbox1u = writer<AxBox1U>();
-    axbox1u.property("lo", &AxBox1U::lo);
-    axbox1u.property("hi", &AxBox1U::hi);
-    axbox1u.method("center", &AxBox1U::center);
-
-    auto axbox2d = writer<AxBox2D>();
-    axbox2d.property("lo", &AxBox2D::lo);
-    axbox2d.property("hi", &AxBox2D::hi);
-    axbox2d.method("center", &AxBox2D::center);
-
-    auto axbox2f = writer<AxBox2F>();
-    axbox2f.property("lo", &AxBox2F::lo);
-    axbox2f.property("hi", &AxBox2F::hi);
-    axbox2f.method("center", &AxBox2F::center);
-
-    auto axbox2i = writer<AxBox2I>();
-    axbox2i.property("lo", &AxBox2I::lo);
-    axbox2i.property("hi", &AxBox2I::hi);
-    axbox2i.method("center", &AxBox2I::center);
-
-    auto axbox2u = writer<AxBox2U>();
-    axbox2u.property("lo", &AxBox2U::lo);
-    axbox2u.property("hi", &AxBox2U::hi);
-    axbox2u.method("center", &AxBox2U::center);
+static constexpr const std::string_view     szArea              = "area";
+static constexpr const std::string_view     szArea_Box2         = "Area of the box";
+static constexpr const std::string_view     szArea_Box3         = "Surface area of the box";
+static constexpr const std::string_view     szCenter            = "center";
+static constexpr const std::string_view     szCenter_Box        = "Center of the box";
+static constexpr const std::string_view     szContains          = "contains";
+static constexpr const std::string_view     szContains_Box_Box  = "Tests if other box is inside/touching this box";
+static constexpr const std::string_view     szContains_Box_Pt   = "Tests if point is inside/touching the box";
+static constexpr const std::string_view     szDimension         = "dimensions";
+static constexpr const std::string_view     szDimension_Box     = "Dimension(s) of the box";
+static constexpr const std::string_view     szHigh              = "hi";
+static constexpr const std::string_view     szHigh_Box          = "High-corner of the box";
+static constexpr const std::string_view     szHypervolume       = "hypervolume";
+static constexpr const std::string_view     szHypervolume_Box4  = "Hypervolume of the box";
+static constexpr const std::string_view     szLow               = "lo";
+static constexpr const std::string_view     szLow_Box           = "Low-corner of the box";
+static constexpr const std::string_view     szOverlaps          = "overlaps";
+static constexpr const std::string_view     szOverlaps_Box_Box  = "Tests if other box overlaps this box";
+static constexpr const std::string_view     szProject           = "global";
+static constexpr const std::string_view     szProject_Box       = "Project local point (u/v/w) to real space (x/y/z)";
+static constexpr const std::string_view     szSize              = "size";
+static constexpr const std::string_view     szSize_Box          = "Size of the box";
+static constexpr const std::string_view     szSurfaceArea       = "surface_area";
+static constexpr const std::string_view     szSurfaceArea_Box3  = "Surface area of the box";
+static constexpr const std::string_view     szUnproject         = "local";
+static constexpr const std::string_view     szUnproject_Box     = "Project global point (x/y/z) to local space (u/v/w)";
+static constexpr const std::string_view     szValid             = "valid";
+static constexpr const std::string_view     szValid_Box         = "Tests if the box is valid (ie, lo < hi)";
+static constexpr const std::string_view     szVolume            = "vol";
+static constexpr const std::string_view     szVolume_Box        = "Volume of the box";
+static constexpr const std::string_view     szW                 = "w";
+static constexpr const std::string_view     szW_Box             = "W range of the box";
+static constexpr const std::string_view     szX                 = "x";
+static constexpr const std::string_view     szX_Box             = "X range of the box";
+static constexpr const std::string_view     szY                 = "y";
+static constexpr const std::string_view     szY_Box             = "Y range of the box";
+static constexpr const std::string_view     szZ                 = "z";
+static constexpr const std::string_view     szZ_Box             = "Z range of the box";
 
 
-    auto axbox3d = writer<AxBox3D>();
-    axbox3d.property("lo", &AxBox3D::lo);
-    axbox3d.property("hi", &AxBox3D::hi);
-    axbox3d.method("center", &AxBox3D::center);
+static void reg_math () {
 
-    auto axbox3f = writer<AxBox3F>();
-    axbox3f.property("lo", &AxBox3F::lo);
-    axbox3f.property("hi", &AxBox3F::hi);
-    axbox3f.method("center", &AxBox3F::center);
+    // General order ... all alphabetical
+    //
+    //      1. properties
+    //      2. methods
+    //
 
-    auto axbox3i = writer<AxBox3I>();
-    axbox3i.property("lo", &AxBox3I::lo);
-    axbox3i.property("hi", &AxBox3I::hi);
-    axbox3i.method("center", &AxBox3I::center);
 
-    auto axbox3u = writer<AxBox3U>();
-    axbox3u.property("lo", &AxBox3U::lo);
-    axbox3u.property("hi", &AxBox3U::hi);
-    axbox3u.method("center", &AxBox3U::center);
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  AxBox1
 
-    auto axbox4d = writer<AxBox4D>();
-    axbox4d.property("lo", &AxBox4D::lo);
-    axbox4d.property("hi", &AxBox4D::hi);
-    axbox4d.method("center", &AxBox4D::center);
+    {
+        auto w = writer<AxBox1D>();
+        w.property(szCenter, &AxBox1D::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox1D::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox1D::hi).description(szHigh_Box);
+        w.property(szLow, &AxBox1D::lo).description(szLow_Box);
+        w.property(szValid, &AxBox1D::valid).description(szValid_Box);
+        w.property(szX, &AxBox1D::x_range).description(szX_Box);
+        w.method(szContains, (bool(AxBox1D::*)(const Vector1D&) const) &AxBox1D::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox1D::*)(const AxBox1D&) const) &AxBox1D::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox1D::*)(const AxBox1D&) const) &AxBox1D::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox1D::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox1D::unproject).description(szUnproject_Box);
+    }
 
-    auto axbox4f = writer<AxBox4F>();
-    axbox4f.property("lo", &AxBox4F::lo);
-    axbox4f.property("hi", &AxBox4F::hi);
-    axbox4f.method("center", &AxBox4F::center);
+    {
+        auto w = writer<AxBox1F>();
+        w.property(szCenter, &AxBox1F::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox1F::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox1F::hi).description(szHigh_Box);
+        w.property(szLow, &AxBox1F::lo).description(szLow_Box);
+        w.property(szValid, &AxBox1F::valid).description(szValid_Box);
+        w.property(szX, &AxBox1F::x_range).description(szX_Box);
+        w.method(szContains, (bool(AxBox1F::*)(const Vector1F&) const) &AxBox1F::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox1F::*)(const AxBox1F&) const) &AxBox1F::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox1F::*)(const AxBox1F&) const) &AxBox1F::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox1F::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox1F::unproject).description(szUnproject_Box);
+    }
 
-    auto axbox4i = writer<AxBox4I>();
-    axbox4i.property("lo", &AxBox4I::lo);
-    axbox4i.property("hi", &AxBox4I::hi);
-    axbox4i.method("center", &AxBox4I::center);
+    {
+        auto w = writer<AxBox1I>();
+        w.property(szCenter, &AxBox1I::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox1I::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox1I::hi).description(szHigh_Box);
+        w.property(szLow, &AxBox1I::lo).description(szLow_Box);
+        w.property(szValid, &AxBox1I::valid).description(szValid_Box);
+        w.property(szX, &AxBox1I::x_range).description(szX_Box);
+        w.method(szContains, (bool(AxBox1I::*)(const Vector1I&) const) &AxBox1I::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::overlaps).description(szOverlaps_Box_Box);
+    }
 
-    auto axbox4u = writer<AxBox4U>();
-    axbox4u.property("lo", &AxBox4U::lo);
-    axbox4u.property("hi", &AxBox4U::hi);
-    axbox4u.method("center", &AxBox4U::center);
+    {
+        auto w = writer<AxBox1U>();
+        w.property(szCenter, &AxBox1U::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox1U::span).description(szDimension_Box);
+        w.property(szLow, &AxBox1U::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox1U::hi).description(szHigh_Box);
+        w.property(szValid, &AxBox1U::valid).description(szValid_Box);
+        w.property(szX, &AxBox1U::x_range).description(szX_Box);
+        w.method(szContains, (bool(AxBox1U::*)(const Vector1U&) const) &AxBox1U::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox1U::*)(const AxBox1U&) const) &AxBox1U::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, &AxBox1U::overlaps).description(szOverlaps_Box_Box);
+    }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  AxBox2
+
+    {
+        auto w = writer<AxBox2D>();
+        w.property(szArea, &AxBox2D::area).description(szArea_Box2);
+        w.property(szCenter, &AxBox2D::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox2D::span).description(szDimension_Box);
+        w.property(szLow, &AxBox2D::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox2D::hi).description(szHigh_Box);
+        w.property(szValid, &AxBox2D::valid).description(szValid_Box);
+        w.property(szX, &AxBox2D::x_range).description(szX_Box);
+        w.property(szY, &AxBox2D::y_range).description(szY_Box);
+        w.method(szContains, (bool(AxBox2D::*)(const Vector2D&) const) &AxBox2D::contains).description(szContains_Box_Pt);
+        w.method(szOverlaps, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::overlaps).description(szOverlaps_Box_Box);
+        w.method(szContains, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::contains).description(szContains_Box_Box);
+        w.method(szProject, &AxBox2D::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox2D::unproject).description(szUnproject_Box);
+    }
+    
+    {
+        auto w = writer<AxBox2F>();
+        w.property(szArea, &AxBox2F::area).description(szArea_Box2);
+        w.property(szCenter, &AxBox2F::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox2F::span).description(szDimension_Box);
+        w.property(szLow, &AxBox2F::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox2F::hi).description(szHigh_Box);
+        w.property(szValid, &AxBox2F::valid).description(szValid_Box);
+        w.property(szX, &AxBox2F::x_range).description(szX_Box);
+        w.property(szY, &AxBox2F::y_range).description(szY_Box);
+        w.method(szContains, (bool(AxBox2F::*)(const Vector2F&) const) &AxBox2F::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox2F::*)(const AxBox2F&) const) &AxBox2F::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox2F::*)(const AxBox2F&) const) &AxBox2F::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox2F::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox2F::unproject).description(szUnproject_Box);
+    }
+    
+    {
+        auto w = writer<AxBox2I>();
+        w.property(szArea, &AxBox2I::area).description(szArea_Box2);
+        w.property(szCenter, &AxBox2I::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox2I::span).description(szDimension_Box);
+        w.property(szLow, &AxBox2I::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox2I::hi).description(szHigh_Box);
+        w.property(szValid, &AxBox2I::valid).description(szValid_Box);
+        w.property(szX, &AxBox2I::x_range).description(szX_Box);
+        w.property(szY, &AxBox2I::y_range).description(szY_Box);
+        w.method(szContains, (bool(AxBox2I::*)(const Vector2I&) const) &AxBox2I::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::overlaps).description(szOverlaps_Box_Box);
+    }
+    
+    {
+        auto w = writer<AxBox2U>();
+        w.property(szArea, &AxBox2U::area).description(szArea_Box2);
+        w.property(szCenter, &AxBox2U::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox2U::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox2U::hi).description(szHigh_Box);
+        w.property(szLow, &AxBox2U::lo).description(szLow_Box);
+        w.property(szValid, &AxBox2U::valid).description(szValid_Box);
+        w.property(szX, &AxBox2U::x_range).description(szX_Box);
+        w.property(szY, &AxBox2U::y_range).description(szY_Box);
+        w.method(szContains, (bool(AxBox2U::*)(const Vector2U&) const) &AxBox2U::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::overlaps).description(szOverlaps_Box_Box);
+    }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  AxBox3
+    
+    {
+        auto w = writer<AxBox3D>();
+        w.property(szSurfaceArea, &AxBox3D::surface_area).description(szSurfaceArea_Box3);
+        w.property(szCenter, &AxBox3D::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox3D::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox3D::hi).description(szHigh_Box);
+        w.property(szLow, &AxBox3D::lo).description(szLow_Box);
+        w.property(szValid, &AxBox3D::valid).description(szValid_Box);
+        w.property(szVolume, &AxBox3D::volume).description(szVolume_Box);
+        w.property(szX, &AxBox3D::x_range).description(szX_Box);
+        w.property(szY, &AxBox3D::y_range).description(szY_Box);
+        w.property(szZ, &AxBox3D::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox3D::*)(const Vector3D&) const) &AxBox3D::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox3D::*)(const AxBox3D&) const) &AxBox3D::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox3D::*)(const AxBox3D&) const) &AxBox3D::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox3D::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox3D::unproject).description(szUnproject_Box);
+    }
+
+    {
+        auto w = writer<AxBox3F>();
+        w.property(szCenter, &AxBox3F::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox3F::span).description(szDimension_Box);
+        w.property(szLow, &AxBox3F::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox3F::hi).description(szHigh_Box);
+        w.property(szSurfaceArea, &AxBox3F::surface_area).description(szSurfaceArea_Box3);
+        w.property(szValid, &AxBox3F::valid).description(szValid_Box);
+        w.property(szVolume, &AxBox3F::volume).description(szVolume_Box);
+        w.property(szX, &AxBox3F::x_range).description(szX_Box);
+        w.property(szY, &AxBox3F::y_range).description(szY_Box);
+        w.property(szZ, &AxBox3F::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox3F::*)(const Vector3F&) const) &AxBox3F::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox3F::*)(const AxBox3F&) const) &AxBox3F::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox3F::*)(const AxBox3F&) const) &AxBox3F::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox3F::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox3F::unproject).description(szUnproject_Box);
+    }
+
+    {
+        auto w = writer<AxBox3I>();
+        w.property(szCenter, &AxBox3I::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox3I::span).description(szDimension_Box);
+        w.property(szLow, &AxBox3I::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox3I::hi).description(szHigh_Box);
+        w.property(szSurfaceArea, &AxBox3I::surface_area).description(szSurfaceArea_Box3);
+        w.property(szValid, &AxBox3I::valid).description(szValid_Box);
+        w.property(szX, &AxBox3I::x_range).description(szX_Box);
+        w.property(szY, &AxBox3I::y_range).description(szY_Box);
+        w.property(szZ, &AxBox3I::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox3I::*)(const Vector3I&) const) &AxBox3I::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::overlaps).description(szOverlaps_Box_Box);
+    }
+
+    {
+        auto w = writer<AxBox3U>();
+        w.property(szCenter, &AxBox3U::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox3U::span).description(szDimension_Box);
+        w.property(szLow, &AxBox3U::lo).description(szLow_Box);
+        w.property(szHigh, &AxBox3U::hi).description(szHigh_Box);
+        w.property(szSurfaceArea, &AxBox3U::surface_area).description(szSurfaceArea_Box3);
+        w.property(szValid, &AxBox3U::valid).description(szValid_Box);
+        w.property(szX, &AxBox3U::x_range).description(szX_Box);
+        w.property(szY, &AxBox3U::y_range).description(szY_Box);
+        w.property(szZ, &AxBox3U::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox3U::*)(const Vector3U&) const) &AxBox3U::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::overlaps).description(szOverlaps_Box_Box);
+    }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  AxBox4
+    
+    {
+        auto w = writer<AxBox4D>();
+        w.property(szCenter, &AxBox4D::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox4D::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox4D::hi).description(szHigh_Box);
+        w.property(szHypervolume, &AxBox4D::hypervolume).description(szHypervolume_Box4);
+        w.property(szLow, &AxBox4D::lo).description(szLow_Box);
+        w.property(szValid, &AxBox4D::valid).description(szValid_Box);
+        w.property(szW, &AxBox4D::w_range).description(szW_Box);
+        w.property(szX, &AxBox4D::x_range).description(szX_Box);
+        w.property(szY, &AxBox4D::y_range).description(szY_Box);
+        w.property(szZ, &AxBox4D::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox4D::*)(const Vector4D&) const) &AxBox4D::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox4D::*)(const AxBox4D&) const) &AxBox4D::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox4D::*)(const AxBox4D&) const) &AxBox4D::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox4D::project).description(szProject_Box);
+    }
+
+    {
+        auto w = writer<AxBox4F>();
+        w.property(szCenter, &AxBox4F::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox4F::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox4F::hi).description(szHigh_Box);
+        w.property(szHypervolume, &AxBox4F::hypervolume).description(szHypervolume_Box4);
+        w.property(szLow, &AxBox4F::lo).description(szLow_Box);
+        w.property(szValid, &AxBox4F::valid).description(szValid_Box);
+        w.property(szW, &AxBox4F::w_range).description(szW_Box);
+        w.property(szX, &AxBox4F::x_range).description(szX_Box);
+        w.property(szY, &AxBox4F::y_range).description(szY_Box);
+        w.property(szZ, &AxBox4F::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox4F::*)(const Vector4F&) const) &AxBox4F::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox4F::*)(const AxBox4F&) const) &AxBox4F::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox4F::*)(const AxBox4F&) const) &AxBox4F::overlaps).description(szOverlaps_Box_Box);
+        w.method(szProject, &AxBox4F::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox4F::unproject).description(szUnproject_Box);
+    }
+    
+    {
+        auto w = writer<AxBox4I>();
+        w.property(szCenter, &AxBox4I::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox4I::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox4I::hi).description(szHigh_Box);
+        w.property(szHypervolume, &AxBox4I::hypervolume).description(szHypervolume_Box4);
+        w.property(szLow, &AxBox4I::lo).description(szLow_Box);
+        w.property(szValid, &AxBox4I::valid).description(szValid_Box);
+        w.property(szW, &AxBox4I::w_range).description(szW_Box);
+        w.property(szX, &AxBox4I::x_range).description(szX_Box);
+        w.property(szY, &AxBox4I::y_range).description(szY_Box);
+        w.property(szZ, &AxBox4I::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox4I::*)(const Vector4I&) const) &AxBox4I::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox4I::*)(const AxBox4I&) const) &AxBox4I::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox4I::*)(const AxBox4I&) const) &AxBox4I::overlaps).description(szOverlaps_Box_Box);
+    }
+    
+    {
+        auto w = writer<AxBox4U>();
+        w.property(szCenter, &AxBox4U::center).description(szCenter_Box);
+        w.property(szDimension, &AxBox4U::span).description(szDimension_Box);
+        w.property(szHigh, &AxBox4U::hi).description(szHigh_Box);
+        w.property(szHypervolume, &AxBox4U::hypervolume).description(szHypervolume_Box4);
+        w.property(szLow, &AxBox4U::lo).description(szLow_Box);
+        w.property(szValid, &AxBox4U::valid).description(szValid_Box);
+        w.property(szW, &AxBox4U::w_range).description(szW_Box);
+        w.property(szX, &AxBox4U::x_range).description(szX_Box);
+        w.property(szY, &AxBox4U::y_range).description(szY_Box);
+        w.property(szZ, &AxBox4U::z_range).description(szZ_Box);
+        w.method(szContains, (bool(AxBox4U::*)(const Vector4U&) const) &AxBox4U::contains).description(szContains_Box_Pt);
+        w.method(szContains, (bool(AxBox4U::*)(const AxBox4U&) const) &AxBox4U::contains).description(szContains_Box_Box);
+        w.method(szOverlaps, (bool(AxBox4U::*)(const AxBox4U&) const) &AxBox4U::overlaps).description(szOverlaps_Box_Box);
+    }
+    
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    
+    
     auto bivec2d = writer<Bivector2D>();
     bivec2d.property("xy", &Bivector2D::xy);
 
@@ -836,29 +1097,42 @@ YQ_INVOKE(
 
 
     auto circle2d = writer<Circle2D>();
-    circle2d.property("pt", &Circle2D::point);
-    circle2d.property("r", &Circle2D::radius);
+    circle2d.property(szCenter, &Circle2D::point);
+    circle2d.property("radius", &Circle2D::radius);
+    circle2d.property("box", &Circle2D::bounds);
+    circle2d.property("diameter", &Circle2D::diameter);
+    circle2d.property("area", &Circle2D::area);
+    circle2d.property("circumference", &Circle2D::circumference);
     
     auto circle2f = writer<Circle2F>();
-    circle2f.property("pt", &Circle2F::point);
-    circle2f.property("r", &Circle2F::radius);
+    circle2f.property(szCenter, &Circle2F::point);
+    circle2f.property("radius", &Circle2F::radius);
+    circle2f.property("box", &Circle2F::bounds);
+    circle2f.property("diameter", &Circle2F::diameter);
+    circle2f.property("area", &Circle2F::area);
+    circle2f.property("circumference", &Circle2F::circumference);
 
     auto circle2i = writer<Circle2I>();
-    circle2i.property("pt", &Circle2I::point);
-    circle2i.property("r", &Circle2I::radius);
+    circle2i.property(szCenter, &Circle2I::point);
+    circle2i.property("radius", &Circle2I::radius);
+    circle2i.property("box", &Circle2I::bounds);
+    circle2i.property("diameter", &Circle2I::diameter);
 
     auto circle2u = writer<Circle2U>();
-    circle2u.property("pt", &Circle2U::point);
-    circle2u.property("r", &Circle2U::radius);
-
+    circle2u.property(szCenter, &Circle2U::point);
+    circle2u.property("radius", &Circle2U::radius);
+    circle2u.property("box", &Circle2U::bounds);
+    circle2u.property("diameter", &Circle2U::diameter);
 
     auto complexD = writer<ComplexD>();
-    complexD.property("re", (double (ComplexD::*)() const) &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real);
-    complexD.property("im", (double (ComplexD::*)() const) &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag);
+    complexD.property("re", &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real);
+    complexD.property("im", &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag);
+    //complexD.property("mag", [](const ComplexD&v) -> double { return std::abs(v); });
 
     auto complexF = writer<ComplexF>();
     complexF.property("re", (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real);
     complexF.property("im", (float (ComplexF::*)() const) &ComplexF::imag).setter((void(ComplexF::*)(float)) &ComplexF::imag);
+    //complexD.property("mag", [](const ComplexF&v) -> float { return std::abs(v); });
 
     auto complexI = writer<ComplexI>();
     complexI.property("re", (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real);
@@ -1110,6 +1384,22 @@ YQ_INVOKE(
     quat3f.property("y", &Quaternion3F::y);
     quat3f.property("z", &Quaternion3F::z);
     
+    {
+        auto w  = writer<RangeD>();
+    }
+    
+    {
+        auto w  = writer<RangeF>();
+    }
+
+    {
+        auto w  = writer<RangeI>();
+    }
+
+    {
+        auto w  = writer<RangeU>();
+    }
+
     auto ray2d = writer<Ray2D>();
     ray2d.property("pt", &Ray2D::point);
     ray2d.property("dir", &Ray2D::direction);
@@ -2084,7 +2374,9 @@ YQ_INVOKE(
     vec4u.property("y", &Vector4U::y);
     vec4u.property("z", &Vector4U::z);
     vec4u.property("w", &Vector4U::w);
-);
+}
+
+YQ_INVOKE(reg_math();)
 
 namespace yq {
     void        initialize_math()

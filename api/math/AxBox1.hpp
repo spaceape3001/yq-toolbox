@@ -8,6 +8,7 @@
 #include <math/preamble.hpp>
 #include <math/Range.hpp>
 #include <math/Vector1.hpp>
+#include <math/Size1.hpp>
 #include <math/AxCorners1.hpp>
 
 namespace yq {
@@ -102,7 +103,7 @@ namespace yq {
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
             \param[in] b     The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox1<T>& b) const noexcept
+        constexpr bool contains(const AxBox1<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
@@ -133,6 +134,12 @@ namespace yq {
         constexpr Vector1<T>   project(const Vector1<T>& v) const noexcept
         {
             return (one_v<Vector1<T>>-v).emul(lo) + v.emul(hi);
+        }
+        
+        constexpr Size1<T> size() const noexcept 
+        {
+            auto s = span();
+            return Size1<T>{ s.x }; 
         }
 
         constexpr Vector1<T>    span() const noexcept
