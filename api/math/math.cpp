@@ -740,15 +740,24 @@ static constexpr const std::string_view     szArea_Box2         = "Area of the b
 static constexpr const std::string_view     szArea_Box3         = "Surface area of the box";
 static constexpr const std::string_view     szCenter            = "center";
 static constexpr const std::string_view     szCenter_Box        = "Center of the box";
+static constexpr const std::string_view     szCtr               = "ctr";
 static constexpr const std::string_view     szContains          = "contains";
 static constexpr const std::string_view     szContains_Box_Box  = "Tests if other box is inside/touching this box";
 static constexpr const std::string_view     szContains_Box_Pt   = "Tests if point is inside/touching the box";
+static constexpr const std::string_view     szDim               = "dim";
 static constexpr const std::string_view     szDimension         = "dimensions";
 static constexpr const std::string_view     szDimension_Box     = "Dimension(s) of the box";
 static constexpr const std::string_view     szHigh              = "hi";
 static constexpr const std::string_view     szHigh_Box          = "High-corner of the box";
 static constexpr const std::string_view     szHypervolume       = "hypervolume";
 static constexpr const std::string_view     szHypervolume_Box4  = "Hypervolume of the box";
+static constexpr const std::string_view     szHVol              = "hvol";
+static constexpr const std::string_view     szLen               = "len";
+static constexpr const std::string_view     szLen²              = "len2";
+static constexpr const std::string_view     szLength            = "length";
+static constexpr const std::string_view     szLength_Vector     = "Length of the vector";
+static constexpr const std::string_view     szLength²           = "length2";
+static constexpr const std::string_view     szLength²_Vector    = "Length SQUARED of the vector";
 static constexpr const std::string_view     szLow               = "lo";
 static constexpr const std::string_view     szLow_Box           = "Low-corner of the box";
 static constexpr const std::string_view     szOverlaps          = "overlaps";
@@ -757,22 +766,29 @@ static constexpr const std::string_view     szProject           = "global";
 static constexpr const std::string_view     szProject_Box       = "Project local point (u/v/w) to real space (x/y/z)";
 static constexpr const std::string_view     szSize              = "size";
 static constexpr const std::string_view     szSize_Box          = "Size of the box";
+static constexpr const std::string_view     szSArea             = "sarea";
 static constexpr const std::string_view     szSurfaceArea       = "surface_area";
 static constexpr const std::string_view     szSurfaceArea_Box3  = "Surface area of the box";
 static constexpr const std::string_view     szUnproject         = "local";
 static constexpr const std::string_view     szUnproject_Box     = "Project global point (x/y/z) to local space (u/v/w)";
 static constexpr const std::string_view     szValid             = "valid";
 static constexpr const std::string_view     szValid_Box         = "Tests if the box is valid (ie, lo < hi)";
-static constexpr const std::string_view     szVolume            = "vol";
+static constexpr const std::string_view     szVol               = "vol";
+static constexpr const std::string_view     szVolume            = "volume";
 static constexpr const std::string_view     szVolume_Box        = "Volume of the box";
 static constexpr const std::string_view     szW                 = "w";
 static constexpr const std::string_view     szW_Box             = "W range of the box";
+static constexpr const std::string_view     szW_Vector          = "W component of the vector";
 static constexpr const std::string_view     szX                 = "x";
 static constexpr const std::string_view     szX_Box             = "X range of the box";
+static constexpr const std::string_view     szX_Vector          = "X component of the vector";
 static constexpr const std::string_view     szY                 = "y";
 static constexpr const std::string_view     szY_Box             = "Y range of the box";
+static constexpr const std::string_view     szY_Vector          = "Y component of the vector";
 static constexpr const std::string_view     szZ                 = "z";
 static constexpr const std::string_view     szZ_Box             = "Z range of the box";
+static constexpr const std::string_view     szZ_Vector          = "Z component of the vector";
+static constexpr const std::string_view     szZ_Vector2         = "Promotes to Vector3 with a z-value";
 
 
 static void reg_math () {
@@ -789,8 +805,8 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1D>();
-        w.property(szCenter, &AxBox1D::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox1D::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox1D::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox1D::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox1D::hi).description(szHigh_Box);
         w.property(szLow, &AxBox1D::lo).description(szLow_Box);
         w.property(szValid, &AxBox1D::valid).description(szValid_Box);
@@ -804,8 +820,8 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1F>();
-        w.property(szCenter, &AxBox1F::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox1F::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox1F::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox1F::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox1F::hi).description(szHigh_Box);
         w.property(szLow, &AxBox1F::lo).description(szLow_Box);
         w.property(szValid, &AxBox1F::valid).description(szValid_Box);
@@ -819,8 +835,8 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1I>();
-        w.property(szCenter, &AxBox1I::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox1I::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox1I::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox1I::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox1I::hi).description(szHigh_Box);
         w.property(szLow, &AxBox1I::lo).description(szLow_Box);
         w.property(szValid, &AxBox1I::valid).description(szValid_Box);
@@ -832,8 +848,8 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1U>();
-        w.property(szCenter, &AxBox1U::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox1U::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox1U::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox1U::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox1U::lo).description(szLow_Box);
         w.property(szHigh, &AxBox1U::hi).description(szHigh_Box);
         w.property(szValid, &AxBox1U::valid).description(szValid_Box);
@@ -849,8 +865,8 @@ static void reg_math () {
     {
         auto w = writer<AxBox2D>();
         w.property(szArea, &AxBox2D::area).description(szArea_Box2);
-        w.property(szCenter, &AxBox2D::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox2D::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox2D::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox2D::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox2D::lo).description(szLow_Box);
         w.property(szHigh, &AxBox2D::hi).description(szHigh_Box);
         w.property(szValid, &AxBox2D::valid).description(szValid_Box);
@@ -866,8 +882,8 @@ static void reg_math () {
     {
         auto w = writer<AxBox2F>();
         w.property(szArea, &AxBox2F::area).description(szArea_Box2);
-        w.property(szCenter, &AxBox2F::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox2F::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox2F::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox2F::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox2F::lo).description(szLow_Box);
         w.property(szHigh, &AxBox2F::hi).description(szHigh_Box);
         w.property(szValid, &AxBox2F::valid).description(szValid_Box);
@@ -883,8 +899,8 @@ static void reg_math () {
     {
         auto w = writer<AxBox2I>();
         w.property(szArea, &AxBox2I::area).description(szArea_Box2);
-        w.property(szCenter, &AxBox2I::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox2I::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox2I::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox2I::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox2I::lo).description(szLow_Box);
         w.property(szHigh, &AxBox2I::hi).description(szHigh_Box);
         w.property(szValid, &AxBox2I::valid).description(szValid_Box);
@@ -898,8 +914,8 @@ static void reg_math () {
     {
         auto w = writer<AxBox2U>();
         w.property(szArea, &AxBox2U::area).description(szArea_Box2);
-        w.property(szCenter, &AxBox2U::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox2U::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox2U::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox2U::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox2U::hi).description(szHigh_Box);
         w.property(szLow, &AxBox2U::lo).description(szLow_Box);
         w.property(szValid, &AxBox2U::valid).description(szValid_Box);
@@ -915,13 +931,13 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox3D>();
-        w.property(szSurfaceArea, &AxBox3D::surface_area).description(szSurfaceArea_Box3);
-        w.property(szCenter, &AxBox3D::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox3D::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox3D::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox3D::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox3D::hi).description(szHigh_Box);
         w.property(szLow, &AxBox3D::lo).description(szLow_Box);
+        w.property(szSurfaceArea, &AxBox3D::surface_area).description(szSurfaceArea_Box3).alias(szSArea);
         w.property(szValid, &AxBox3D::valid).description(szValid_Box);
-        w.property(szVolume, &AxBox3D::volume).description(szVolume_Box);
+        w.property(szVolume, &AxBox3D::volume).description(szVolume_Box).alias(szVol);
         w.property(szX, &AxBox3D::x_range).description(szX_Box);
         w.property(szY, &AxBox3D::y_range).description(szY_Box);
         w.property(szZ, &AxBox3D::z_range).description(szZ_Box);
@@ -934,13 +950,13 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox3F>();
-        w.property(szCenter, &AxBox3F::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox3F::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox3F::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox3F::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox3F::lo).description(szLow_Box);
         w.property(szHigh, &AxBox3F::hi).description(szHigh_Box);
-        w.property(szSurfaceArea, &AxBox3F::surface_area).description(szSurfaceArea_Box3);
+        w.property(szSurfaceArea, &AxBox3F::surface_area).description(szSurfaceArea_Box3).alias(szSArea);
         w.property(szValid, &AxBox3F::valid).description(szValid_Box);
-        w.property(szVolume, &AxBox3F::volume).description(szVolume_Box);
+        w.property(szVolume, &AxBox3F::volume).description(szVolume_Box).alias(szVol);
         w.property(szX, &AxBox3F::x_range).description(szX_Box);
         w.property(szY, &AxBox3F::y_range).description(szY_Box);
         w.property(szZ, &AxBox3F::z_range).description(szZ_Box);
@@ -953,12 +969,13 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox3I>();
-        w.property(szCenter, &AxBox3I::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox3I::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox3I::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox3I::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox3I::lo).description(szLow_Box);
         w.property(szHigh, &AxBox3I::hi).description(szHigh_Box);
-        w.property(szSurfaceArea, &AxBox3I::surface_area).description(szSurfaceArea_Box3);
+        w.property(szSurfaceArea, &AxBox3I::surface_area).description(szSurfaceArea_Box3).alias(szSArea);
         w.property(szValid, &AxBox3I::valid).description(szValid_Box);
+        w.property(szVolume, &AxBox3I::volume).description(szVolume_Box).alias(szVol);
         w.property(szX, &AxBox3I::x_range).description(szX_Box);
         w.property(szY, &AxBox3I::y_range).description(szY_Box);
         w.property(szZ, &AxBox3I::z_range).description(szZ_Box);
@@ -969,12 +986,13 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox3U>();
-        w.property(szCenter, &AxBox3U::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox3U::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox3U::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox3U::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox3U::lo).description(szLow_Box);
         w.property(szHigh, &AxBox3U::hi).description(szHigh_Box);
         w.property(szSurfaceArea, &AxBox3U::surface_area).description(szSurfaceArea_Box3);
         w.property(szValid, &AxBox3U::valid).description(szValid_Box);
+        w.property(szVolume, &AxBox3U::volume).description(szVolume_Box).alias(szVol);
         w.property(szX, &AxBox3U::x_range).description(szX_Box);
         w.property(szY, &AxBox3U::y_range).description(szY_Box);
         w.property(szZ, &AxBox3U::z_range).description(szZ_Box);
@@ -988,8 +1006,8 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox4D>();
-        w.property(szCenter, &AxBox4D::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox4D::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox4D::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox4D::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4D::hi).description(szHigh_Box);
         w.property(szHypervolume, &AxBox4D::hypervolume).description(szHypervolume_Box4);
         w.property(szLow, &AxBox4D::lo).description(szLow_Box);
@@ -1006,8 +1024,8 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox4F>();
-        w.property(szCenter, &AxBox4F::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox4F::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox4F::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox4F::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4F::hi).description(szHigh_Box);
         w.property(szHypervolume, &AxBox4F::hypervolume).description(szHypervolume_Box4);
         w.property(szLow, &AxBox4F::lo).description(szLow_Box);
@@ -1025,8 +1043,8 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox4I>();
-        w.property(szCenter, &AxBox4I::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox4I::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox4I::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox4I::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4I::hi).description(szHigh_Box);
         w.property(szHypervolume, &AxBox4I::hypervolume).description(szHypervolume_Box4);
         w.property(szLow, &AxBox4I::lo).description(szLow_Box);
@@ -1042,8 +1060,8 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox4U>();
-        w.property(szCenter, &AxBox4U::center).description(szCenter_Box);
-        w.property(szDimension, &AxBox4U::span).description(szDimension_Box);
+        w.property(szCenter, &AxBox4U::center).description(szCenter_Box).alias(szCtr);
+        w.property(szDimension, &AxBox4U::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4U::hi).description(szHigh_Box);
         w.property(szHypervolume, &AxBox4U::hypervolume).description(szHypervolume_Box4);
         w.property(szLow, &AxBox4U::lo).description(szLow_Box);
@@ -1320,37 +1338,37 @@ static void reg_math () {
     {
         auto mul1d  = writer<Multivector1D>();
         mul1d.property("a", &Multivector1D::a);
-        mul1d.property("x", &Multivector1D::x);
+        mul1d.property(szX, &Multivector1D::x);
     }
 
     {
         auto mul1f  = writer<Multivector1F>();
         mul1f.property("a", &Multivector1F::a);
-        mul1f.property("x", &Multivector1F::x);
+        mul1f.property(szX, &Multivector1F::x);
     }
 
     {
         auto mul2d  = writer<Multivector2D>();
         mul2d.property("a", &Multivector2D::a);
-        mul2d.property("x", &Multivector2D::x);
-        mul2d.property("y", &Multivector2D::y);
+        mul2d.property(szX, &Multivector2D::x);
+        mul2d.property(szY, &Multivector2D::y);
         mul2d.property("xy", &Multivector2D::xy);
     }
 
     {
         auto mul2f  = writer<Multivector2F>();
         mul2f.property("a", &Multivector2F::a);
-        mul2f.property("x", &Multivector2F::x);
-        mul2f.property("y", &Multivector2F::y);
+        mul2f.property(szX, &Multivector2F::x);
+        mul2f.property(szY, &Multivector2F::y);
         mul2f.property("xy", &Multivector2F::xy);
     }
 
     {
         auto mul3d  = writer<Multivector3D>();
         mul3d.property("a", &Multivector3D::a);
-        mul3d.property("x", &Multivector3D::x);
-        mul3d.property("y", &Multivector3D::y);
-        mul3d.property("z", &Multivector3D::z);
+        mul3d.property(szX, &Multivector3D::x);
+        mul3d.property(szY, &Multivector3D::y);
+        mul3d.property(szZ, &Multivector3D::z);
         mul3d.property("xy", &Multivector3D::xy);
         mul3d.property("yz", &Multivector3D::yz);
         mul3d.property("zx", &Multivector3D::zx);
@@ -1360,9 +1378,9 @@ static void reg_math () {
     {
         auto mul3f  = writer<Multivector3F>();
         mul3f.property("a", &Multivector3F::a);
-        mul3f.property("x", &Multivector3F::x);
-        mul3f.property("y", &Multivector3F::y);
-        mul3f.property("z", &Multivector3F::z);
+        mul3f.property(szX, &Multivector3F::x);
+        mul3f.property(szY, &Multivector3F::y);
+        mul3f.property(szZ, &Multivector3F::z);
         mul3f.property("xy", &Multivector3F::xy);
         mul3f.property("yz", &Multivector3F::yz);
         mul3f.property("zx", &Multivector3F::zx);
@@ -1372,10 +1390,10 @@ static void reg_math () {
     {
         auto mul4d  = writer<Multivector4D>();
         mul4d.property("a", &Multivector4D::a);
-        mul4d.property("x", &Multivector4D::x);
-        mul4d.property("y", &Multivector4D::y);
-        mul4d.property("z", &Multivector4D::z);
-        mul4d.property("w", &Multivector4D::w);
+        mul4d.property(szX, &Multivector4D::x);
+        mul4d.property(szY, &Multivector4D::y);
+        mul4d.property(szZ, &Multivector4D::z);
+        mul4d.property(szW, &Multivector4D::w);
         mul4d.property("xy", &Multivector4D::xy);
         mul4d.property("yz", &Multivector4D::yz);
         mul4d.property("zw", &Multivector4D::zw);
@@ -1392,10 +1410,10 @@ static void reg_math () {
     {
         auto mul4f  = writer<Multivector4F>();
         mul4f.property("a", &Multivector4F::a);
-        mul4f.property("x", &Multivector4F::x);
-        mul4f.property("y", &Multivector4F::y);
-        mul4f.property("z", &Multivector4F::z);
-        mul4f.property("w", &Multivector4F::w);
+        mul4f.property(szX, &Multivector4F::x);
+        mul4f.property(szY, &Multivector4F::y);
+        mul4f.property(szZ, &Multivector4F::z);
+        mul4f.property(szW, &Multivector4F::w);
         mul4f.property("xy", &Multivector4F::xy);
         mul4f.property("yz", &Multivector4F::yz);
         mul4f.property("zw", &Multivector4F::zw);
@@ -1485,18 +1503,18 @@ static void reg_math () {
 
     {
         auto quat3d = writer<Quaternion3D>();
-        quat3d.property("w", &Quaternion3D::w);
-        quat3d.property("x", &Quaternion3D::x);
-        quat3d.property("y", &Quaternion3D::y);
-        quat3d.property("z", &Quaternion3D::z);
+        quat3d.property(szW, &Quaternion3D::w);
+        quat3d.property(szX, &Quaternion3D::x);
+        quat3d.property(szY, &Quaternion3D::y);
+        quat3d.property(szZ, &Quaternion3D::z);
     }
 
     {
         auto quat3f = writer<Quaternion3F>();
-        quat3f.property("w", &Quaternion3F::w);
-        quat3f.property("x", &Quaternion3F::x);
-        quat3f.property("y", &Quaternion3F::y);
-        quat3f.property("z", &Quaternion3F::z);
+        quat3f.property(szW, &Quaternion3F::w);
+        quat3f.property(szX, &Quaternion3F::x);
+        quat3f.property(szY, &Quaternion3F::y);
+        quat3f.property(szZ, &Quaternion3F::z);
     }
         
     {
@@ -1733,72 +1751,72 @@ static void reg_math () {
 
     {
         auto size2d = writer<Size2D>();
-        size2d.property("x", &Size2D::x);
-        size2d.property("y", &Size2D::y);
-        size2d.property("w", &Size2D::width);
+        size2d.property(szX, &Size2D::x);
+        size2d.property(szY, &Size2D::y);
+        size2d.property(szW, &Size2D::width);
         size2d.property("h", &Size2D::height);
     }
 
     {
         auto size2f = writer<Size2F>();
-        size2f.property("x", &Size2F::x);
-        size2f.property("y", &Size2F::y);
-        size2f.property("w", &Size2F::width);
+        size2f.property(szX, &Size2F::x);
+        size2f.property(szY, &Size2F::y);
+        size2f.property(szW, &Size2F::width);
         size2f.property("h", &Size2F::height);
     }
 
     {
         auto size2i = writer<Size2I>();
-        size2i.property("x", &Size2I::x);
-        size2i.property("y", &Size2I::y);
-        size2i.property("w", &Size2I::width);
+        size2i.property(szX, &Size2I::x);
+        size2i.property(szY, &Size2I::y);
+        size2i.property(szW, &Size2I::width);
         size2i.property("h", &Size2I::height);
     }
 
     {
         auto size2u = writer<Size2U>();
-        size2u.property("x", &Size2U::x);
-        size2u.property("y", &Size2U::y);
-        size2u.property("w", &Size2U::width);
+        size2u.property(szX, &Size2U::x);
+        size2u.property(szY, &Size2U::y);
+        size2u.property(szW, &Size2U::width);
         size2u.property("h", &Size2U::height);
     }
 
     {
         auto size3d = writer<Size3D>();
-        size3d.property("x", &Size3D::x);
-        size3d.property("y", &Size3D::y);
-        size3d.property("z", &Size3D::z);
-        size3d.property("w", &Size3D::width);
+        size3d.property(szX, &Size3D::x);
+        size3d.property(szY, &Size3D::y);
+        size3d.property(szZ, &Size3D::z);
+        size3d.property(szW, &Size3D::width);
         size3d.property("h", &Size3D::height);
         size3d.property("d", &Size3D::depth);
     }
 
     {
         auto size3f = writer<Size3F>();
-        size3f.property("x", &Size3F::x);
-        size3f.property("y", &Size3F::y);
-        size3f.property("z", &Size3F::z);
-        size3f.property("w", &Size3F::width);
+        size3f.property(szX, &Size3F::x);
+        size3f.property(szY, &Size3F::y);
+        size3f.property(szZ, &Size3F::z);
+        size3f.property(szW, &Size3F::width);
         size3f.property("h", &Size3F::height);
         size3f.property("d", &Size3F::depth);
     }
 
     {
         auto size3i = writer<Size3I>();
-        size3i.property("x", &Size3I::x);
-        size3i.property("y", &Size3I::y);
-        size3i.property("z", &Size3I::z);
-        size3i.property("w", &Size3I::width);
+        size3i.property(szX, &Size3I::x);
+        size3i.property(szY, &Size3I::y);
+        size3i.property(szZ, &Size3I::z);
+        size3i.property(szW, &Size3I::width);
         size3i.property("h", &Size3I::height);
         size3i.property("d", &Size3I::depth);
     }
 
     {
         auto size3u = writer<Size3U>();
-        size3u.property("x", &Size3U::x);
-        size3u.property("y", &Size3U::y);
-        size3u.property("z", &Size3U::z);
-        size3u.property("w", &Size3U::width);
+        size3u.property(szX, &Size3U::x);
+        size3u.property(szY, &Size3U::y);
+        size3u.property(szZ, &Size3U::z);
+        size3u.property(szW, &Size3U::width);
         size3u.property("h", &Size3U::height);
         size3u.property("d", &Size3U::depth);
     }
@@ -2648,115 +2666,135 @@ static void reg_math () {
     }
 
     {
-        auto vec1d = writer<Vector1D>();
-        vec1d.property("x", &Vector1D::x);
-        vec1d.method("len", &Vector1D::length);
+        auto w = writer<Vector1D>();
+        w.property(szLength, &Vector1D::length).description(szLength_Vector).alias(szLen);
+        w.property(szLength², &Vector1D::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector1D::x);
     }
 
     {
-        auto vec1f = writer<Vector1F>();
-        vec1f.property("x", &Vector1F::x);
-        vec1f.method("len", &Vector1F::length);
+        auto w = writer<Vector1F>();
+        w.property(szLength, &Vector1F::length).description(szLength_Vector).alias(szLen);
+        w.property(szLength², &Vector1F::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector1F::x);
     }
 
     {
-        auto vec1i = writer<Vector1I>();
-        vec1i.property("x", &Vector1I::x);
+        auto w = writer<Vector1I>();
+        w.property(szLength², &Vector1I::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector1I::x).description(szX_Vector);
     }
 
     {
-        auto vec1u = writer<Vector1U>();
-        vec1u.property("x", &Vector1U::x);
+        auto w = writer<Vector1U>();
+        w.property(szLength², &Vector1U::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector1U::x).description(szX_Vector);
     }
 
     {
-        auto vec2d = writer<Vector2D>();
-        vec2d.property("x", &Vector2D::x);
-        vec2d.property("y", &Vector2D::y);
-        vec2d.method("len", &Vector2D::length);
+        auto w = writer<Vector2D>();
+        w.property(szLength², &Vector2D::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector2D::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector2D::x).description(szX_Vector);
+        w.property(szY, &Vector2D::y).description(szY_Vector);
+        w.method(szZ, &Vector2D::z).description(szZ_Vector2);
     }
 
     {
-        auto vec2f = writer<Vector2F>();
-        vec2f.property("x", &Vector2F::x);
-        vec2f.property("y", &Vector2F::y);
-        vec2f.method("len", &Vector2F::length);
+        auto w = writer<Vector2F>();
+        w.property(szLength², &Vector2F::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector2F::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector2F::x).description(szX_Vector);
+        w.property(szY, &Vector2F::y).description(szY_Vector);
+        w.method(szZ, &Vector2F::z).description(szZ_Vector2);
     }
 
     {
-        auto vec2i = writer<Vector2I>();
-        vec2i.property("x", &Vector2I::x);
-        vec2i.property("y", &Vector2I::y);
+        auto w = writer<Vector2I>();
+        w.property(szLength², &Vector2I::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector2I::x).description(szX_Vector);
+        w.property(szY, &Vector2I::y).description(szY_Vector);
+        w.method(szZ, &Vector2I::z).description(szZ_Vector2);
     }
 
     {
-        auto vec2u = writer<Vector2U>();
-        vec2u.property("x", &Vector2U::x);
-        vec2u.property("y", &Vector2U::y);
+        auto w = writer<Vector2U>();
+        w.property(szLength², &Vector2U::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector2U::x).description(szX_Vector);
+        w.property(szY, &Vector2U::y).description(szY_Vector);
+        w.method(szZ, &Vector2U::z).description(szZ_Vector2);
     }
 
     {
-        auto vec3d = writer<Vector3D>();
-        vec3d.property("x", &Vector3D::x);
-        vec3d.property("y", &Vector3D::y);
-        vec3d.property("z", &Vector3D::z);
-        vec3d.method("len", &Vector3D::length);
+        auto w = writer<Vector3D>();
+        w.property(szLength², &Vector3D::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector3D::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector3D::x).description(szX_Vector);
+        w.property(szY, &Vector3D::y).description(szY_Vector);
+        w.property(szZ, &Vector3D::z).description(szZ_Vector);
     }
 
     {
-        auto vec3f = writer<Vector3F>();
-        vec3f.property("x", &Vector3F::x);
-        vec3f.property("y", &Vector3F::y);
-        vec3f.property("z", &Vector3F::z);
-        vec3f.method("len", &Vector3F::length);
+        auto w = writer<Vector3F>();
+        w.property(szLength², &Vector3F::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector3F::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector3F::x).description(szX_Vector);
+        w.property(szY, &Vector3F::y).description(szY_Vector);
+        w.property(szZ, &Vector3F::z).description(szZ_Vector);
     }
 
     {
-        auto vec3i = writer<Vector3I>();
-        vec3i.property("x", &Vector3I::x);
-        vec3i.property("y", &Vector3I::y);
-        vec3i.property("z", &Vector3I::z);
+        auto w = writer<Vector3I>();
+        w.property(szLength², &Vector3I::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector3I::x).description(szX_Vector);
+        w.property(szY, &Vector3I::y).description(szY_Vector);
+        w.property(szZ, &Vector3I::z).description(szZ_Vector);
     }
 
     {
-        auto vec3u = writer<Vector3U>();
-        vec3u.property("x", &Vector3U::x);
-        vec3u.property("y", &Vector3U::y);
-        vec3u.property("z", &Vector3U::z);
+        auto w = writer<Vector3U>();
+        w.property(szLength², &Vector3U::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector3U::x).description(szX_Vector);
+        w.property(szY, &Vector3U::y).description(szY_Vector);
+        w.property(szZ, &Vector3U::z).description(szZ_Vector);
     }
 
     {
-        auto vec4d = writer<Vector4D>();
-        vec4d.property("x", &Vector4D::x);
-        vec4d.property("y", &Vector4D::y);
-        vec4d.property("z", &Vector4D::z);
-        vec4d.property("w", &Vector4D::w);
-        vec4d.method("len", &Vector4D::length);
+        auto w = writer<Vector4D>();
+        w.property(szLength², &Vector4D::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector4D::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector4D::x).description(szX_Vector);
+        w.property(szY, &Vector4D::y).description(szY_Vector);
+        w.property(szZ, &Vector4D::z).description(szZ_Vector);
+        w.property(szW, &Vector4D::w).description(szW_Vector);
     }
 
     {
-        auto vec4f = writer<Vector4F>();
-        vec4f.property("x", &Vector4F::x);
-        vec4f.property("y", &Vector4F::y);
-        vec4f.property("z", &Vector4F::z);
-        vec4f.property("w", &Vector4F::w);
-        vec4f.method("len", &Vector4F::length);
+        auto w = writer<Vector4F>();
+        w.property(szLength², &Vector4F::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector4F::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector4F::x).description(szX_Vector);
+        w.property(szY, &Vector4F::y).description(szY_Vector);
+        w.property(szZ, &Vector4F::z).description(szZ_Vector);
+        w.property(szW, &Vector4F::w).description(szW_Vector);
     }
 
     {
-        auto vec4i = writer<Vector4I>();
-        vec4i.property("x", &Vector4I::x);
-        vec4i.property("y", &Vector4I::y);
-        vec4i.property("z", &Vector4I::z);
-        vec4i.property("w", &Vector4I::w);
+        auto w = writer<Vector4I>();
+        w.property(szLength², &Vector4I::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector4I::x).description(szX_Vector);
+        w.property(szY, &Vector4I::y).description(szY_Vector);
+        w.property(szZ, &Vector4I::z).description(szZ_Vector);
+        w.property(szW, &Vector4I::w).description(szW_Vector);
     }
 
     {
-        auto vec4u = writer<Vector4U>();
-        vec4u.property("x", &Vector4U::x);
-        vec4u.property("y", &Vector4U::y);
-        vec4u.property("z", &Vector4U::z);
-        vec4u.property("w", &Vector4U::w);
+        auto w = writer<Vector4U>();
+        w.property(szLength², &Vector4U::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szX, &Vector4U::x).description(szX_Vector);
+        w.property(szY, &Vector4U::y).description(szY_Vector);
+        w.property(szZ, &Vector4U::z).description(szZ_Vector);
+        w.property(szW, &Vector4U::w).description(szW_Vector);
     }
 }
 

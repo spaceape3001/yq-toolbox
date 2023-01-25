@@ -186,6 +186,7 @@ namespace yq {
             }
             {
                 auto w = writer<double>();
+                w.casts<float>();
                 w.parse<parse_double>();
                 w.print<print_double>();
             }
@@ -196,17 +197,23 @@ namespace yq {
             }
             {
                 auto w  = writer<int8_t>();
+                w.casts<int16_t>();
+                w.casts<int32_t>();
+                w.casts<int64_t>();
                 w.parse<parse_int8>();
                 w.print<print_int8>();
             }
             {
                 auto w  = writer<int16_t>();
+                w.casts<int32_t>();
+                w.casts<int64_t>();
                 w.parse<parse_int16>();
                 w.print<print_int16>();
             }
             {
                 auto w  = writer<int32_t>();
                 w.alias("Integer");
+                w.casts<int64_t>();
                 w.parse<parse_int32>();
                 w.print<print_int32>();
             }
@@ -217,16 +224,28 @@ namespace yq {
             }
             {
                 auto w  = writer<uint8_t>();
+                w.casts<int16_t>();
+                w.casts<int32_t>();
+                w.casts<int64_t>();
+                w.casts<uint16_t>();
+                w.casts<uint32_t>();
+                w.casts<uint64_t>();
                 w.parse<parse_uint8>();
                 w.print<print_uint8>();
             }
             {
                 auto w  = writer<uint16_t>();
+                w.casts<int32_t>();
+                w.casts<int64_t>();
+                w.casts<uint32_t>();
+                w.casts<uint64_t>();
                 w.parse<parse_uint16>();
                 w.print<print_uint16>();
             }
             {
                 auto w  = writer<uint32_t>();
+                w.casts<int64_t>();
+                w.casts<uint64_t>();
                 w.parse<parse_uint32>();
                 w.print<print_uint32>();
             }
