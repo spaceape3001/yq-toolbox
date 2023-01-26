@@ -112,10 +112,17 @@ namespace yq {
             A small box is "eclipsed" if it's wholy contained (or touching edges) by this box.
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool          contains(const AxBox2<T>& b) const noexcept
+        constexpr bool          eclipses(const AxBox2<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }
+
+        /*! \brief Checks for full occlusion
+        
+            A small box is "eclipsed" if it's wholy contained (or touching edges) by this box.
+            \param[in] Small The "smaller" box, if eclipsed
+        */
+        constexpr bool          eclipses(const Circle2<T>& b) const noexcept;
 
         /*! \brief Computes largest circle that's inside the box
             \note The resulting circle will be centered within the box

@@ -32,6 +32,14 @@ namespace yq {
             return { vertex };
         }
 
+        //! Addsa a point to the polygon
+        Polygon3&   operator<<(const Vector3<T>& pt) 
+        {
+            vertex.push_back(pt);
+            return *this;
+        }
+
+
         /*! \brief Computes the axially aligned bounding box of this polygon
         */
         AxBox3<T>   bounds() const

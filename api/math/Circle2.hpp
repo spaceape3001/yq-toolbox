@@ -33,7 +33,10 @@ namespace yq {
         */
         constexpr square_t<T> area() const noexcept
         {
-            return std::numbers::pi_v<ieee754_t<T>> * (radius*radius);
+            if constexpr ( has_ieee754_v<T> )
+                return std::numbers::pi_v<ieee754_t<T>> * (radius*radius);
+            else
+                return {};
         }
 
         //! Returns the bounding box for this circle
@@ -53,7 +56,10 @@ namespace yq {
         */
         constexpr T     circumference() const noexcept
         {
-            return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * radius;
+            if constexpr ( has_ieee754_v<T> )
+                return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * radius;
+            else
+                return {};
         }
 
         /*! \brief Computes the diameter
@@ -95,6 +101,12 @@ namespace yq {
         return circle( center(), half_v<T>*span().length() );
     }
     
+    template <typename T>
+    constexpr bool        AxBox2<T>::eclipses(const Circle2<T>& b) const noexcept
+    {
+        return eclipses(b.bounds());
+    }
+
     template <typename T>
     constexpr Circle2<T>  AxBox2<T>::incircle() const noexcept
     {

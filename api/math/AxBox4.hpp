@@ -118,7 +118,7 @@ namespace yq {
             \param[in] Big   The "bigger" box, if eclipsed
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool contains(const AxBox4<T>& b) const noexcept
+        constexpr bool eclipses(const AxBox4<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }

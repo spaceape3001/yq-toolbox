@@ -735,60 +735,96 @@ YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond²3D)
 
 //  Grammaer to below
 
-static constexpr const std::string_view     szArea              = "area";
-static constexpr const std::string_view     szArea_Box2         = "Area of the box";
-static constexpr const std::string_view     szArea_Box3         = "Surface area of the box";
-static constexpr const std::string_view     szCenter            = "center";
-static constexpr const std::string_view     szCenter_Box        = "Center of the box";
-static constexpr const std::string_view     szCtr               = "ctr";
-static constexpr const std::string_view     szContains          = "contains";
-static constexpr const std::string_view     szContains_Box_Box  = "Tests if other box is inside/touching this box";
-static constexpr const std::string_view     szContains_Box_Pt   = "Tests if point is inside/touching the box";
-static constexpr const std::string_view     szDim               = "dim";
-static constexpr const std::string_view     szDimension         = "dimensions";
-static constexpr const std::string_view     szDimension_Box     = "Dimension(s) of the box";
-static constexpr const std::string_view     szHigh              = "hi";
-static constexpr const std::string_view     szHigh_Box          = "High-corner of the box";
-static constexpr const std::string_view     szHypervolume       = "hypervolume";
-static constexpr const std::string_view     szHypervolume_Box4  = "Hypervolume of the box";
-static constexpr const std::string_view     szHVol              = "hvol";
-static constexpr const std::string_view     szLen               = "len";
-static constexpr const std::string_view     szLen²              = "len2";
-static constexpr const std::string_view     szLength            = "length";
-static constexpr const std::string_view     szLength_Vector     = "Length of the vector";
-static constexpr const std::string_view     szLength²           = "length2";
-static constexpr const std::string_view     szLength²_Vector    = "Length SQUARED of the vector";
-static constexpr const std::string_view     szLow               = "lo";
-static constexpr const std::string_view     szLow_Box           = "Low-corner of the box";
-static constexpr const std::string_view     szOverlaps          = "overlaps";
-static constexpr const std::string_view     szOverlaps_Box_Box  = "Tests if other box overlaps this box";
-static constexpr const std::string_view     szProject           = "global";
-static constexpr const std::string_view     szProject_Box       = "Project local point (u/v/w) to real space (x/y/z)";
-static constexpr const std::string_view     szSize              = "size";
-static constexpr const std::string_view     szSize_Box          = "Size of the box";
-static constexpr const std::string_view     szSArea             = "sarea";
-static constexpr const std::string_view     szSurfaceArea       = "surface_area";
-static constexpr const std::string_view     szSurfaceArea_Box3  = "Surface area of the box";
-static constexpr const std::string_view     szUnproject         = "local";
-static constexpr const std::string_view     szUnproject_Box     = "Project global point (x/y/z) to local space (u/v/w)";
-static constexpr const std::string_view     szValid             = "valid";
-static constexpr const std::string_view     szValid_Box         = "Tests if the box is valid (ie, lo < hi)";
-static constexpr const std::string_view     szVol               = "vol";
-static constexpr const std::string_view     szVolume            = "volume";
-static constexpr const std::string_view     szVolume_Box        = "Volume of the box";
-static constexpr const std::string_view     szW                 = "w";
-static constexpr const std::string_view     szW_Box             = "W range of the box";
-static constexpr const std::string_view     szW_Vector          = "W component of the vector";
-static constexpr const std::string_view     szX                 = "x";
-static constexpr const std::string_view     szX_Box             = "X range of the box";
-static constexpr const std::string_view     szX_Vector          = "X component of the vector";
-static constexpr const std::string_view     szY                 = "y";
-static constexpr const std::string_view     szY_Box             = "Y range of the box";
-static constexpr const std::string_view     szY_Vector          = "Y component of the vector";
-static constexpr const std::string_view     szZ                 = "z";
-static constexpr const std::string_view     szZ_Box             = "Z range of the box";
-static constexpr const std::string_view     szZ_Vector          = "Z component of the vector";
-static constexpr const std::string_view     szZ_Vector2         = "Promotes to Vector3 with a z-value";
+static constexpr const std::string_view     szArea                      = "area";
+static constexpr const std::string_view     szArea_Box                  = "Area of the box";
+static constexpr const std::string_view     szArea_Circle               = "Area of the box";
+static constexpr const std::string_view     szBox                       = "box";
+static constexpr const std::string_view     szBox_Circle                = "Bounding box of the circle";
+static constexpr const std::string_view     szCenter                    = "center";
+static constexpr const std::string_view     szCenter_Box                = "Center of the box";
+static constexpr const std::string_view     szCenter_Circle             = "Center of the circle";
+static constexpr const std::string_view     szCircumcircle              = "circumcircle";
+static constexpr const std::string_view     szCircumcircle_Box          = "Circumcircle of the box";
+static constexpr const std::string_view     szCircumference             = "radius";
+static constexpr const std::string_view     szCircumference_Circle      = "Radius of the circle";
+static constexpr const std::string_view     szContains                  = "contains";
+static constexpr const std::string_view     szContains_Box_Box          = "Tests if other box is inside/touching this box";
+static constexpr const std::string_view     szContains_Box_Pt           = "Tests if point is inside/touching the box";
+static constexpr const std::string_view     szCtr                       = "ctr";
+static constexpr const std::string_view     szD                         = "d";
+static constexpr const std::string_view     szDia                       = "dia";
+static constexpr const std::string_view     szDiameter                  = "diameter";
+static constexpr const std::string_view     szDiameter_Circle           = "Diameter of the circle";
+static constexpr const std::string_view     szDim                       = "dim";
+static constexpr const std::string_view     szDimension                 = "dimensions";
+static constexpr const std::string_view     szDimension_Box             = "Dimension(s) of the box";
+static constexpr const std::string_view     szEclipses                  = "eclipses";
+static constexpr const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
+static constexpr const std::string_view     szEclipses_Box_Circle       = "Tests if circle is inside/touching this box";
+static constexpr const std::string_view     szEclipses_Box_Pt           = "Tests if point is inside/touching the box";
+static constexpr const std::string_view     szHigh                      = "hi";
+static constexpr const std::string_view     szHigh_Box                  = "High-corner of the box";
+static constexpr const std::string_view     szHypervolume               = "hypervolume";
+static constexpr const std::string_view     szHypervolume_Box4          = "Hypervolume of the box";
+static constexpr const std::string_view     szHVol                      = "hvol";
+static constexpr const std::string_view     szIncircle                  = "incircle";
+static constexpr const std::string_view     szIncircle_Box              = "Incircle of the box";
+static constexpr const std::string_view     szLen                       = "len";
+static constexpr const std::string_view     szLen²                      = "len2";
+static constexpr const std::string_view     szLength                    = "length";
+static constexpr const std::string_view     szLength_Vector             = "Length of the vector";
+static constexpr const std::string_view     szLength²                   = "length2";
+static constexpr const std::string_view     szLength²_Vector            = "Length SQUARED of the vector";
+static constexpr const std::string_view     szLow                       = "lo";
+static constexpr const std::string_view     szLow_Box                   = "Low-corner of the box";
+static constexpr const std::string_view     szNE                        = "ne";
+static constexpr const std::string_view     szNortheast                 = "northeast";
+static constexpr const std::string_view     szNortheast_Box             = "North-east corner of the box";
+static constexpr const std::string_view     szNorthwest                 = "northwest";
+static constexpr const std::string_view     szNorthwest_Box             = "North-west corner of the box";
+static constexpr const std::string_view     szNW                        = "nw";
+static constexpr const std::string_view     szOverlaps                  = "overlaps";
+static constexpr const std::string_view     szOverlaps_Box_Box          = "Tests if other box overlaps this box";
+static constexpr const std::string_view     szPerimeter                 = "perimeter";
+static constexpr const std::string_view     szPerimeter_Box             = "Perimeter of the box";
+static constexpr const std::string_view     szPerimeter_Circle          = "Perimeter of the circle";
+static constexpr const std::string_view     szProject                   = "global";
+static constexpr const std::string_view     szProject_Box               = "Project local point (u/v/w) to real space (x/y/z)";
+static constexpr const std::string_view     szR                         = "r";
+static constexpr const std::string_view     szRadius                    = "radius";
+static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
+static constexpr const std::string_view     szSE                        = "se";
+static constexpr const std::string_view     szSArea                     = "sarea";
+static constexpr const std::string_view     szSize                      = "size";
+static constexpr const std::string_view     szSize_Box                  = "Size of the box";
+static constexpr const std::string_view     szSoutheast                 = "northeast";
+static constexpr const std::string_view     szSoutheast_Box             = "North-east corner of the box";
+static constexpr const std::string_view     szSouthwest                 = "northwest";
+static constexpr const std::string_view     szSouthwest_Box             = "North-west corner of the box";
+static constexpr const std::string_view     szSurfaceArea               = "surface_area";
+static constexpr const std::string_view     szSurfaceArea_Box3          = "Surface area of the box";
+static constexpr const std::string_view     szSW                        = "sw";
+static constexpr const std::string_view     szUnproject                 = "local";
+static constexpr const std::string_view     szUnproject_Box             = "Project global point (x/y/z) to local space (u/v/w)";
+static constexpr const std::string_view     szValid                     = "valid";
+static constexpr const std::string_view     szValid_Box                 = "Tests if the box is valid (ie, lo < hi)";
+static constexpr const std::string_view     szValid_Circle              = "Tests if the circle is valid (ie, radius >= 0)";
+static constexpr const std::string_view     szVol                       = "vol";
+static constexpr const std::string_view     szVolume                    = "volume";
+static constexpr const std::string_view     szVolume_Box                = "Volume of the box";
+static constexpr const std::string_view     szW                         = "w";
+static constexpr const std::string_view     szW_Box                     = "W range of the box";
+static constexpr const std::string_view     szW_Vector                  = "W component of the vector";
+static constexpr const std::string_view     szX                         = "x";
+static constexpr const std::string_view     szX_Box                     = "X range of the box";
+static constexpr const std::string_view     szX_Vector                  = "X component of the vector";
+static constexpr const std::string_view     szY                         = "y";
+static constexpr const std::string_view     szY_Box                     = "Y range of the box";
+static constexpr const std::string_view     szY_Vector                  = "Y component of the vector";
+static constexpr const std::string_view     szZ                         = "z";
+static constexpr const std::string_view     szZ_Box                     = "Z range of the box";
+static constexpr const std::string_view     szZ_Vector                  = "Z component of the vector";
+static constexpr const std::string_view     szZ_Vector2                 = "Promotes to Vector3 with a z-value";
 
 
 static void reg_math () {
@@ -812,7 +848,7 @@ static void reg_math () {
         w.property(szValid, &AxBox1D::valid).description(szValid_Box);
         w.property(szX, &AxBox1D::x_range).description(szX_Box);
         w.method(szContains, (bool(AxBox1D::*)(const Vector1D&) const) &AxBox1D::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox1D::*)(const AxBox1D&) const) &AxBox1D::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox1D::*)(const AxBox1D&) const) &AxBox1D::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox1D::*)(const AxBox1D&) const) &AxBox1D::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox1D::project).description(szProject_Box);
         w.method(szUnproject, &AxBox1D::unproject).description(szUnproject_Box);
@@ -827,7 +863,7 @@ static void reg_math () {
         w.property(szValid, &AxBox1F::valid).description(szValid_Box);
         w.property(szX, &AxBox1F::x_range).description(szX_Box);
         w.method(szContains, (bool(AxBox1F::*)(const Vector1F&) const) &AxBox1F::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox1F::*)(const AxBox1F&) const) &AxBox1F::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox1F::*)(const AxBox1F&) const) &AxBox1F::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox1F::*)(const AxBox1F&) const) &AxBox1F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox1F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox1F::unproject).description(szUnproject_Box);
@@ -842,7 +878,7 @@ static void reg_math () {
         w.property(szValid, &AxBox1I::valid).description(szValid_Box);
         w.property(szX, &AxBox1I::x_range).description(szX_Box);
         w.method(szContains, (bool(AxBox1I::*)(const Vector1I&) const) &AxBox1I::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::overlaps).description(szOverlaps_Box_Box);
     }
 
@@ -855,8 +891,8 @@ static void reg_math () {
         w.property(szValid, &AxBox1U::valid).description(szValid_Box);
         w.property(szX, &AxBox1U::x_range).description(szX_Box);
         w.method(szContains, (bool(AxBox1U::*)(const Vector1U&) const) &AxBox1U::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox1U::*)(const AxBox1U&) const) &AxBox1U::contains).description(szContains_Box_Box);
-        w.method(szOverlaps, &AxBox1U::overlaps).description(szOverlaps_Box_Box);
+        w.method(szEclipses, (bool(AxBox1U::*)(const AxBox1U&) const) &AxBox1U::eclipses).description(szEclipses_Box_Box);
+        w.method(szOverlaps, (bool(AxBox1U::*)(const AxBox1U&) const) &AxBox1U::overlaps).description(szOverlaps_Box_Box);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -864,33 +900,49 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox2D>();
-        w.property(szArea, &AxBox2D::area).description(szArea_Box2);
+        w.property(szArea, &AxBox2D::area).description(szArea_Box);
         w.property(szCenter, &AxBox2D::center).description(szCenter_Box).alias(szCtr);
+        w.property(szCircumcircle, &AxBox2D::circumcircle).description(szCircumcircle);
         w.property(szDimension, &AxBox2D::span).description(szDimension_Box).alias(szDim);
+        w.property(szIncircle, &AxBox2D::incircle).description(szIncircle_Box);
         w.property(szLow, &AxBox2D::lo).description(szLow_Box);
         w.property(szHigh, &AxBox2D::hi).description(szHigh_Box);
+        w.property(szNortheast, &AxBox2D::northeast).description(szNortheast_Box).alias(szNE);
+        w.property(szNorthwest, &AxBox2D::northwest).description(szNorthwest_Box).alias(szNW);
+        w.property(szPerimeter, &AxBox2D::perimeter).description(szPerimeter_Box);
+        w.property(szSoutheast, &AxBox2D::southeast).description(szSoutheast_Box).alias(szSE);
+        w.property(szSouthwest, &AxBox2D::southwest).description(szSouthwest_Box).alias(szSW);
         w.property(szValid, &AxBox2D::valid).description(szValid_Box);
         w.property(szX, &AxBox2D::x_range).description(szX_Box);
         w.property(szY, &AxBox2D::y_range).description(szY_Box);
         w.method(szContains, (bool(AxBox2D::*)(const Vector2D&) const) &AxBox2D::contains).description(szContains_Box_Pt);
-        w.method(szOverlaps, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::overlaps).description(szOverlaps_Box_Box);
-        w.method(szContains, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::eclipses).description(szEclipses_Box_Box);
+        w.method(szEclipses, (bool(AxBox2D::*)(const Circle2D&) const) &AxBox2D::eclipses).description(szEclipses_Box_Circle);
+        w.method(szOverlaps, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::overlaps).description(szContains_Box_Box);
         w.method(szProject, &AxBox2D::project).description(szProject_Box);
         w.method(szUnproject, &AxBox2D::unproject).description(szUnproject_Box);
     }
     
     {
         auto w = writer<AxBox2F>();
-        w.property(szArea, &AxBox2F::area).description(szArea_Box2);
+        w.property(szArea, &AxBox2F::area).description(szArea_Box);
         w.property(szCenter, &AxBox2F::center).description(szCenter_Box).alias(szCtr);
+        w.property(szCircumcircle, &AxBox2F::circumcircle).description(szCircumcircle);
         w.property(szDimension, &AxBox2F::span).description(szDimension_Box).alias(szDim);
+        w.property(szIncircle, &AxBox2F::incircle).description(szIncircle_Box);
         w.property(szLow, &AxBox2F::lo).description(szLow_Box);
         w.property(szHigh, &AxBox2F::hi).description(szHigh_Box);
+        w.property(szNortheast, &AxBox2F::northeast).description(szNortheast_Box).alias(szNE);
+        w.property(szNorthwest, &AxBox2F::northwest).description(szNorthwest_Box).alias(szNW);
+        w.property(szPerimeter, &AxBox2F::perimeter).description(szPerimeter_Box);
+        w.property(szSoutheast, &AxBox2F::southeast).description(szSoutheast_Box).alias(szSE);
+        w.property(szSouthwest, &AxBox2F::southwest).description(szSouthwest_Box).alias(szSW);
         w.property(szValid, &AxBox2F::valid).description(szValid_Box);
         w.property(szX, &AxBox2F::x_range).description(szX_Box);
         w.property(szY, &AxBox2F::y_range).description(szY_Box);
         w.method(szContains, (bool(AxBox2F::*)(const Vector2F&) const) &AxBox2F::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox2F::*)(const AxBox2F&) const) &AxBox2F::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox2F::*)(const AxBox2F&) const) &AxBox2F::eclipses).description(szEclipses_Box_Box);
+        w.method(szEclipses, (bool(AxBox2F::*)(const Circle2F&) const) &AxBox2F::eclipses).description(szEclipses_Box_Circle);
         w.method(szOverlaps, (bool(AxBox2F::*)(const AxBox2F&) const) &AxBox2F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox2F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox2F::unproject).description(szUnproject_Box);
@@ -898,31 +950,43 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox2I>();
-        w.property(szArea, &AxBox2I::area).description(szArea_Box2);
+        w.property(szArea, &AxBox2I::area).description(szArea_Box);
         w.property(szCenter, &AxBox2I::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox2I::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox2I::lo).description(szLow_Box);
         w.property(szHigh, &AxBox2I::hi).description(szHigh_Box);
+        w.property(szNortheast, &AxBox2I::northeast).description(szNortheast_Box).alias(szNE);
+        w.property(szNorthwest, &AxBox2I::northwest).description(szNorthwest_Box).alias(szNW);
+        w.property(szPerimeter, &AxBox2I::perimeter).description(szPerimeter_Box);
+        w.property(szSoutheast, &AxBox2I::southeast).description(szSoutheast_Box).alias(szSE);
+        w.property(szSouthwest, &AxBox2I::southwest).description(szSouthwest_Box).alias(szSW);
         w.property(szValid, &AxBox2I::valid).description(szValid_Box);
         w.property(szX, &AxBox2I::x_range).description(szX_Box);
         w.property(szY, &AxBox2I::y_range).description(szY_Box);
         w.method(szContains, (bool(AxBox2I::*)(const Vector2I&) const) &AxBox2I::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::eclipses).description(szEclipses_Box_Box);
+        w.method(szEclipses, (bool(AxBox2I::*)(const Circle2I&) const) &AxBox2I::eclipses).description(szEclipses_Box_Circle);
         w.method(szOverlaps, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::overlaps).description(szOverlaps_Box_Box);
     }
     
     {
         auto w = writer<AxBox2U>();
-        w.property(szArea, &AxBox2U::area).description(szArea_Box2);
+        w.property(szArea, &AxBox2U::area).description(szArea_Box);
         w.property(szCenter, &AxBox2U::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox2U::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox2U::hi).description(szHigh_Box);
         w.property(szLow, &AxBox2U::lo).description(szLow_Box);
+        w.property(szNortheast, &AxBox2U::northeast).description(szNortheast_Box).alias(szNE);
+        w.property(szNorthwest, &AxBox2U::northwest).description(szNorthwest_Box).alias(szNW);
+        w.property(szPerimeter, &AxBox2U::perimeter).description(szPerimeter_Box);
+        w.property(szSoutheast, &AxBox2U::southeast).description(szSoutheast_Box).alias(szSE);
+        w.property(szSouthwest, &AxBox2U::southwest).description(szSouthwest_Box).alias(szSW);
         w.property(szValid, &AxBox2U::valid).description(szValid_Box);
         w.property(szX, &AxBox2U::x_range).description(szX_Box);
         w.property(szY, &AxBox2U::y_range).description(szY_Box);
         w.method(szContains, (bool(AxBox2U::*)(const Vector2U&) const) &AxBox2U::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::eclipses).description(szEclipses_Box_Box);
+        w.method(szEclipses, (bool(AxBox2U::*)(const Circle2U&) const) &AxBox2U::eclipses).description(szEclipses_Box_Circle);
         w.method(szOverlaps, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::overlaps).description(szOverlaps_Box_Box);
     }
 
@@ -942,7 +1006,7 @@ static void reg_math () {
         w.property(szY, &AxBox3D::y_range).description(szY_Box);
         w.property(szZ, &AxBox3D::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox3D::*)(const Vector3D&) const) &AxBox3D::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox3D::*)(const AxBox3D&) const) &AxBox3D::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox3D::*)(const AxBox3D&) const) &AxBox3D::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox3D::*)(const AxBox3D&) const) &AxBox3D::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox3D::project).description(szProject_Box);
         w.method(szUnproject, &AxBox3D::unproject).description(szUnproject_Box);
@@ -961,7 +1025,7 @@ static void reg_math () {
         w.property(szY, &AxBox3F::y_range).description(szY_Box);
         w.property(szZ, &AxBox3F::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox3F::*)(const Vector3F&) const) &AxBox3F::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox3F::*)(const AxBox3F&) const) &AxBox3F::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox3F::*)(const AxBox3F&) const) &AxBox3F::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox3F::*)(const AxBox3F&) const) &AxBox3F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox3F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox3F::unproject).description(szUnproject_Box);
@@ -980,7 +1044,7 @@ static void reg_math () {
         w.property(szY, &AxBox3I::y_range).description(szY_Box);
         w.property(szZ, &AxBox3I::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox3I::*)(const Vector3I&) const) &AxBox3I::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::overlaps).description(szOverlaps_Box_Box);
     }
 
@@ -997,7 +1061,7 @@ static void reg_math () {
         w.property(szY, &AxBox3U::y_range).description(szY_Box);
         w.property(szZ, &AxBox3U::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox3U::*)(const Vector3U&) const) &AxBox3U::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::overlaps).description(szOverlaps_Box_Box);
     }
 
@@ -1017,9 +1081,10 @@ static void reg_math () {
         w.property(szY, &AxBox4D::y_range).description(szY_Box);
         w.property(szZ, &AxBox4D::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox4D::*)(const Vector4D&) const) &AxBox4D::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox4D::*)(const AxBox4D&) const) &AxBox4D::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox4D::*)(const AxBox4D&) const) &AxBox4D::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox4D::*)(const AxBox4D&) const) &AxBox4D::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox4D::project).description(szProject_Box);
+        w.method(szUnproject, &AxBox4D::unproject).description(szUnproject_Box);
     }
 
     {
@@ -1035,7 +1100,7 @@ static void reg_math () {
         w.property(szY, &AxBox4F::y_range).description(szY_Box);
         w.property(szZ, &AxBox4F::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox4F::*)(const Vector4F&) const) &AxBox4F::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox4F::*)(const AxBox4F&) const) &AxBox4F::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox4F::*)(const AxBox4F&) const) &AxBox4F::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox4F::*)(const AxBox4F&) const) &AxBox4F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox4F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox4F::unproject).description(szUnproject_Box);
@@ -1054,7 +1119,7 @@ static void reg_math () {
         w.property(szY, &AxBox4I::y_range).description(szY_Box);
         w.property(szZ, &AxBox4I::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox4I::*)(const Vector4I&) const) &AxBox4I::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox4I::*)(const AxBox4I&) const) &AxBox4I::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox4I::*)(const AxBox4I&) const) &AxBox4I::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox4I::*)(const AxBox4I&) const) &AxBox4I::overlaps).description(szOverlaps_Box_Box);
     }
     
@@ -1071,7 +1136,7 @@ static void reg_math () {
         w.property(szY, &AxBox4U::y_range).description(szY_Box);
         w.property(szZ, &AxBox4U::z_range).description(szZ_Box);
         w.method(szContains, (bool(AxBox4U::*)(const Vector4U&) const) &AxBox4U::contains).description(szContains_Box_Pt);
-        w.method(szContains, (bool(AxBox4U::*)(const AxBox4U&) const) &AxBox4U::contains).description(szContains_Box_Box);
+        w.method(szEclipses, (bool(AxBox4U::*)(const AxBox4U&) const) &AxBox4U::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox4U::*)(const AxBox4U&) const) &AxBox4U::overlaps).description(szOverlaps_Box_Box);
     }
     
@@ -1126,40 +1191,47 @@ static void reg_math () {
     //  Circle2
     
     {
-
         auto w = writer<Circle2D>();
-        w.property(szCenter, &Circle2D::point);
-        w.property("radius", &Circle2D::radius);
-        w.property("box", &Circle2D::bounds);
-        w.property("diameter", &Circle2D::diameter);
-        w.property("area", &Circle2D::area);
-        w.property("circumference", &Circle2D::circumference);
+        w.property(szArea, &Circle2D::area).description(szArea_Circle);
+        w.property(szBox, &Circle2D::bounds).description(szBox_Circle);
+        w.property(szCenter, &Circle2D::point).description(szCenter_Circle);
+        w.property(szCircumference, &Circle2D::circumference).description(szCircumference);
+        w.property(szDiameter, &Circle2D::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
+        w.property(szPerimeter, &Circle2D::circumference).description(szPerimeter_Circle);
+        w.property(szRadius, &Circle2D::radius).description(szRadius_Circle).alias(szR);
+        w.property(szValid, &Circle2D::valid).description(szValid_Circle);
     }
     
     {
         auto w = writer<Circle2F>();
-        w.property(szCenter, &Circle2F::point);
-        w.property("radius", &Circle2F::radius);
-        w.property("box", &Circle2F::bounds);
-        w.property("diameter", &Circle2F::diameter);
-        w.property("area", &Circle2F::area);
-        w.property("circumference", &Circle2F::circumference);
+        w.property(szArea, &Circle2F::area).description(szArea_Circle);
+        w.property(szBox, &Circle2F::bounds).description(szBox_Circle);
+        w.property(szCenter, &Circle2F::point).description(szCenter_Circle);
+        w.property(szCircumference, &Circle2F::circumference).description(szCircumference);
+        w.property(szDiameter, &Circle2F::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
+        w.property(szPerimeter, &Circle2F::circumference).description(szPerimeter_Circle);
+        w.property(szRadius, &Circle2F::radius).description(szRadius_Circle).alias(szR);
+        w.property(szValid, &Circle2F::valid).description(szValid_Circle);
     }
     
     {
         auto w = writer<Circle2I>();
-        w.property(szCenter, &Circle2I::point);
-        w.property("radius", &Circle2I::radius);
-        w.property("box", &Circle2I::bounds);
-        w.property("diameter", &Circle2I::diameter);
+        w.property(szBox, &Circle2I::bounds).description(szBox_Circle);
+        w.property(szCenter, &Circle2I::point).description(szCenter_Circle);
+        w.property(szDiameter, &Circle2I::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
+        w.property(szPerimeter, &Circle2I::circumference).description(szPerimeter_Circle);
+        w.property(szRadius, &Circle2I::radius).description(szRadius_Circle).alias(szR);
+        w.property(szValid, &Circle2I::valid).description(szValid_Circle);
     }
     
     {
         auto w = writer<Circle2U>();
-        w.property(szCenter, &Circle2U::point);
-        w.property("radius", &Circle2U::radius);
-        w.property("box", &Circle2U::bounds);
-        w.property("diameter", &Circle2U::diameter);
+        w.property(szBox, &Circle2U::bounds).description(szBox_Circle);
+        w.property(szCenter, &Circle2U::point).description(szCenter_Circle);
+        w.property(szDiameter, &Circle2U::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
+        w.property(szPerimeter, &Circle2U::circumference).description(szPerimeter_Circle);
+        w.property(szRadius, &Circle2U::radius).description(szRadius_Circle).alias(szR);
+        w.property(szValid, &Circle2U::valid).description(szValid_Circle);
     }
     
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -103,7 +103,7 @@ namespace yq {
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
             \param[in] b     The "smaller" box, if eclipsed
         */
-        constexpr bool contains(const AxBox1<T>& b) const noexcept
+        constexpr bool eclipses(const AxBox1<T>& b) const noexcept
         {
             return (all(lo) <= b.lo) && (all(b.hi) <= hi);
         }

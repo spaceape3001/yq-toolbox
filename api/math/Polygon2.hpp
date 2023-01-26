@@ -21,7 +21,7 @@ namespace yq {
         using component_type    = T;
         
         //! Vertex data
-        std::vector<Vector2<T>>  vertex;
+        std::vector<Vector2<T>>     vertex;
         
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon2&) const noexcept = default;
@@ -30,6 +30,14 @@ namespace yq {
         {
             return { vertex };
         }
+
+        //! Addsa a point to the polygon
+        Polygon2&   operator<<(const Vector2<T>& pt) 
+        {
+            vertex.push_back(pt);
+            return *this;
+        }
+        
         
         /*! \brief Computes the area of a 2D polygon
         */

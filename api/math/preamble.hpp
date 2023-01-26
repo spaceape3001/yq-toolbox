@@ -1081,6 +1081,63 @@ namespace yq {
         template <typename T>   static constexpr const bool is_basic_v = std::is_floating_point_v<T>;
     }
     
+    //! Fast way to what something's sign is
+    enum class Sign : signed {
+        NEG        = -1,
+        ZERO       =  0,
+        POS        =  1
+    };
+    
+    //! Denote sides of shapes, planes, etc
+    enum class Side : unsigned {
+    
+        // Mind-boggling how this gets defined...we're undoing that!
+        #ifdef ERROR
+        #undef ERROR
+        #endif
+        
+        //! Error detected
+        ERROR       = 1 << 0,
+        
+        //! Below the threshhold
+        BELOW       = 1 << 1,
+        
+        //! Inside the threshhold (or center)
+        MIDDLE      = 1 << 2,
+        
+        ABOVE       = 1 << 3,
+        
+        XNEG        = 1 << 4,
+        YNEG        = 1 << 5,
+        ZNEG        = 1 << 6,
+        WNEG        = 1 << 7,
+
+        XMID        = 1 << 8,
+        YMID        = 1 << 9,
+        ZMID        = 1 << 10,
+        WMID        = 1 << 11,
+
+        XPOS        = 1 << 12,
+        YPOS        = 1 << 13,
+        ZPOS        = 1 << 14,
+        WPOS        = 1 << 15,
+        
+        COPLANAR    = 1 << 16,
+        
+        CENTER      = MIDDLE,
+        INSIDE      = BELOW,
+        TOUCH       = MIDDLE,
+        OUTSIDE     = ABOVE,
+
+        EAST        = XPOS,
+        WEST        = XNEG,
+        NORTH       = YPOS,
+        SOUTH       = YNEG,
+        TOP         = ZPOS,
+        BOTTOM      = ZNEG
+        
+    };
+    
     /*! \brief Mid-way divide two numbers
     */
     template <typename T>
