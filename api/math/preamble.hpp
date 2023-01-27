@@ -130,9 +130,14 @@ namespace yq {
     static constexpr const int64_t  max64   = std::numeric_limits<int64_t>::max();
     static constexpr const uint64_t maxu64  = std::numeric_limits<uint64_t>::max();
     
-    struct two_t {};
-    struct three_t {};
+    struct columns_t {};
     struct ordered_t {};   //! Used in constructors to get the as-is ordered
+    struct rows_t {};
+    struct three_t {};
+    struct two_t {};
+    struct x_t {};
+    struct y_t {};
+    struct z_t {};
     
     static constexpr const two_t        ²;
     static constexpr const three_t      ³;

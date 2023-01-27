@@ -26,20 +26,35 @@ namespace yq {
         //! Component data type argument to this structure (ie, template parameter T)
         using component_type = T;
 
-        /*! \brief Creates a unit-vector in the x-dimension.
-        */
-        static consteval Vector3 unit_x() noexcept;
-        /*! \brief Creates a unit-vector in the y-dimension.
-        */
-        static consteval Vector3 unit_y() noexcept;
-        /*! \brief Creates a unit-vector in the z-dimension.
-        */
-        static consteval Vector3 unit_z() noexcept;
-
         T       x;
         T       y;
         T       z;
         
+        constexpr Vector3() noexcept = default;
+        constexpr Vector3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
+        constexpr Vector3(T _x, T _y, T _z, ordered_t) noexcept : x(_x), y(_y), z(_z) {}
+
+        /*! \brief Creates a unit-vector in the x-dimension.
+        */
+        static consteval Vector3 unit_x() noexcept
+        {
+            return Vector3(one_v<T>,zero_v<T>,zero_v<T>);
+        }
+        
+        /*! \brief Creates a unit-vector in the y-dimension.
+        */
+        static consteval Vector3 unit_y() noexcept
+        {
+            return Vector3(zero_v<T>,one_v<T>,zero_v<T>);
+        }
+        
+        /*! \brief Creates a unit-vector in the z-dimension.
+        */
+        static consteval Vector3 unit_z() noexcept
+        {
+            return Vector3(zero_v<T>,zero_v<T>,one_v<T>);
+        }
+
         //! Equality operator (using default)
         constexpr bool operator==(const Vector3&) const noexcept = default;
 
@@ -295,67 +310,49 @@ namespace yq {
     template <typename T>
     constexpr Vector3<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z) noexcept
     {
-        return {x,y,z};
+        return Vector3<T>( x,y,z );
     }
     
     template <typename T, glm::qualifier Q>
     constexpr Vector3<T> vector(const glm::vec<3,T,Q>& v) noexcept
     {
-        return { v.x, v.y, v.z };
-    }
-
-    template <typename T>
-    consteval Vector3<T> Vector3<T>::unit_x() noexcept
-    {
-        return {one_v<T>,zero_v<T>,zero_v<T>};
-    }
-
-    template <typename T>
-    consteval Vector3<T> Vector3<T>::unit_y() noexcept
-    {
-        return {zero_v<T>,one_v<T>,zero_v<T>};
-    }
-
-    template <typename T>
-    consteval Vector3<T> Vector3<T>::unit_z() noexcept
-    {
-        return {zero_v<T>,zero_v<T>,one_v<T>};
+        return Vector3<T>( v.x, v.y, v.z );
     }
 
     constexpr Vector3D operator "" _x3(unsigned long long int v) noexcept
     {
-        return {(double) v, 0., 0.};
+        return Vector3D((double) v, 0., 0.);
     }
 
     constexpr Vector3D operator "" _x3(long double v) noexcept
     {
-        return {(double) v, 0., 0.};
+        return Vector3D((double) v, 0., 0.);
     }
 
     constexpr Vector3D operator "" _y3(unsigned long long int v) noexcept
     {
-        return {0., (double) v, 0.};
+        return Vector3D(0., (double) v, 0.);
     }
 
     constexpr Vector3D operator "" _y3(long double v) noexcept
     {
-        return {0., (double) v, 0.};
+        return Vector3D(0., (double) v, 0.);
     }
 
     constexpr Vector3D operator "" _z3(unsigned long long int v) noexcept
     {
-        return {0., 0., (double) v};
+        return Vector3D(0., 0., (double) v);
     }
 
     constexpr Vector3D operator "" _z3(long double v) noexcept
     {
-        return {0., 0., (double) v};
+        return Vector3D(0., 0., (double) v);
     }
 
     template <typename T>
     constexpr Vector3<T> Vector2<T>::z(T _z) const noexcept
     {
-        return { x, y, _z };
+        return Vector3<T>( x, y, _z );
     }
 
 
@@ -366,7 +363,7 @@ namespace yq {
     inline  Vector3D    ccw(Radian az, Radian el)
     {
         double  c  = cos(el);
-        return { c*cos(az), c*sin(az), sin(el) };
+        return Vector3D( c*cos(az), c*sin(az), sin(el) );
     }
 
 
@@ -377,19 +374,19 @@ namespace yq {
     inline Vector3D     clockwise(Radian az, Radian el)
     {
         double  c  = cos(el);
-        return { c*sin(az), c*cos(az), sin(el) };
+        return Vector3D(  c*sin(az), c*cos(az), sin(el) );
     }
 
     template <typename T>
     constexpr Vector2<T> xy( const Vector3<T>& a) noexcept
     {
-        return { a.x, a.y };
+        return Vector2<T>( a.x, a.y );
     }
 
     template <typename T>
     constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept
     {
-        return { a.x, a.y, z };
+        return Vector3<T>( a.x, a.y, z );
     }
     
     YQ_NAN_1(Vector3, Vector3<T>{nan_v<T>, nan_v<T>, nan_v<T>})
@@ -441,19 +438,19 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept
     {
-        return {a*b.x, a*b.y, a*b.z};
+        return Vector3<product_t<T,U>>(a*b.x, a*b.y, a*b.z);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Vector3<product_t<T,U>> operator*(const Vector3<T>& a, U b) noexcept
     {
-        return {a.x*b, a.y*b, a.z*b};
+        return Vector3<product_t<T,U>>(a.x*b, a.y*b, a.z*b);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector3<T>& operator*=(Vector3<T>& a, T b) noexcept
+    Vector3<T>& operator*=(Vector3<T>& a, U b) noexcept
     {
         a.x *= b;
         a.y *= b;
@@ -481,7 +478,7 @@ namespace yq {
     requires (std::is_arithmetic_v<U>)
     constexpr  Vector3<quotient_t<T,U>> operator/(const  Vector3<T>& a, U b) noexcept
     {
-        return {a.x / b, a.y / b, a.z / b};
+        return Vector3<quotient_t<T,U>>(a.x / b, a.y / b, a.z / b);
     }
 
     template <typename T, typename U>
@@ -541,11 +538,11 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector3<product_t<T,U>> operator CROSS (const Vector3<T>& a, const Vector3<U>&b) noexcept
     {
-        return { 
+        return Vector3<product_t<T,U>>(
             a.y*b.z-a.z*b.y, 
             a.z*b.x-a.x*b.z, 
             a.x*b.y-a.y*b.x 
-        };
+        );
     }
 
 ///  --------------------------------------------------------
@@ -673,7 +670,7 @@ namespace yq {
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr T     midvector(const Vector3<T>& a, const Vector3<T>& b=Vector3<T>{}) noexcept
+    constexpr Vector3<T>     midvector(const Vector3<T>& a, const Vector3<T>& b=Vector3<T>{}) noexcept
     {
         if constexpr (has_ieee754_v<T>)
             return ieee754_t<T>(0.5)*(a+b);
