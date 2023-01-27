@@ -63,6 +63,14 @@ namespace yq {
             return { x, y, z };
         }
 
+        //! Explicit conversion operator
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_same_v<T,U>)
+        explicit operator Vector3<U>() const
+        {
+            return Vector3<U>( U(x), U(x), U(z) );
+        }
+
         //! Affirmation
         constexpr Vector3 operator+() const noexcept
         {
@@ -79,7 +87,7 @@ namespace yq {
         Vector3<quotient_t<T,T>> operator~() const
         {
             auto l = one_v<T>/length();
-            return {x/l, y/l, z/l};
+            return {x*l, y*l, z*l};
         }
 
         constexpr Vector3 operator+(const Vector3& b) const noexcept
@@ -652,7 +660,7 @@ namespace yq {
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
-        return is_close(compare, actual, Vector3<T>{x, y, z} );
+        return is_close(compare, actual, Vector3<T>(x, y, z) );
     }
 
     template <typename T>

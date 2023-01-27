@@ -527,7 +527,7 @@ namespace yq {
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector1<T>& actual, std::type_identity_t<T> x)
     {
-        return is_close(compare, actual, Vector1<T>{x} );
+        return is_close(compare, actual, Vector1<T>(x) );
     }
     
     template <typename T>
