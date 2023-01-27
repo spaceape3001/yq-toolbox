@@ -23,15 +23,23 @@ namespace yq {
         //! Component data type argument to this structure (ie, template parameter T)
         using component_type = T;
 
-        /*! \brief Creates a unit-vector in the x-dimension.
-        */
-        static consteval Vector1 unit_x() noexcept;
 
         T       x;
         
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
-        constexpr Vector1(T _x, ordered_t) noexcept : x(_x) {}  // for those templated methods
+        constexpr Vector1(all_t, T v) noexcept : x(v) {}
+        constexpr Vector1(ordered_t, T _x) noexcept : x(_x) {}  // for those templated methods
+        constexpr Vector1(x_t, T v) noexcept : x(v) {}
+        consteval Vector1(x_t) noexcept : x(one_v<T>) {}
+        consteval Vector1(zero_t) noexcept : x(zero_v<T>) {}
+
+        /*! \brief Creates a unit-vector in the x-dimension.
+        */
+        static consteval Vector1 unit_x() noexcept
+        {
+            return Vector1(x_t());
+        }
         
         //constexpr Vector1(const glm::vec<1, T, glm::defaultp>& v) noexcept : x(v.x) {}
         
@@ -314,21 +322,15 @@ namespace yq {
     {
         return Vector1( v.x);
     }
-    
-    template <typename T>
-    consteval Vector1<T> Vector1<T>::unit_x() noexcept
-    {
-        return Vector1(one_v<T>);
-    }
 
     constexpr Vector1D operator "" _x1(unsigned long long int v) noexcept
     {
-        return Vector1D((double) v);
+        return Vector1D(x_, (double) v);
     }
 
     constexpr Vector1D operator "" _x1(long double v) noexcept
     {
-        return Vector1D((double) v);
+        return Vector1D(x_, (double) v);
     }
 
     YQ_NAN_1(Vector1, Vector1<T>{nan_v<T>})

@@ -29,7 +29,14 @@ namespace yq {
 
         constexpr Vector2() noexcept = default;
         constexpr Vector2(T _x, T _y) noexcept : x(_x), y(_y) {}
-        constexpr Vector2(T _x, T _y, ordered_t) noexcept : x(_x), y(_y) {}
+        constexpr Vector2(all_t, T v) noexcept : x(v), y(v) {}
+        constexpr Vector2(ordered_t, T _x, T _y) noexcept : x(_x), y(_y) {}
+        consteval Vector2(x_t) noexcept : x(one_v<T>), y(zero_v<T>) {}
+        constexpr Vector2(x_t, T v) noexcept : x(v), y(zero_v<T>) {}
+        consteval Vector2(y_t) noexcept : x(zero_v<T>), y(one_v<T>) {}
+        constexpr Vector2(y_t, T v) noexcept : x(zero_v<T>), y(v) {}
+        consteval Vector2(zero_t) noexcept : x(zero_v<T>), y(zero_v<T>) {}
+        
         
         #if 0
         constexpr Vector2(const glm::vec<2, T, glm::defaultp>()& v) : x(v.x), y(v.y) {}
@@ -39,14 +46,14 @@ namespace yq {
         */
         static consteval Vector2 unit_x() noexcept
         {
-            return Vector2(one_v<T>,zero_v<T>);
+            return Vector2(x_);
         }
         
         /*! \brief Creates a unit-vector in the y-dimension.
         */
         static consteval Vector2 unit_y() noexcept
         {
-            return Vector2(zero_v<T>,one_v<T>);
+            return Vector2(y_);
         }
 
         T       x;
@@ -344,22 +351,22 @@ namespace yq {
 
     constexpr Vector2D operator "" _x2(unsigned long long int v) noexcept
     {
-        return Vector2D((double) v, 0.);
+        return Vector2D(x_, (double) v);
     }
 
     constexpr Vector2D operator "" _x2(long double v) noexcept
     {
-        return Vector2D((double) v, 0.);
+        return Vector2D(x_, (double) v);
     }
 
     constexpr Vector2D operator "" _y2(unsigned long long int v) noexcept
     {
-        return Vector2D(0., (double) v);
+        return Vector2D(y_, (double) v);
     }
 
     constexpr Vector2D operator "" _y2(long double v) noexcept
     {
-        return Vector2D(0., (double) v);
+        return Vector2D(y_, (double) v);
     }
 
     //! Creates a two dimension unit vector

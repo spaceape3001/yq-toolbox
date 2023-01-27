@@ -130,6 +130,7 @@ namespace yq {
     static constexpr const int64_t  max64   = std::numeric_limits<int64_t>::max();
     static constexpr const uint64_t maxu64  = std::numeric_limits<uint64_t>::max();
     
+    struct all_t {};
     struct columns_t {};
     struct diagonal_t {};
     struct identity_t {};
@@ -137,10 +138,23 @@ namespace yq {
     struct rows_t {};
     struct three_t {};
     struct two_t {};
+    struct w_t {};
     struct x_t {};
     struct y_t {};
     struct z_t {};
     struct zero_t {};
+
+    static constexpr const all_t        all_;
+    static constexpr const columns_t    columns_;
+    static constexpr const diagonal_t   diagonal_;
+    static constexpr const identity_t   identity_;
+    static constexpr const ordered_t    ordered_;
+    static constexpr const rows_t       rows_;
+    static constexpr const w_t          w_;
+    static constexpr const x_t          x_;
+    static constexpr const y_t          y_;
+    static constexpr const z_t          z_;
+    static constexpr const zero_t       zero_;
     
     static constexpr const two_t        ²;
     static constexpr const three_t      ³;

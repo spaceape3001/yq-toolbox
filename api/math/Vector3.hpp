@@ -32,27 +32,35 @@ namespace yq {
         
         constexpr Vector3() noexcept = default;
         constexpr Vector3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
-        constexpr Vector3(T _x, T _y, T _z, ordered_t) noexcept : x(_x), y(_y), z(_z) {}
+        constexpr Vector3(all_t, T v) noexcept : x(v), y(v), z(v) {}
+        constexpr Vector3(ordered_t, T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
+        consteval Vector3(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        constexpr Vector3(x_t, T v) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        consteval Vector3(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
+        constexpr Vector3(y_t, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>) {}
+        consteval Vector3(z_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
+        constexpr Vector3(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v) {}
+        consteval Vector3(zero_t) noexcept : Vector3(all_, zero_v<T>) {}
 
         /*! \brief Creates a unit-vector in the x-dimension.
         */
         static consteval Vector3 unit_x() noexcept
         {
-            return Vector3(one_v<T>,zero_v<T>,zero_v<T>);
+            return Vector3(x_);
         }
         
         /*! \brief Creates a unit-vector in the y-dimension.
         */
         static consteval Vector3 unit_y() noexcept
         {
-            return Vector3(zero_v<T>,one_v<T>,zero_v<T>);
+            return Vector3(y_);
         }
         
         /*! \brief Creates a unit-vector in the z-dimension.
         */
         static consteval Vector3 unit_z() noexcept
         {
-            return Vector3(zero_v<T>,zero_v<T>,one_v<T>);
+            return Vector3(z_);
         }
 
         //! Equality operator (using default)
@@ -329,32 +337,32 @@ namespace yq {
 
     constexpr Vector3D operator "" _x3(unsigned long long int v) noexcept
     {
-        return Vector3D((double) v, 0., 0.);
+        return Vector3D(x_, (double) v);
     }
 
     constexpr Vector3D operator "" _x3(long double v) noexcept
     {
-        return Vector3D((double) v, 0., 0.);
+        return Vector3D(x_, (double) v);
     }
 
     constexpr Vector3D operator "" _y3(unsigned long long int v) noexcept
     {
-        return Vector3D(0., (double) v, 0.);
+        return Vector3D(y_, (double) v);
     }
 
     constexpr Vector3D operator "" _y3(long double v) noexcept
     {
-        return Vector3D(0., (double) v, 0.);
+        return Vector3D(y_, (double) v);
     }
 
     constexpr Vector3D operator "" _z3(unsigned long long int v) noexcept
     {
-        return Vector3D(0., 0., (double) v);
+        return Vector3D(z_, (double) v);
     }
 
     constexpr Vector3D operator "" _z3(long double v) noexcept
     {
-        return Vector3D(0., 0., (double) v);
+        return Vector3D(z_, (double) v);
     }
 
     template <typename T>

@@ -27,9 +27,10 @@ namespace yq {
         constexpr Tensor11(diagonal_t, T _xx) noexcept : xx(_xx) {}
         constexpr Tensor11(diagonal_t, const Vector1<T>& v) noexcept : xx(v.x) {}
         constexpr Tensor11(columns_t, const Vector1<T>& x) noexcept : xx(x.x) {}
+        constexpr Tensor11(identity_t) noexcept : xx( one_v<T> ) {}
+        constexpr Tensor11(ordered_t, T _xx) noexcept : xx(_xx) {}
         constexpr Tensor11(rows_t,    const Vector1<T>& x) noexcept : xx(x.x) {}
         constexpr Tensor11(zero_t) noexcept : xx( zero_v<T> ) {}
-        constexpr Tensor11(identity_t) noexcept : xx( one_v<T> ) {}
         
 
         //! Defaulted equality operator
@@ -168,7 +169,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  columns(const Vector1<T>&x)
     {
-        return Tensor11<T>(columns_t(), x);
+        return Tensor11<T>(columns_, x);
     }
 
     /*! \brief Create 1x1 tensor by its diagonal
@@ -176,7 +177,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  diagonal(const Vector1<T>&v)
     {
-        return Tensor11<T>(diagonal_t(), v);
+        return Tensor11<T>(diagonal_, v);
     }
     
     /*! \brief Create 1x1 tensor by its diagonal
@@ -184,7 +185,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  diagonal(T x)
     {
-        return Tensor11<T>(diagonal_t(), x);
+        return Tensor11<T>(diagonal_, x);
     }
 
     /*! \brief Create 1x1 tensor by rows
@@ -192,7 +193,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  rows(const Vector1<T>&x)
     {
-        return Tensor11<T>(rows_t(), x);
+        return Tensor11<T>(rows_, x);
     }
     
     YQ_IDENTITY_1(Tensor11, {

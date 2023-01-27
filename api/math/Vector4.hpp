@@ -33,35 +33,45 @@ namespace yq {
         constexpr Vector4() noexcept = default;
         constexpr Vector4(T _x, T _y, T _z, T _w) noexcept : 
             x(_x), y(_y), z(_z), w(_w) {}
-        constexpr Vector4(T _x, T _y, T _z, T _w, ordered_t) noexcept : 
+        constexpr Vector4(all_t, T v) noexcept : x(v), y(v), z(v), w(v) {}
+        constexpr Vector4(ordered_t, T _x, T _y, T _z, T _w) noexcept : 
             x(_x), y(_y), z(_z), w(_w) {}
+        consteval Vector4(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
+        constexpr Vector4(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
+        consteval Vector4(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>), w(zero_v<T>) {}
+        constexpr Vector4(y_t, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>), w(zero_v<T>) {}
+        consteval Vector4(z_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>), w(zero_v<T>) {}
+        constexpr Vector4(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v), w(zero_v<T>) {}
+        consteval Vector4(w_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(one_v<T>) {}
+        constexpr Vector4(w_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
+        consteval Vector4(zero_t) noexcept : Vector4(all_, zero_v<T>) {}
         
         /*! \brief Creates a unit-vector in the x-dimension.
         */
         static consteval Vector4 unit_x() noexcept
         {
-            return Vector4(one_v<T>,zero_v<T>,zero_v<T>,zero_v<T>);
+            return Vector4(x_);
         }
         
         /*! \brief Creates a unit-vector in the y-dimension.
         */
         static consteval Vector4 unit_y() noexcept
         {
-            return Vector4(zero_v<T>,one_v<T>,zero_v<T>,zero_v<T>);
+            return Vector4(y_);
         }
         
         /*! \brief Creates a unit-vector in the z-dimension.
         */
         static consteval Vector4 unit_z() noexcept
         {
-            return Vector4(zero_v<T>,zero_v<T>,one_v<T>,zero_v<T>);
+            return Vector4(z_);
         }
         
         /*! \brief Creates a unit-vector in the w-dimension.
         */
         static consteval Vector4 unit_w() noexcept
         {
-            return Vector4(zero_v<T>,zero_v<T>,zero_v<T>,one_v<T>);
+            return Vector4(w_);
         }
 
 
@@ -347,42 +357,42 @@ namespace yq {
 
     constexpr Vector4D operator "" _x4(unsigned long long int v) noexcept
     {
-        return Vector4D((double) v, 0., 0., 0.);
+        return Vector4D(x_, (double) v);
     }
 
     constexpr Vector4D operator "" _x4(long double v) noexcept
     {
-        return Vector4D((double) v, 0., 0., 0.);
+        return Vector4D(x_, (double) v);
     }
 
     constexpr Vector4D operator "" _y4(unsigned long long int v) noexcept
     {
-        return Vector4D(0., (double) v, 0., 0.);
+        return Vector4D(y_, (double) v);
     }
 
     constexpr Vector4D operator "" _y4(long double v) noexcept
     {
-        return Vector4D(0., (double) v, 0., 0.);
+        return Vector4D(y_, (double) v);
     }
 
     constexpr Vector4D operator "" _z4(unsigned long long int v) noexcept
     {
-        return Vector4D(0., 0., (double) v, 0.);
+        return Vector4D(z_, (double) v);
     }
 
     constexpr Vector4D operator "" _z4(long double v) noexcept
     {
-        return Vector4D(0., 0., (double) v, 0.);
+        return Vector4D(z_, (double) v);
     }
 
     constexpr Vector4D operator "" _w4(unsigned long long int v) noexcept
     {
-        return Vector4D(0., 0., 0., (double) v);
+        return Vector4D(w_, (double) v);
     }
 
     constexpr Vector4D operator "" _w4(long double v) noexcept
     {
-        return Vector4D(0., 0., 0., (double) v);
+        return Vector4D(w_, (double) v);
     }
 
     YQ_NAN_1(Vector4, Vector4<T>{nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>})
