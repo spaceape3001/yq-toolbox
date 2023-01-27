@@ -132,6 +132,7 @@ namespace yq {
     
     struct two_t {};
     struct three_t {};
+    struct ordered_t {};   //! Used in constructors to get the as-is ordered
     
     static constexpr const two_t        ²;
     static constexpr const three_t      ³;

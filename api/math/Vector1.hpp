@@ -27,7 +27,12 @@ namespace yq {
         */
         static consteval Vector1 unit_x() noexcept;
 
-        T       x;;
+        T       x;
+        
+        constexpr Vector1() noexcept = default;
+        constexpr Vector1(T _x) noexcept : x(_x) {}
+        
+        //constexpr Vector1(const glm::vec<1, T, glm::defaultp>& v) noexcept : x(v.x) {}
         
         //! Equality operator (using default)
         constexpr bool operator==(const Vector1&) const noexcept = default;
@@ -37,6 +42,15 @@ namespace yq {
         {
             return { x  };
         }
+        
+        //! Explicit conversion operator
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_same_v<T,U>)
+        explicit operator Vector1<U>() const
+        {
+            return Vector1<U>( U(x) );
+        }
+        
 
         //! Affirmation operator
         constexpr Vector1 operator+() const noexcept
@@ -116,45 +130,45 @@ namespace yq {
         //! Element by element absolute value
         constexpr Vector1   eabs() const noexcept
         {
-            return { abs(x) };
+            return Vector1(abs(x));
         }
 
         //! Element by element division
         template <typename U>
         constexpr Vector1<quotient_t<T,U>>    ediv(const Vector1<U>&b) const noexcept
         {
-            return {x/b.x};
+            return Vector1<quotient_t<T,U>>(x/b.x);
         }
 
         //! Element by element maximum
         constexpr Vector1   emax(const Vector1&b) const noexcept
         {
-            return {max(x, b.x)};
+            return Vector1(max(x, b.x));
         }
 
         //! Element by element minimum
         constexpr Vector1   emax(T b) const noexcept
         {
-            return {max(x, b)};
+            return Vector1(max(x, b));
         }
 
         //! Element by element minimum
         constexpr Vector1   emin(const Vector1&b) const noexcept
         {
-            return {min(x, b.x)};
+            return Vector1(min(x, b.x));
         }
 
         //! Element by element minimum
         constexpr Vector1   emin(T b) const noexcept
         {
-            return {min(x, b)};
+            return Vector1(min(x, b));
         }
 
         //! Element by element multiplication
         template <typename U>
         constexpr Vector1<product_t<T,U>>    emul(const Vector1<U>&b) const noexcept
         {
-            return {x*b.x};
+            return Vector1<product_t<T,U>>(x*b.x);
         }
 
         /*! \brief Square of the vector's length
@@ -188,14 +202,14 @@ namespace yq {
         */
         constexpr Vector1 all_add(T b) const noexcept
         {
-            return { x + b };
+            return Vector1( x + b );
         }
         
         /*! \brief Subtracts value from all elements
         */
         constexpr Vector1 all_subtract(T b) const noexcept
         {
-            return { x - b };
+            return Vector1( x - b );
         }
 
        /*! Tests every element
@@ -291,29 +305,29 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T> vector(T x) noexcept
     {
-        return {x};
+        return Vector1<T>(x);
     }
     
     template <typename T, glm::qualifier Q>
     constexpr Vector1<T> vector(const glm::vec<1,T,Q>& v) noexcept
     {
-        return { v.x };
+        return Vector1( v.x );
     }
     
     template <typename T>
     consteval Vector1<T> Vector1<T>::unit_x() noexcept
     {
-        return {one_v<T>};
+        return Vector1(one_v<T>);
     }
 
     constexpr Vector1D operator "" _x1(unsigned long long int v) noexcept
     {
-        return {(double) v};
+        return Vector1D((double) v);
     }
 
     constexpr Vector1D operator "" _x1(long double v) noexcept
     {
-        return {(double) v};
+        return Vector1D((double) v);
     }
 
     YQ_NAN_1(Vector1, Vector1<T>{nan_v<T>})
@@ -359,19 +373,19 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr Vector1<product_t<T,U>> operator*(T a, const Vector1<U>&b) noexcept
     {
-        return {a*b.x};
+        return Vector1<product_t<T,U>>(a*b.x);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Vector1<product_t<T,U>> operator*(const Vector1<T>& a, U b) noexcept
     {
-        return {a.x*b};
+        return Vector1<product_t<T,U>>(a.x*b);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector1<T>& operator*=(Vector1<T>& a, T b) noexcept
+    Vector1<T>& operator*=(Vector1<T>& a, U b) noexcept
     {
         a.x *= b;
         return a;
@@ -386,7 +400,7 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector1<product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
     {
-        return {a.x*b.x};
+        return a.emul(b);
     }
 
 //  --------------------------------------------------------
@@ -403,7 +417,7 @@ namespace yq {
     requires (std::is_arithmetic_v<U>)
     constexpr  Vector1<quotient_t<T,U>> operator/(const  Vector1<T>& a, U b) noexcept
     {
-        return {a.x / b};
+        return Vector1<quotient_t<T,U>>(a.x / b);
     }
 
     template <typename T, typename U>
@@ -423,7 +437,7 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector1<quotient_t<T,U>>    div_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
     {
-        return {a.x/b.x};
+        return a.ediv(b);
     }
 
 //  --------------------------------------------------------
@@ -530,7 +544,7 @@ namespace yq {
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr T     midvector(const Vector1<T>& a, const Vector1<T>& b=Vector1<T>{}) noexcept
+    constexpr Vector1<T>        midvector(const Vector1<T>& a, const Vector1<T>& b=Vector1<T>{}) noexcept
     {
         if constexpr (has_ieee754_v<T>)
             return ieee754_t<T>(0.5)*(a+b);
