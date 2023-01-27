@@ -31,6 +31,7 @@ namespace yq {
         
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
+        constexpr Vector1(T _x, ordered_t) noexcept : x(_x) {}  // for those templated methods
         
         //constexpr Vector1(const glm::vec<1, T, glm::defaultp>& v) noexcept : x(v.x) {}
         
@@ -48,7 +49,7 @@ namespace yq {
         requires (std::is_convertible_v<T,U> && !std::is_same_v<T,U>)
         explicit operator Vector1<U>() const
         {
-            return Vector1<U>( U(x) );
+            return Vector1<U>( U(x));
         }
         
 
@@ -61,7 +62,7 @@ namespace yq {
         //! Negation operator
         constexpr Vector1 operator-() const noexcept
         {
-            return {-x};
+            return Vector1(-x );
         }
 
         //! Normalizes the vector
@@ -74,7 +75,7 @@ namespace yq {
 
         constexpr Vector1 operator+(const Vector1& b) const noexcept
         {
-            return {x+b.x};
+            return Vector1(x+b.x);
         }
 
         Vector1& operator+=(const Vector1& b) noexcept
@@ -85,7 +86,7 @@ namespace yq {
 
         constexpr Vector1 operator-(const Vector1& b) const noexcept
         {
-            return {x-b.x};
+            return Vector1(x-b.x);
         }
 
         Vector1& operator-=(const Vector1& b) noexcept
@@ -311,7 +312,7 @@ namespace yq {
     template <typename T, glm::qualifier Q>
     constexpr Vector1<T> vector(const glm::vec<1,T,Q>& v) noexcept
     {
-        return Vector1( v.x );
+        return Vector1( v.x);
     }
     
     template <typename T>

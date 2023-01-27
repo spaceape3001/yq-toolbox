@@ -27,12 +27,27 @@ namespace yq {
         //! Component data type argument to this structure (ie, template parameter T)
         using component_type = T;
 
+        constexpr Vector2() noexcept = default;
+        constexpr Vector2(T _x, T _y) noexcept : x(_x), y(_y) {}
+        constexpr Vector2(T _x, T _y, ordered_t) noexcept : x(_x), y(_y) {}
+        
+        #if 0
+        constexpr Vector2(const glm::vec<2, T, glm::defaultp>()& v) : x(v.x), y(v.y) {}
+        #endif
+
         /*! \brief Creates a unit-vector in the x-dimension.
         */
-        static consteval Vector2 unit_x() noexcept;
+        static consteval Vector2 unit_x() noexcept
+        {
+            return Vector2(one_v<T>,zero_v<T>);
+        }
+        
         /*! \brief Creates a unit-vector in the y-dimension.
         */
-        static consteval Vector2 unit_y() noexcept;
+        static consteval Vector2 unit_y() noexcept
+        {
+            return Vector2(zero_v<T>,one_v<T>);
+        }
 
         T       x;
         T       y;
@@ -40,11 +55,10 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector2&) const noexcept = default;
 
-        template <typename=void>
         Vector2<quotient_t<T,T>> operator~() const
         {
             auto l = one_v<T>/length();
-            return {x/l, y/l};
+            return Vector2<quotient_t<T,T>>(x*l, y*l);
         }
         
 
@@ -52,22 +66,30 @@ namespace yq {
         {
             return { x, y  };
         }
+
+        //! Explicit conversion operator
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_same_v<T,U>)
+        explicit operator Vector2<U>() const
+        {
+            return Vector2<U>( U(x), U(x) );
+        }
         
         //! Affirmation (positive) operator
-        constexpr Vector2<T> operator+() const noexcept
+        constexpr Vector2 operator+() const noexcept
         {
             return *this;
         }
 
         //! Negation (negative) operator
-        constexpr Vector2<T> operator-() const noexcept
+        constexpr Vector2 operator-() const noexcept
         {
-            return {-x,-y};
+            return Vector2(-x,-y);
         }
 
         constexpr Vector2 operator+(const Vector2& b) const noexcept
         {
-            return {x+b.x, y+b.y};
+            return Vector2(x+b.x, y+b.y);
         }
         
         Vector2& operator+=(const Vector2& b) noexcept
@@ -79,7 +101,7 @@ namespace yq {
 
         constexpr Vector2 operator-(const Vector2& b) const noexcept
         {
-            return {x-b.x, y-b.y};
+            return Vector2(x-b.x, y-b.y);
         }
 
         Vector2& operator-=(const Vector2& b) noexcept
@@ -124,45 +146,45 @@ namespace yq {
         //! Element by element absolute value
         constexpr Vector2   eabs() const noexcept
         {
-            return { abs(x), abs(y) };
+            return Vector2( abs(x), abs(y) );
         }
 
         //! Element by element division
         template <typename U>
         constexpr Vector2<quotient_t<T,U>>    ediv(const Vector2<U>&b) const noexcept
         {
-            return {x/b.x, y/b.y};
+            return Vector2<quotient_t<T,U>>(x/b.x, y/b.y);
         }
 
         //! Element by element maximum
         constexpr Vector2   emax(const Vector2&b) const noexcept
         {
-            return {max(x, b.x), max(y, b.y)};
+            return Vector2(max(x, b.x), max(y, b.y));
         }
 
         //! Element by element minimum
         constexpr Vector2   emax(T b) const noexcept
         {
-            return {max(x, b), max(y, b)};
+            return Vector2(max(x, b), max(y, b));
         }
 
         //! Element by element minimum
         constexpr Vector2   emin(const Vector2&b) const noexcept
         {
-            return {min(x, b.x), min(y, b.y)};
+            return Vector2(min(x, b.x), min(y, b.y));
         }
 
         //! Element by element minimum
         constexpr Vector2   emin(T b) const noexcept
         {
-            return {min(x, b), min(y, b)};
+            return Vector2(min(x, b), min(y, b));
         }
 
         //! Element by element multiplication
         template <typename U>
         constexpr Vector2<product_t<T,U>>    emul(const Vector2<U>&b) const noexcept
         {
-            return {x*b.x, y*b.y};
+            return Vector2<product_t<T,U>>(x*b.x, y*b.y);
         }
 
         /*! \brief Square of the vector's length
@@ -195,14 +217,14 @@ namespace yq {
         */
         constexpr Vector2 all_add(T b) const noexcept
         {
-            return { x+b, y+b };
+            return Vector2( x+b, y+b );
         }
         
         /*! \brief Subtracts value to all components
         */
         constexpr Vector2 all_subtract(T b) const noexcept
         {
-            return { x-b, x-b };
+            return Vector2( x-b, x-b );
         }
 
        /*! Tests every element
@@ -311,46 +333,33 @@ namespace yq {
     template <typename T>
     constexpr Vector2<T> vector(T x, std::type_identity_t<T> y) noexcept
     {
-        return {x,y};
+        return Vector2<T>(x,y);
     }
     
     template <typename T, glm::qualifier Q>
     constexpr Vector2<T> vector(const glm::vec<2,T,Q>& v) noexcept
     {
-        return { v.x, v.y };
-    }
-
-
-    template <typename T>
-    consteval Vector2<T> Vector2<T>::unit_x() noexcept
-    {
-        return {one_v<T>,zero_v<T>};
-    }
-
-    template <typename T>
-    consteval Vector2<T> Vector2<T>::unit_y() noexcept
-    {
-        return {zero_v<T>,one_v<T>};
+        return Vector2<T>( v.x, v.y );
     }
 
     constexpr Vector2D operator "" _x2(unsigned long long int v) noexcept
     {
-        return {(double) v, 0.};
+        return Vector2D((double) v, 0.);
     }
 
     constexpr Vector2D operator "" _x2(long double v) noexcept
     {
-        return {(double) v, 0.};
+        return Vector2D((double) v, 0.);
     }
 
     constexpr Vector2D operator "" _y2(unsigned long long int v) noexcept
     {
-        return {0., (double) v};
+        return Vector2D(0., (double) v);
     }
 
     constexpr Vector2D operator "" _y2(long double v) noexcept
     {
-        return {0., (double) v};
+        return Vector2D(0., (double) v);
     }
 
     //! Creates a two dimension unit vector
@@ -358,7 +367,7 @@ namespace yq {
     //! \param az   Counter-clockwise angle from +x
     inline Vector2D     ccw(Radian az)
     {
-        return { cos(az), sin(az) };
+        return Vector2D(cos(az), sin(az) );
     }
 
     //! Creates a two dimension unit vector
@@ -366,7 +375,7 @@ namespace yq {
     //! \param az    Clockwise angle from +y
     inline Vector2D     clockwise(Radian az)
     {
-        return { sin(az), cos(az) };
+        return Vector2D( sin(az), cos(az) );
     }
 
     YQ_NAN_1(Vector2, Vector2<T>{nan_v<T>, nan_v<T>})
@@ -410,20 +419,20 @@ namespace yq {
     requires (std::is_arithmetic_v<T>)
     constexpr Vector2<product_t<T,U>> operator*(T a, const Vector2<U>&b) noexcept
     {
-        return {a*b.x, a*b.y};
+        return Vector2<product_t<T,U>>(a*b.x, a*b.y);
     }
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
     constexpr Vector2<product_t<T,U>> operator*(const Vector2<T>& a, U b) noexcept
     {
-        return {a.x*b, a.y*b};
+        return Vector2<product_t<T,U>>(a.x*b, a.y*b);
     }
 
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector2<T>& operator*=(Vector2<T>& a, T b) noexcept
+    Vector2<T>& operator*=(Vector2<T>& a, U b) noexcept
     {
         a.x *= b;
         a.y *= b;
@@ -451,7 +460,7 @@ namespace yq {
     requires (std::is_arithmetic_v<U>)
     constexpr  Vector2<quotient_t<T,U>> operator/(const  Vector2<T>& a, U b) noexcept
     {
-        return {a.x / b, a.y / b};
+        return Vector2<product_t<T,U>>(a.x / b, a.y / b);
     }
 
     template <typename T, typename U>
@@ -672,7 +681,7 @@ namespace yq {
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr T     midvector(const Vector2<T>& a, const Vector2<T>& b=Vector2<T>{}) noexcept
+    constexpr Vector2<T>  midvector(const Vector2<T>& a, const Vector2<T>& b=Vector2<T>{}) noexcept
     {
         if constexpr (has_ieee754_v<T>)
             return ieee754_t<T>(0.5)*(a+b);
