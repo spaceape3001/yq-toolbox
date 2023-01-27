@@ -21,6 +21,16 @@ namespace yq {
         //! Component type captures the template parameter
         using component_type = T;
         T xx;
+        
+        constexpr Tensor11() noexcept = default;
+        constexpr Tensor11(T _xx) noexcept : xx(_xx) {}
+        constexpr Tensor11(diagonal_t, T _xx) noexcept : xx(_xx) {}
+        constexpr Tensor11(diagonal_t, const Vector1<T>& v) noexcept : xx(v.x) {}
+        constexpr Tensor11(columns_t, const Vector1<T>& x) noexcept : xx(x.x) {}
+        constexpr Tensor11(rows_t,    const Vector1<T>& x) noexcept : xx(x.x) {}
+        constexpr Tensor11(zero_t) noexcept : xx( zero_v<T> ) {}
+        constexpr Tensor11(identity_t) noexcept : xx( one_v<T> ) {}
+        
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor11&) const noexcept = default;
@@ -32,16 +42,16 @@ namespace yq {
 
         constexpr Tensor11  operator-() const noexcept
         {
-            return {
+            return Tensor11(
                 -xx
-            };
+            );
         }
 
         constexpr Tensor11   operator+ (const Tensor11 &b) const noexcept
         {
-            return {
+            return Tensor11(
                 xx+b.xx
-            };
+            );
         }
 
         Tensor11&   operator+=(const Tensor11 &b) 
@@ -52,9 +62,9 @@ namespace yq {
 
         constexpr Tensor11   operator- (const Tensor11 &b) const noexcept
         {
-            return {
+            return Tensor11(
                 xx-b.xx
-            };
+            );
         }
         
         Tensor11&   operator-=(const Tensor11 &b) 
@@ -78,7 +88,7 @@ namespace yq {
         //! Transpose, which is itself for a 1x1
         constexpr Tensor11 transpose() const 
         { 
-            return { xx }; 
+            return Tensor11( xx ); 
         }
 
         //  --------------------------------------------------------
@@ -87,19 +97,19 @@ namespace yq {
             //! Gets the diagonal as a vector
             constexpr Vector1<T>  diagonal() const noexcept
             {
-                return {xx};
+                return Vector1<T>(xx);
             }
 
             //! Gets the x-column as a vector
             constexpr Vector1<T>  x_column()  const noexcept
             {
-                return {xx};
+                return Vector1<T>(xx);
             }
 
             //! Gets the x-row as a vector
             constexpr Vector1<T>  x_row() const noexcept
             {
-                return {xx};
+                return Vector1<T>(xx);
             }
 
         //  --------------------------------------------------------
@@ -158,9 +168,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  columns(const Vector1<T>&x)
     {
-        return {
-            x.x
-        };
+        return Tensor11<T>(columns_t(), x);
     }
 
     /*! \brief Create 1x1 tensor by its diagonal
@@ -168,9 +176,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  diagonal(const Vector1<T>&v)
     {
-        return {
-            v.x
-        };
+        return Tensor11<T>(diagonal_t(), v);
     }
     
     /*! \brief Create 1x1 tensor by its diagonal
@@ -178,9 +184,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  diagonal(T x)
     {
-        return {
-            x
-        };
+        return Tensor11<T>(diagonal_t(), x);
     }
 
     /*! \brief Create 1x1 tensor by rows
@@ -188,9 +192,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  rows(const Vector1<T>&x)
     {
-        return {
-            x.x
-        };
+        return Tensor11<T>(rows_t(), x);
     }
     
     YQ_IDENTITY_1(Tensor11, {
@@ -220,9 +222,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor11<T>  transpose(const Tensor11<T>&v)
     {
-        return {
-            v.xx
-        };
+        return v.transpose();
     }
 
 //  --------------------------------------------------------
@@ -265,9 +265,9 @@ namespace yq {
     requires std::is_arithmetic_v<U>
     constexpr Tensor11<product_t<T,U>>  operator*(const Tensor11<T>& a, U b)
     {
-        return {
+        return Tensor11<product_t<T,U>>(
             a.xx*b
-        };
+        );
     }
     
     template <typename T, typename U>
@@ -281,9 +281,9 @@ namespace yq {
     template <typename T, typename U>
     constexpr Tensor11<product_t<T,U>> operator*(const Tensor11<T>& a, const Tensor11<U>& b)
     {
-        return {
+        return Tensor11<product_t<T,U>>(
             a.xx*b.xx
-        };
+        );
     }
     
     template <typename T, typename U>
@@ -298,17 +298,17 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector1<product_t<T,U>> operator*(const Tensor11<T>&a, const Vector1<U>&b)
     {
-        return {
+        return Vector1<product_t<T,U>>(
             a.xx*b.x
-        };
+        );
     }
 
     template <typename T, typename U>
     constexpr Vector1<product_t<T,U>> operator*(const Vector1<T>&a, const Tensor11<U>&b)
     {
-        return {
+        return Vector1<product_t<T,U>>(
             a.x*b.xx
-        };
+        );
     }
 
     template <typename T, typename U>
@@ -327,9 +327,9 @@ namespace yq {
     requires std::is_arithmetic_v<U>
     constexpr Tensor11<quotient_t<T,U>>  operator/(const Tensor11<T>& a, U b)
     {
-        return {
+        return Tensor11<quotient_t<T,U>>(
             a.xx/b
-        };
+        );
     }
     
     template <typename T, typename U>
@@ -346,9 +346,9 @@ namespace yq {
     template <typename T, typename U>
     constexpr Tensor11<product_t<T,U>> operator OTIMES(const Vector1<T>&a, const Vector1<U>&b)
     {
-        return {
+        return Tensor11<product_t<T,U>>(
             a.x+b.x
-        };
+        );
     }
 
 //  --------------------------------------------------------
