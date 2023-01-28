@@ -146,7 +146,7 @@ namespace yq {
         //  SETTERS
 
             //! Sets the X-column
-            Tensor34<T>& x_column(const Vector4<T>& v) noexcept
+            Tensor34<T>& x_column(const Vector3<T>& v) noexcept
             {
                 xx = v.x;
                 yx = v.y;
@@ -164,7 +164,7 @@ namespace yq {
             }
 
             //! Sets the Y-column
-            Tensor34<T>& y_column(const Vector4<T>& v) noexcept
+            Tensor34<T>& y_column(const Vector3<T>& v) noexcept
             {
                 xy = v.x;
                 yy = v.y;
@@ -182,7 +182,7 @@ namespace yq {
             }
 
             //! Sets the Z-column
-            Tensor34<T>& z_column(const Vector4<T>& v) noexcept
+            Tensor34<T>& z_column(const Vector3<T>& v) noexcept
             {
                 xz = v.x;
                 yz = v.y;
@@ -200,7 +200,7 @@ namespace yq {
             }
 
             //! Sets the W-column
-            Tensor34<T>& w_column(const Vector4<T>& v) noexcept
+            Tensor34<T>& w_column(const Vector3<T>& v) noexcept
             {
                 xw = v.x;
                 yw = v.y;
@@ -218,7 +218,7 @@ namespace yq {
             }
 
             //! Sets the X-row
-            Tensor34<T>& x_row(const Vector3<T>& v) noexcept
+            Tensor34<T>& x_row(const Vector4<T>& v) noexcept
             {
                 xx = v.x;
                 xy = v.y;
@@ -238,7 +238,7 @@ namespace yq {
             }
 
             //! Sets the Y-row
-            Tensor34<T>& y_row(const Vector3<T>& v) noexcept
+            Tensor34<T>& y_row(const Vector4<T>& v) noexcept
             {
                 yx = v.x;
                 yy = v.y;
@@ -258,7 +258,7 @@ namespace yq {
             }
 
             //! Sets the Z-row
-            Tensor34<T>& z_row(const Vector3<T>& v) noexcept
+            Tensor34<T>& z_row(const Vector4<T>& v) noexcept
             {
                 zx = v.x;
                 zy = v.y;

@@ -71,7 +71,7 @@ namespace yq {
 
         constexpr operator glm::vec<2, T, glm::defaultp>() const noexcept
         {
-            return { x, y  };
+            return glm::vec<2, T, glm::defaultp>( x, y );
         }
 
         //! Explicit conversion operator

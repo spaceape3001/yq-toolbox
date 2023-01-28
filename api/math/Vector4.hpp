@@ -100,7 +100,7 @@ namespace yq {
         //! Conversion to GLM library
         constexpr operator glm::vec<4, T, glm::defaultp>() const noexcept
         {
-            return { x, y, z, w };
+            return glm::vec<4, T, glm::defaultp>( x, y, z, w );
         }
 
         //! Explicit conversion operator

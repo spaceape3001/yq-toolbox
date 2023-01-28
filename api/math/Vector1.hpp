@@ -49,7 +49,7 @@ namespace yq {
         //! Implicit conversion to GLM vector
         constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept
         {
-            return { x  };
+            return glm::vec<1, T, glm::defaultp>(x);
         }
         
         //! Explicit conversion operator
