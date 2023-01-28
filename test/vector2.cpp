@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <math/Vector2.hpp>
+#include <math/Vector2.hxx>
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 

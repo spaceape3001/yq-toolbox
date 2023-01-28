@@ -623,23 +623,6 @@ namespace yq {
         };
     }
 
-    template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>> operator*(const Vector3<T>&a, const Tensor33<U>&b)
-    {
-        return {
-            a.x*b.xx + a.y*b.yx + a.z*b.zx,
-            a.x*b.xy + a.y*b.yy + a.z*b.zy,
-            a.x*b.xz + a.y*b.yz + a.z*b.zz
-        };
-    }
-
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Vector3<T>& operator*=(Vector3<T>&a, const Tensor33<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -668,16 +651,6 @@ namespace yq {
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
-
-    template <typename T, typename U>
-    constexpr Tensor33<product_t<T,U>> operator OTIMES(const Vector3<T>&a, const Vector3<U>&b)
-    {
-        return {
-            a.x+b.x, a.x+b.y, a.x+b.z,
-            a.y+b.x, a.y+b.y, a.y+b.z,
-            a.z+b.x, a.z+b.y, a.z+b.z
-        };
-    }
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

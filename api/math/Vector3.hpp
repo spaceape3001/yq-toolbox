@@ -11,7 +11,6 @@
 #include <math/Absolute.hpp>
 #include <math/Units.hpp>
 #include <math/trig.hpp>
-#include <math/Vector2.hpp>
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
@@ -141,6 +140,27 @@ namespace yq {
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Vector3<T>& operator*=(U b) noexcept;
 
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector1<product_t<T,U>> operator*(const Tensor31<U>&b) const noexcept;
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Tensor32<U>&b) const noexcept;
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector3<product_t<T,U>> operator*(const Tensor33<U>&b) const noexcept;
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector4<product_t<T,U>> operator*(const Tensor34<U>&b) const noexcept;
+        //! Vector/tensor self multiplication
+        template <typename U>
+        requires (trait::self_mul_v<T,U>)
+        Vector3& operator*=(const Tensor33<U>&b) noexcept;
+
+        //! Geometric product
+        template <typename U>
+        constexpr Multivector3<product_t<U,T>> operator*(const Vector3<U>&) const noexcept;
+
         //! Dot product
         template <typename U>
         constexpr product_t<T,U> operator DOT (const Vector3<U>&b) const noexcept;
@@ -157,7 +177,19 @@ namespace yq {
         template <typename U>
         constexpr Bivector3<product_t<T,U>> operator OUTER (const Vector3<U>& b) noexcept;
 
-
+        //! OTIMES Vector1
+        template <typename U>
+        constexpr Tensor31<product_t<T,U>> operator OTIMES(const Vector1<U>&b) const noexcept;
+        //! OTIMES Vector2
+        template <typename U>
+        constexpr Tensor32<product_t<T,U>> operator OTIMES(const Vector2<U>&b) const noexcept;
+        //! OTIMES Vector3
+        template <typename U>
+        constexpr Tensor33<product_t<T,U>> operator OTIMES(const Vector3<U>&b) const noexcept;
+        //! OTIMES Vector4
+        template <typename U>
+        constexpr Tensor34<product_t<T,U>> operator OTIMES(const Vector4<U>&b) const noexcept;
+    
         //! Division
         template <typename U>
         requires (std::is_arithmetic_v<U>)
@@ -367,11 +399,6 @@ namespace yq {
         return Vector3D(z_, (double) v);
     }
 
-    template <typename T>
-    constexpr Vector3<T> Vector2<T>::z(T _z) const noexcept
-    {
-        return Vector3<T>( x, y, _z );
-    }
 
 
     //! Creates a three dimension unit vector
@@ -509,25 +536,15 @@ namespace yq {
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept
-    {
-        return a.eabs();
-    }
+    constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept;
 
     template <typename T>
     requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
-    Radian              angle(const Vector3<T>&a, const Vector3<T>& b)
-    {
-        return acos( std::clamp<T>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
-    }
+    Radian              angle(const Vector3<T>&a, const Vector3<T>& b);
     
     template <typename T, typename DIM1, typename DIM2>
     requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
-    Radian             angle(const Vector3<MKS<T,DIM1>>&a, const Vector3<MKS<T,DIM2>>& b)
-    {
-        using one_t = MKS<T,dim::None>;
-        return acos( std::clamp<one_t>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
-    }
+    Radian             angle(const Vector3<MKS<T,DIM1>>&a, const Vector3<MKS<T,DIM2>>& b);
 
     /*! \brief Counter clockwise (euler) angle
     
@@ -535,10 +552,7 @@ namespace yq {
     */
     template <typename T>
     requires std::is_floating_point_v<T>
-    Radian   ccw(const Vector3<T>& a)
-    {
-        return atan(a.y, a.x);
-    }
+    Radian   ccw(const Vector3<T>& a);
 
     /*! \brief Counter clockwise (euler) angle
     
@@ -546,10 +560,7 @@ namespace yq {
     */
     template <typename T, typename DIM>
     requires std::is_floating_point_v<T>
-    Radian   ccw(const Vector3<MKS<T,DIM>>& a)
-    {
-        return atan(a.y, a.x);
-    }
+    Radian   ccw(const Vector3<MKS<T,DIM>>& a);
 
     /*! \brief Clockwise angle
     
@@ -557,10 +568,7 @@ namespace yq {
     */
     template <typename T>
     requires std::is_floating_point_v<T>
-    MKS<T,dim::Angle>   clockwise(const Vector3<T>& a)
-    {
-        return atan(a.y, a.x);
-    }
+    MKS<T,dim::Angle>   clockwise(const Vector3<T>& a);
 
     /*! \brief Clockwise angle
     
@@ -568,88 +576,53 @@ namespace yq {
     */
     template <typename T, typename DIM>
     requires std::is_floating_point_v<T>
-    MKS<T,dim::Angle>   clockwise(const Vector3<MKS<T,DIM>>& a)
-    {
-        return atan(a.y, a.x);
-    }
-
-    template <typename T>
-    constexpr T             component_max(const Vector3<T>&a) noexcept
-    {
-        return a.cmax();
-    }
-
-    template <typename T>
-    constexpr T             component_min(const Vector3<T>&a) noexcept
-    {
-        return a.cmin();
-    }
-
-    template <typename T>
-    constexpr cube_t<T>       component_product(const Vector3<T>& a) noexcept
-    {
-        return a.cproduct();
-    }
+    MKS<T,dim::Angle>   clockwise(const Vector3<MKS<T,DIM>>& a);
     
     template <typename T>
-    constexpr T   component_sum(const Vector3<T>& a) noexcept
-    {
-        return a.csum();
-    }
+    constexpr T             component_max(const Vector3<T>&a) noexcept;
+
+    template <typename T>
+    constexpr T             component_min(const Vector3<T>&a) noexcept;
+
+    template <typename T>
+    constexpr cube_t<T>       component_product(const Vector3<T>& a) noexcept;
+    
+    template <typename T>
+    constexpr T   component_sum(const Vector3<T>& a) noexcept;
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected)
-    {
-        return compare(length(actual-expected), length(expected));
-    }
+    bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected);
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
-    {
-        return is_close(compare, actual, Vector3<T>(x, y, z) );
-    }
+    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z);
 
     template <typename T>
-    constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
-    {
-        return a.emax(b);
-    }
+    constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;
 
     template <typename T>
-    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
-    {
-        return a.emin(b);
-    }    
+    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;
 
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr Vector3<T>     midvector(const Vector3<T>& a, const Vector3<T>& b=Vector3<T>{}) noexcept
-    {
-        if constexpr (has_ieee754_v<T>)
-            return ieee754_t<T>(0.5)*(a+b);
-        else if constexpr (std::is_integral_v<T>)
-            return (a+b) / T(2);
-        else
-            return {};
-    }
+    constexpr Vector3<T>     midvector(const Vector3<T>& a, const Vector3<T>& b=Vector3<T>{}) noexcept;
 
     template <typename T>
     AllComponents<Vector3<T>>   all(const Vector3<T>& val)
     {
-        return { val };
+        return AllComponents<Vector3<T>>(val);
     }
     
     template <typename T>
     AllComponents<Vector3<T>>   elem(const Vector3<T>& val)
     {
-        return { val };
+        return AllComponents<Vector3<T>>(val);
     }
 
     template <typename T>
     AnyComponents<Vector3<T>>   any(const Vector3<T>& val)
     {
-        return { val };
+        return AnyComponents<Vector3<T>>(val);
     }
 }
 

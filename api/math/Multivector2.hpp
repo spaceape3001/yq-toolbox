@@ -241,39 +241,6 @@ namespace yq {
         };
     }
 
-    //! Adds vector with bivector
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Vector2<T>& a, const Bivector2<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            a.x, a.y, 
-            b.xy 
-        };
-    }
-
-    //! Adds vector with multivector
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Vector2<T>& a, const Multivector2<T>& b) noexcept
-    {
-        return { 
-            b.a, 
-            a.x+b.x, a.y+b.y,
-            b.xy
-        };
-    }
-
-    //! Adds vector with scalar
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Vector2<T>& a, unity_t<T>  b) noexcept
-    {
-        return { 
-            b, 
-            a.x, a.y, 
-            {} 
-        };
-    }
-
 
 
 //  --------------------------------------------------------
@@ -422,40 +389,6 @@ namespace yq {
             {} 
         };
     }
-
-    //! Subtracts bivector from vector
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Vector2<T>& a, const Bivector2<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            a.x, a.y, 
-            -b.xy 
-        };
-    }
-
-    //! Subtracts multivector from vector
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Vector2<T>& a, const Multivector2<T>& b) noexcept
-    {
-        return { 
-            -b.a, 
-            a.x-b.x, a.y-b.y,
-            -b.xy
-        };
-    }
-
-    //! Subtracts scalar from vector
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Vector2<T>& a, unity_t<T> b) noexcept
-    {
-        return { 
-            -b, 
-            a.x, a.y, 
-            {} 
-        };
-    }
-
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -493,16 +426,6 @@ namespace yq {
         a.x  *= b; a.y *= b; 
         a.xy *= b;
         return a;
-    }
-
-    //! Geometric product
-    //! 
-    //! This is the basis to the geometric algebra, multiplying two vectors together.
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector2<T>   operator* (const Vector2<T>&a, const Vector2<T>&b) 
-    {
-        return { a.x*b.x+a.y*b.y, 0., 0., a.x*b.y-a.y*b.x };
     }
 
 //  --------------------------------------------------------

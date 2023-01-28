@@ -1045,21 +1045,6 @@ namespace yq {
         return a;
     }
 
-    /*! \brief Geometric product (vector*vector)
-    
-        This is the foundation of geometric algebra.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector4<T>   operator* (const Vector4<T>&a, const Vector4<T>&b) 
-    {
-        return {
-            a.x*b.x+a.y*b.y+a.z*b.z+a.w*b.w, 0., 0., 0., 0.,
-            a.x*b.y-a.y*b.x, a.y*b.z-a.z*b.y, a.z*b.w-a.w*b.z, a.w*b.x-a.x*b.w, a.x*b.z-a.z*b.x, a.y*b.w-a.w*b.y,
-            0., 0., 0., 0., 0.
-        };
-    }
-
 //  --------------------------------------------------------
 //  DIVISION
 

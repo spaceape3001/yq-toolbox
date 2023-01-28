@@ -480,16 +480,6 @@ namespace yq {
         );
     }
 
-    template <typename T, typename U>
-    constexpr Vector4<product_t<T,U>> operator*(const Vector3<T>&a, const Tensor34<U>&b) noexcept
-    {
-        return Vector4<product_t<T,U>>(
-            a.x*b.xx + a.y*b.yx + a.z*b.zx,
-            a.x*b.xy + a.y*b.yy + a.z*b.zy,
-            a.x*b.xz + a.y*b.yz + a.z*b.zz,
-            a.x*b.xw + a.y*b.yw + a.z*b.zw
-        );
-    }
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -518,16 +508,6 @@ namespace yq {
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
-
-    template <typename T, typename U>
-    constexpr Tensor34<product_t<T,U>> operator OTIMES(const Vector3<T>&a, const Vector4<U>&b) noexcept
-    {
-        return Tensor34<product_t<T,U>>(
-            a.x+b.x, a.x+b.y, a.x+b.z, a.x+b.w,
-            a.y+b.x, a.y+b.y, a.y+b.z, a.y+b.w,
-            a.z+b.x, a.z+b.y, a.z+b.z, a.z+b.w
-        );
-    }
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

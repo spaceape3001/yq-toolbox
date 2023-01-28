@@ -16,10 +16,18 @@
 #include "Multivector3.hpp"
 #include "Trivector3.hpp"
 
+#include "Tensor31.hpp"
+#include "Tensor32.hpp"
+#include "Tensor33.hpp"
+#include "Tensor34.hpp"
+
 #include "Vector1.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
+
+#include <math/Units.hpp>
+#include <math/trig.hpp>
 
 namespace yq {
     template <typename T>
@@ -50,45 +58,45 @@ namespace yq {
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(T b) const noexcept
     {
-        return { 
+        return Multivector3<T>(
             b, 
             x, y, z,
             {}, {}, {}, 
             {} 
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(const Bivector3<T>& b) const noexcept
     {
-        return { 
+        return Multivector3<T>(
             {}, 
             x, y, z,
             b.xy, b.yz, b.zx,
             {} 
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(const Multivector3<T>& b) const noexcept
     {
-        return { 
+        return Multivector3<T>(
             b.a, 
             x+b.x, y+b.y, z+b.z, 
             b.xy, b.yz, b.zx,
             b.xyz
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(const Trivector3<T>& b) const noexcept
     {
-        return { 
+        return Multivector3<T>( 
             {}, 
             x, y, z,
             {}, {}, {}, 
             b.xyz
-        };
+        );
     }
     
     template <typename T>
@@ -109,45 +117,45 @@ namespace yq {
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator-(const Bivector3<T>& b) const noexcept
     {
-        return { 
+        return Multivector3<T>( 
             {}, 
             x, y, z,
             -b.xy, -b.yz, -b.zx,
             {} 
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator-(const Multivector3<T>& b) const noexcept
     {
-        return { 
+        return Multivector3<T>(
             -b.a, 
             x-b.x, y-b.y, z-b.z, 
             -b.xy, -b.yz, -b.zx,
             -b.xyz
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator-(const Trivector3<T>& b) const noexcept
     {
-        return { 
+        return Multivector3<T>( 
             {}, 
             x, y, z,
             {}, {}, {}, 
             -b.xyz
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator-(T b) const noexcept
     {
-        return { 
+        return Multivector3<T>(
             -b, 
             x, y, z,
             {}, {}, {}, 
             {} 
-        };
+        );
     }
 
     template <typename T>
@@ -186,6 +194,69 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    constexpr Vector1<product_t<T,U>> Vector3<T>::operator*(const Tensor31<U>&b) const noexcept
+    {
+        return Vector1<product_t<T,U>>(
+            x*b.xx + y*b.yx + z*b.zx
+        );
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Vector2<product_t<T,U>> Vector3<T>::operator*(const Tensor32<U>&b) const noexcept
+    {
+        return Vector2<product_t<T,U>>(
+            x*b.xx + y*b.yx + z*b.zx,
+            x*b.xy + y*b.yy + z*b.zy
+        );
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Vector3<product_t<T,U>> Vector3<T>::operator*(const Tensor33<U>&b) const noexcept
+    {
+        return Vector3<product_t<T,U>>(
+            x*b.xx + y*b.yx + z*b.zx,
+            x*b.xy + y*b.yy + z*b.zy,
+            x*b.xz + y*b.yz + z*b.zz
+        );
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Vector4<product_t<T,U>> Vector3<T>::operator*(const Tensor34<U>&b) const noexcept
+    {
+        return Vector4<product_t<T,U>>(
+            x*b.xx + y*b.yx + z*b.zx,
+            x*b.xy + y*b.yy + z*b.zy,
+            x*b.xz + y*b.yz + z*b.zz,
+            x*b.xw + y*b.yw + z*b.zw
+        );
+    }
+
+    template <typename T>
+        template <typename U>
+    requires (trait::self_mul_v<T,U>)
+    Vector3<T>& Vector3<T>::operator*=(const Tensor33<U>&b) noexcept
+    {
+        *this   = *this * b;
+        return *this;
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Multivector3<product_t<U,T>> Vector3<T>::operator*(const Vector3<U>&b) const noexcept
+    {
+        return Multivector3<product_t<U,T>>(
+            x*b.x+y*b.y+z*b.z, 
+            0., 0., 0., 
+            x*b.y-y*b.x, y*b.z-z*b.y, z*b.x-x*b.z,
+            0.
+        );
+    }
+
+    template <typename T>
+        template <typename U>
     constexpr product_t<T,U> Vector3<T>::operator DOT (const Vector3<U>&b) const noexcept
     {
         return x*b.x + y*b.y + z*b.z;
@@ -214,7 +285,51 @@ namespace yq {
         template <typename U>
     constexpr Bivector3<product_t<T,U>> Vector3<T>::operator OUTER (const Vector3<U>& b) noexcept
     {
-        return { x*b.y-y*b.x, y*b.z-z*b.y, z*b.x-x*b.z };
+        return Bivector3<product_t<T,U>>( x*b.y-y*b.x, y*b.z-z*b.y, z*b.x-x*b.z );
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Tensor31<product_t<T,U>> Vector3<T>::operator OTIMES(const Vector1<U>&b) const noexcept
+    {
+        return Tensor31<product_t<T,U>>(
+            x+b.x,
+            y+b.x,
+            z+b.x
+        );
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Tensor32<product_t<T,U>> Vector3<T>::operator OTIMES(const Vector2<U>&b) const noexcept
+    {
+        return Tensor32<product_t<T,U>> (
+            x+b.x, x+b.y,
+            y+b.x, y+b.y,
+            z+b.x, z+b.y
+        );
+    }
+    
+    template <typename T>
+        template <typename U>
+    constexpr Tensor33<product_t<T,U>> Vector3<T>::operator OTIMES(const Vector3<U>&b) const noexcept
+    {
+        return Tensor33<product_t<T,U>>(
+            x+b.x, x+b.y, x+b.z,
+            y+b.x, y+b.y, y+b.z,
+            z+b.x, z+b.y, z+b.z
+        );
+    }
+    
+    template <typename T>
+        template <typename U>
+    constexpr Tensor34<product_t<T,U>> Vector3<T>::operator OTIMES(const Vector4<U>&b) const noexcept
+    {
+        return Tensor34<product_t<T,U>>(
+            x+b.x, x+b.y, x+b.z, x+b.w,
+            y+b.x, y+b.y, y+b.z, y+b.w,
+            z+b.x, z+b.y, z+b.z, z+b.w
+        );
     }
 
     template <typename T>
@@ -275,33 +390,33 @@ namespace yq {
     template <typename T>
     constexpr Vector3<T>   Vector3<T>::eabs() const noexcept
     {
-        return { abs(x), abs(y), abs(z) };
+        return Vector3<T>( abs(x), abs(y), abs(z) );
     }
 
     template <typename T>
         template <typename U>
     constexpr Vector3<quotient_t<T,U>>    Vector3<T>::ediv(const Vector3<U>&b) const noexcept
     {
-        return {x/b.x, y/b.y, z/b.z};
+        return Vector3<quotient_t<T,U>>( x/b.x, y/b.y, z/b.z );
     }
 
     template <typename T>
     constexpr Vector3<T>   Vector3<T>::emax(const Vector3&b) const noexcept
     {
-        return {max(x, b.x), max(y, b.y), max(z, b.z)};
+        return Vector3<T>(max(x, b.x), max(y, b.y), max(z, b.z));
     }
 
     template <typename T>
     constexpr Vector3<T>   Vector3<T>::emin(const Vector3&b) const noexcept
     {
-        return {min(x, b.x), min(y, b.y), min(z, b.z)};
+        return Vector3<T>(min(x, b.x), min(y, b.y), min(z, b.z));
     }    
 
     template <typename T>
         template <typename U>
     constexpr Vector3<product_t<T,U>>    Vector3<T>::emul(const Vector3<U>&b) const noexcept
     {
-        return {x*b.x, y*b.y, z*b.z};
+        return Vector3<product_t<T,U>>(x*b.x, y*b.y, z*b.z);
     }
 
     template <typename T>
@@ -317,4 +432,134 @@ namespace yq {
             return sqrt(length²());
         return {};
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+    template <typename T>
+    constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept
+    {
+        return a.eabs();
+    }
+
+    template <typename T>
+    requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
+    Radian              angle(const Vector3<T>&a, const Vector3<T>& b)
+    {
+        return acos( std::clamp<T>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
+    }
+    
+    template <typename T, typename DIM1, typename DIM2>
+    requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
+    Radian             angle(const Vector3<MKS<T,DIM1>>&a, const Vector3<MKS<T,DIM2>>& b)
+    {
+        using one_t = MKS<T,dim::None>;
+        return acos( std::clamp<one_t>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
+    }
+
+    /*! \brief Counter clockwise (euler) angle
+    
+        Computes the euler angle of the vector, ie, counter-clockwise from the +X axis.
+    */
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Radian   ccw(const Vector3<T>& a)
+    {
+        return atan(a.y, a.x);
+    }
+
+    /*! \brief Counter clockwise (euler) angle
+    
+        Computes the euler angle of the vector, ie, counter-clockwise from the +X axis.
+    */
+    template <typename T, typename DIM>
+    requires std::is_floating_point_v<T>
+    Radian   ccw(const Vector3<MKS<T,DIM>>& a)
+    {
+        return atan(a.y, a.x);
+    }
+
+    /*! \brief Clockwise angle
+    
+        Computes the angle of the vector from the +Y axis.
+    */
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    MKS<T,dim::Angle>   clockwise(const Vector3<T>& a)
+    {
+        return atan(a.y, a.x);
+    }
+
+    /*! \brief Clockwise angle
+    
+        Computes the angle of the vector from the +Y axis.
+    */
+    template <typename T, typename DIM>
+    requires std::is_floating_point_v<T>
+    MKS<T,dim::Angle>   clockwise(const Vector3<MKS<T,DIM>>& a)
+    {
+        return atan(a.y, a.x);
+    }
+
+    template <typename T>
+    constexpr T             component_max(const Vector3<T>&a) noexcept
+    {
+        return a.cmax();
+    }
+
+    template <typename T>
+    constexpr T             component_min(const Vector3<T>&a) noexcept
+    {
+        return a.cmin();
+    }
+
+    template <typename T>
+    constexpr cube_t<T>       component_product(const Vector3<T>& a) noexcept
+    {
+        return a.cproduct();
+    }
+    
+    template <typename T>
+    constexpr T   component_sum(const Vector3<T>& a) noexcept
+    {
+        return a.csum();
+    }
+
+    template <typename T, typename R>
+    bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected)
+    {
+        return compare(length(actual-expected), expected.length());
+    }
+    
+    template <typename T, typename R>
+    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
+    {
+        return is_close(compare, actual, Vector3<T>(x, y, z) );
+    }
+
+    template <typename T>
+    constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
+    {
+        return a.emax(b);
+    }
+
+    /*! \brief Mid-way divide two vectors
+    */
+    template <typename T>
+    constexpr Vector3<T>     midvector(const Vector3<T>& a, const Vector3<T>& b) noexcept
+    {
+        if constexpr (has_ieee754_v<T>)
+            return ieee754_t<T>(0.5)*(a+b);
+        else if constexpr (std::is_integral_v<T>)
+            return (a+b) / T(2);
+        else
+            return {};
+    }
+
+    template <typename T>
+    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
+    {
+        return a.emin(b);
+    }    
 }

@@ -468,22 +468,6 @@ namespace yq {
         };
     }
 
-    template <typename T, typename U>
-    constexpr Vector2<product_t<T,U>> operator*(const Vector2<T>&a, const Tensor22<U>&b)
-    {
-        return {
-            a.x*b.xx + a.y*b.yx,
-            a.x*b.xy + a.y*b.yy
-        };
-    }
-
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Vector2<T>& operator*=(Vector2<T>&a, const Tensor22<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -511,14 +495,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
 
-    template <typename T, typename U>
-    constexpr Tensor22<product_t<T,U>> operator OTIMES(const Vector2<T>&a, const Vector2<U>&b)
-    {
-        return {
-            a.x+b.x, a.x+b.y,
-            a.y+b.x, a.y+b.y
-        };
-    }
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

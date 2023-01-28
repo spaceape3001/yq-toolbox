@@ -8,8 +8,6 @@
 
 #define YQ__API__MATH__VECTOR_4__HPP 1
 #include <math/preamble.hpp>
-#include <math/Units.hpp>
-#include <math/trig.hpp>
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
@@ -148,6 +146,11 @@ namespace yq {
         requires trait::is_arithmetic_v<U>
         constexpr Vector4<product_t<T,U>> operator*(U b) const noexcept;
 
+        //! Self-multiplication with scalar
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Vector4<T>& operator*=(U b) noexcept;
+
         //! Multiplication with tensor41
         template <typename U>
         constexpr Vector1<product_t<T,U>> operator*(const Tensor41<U>&b) const noexcept;
@@ -164,17 +167,15 @@ namespace yq {
         template <typename U>
         constexpr Vector4<product_t<T,U>> operator*(const Tensor44<U>&b) const noexcept;
 
+        //! Self-multiplication with tensor44
         template <typename U>
         requires trait::self_mul_v<T,U>
         Vector4<T>& operator*=(const Tensor44<U>& b) noexcept;
 
+        //! Geometric product
         template <typename U>
         constexpr Multivector4<product_t<T,U>>   operator*(const Vector4<U>&) const noexcept;
 
-        //! Self-multiplication
-        template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-        Vector4<T>& operator*=(U b) noexcept;
 
         //! Dot product
         template <typename U>
@@ -452,33 +453,20 @@ namespace yq {
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
-    constexpr Vector4<product_t<T,U>> operator*(T a, const Vector4<U>&b) noexcept
-    {
-        return Vector4<product_t<T,U>>(a*b.x, a*b.y, a*b.z, a*b.w);
-    }
-    
+    constexpr Vector4<product_t<T,U>> operator*(T a, const Vector4<U>&b) noexcept;
 
     template <typename T, typename U>
-    constexpr Vector4<product_t<T,U>>    mul_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
-    {
-        return a.emul(b);
-    }
+    constexpr Vector4<product_t<T,U>>    mul_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;
     
 //  --------------------------------------------------------
 //  DIVISION
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
-    constexpr  Vector4<quotient_t<T,U>> operator/(T a, const  Vector4<U>&b) noexcept
-    {
-        return (a*b) / b.length²();
-    }
+    constexpr  Vector4<quotient_t<T,U>> operator/(T a, const  Vector4<U>&b) noexcept;
     
     template <typename T, typename U>
-    constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<U>&b) noexcept
-    {
-        return a.ediv(b);
-    }
+    constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<U>&b) noexcept;
 
 //  --------------------------------------------------------
 //  DOT PRODUCT
@@ -504,88 +492,45 @@ namespace yq {
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    constexpr Vector4<T>   abs_elem(const Vector4<T>&a) noexcept
-    {
-        return a.eabs();
-    }
+    constexpr Vector4<T>   abs_elem(const Vector4<T>&a) noexcept;
 
 
     template <typename T>
     requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
-    Radian       angle(const Vector4<T>&a, const Vector4<T>& b)
-    {
-        return acos( std::clamp<T>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
-    }
+    Radian       angle(const Vector4<T>&a, const Vector4<T>& b);
     
     template <typename T, typename DIM1, typename DIM2>
     requires (std::is_floating_point_v<T> && trait::has_sqrt_v<T>)
-    Radian       angle(const Vector4<MKS<T,DIM1>>&a, const Vector4<MKS<T,DIM2>>& b)
-    {
-        using one_t = MKS<T,dim::None>;
-        return acos( std::clamp<one_t>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
-    }
+    Radian       angle(const Vector4<MKS<T,DIM1>>&a, const Vector4<MKS<T,DIM2>>& b);
 
     template <typename T>
-    constexpr T             component_max(const Vector4<T>&a) noexcept
-    {
-        return a.cmax();
-    }
+    constexpr T             component_max(const Vector4<T>&a) noexcept;
 
     template <typename T>
-    constexpr T             component_min(const Vector4<T>&a) noexcept
-    {
-        return a.cmin();
-    }
+    constexpr T             component_min(const Vector4<T>&a) noexcept;
 
     template <typename T>
-    constexpr fourth_t<T>     component_product(const Vector4<T>& a) noexcept
-    {
-        return a.cproduct();
-    }
+    constexpr fourth_t<T>     component_product(const Vector4<T>& a) noexcept;
 
     template <typename T>
-    constexpr T   component_sum(const Vector4<T>& a) noexcept
-    {
-        return a.csum();
-    }
+    constexpr T   component_sum(const Vector4<T>& a) noexcept;
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector4<T>& actual, const Vector4<T>& expected)
-    {
-        return compare(length(actual-expected), length(expected));
-    }
+    bool is_close(const R& compare, const Vector4<T>& actual, const Vector4<T>& expected);
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z,std::type_identity_t<T>w)
-    {
-        return is_close(compare, actual, Vector4<T>(x, y, z, w) );
-    }
+    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z,std::type_identity_t<T>w);
 
+    template <typename T>
+    constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;
     
     template <typename T>
-    constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
-    {
-        return a.emax(b);
-    }
-    
-    template <typename T>
-    constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
-    {
-        return a.emin(b);
-    }
+    constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;
 
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr Vector4<T>    midvector(const Vector4<T>& a, const Vector4<T>& b=Vector4<T>{}) noexcept
-    {
-        if constexpr (has_ieee754_v<T>)
-            return ieee754_t<T>(0.5)*(a+b);
-        else if constexpr (std::is_integral_v<T>)
-            return (a+b) / T(2);
-        else
-            return {};
-    }
+    constexpr Vector4<T>    midvector(const Vector4<T>& a, const Vector4<T>& b=Vector4<T>{}) noexcept;
 
     template <typename T>
     AllComponents<Vector4<T>>   all(const Vector4<T>& val)

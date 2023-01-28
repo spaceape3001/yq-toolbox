@@ -608,18 +608,6 @@ namespace yq {
         return a;
     }
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector3<T>   operator* (const Vector3<T>&a, const Vector3<T>&b) 
-    {
-        return {
-            a.x*b.x+a.y*b.y+a.z*b.z, 
-            0., 0., 0., 
-            a.x*b.y-a.y*b.x, a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z,
-            0.
-        };
-    }
-
 
 //  --------------------------------------------------------
 //  DIVISION
