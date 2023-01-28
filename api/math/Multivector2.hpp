@@ -230,16 +230,6 @@ namespace yq {
         };
     }
 
-    //! Adds scalar with vector
-    template <typename T>
-    constexpr Multivector2<T> operator+(unity_t<T> a, const Vector2<T>& b) noexcept
-    {
-        return { 
-            a, 
-            b.x, b.y, 
-            {} 
-        };
-    }
 
 
 
@@ -379,16 +369,6 @@ namespace yq {
         };
     }
 
-    //! Subtracts vector from scalar
-    template <typename T>
-    constexpr Multivector2<T> operator-(unity_t<T> a, const Vector2<T>& b) noexcept
-    {
-        return { 
-            a, 
-            -b.x, -b.y, 
-            {} 
-        };
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -454,13 +434,6 @@ namespace yq {
         return a;
     }
 
-    //! Division of left vector by the right
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector2<T>   operator/ (const Vector2<T>&a, const Vector2<T>&b) 
-    {
-        return (a * b) / length2(b);
-    }
 
 //  --------------------------------------------------------
 //  POWERS

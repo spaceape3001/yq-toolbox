@@ -352,6 +352,13 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename U>
+    constexpr Multivector3<quotient_t<T,U>>   Vector3<T>::operator/ (const Vector3<U>&b) const noexcept
+    {
+        return (*this * b) / b.length²();
+    }
+
+    template <typename T>
     constexpr Vector3<T> Vector3<T>::all_add(T b) const noexcept
     {
         return { x+b, y+b, z+b };
@@ -434,8 +441,41 @@ namespace yq {
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    template <typename T>
+    constexpr Multivector3<T> operator+(T a, const Vector3<T>& b) noexcept
+    {
+        return Multivector3<T>(
+            a, 
+            b.x, b.y, b.z, 
+            {}, {}, {}, 
+            {} 
+        );
+    }
 
 
+    template <typename T>
+    constexpr Multivector3<T> operator-(T a, const Vector3<T>& b) noexcept
+    {
+        return Multivector3<T>(
+            a, 
+            -b.x, -b.y, -b.z, 
+            {}, {}, {}, 
+            {} 
+        );
+    }
+
+    template <typename T, typename U>
+    requires (std::is_arithmetic_v<T>)
+    constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept;
+
+    template <typename T, typename U>
+    requires (trait::is_arithmetic_v<T>)
+    constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept
+    {
+        return Vector3<product_t<T,U>>(a*b.x, a*b.y, a*b.z);
+    }
 
     template <typename T>
     constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept

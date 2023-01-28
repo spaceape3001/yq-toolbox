@@ -6,6 +6,12 @@
 
 #pragma once
 
+/* 
+    This is the template IMPLEMENTATION of the vector2 code.  Include this
+    *IF* you need the operator and it's not yet available as explicit 
+    template instantiation.  
+*/
+
 #include "Bivector2.hpp"
 #include "Multivector2.hpp"
 
@@ -22,11 +28,6 @@
 #include <math/trig.hpp>
 #include <math/Units.hpp>
 
-/* 
-    This is the template IMPLEMENTATION of the vector2 code.  Include this
-    *IF* you need the operator and it's not yet available as explicit 
-    template instantiation.  
-*/
 
 namespace yq {
     template <typename T>
@@ -309,6 +310,13 @@ namespace yq {
         return *this;
     }
 
+    //! Division of left vector by the right
+    template <typename T>
+        template <typename U>
+    constexpr Multivector2<quotient_t<T,U>>   Vector2<T>::operator/ (const Vector2<U>&b) const noexcept
+    {
+        return (*this * b) / b.length²();
+    }
 
     template <typename T>
     constexpr T     Vector2<T>::cmax() const noexcept
@@ -399,6 +407,29 @@ namespace yq {
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    //! Adds scalar with vector
+    template <typename T>
+    constexpr Multivector2<T> operator+(T a, const Vector2<T>& b) noexcept
+    {
+        return Multivector2<T>(
+            a, 
+            b.x, b.y, 
+            {} 
+        );
+    }
+
+    //! Subtracts vector from scalar
+    template <typename T>
+    constexpr Multivector2<T> operator-(T a, const Vector2<T>& b) noexcept
+    {
+        return Multivector2<T>(
+            a, 
+            -b.x, -b.y, 
+            {} 
+        );
+    }
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)

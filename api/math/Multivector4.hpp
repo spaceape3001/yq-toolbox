@@ -552,20 +552,6 @@ namespace yq {
         };
     }
 
-    /*! Scalar/vector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(unity_t<T> a, const Vector4<T>& b) noexcept
-    {
-        return { 
-            a, 
-            b.x, b.y, b.z, b.w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
-        };
-    }
-
 
 
 
@@ -984,19 +970,6 @@ namespace yq {
         };
     }
 
-    /*! Scalar/vector subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(unity_t<T> a, const Vector4<T>& b) noexcept
-    {
-        return { 
-            a, 
-            -b.x, -b.y, -b.z, -b.w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
-        };
-    }
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -1077,16 +1050,6 @@ namespace yq {
         return a;
     }
 
-    /*! Vector/vector division
-    
-        Yes, legal in geometric algebra!
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector4<T>   operator/ (const Vector4<T>&a, const Vector4<T>&b) 
-    {
-        return (a * b) / length2(b);
-    }
 
 //  --------------------------------------------------------
 //  POWERS

@@ -50,10 +50,7 @@ namespace yq {
         constexpr bool operator==(const Vector1&) const noexcept = default;
 
         //! Implicit conversion to GLM vector
-        constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept
-        {
-            return glm::vec<1, T, glm::defaultp>(x);
-        }
+        constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept;
         
         //! Explicit conversion operator
         template <typename U>
@@ -71,41 +68,108 @@ namespace yq {
         }
 
         //! Negation operator
-        constexpr Vector1 operator-() const noexcept
-        {
-            return Vector1(-x );
-        }
+        constexpr Vector1 operator-() const noexcept;
 
         //! Normalizes the vector
-        constexpr Vector1<T> operator~() const noexcept
-        {
-            if constexpr (trait::has_copysign_v<T>)
-                return Vector1<T>(copysign(one_v<T>, x));
-            return {};
-        }
+        constexpr Vector1<T> operator~() const noexcept;
 
-        constexpr Vector1 operator+(const Vector1& b) const noexcept
-        {
-            return Vector1(x+b.x);
-        }
+        //! Squares the vector
+        constexpr square_t<T> operator^(two_t) const noexcept;
 
-        Vector1& operator+=(const Vector1& b) noexcept
-        {
-            x += b.x;
-            return *this;
-        }
+        //! Addition with scalar
+        constexpr Multivector1<T> operator+(T b) const noexcept;
 
-        constexpr Vector1 operator-(const Vector1& b) const noexcept
-        {
-            return Vector1(x-b.x);
-        }
-
-        Vector1& operator-=(const Vector1& b) noexcept
-        {
-            x -= b.x;
-            return *this;
-        }
+        //! Addition with multivector
+        constexpr Multivector1<T> operator+(const Multivector1<T>& b) const noexcept;
         
+        //! Addition
+        constexpr Vector1 operator+(const Vector1& b) const noexcept;
+
+        //! Self-addition
+        Vector1& operator+=(const Vector1& b) noexcept;
+
+        //! Subtraction with scalar
+        constexpr Multivector1<T> operator-(T b) const noexcept;
+        
+        //! Subtraction with multivector
+        constexpr Multivector1<T> operator-(const Multivector1<T>& b) const noexcept;
+        
+        //! Subtraction
+        constexpr Vector1 operator-(const Vector1& b) const noexcept;
+
+        //! Self-subtraction
+        Vector1& operator-=(const Vector1& b) noexcept;
+        
+        //! Multiplication with scalar
+        template <typename U>
+        requires (trait::is_arithmetic_v<U>)
+        constexpr Vector1<product_t<T,U>> operator*(U b) const noexcept;
+        
+        //! Self-multiplication with scalar
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Vector1<T>& operator*=(U b) noexcept;
+
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector1<product_t<T,U>> operator*(const Tensor11<U>&) const noexcept;
+
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Tensor12<U>&) const noexcept;
+
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector3<product_t<T,U>> operator*(const Tensor13<U>&) const noexcept;
+
+        //! Vector/tensor multiplication
+        template <typename U>
+        constexpr Vector4<product_t<T,U>> operator*(const Tensor14<U>&) const noexcept;
+        
+        //! Vector/tensor self-multiplication
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Vector1&  operator*=(const Tensor11<U>&) noexcept;
+
+        //! Geometric product (scalar in 1D)
+        template <typename U>
+        constexpr product_t<T,U> operator*(const Vector1<U>& b) const noexcept;
+
+        //! Dot product
+        template <typename U>
+        constexpr product_t<T,U> operator DOT (const Vector1<U>&b) const noexcept;
+        
+        //! Inner product
+        template <typename U>
+        constexpr product_t<T,U> operator INNER (const Vector1<U>&b) const noexcept;
+
+        //! OTIMES Vector1
+        template <typename U>
+        constexpr Tensor11<product_t<T,U>> operator OTIMES(const Vector1<U>&b) const noexcept;
+        //! OTIMES Vector2
+        template <typename U>
+        constexpr Tensor12<product_t<T,U>> operator OTIMES(const Vector2<U>&b) const noexcept;
+        //! OTIMES Vector3
+        template <typename U>
+        constexpr Tensor13<product_t<T,U>> operator OTIMES(const Vector3<U>&b) const noexcept;
+        //! OTIMES Vector4
+        template <typename U>
+        constexpr Tensor14<product_t<T,U>> operator OTIMES(const Vector4<U>&b) const noexcept;
+
+        //! Scalar division
+        template <typename U>
+        requires (trait::is_arithmetic_v<U>)
+        constexpr  Vector1<quotient_t<T,U>> operator/(U b) const noexcept;
+
+        //! Self-division with scalar
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Vector1<T>& operator/=(U b) noexcept;
+
+        //! Division with vector
+        template <typename U>
+        constexpr quotient_t<T,U> operator/(const Vector1<U>& b) const noexcept;
+
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
         bool close(const Vector1&b, R compare) const 
@@ -114,96 +178,53 @@ namespace yq {
         }
 
         //! Component-wise max value
-        constexpr T cmax() const noexcept
-        {
-            return x;
-        }
+        constexpr T cmax() const noexcept;
         
         //! Component-wise min value
-        constexpr T cmin() const noexcept
-        {
-            return x;
-        }
+        constexpr T cmin() const noexcept;
 
         //! Component-wise product
-        constexpr T cproduct() const noexcept
-        {
-            return x;
-        }
+        constexpr T cproduct() const noexcept;
 
         //! Component-wise sum
-        constexpr T csum() const noexcept
-        {
-            return x;
-        }
+        constexpr T csum() const noexcept;
         
             //   the e's are here for consistency... not like they're really needed on 1D vectors
 
         //! Element by element absolute value
-        constexpr Vector1   eabs() const noexcept
-        {
-            return Vector1(abs(x));
-        }
+        constexpr Vector1   eabs() const noexcept;
 
         //! Element by element division
         template <typename U>
-        constexpr Vector1<quotient_t<T,U>>    ediv(const Vector1<U>&b) const noexcept
-        {
-            return Vector1<quotient_t<T,U>>(x/b.x);
-        }
+        constexpr Vector1<quotient_t<T,U>>    ediv(const Vector1<U>&b) const noexcept;
 
         //! Element by element maximum
-        constexpr Vector1   emax(const Vector1&b) const noexcept
-        {
-            return Vector1(max(x, b.x));
-        }
+        constexpr Vector1   emax(const Vector1&b) const noexcept;
 
         //! Element by element minimum
-        constexpr Vector1   emax(T b) const noexcept
-        {
-            return Vector1(max(x, b));
-        }
+        constexpr Vector1   emax(T b) const noexcept;
 
         //! Element by element minimum
-        constexpr Vector1   emin(const Vector1&b) const noexcept
-        {
-            return Vector1(min(x, b.x));
-        }
+        constexpr Vector1   emin(const Vector1&b) const noexcept;
 
         //! Element by element minimum
-        constexpr Vector1   emin(T b) const noexcept
-        {
-            return Vector1(min(x, b));
-        }
+        constexpr Vector1   emin(T b) const noexcept;
 
         //! Element by element multiplication
         template <typename U>
-        constexpr Vector1<product_t<T,U>>    emul(const Vector1<U>&b) const noexcept
-        {
-            return Vector1<product_t<T,U>>(x*b.x);
-        }
+        constexpr Vector1<product_t<T,U>>    emul(const Vector1<U>&b) const noexcept;
 
         /*! \brief Square of the vector's length
         
             This returns the SQUARE of the given vector's length.
         */
-        constexpr square_t<T> length²() const noexcept
-        {
-            return x*x;
-        }    
+        constexpr square_t<T> length²() const noexcept;
 
         /*! \brief Length of the vector
             
             This returns the length of the given vector.
         */
-        constexpr T    length() const noexcept
-        {
-            if constexpr (trait::has_abs_v<T>)
-                return abs(x);
-            if(x < T{})
-                return -x;
-            return x;
-        }
+        constexpr T    length() const noexcept;
 
 
             //  ===================================================================================================
@@ -212,17 +233,11 @@ namespace yq {
         
         /*! Adds a value to all the elements
         */
-        constexpr Vector1 all_add(T b) const noexcept
-        {
-            return Vector1( x + b );
-        }
+        constexpr Vector1 all_add(T b) const noexcept;
         
         /*! \brief Subtracts value from all elements
         */
-        constexpr Vector1 all_subtract(T b) const noexcept
-        {
-            return Vector1( x - b );
-        }
+        constexpr Vector1 all_subtract(T b) const noexcept;
 
        /*! Tests every element
             This applies the given test to every component, 
@@ -351,10 +366,7 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length²(const Vector1<T>& vec) noexcept
-    {
-        return vec.length²();
-    }    
+    constexpr square_t<T> length²(const Vector1<T>& vec) noexcept;
     
 
     /*! \brief Length of the vector
@@ -362,127 +374,56 @@ namespace yq {
         This returns the length of the given vector.
     */
     template <typename T>
-    constexpr T  length(const Vector1<T>& vec) noexcept
-    {
-        return vec.length();
-    }
+    constexpr T  length(const Vector1<T>& vec) noexcept;
 
 
 //  --------------------------------------------------------
 //  ADDITION
 
+    template <typename T>
+    constexpr Multivector1<T> operator+(T a, const Vector1<T>& b) noexcept;
+
+//  --------------------------------------------------------
+//  SUBTRACTION
+
+    template <typename T>
+    constexpr Multivector1<T> operator-(T a, const Vector1<T>& b) noexcept;
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<T>)
-    constexpr Vector1<product_t<T,U>> operator*(T a, const Vector1<U>&b) noexcept
-    {
-        return Vector1<product_t<T,U>>(a*b.x);
-    }
+    requires (trait::is_arithmetic_v<T>)
+    constexpr Vector1<product_t<T,U>> operator*(T a, const Vector1<U>&b) noexcept;
+
+
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U>)
-    constexpr Vector1<product_t<T,U>> operator*(const Vector1<T>& a, U b) noexcept
-    {
-        return Vector1<product_t<T,U>>(a.x*b);
-    }
-
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector1<T>& operator*=(Vector1<T>& a, U b) noexcept
-    {
-        a.x *= b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr product_t<T,U> operator*(const Vector1<T>&a, const Vector1<U>& b) noexcept
-    {
-        return a.x*b.x;
-    }
-
-    template <typename T, typename U>
-    constexpr Vector1<product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
-    {
-        return a.emul(b);
-    }
+    constexpr Vector1<product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept;
 
 //  --------------------------------------------------------
 //  DIVISION
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<T>)
-    constexpr  Vector1<quotient_t<T,U>> operator/(T a, const  Vector1<U>&b) noexcept
-    {
-        return (a*b) / b.length²();
-    }
+    requires (trait::is_arithmetic_v<T>)
+    constexpr  Vector1<quotient_t<T,U>> operator/(T a, const  Vector1<U>&b) noexcept;
+
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U>)
-    constexpr  Vector1<quotient_t<T,U>> operator/(const  Vector1<T>& a, U b) noexcept
-    {
-        return Vector1<quotient_t<T,U>>(a.x / b);
-    }
-
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Vector1<T>& operator/=(Vector1<T>& a, U b) noexcept
-    {
-        a.x /= b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr quotient_t<T,U> operator/(const Vector1<T>&a, const Vector1<U>& b) noexcept
-    {
-        return (a*b)/length2(b);
-    }
-
-    template <typename T, typename U>
-    constexpr Vector1<quotient_t<T,U>>    div_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
-    {
-        return a.ediv(b);
-    }
+    constexpr Vector1<quotient_t<T,U>>    div_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept;
 
 //  --------------------------------------------------------
 //  POWERS
 
-    /*! \brief Square of the vector's length
-    
-        This returns the SQUARE of the given vector's length.
-    */
-    template <typename T>
-    constexpr square_t<T> operator^(const Vector1<T>& a,two_t) noexcept
-    {
-        return a.x*a.x;
-    }    
 
 //  --------------------------------------------------------
 //  DOT PRODUCT
 
-    template <typename T, typename U>
-    constexpr product_t<T,U> operator DOT (const Vector1<T>& a, const Vector1<U>&b) noexcept
-    {
-        return a.x*b.x;
-    }
-
-
 //  --------------------------------------------------------
 //  INNER PRODUCT
 
-
-    template <typename T, typename U>
-    constexpr product_t<T,U> operator INNER (const Vector1<T>& a, const Vector1<U>&b) noexcept
-    {
-        return a.x*b.x;
-    }
-
-
 //  --------------------------------------------------------
 //  OUTER PRODUCT
-
 
 ///  --------------------------------------------------------
 //  OTIMES PRODUCT
@@ -494,34 +435,19 @@ namespace yq {
 //  ADVANCED FUNCTIONS
 
     template <typename T>
-    constexpr Vector1<T>   abs_elem(const Vector1<T>&a) noexcept
-    {
-        return a.eabs();
-    }
+    constexpr Vector1<T>   abs_elem(const Vector1<T>&a) noexcept;
 
     template <typename T>
-    constexpr T             component_max(const Vector1<T>&a) noexcept
-    {
-        return a.x;
-    }
+    constexpr T             component_max(const Vector1<T>&a) noexcept;
 
     template <typename T>
-    constexpr T             component_min(const Vector1<T>&a) noexcept
-    {
-        return a.x;
-    }
+    constexpr T             component_min(const Vector1<T>&a) noexcept;
 
     template <typename T>
-    constexpr T                   component_product(const Vector1<T>& a) noexcept
-    {
-        return a.x;
-    }
+    constexpr T                   component_product(const Vector1<T>& a) noexcept;
 
     template <typename T>
-    constexpr T                   component_sum(const Vector1<T>& a) noexcept
-    {
-        return a.x;
-    }
+    constexpr T                   component_sum(const Vector1<T>& a) noexcept;
 
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector1<T>& actual, const Vector1<T>& expected)
@@ -536,29 +462,15 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr Vector1<T>   max_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
-    {
-        return a.emax(b);
-    }
+    constexpr Vector1<T>   max_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept;
 
     template <typename T>
-    constexpr Vector1<T>   min_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
-    {
-        return a.emin(b);
-    }
+    constexpr Vector1<T>   min_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept;
 
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
-    constexpr Vector1<T>        midvector(const Vector1<T>& a, const Vector1<T>& b=Vector1<T>{}) noexcept
-    {
-        if constexpr (has_ieee754_v<T>)
-            return ieee754_t<T>(0.5)*(a+b);
-        else if constexpr (std::is_integral_v<T>)
-            return (a+b) / T(2);
-        else
-            return {};
-    }
+    constexpr Vector1<T>        midvector(const Vector1<T>& a, const Vector1<T>& b=Vector1<T>{}) noexcept;
 
     template <typename T>
     AllComponents<Vector1<T>>   all(const Vector1<T>& val)

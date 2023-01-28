@@ -324,17 +324,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Multivector3<T> operator+(unity_t<T> a, const Vector3<T>& b) noexcept
-    {
-        return { 
-            a, 
-            b.x, b.y, b.z, 
-            {}, {}, {}, 
-            {} 
-        };
-    }
-
 
     
 //  --------------------------------------------------------
@@ -557,16 +546,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Multivector3<T> operator-(unity_t<T> a, const Vector3<T>& b) noexcept
-    {
-        return { 
-            a, 
-            -b.x, -b.y, -b.z, 
-            {}, {}, {}, 
-            {} 
-        };
-    }
 
 
         
@@ -635,12 +614,6 @@ namespace yq {
         return a;
     }
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector3<T>   operator/ (const Vector3<T>&a, const Vector3<T>&b) 
-    {
-        return (a * b) / length2(b);
-    }
 
 //  --------------------------------------------------------
 //  POWERS

@@ -382,6 +382,17 @@ namespace yq {
         return *this;
     }
 
+    /*! Vector/vector division
+    
+        Yes, legal in geometric algebra!
+    */
+    template <typename T>
+        template <typename U>
+    constexpr Multivector4<quotient_t<T,U>>   Vector4<T>::operator/ (const Vector4<U>&b) const noexcept
+    {
+        return (*this * b) / b.length²();
+    }
+
     template <typename T>
     constexpr Vector4<T> Vector4<T>::all_add(T b) const noexcept
     {
@@ -465,6 +476,37 @@ namespace yq {
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    
+
+    /*! Scalar/vector subtraction
+    */
+    template <typename T>
+    constexpr Multivector4<T> operator-(T a, const Vector4<T>& b) noexcept
+    {
+        return { 
+            a, 
+            -b.x, -b.y, -b.z, -b.w, 
+            {}, {}, {}, {}, {}, {}, 
+            {}, {}, {}, {}, 
+            {} 
+        };
+    }
+
+    /*! Scalar/vector addition
+    */
+    template <typename T>
+    constexpr Multivector4<T> operator+(T a, const Vector4<T>& b) noexcept
+    {
+        return { 
+            a, 
+            b.x, b.y, b.z, b.w, 
+            {}, {}, {}, {}, {}, {}, 
+            {}, {}, {}, {}, 
+            {} 
+        };
+    }
+
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)

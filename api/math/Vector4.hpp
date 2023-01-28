@@ -215,6 +215,8 @@ namespace yq {
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
         Vector4<T>& operator/=(U b) noexcept;
         
+        template <typename U>
+        constexpr Multivector4<quotient_t<T,U>>   operator/ (const Vector4<U>&b) const noexcept;
 
         //! Tests to see if this vector is "close" to the other
         template <typename R>
@@ -449,6 +451,19 @@ namespace yq {
     auto    length(const Vector4<T>& a);
 
 //  --------------------------------------------------------
+//  ADDITION
+
+
+    template <typename T>
+    constexpr Multivector4<T> operator+(T a, const Vector4<T>& b) noexcept;
+
+//  --------------------------------------------------------
+//  SUBTRACTION
+
+    template <typename T>
+    constexpr Multivector4<T> operator-(T a, const Vector4<T>& b) noexcept;
+
+//  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
@@ -468,25 +483,6 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector4<quotient_t<T,U>>    div_elem(const Vector4<T>&a, const Vector4<U>&b) noexcept;
 
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  PROJECTIONS
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

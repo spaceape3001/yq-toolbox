@@ -200,6 +200,9 @@ namespace yq {
         requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
         Vector3<T>& operator/=(U b) noexcept;
 
+        template <typename U>
+        constexpr Multivector3<quotient_t<T,U>>   operator/ (const Vector3<U>&b) const noexcept;
+
         template <typename R>
         bool close(const Vector3& expected, const R& compare) const
         {
@@ -475,17 +478,21 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
+    template <typename T>
+    constexpr Multivector3<T> operator+(T a, const Vector3<T>& b) noexcept;
+
+//  --------------------------------------------------------
+//  SUBTRACTION
+
+    template <typename T>
+    constexpr Multivector3<T> operator-(T a, const Vector3<T>& b) noexcept;
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
-    constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept
-    {
-        return Vector3<product_t<T,U>>(a*b.x, a*b.y, a*b.z);
-    }
-
+    constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept;
     
     template <typename T, typename U>
     constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
@@ -498,10 +505,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept
-    {
-        return (a*b) / b.length²();
-    }
+    constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept;
 
 
     template <typename T, typename U>

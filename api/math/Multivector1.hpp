@@ -146,36 +146,7 @@ namespace yq {
         };
     }
 
-    //! Adds left scalar with right vector, returns multivector
-    template <typename T>
-    constexpr Multivector1<T> operator+(unity_t<T> a, const Vector1<T>& b) noexcept
-    {
-        return { 
-            a, 
-            b.x 
-        };
-    }
 
-    //! Adds left vector with right multivector, returns multivector
-    template <typename T>
-    constexpr Multivector1<T> operator+(Vector1<T> a, const Multivector1<T>& b) noexcept
-    {
-        return { 
-            b.a, 
-            a.x+b.x
-        };
-    }
-
-    //! Adds left vector with right scalar, returns multivector
-    template <typename T>
-    constexpr Multivector1<T> operator+(Vector1<T> a, unity_t<T>  b) noexcept
-    {
-        return { 
-            b, 
-            a.x 
-        };
-    }
-    
     
 //  --------------------------------------------------------
 //  SUBTRACTION
@@ -245,35 +216,7 @@ namespace yq {
         };
     }
 
-    //! Subtracts vector from scalar
-    template <typename T>
-    constexpr Multivector1<T> operator-(unity_t<T> a, const Vector1<T>& b) noexcept
-    {
-        return { 
-            a, 
-            -b.x 
-        };
-    }
 
-    //! Subtracts multivector from vector
-    template <typename T>
-    constexpr Multivector1<T> operator-(Vector1<T> a, const Multivector1<T>& b) noexcept
-    {
-        return { 
-            -b.a, 
-            a.x-b.x
-        };
-    }
-
-    //! Subtracts scalar from vector
-    template <typename T>
-    constexpr Multivector1<T> operator-(Vector1<T> a, unity_t<T> b) noexcept
-    {
-        return { 
-            -b, 
-            a.x 
-        };
-    }
 
 
 //  --------------------------------------------------------

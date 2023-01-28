@@ -179,6 +179,8 @@ namespace yq {
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
         Vector2<T>& operator/=(U b) noexcept;
         
+        template <typename U>
+        constexpr Multivector2<quotient_t<T,U>>   operator/ (const Vector2<U>&b) const noexcept;
 
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
@@ -425,6 +427,19 @@ namespace yq {
     requires trait::has_sqrt_v<T>
     auto    length(const Vector2<T>& a);
 
+//  --------------------------------------------------------
+//  ADDITION
+
+    //! Adds scalar with vector
+    template <typename T>
+    constexpr Multivector2<T> operator+(T a, const Vector2<T>& b) noexcept;
+
+//  --------------------------------------------------------
+//  SUBTRACTION
+
+    template <typename T>
+    constexpr Multivector2<T> operator-(T a, const Vector2<T>& b) noexcept;
+
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -447,34 +462,6 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector2<quotient_t<T,U>>    div_elem(const Vector2<T>&a, const Vector2<U>&b) noexcept;
 
-
-//  --------------------------------------------------------
-//  POWERS
-
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  PROJECTIONS
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
