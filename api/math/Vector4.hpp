@@ -45,6 +45,11 @@ namespace yq {
         consteval Vector4(w_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(one_v<T>) {}
         constexpr Vector4(w_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
         consteval Vector4(zero_t) noexcept : Vector4(all_, zero_v<T>) {}
+
+        template <glm::qualifier Q>
+        explicit constexpr Vector4(const glm::vec<4, T, Q>& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
+        
+        
         
         /*! \brief Creates a unit-vector in the x-dimension.
         */
@@ -85,23 +90,16 @@ namespace yq {
         }
 
         //! Negation
-        constexpr Vector4 operator-() const noexcept
-        {
-            return Vector4(-x,-y,-z,-w);
-        }
+        constexpr Vector4 operator-() const noexcept;
 
         //! Normalization
-        Vector4<quotient_t<T,T>> operator~() const
-        {
-            auto l = one_v<T>/length();
-            return Vector4(x*l, y*l, z*l, w*l);
-        }
+        Vector4<quotient_t<T,T>> operator~() const;
+
+        //! Power (of two)
+        constexpr square_t<T> operator^(two_t) const noexcept;
 
         //! Conversion to GLM library
-        constexpr operator glm::vec<4, T, glm::defaultp>() const noexcept
-        {
-            return glm::vec<4, T, glm::defaultp>( x, y, z, w );
-        }
+        constexpr operator glm::vec<4, T, glm::defaultp>() const noexcept;
 
         //! Explicit conversion operator
         template <typename U>
@@ -112,38 +110,99 @@ namespace yq {
         }
 
         //! Addition
-        constexpr Vector4 operator+(const Vector4& b) const noexcept
-        {
-            return Vector4(x+b.x, y+b.y, z+b.z, w+b.w);
-        }
+        constexpr Vector4 operator+(const Vector4& b) const noexcept;
 
+        //! Addition with bivector
+        constexpr Multivector4<T> operator+(const Bivector4<T>&) const noexcept;
+        //! Addition with multivector
+        constexpr Multivector4<T> operator+(const Multivector4<T>&) const noexcept;
+        //! Addition with quadvector
+        constexpr Multivector4<T> operator+(const Quadvector4<T>&) const noexcept;
+        //! Addition with trivector
+        constexpr Multivector4<T> operator+(const Trivector4<T>&) const noexcept;
+        //! Addition with scalar
+        constexpr Multivector4<T> operator+(T) const noexcept;
+        
         //! Self-addition
-        Vector4& operator+=(const Vector4& b) noexcept
-        {
-            x += b.x;
-            y += b.y;
-            z += b.z;
-            w += b.w;
-            return *this;
-        }
+        Vector4& operator+=(const Vector4& b) noexcept;
 
         //! Subtraction
-        constexpr Vector4 operator-(const Vector4& b) const noexcept
-        {
-            return Vector4(x-b.x, y-b.y, z-b.z, w-b.w);
-        }
+        constexpr Vector4 operator-(const Vector4& b) const noexcept;
         
         //! Self-subtraction
-        Vector4& operator-=(const Vector4& b) noexcept
-        {
-            x -= b.x;
-            y -= b.y;
-            z -= b.z;
-            w -= b.w;
-            return *this;
-        }
+        Vector4& operator-=(const Vector4& b) noexcept;
 
+        //! Multiplication with scalar
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Vector4<product_t<T,U>> operator*(U b) const noexcept;
 
+        //! Multiplication with tensor41
+        template <typename U>
+        constexpr Vector1<product_t<T,U>> operator*(const Tensor41<U>&b) const noexcept;
+
+        //! Multiplication with tensor42
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Tensor42<U>&b) const noexcept;
+
+        //! Multiplication with tensor43
+        template <typename U>
+        constexpr Vector3<product_t<T,U>> operator*(const Tensor43<U>&b) const noexcept;
+
+        //! Multiplication with tensor44
+        template <typename U>
+        constexpr Vector4<product_t<T,U>> operator*(const Tensor44<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Vector4<T>& operator*=(const Tensor44<U>& b) noexcept;
+
+        template <typename U>
+        constexpr Multivector4<product_t<T,U>>   operator*(const Vector4<U>&) const noexcept;
+
+        //! Self-multiplication
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Vector4<T>& operator*=(U b) noexcept;
+
+        //! Dot product
+        template <typename U>
+        constexpr product_t<T,U> operator DOT (const Vector4<U>&b) const noexcept;
+
+        //! Inner product
+        template <typename U>
+        constexpr product_t<T,U> operator INNER (const Vector4<U>&b) const noexcept;
+        
+        //! Outer product
+        template <typename U>
+        constexpr Bivector4<product_t<T,U>> operator OUTER(const Vector4<U>&b) const noexcept;
+        
+        //! OTIMES product (with vector1)
+        template <typename U>
+        constexpr Tensor41<product_t<T,U>> operator OTIMES(const Vector1<U>&b) const noexcept;
+
+        //! OTIMES product (with vector2)
+        template <typename U>
+        constexpr Tensor42<product_t<T,U>> operator OTIMES(const Vector2<U>&b) const noexcept;
+
+        //! OTIMES product (with vector3)
+        template <typename U>
+        constexpr Tensor43<product_t<T,U>> operator OTIMES(const Vector3<U>&b) const noexcept;
+
+        //! OTIMES product (with vector4)
+        template <typename U>
+        constexpr Tensor44<product_t<T,U>> operator OTIMES(const Vector4<U>&b) const noexcept;
+
+        //! Division
+        template <typename U>
+        requires (trait::is_arithmetic_v<U>)
+        constexpr  Vector4<quotient_t<T,U>> operator/(U b) const noexcept;
+        
+        //! Self-division
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Vector4<T>& operator/=(U b) noexcept;
+        
 
         //! Tests to see if this vector is "close" to the other
         template <typename R>
@@ -153,80 +212,45 @@ namespace yq {
         }
 
         //! Returns the most positive of the components
-        constexpr T             cmax() const noexcept
-        {
-            return max(max(x, y), max(z, w));
-        }
+        constexpr T             cmax() const noexcept;
 
         //! Returns the most negative of the components
-        constexpr T             cmin() const noexcept
-        {
-            return min(min(x, y), min(z, w));
-        }
+        constexpr T             cmin() const noexcept;
 
         //! Returns the product of all components
-        constexpr fourth_t<T>   cproduct() const noexcept
-        {
-            return x*y*z*w;
-        }
+        constexpr fourth_t<T>   cproduct() const noexcept;
 
         //! Returns the sum of all components
-        constexpr T             csum() const noexcept
-        {
-            return x + y + z + w;
-        }
+        constexpr T             csum() const noexcept;
 
         //! Absolute value of each component
-        constexpr Vector4   eabs() const noexcept
-        {
-            return Vector4( abs(x), abs(y), abs(z), abs(w) );
-        }
+        constexpr Vector4       eabs() const noexcept;
 
         //! Element by element division
         template <typename U>
-        constexpr Vector4<quotient_t<T,U>>  ediv(const Vector4<U>&b) const noexcept
-        {
-            return Vector4<quotient_t<T,U>>(x/b.x, y/b.y, z/b.z, w/b.w);
-        }
+        constexpr Vector4<quotient_t<T,U>>  ediv(const Vector4<U>&b) const noexcept;
 
         //! Maximum applied to each component
-        constexpr Vector4   emax(const Vector4&b) const noexcept
-        {
-            return Vector4(max(x, b.x), max(y, b.y), max(z, b.z), max(w, b.w));
-        }
+        constexpr Vector4   emax(const Vector4&b) const noexcept;
         
         //! Minimum applied to each component
-        constexpr Vector4   emin(const Vector4&b) const noexcept
-        {
-            return Vector4(min(x, b.x), min(y, b.y), min(z, b.z), min(w, b.w));
-        }
+        constexpr Vector4   emin(const Vector4&b) const noexcept;
 
         //! Element by element multiplication
         template <typename U>
-        constexpr Vector4<product_t<T,U>>   emul(const Vector4<U>&b) const noexcept
-        {
-            return {x*b.x, y*b.y, z*b.z, w*b.w};
-        }
+        constexpr Vector4<product_t<T,U>>   emul(const Vector4<U>&b) const noexcept;
 
         /*! \brief Square of the vector's length
         
             This returns the SQUARE of the given vector's length.
         */
-        constexpr square_t<T> length²() const noexcept
-        {
-            return x*x + y*y + z*z + w*w;
-        }    
+        constexpr square_t<T> length²() const noexcept;
 
         /*! \brief Length of the vector
             
             This returns the length of the given vector.
         */
-        T    length() const
-        {
-            if constexpr (trait::has_sqrt_v<T>)
-                return sqrt(length²());
-            return {};
-        }
+        T    length() const;
 
             //  ===================================================================================================
             //  AllComponents Adapters
@@ -234,17 +258,11 @@ namespace yq {
 
         /*! Adds a value to all the elements
         */
-        constexpr Vector4 all_add(T b) const noexcept
-        {
-            return Vector4( x+b, y+b, z+b, w+b );
-        }
+        constexpr Vector4 all_add(T b) const noexcept;
         
         /*! \brief Subtracts value from all elements
         */
-        constexpr Vector4 all_subtract(T b) const noexcept
-        {
-            return Vector4( x-b, y-b, z-b, w-b );
-        }
+        constexpr Vector4 all_subtract(T b) const noexcept;
 
         /*! Tests every element
             
@@ -354,7 +372,6 @@ namespace yq {
         return Vector4<T>( v.x, v.y, v.z, v.w );
     }
 
-
     constexpr Vector4D operator "" _x4(unsigned long long int v) noexcept
     {
         return Vector4D(x_, (double) v);
@@ -410,48 +427,25 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length²(const Vector4<T>& a) noexcept
-    {
-        return a.length²();
-    }    
+    constexpr square_t<T> length²(const Vector4<T>& a) noexcept;
 
     /*! \brief Length of the vector
         
         This returns the length of the given vector.
     */
     template <typename T>
-    auto    length(const Vector4<T>& a)
-    {
-        return a.length();
-    }
+    auto    length(const Vector4<T>& a);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<T>)
+    requires (trait::is_arithmetic_v<T>)
     constexpr Vector4<product_t<T,U>> operator*(T a, const Vector4<U>&b) noexcept
     {
         return Vector4<product_t<T,U>>(a*b.x, a*b.y, a*b.z, a*b.w);
     }
     
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U>)
-    constexpr Vector4<product_t<T,U>> operator*(const Vector4<T>& a, U b) noexcept
-    {
-        return Vector4<product_t<T,U>>(a.x*b, a.y*b, a.z*b, a.w*b);
-    }
-
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Vector4<T>& operator*=(Vector4<T>& a, U b) noexcept
-    {
-        a.x *= b;
-        a.y *= b;
-        a.z *= b;
-        a.w *= b;
-        return a;
-    }
 
     template <typename T, typename U>
     constexpr Vector4<product_t<T,U>>    mul_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
@@ -463,28 +457,10 @@ namespace yq {
 //  DIVISION
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<T>)
+    requires (trait::is_arithmetic_v<T>)
     constexpr  Vector4<quotient_t<T,U>> operator/(T a, const  Vector4<U>&b) noexcept
     {
         return (a*b) / b.length²();
-    }
-
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U>)
-    constexpr  Vector4<quotient_t<T,U>> operator/(const  Vector4<T>& a, U b) noexcept
-    {
-        return Vector4<quotient_t<T,U>>(a.x / b, a.y / b, a.z / b, a.w / b);
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Vector4<T>& operator/=(Vector4<T>& a, U b) noexcept
-    {
-        a.x /= b;
-        a.y /= b;
-        a.z /= b;
-        a.w /= b;
-        return a;
     }
     
     template <typename T, typename U>
@@ -494,31 +470,10 @@ namespace yq {
     }
 
 //  --------------------------------------------------------
-//  POWERS
-
-    template <typename T>
-    constexpr square_t<T> operator^(const Vector4<T>& a,two_t) noexcept
-    {
-        return a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w;
-    }    
-
-//  --------------------------------------------------------
 //  DOT PRODUCT
-
-    template <typename T, typename U>
-    constexpr product_t<T,U> operator DOT (const Vector4<T>& a, const Vector4<U>&b) noexcept
-    {
-        return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
-    }
 
 //  --------------------------------------------------------
 //  INNER PRODUCT
-
-    template <typename T, typename U>
-    constexpr product_t<T,U> operator INNER (const Vector4<T>& a, const Vector4<U>&b) noexcept
-    {
-        return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
-    }
 
 //  --------------------------------------------------------
 //  OUTER PRODUCT

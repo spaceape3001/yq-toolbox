@@ -17,10 +17,10 @@ namespace yq {
     */
     template <typename T>
     struct Multivector3 {
-        unity_t<T>      a;
-        T               x, y, z;
-        square_t<T>     xy, yz, zx;
-        cube_t<T>       xyz;
+        T   a;
+        T   x, y, z;
+        T   xy, yz, zx;
+        T   xyz;
         
         constexpr bool operator==(const Multivector3&) const noexcept = default;
     };

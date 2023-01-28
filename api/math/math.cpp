@@ -2877,3 +2877,210 @@ namespace yq {
     {
     }
 }
+
+#include "AxBox1.hxx"
+#include "AxBox2.hxx"
+#include "AxBox3.hxx"
+#include "AxBox4.hxx"
+
+#include "Bivector2.hxx"
+#include "Bivector3.hxx"
+#include "Bivector4.hxx"
+
+#include "Circle2.hxx"
+#include "Circle3.hxx"
+
+#include "MKS.hxx"
+
+#include "Multivector1.hxx"
+#include "Multivector2.hxx"
+#include "Multivector3.hxx"
+#include "Multivector4.hxx"
+
+#include "Normal2.hxx"
+#include "Normal3.hxx"
+
+#include "Plane3.hxx"
+
+#include "Polygon2.hxx"
+#include "Polygon3.hxx"
+#include "Polygon4.hxx"
+
+#include "Polyline2.hxx"
+#include "Polyline3.hxx"
+#include "Polyline4.hxx"
+
+#include "Pose2.hxx"
+#include "Pose3.hxx"
+
+#include "Quadrilateral2.hxx"
+#include "Quadvector4.hxx"
+#include "Quaternion3.hxx"
+
+#include "Range.hxx"
+#include "Ray2.hxx"
+#include "Ray3.hxx"
+#include "Ray4.hxx"
+#include "Rectangle2.hxx"
+
+#include "RGB.hxx"
+#include "RGBA.hxx"
+
+#include "SCALED.hxx"
+#include "Segment1.hxx"
+#include "Segment2.hxx"
+#include "Segment3.hxx"
+#include "Segment4.hxx"
+
+#include "Size1.hxx"
+#include "Size2.hxx"
+#include "Size3.hxx"
+#include "Size4.hxx"
+
+#include "Sphere3.hxx"
+#include "Sphere4.hxx"
+
+#include "Tensor11.hxx"
+#include "Tensor12.hxx"
+#include "Tensor13.hxx"
+#include "Tensor14.hxx"
+
+#include "Tensor21.hxx"
+#include "Tensor22.hxx"
+#include "Tensor23.hxx"
+#include "Tensor24.hxx"
+
+#include "Tensor31.hxx"
+#include "Tensor32.hxx"
+#include "Tensor33.hxx"
+#include "Tensor34.hxx"
+
+#include "Tensor41.hxx"
+#include "Tensor42.hxx"
+#include "Tensor43.hxx"
+#include "Tensor44.hxx"
+
+#include "Tetrahedron3.hxx"
+
+#include "Triangle2.hxx"
+#include "Triangle3.hxx"
+#include "Triangle4.hxx"
+
+#include "Trivector3.hxx"
+#include "Trivector4.hxx"
+
+#include "Vector1.hxx"
+#include "Vector2.hxx"
+#include "Vector3.hxx"
+#include "Vector4.hxx"
+
+namespace yq {
+
+    template class Tensor11<double>;
+    template class Tensor11<float>;
+    template class Tensor11<int>;
+    template class Tensor11<unsigned>;
+
+    template class Tensor12<double>;
+    template class Tensor12<float>;
+    template class Tensor12<int>;
+    template class Tensor12<unsigned>;
+
+    template class Tensor13<double>;
+    template class Tensor13<float>;
+    template class Tensor13<int>;
+    template class Tensor13<unsigned>;
+
+    template class Tensor14<double>;
+    template class Tensor14<float>;
+    template class Tensor14<int>;
+    template class Tensor14<unsigned>;
+
+    template class Tensor21<double>;
+    template class Tensor21<float>;
+    template class Tensor21<int>;
+    template class Tensor21<unsigned>;
+
+    template class Tensor22<double>;
+    template class Tensor22<float>;
+    template class Tensor22<int>;
+    template class Tensor22<unsigned>;
+
+    template class Tensor23<double>;
+    template class Tensor23<float>;
+    template class Tensor23<int>;
+    template class Tensor23<unsigned>;
+
+    template class Tensor24<double>;
+    template class Tensor24<float>;
+    template class Tensor24<int>;
+    template class Tensor24<unsigned>;
+
+    template class Tensor31<double>;
+    template class Tensor31<float>;
+    template class Tensor31<int>;
+    template class Tensor31<unsigned>;
+
+    template class Tensor32<double>;
+    template class Tensor32<float>;
+    template class Tensor32<int>;
+    template class Tensor32<unsigned>;
+
+    template class Tensor33<double>;
+    template class Tensor33<float>;
+    template class Tensor33<int>;
+    template class Tensor33<unsigned>;
+    //template class Tensor33<unit::Pascal>;
+
+    template class Tensor34<double>;
+    template class Tensor34<float>;
+    template class Tensor34<int>;
+    template class Tensor34<unsigned>;
+
+    template class Tensor41<double>;
+    template class Tensor41<float>;
+    template class Tensor41<int>;
+    template class Tensor41<unsigned>;
+
+    template class Tensor42<double>;
+    template class Tensor42<float>;
+    template class Tensor42<int>;
+    template class Tensor42<unsigned>;
+
+    template class Tensor43<double>;
+    template class Tensor43<float>;
+    template class Tensor43<int>;
+    template class Tensor43<unsigned>;
+
+    template class Tensor44<double>;
+    template class Tensor44<float>;
+    template class Tensor44<int>;
+    template class Tensor44<unsigned>;
+
+    template class Vector1<double>;
+    template class Vector1<float>;
+    template class Vector1<int>;
+    template class Vector1<unsigned>;
+
+    template class Vector2<double>;
+    template class Vector2<float>;
+    template class Vector2<int>;
+    template class Vector2<unsigned>;
+
+    template class Vector3<double>;
+    template class Vector3<float>;
+    template class Vector3<int>;
+    template class Vector3<unsigned>;
+
+    template class Vector4<double>;
+    template class Vector4<float>;
+    template class Vector4<int>;
+    template class Vector4<unsigned>;
+
+    // Add function overloads as needed...
+    
+    template Vector4<double> Vector4<double>::ediv<double>(const Vector4<double>&) const;
+    template Vector4<double> Vector4<double>::emul<double>(const Vector4<double>&) const;
+    template Vector4<float> Vector4<float>::ediv<float>(const Vector4<float>&) const;
+    template Vector4<float> Vector4<float>::emul<float>(const Vector4<float>&) const;
+}

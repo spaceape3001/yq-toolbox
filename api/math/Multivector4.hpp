@@ -18,11 +18,11 @@ namespace yq {
     */
     template <typename T>
     struct Multivector4 {
-        unity_t<T>      a;
-        T               x, y, z, w;
-        square_t<T>     xy, yz, zw, wx, xz, yw;
-        cube_t<T>       xyz, yzw, zwx, wxy;
-        fourth_t<T>     xyzw;
+        T       a;
+        T       x, y, z, w;
+        T       xy, yz, zw, wx, xz, yw;
+        T       xyz, yzw, zwx, wxy;
+        T       xyzw;
         
         //! Equality (defaulted) 
         constexpr bool operator==(const Multivector4&) const noexcept = default;
@@ -566,75 +566,7 @@ namespace yq {
         };
     }
 
-    /*! Vector/bivector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Vector4<T>& a, const Bivector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            a.x, a.y, a.z, a.w, 
-            b.xy, b.yz, b.zw, b.wx, b.xz, b.yw,
-            {}, {}, {}, {}, 
-            {} 
-        };
-    }
 
-    /*! Vector/multivector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Vector4<T>& a, const Multivector4<T>& b) noexcept
-    {
-        return { 
-            b.a, 
-            a.x+b.x, a.y+b.y, a.z+b.z, a.w+b.w, 
-            b.xy, b.yz, b.zw, b.wx, b.xz, b.yw,
-            b.xyz, b.yzw, b.zwx, b.wxy,
-            b.xyzw
-        };
-    }
-
-    /*! Vector/quadvector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Vector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            a.x, a.y, a.z, a.w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            b.xyzw
-        };
-    }
-
-    /*! Vector/trivector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Vector4<T>& a, const Trivector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            a.x, a.y, a.z, a.w, 
-            {}, {}, {}, {}, {}, {}, 
-            b.xyz, b.yzw, b.zwx, b.wxy,
-            {} 
-        };
-    }    
-
-    /*! Vector/scalar addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Vector4<T>& a, unity_t<T>  b) noexcept
-    {
-        return { 
-            b, 
-            a.x, a.y, a.z, a.w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
-        };
-    }
 
 
 //  --------------------------------------------------------

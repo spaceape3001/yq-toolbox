@@ -22,6 +22,7 @@
 #include <math/trait/has_sqrt.hpp>
 #include <math/trait/has_zero.hpp>
 #include <math/trait/ieee754.hpp>
+#include <math/trait/is_arithmetic.hpp>
 
 #include <math/dims.hpp>
 
@@ -1101,7 +1102,10 @@ namespace yq {
         template <typename T, typename U>  static constexpr const bool self_mul_v = std::is_same_v<T,product_t<T,U>>;
         template <typename T, typename U>  static constexpr const bool self_div_v = std::is_same_v<T,quotient_t<T,U>>;
         
-        template <typename T>   static constexpr const bool is_basic_v = std::is_floating_point_v<T>;
+        template <typename T> static constexpr const bool is_basic_v = std::is_floating_point_v<T>;
+        template <typename T> struct is_arithmetic<std::complex<T>> : is_arithmetic<T> {};
+        template <typename T, typename D>             struct is_arithmetic<MKS<T,D>> : is_arithmetic<T> {};
+        template <typename T, typename D, double K>   struct is_arithmetic<SCALED<T,D,K>> : is_arithmetic<T> {};
     }
     
     //! Fast way to what something's sign is

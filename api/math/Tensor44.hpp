@@ -701,24 +701,6 @@ namespace yq {
         );
     }
 
-    template <typename T, typename U>
-    constexpr Vector4<product_t<T,U>> operator*(const Vector4<T>&a, const Tensor44<U>&b) noexcept
-    {
-        return Vector4<product_t<T,U>>(
-            a.x*b.xx + a.y*b.yx + a.z*b.zx + a.w*b.wx,
-            a.x*b.xy + a.y*b.yy + a.z*b.zy + a.w*b.wy,
-            a.x*b.xz + a.y*b.yz + a.z*b.zz + a.w*b.wz,
-            a.x*b.xw + a.y*b.yw + a.z*b.zw + a.w*b.ww
-        );
-    }
-
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Vector4<T>& operator*=(Vector4<T>&a, const Tensor44<U>& b) noexcept
-    {
-        a = a * b;
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -749,17 +731,6 @@ namespace yq {
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
-
-    template <typename T, typename U>
-    constexpr Tensor44<product_t<T,U>> operator OTIMES(const Vector4<T>&a, const Vector4<U>&b) noexcept
-    {
-        return Tensor44<product_t<T,U>>(
-            a.x+b.x, a.x+b.y, a.x+b.z, a.x+b.w,
-            a.y+b.x, a.y+b.y, a.y+b.z, a.y+b.w,
-            a.z+b.x, a.z+b.y, a.z+b.z, a.z+b.w,
-            a.w+b.x, a.w+b.y, a.w+b.z, a.w+b.w
-        );
-    }
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
