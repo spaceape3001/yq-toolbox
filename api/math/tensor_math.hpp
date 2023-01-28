@@ -157,15 +157,6 @@ namespace yq {
     }
 
     
-    template <typename T>
-    constexpr Tensor34<T>  transpose(const Tensor43<T>&v)
-    {
-        return {
-            v.xx, v.yx, v.zx, v.wx,
-            v.xy, v.yy, v.zy, v.wy,
-            v.xz, v.yz, v.zz, v.wz
-        };
-    }
 
     
 //  --------------------------------------------------------
@@ -1009,93 +1000,6 @@ namespace yq {
     //  -------------------------
     //  Tensor43 * (OTHER)
 
-    template <typename T, typename U>
-    constexpr Tensor41<product_t<T,U>> operator*(const Tensor43<T>& a, const Tensor31<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-
-            a.wx*b.xx + a.wy*b.yx + a.wz*b.zx
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor42<product_t<T,U>> operator*(const Tensor43<T>& a, const Tensor32<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-            a.zx*b.xy + a.zy*b.yy + a.zz*b.zy,
-
-            a.wx*b.xx + a.wy*b.yx + a.wz*b.zx,
-            a.wx*b.xy + a.wy*b.yy + a.wz*b.zy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor43<product_t<T,U>> operator*(const Tensor43<T>& a, const Tensor33<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-            a.xx*b.xz + a.xy*b.yz + a.xz*b.zz,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-            a.yx*b.xz + a.yy*b.yz + a.yz*b.zz,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-            a.zx*b.xy + a.zy*b.yy + a.zz*b.zy,
-            a.zx*b.xz + a.zy*b.yz + a.zz*b.zz,
-
-            a.wx*b.xx + a.wy*b.yx + a.wz*b.zx,
-            a.wx*b.xy + a.wy*b.yy + a.wz*b.zy,
-            a.wx*b.xz + a.wy*b.yz + a.wz*b.zz
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor43<T>& operator*=(Tensor43<T>&a, const Tensor33<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor44<product_t<T,U>> operator*(const Tensor43<T>& a, const Tensor34<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-            a.xx*b.xz + a.xy*b.yz + a.xz*b.zz,
-            a.xx*b.xw + a.xy*b.yw + a.xz*b.zw,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-            a.yx*b.xz + a.yy*b.yz + a.yz*b.zz,
-            a.yx*b.xw + a.yy*b.yw + a.yz*b.zw,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-            a.zx*b.xy + a.zy*b.yy + a.zz*b.zy,
-            a.zx*b.xz + a.zy*b.yz + a.zz*b.zz,
-            a.zx*b.xw + a.zy*b.yw + a.zz*b.zw,
-
-            a.wx*b.xx + a.wy*b.yx + a.wz*b.zx,
-            a.wx*b.xy + a.wy*b.yy + a.wz*b.zy,
-            a.wx*b.xz + a.wy*b.yz + a.wz*b.zz,
-            a.wx*b.xw + a.wy*b.yw + a.wz*b.zw
-        };
-    }
     
     //  -------------------------
     //  Tensor44 * (OTHER)
