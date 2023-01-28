@@ -735,9 +735,15 @@ YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond²3D)
 
 //  Grammaer to below
 
+static constexpr const std::string_view     szA                         = "a";
+static constexpr const std::string_view     szAlpha                     = "alpha";
+static constexpr const std::string_view     szAlpha_Color               = "Alpha channel of the color";
 static constexpr const std::string_view     szArea                      = "area";
 static constexpr const std::string_view     szArea_Box                  = "Area of the box";
 static constexpr const std::string_view     szArea_Circle               = "Area of the box";
+static constexpr const std::string_view     szB                         = "b";
+static constexpr const std::string_view     szBlue                      = "blue";
+static constexpr const std::string_view     szBlue_Color                = "Blue channel of the color";
 static constexpr const std::string_view     szBox                       = "box";
 static constexpr const std::string_view     szBox_Circle                = "Bounding box of the circle";
 static constexpr const std::string_view     szCenter                    = "center";
@@ -758,12 +764,19 @@ static constexpr const std::string_view     szDiameter_Circle           = "Diame
 static constexpr const std::string_view     szDim                       = "dim";
 static constexpr const std::string_view     szDimension                 = "dimensions";
 static constexpr const std::string_view     szDimension_Box             = "Dimension(s) of the box";
+static constexpr const std::string_view     szDir                       = "dir";
+static constexpr const std::string_view     szDirection                 = "direction";
+static constexpr const std::string_view     szDirection_Ray             = "Direction of the ray";
 static constexpr const std::string_view     szEclipses                  = "eclipses";
 static constexpr const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
 static constexpr const std::string_view     szEclipses_Box_Circle       = "Tests if circle is inside/touching this box";
 static constexpr const std::string_view     szEclipses_Box_Pt           = "Tests if point is inside/touching the box";
+static constexpr const std::string_view     szG                         = "g";
+static constexpr const std::string_view     szGreen                     = "green";
+static constexpr const std::string_view     szGreen_Color               = "Green channel of the color";
 static constexpr const std::string_view     szHigh                      = "hi";
 static constexpr const std::string_view     szHigh_Box                  = "High-corner of the box";
+static constexpr const std::string_view     szHigh_Range                = "High-value of the range";
 static constexpr const std::string_view     szHypervolume               = "hypervolume";
 static constexpr const std::string_view     szHypervolume_Box4          = "Hypervolume of the box";
 static constexpr const std::string_view     szHVol                      = "hvol";
@@ -777,6 +790,7 @@ static constexpr const std::string_view     szLength²                   = "leng
 static constexpr const std::string_view     szLength²_Vector            = "Length SQUARED of the vector";
 static constexpr const std::string_view     szLow                       = "lo";
 static constexpr const std::string_view     szLow_Box                   = "Low-corner of the box";
+static constexpr const std::string_view     szLow_Range                 = "Low-value of the range";
 static constexpr const std::string_view     szNE                        = "ne";
 static constexpr const std::string_view     szNortheast                 = "northeast";
 static constexpr const std::string_view     szNortheast_Box             = "North-east corner of the box";
@@ -788,11 +802,15 @@ static constexpr const std::string_view     szOverlaps_Box_Box          = "Tests
 static constexpr const std::string_view     szPerimeter                 = "perimeter";
 static constexpr const std::string_view     szPerimeter_Box             = "Perimeter of the box";
 static constexpr const std::string_view     szPerimeter_Circle          = "Perimeter of the circle";
+static constexpr const std::string_view     szPoint                     = "point";
+static constexpr const std::string_view     szPoint_Ray                 = "Point of the ray";
 static constexpr const std::string_view     szProject                   = "global";
 static constexpr const std::string_view     szProject_Box               = "Project local point (u/v/w) to real space (x/y/z)";
 static constexpr const std::string_view     szR                         = "r";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
+static constexpr const std::string_view     szRed                       = "red";
+static constexpr const std::string_view     szRed_Color                 = "Red channel of the color";
 static constexpr const std::string_view     szSE                        = "se";
 static constexpr const std::string_view     szSArea                     = "sarea";
 static constexpr const std::string_view     szSize                      = "size";
@@ -1408,95 +1426,95 @@ static void reg_math () {
     }
 
     {
-        auto mul1d  = writer<Multivector1D>();
-        mul1d.property("a", &Multivector1D::a);
-        mul1d.property(szX, &Multivector1D::x);
+        auto w  = writer<Multivector1D>();
+        w.property("a", &Multivector1D::a);
+        w.property(szX, &Multivector1D::x);
     }
 
     {
-        auto mul1f  = writer<Multivector1F>();
-        mul1f.property("a", &Multivector1F::a);
-        mul1f.property(szX, &Multivector1F::x);
+        auto w  = writer<Multivector1F>();
+        w.property("a", &Multivector1F::a);
+        w.property(szX, &Multivector1F::x);
     }
 
     {
-        auto mul2d  = writer<Multivector2D>();
-        mul2d.property("a", &Multivector2D::a);
-        mul2d.property(szX, &Multivector2D::x);
-        mul2d.property(szY, &Multivector2D::y);
-        mul2d.property("xy", &Multivector2D::xy);
+        auto w  = writer<Multivector2D>();
+        w.property("a", &Multivector2D::a);
+        w.property(szX, &Multivector2D::x);
+        w.property(szY, &Multivector2D::y);
+        w.property("xy", &Multivector2D::xy);
     }
 
     {
-        auto mul2f  = writer<Multivector2F>();
-        mul2f.property("a", &Multivector2F::a);
-        mul2f.property(szX, &Multivector2F::x);
-        mul2f.property(szY, &Multivector2F::y);
-        mul2f.property("xy", &Multivector2F::xy);
+        auto w  = writer<Multivector2F>();
+        w.property("a", &Multivector2F::a);
+        w.property(szX, &Multivector2F::x);
+        w.property(szY, &Multivector2F::y);
+        w.property("xy", &Multivector2F::xy);
     }
 
     {
-        auto mul3d  = writer<Multivector3D>();
-        mul3d.property("a", &Multivector3D::a);
-        mul3d.property(szX, &Multivector3D::x);
-        mul3d.property(szY, &Multivector3D::y);
-        mul3d.property(szZ, &Multivector3D::z);
-        mul3d.property("xy", &Multivector3D::xy);
-        mul3d.property("yz", &Multivector3D::yz);
-        mul3d.property("zx", &Multivector3D::zx);
-        mul3d.property("xyz", &Multivector3D::xyz);
+        auto w  = writer<Multivector3D>();
+        w.property("a", &Multivector3D::a);
+        w.property(szX, &Multivector3D::x);
+        w.property(szY, &Multivector3D::y);
+        w.property(szZ, &Multivector3D::z);
+        w.property("xy", &Multivector3D::xy);
+        w.property("yz", &Multivector3D::yz);
+        w.property("zx", &Multivector3D::zx);
+        w.property("xyz", &Multivector3D::xyz);
     }
 
     {
-        auto mul3f  = writer<Multivector3F>();
-        mul3f.property("a", &Multivector3F::a);
-        mul3f.property(szX, &Multivector3F::x);
-        mul3f.property(szY, &Multivector3F::y);
-        mul3f.property(szZ, &Multivector3F::z);
-        mul3f.property("xy", &Multivector3F::xy);
-        mul3f.property("yz", &Multivector3F::yz);
-        mul3f.property("zx", &Multivector3F::zx);
-        mul3f.property("xyz", &Multivector3F::xyz);
+        auto w  = writer<Multivector3F>();
+        w.property("a", &Multivector3F::a);
+        w.property(szX, &Multivector3F::x);
+        w.property(szY, &Multivector3F::y);
+        w.property(szZ, &Multivector3F::z);
+        w.property("xy", &Multivector3F::xy);
+        w.property("yz", &Multivector3F::yz);
+        w.property("zx", &Multivector3F::zx);
+        w.property("xyz", &Multivector3F::xyz);
     }
 
     {
-        auto mul4d  = writer<Multivector4D>();
-        mul4d.property("a", &Multivector4D::a);
-        mul4d.property(szX, &Multivector4D::x);
-        mul4d.property(szY, &Multivector4D::y);
-        mul4d.property(szZ, &Multivector4D::z);
-        mul4d.property(szW, &Multivector4D::w);
-        mul4d.property("xy", &Multivector4D::xy);
-        mul4d.property("yz", &Multivector4D::yz);
-        mul4d.property("zw", &Multivector4D::zw);
-        mul4d.property("wx", &Multivector4D::wx);
-        mul4d.property("xz", &Multivector4D::xz);
-        mul4d.property("yw", &Multivector4D::yw);
-        mul4d.property("xyz", &Multivector4D::xyz);
-        mul4d.property("yzw", &Multivector4D::yzw);
-        mul4d.property("zwx", &Multivector4D::zwx);
-        mul4d.property("wxy", &Multivector4D::wxy);
-        mul4d.property("xyzw", &Multivector4D::xyzw);
+        auto w  = writer<Multivector4D>();
+        w.property("a", &Multivector4D::a);
+        w.property(szX, &Multivector4D::x);
+        w.property(szY, &Multivector4D::y);
+        w.property(szZ, &Multivector4D::z);
+        w.property(szW, &Multivector4D::w);
+        w.property("xy", &Multivector4D::xy);
+        w.property("yz", &Multivector4D::yz);
+        w.property("zw", &Multivector4D::zw);
+        w.property("wx", &Multivector4D::wx);
+        w.property("xz", &Multivector4D::xz);
+        w.property("yw", &Multivector4D::yw);
+        w.property("xyz", &Multivector4D::xyz);
+        w.property("yzw", &Multivector4D::yzw);
+        w.property("zwx", &Multivector4D::zwx);
+        w.property("wxy", &Multivector4D::wxy);
+        w.property("xyzw", &Multivector4D::xyzw);
     }
 
     {
-        auto mul4f  = writer<Multivector4F>();
-        mul4f.property("a", &Multivector4F::a);
-        mul4f.property(szX, &Multivector4F::x);
-        mul4f.property(szY, &Multivector4F::y);
-        mul4f.property(szZ, &Multivector4F::z);
-        mul4f.property(szW, &Multivector4F::w);
-        mul4f.property("xy", &Multivector4F::xy);
-        mul4f.property("yz", &Multivector4F::yz);
-        mul4f.property("zw", &Multivector4F::zw);
-        mul4f.property("wx", &Multivector4F::wx);
-        mul4f.property("xz", &Multivector4F::xz);
-        mul4f.property("yw", &Multivector4F::yw);
-        mul4f.property("xyz", &Multivector4F::xyz);
-        mul4f.property("yzw", &Multivector4F::yzw);
-        mul4f.property("zwx", &Multivector4F::zwx);
-        mul4f.property("wxy", &Multivector4F::wxy);
-        mul4f.property("xyzw", &Multivector4F::xyzw);
+        auto w  = writer<Multivector4F>();
+        w.property("a", &Multivector4F::a);
+        w.property(szX, &Multivector4F::x);
+        w.property(szY, &Multivector4F::y);
+        w.property(szZ, &Multivector4F::z);
+        w.property(szW, &Multivector4F::w);
+        w.property("xy", &Multivector4F::xy);
+        w.property("yz", &Multivector4F::yz);
+        w.property("zw", &Multivector4F::zw);
+        w.property("wx", &Multivector4F::wx);
+        w.property("xz", &Multivector4F::xz);
+        w.property("yw", &Multivector4F::yw);
+        w.property("xyz", &Multivector4F::xyz);
+        w.property("yzw", &Multivector4F::yzw);
+        w.property("zwx", &Multivector4F::zwx);
+        w.property("wxy", &Multivector4F::wxy);
+        w.property("xyzw", &Multivector4F::xyzw);
     }
 
     {
@@ -1591,18 +1609,26 @@ static void reg_math () {
         
     {
         auto w  = writer<RangeD>();
+        w.property(szLow, &RangeD::lo).description(szLow_Range);
+        w.property(szHigh, &RangeD::hi).description(szHigh_Range);
     }
     
     {
         auto w  = writer<RangeF>();
+        w.property(szLow, &RangeF::lo).description(szLow_Range);
+        w.property(szHigh, &RangeF::hi).description(szHigh_Range);
     }
 
     {
         auto w  = writer<RangeI>();
+        w.property(szLow, &RangeI::lo).description(szLow_Range);
+        w.property(szHigh, &RangeI::hi).description(szHigh_Range);
     }
 
     {
         auto w  = writer<RangeU>();
+        w.property(szLow, &RangeU::lo).description(szLow_Range);
+        w.property(szHigh, &RangeU::hi).description(szHigh_Range);
     }
 
     {
@@ -1642,63 +1668,63 @@ static void reg_math () {
     }
 
     {
-        auto rgbd   = writer<RGB3D>();
-        rgbd.property("r", &RGB3D::red);
-        rgbd.property("g", &RGB3D::green);
-        rgbd.property("b", &RGB3D::blue);
+        auto w   = writer<RGB3D>();
+        w.property(szRed, &RGB3D::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGB3D::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGB3D::blue).description(szBlue_Color).alias(szB);
     }
 
     {
-        auto rgbf   = writer<RGB3F>();
-        rgbf.property("r", &RGB3F::red);
-        rgbf.property("g", &RGB3F::green);
-        rgbf.property("b", &RGB3F::blue);
+        auto w   = writer<RGB3F>();
+        w.property(szRed, &RGB3F::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGB3F::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGB3F::blue).description(szBlue_Color).alias(szB);
     }
 
     {
-        auto rgbu8   = writer<RGB3U8>();
-        rgbu8.property("r", &RGB3U8::red);
-        rgbu8.property("g", &RGB3U8::green);
-        rgbu8.property("b", &RGB3U8::blue);
+        auto w   = writer<RGB3U8>();
+        w.property(szRed, &RGB3U8::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGB3U8::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGB3U8::blue).description(szBlue_Color).alias(szB);
     }
 
     {
-        auto rgbu16   = writer<RGB3U16>();
-        rgbu16.property("r", &RGB3U16::red);
-        rgbu16.property("g", &RGB3U16::green);
-        rgbu16.property("b", &RGB3U16::blue);
+        auto w   = writer<RGB3U16>();
+        w.property(szRed, &RGB3U16::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGB3U16::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGB3U16::blue).description(szBlue_Color).alias(szB);
     }
 
     {
-        auto rgbad   = writer<RGBA4D>();
-        rgbad.property("r", &RGBA4D::red);
-        rgbad.property("g", &RGBA4D::green);
-        rgbad.property("b", &RGBA4D::blue);
-        rgbad.property("a", &RGBA4D::alpha);
+        auto w   = writer<RGBA4D>();
+        w.property(szRed, &RGBA4D::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGBA4D::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGBA4D::blue).description(szBlue_Color).alias(szB);
+        w.property(szAlpha, &RGBA4D::alpha).description(szAlpha_Color).alias(szA);
     }
 
     {
-        auto rgbaf   = writer<RGBA4F>();
-        rgbaf.property("r", &RGBA4F::red);
-        rgbaf.property("g", &RGBA4F::green);
-        rgbaf.property("b", &RGBA4F::blue);
-        rgbaf.property("a", &RGBA4F::alpha);
+        auto w   = writer<RGBA4F>();
+        w.property(szRed, &RGBA4F::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGBA4F::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGBA4F::blue).description(szBlue_Color).alias(szB);
+        w.property(szAlpha, &RGBA4F::alpha).description(szAlpha_Color).alias(szA);
     }
 
     {
-        auto rgbau8   = writer<RGBA4U8>();
-        rgbau8.property("r", &RGBA4U8::red);
-        rgbau8.property("g", &RGBA4U8::green);
-        rgbau8.property("b", &RGBA4U8::blue);
-        rgbau8.property("a", &RGBA4U8::alpha);
+        auto w   = writer<RGBA4U8>();
+        w.property(szRed, &RGBA4U8::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGBA4U8::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGBA4U8::blue).description(szBlue_Color).alias(szB);
+        w.property(szAlpha, &RGBA4U8::alpha).description(szAlpha_Color).alias(szA);
     }
 
     {
-        auto rgbau16   = writer<RGBA4U16>();
-        rgbau16.property("r", &RGBA4U16::red);
-        rgbau16.property("g", &RGBA4U16::green);
-        rgbau16.property("b", &RGBA4U16::blue);
-        rgbau16.property("a", &RGBA4U16::alpha);
+        auto w   = writer<RGBA4U16>();
+        w.property(szRed, &RGBA4U16::red).description(szRed_Color).alias(szR);
+        w.property(szGreen, &RGBA4U16::green).description(szGreen_Color).alias(szG);
+        w.property(szBlue, &RGBA4U16::blue).description(szBlue_Color).alias(szB);
+        w.property(szAlpha, &RGBA4U16::alpha).description(szAlpha_Color).alias(szA);
     }
 
     {
@@ -2976,111 +3002,117 @@ namespace yq {
 
 namespace yq {
 
-    template class Tensor11<double>;
-    template class Tensor11<float>;
-    template class Tensor11<int>;
-    template class Tensor11<unsigned>;
+    //template class Tensor11<double>;
+    //template class Tensor11<float>;
+    //template class Tensor11<int>;
+    //template class Tensor11<unsigned>;
 
-    template class Tensor12<double>;
-    template class Tensor12<float>;
-    template class Tensor12<int>;
-    template class Tensor12<unsigned>;
+    //template class Tensor12<double>;
+    //template class Tensor12<float>;
+    //template class Tensor12<int>;
+    //template class Tensor12<unsigned>;
 
-    template class Tensor13<double>;
-    template class Tensor13<float>;
-    template class Tensor13<int>;
-    template class Tensor13<unsigned>;
+    //template class Tensor13<double>;
+    //template class Tensor13<float>;
+    //template class Tensor13<int>;
+    //template class Tensor13<unsigned>;
 
-    template class Tensor14<double>;
-    template class Tensor14<float>;
-    template class Tensor14<int>;
-    template class Tensor14<unsigned>;
+    //template class Tensor14<double>;
+    //template class Tensor14<float>;
+    //template class Tensor14<int>;
+    //template class Tensor14<unsigned>;
 
-    template class Tensor21<double>;
-    template class Tensor21<float>;
-    template class Tensor21<int>;
-    template class Tensor21<unsigned>;
+    //template class Tensor21<double>;
+    //template class Tensor21<float>;
+    //template class Tensor21<int>;
+    //template class Tensor21<unsigned>;
 
-    template class Tensor22<double>;
-    template class Tensor22<float>;
-    template class Tensor22<int>;
-    template class Tensor22<unsigned>;
+    //template class Tensor22<double>;
+    //template class Tensor22<float>;
+    //template class Tensor22<int>;
+    //template class Tensor22<unsigned>;
 
-    template class Tensor23<double>;
-    template class Tensor23<float>;
-    template class Tensor23<int>;
-    template class Tensor23<unsigned>;
+    //template class Tensor23<double>;
+    //template class Tensor23<float>;
+    //template class Tensor23<int>;
+    //template class Tensor23<unsigned>;
 
-    template class Tensor24<double>;
-    template class Tensor24<float>;
-    template class Tensor24<int>;
-    template class Tensor24<unsigned>;
+    //template class Tensor24<double>;
+    //template class Tensor24<float>;
+    //template class Tensor24<int>;
+    //template class Tensor24<unsigned>;
 
-    template class Tensor31<double>;
-    template class Tensor31<float>;
-    template class Tensor31<int>;
-    template class Tensor31<unsigned>;
+    //template class Tensor31<double>;
+    //template class Tensor31<float>;
+    //template class Tensor31<int>;
+    //template class Tensor31<unsigned>;
 
-    template class Tensor32<double>;
-    template class Tensor32<float>;
-    template class Tensor32<int>;
-    template class Tensor32<unsigned>;
+    //template class Tensor32<double>;
+    //template class Tensor32<float>;
+    //template class Tensor32<int>;
+    //template class Tensor32<unsigned>;
 
-    template class Tensor33<double>;
-    template class Tensor33<float>;
-    template class Tensor33<int>;
-    template class Tensor33<unsigned>;
-    //template class Tensor33<unit::Pascal>;
+    //template class Tensor33<double>;
+    //template class Tensor33<float>;
+    //template class Tensor33<int>;
+    //template class Tensor33<unsigned>;
+    ////template class Tensor33<unit::Pascal>;
 
-    template class Tensor34<double>;
-    template class Tensor34<float>;
-    template class Tensor34<int>;
-    template class Tensor34<unsigned>;
+    //template class Tensor34<double>;
+    //template class Tensor34<float>;
+    //template class Tensor34<int>;
+    //template class Tensor34<unsigned>;
 
-    template class Tensor41<double>;
-    template class Tensor41<float>;
-    template class Tensor41<int>;
-    template class Tensor41<unsigned>;
+    //template class Tensor41<double>;
+    //template class Tensor41<float>;
+    //template class Tensor41<int>;
+    //template class Tensor41<unsigned>;
 
-    template class Tensor42<double>;
-    template class Tensor42<float>;
-    template class Tensor42<int>;
-    template class Tensor42<unsigned>;
+    //template class Tensor42<double>;
+    //template class Tensor42<float>;
+    //template class Tensor42<int>;
+    //template class Tensor42<unsigned>;
 
-    template class Tensor43<double>;
-    template class Tensor43<float>;
-    template class Tensor43<int>;
-    template class Tensor43<unsigned>;
+    //template class Tensor43<double>;
+    //template class Tensor43<float>;
+    //template class Tensor43<int>;
+    //template class Tensor43<unsigned>;
 
-    template class Tensor44<double>;
-    template class Tensor44<float>;
-    template class Tensor44<int>;
-    template class Tensor44<unsigned>;
+    //template class Tensor44<double>;
+    //template class Tensor44<float>;
+    //template class Tensor44<int>;
+    //template class Tensor44<unsigned>;
 
-    template class Vector1<double>;
-    template class Vector1<float>;
-    template class Vector1<int>;
-    template class Vector1<unsigned>;
+    //template class Vector1<double>;
+    //template class Vector1<float>;
+    //template class Vector1<int>;
+    //template class Vector1<unsigned>;
 
-    template class Vector2<double>;
-    template class Vector2<float>;
-    template class Vector2<int>;
-    template class Vector2<unsigned>;
+    //template class Vector2<double>;
+    //template class Vector2<float>;
+    //template class Vector2<int>;
+    //template class Vector2<unsigned>;
 
-    template class Vector3<double>;
-    template class Vector3<float>;
-    template class Vector3<int>;
-    template class Vector3<unsigned>;
+    //template class Vector3<double>;
+    //template class Vector3<float>;
+    //template class Vector3<int>;
+    //template class Vector3<unsigned>;
 
-    template class Vector4<double>;
-    template class Vector4<float>;
-    template class Vector4<int>;
-    template class Vector4<unsigned>;
+    //template class Vector4<double>;
+    //template class Vector4<float>;
+    //template class Vector4<int>;
+    //template class Vector4<unsigned>;
 
-    // Add function overloads as needed...
+    //// Add function overloads as needed...
     
-    template Vector4<double> Vector4<double>::ediv<double>(const Vector4<double>&) const;
-    template Vector4<double> Vector4<double>::emul<double>(const Vector4<double>&) const;
-    template Vector4<float> Vector4<float>::ediv<float>(const Vector4<float>&) const;
-    template Vector4<float> Vector4<float>::emul<float>(const Vector4<float>&) const;
+    //template Vector3<product_t<unsigned,int>> Vector3<unsigned>::operator* <int>(int) const;
+    
+    //template Vector4<double> Vector4<double>::ediv<double>(const Vector4<double>&) const;
+    //template Vector4<double> Vector4<double>::emul<double>(const Vector4<double>&) const;
+
+    //template Vector4<float> Vector4<float>::ediv<float>(const Vector4<float>&) const;
+    //template Vector4<float> Vector4<float>::emul<float>(const Vector4<float>&) const;
+
+    //template Vector4<product_t<unsigned,int>> Vector4<unsigned>::operator* <int>(int) const;
+
 }

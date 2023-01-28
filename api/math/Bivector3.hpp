@@ -237,17 +237,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  OUTER PRODUCT
 
-    /*! \brief Outer product for 3 dimensional vectors
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Bivector3<T> operator OUTER (const Vector3<T>&a, const Vector3<T>& b) noexcept
-    {
-        return { a.x*b.y-a.y*b.x, a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z };
-    }
-
 //  --------------------------------------------------------
 //  CROSS PRODUCT
 

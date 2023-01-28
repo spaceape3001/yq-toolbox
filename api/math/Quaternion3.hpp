@@ -317,7 +317,7 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Quaternion3<T>  hpr(const MKS<T,dim::Angle>& hdg, const MKS<T,dim::Angle>& pitch, const MKS<T,dim::Angle>& roll)
     {
-        return rotor_z(hdg) * rotor_y(pitch) * rotor_x(pitch);
+        return rotor_z(hdg) * rotor_y(pitch) * rotor_x(roll);
     }
 
     template <typename T>
@@ -340,7 +340,7 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Tensor33<T>     tensor(const Quaternion3<T>& q)
     {
-        return columns( q * Vector3<T>::unit_x(), q * Vector3<T>::unit_y(), q * Vector3<T>::unit_z());
+        return columns( q * Vector3<T>(x_), q * Vector3<T>(y_), q * Vector3<T>(z_));
     }
 
 }

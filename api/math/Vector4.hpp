@@ -128,6 +128,17 @@ namespace yq {
 
         //! Subtraction
         constexpr Vector4 operator-(const Vector4& b) const noexcept;
+
+        //! Addition with bivector
+        constexpr Multivector4<T> operator-(const Bivector4<T>&) const noexcept;
+        //! Addition with multivector
+        constexpr Multivector4<T> operator-(const Multivector4<T>&) const noexcept;
+        //! Addition with quadvector
+        constexpr Multivector4<T> operator-(const Quadvector4<T>&) const noexcept;
+        //! Addition with trivector
+        constexpr Multivector4<T> operator-(const Trivector4<T>&) const noexcept;
+        //! Addition with scalar
+        constexpr Multivector4<T> operator-(T) const noexcept;
         
         //! Self-subtraction
         Vector4& operator-=(const Vector4& b) noexcept;

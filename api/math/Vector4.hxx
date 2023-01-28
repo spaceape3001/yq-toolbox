@@ -145,6 +145,67 @@ namespace yq {
         return *this;
     }
 
+
+    template <typename T>
+    constexpr Multivector4<T> Vector4<T>::operator-(T b) const noexcept
+    {
+        return { 
+            -b, 
+            x, y, z, w, 
+            {}, {}, {}, {}, {}, {}, 
+            {}, {}, {}, {}, 
+            {} 
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector4<T> Vector4<T>::operator-(const Bivector4<T>& b) const noexcept
+    {
+        return { 
+            {}, 
+            x, y, z, w, 
+            -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
+            {}, {}, {}, {}, 
+            {} 
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector4<T> Vector4<T>::operator-(const Multivector4<T>& b) const noexcept
+    {
+        return { 
+            -b.a, 
+            x-b.x, y-b.y, z-b.z, w-b.w, 
+            -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
+            -b.xyz, -b.yzw, -b.zwx, -b.wxy,
+            -b.xyzw
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector4<T> Vector4<T>::operator-(const Quadvector4<T>& b) const noexcept
+    {
+        return { 
+            {}, 
+            x, y, z, w, 
+            {}, {}, {}, {}, {}, {}, 
+            {}, {}, {}, {}, 
+            -b.xyzw
+        };
+    }
+
+    template <typename T>
+    constexpr Multivector4<T> Vector4<T>::operator-( const Trivector4<T>& b) const noexcept
+    {
+        return { 
+            {}, 
+            x, y, z, w, 
+            {}, {}, {}, {}, {}, {}, 
+            -b.xyz, -b.yzw, -b.zwx, -b.wxy,
+            {} 
+        };
+    }    
+
     template <typename T>
         template <typename U>
     requires (trait::is_arithmetic_v<U>)

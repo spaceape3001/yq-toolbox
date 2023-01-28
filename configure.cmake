@@ -50,6 +50,7 @@ if(NOT YOUR_QUILL_TOOLBOX)
         -Wno-error=unused-function 
         -Wno-error=unused-variable 
         -Wall 
+        -Wextra
         -fno-strict-aliasing 
         -D_GNU_SOURCE 
         -fdiagnostics-color 

@@ -21,7 +21,7 @@ namespace yq {
 
     template <typename...> 
     struct MethodInfo::DefineArg {
-        static void    define(const std::source_location&, Meta*, options_t options)
+        static void    define(const std::source_location&, Meta*, options_t)
         {
         }
     };
@@ -212,7 +212,7 @@ namespace yq {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        std::error_code            _invoke(void* res, void* obj, const void** args) const override final
+        std::error_code            _invoke(void* res, void*, const void** args) const override final
         {
             if constexpr (trait::is_returnable_v<R>){
                 if(!res)

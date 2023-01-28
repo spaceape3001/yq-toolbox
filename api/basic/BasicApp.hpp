@@ -20,7 +20,7 @@ namespace yq {
     public:
         
         //! Our application pointer
-        static const BasicApp* const        app() { return s_app; }
+        static const BasicApp*              app() { return s_app; }
         
         //! Name of the application, as provided by the command line arguments
         static std::string_view             app_name();
