@@ -38,88 +38,86 @@ namespace yq {
         constexpr bool operator==(const Tensor12&) const noexcept = default;
 
         //! Positive (affirmation) operator
-        constexpr Tensor12  operator+() const noexcept
-        { 
-            return *this; 
-        }
-
+        constexpr Tensor12  operator+() const noexcept;
 
         //! Negation
-        constexpr Tensor12  operator-() const noexcept
-        {
-            return Tensor12(
-                -xx, -xy
-            );
-        }
+        constexpr Tensor12  operator-() const noexcept;
 
+        constexpr Tensor12<T>   operator+ (const Tensor12<T> &b) const noexcept;
+        Tensor12<T>&            operator+=(const Tensor12<T> &b) noexcept;
+        constexpr Tensor12<T>   operator- (const Tensor12<T> &b) const noexcept;
+        Tensor12<T>&            operator-=(const Tensor12<T> &b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor12<product_t<T,U>>  operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor12<product_t<T,U>>            operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Vector1<product_t<T,U>>   operator*(const Vector2<U>&b) const noexcept;
+
+        template <typename U>
+        constexpr Tensor11<product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Tensor12<product_t<T,U>> operator*(const Tensor22<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor12<T>& operator*=(const Tensor22<U>& b) noexcept;
+
+        template <typename U>
+        constexpr Tensor13<product_t<T,U>> operator*(const Tensor23<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Tensor14<product_t<T,U>> operator*(const Tensor24<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor12<quotient_t<T,U>>  operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor12<quotient_t<T,U>>               operator/=(U b) noexcept;
+
+        constexpr Tensor21<T> transpose() const noexcept;
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! Gets the x-column as a vector
-            constexpr Vector1<T>  x_column() const noexcept
-            {
-                return Vector1<T>(xx);
-            }
+            constexpr Vector1<T>  x_column() const noexcept;
 
             //! Gets the y-column as a vector
-            constexpr Vector1<T>  y_column() const noexcept
-            {
-                return Vector1<T>(xy);
-            }
+            constexpr Vector1<T>  y_column() const noexcept;
 
             //! Gets the x-row as a vector
-            constexpr Vector2<T>  x_row() const noexcept
-            {
-                return Vector2<T>(xx, xy);
-            }
+            constexpr Vector2<T>  x_row() const noexcept;
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Sets the X-column
-            Tensor12& x_column(const Vector1<T>& v)
-            {
-                xx = v.x;
-                return *this;
-            }
+            Tensor12& x_column(const Vector1<T>& v);
 
             //! Sets the X-column
-            Tensor12& x_column(T _xx)
-            {
-                xx = _xx;
-                return *this;
-            }
+            Tensor12& x_column(T _xx);
 
             //! Sets the Y-column
-            Tensor12& y_column(const Vector1<T>& v)
-            {
-                xy = v.x;
-                return *this;
-            }
+            Tensor12& y_column(const Vector1<T>& v);
 
             //! Sets the Y-column
-            Tensor12& y_column(T _xy)
-            {
-                xy = _xy;
-                return *this;
-            }
+            Tensor12& y_column(T _xy);
 
             //! Sets the X-row
-            Tensor12& x_row(const Vector2<T>& v)
-            {
-                xx = v.x;
-                xy = v.y;
-                return *this;
-            }
+            Tensor12& x_row(const Vector2<T>& v);
 
             //! Sets the X-row
-            Tensor12& x_row(T _xx, T _xy)
-            {
-                xx = _xx;
-                xy = _xy;
-                return *this;
-            }
+            Tensor12& x_row(T _xx, T _xy);
+            
 
     };
 
@@ -168,128 +166,39 @@ namespace yq {
         is_nan(v.xx) || is_nan(v.xy)
     )
 
+    template <typename T>
+    constexpr Tensor21<T>  transpose(const Tensor12<T>&v) noexcept;
+
 //  --------------------------------------------------------
 //  GETTERS
 
     template <typename T>
-    constexpr Vector1<T>  x_column(const Tensor12<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector1<T>  x_column(const Tensor12<T>&ten) noexcept;
 
     template <typename T>
-    constexpr Vector1<T>  y_column(const Tensor12<T>&ten) 
-    {
-        return ten.y_column();
-    }
+    constexpr Vector1<T>  y_column(const Tensor12<T>&ten) noexcept;
 
     template <typename T>
-    constexpr Vector2<T>  x_row(const Tensor12<T>&ten)
-    {   
-        return ten.x_row();
-    }
+    constexpr Vector2<T>  x_row(const Tensor12<T>&ten) noexcept;
 
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor12<T>   operator+ (const Tensor12<T> &a, const Tensor12<T> &b) 
-    {
-        return Tensor12<T>(
-            a.xx+b.xx, a.xy+b.xy
-        );
-    }
-
-    template <typename T>
-    Tensor12<T>&   operator+=(Tensor12<T> &a, const Tensor12<T> &b) 
-    {
-        a.xx+=b.xx;  a.xy+=b.xy;
-        return a;
-    }
-
-
 //  --------------------------------------------------------
 //  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor12<T>   operator- (const Tensor12<T> &a, const Tensor12<T> &b) 
-    {
-        return Tensor12<T>(
-            a.xx-b.xx, a.xy-b.xy
-        );
-    }
-    
-
-    template <typename T>
-    Tensor12<T>&   operator-=(Tensor12<T> &a, const Tensor12<T> &b) 
-    {
-        a.xx-=b.xx;  a.xy-=b.xy;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    constexpr Tensor12<product_t<T,U>>  operator*(T a, const Tensor12<U>& b)
-    {
-        return Tensor12<product_t<T,U>>(
-            a*b.xx, a*b.xy
-        );
-    }
+    constexpr Tensor12<product_t<T,U>>  operator*(T a, const Tensor12<U>& b);
     
-    
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor12<product_t<T,U>>  operator*(const Tensor12<T>& a, U b)
-    {
-        return Tensor12<product_t<T,U>>(
-            a.xx*b, a.xy*b
-        );
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor12<product_t<T,U>>  operator*=(const Tensor12<T>& a, U b)
-    {
-        a.xx*=b; a.xy*=b;        
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector1<product_t<T,U>> operator*(const Tensor12<T>&a, const Vector2<U>&b)
-    {
-        return Vector1<product_t<T,U>>(
-            a.xx*b.x + a.xy*b.y
-        );
-    }
-
 //  --------------------------------------------------------
 //  DIVISION
 
-
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor12<quotient_t<T,U>>  operator/(const Tensor12<T>& a, U b)
-    {
-        return Tensor12<quotient_t<T,U>> (
-            a.xx/b, a.xy/b
-        );
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor12<quotient_t<T,U>>  operator/=(const Tensor12<T>& a, U b)
-    {
-        a.xx/=b; a.xy/=b;        
-        return a;
-    }
-
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
-
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

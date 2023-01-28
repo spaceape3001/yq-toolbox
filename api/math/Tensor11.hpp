@@ -41,15 +41,11 @@ namespace yq {
             return *this; 
         }
 
-        constexpr Tensor11  operator-() const noexcept;
-
-        constexpr Tensor11   operator+ (const Tensor11 &b) const noexcept;
-
-        Tensor11&   operator+=(const Tensor11 &b);
-
-        constexpr Tensor11   operator- (const Tensor11 &b) const noexcept;
-        
-        Tensor11&   operator-=(const Tensor11 &b);
+        constexpr Tensor11      operator-() const noexcept;
+        constexpr Tensor11      operator+ (const Tensor11 &b) const noexcept;
+        Tensor11&               operator+=(const Tensor11 &b);
+        constexpr Tensor11      operator- (const Tensor11 &b) const noexcept;
+        Tensor11&               operator-=(const Tensor11 &b);
     
         template <typename U>
         requires trait::is_arithmetic_v<U>

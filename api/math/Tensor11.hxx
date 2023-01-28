@@ -13,6 +13,9 @@
 */
 
 #include "Tensor11.hpp"
+#include "Tensor12.hpp"
+#include "Tensor13.hpp"
+#include "Tensor14.hpp"
 #include "Vector1.hpp"
 
 namespace yq {
@@ -95,33 +98,33 @@ namespace yq {
         template <typename U>
     constexpr Tensor12<product_t<T,U>> Tensor11<T>::operator*(const Tensor12<U>& b) const noexcept
     {
-        return {
+        return Tensor12<product_t<T,U>>(
             xx*b.xx,
             xx*b.xy
-        };
+        );
     }
     
     template <typename T>
         template <typename U>
     constexpr Tensor13<product_t<T,U>> Tensor11<T>::operator*(const Tensor13<U>& b) const noexcept
     {
-        return {
+        return Tensor13<product_t<T,U>>(
             xx*b.xx,
             xx*b.xy,
             xx*b.xz
-        };
+        );
     }
     
     template <typename T>
         template <typename U>
     constexpr Tensor14<product_t<T,U>> Tensor11<T>::operator*(const Tensor14<U>& b) const noexcept
     {
-        return {
+        return Tensor14<product_t<T,U>>(
             xx*b.xx,
             xx*b.xy,
             xx*b.xz,
             xx*b.xw
-        };
+        );
     }
 
         
