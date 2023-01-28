@@ -25,6 +25,58 @@ namespace yq {
         T yx, yy, yz, yw;
         T zx, zy, zz, zw;
 
+        constexpr Tensor34() noexcept = default;
+
+        constexpr Tensor34(
+            T _xx, T _xy, T _xz, T _xw,
+            T _yx, T _yy, T _yz, T _yw,
+            T _zx, T _zy, T _zz, T _zw
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), xw(_xw),
+            yx(_yx), yy(_yy), yz(_yz), yw(_yw),
+            zx(_zx), zy(_zy), zz(_zz), zw(_zw)
+        {
+        }
+        
+        constexpr Tensor34(columns_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z, const Vector3<T>& w) :
+            xx(x.x), xy(y.x), xz(z.x), xw(w.x),
+            yx(x.y), yy(y.y), yz(z.y), yw(w.y),
+            zx(x.z), zy(y.z), zz(z.z), zw(w.z)
+        {
+        }
+
+        consteval Tensor34(identity_t) : 
+            xx(one_v<T>),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
+            yx(zero_v<T>), yy(one_v<T>),  yz(zero_v<T>), yw(zero_v<T>),
+            zx(zero_v<T>), zy(zero_v<T>), zz(one_v<T>),  zw(zero_v<T>)
+        {
+        }
+
+        constexpr Tensor34(ordered_t,
+            T _xx, T _xy, T _xz, T _xw,
+            T _yx, T _yy, T _yz, T _yw,
+            T _zx, T _zy, T _zz, T _zw
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), xw(_xw),
+            yx(_yx), yy(_yy), yz(_yz), yw(_yw),
+            zx(_zx), zy(_zy), zz(_zz), zw(_zw)
+        {
+        }
+
+        constexpr Tensor34(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+            xx(x.x), xy(x.y), xz(x.z), xw(x.w),
+            yx(y.x), yy(y.y), yz(y.z), yw(y.w),
+            zx(z.x), zy(z.y), zz(z.z), zw(z.w)
+        {
+        }
+
+        consteval Tensor34(zero_t) : 
+            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
+            yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>), yw(zero_v<T>),
+            zx(zero_v<T>), zy(zero_v<T>), zz(zero_v<T>), zw(zero_v<T>)
+        {
+        }
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor34&) const noexcept = default;
 
@@ -37,11 +89,11 @@ namespace yq {
         //! Negation operator
         constexpr Tensor34<T>  operator-() const noexcept
         {
-            return {
+            return Tensor34<T>(
                 -xx, -xy, -xz, -xw,
                 -yx, -yy, -yz, -yw,
                 -zx, -zy, -zz, -zw
-            };
+            );
         }
 
         //  --------------------------------------------------------
@@ -50,43 +102,43 @@ namespace yq {
             //! X-column of this tensor
             constexpr Vector3<T>  x_column() const noexcept
             {
-                return {xx, yx, zx};
+                return Vector3<T>(xx, yx, zx);
             }
 
             //! Y-column of this tensor
             constexpr Vector3<T>  y_column() const noexcept
             {
-                return {xy, yy, zy};
+                return Vector3<T>(xy, yy, zy);
             }
 
             //! Z-column of this tensor
             constexpr Vector3<T>  z_column() const noexcept
             {
-                return {xz, yz, zz};
+                return Vector3<T>(xz, yz, zz);
             }
 
             //! W-column of this tensor
             constexpr Vector3<T>  w_column() const noexcept
             {
-                return {xw, yw, zw};
+                return Vector3<T>(xw, yw, zw);
             }
 
             //! X-row of this tensor
             constexpr Vector4<T>  x_row() const noexcept
             {
-                return {xx, xy, xz, xw};
+                return Vector4<T>(xx, xy, xz, xw);
             }
 
             //! Y-row of this tensor
             constexpr Vector4<T>  y_row() const noexcept
             {
-                return {yx, yy, yz, yw};
+                return Vector4<T>(yx, yy, yz, yw);
             }
 
             //! Z-row of this tensor
             constexpr Vector4<T>  z_row() const noexcept
             {
-                return {zx, zy, zz, zw};
+                return Vector4<T>(zx, zy, zz, zw);
             }
 
 
@@ -236,11 +288,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor34<T>  columns(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z, const Vector3<T>&w) noexcept
     {
-        return {
-            x.x, y.x, z.x, w.x,
-            x.y, y.y, z.y, w.y,
-            x.z, y.z, z.z, w.z
-        };
+        return Tensor34<T>(columns_, x, y, z, w);
     }
 
     /*! \brief Create 3x4 tensor by rows
@@ -248,11 +296,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor34<T>  rows(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z) noexcept
     {
-        return {
-            x.x, x.y, x.z, x.w,
-            y.x, y.y, y.z, y.w,
-            z.x, z.y, z.z, z.w
-        };
+        return Tensor34<T>(rows_, x, y, z);
     }
     
     YQ_IDENTITY_1(Tensor34, {
@@ -349,11 +393,11 @@ namespace yq {
     template <typename T>
     constexpr Tensor34<T>   operator+ (const Tensor34<T> &a, const Tensor34<T> &b)  noexcept
     {
-        return {
+        return Tensor34<T>(
             a.xx+b.xx, a.xy+b.xy, a.xz+b.xz, a.xw+b.xw,
             a.yx+b.yx, a.yy+b.yy, a.yz+b.yz, a.yw+b.yw,
             a.zx+b.zx, a.zy+b.zy, a.zz+b.zz, a.zw+b.zw
-        };
+        );
     }
 
     template <typename T>
@@ -372,11 +416,11 @@ namespace yq {
     template <typename T>
     constexpr Tensor34<T>   operator- (const Tensor34<T> &a, const Tensor34<T> &b)  noexcept
     {
-        return {
+        return Tensor34<T>(
             a.xx-b.xx, a.xy-b.xy, a.xz-b.xz, a.xw-b.xw,
             a.yx-b.yx, a.yy-b.yy, a.yz-b.yz, a.yw-b.yw,
             a.zx-b.zx, a.zy-b.zy, a.zz-b.zz, a.zw-b.zw
-        };
+        );
     }
     
 
@@ -394,13 +438,13 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    constexpr Tensor34<product_t<T,U>>  operator*(T a, const Tensor34<T>& b) noexcept
+    constexpr Tensor34<product_t<T,U>>  operator*(T a, const Tensor34<U>& b) noexcept
     {
-        return {
+        return Tensor34<product_t<T,U>>(
             a*b.xx, a*b.xy, a*b.xz, a*b.xw,
             a*b.yx, a*b.yy, a*b.yz, a*b.yw,
             a*b.zx, a*b.zy, a*b.zz, a*b.zw
-        };
+        );
     }
     
     
@@ -408,11 +452,11 @@ namespace yq {
     requires std::is_arithmetic_v<U>
     constexpr Tensor34<product_t<T,U>>  operator*(const Tensor34<T>& a, U b) noexcept
     {
-        return {
+        return Tensor34<product_t<T,U>>(
             a.xx*b, a.xy*b, a.xz*b, a.xw*b,
             a.yx*b, a.yy*b, a.yz*b, a.yw*b,
             a.zx*b, a.zy*b, a.zz*b, a.zw*b
-        };
+        );
     }
     
     template <typename T, typename U>
@@ -429,22 +473,22 @@ namespace yq {
     template <typename T, typename U>
     constexpr Vector3<product_t<T,U>> operator*(const Tensor34<T>&a, const Vector4<U>&b) noexcept
     {
-        return {
+        return Vector3<product_t<T,U>>(
             a.xx*b.x + a.xy*b.y + a.xz*b.z + a.xw*b.w,
             a.yx*b.x + a.yy*b.y + a.yz*b.z + a.yw*b.w,
             a.zx*b.x + a.zy*b.y + a.zz*b.z + a.zw*b.w
-        };
+        );
     }
 
     template <typename T, typename U>
     constexpr Vector4<product_t<T,U>> operator*(const Vector3<T>&a, const Tensor34<U>&b) noexcept
     {
-        return {
+        return Vector4<product_t<T,U>>(
             a.x*b.xx + a.y*b.yx + a.z*b.zx,
             a.x*b.xy + a.y*b.yy + a.z*b.zy,
             a.x*b.xz + a.y*b.yz + a.z*b.zz,
             a.x*b.xw + a.y*b.yw + a.z*b.zw
-        };
+        );
     }
 
 //  --------------------------------------------------------
@@ -455,11 +499,11 @@ namespace yq {
     requires std::is_arithmetic_v<U>
     constexpr Tensor34<quotient_t<T,U>>  operator/(const Tensor34<T>& a, U b) noexcept
     {
-        return {
+        return Tensor34<quotient_t<T,U>>(
             a.xx/b, a.xy/b, a.xz/b, a.xw/b,
             a.yx/b, a.yy/b, a.yz/b, a.yw/b,
             a.zx/b, a.zy/b, a.zz/b, a.zw/b
-        };
+        );
     }
     
     template <typename T, typename U>
@@ -478,11 +522,11 @@ namespace yq {
     template <typename T, typename U>
     constexpr Tensor34<product_t<T,U>> operator OTIMES(const Vector3<T>&a, const Vector4<U>&b) noexcept
     {
-        return {
+        return Tensor34<product_t<T,U>>(
             a.x+b.x, a.x+b.y, a.x+b.z, a.x+b.w,
             a.y+b.x, a.y+b.y, a.y+b.z, a.y+b.w,
             a.z+b.x, a.z+b.y, a.z+b.z, a.z+b.w
-        };
+        );
     }
 
 //  --------------------------------------------------------
