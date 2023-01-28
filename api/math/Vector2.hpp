@@ -39,7 +39,7 @@ namespace yq {
         
         
         template <glm::qualifier Q>
-        explicit constexpr Vector2(const glm::vec<2, T, Q>()& v) : x(v.x), y(v.y) {}
+        explicit constexpr Vector2(const glm::vec<2, T, Q>& v) : x(v.x), y(v.y) {}
 
         /*! \brief Creates a unit-vector in the x-dimension.
         */
