@@ -41,122 +41,82 @@ namespace yq {
             return *this; 
         }
 
-        constexpr Tensor11  operator-() const noexcept
-        {
-            return Tensor11(
-                -xx
-            );
-        }
+        constexpr Tensor11  operator-() const noexcept;
 
-        constexpr Tensor11   operator+ (const Tensor11 &b) const noexcept
-        {
-            return Tensor11(
-                xx+b.xx
-            );
-        }
+        constexpr Tensor11   operator+ (const Tensor11 &b) const noexcept;
 
-        Tensor11&   operator+=(const Tensor11 &b) 
-        {
-            xx+=b.xx;
-            return *this;
-        }
+        Tensor11&   operator+=(const Tensor11 &b);
 
-        constexpr Tensor11   operator- (const Tensor11 &b) const noexcept
-        {
-            return Tensor11(
-                xx-b.xx
-            );
-        }
+        constexpr Tensor11   operator- (const Tensor11 &b) const noexcept;
         
-        Tensor11&   operator-=(const Tensor11 &b) 
-        {
-            xx-=b.xx;
-            return *this;
-        }
+        Tensor11&   operator-=(const Tensor11 &b);
     
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor11<product_t<T,U>>  operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor11<product_t<T,U>>  operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Tensor11<product_t<T,U>> operator*(const Tensor11<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor12<product_t<T,U>> operator*(const Tensor12<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor13<product_t<T,U>> operator*(const Tensor13<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor14<product_t<T,U>> operator*(const Tensor14<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor11<T>& operator*=(const Tensor11<U>& b) const noexcept;
+
+
+        template <typename U>
+        constexpr Vector1<product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;
+
             //! Returns the determinant
-        constexpr T determinant() const noexcept
-        {
-            return xx;
-        }
+        constexpr T determinant() const noexcept;
 
             //! Returns the trace
-        constexpr T     trace() const noexcept
-        {
-            return xx;
-        }
+        constexpr T     trace() const noexcept;
 
         //! Transpose, which is itself for a 1x1
-        constexpr Tensor11 transpose() const 
-        { 
-            return Tensor11( xx ); 
-        }
+        constexpr Tensor11 transpose() const ;
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! Gets the diagonal as a vector
-            constexpr Vector1<T>  diagonal() const noexcept
-            {
-                return Vector1<T>(xx);
-            }
+            constexpr Vector1<T>  diagonal() const noexcept;
 
             //! Gets the x-column as a vector
-            constexpr Vector1<T>  x_column()  const noexcept
-            {
-                return Vector1<T>(xx);
-            }
+            constexpr Vector1<T>  x_column()  const noexcept;
 
             //! Gets the x-row as a vector
-            constexpr Vector1<T>  x_row() const noexcept
-            {
-                return Vector1<T>(xx);
-            }
+            constexpr Vector1<T>  x_row() const noexcept;
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Sets the diagonal
-            Tensor11&   diagonal(const Vector1<T>& v)
-            {        
-                xx = v.x;
-                return *this;
-            }
+            Tensor11&   diagonal(const Vector1<T>& v);
 
             //! Sets the diagonal
-            Tensor11&   diagonal(T _xx)
-            {        
-                xx = _xx;
-                return *this;
-            }
+            Tensor11&   diagonal(T _xx);
 
             //! Sets the x-column
-            Tensor11& x_column(const Vector1<T>& v)
-            {
-                xx = v.x;
-                return *this;
-            }
+            Tensor11&   x_column(const Vector1<T>& v);
 
             //! Sets the x-column
-            Tensor11& x_column(T _xx)
-            {
-                xx = _xx;
-                return *this;
-            }
+            Tensor11& x_column(T _xx);
 
             //! Sets the x-row
-            Tensor11& x_row(const Vector1<T>& v)
-            {
-                xx = v.x;
-                return *this;
-            }
+            Tensor11& x_row(const Vector1<T>& v);
 
             //! Sets the x-row
-            Tensor11& x_row(T _xx)
-            {
-                xx = _xx;
-                return *this;
-            }
+            Tensor11& x_row(T _xx);
     };
 
     YQ_IEEE754_1(Tensor11)
@@ -221,31 +181,19 @@ namespace yq {
     )
 
     template <typename T>
-    constexpr Tensor11<T>  transpose(const Tensor11<T>&v)
-    {
-        return v.transpose();
-    }
+    constexpr Tensor11<T>  transpose(const Tensor11<T>&v);
 
 //  --------------------------------------------------------
 //  GETTERS
 
     template <typename T>
-    constexpr Vector1<T>  diagonal(const Tensor11<T>& v)
-    {
-        return v.diagonal();
-    }
+    constexpr Vector1<T>  diagonal(const Tensor11<T>& v);
 
     template <typename T>
-    constexpr Vector1<T>  x_column(const Tensor11<T>&v) 
-    {
-        return v.x_column();
-    }
+    constexpr Vector1<T>  x_column(const Tensor11<T>&v) ;
 
     template <typename T>
-    constexpr Vector1<T>  x_row(const Tensor11<T>&v)
-    {
-        return v.x_row();
-    }
+    constexpr Vector1<T>  x_row(const Tensor11<T>&v);
 
 
     
@@ -254,55 +202,9 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    constexpr Tensor11<product_t<T,U>>  operator*(T a, const Tensor11<U>& b)
-    {
-        return {
-            a*b.xx
-        };
-    }
+    constexpr Tensor11<product_t<T,U>>  operator*(T a, const Tensor11<U>& b);
     
     
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor11<product_t<T,U>>  operator*(const Tensor11<T>& a, U b)
-    {
-        return Tensor11<product_t<T,U>>(
-            a.xx*b
-        );
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor11<product_t<T,U>>  operator*=(const Tensor11<T>& a, U b)
-    {
-        a.xx*=b;        
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor11<product_t<T,U>> operator*(const Tensor11<T>& a, const Tensor11<U>& b)
-    {
-        return Tensor11<product_t<T,U>>(
-            a.xx*b.xx
-        );
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor11<T>& operator*=(Tensor11<T>&a, const Tensor11<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector1<product_t<T,U>> operator*(const Tensor11<T>&a, const Vector1<U>&b)
-    {
-        return Vector1<product_t<T,U>>(
-            a.xx*b.x
-        );
-    }
 
 //  --------------------------------------------------------
 //  DIVISION

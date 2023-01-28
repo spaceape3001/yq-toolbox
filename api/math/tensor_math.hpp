@@ -203,36 +203,6 @@ namespace yq {
     //  Tensor11 * (OTHER)
 
 
-    template <typename T, typename U>
-    constexpr Tensor12<product_t<T,U>> operator*(const Tensor11<T>& a, const Tensor12<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor13<product_t<T,U>> operator*(const Tensor11<T>& a, const Tensor13<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor14<product_t<T,U>> operator*(const Tensor11<T>& a, const Tensor14<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-            a.xx*b.xw
-        };
-    }
-
     
     //  -------------------------
     //  Tensor12 * (OTHER)
