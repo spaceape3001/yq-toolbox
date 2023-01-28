@@ -23,6 +23,43 @@ namespace yq {
         
         T xx, xy, xz, xw;
 
+
+        constexpr Tensor14() noexcept = default;
+
+        constexpr Tensor14(
+            T _xx, T _xy, T _xz, T _xw
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), xw(_xw)
+        {
+        }
+        
+        constexpr Tensor14(columns_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z, const Vector1<T>& w) :
+            xx(x.x), xy(y.x), xz(z.x), xw(w.x)
+        {
+        }
+
+        consteval Tensor14(identity_t) : 
+            xx(one_v<T>),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>)
+        {
+        }
+
+        constexpr Tensor14(ordered_t,
+            T _xx, T _xy, T _xz, T _xw
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), xw(_xw)
+        {
+        }
+
+        constexpr Tensor14(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+            xx(x.x), xy(x.y), xz(x.z), xw(x.w)
+        {
+        }
+
+        consteval Tensor14(zero_t) : 
+            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>)
+        {
+        }
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor14&) const noexcept = default;
 

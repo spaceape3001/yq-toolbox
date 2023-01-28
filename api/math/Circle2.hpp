@@ -69,6 +69,7 @@ namespace yq {
             return radius + radius;
         }
 
+        //! TRUE if the radius is greater than zero!
         constexpr bool    valid() const noexcept
         {
             return radius >= T{};

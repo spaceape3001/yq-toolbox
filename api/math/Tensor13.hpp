@@ -22,6 +22,9 @@ namespace yq {
         //! Component type (captures the template parameter)
         using component_type = T;
         T xx, xy, xz;
+        
+        constexpr Tensor13() noexcept = default;
+        constexpr Tensor13(T _xx, T _xy, T _xz) noexcept :  xx(_xx), xy(_xy), xz(_xz) {}
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor13&) const noexcept = default;

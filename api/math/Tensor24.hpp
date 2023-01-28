@@ -25,6 +25,50 @@ namespace yq {
         T xx, xy, xz, xw;
         T yx, yy, yz, yw;
 
+        constexpr Tensor24() noexcept = default;
+
+        constexpr Tensor24(
+            T _xx, T _xy, T _xz, T _xw,
+            T _yx, T _yy, T _yz, T _yw
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), xw(_xw),
+            yx(_yx), yy(_yy), yz(_yz), yw(_yw)
+        {
+        }
+        
+        constexpr Tensor24(columns_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :
+            xx(x.x), xy(y.x), xz(z.x), xw(w.x),
+            yx(x.y), yy(y.y), yz(z.y), yw(w.y)
+        {
+        }
+
+        consteval Tensor24(identity_t) : 
+            xx(one_v<T>),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
+            yx(zero_v<T>), yy(one_v<T>),  yz(zero_v<T>), yw(zero_v<T>)
+        {
+        }
+
+        constexpr Tensor24(ordered_t,
+            T _xx, T _xy, T _xz, T _xw,
+            T _yx, T _yy, T _yz, T _yw
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), xw(_xw),
+            yx(_yx), yy(_yy), yz(_yz), yw(_yw)
+        {
+        }
+
+        constexpr Tensor24(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+            xx(x.x), xy(x.y), xz(x.z), xw(x.w),
+            yx(y.x), yy(y.y), yz(y.z), yw(y.w)
+        {
+        }
+
+        consteval Tensor24(zero_t) : 
+            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
+            yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>), yw(zero_v<T>)
+        {
+        }
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor24&) const noexcept = default;
 
