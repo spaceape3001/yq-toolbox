@@ -38,9 +38,8 @@ namespace yq {
         consteval Vector2(zero_t) noexcept : x(zero_v<T>), y(zero_v<T>) {}
         
         
-        #if 0
-        constexpr Vector2(const glm::vec<2, T, glm::defaultp>()& v) : x(v.x), y(v.y) {}
-        #endif
+        template <glm::qualifier Q>
+        explicit constexpr Vector2(const glm::vec<2, T, Q>()& v) : x(v.x), y(v.y) {}
 
         /*! \brief Creates a unit-vector in the x-dimension.
         */
