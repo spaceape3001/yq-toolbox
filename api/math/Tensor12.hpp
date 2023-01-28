@@ -232,7 +232,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    constexpr Tensor12<product_t<T,U>>  operator*(T a, const Tensor12<T>& b)
+    constexpr Tensor12<product_t<T,U>>  operator*(T a, const Tensor12<U>& b)
     {
         return Tensor12<product_t<T,U>>(
             a*b.xx, a*b.xy

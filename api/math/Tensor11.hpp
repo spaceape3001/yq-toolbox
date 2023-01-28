@@ -254,7 +254,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires std::is_arithmetic_v<T>
-    constexpr Tensor11<product_t<T,U>>  operator*(T a, const Tensor11<T>& b)
+    constexpr Tensor11<product_t<T,U>>  operator*(T a, const Tensor11<U>& b)
     {
         return {
             a*b.xx
