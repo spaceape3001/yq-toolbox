@@ -70,13 +70,6 @@ namespace yq {
         };
     }
 
-    template <typename T>
-    constexpr Tensor12<T>  transpose(const Tensor21<T>&v)
-    {
-        return {
-            v.xx, v.yx
-        };
-    }
 
 
 
@@ -223,65 +216,6 @@ namespace yq {
     //  Tensor21 * (OTHER)
 
 
-    template <typename T, typename U>
-    constexpr Tensor21<product_t<T,U>> operator*(const Tensor21<T>& a, const Tensor11<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-
-            a.yx*b.xx
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor21<T>& operator*=(Tensor21<T>&a, const Tensor11<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor22<product_t<T,U>> operator*(const Tensor21<T>& a, const Tensor12<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-
-            a.yx*b.xx,
-            a.yx*b.xy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor23<product_t<T,U>> operator*(const Tensor21<T>& a, const Tensor13<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-            a.yx*b.xz
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor24<product_t<T,U>> operator*(const Tensor21<T>& a, const Tensor14<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-            a.xx*b.xw,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-            a.yx*b.xz,
-            a.yx*b.xw
-        };
-    }
     
     //  -------------------------
     //  Tensor22 * (OTHER)

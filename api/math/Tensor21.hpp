@@ -71,80 +71,74 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor21&) const noexcept = default;
 
+        constexpr operator glm::mat<2,1,T,glm::defaultp>() const noexcept ;
+
         //! Positive (affirmation) operator
-        constexpr Tensor21  operator+() const noexcept
-        { 
-            return *this; 
-        }
+        constexpr Tensor21  operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor21  operator-() const noexcept
-        {
-            return {
-                -xx,
-                -yx
-            };
-        }
+        constexpr Tensor21  operator-() const noexcept;
+
+        constexpr Tensor21   operator+ (const Tensor21 &b) const noexcept;
+        Tensor21&            operator+=(const Tensor21 &b) noexcept;
+        constexpr Tensor21   operator- (const Tensor21 &b) const noexcept;
+        Tensor21&            operator-=(const Tensor21 &b) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor21<product_t<T,U>>  operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>) 
+        Tensor21&  operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Tensor21<product_t<T,U>> operator*(const Tensor11<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor22<product_t<T,U>> operator*(const Tensor12<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor23<product_t<T,U>> operator*(const Tensor13<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor24<product_t<T,U>> operator*(const Tensor14<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor21<T>& operator*=(const Tensor11<U>& b) noexcept;
+
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor21<quotient_t<T,U>>  operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>) 
+        Tensor21<T>&  operator/=(U b) noexcept;
+
+        constexpr Tensor12<T> transpose() const noexcept;
+
 
         //  --------------------------------------------------------
         //  GETTERS
 
-            constexpr Vector2<T>  x_column() const noexcept
-            {
-                return {xx, yx};
-            }
-
-            constexpr Vector1<T>  x_row() const noexcept
-            {
-                return {xx};
-            }
-
-            constexpr Vector1<T>  y_row() const noexcept
-            {
-                return {yx};
-            }
-
+            constexpr Vector2<T>  x_column() const noexcept;
+            constexpr Vector1<T>  x_row() const noexcept;
+            constexpr Vector1<T>  y_row() const noexcept;
         //  --------------------------------------------------------
         //  SETTERS
 
-            Tensor21& x_column(const Vector2<T>& v)
-            {
-                xx = v.x;
-                yx = v.y;
-                return *this;
-            }
+            Tensor21& x_column(const Vector2<T>& v);
 
-            Tensor21& x_column(T _xx, T _yx)
-            {
-                xx = _xx;
-                yx = _yx;
-                return *this;
-            }
+            Tensor21& x_column(T _xx, T _yx);
 
-            Tensor21& x_row(const Vector1<T>& v)
-            {
-                xx = v.x;
-                return *this;
-            }
+            Tensor21& x_row(const Vector1<T>& v);
 
-            Tensor21& x_row(T _xx)
-            {
-                xx = _xx;
-                return *this;
-            }
+            Tensor21& x_row(T _xx);
 
-            Tensor21& y_row(const Vector1<T>& v)
-            {
-                yx = v.x;
-                return *this;
-            }
+            Tensor21& y_row(const Vector1<T>& v);
 
-            Tensor21& y_row(T _yx)
-            {
-                yx = _yx;
-                return *this;
-            }
-
+            Tensor21& y_row(T _yx);
 
     };
 
@@ -158,10 +152,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor21<T>  columns(const Vector2<T>&x)
     {
-        return {
-            x.x,
-            x.y
-        };
+        return Tensor21<T>(COLUMNS, x);
     }
 
     /*! \brief Create 2x1 tensor by rows
@@ -169,26 +160,12 @@ namespace yq {
     template <typename T>
     constexpr Tensor21<T>  rows(const Vector1<T>&x, const Vector1<T>&y)
     {
-        return {
-            x.x,
-            y.x
-        };
+        return Tensor21<T>(ROWS, x, y);
     }
     
-    YQ_IDENTITY_1(Tensor21, {
-        one_v<T>,
-        zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor21, {
-        nan_v<T>,
-        nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor21, {
-        zero_v<T>,
-        zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor21, Tensor21<T>(IDENTITY))
+    YQ_NAN_1(Tensor21, Tensor21<T>(NAN))
+    YQ_ZERO_1(Tensor21, Tensor21<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -204,87 +181,40 @@ namespace yq {
         is_nan(v.yx)
     )
 
+    template <typename T>
+    constexpr Tensor12<T>  transpose(const Tensor21<T>&v);
+
 //  --------------------------------------------------------
 //  GETTERS
 
     template <typename T>
-    constexpr Vector2<T>  x_column(const Tensor21<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector2<T>  x_column(const Tensor21<T>&ten);
 
     template <typename T>
-    constexpr Vector1<T>  x_row(const Tensor21<T>&ten)
-    {
-        return ten.x_row();
-    }
+    constexpr Vector1<T>  x_row(const Tensor21<T>&ten);
 
     template <typename T>
-    constexpr Vector1<T>  y_row(const Tensor21<T>&ten)
-    {
-        return ten.y_row();
-    }
+    constexpr Vector1<T>  y_row(const Tensor21<T>&ten);
 
 
 
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor21<T>   operator+ (const Tensor21<T> &a, const Tensor21<T> &b) 
-    {
-        return {
-            a.xx+b.xx,
-            a.yx+b.yx
-        };
-    }
-
-    template <typename T>
-    Tensor21<T>&   operator+=(Tensor21<T> &a, const Tensor21<T> &b) 
-    {
-        a.xx+=b.xx;
-        a.yx+=b.yx;
-        return a;
-    }
-
 
 //  --------------------------------------------------------
 //  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor21<T>   operator- (const Tensor21<T> &a, const Tensor21<T> &b) 
-    {
-        return {
-            a.xx-b.xx,
-            a.yx-b.yx
-        };
-    }
-    
-
-    template <typename T>
-    Tensor21<T>&   operator-=(Tensor21<T> &a, const Tensor21<T> &b) 
-    {
-        a.xx-=b.xx;
-        a.yx-=b.yx;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor21<product_t<T,U>>  operator*(T a, const Tensor21<T>& b)
-    {
-        return {
-            a*b.xx,
-            a*b.yx
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor21<product_t<T,U>>  operator*(T a, const Tensor21<U>& b);
     
     
     template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
+    requires trait::is_arithmetic_v<U>
     constexpr Tensor21<product_t<T,U>>  operator*(const Tensor21<T>& a, U b)
     {
         return {
@@ -294,8 +224,8 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor21<product_t<T,U>>  operator*=(const Tensor21<T>& a, U b)
+    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    Tensor21<T>&  operator*=(const Tensor21<T>& a, U b)
     {
         a.xx*=b;
         a.yx*=b;        
@@ -315,25 +245,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  DIVISION
 
-
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor21<quotient_t<T,U>>  operator/(const Tensor21<T>& a, U b)
-    {
-        return {
-            a.xx/b,
-            a.yx/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor21<quotient_t<T,U>>  operator/=(const Tensor21<T>& a, U b)
-    {
-        a.xx/=b;
-        a.yx/=b;        
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
