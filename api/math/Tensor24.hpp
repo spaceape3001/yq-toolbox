@@ -48,6 +48,12 @@ namespace yq {
         {
         }
 
+        consteval Tensor24(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), xw(nan_v<T>),
+            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), yw(nan_v<T>)
+        {
+        }
+
         constexpr Tensor24(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
             yx(y.x), yy(y.y), yz(y.z), yw(y.w)
@@ -60,170 +66,119 @@ namespace yq {
         {
         }
 
+        template <glm::qualifier Q>
+        explicit constexpr Tensor24(const glm::mat<2,4,T,Q>& t) noexcept;
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor24&) const noexcept = default;
 
+        constexpr operator glm::mat<2,4,T,glm::defaultp>() const noexcept;
+
         //! Positive (affirmation) operator
-        constexpr Tensor24  operator+() const noexcept
-        { 
-            return *this; 
-        }
+        constexpr Tensor24      operator+() const noexcept;
 
         //! Negation
-        constexpr Tensor24  operator-() const noexcept
-        {
-            return {
-                -xx, -xy, -xz, -xw,
-                -yx, -yy, -yz, -yw
-            };
-        }
+        constexpr Tensor24      operator-() const noexcept;
+        
+        constexpr Tensor24      operator+ (const Tensor24 &b) const noexcept;
+        Tensor24&               operator+=(const Tensor24 &b) noexcept;
+        constexpr Tensor24      operator- (const Tensor24 &b) const noexcept;
+        Tensor24&               operator-=(const Tensor24 &b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor24<product_t<T,U>>  operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor24<T>&  operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Tensor21<product_t<T,U>> operator*(const Tensor41<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor22<product_t<T,U>> operator*(const Tensor42<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor23<product_t<T,U>> operator*(const Tensor43<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor24<product_t<T,U>> operator*(const Tensor44<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Vector4<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor24<T>& operator*=(const Tensor44<U>& b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor24<quotient_t<T,U>>  operator/(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor24<T>&  operator/=(U b) noexcept;
+        
+        constexpr Tensor42<T> transpose() const noexcept;
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! X-column of this tensor
-            constexpr Vector2<T>  x_column() const noexcept 
-            {
-                return {xx, yx};
-            }
+            constexpr Vector2<T>  x_column() const noexcept;
 
             //! Y-column of this tensor
-            constexpr Vector2<T>  y_column() const noexcept 
-            {
-                return {xy, yy};
-            }
+            constexpr Vector2<T>  y_column() const noexcept;
 
             //! Z-column of this tensor
-            constexpr Vector2<T>  z_column() const noexcept 
-            {
-                return {xz, yz};
-            }
+            constexpr Vector2<T>  z_column() const noexcept;
 
             //! W-column of this tensor
-            constexpr Vector2<T>  w_column() const noexcept 
-            {
-                return {xw, yw};
-            }
+            constexpr Vector2<T>  w_column() const noexcept;
 
             //! X-row of this tensor
-            constexpr Vector4<T>  x_row() const noexcept 
-            {
-                return {xx, xy, xz, xw};
-            }
+            constexpr Vector4<T>  x_row() const noexcept;
 
             //! Y-row of this tensor
-            constexpr Vector4<T>  y_row() const noexcept 
-            {
-                return {yx, yy, yz, yw};
-            }
+            constexpr Vector4<T>  y_row() const noexcept;
 
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Sets the x-column of this tensor
-            Tensor24& x_column(const Vector2<T>& v)
-            {
-                xx = v.x;
-                yx = v.y;
-                return *this;
-            }
+            Tensor24& x_column(const Vector2<T>& v);
 
             //! Sets the x-column of this tensor
-            Tensor24& x_column(T _xx, T _yx)
-            {
-                xx = _xx;
-                yx = _yx;
-                return *this;
-            }
+            Tensor24& x_column(T _xx, T _yx);
 
             //! Sets the y-column of this tensor
-            Tensor24& y_column(const Vector2<T>& v)
-            {
-                xy = v.x;
-                yy = v.y;
-                return *this;
-            }
+            Tensor24& y_column(const Vector2<T>& v);
 
             //! Sets the y-column of this tensor
-            Tensor24& y_column(T _xy, T _yy)
-            {
-                xy = _xy;
-                yy = _yy;
-                return *this;
-            }
+            Tensor24& y_column(T _xy, T _yy);
 
             //! Sets the z-column of this tensor
-            Tensor24& z_column(const Vector2<T>& v)
-            {
-                xz = v.x;
-                yz = v.y;
-                return *this;
-            }
+            Tensor24& z_column(const Vector2<T>& v);
 
             //! Sets the z-column of this tensor
-            Tensor24& z_column(T _xz, T _yz)
-            {
-                xz = _xz;
-                yz = _yz;
-                return *this;
-            }
+            Tensor24& z_column(T _xz, T _yz);
 
             //! Sets the w-column of this tensor
-            Tensor24& w_column(const Vector2<T>& v)
-            {
-                xw = v.x;
-                yw = v.y;
-                return *this;
-            }
+            Tensor24& w_column(const Vector2<T>& v);
 
             //! Sets the w-column of this tensor
-            Tensor24& w_column(T _xw, T _yw)
-            {
-                xw = _xw;
-                yw = _yw;
-                return *this;
-            }
+            Tensor24& w_column(T _xw, T _yw);
 
             //! Sets the x-row of this tensor
-            Tensor24& x_row(const Vector4<T>& v)
-            {
-                xx = v.x;
-                xy = v.y;
-                xz = v.z;
-                xw = v.w;
-                return *this;
-            }
+            Tensor24& x_row(const Vector4<T>& v);
 
             //! Sets the x-row of this tensor
-            Tensor24& x_row(T _xx, T _xy, T _xz, T _xw)
-            {
-                xx = _xx;
-                xy = _xy;
-                xz = _xz;
-                xw = _xw;
-                return *this;
-            }
+            Tensor24& x_row(T _xx, T _xy, T _xz, T _xw);
 
             //! Sets the y-row of this tensor
-            Tensor24& y_row(const Vector4<T>& v)
-            {
-                yx = v.x;
-                yy = v.y;
-                yz = v.z;
-                yw = v.w;
-                return *this;
-            }
+            Tensor24& y_row(const Vector4<T>& v);
 
             //! Sets the y-row of this tensor
-            Tensor24& y_row(T _yx, T _yy, T _yz, T _yw)
-            {
-                yx = _yx;
-                yy = _yy;
-                yz = _yz;
-                yw = _yw;
-                return *this;
-            }
+            Tensor24& y_row(T _yx, T _yy, T _yz, T _yw);
     };
 
     YQ_IEEE754_1(Tensor24)
@@ -236,10 +191,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor24<T>  columns(const Vector2<T>&x, const Vector2<T>&y, const Vector2<T>&z, const Vector2<T>&w)
     {
-        return {
-            x.x, y.x, z.x, w.x,
-            x.y, y.y, z.y, w.y
-        };
+        return Tensor24<T>(COLUMNS, x, y, z, w);
     }
 
     /*! \brief Create 2x4 tensor by rows
@@ -247,26 +199,12 @@ namespace yq {
     template <typename T>
     constexpr Tensor24<T>  rows(const Vector4<T>&x, const Vector4<T>&y)
     {
-        return {
-            x.x, x.y, x.z, x.w,
-            y.x, y.y, y.z, y.w
-        };
+        return Tensor24<T>(ROWS, x, y );
     }
     
-    YQ_IDENTITY_1(Tensor24, {
-        one_v<T>, zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>, zero_v<T>, zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor24, {
-        nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor24, {
-        zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor24, Tensor24<T>(IDENTITY))
+    YQ_NAN_1(Tensor24,Tensor24<T>(NAN))
+    YQ_ZERO_1(Tensor24, Tensor24<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -281,6 +219,9 @@ namespace yq {
         is_nan(v.xx) || is_nan(v.xy) || is_nan(v.xz) || is_nan(v.xw) ||
         is_nan(v.yx) || is_nan(v.yy) || is_nan(v.yz) || is_nan(v.yw)
     )
+
+    template <typename T>
+    constexpr Tensor42<T>  transpose(const Tensor24<T>&v);
 
 //  --------------------------------------------------------
 //  GETTERS
@@ -328,119 +269,12 @@ namespace yq {
     }
 
 //  --------------------------------------------------------
-//  ADDITION
-
-    template <typename T>
-    constexpr Tensor24<T>   operator+ (const Tensor24<T> &a, const Tensor24<T> &b) 
-    {
-        return {
-            a.xx+b.xx, a.xy+b.xy, a.xz+b.xz, a.xw+b.xw,
-            a.yx+b.yx, a.yy+b.yy, a.yz+b.yz, a.yw+b.yw
-        };
-    }
-
-    template <typename T>
-    Tensor24<T>&   operator+=(Tensor24<T> &a, const Tensor24<T> &b) 
-    {
-        a.xx+=b.xx;  a.xy+=b.xy;  a.xz+=b.xz;  a.xw+=b.xw;
-        a.yx+=b.yx;  a.yy+=b.yy;  a.yz+=b.yz;  a.yw+=b.yw;
-        return a;
-    }
-
-
 //  --------------------------------------------------------
-//  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor24<T>   operator- (const Tensor24<T> &a, const Tensor24<T> &b) 
-    {
-        return {
-            a.xx-b.xx, a.xy-b.xy, a.xz-b.xz, a.xw-b.xw,
-            a.yx-b.yx, a.yy-b.yy, a.yz-b.yz, a.yw-b.yw
-        };
-    }
-    
-
-    template <typename T>
-    Tensor24<T>&   operator-=(Tensor24<T> &a, const Tensor24<T> &b) 
-    {
-        a.xx-=b.xx;  a.xy-=b.xy;  a.xz-=b.xz;  a.xw-=b.xw;
-        a.yx-=b.yx;  a.yy-=b.yy;  a.yz-=b.yz;  a.yw-=b.yw;
-        return a;
-    }
-    
-//  --------------------------------------------------------
-//  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor24<product_t<T,U>>  operator*(T a, const Tensor24<T>& b)
-    {
-        return {
-            a*b.xx, a*b.xy, a*b.xz, a*b.xw,
-            a*b.yx, a*b.yy, a*b.yz, a*b.yw
-        };
-    }
-    
-    
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor24<product_t<T,U>>  operator*(const Tensor24<T>& a, U b)
-    {
-        return {
-            a.xx*b, a.xy*b, a.xz*b, a.xw*b,
-            a.yx*b, a.yy*b, a.yz*b, a.yw*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor24<product_t<T,U>>  operator*=(const Tensor24<T>& a, U b)
-    {
-        a.xx*=b; a.xy*=b; a.xz*=b; a.xw*=b;
-        a.yx*=b; a.yy*=b; a.yz*=b; a.yw*=b;        
-        return a;
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor24<product_t<T,U>>  operator*(T a, const Tensor24<U>& b);
 
-        
-    template <typename T, typename U>
-    constexpr Vector2<product_t<T,U>> operator*(const Tensor24<T>&a, const Vector4<U>&b)
-    {
-        return {
-            a.xx*b.x + a.xy*b.y + a.xz*b.z + a.xw*b.w,
-            a.yx*b.x + a.yy*b.y + a.yz*b.z + a.yw*b.w
-        };
-    }
-
-//  --------------------------------------------------------
-//  DIVISION
-
-
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor24<quotient_t<T,U>>  operator/(const Tensor24<T>& a, U b)
-    {
-        return {
-            a.xx/b, a.xy/b, a.xz/b, a.xw/b,
-            a.yx/b, a.yy/b, a.yz/b, a.yw/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor24<quotient_t<T,U>>  operator/=(const Tensor24<T>& a, U b)
-    {
-        a.xx/=b; a.xy/=b; a.xz/=b; a.xw/=b;
-        a.yx/=b; a.yy/=b; a.yz/=b; a.yw/=b;        
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
 
 }
 

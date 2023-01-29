@@ -16,6 +16,9 @@
 #include "Tensor43.hpp"
 #include "Tensor44.hpp"
 
+#include "Vector2.hpp"
+#include "Vector4.hpp"
+
 /* 
     This is the template IMPLEMENTATION of the tensor42 code.  Include this
     *IF* you need the operator and it's not yet available as explicit 
