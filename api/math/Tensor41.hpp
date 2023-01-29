@@ -43,6 +43,14 @@ namespace yq {
         {
         }
         
+        consteval Tensor41(all_t, T v) : 
+            xx(v), 
+            yx(v), 
+            zx(v), 
+            wx(v)
+        {
+        }
+
         constexpr Tensor41(columns_t, const Vector4<T>& x) noexcept :
             xx(x.x),
             yx(x.y),
@@ -59,13 +67,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor41(nan_t) : 
-            xx(nan_v<T>), 
-            yx(nan_v<T>), 
-            zx(nan_v<T>), 
-            wx(nan_v<T>)
-        {
-        }
+        consteval Tensor41(nan_t) : Tensor41(ALL, nan_v<T>) {}
 
         constexpr Tensor41(rows_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z, const Vector1<T>& w) :
             xx(x.x), 
@@ -75,13 +77,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor41(zero_t) : 
-            xx(zero_v<T>), 
-            yx(zero_v<T>), 
-            zx(zero_v<T>), 
-            wx(zero_v<T>)
-        {
-        }
+        consteval Tensor41(zero_t) : Tensor41(ALL, zero_v<T>) {}
         
         template <glm::qualifier Q>
         explicit constexpr Tensor41(const glm::mat<4,1,T,Q>& t) noexcept;

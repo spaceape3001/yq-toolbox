@@ -36,6 +36,12 @@ namespace yq {
         {
         }
         
+        consteval Tensor24(all_t, T v) : 
+            xx(v), xy(v), xz(v), xw(v),
+            yx(v), yy(v), yz(v), yw(v)
+        {
+        }
+
         constexpr Tensor24(columns_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),
             yx(x.y), yy(y.y), yz(z.y), yw(w.y)
@@ -48,11 +54,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor24(nan_t) : 
-            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), xw(nan_v<T>),
-            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), yw(nan_v<T>)
-        {
-        }
+        consteval Tensor24(nan_t) : Tensor24(ALL, nan_v<T>) {}
 
         constexpr Tensor24(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
@@ -60,11 +62,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor24(zero_t) : 
-            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
-            yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>), yw(zero_v<T>)
-        {
-        }
+        consteval Tensor24(zero_t) : Tensor24(ALL, zero_v<T>) {}
 
         template <glm::qualifier Q>
         explicit constexpr Tensor24(const glm::mat<2,4,T,Q>& t) noexcept;

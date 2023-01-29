@@ -29,9 +29,11 @@ namespace yq {
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
         constexpr Vector1(all_t, T v) noexcept : x(v) {}
+        consteval Vector1(nan_t) noexcept : Vector1(ALL, nan_v<T>) {}
+        consteval Vector1(one_t) noexcept : Vector1(ALL, one_v<T>) {}
         constexpr Vector1(x_t, T v) noexcept : x(v) {}
         consteval Vector1(x_t) noexcept : x(one_v<T>) {}
-        consteval Vector1(zero_t) noexcept : x(zero_v<T>) {}
+        consteval Vector1(zero_t) noexcept : Vector1(ALL, zero_v<T>) {}
 
         template <glm::qualifier Q>
         explicit constexpr Vector1(const glm::vec<1, T, Q>& v) : x(v.x) {}
@@ -350,9 +352,9 @@ namespace yq {
         return Vector1D(x_, (double) v);
     }
 
-    YQ_NAN_1(Vector1, Vector1<T>{nan_v<T>})
-    YQ_ONE_1(Vector1, Vector1<T>{one_v<T>})
-    YQ_ZERO_1(Vector1, Vector1<T>{zero_v<T>})
+    YQ_NAN_1(Vector1, Vector1<T>(NAN))
+    YQ_ONE_1(Vector1, Vector1<T>(ONE))
+    YQ_ZERO_1(Vector1, Vector1<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

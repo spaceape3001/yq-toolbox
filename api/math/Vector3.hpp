@@ -33,13 +33,15 @@ namespace yq {
         constexpr Vector3() noexcept = default;
         constexpr Vector3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
         constexpr Vector3(all_t, T v) noexcept : x(v), y(v), z(v) {}
+        consteval Vector3(nan_t) noexcept : Vector3(ALL, nan_v<T>) {}
+        consteval Vector3(one_t) noexcept : Vector3(ALL, one_v<T>) {}
         consteval Vector3(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
         constexpr Vector3(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>) {}
         consteval Vector3(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
         constexpr Vector3(y_t, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>) {}
         consteval Vector3(z_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
         constexpr Vector3(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v) {}
-        consteval Vector3(zero_t) noexcept : Vector3(all_, zero_v<T>) {}
+        consteval Vector3(zero_t) noexcept : Vector3(ALL, zero_v<T>) {}
 
         template <glm::qualifier Q>
         explicit constexpr Vector3(const glm::vec<3, T, Q>& v) : x(v.x), y(v.y), z(v.z) {}
@@ -436,9 +438,9 @@ namespace yq {
         return Vector3<T>( a.x, a.y, z );
     }
     
-    YQ_NAN_1(Vector3, Vector3<T>{nan_v<T>, nan_v<T>, nan_v<T>})
-    YQ_ONE_1(Vector3, Vector3<T>{one_v<T>, one_v<T>, one_v<T>})
-    YQ_ZERO_1(Vector3, Vector3<T>{zero_v<T>, zero_v<T>, zero_v<T>})
+    YQ_NAN_1(Vector3, Vector3<T>(NAN))
+    YQ_ONE_1(Vector3, Vector3<T>(ONE))
+    YQ_ZERO_1(Vector3, Vector3<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

@@ -39,6 +39,13 @@ namespace yq {
         {
         }
         
+        consteval Tensor31(all_t, T v) : 
+            xx(v), 
+            yx(v), 
+            zx(v)
+        {
+        }
+
         constexpr Tensor31(columns_t, const Vector3<T>& x) noexcept :
             xx(x.x),
             yx(x.y),
@@ -53,12 +60,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor31(nan_t) : 
-            xx(nan_v<T>), 
-            yx(nan_v<T>), 
-            zx(nan_v<T>)
-        {
-        }
+        consteval Tensor31(nan_t) : Tensor31(ALL, nan_v<T>) {}
 
         constexpr Tensor31(rows_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z) :
             xx(x.x), 
@@ -67,12 +69,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor31(zero_t) : 
-            xx(zero_v<T>), 
-            yx(zero_v<T>), 
-            zx(zero_v<T>)
-        {
-        }
+        consteval Tensor31(zero_t) : Tensor31(ALL, zero_v<T>) {} 
         
         template <glm::qualifier Q>
         explicit constexpr Tensor31(const glm::mat<3,1,T,Q>& t) noexcept;

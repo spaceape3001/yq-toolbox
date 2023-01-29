@@ -36,6 +36,12 @@ namespace yq {
         {
         }
         
+        consteval Tensor23(all_t, T v) : 
+            xx(v), xy(v), xz(v),
+            yx(v), yy(v), yz(v)
+        {
+        }
+
         constexpr Tensor23(columns_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z) noexcept :
             xx(x.x), xy(y.x), xz(z.x), 
             yx(x.y), yy(y.y), yz(z.y)
@@ -49,11 +55,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor23(nan_t) : 
-            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), 
-            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>)
-        {
-        }
+        consteval Tensor23(nan_t) : Tensor23(ALL, nan_v<T>) {}
 
         constexpr Tensor23(rows_t, const Vector3<T>& x, const Vector3<T>& y) :
             xx(x.x), xy(x.y), xz(x.z),
@@ -61,11 +63,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor23(zero_t) : 
-            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), 
-            yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>)
-        {
-        }
+        consteval Tensor23(zero_t) : Tensor23(ALL, zero_v<T>) {}
         
         template <glm::qualifier Q>
         explicit constexpr Tensor23(const glm::mat<2,3,T,Q>& t) noexcept;

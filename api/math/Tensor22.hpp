@@ -34,6 +34,12 @@ namespace yq {
             yx(_yx), yy(_yy)
         {
         }
+
+        consteval Tensor22(all_t, T v) : 
+            xx(v), xy(v),
+            yx(v), yy(v)
+        {
+        }
         
         constexpr Tensor22(columns_t, const Vector2<T>& x, const Vector2<T>& y) noexcept :
             xx(x.x), xy(y.x), 
@@ -59,11 +65,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor22(nan_t) : 
-            xx(nan_v<T>), xy(nan_v<T>), 
-            yx(nan_v<T>), yy(nan_v<T>)
-        {
-        }
+        consteval Tensor22(nan_t) : Tensor22(ALL, nan_v<T>) {}
 
         constexpr Tensor22(rows_t, const Vector2<T>& x, const Vector2<T>& y) :
             xx(x.x), xy(x.y), 
@@ -71,11 +73,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor22(zero_t) : 
-            xx(zero_v<T>), xy(zero_v<T>), 
-            yx(zero_v<T>), yy(zero_v<T>)
-        {
-        }
+        consteval Tensor22(zero_t) : Tensor22(ALL, zero_v<T>) {}
 
         template <glm::qualifier Q>
         explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;

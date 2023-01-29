@@ -25,6 +25,7 @@ namespace yq {
     struct hpr_t {};
     struct identity_t {};
     struct nan_t {};
+    struct one_t {};
     struct rows_t {};
     struct sort_t {};
     struct three_t {};
@@ -72,6 +73,7 @@ namespace yq {
     static constexpr const hpr_t        HPR;
     static constexpr const identity_t   IDENTITY;
     static constexpr const nan_t        NAN;
+    static constexpr const one_t        ONE;
     static constexpr const rows_t       ROWS;
     static constexpr const sort_t       SORT;
     static constexpr const up_t         UP;

@@ -41,6 +41,14 @@ namespace yq {
         {
         }
         
+        consteval Tensor44(all_t, T v) : 
+            xx(v), xy(v), xz(v), xw(v),
+            yx(v), yy(v), yz(v), yw(v),
+            zx(v), zy(v), zz(v), zw(v),
+            wx(v), wy(v), wz(v), ww(v)
+        {
+        }
+
         constexpr Tensor44(columns_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),
             yx(x.y), yy(y.y), yz(z.y), yw(w.y),
@@ -73,13 +81,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor44(nan_t) : 
-            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), xw(nan_v<T>),
-            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), yw(nan_v<T>),
-            zx(nan_v<T>), zy(nan_v<T>), zz(nan_v<T>), zw(nan_v<T>),
-            wx(nan_v<T>), wy(nan_v<T>), wz(nan_v<T>), ww(nan_v<T>)
-        {
-        }
+        consteval Tensor44(nan_t) : Tensor44(ALL, nan_v<T>){}
 
         constexpr Tensor44(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
@@ -89,13 +91,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor44(zero_t) : 
-            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
-            yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>), yw(zero_v<T>),
-            zx(zero_v<T>), zy(zero_v<T>), zz(zero_v<T>), zw(zero_v<T>),
-            wx(zero_v<T>), wy(zero_v<T>), wz(zero_v<T>), ww(zero_v<T>)
-        {
-        }
+        consteval Tensor44(zero_t) :Tensor44(ALL, zero_v<T>){} 
 
         template <glm::qualifier Q>
         explicit constexpr Tensor44(const glm::mat<4,4,T,Q>& t) noexcept;

@@ -37,6 +37,13 @@ namespace yq {
             zx(_zx), zy(_zy), zz(_zz), zw(_zw)
         {
         }
+
+        consteval Tensor34(all_t, T v) : 
+            xx(v), xy(v), xz(v), xw(v),
+            yx(v), yy(v), yz(v), yw(v),
+            zx(v), zy(v), zz(v), zw(v)
+        {
+        }
         
         constexpr Tensor34(columns_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z, const Vector3<T>& w) :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),

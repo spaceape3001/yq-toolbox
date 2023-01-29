@@ -32,6 +32,8 @@ namespace yq {
         constexpr Vector4(T _x, T _y, T _z, T _w) noexcept : 
             x(_x), y(_y), z(_z), w(_w) {}
         constexpr Vector4(all_t, T v) noexcept : x(v), y(v), z(v), w(v) {}
+        consteval Vector4(nan_t) noexcept : Vector4(ALL, nan_v<T>) {}
+        consteval Vector4(one_t) noexcept : Vector4(ALL, one_v<T>) {}
         consteval Vector4(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
         constexpr Vector4(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
         consteval Vector4(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>), w(zero_v<T>) {}
@@ -40,7 +42,7 @@ namespace yq {
         constexpr Vector4(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v), w(zero_v<T>) {}
         consteval Vector4(w_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(one_v<T>) {}
         constexpr Vector4(w_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
-        consteval Vector4(zero_t) noexcept : Vector4(all_, zero_v<T>) {}
+        consteval Vector4(zero_t) noexcept : Vector4(ALL, zero_v<T>) {}
 
         template <glm::qualifier Q>
         explicit constexpr Vector4(const glm::vec<4, T, Q>& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
@@ -424,9 +426,9 @@ namespace yq {
         return Vector4D(w_, (double) v);
     }
 
-    YQ_NAN_1(Vector4, Vector4<T>{nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>})
-    YQ_ONE_1(Vector4, Vector4<T>{one_v<T>, one_v<T>, one_v<T>, one_v<T>})
-    YQ_ZERO_1(Vector4, Vector4<T>{zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>})
+    YQ_NAN_1(Vector4, Vector4<T>(NAN))
+    YQ_ONE_1(Vector4, Vector4<T>(ONE))
+    YQ_ZERO_1(Vector4, Vector4<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

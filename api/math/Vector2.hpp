@@ -31,11 +31,13 @@ namespace yq {
         constexpr Vector2() noexcept = default;
         constexpr Vector2(T _x, T _y) noexcept : x(_x), y(_y) {}
         constexpr Vector2(all_t, T v) noexcept : x(v), y(v) {}
+        consteval Vector2(nan_t) noexcept : Vector2(ALL, nan_v<T>) {}
+        consteval Vector2(one_t) noexcept : Vector2(ALL, one_v<T>) {}
         consteval Vector2(x_t) noexcept : x(one_v<T>), y(zero_v<T>) {}
         constexpr Vector2(x_t, T v) noexcept : x(v), y(zero_v<T>) {}
         consteval Vector2(y_t) noexcept : x(zero_v<T>), y(one_v<T>) {}
         constexpr Vector2(y_t, T v) noexcept : x(zero_v<T>), y(v) {}
-        consteval Vector2(zero_t) noexcept : x(zero_v<T>), y(zero_v<T>) {}
+        consteval Vector2(zero_t) noexcept : Vector2(ALL, zero_v<T>) {}
         
         
         template <glm::qualifier Q>
@@ -400,9 +402,9 @@ namespace yq {
     //! \param az    Clockwise angle from +y
     inline Vector2D     clockwise(Radian az);
 
-    YQ_NAN_1(Vector2, Vector2<T>{nan_v<T>, nan_v<T>})
-    YQ_ONE_1(Vector2, Vector2<T>{one_v<T>, one_v<T>})
-    YQ_ZERO_1(Vector2, Vector2<T>{zero_v<T>, zero_v<T>})
+    YQ_NAN_1(Vector2, Vector2<T>(NAN))
+    YQ_ONE_1(Vector2, Vector2<T>(ONE))
+    YQ_ZERO_1(Vector2, Vector2<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
