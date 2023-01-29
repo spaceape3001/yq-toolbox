@@ -323,16 +323,8 @@ namespace yq {
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor43<product_t<T,U>>  operator*(T a, const Tensor43<T>& b) noexcept
-    {
-        return {
-            a*b.xx, a*b.xy, a*b.xz,
-            a*b.yx, a*b.yy, a*b.yz,
-            a*b.zx, a*b.zy, a*b.zz,
-            a*b.wx, a*b.wy, a*b.wz
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor43<product_t<T,U>>  operator*(T a, const Tensor43<T>& b) noexcept;
     
 
 

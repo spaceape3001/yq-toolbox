@@ -147,16 +147,6 @@ namespace yq {
 
 
     
-    template <typename T>
-    constexpr Tensor24<T>  transpose(const Tensor42<T>&v)
-    {
-        return {
-            v.xx, v.yx, v.zx, v.wx,
-            v.xy, v.yy, v.zy, v.wy
-        };
-    }
-
-    
 
     
 //  --------------------------------------------------------
@@ -909,93 +899,6 @@ namespace yq {
     //  Tensor42 * (OTHER)
 
 
-    template <typename T, typename U>
-    constexpr Tensor41<product_t<T,U>> operator*(const Tensor42<T>& a, const Tensor21<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-
-            a.yx*b.xx + a.yy*b.yx,
-
-            a.zx*b.xx + a.zy*b.yx,
-
-            a.wx*b.xx + a.wy*b.yx
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor42<product_t<T,U>> operator*(const Tensor42<T>& a, const Tensor22<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-            a.xx*b.xy + a.xy*b.yy,
-
-            a.yx*b.xx + a.yy*b.yx,
-            a.yx*b.xy + a.yy*b.yy,
-
-            a.zx*b.xx + a.zy*b.yx,
-            a.zx*b.xy + a.zy*b.yy,
-
-            a.wx*b.xx + a.wy*b.yx,
-            a.wx*b.xy + a.wy*b.yy
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor42<T>& operator*=(Tensor42<T>&a, const Tensor22<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor43<product_t<T,U>> operator*(const Tensor42<T>& a, const Tensor23<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-            a.xx*b.xy + a.xy*b.yy,
-            a.xx*b.xz + a.xy*b.yz,
-
-            a.yx*b.xx + a.yy*b.yx,
-            a.yx*b.xy + a.yy*b.yy,
-            a.yx*b.xz + a.yy*b.yz,
-
-            a.zx*b.xx + a.zy*b.yx,
-            a.zx*b.xy + a.zy*b.yy,
-            a.zx*b.xz + a.zy*b.yz,
-
-            a.wx*b.xx + a.wy*b.yx,
-            a.wx*b.xy + a.wy*b.yy,
-            a.wx*b.xz + a.wy*b.yz
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor44<product_t<T,U>> operator*(const Tensor42<T>& a, const Tensor24<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-            a.xx*b.xy + a.xy*b.yy,
-            a.xx*b.xz + a.xy*b.yz,
-            a.xx*b.xw + a.xy*b.yw,
-
-            a.yx*b.xx + a.yy*b.yx,
-            a.yx*b.xy + a.yy*b.yy,
-            a.yx*b.xz + a.yy*b.yz,
-            a.yx*b.xw + a.yy*b.yw,
-
-            a.zx*b.xx + a.zy*b.yx,
-            a.zx*b.xy + a.zy*b.yy,
-            a.zx*b.xz + a.zy*b.yz,
-            a.zx*b.xw + a.zy*b.yw,
-
-            a.wx*b.xx + a.wy*b.yx,
-            a.wx*b.xy + a.wy*b.yy,
-            a.wx*b.xz + a.wy*b.yz,
-            a.wx*b.xw + a.wy*b.yw
-        };
-    }
     
     //  -------------------------
     //  Tensor43 * (OTHER)

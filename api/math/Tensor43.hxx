@@ -441,6 +441,18 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor43<product_t<T,U>>  operator*(T a, const Tensor43<T>& b) noexcept
+    {
+        return Tensor43<product_t<T,U>>(
+            a*b.xx, a*b.xy, a*b.xz,
+            a*b.yx, a*b.yy, a*b.yz,
+            a*b.zx, a*b.zy, a*b.zz,
+            a*b.wx, a*b.wy, a*b.wz
+        );
+    }
+
     template <typename T>
     constexpr Tensor34<T>  transpose(const Tensor43<T>&v)
     {
