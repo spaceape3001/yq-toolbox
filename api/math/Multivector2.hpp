@@ -21,7 +21,7 @@ namespace yq {
         using component_type    = T;
 
         //! Scalar
-        unity_t<T>      a;
+        T               a;
         
         //! X (vector component)
         T               x;
@@ -30,7 +30,7 @@ namespace yq {
         T               y;
         
         //! XY (bivector component)
-        square_t<T>     xy;
+        T               xy;
         
         //! Defaulted equality operator
         constexpr bool operator==(const Multivector2&) const noexcept = default;
@@ -97,38 +97,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
-    //! Adds bivector with multivector
-    template <typename T>
-    constexpr Multivector2<T> operator+(Bivector2<T> a, const Multivector2<T>& b) noexcept
-    {
-        return { 
-            b.a, 
-            b.x, b.y,
-            a+b.xy
-        };
-    }
 
-    //! Adds bivector with scalar
-    template <typename T>
-    constexpr Multivector2<T> operator+(Bivector2<T> a, unity_t<T>  b) noexcept
-    {
-        return { 
-            b, 
-            {}, {},
-            a.xy
-        };
-    }
     
-    //! Adds bivector with vector
-    template <typename T>
-    constexpr Multivector2<T> operator+(Bivector2<T> a, const Vector2<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            b.x, b.y, 
-            a.xy 
-        };
-    }
 
     //! Adds multivector with bivector
     template <typename T>
@@ -208,16 +178,6 @@ namespace yq {
         return a;
     }
 
-    //! Adds scalar with bivector
-    template <typename T>
-    constexpr Multivector2<T> operator+(unity_t<T> a, const Bivector2<T>& b) noexcept
-    {
-        return { 
-            a, 
-            {}, {},
-            b 
-        };
-    }
 
     //! Adds scalar with multivector
     template <typename T>
@@ -236,38 +196,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  SUBTRACTION
 
-    //! Subtracts multivector from bivector
-    template <typename T>
-    constexpr Multivector2<T> operator-(Bivector2<T> a, const Multivector2<T>& b) noexcept
-    {
-        return { 
-            -b.a, 
-            -b.x, -b.y,
-            a-b.xy
-        };
-    }
 
-    //! Subtracts scalar from bivector
-    template <typename T>
-    constexpr Multivector2<T> operator-(Bivector2<T> a, unity_t<T> b) noexcept
-    {
-        return { 
-            -b, 
-            {}, {},
-            a.xy
-        };
-    }
 
-    //! Subtracts vector from bivector
-    template <typename T>
-    constexpr Multivector2<T> operator-(Bivector2<T> a, const Vector2<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            -b.x, -b.y, 
-            a.xy 
-        };
-    }
 
     //! Subtracts bivector from multivector
     template <typename T>
@@ -347,16 +277,6 @@ namespace yq {
         return a;
     }
     
-    //! Subtracts bivector from scalar
-    template <typename T>
-    constexpr Multivector2<T> operator-(unity_t<T> a, const Bivector2<T>& b) noexcept
-    {
-        return { 
-            a, 
-            {}, {},
-            -b 
-        };
-    }    
 
     //! Subtracts multivector from scalar
     template <typename T>
