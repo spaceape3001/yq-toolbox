@@ -20,6 +20,16 @@
 
 namespace yq {
     template <typename T>
+        template <glm::qualifier Q>
+    constexpr Tensor44<T>::Tensor44(const glm::mat<4,4,T,Q>& t) noexcept :
+        xx(t.x.x), xy(t.y.x), xz(t.z.x), xw(t.w.x),
+        yx(t.x.y), yy(t.y.y), yz(t.z.y), yw(t.w.y),
+        zx(t.x.z), zy(t.y.z), zz(t.z.z), zw(t.w.z),
+        wx(t.x.w), wy(t.y.w), wz(t.z.w), ww(t.w.w)
+    {
+    }
+
+    template <typename T>
     constexpr Tensor44<T>::operator glm::mat<4,4,T,glm::defaultp>() const noexcept 
     {
         return glm::mat<4,4,T,glm::defaultp>(
@@ -535,6 +545,12 @@ namespace yq {
     //  TODO: 4x4 determinant 
     //  TODO: 4x4 inverse 
     //  TODO: 4x4 eigenvalues, eigenvectors, & eigensystem
+
+    template <typename T, glm::qualifier Q>
+    constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t) noexcept
+    {
+        return Tensor44<T>(t);
+    }
 
     template <typename T>
     constexpr T     trace(const Tensor44<T>& ten) noexcept

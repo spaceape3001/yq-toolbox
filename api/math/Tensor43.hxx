@@ -27,6 +27,16 @@
 
 namespace yq {
     template <typename T>
+        template <glm::qualifier Q>
+    constexpr Tensor43<T>::Tensor43(const glm::mat<4,3,T,Q>& t) noexcept :
+        xx(t.x.x), xy(t.y.x), xz(t.z.x),
+        yx(t.x.y), yy(t.y.y), yz(t.z.y),
+        zx(t.x.z), zy(t.y.z), zz(t.z.z),
+        wx(t.x.w), wy(t.y.w), wz(t.z.w)
+    {
+    }
+
+    template <typename T>
     constexpr Tensor43<T>::operator glm::mat<4,3,T,glm::defaultp>() const noexcept 
     {
         return glm::mat<4,3,T,glm::defaultp>(

@@ -26,116 +26,161 @@ namespace yq {
         T yx, yy, yz;
         T zx, zy, zz;
 
-        //! Default equality operator
+
+        constexpr Tensor33() noexcept = default;
+
+        constexpr Tensor33(
+            T _xx, T _xy, T _xz,
+            T _yx, T _yy, T _yz,
+            T _zx, T _zy, T _zz
+        ) : 
+            xx(_xx), xy(_xy), xz(_xz), 
+            yx(_yx), yy(_yy), yz(_yz), 
+            zx(_zx), zy(_zy), zz(_zz)
+        {
+        }
+        
+        constexpr Tensor33(columns_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) noexcept :
+            xx(x.x), xy(y.x), xz(z.x), 
+            yx(x.y), yy(y.y), yz(z.y), 
+            zx(x.z), zy(y.z), zz(z.z)
+        {
+        }
+
+        constexpr Tensor33(diagonal_t, T _xx, T _yy, T _zz) : 
+            xx(_xx),  xy(zero_v<T>), xz(zero_v<T>),
+            yx(zero_v<T>), yy(_yy),  yz(zero_v<T>),
+            zx(zero_v<T>), zy(zero_v<T>), zz(_zz)
+        {
+        }
+
+        constexpr Tensor33(diagonal_t, const Vector3<T>& v) : 
+            xx(v.x),  xy(zero_v<T>), xz(zero_v<T>), 
+            yx(zero_v<T>), yy(v.y),  yz(zero_v<T>), 
+            zx(zero_v<T>), zy(zero_v<T>), zz(v.z)
+        {
+        }
+
+        consteval Tensor33(identity_t) : 
+            xx(one_v<T>),  xy(zero_v<T>), xz(zero_v<T>), 
+            yx(zero_v<T>), yy(one_v<T>),  yz(zero_v<T>), 
+            zx(zero_v<T>), zy(zero_v<T>), zz(one_v<T>)
+        {
+        }
+
+        consteval Tensor33(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), 
+            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), 
+            zx(nan_v<T>), zy(nan_v<T>), zz(nan_v<T>)
+        {
+        }
+
+        constexpr Tensor33(rows_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) :
+            xx(x.x), xy(x.y), xz(x.z),
+            yx(y.x), yy(y.y), yz(y.z),
+            zx(z.x), zy(z.y), zz(z.z)
+        {
+        }
+
+        consteval Tensor33(zero_t) : 
+            xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), 
+            yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>), 
+            zx(zero_v<T>), zy(zero_v<T>), zz(zero_v<T>)
+        {
+        }
+        
+                //! Default equality operator
         constexpr bool operator==(const Tensor33&) const noexcept = default;
 
         //! Creates a GLM matrix
-        operator glm::mat<3,3,T,glm::defaultp>() const noexcept 
-        {
-            return {
-                xx, yx, zx,
-                xy, yy, zy,
-                xz, yz, zz
-            };
-        }
+        constexpr operator glm::mat<3,3,T,glm::defaultp>() const noexcept;
 
         //! Positive (affirmation) operator
-        constexpr Tensor33  operator+() const noexcept
-        { 
-            return *this; 
-        }
+        constexpr Tensor33  operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor33  operator-() const noexcept
-        {
-            return {
-                -xx, -xy, -xz,
-                -yx, -yy, -yz,
-                -zx, -zy, -zz
-            };
-        }
+        constexpr Tensor33  operator-() const noexcept;
+
+        constexpr Tensor33   operator+ (const Tensor33 &b) const noexcept;
+        Tensor33&            operator+=(const Tensor33 &b) noexcept;
+
+        constexpr Tensor33   operator- (const Tensor33 &b) const noexcept;
+        Tensor33&            operator-=(const Tensor33 &b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor33<product_t<T,U>>  operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor33<product_t<T,U>>  operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Tensor31<product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Tensor32<product_t<T,U>> operator*(const Tensor32<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Tensor33<product_t<T,U>> operator*(const Tensor33<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Tensor34<product_t<T,U>> operator*(const Tensor34<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor33<T>& operator*=(const Tensor33<U>& b) noexcept;
+
+        template <typename U>
+        constexpr Vector3<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor33<quotient_t<T,U>>  operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor33<quotient_t<T,U>>  operator/=(U b) noexcept;
 
         //! Determinant of this matrix
-        constexpr cube_t<T> determinant() const noexcept
-        {
-            return xx*(yy*zz-yz*zy)+xy*(zx*xz-yx*zz)+xz*(yx*zy-zx*yy);
-        }
+        constexpr cube_t<T> determinant() const noexcept;
      
         //  TODO: 3x3 eigenvalues, eigenvectors, & eigensystem
         
         
         //! Inverse of this matrix
-        constexpr Tensor33<inverse_t<T>> inverse() const noexcept
-        {
-            auto    di = one_v<T> / determinant();
-            return {
-                di*(yy*zz-zy*yz), di*(xz*zy-zz*xy), di*(xy*yz-yy*xz),
-                di*(yz*zx-zz*yx), di*(xx*zz-xz*zx), di*(xz*yx-yz*xx),
-                di*(yx*zy-zx*yy), di*(xy*zx-zy*xx), di*(xx*yy-yx*xy)
-            };
-        }
+        constexpr Tensor33<inverse_t<T>> inverse() const noexcept;
         
         /*! \brief Trace of this tensor
         */
-        constexpr T     trace() const noexcept
-        {
-            return xx+yy+zz;
-        }
+        constexpr T     trace() const noexcept;
     
         //! Transpose of this vector
-        constexpr Tensor33  transpose() const noexcept
-        {
-            return {
-                xx, yx, zx,
-                xy, yy, zy,
-                xz, yz, zz
-            };
-        }
+        constexpr Tensor33  transpose() const noexcept;
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! The diagonal of this tensor
-            constexpr Vector3<T>  diagonal() const noexcept
-            {
-                return {xx, yy, zz};
-            }
+            constexpr Vector3<T>  diagonal() const noexcept;
 
             //! X-column of this tensor
-            constexpr Vector3<T>  x_column() const noexcept
-            {
-                return {xx, yx, zx};
-            }
+            constexpr Vector3<T>  x_column() const noexcept;
 
             //! Y-column of this tensor
-            constexpr Vector3<T>  y_column() const noexcept
-            {
-                return {xy, yy, zy};
-            }
+            constexpr Vector3<T>  y_column() const noexcept;
 
             //! Z-column of this tensor
-            constexpr Vector3<T>  z_column() const noexcept
-            {
-                return {xz, yz, zz};
-            }
+            constexpr Vector3<T>  z_column() const noexcept;
 
             //! X-row of this tensor
-            constexpr Vector3<T>  x_row() const noexcept
-            {
-                return {xx, xy, xz};
-            }
+            constexpr Vector3<T>  x_row() const noexcept;
 
             //! Y-row of this tensor
-            constexpr Vector3<T>  y_row() const noexcept
-            {
-                return {yx, yy, yz};
-            }
+            constexpr Vector3<T>  y_row() const noexcept;
 
             //! Z-row of this tensor
-            constexpr Vector3<T>  z_row() const noexcept
-            {
-                return {zx, zy, zz};
-            }
+            constexpr Vector3<T>  z_row() const noexcept;
 
 
 
@@ -143,130 +188,46 @@ namespace yq {
         //  SETTERS
 
             //! Sets the diagonal
-            Tensor33&  diagonal(const Vector3<T>& v)
-            {
-                xx = v.x;
-                yy = v.y;
-                zz = v.z;
-                return *this;
-            }
+            Tensor33&  diagonal(const Vector3<T>& v);
 
             //! Sets the diagonal
-            Tensor33&  diagonal(T _xx, T _yy, T _zz)
-            {
-                xx = _xx;
-                yy = _yy;
-                zz = _zz;
-                return *this;
-            }
+            Tensor33&  diagonal(T _xx, T _yy, T _zz);
 
             //! Sets the x-column
-            Tensor33& x_column(const Vector3<T>& v)
-            {
-                xx = v.x;
-                yx = v.y;
-                zx = v.z;
-                return *this;
-            }
+            Tensor33& x_column(const Vector3<T>& v);
 
             //! Sets the x-column
-            Tensor33& x_column(T _xx, T _yx, T _zx)
-            {
-                xx = _xx;
-                yx = _yx;
-                zx = _zx;
-                return *this;
-            }
+            Tensor33& x_column(T _xx, T _yx, T _zx);
 
             //! Sets the y-column
-            Tensor33& y_column(const Vector3<T>& v)
-            {
-                xy = v.x;
-                yy = v.y;
-                zy = v.z;
-                return *this;
-            }
+            Tensor33& y_column(const Vector3<T>& v);
 
             //! Sets the y-column
-            Tensor33& y_column(T _xy, T _yy, T _zy)
-            {
-                xy = _xy;
-                yy = _yy;
-                zy = _zy;
-                return *this;
-            }
+            Tensor33& y_column(T _xy, T _yy, T _zy);
 
             //! Sets the z-column
-            Tensor33& z_column(const Vector3<T>& v)
-            {
-                xz = v.x;
-                yz = v.y;
-                zz = v.z;
-                return *this;
-            }
+            Tensor33& z_column(const Vector3<T>& v);
 
             //! Sets the z-column
-            Tensor33& z_column(T _xz, T _yz, T _zz)
-            {
-                xz = _xz;
-                yz = _yz;
-                zz = _zz;
-                return *this;
-            }
+            Tensor33& z_column(T _xz, T _yz, T _zz);
 
             //! Sets the x-row
-            Tensor33& x_row(const Vector3<T>& v)
-            {
-                xx = v.x;
-                xy = v.y;
-                xz = v.z;
-                return *this;
-            }
+            Tensor33& x_row(const Vector3<T>& v);
 
             //! Sets the x-row
-            Tensor33& x_row(T _xx, T _xy, T _xz)
-            {
-                xx = _xx;
-                xy = _xy;
-                xz = _xz;
-                return *this;
-            }
+            Tensor33& x_row(T _xx, T _xy, T _xz);
 
             //! Sets the y-row
-            Tensor33& y_row(const Vector3<T>& v)
-            {
-                yx = v.x;
-                yy = v.y;
-                yz = v.z;
-                return *this;
-            }
+            Tensor33& y_row(const Vector3<T>& v);
 
             //! Sets the y-row
-            Tensor33& y_row(T _yx, T _yy, T _yz)
-            {
-                yx = _yx;
-                yy = _yy;
-                yz = _yz;
-                return *this;
-            }
+            Tensor33& y_row(T _yx, T _yy, T _yz);
 
             //! Sets the z-row
-            Tensor33& z_row(const Vector3<T>& v)
-            {
-                zx = v.x;
-                zy = v.y;
-                zz = v.z;
-                return *this;
-            }
+            Tensor33& z_row(const Vector3<T>& v);
     
             //! Sets the z-row
-            Tensor33& z_row(T _zx, T _zy, T _zz)
-            {
-                zx = _zx;
-                zy = _zy;
-                zz = _zz;
-                return *this;
-            }
+            Tensor33& z_row(T _zx, T _zy, T _zz);
     };
 
     YQ_IEEE754_1(Tensor33)
@@ -279,11 +240,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor33<T>  columns(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z)
     {
-        return {
-            x.x, y.x, z.x,
-            x.y, y.y, z.y,
-            x.z, y.z, z.z
-        };
+        return Tensor33<T>(COLUMNS, x, y, z);
     }
 
     /*! \brief Create 3x3 tensor by its diagonal
@@ -291,11 +248,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor33<T>  diagonal(const Vector3<T>&v)
     {
-        return {
-            v.x, zero_v<T>, zero_v<T>,
-            zero_v<T>, v.y, zero_v<T>,
-            zero_v<T>, zero_v<T>, v.z
-        };
+        return Tensor33<T>(DIAGONAL, v);
     }
     
     /*! \brief Create 3x3 tensor by its diagonal
@@ -303,11 +256,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor33<T>  diagonal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
-        return {
-            x, zero_v<T>, zero_v<T>,
-            zero_v<T>, y, zero_v<T>,
-            zero_v<T>, zero_v<T>, z
-        };
+        return Tensor33<T>(DIAGONAL, x, y, z);
     }
 
     /*! \brief Create 3x3 tensor by heading-pitch-roll
@@ -389,11 +338,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor33<T>  rows(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z)
     {
-        return {
-            x.x, x.y, x.z,
-            y.x, y.y, y.z,
-            z.x, z.y, z.z
-        };
+        return Tensor33<T>(ROWS, x, y, z);
     }
 
     /*! \brief Create 3x3 tensor from GLM
@@ -401,31 +346,13 @@ namespace yq {
     template <typename T, glm::qualifier Q>
     constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t)
     {
-        return {
-            t.x.x, t.y.x, t.z.x, 
-            t.x.y, t.y.y, t.z.y, 
-            t.x.z, t.y.z, t.z.z
-        };
+        return Tensor33<T>(t);
     }
     
     
-    YQ_IDENTITY_1(Tensor33, {
-        one_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, one_v<T>
-    })
-
-    YQ_NAN_1(Tensor33, {
-        nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor33, {
-        zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor33, Tensor33<T>(IDENTITY))
+    YQ_NAN_1(Tensor33, Tensor33<T>(NAN))
+    YQ_ZERO_1(Tensor33, Tensor33<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -445,209 +372,61 @@ namespace yq {
 
     //! Transpose of the provided tensor
     template <typename T>
-    constexpr Tensor33<T>  transpose(const Tensor33<T>&ten)
-    {
-        return ten.transpose();
-    }
+    constexpr Tensor33<T>  transpose(const Tensor33<T>&ten);
 
 //  --------------------------------------------------------
 //  GETTERS
 
     //! Diagonal of provided tensor
     template <typename T>
-    constexpr Vector3<T>  diagonal(const Tensor33<T>&ten)
-    {
-        return ten.diagonal();
-    }
+    constexpr Vector3<T>  diagonal(const Tensor33<T>&ten);
 
     //! X-column of provided tensor
     template <typename T>
-    constexpr Vector3<T>  x_column(const Tensor33<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector3<T>  x_column(const Tensor33<T>&ten);
 
     //! Y-column of provided tensor
     template <typename T>
-    constexpr Vector3<T>  y_column(const Tensor33<T>&ten) 
-    {
-        return ten.y_column();
-    }
+    constexpr Vector3<T>  y_column(const Tensor33<T>&ten);
 
     //! Z-column of provided tensor
     template <typename T>
-    constexpr Vector3<T>  z_column(const Tensor33<T>&ten) 
-    {
-        return ten.z_column();
-    }
+    constexpr Vector3<T>  z_column(const Tensor33<T>&ten) ;
 
     //! X-row of provided tensor
     template <typename T>
-    constexpr Vector3<T>  x_row(const Tensor33<T>&ten)
-    {
-        return ten.x_row();
-    }
+    constexpr Vector3<T>  x_row(const Tensor33<T>&ten);
 
     //! Y-row of provided tensor
     template <typename T>
-    constexpr Vector3<T>  y_row(const Tensor33<T>&ten)
-    {
-        return ten.y_row();
-    }
+    constexpr Vector3<T>  y_row(const Tensor33<T>&ten);
 
     //! Z-row of provided tensor
     template <typename T>
-    constexpr Vector3<T>  z_row(const Tensor33<T>&ten)
-    {
-        return ten.z_row();
-    }
+    constexpr Vector3<T>  z_row(const Tensor33<T>&ten);
 
 
 
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor33<T>   operator+ (const Tensor33<T> &a, const Tensor33<T> &b) 
-    {
-        return {
-            a.xx+b.xx, a.xy+b.xy, a.xz+b.xz,
-            a.yx+b.yx, a.yy+b.yy, a.yz+b.yz,
-            a.zx+b.zx, a.zy+b.zy, a.zz+b.zz
-        };
-    }
-
-    template <typename T>
-    Tensor33<T>&   operator+=(Tensor33<T> &a, const Tensor33<T> &b) 
-    {
-        a.xx+=b.xx;  a.xy+=b.xy;  a.xz+=b.xz;
-        a.yx+=b.yx;  a.yy+=b.yy;  a.yz+=b.yz;
-        a.zx+=b.zx;  a.zy+=b.zy;  a.zz+=b.zz;
-        return a;
-    }
-
 
 //  --------------------------------------------------------
 //  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor33<T>   operator- (const Tensor33<T> &a, const Tensor33<T> &b) 
-    {
-        return {
-            a.xx-b.xx, a.xy-b.xy, a.xz-b.xz,
-            a.yx-b.yx, a.yy-b.yy, a.yz-b.yz,
-            a.zx-b.zx, a.zy-b.zy, a.zz-b.zz
-        };
-    }
-    
-
-    template <typename T>
-    Tensor33<T>&   operator-=(Tensor33<T> &a, const Tensor33<T> &b) 
-    {
-        a.xx-=b.xx;  a.xy-=b.xy;  a.xz-=b.xz;
-        a.yx-=b.yx;  a.yy-=b.yy;  a.yz-=b.yz;
-        a.zx-=b.zx;  a.zy-=b.zy;  a.zz-=b.zz;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor33<product_t<T,U>>  operator*(T a, const Tensor33<T>& b)
-    {
-        return {
-            a*b.xx, a*b.xy, a*b.xz,
-            a*b.yx, a*b.yy, a*b.yz,
-            a*b.zx, a*b.zy, a*b.zz
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor33<product_t<T,U>>  operator*(T a, const Tensor33<U>& b);
     
     
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor33<product_t<T,U>>  operator*(const Tensor33<T>& a, U b)
-    {
-        return {
-            a.xx*b, a.xy*b, a.xz*b,
-            a.yx*b, a.yy*b, a.yz*b,
-            a.zx*b, a.zy*b, a.zz*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor33<product_t<T,U>>  operator*=(const Tensor33<T>& a, U b)
-    {
-        a.xx*=b; a.xy*=b; a.xz*=b;
-        a.yx*=b; a.yy*=b; a.yz*=b;
-        a.zx*=b; a.zy*=b; a.zz*=b;        
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor33<product_t<T,U>> operator*(const Tensor33<T>& a, const Tensor33<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-            a.xx*b.xz + a.xy*b.yz + a.xz*b.zz,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-            a.yx*b.xz + a.yy*b.yz + a.yz*b.zz,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-            a.zx*b.xy + a.zy*b.yy + a.zz*b.zy,
-            a.zx*b.xz + a.zy*b.yz + a.zz*b.zz
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor33<T>& operator*=(Tensor33<T>&a, const Tensor33<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>> operator*(const Tensor33<T>&a, const Vector3<U>&b)
-    {
-        return {
-            a.xx*b.x + a.xy*b.y + a.xz*b.z,
-            a.yx*b.x + a.yy*b.y + a.yz*b.z,
-            a.zx*b.x + a.zy*b.y + a.zz*b.z
-        };
-    }
-
 
 //  --------------------------------------------------------
 //  DIVISION
 
 
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor33<quotient_t<T,U>>  operator/(const Tensor33<T>& a, U b)
-    {
-        return {
-            a.xx/b, a.xy/b, a.xz/b,
-            a.yx/b, a.yy/b, a.yz/b,
-            a.zx/b, a.zy/b, a.zz/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor33<quotient_t<T,U>>  operator/=(const Tensor33<T>& a, U b)
-    {
-        a.xx/=b; a.xy/=b; a.xz/=b;
-        a.yx/=b; a.yy/=b; a.yz/=b;
-        a.zx/=b; a.zy/=b; a.zz/=b;        
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
@@ -657,30 +436,21 @@ namespace yq {
 
     //! Determinant of the given tensor
     template <typename T>
-    cube_t<T> determinant(const Tensor33<T>& ten)
-    {
-        return ten.determinant();
-    }
+    cube_t<T> determinant(const Tensor33<T>& ten);
  
     //  TODO: 3x3 eigenvalues, eigenvectors, & eigensystem
     
     
     //! Inverse of the given tensor
     template <typename T>
-    Tensor33<inverse_t<T>> inverse(const Tensor33<T>&ten)
-    {
-        return ten.inverse();
-    }
+    Tensor33<inverse_t<T>> inverse(const Tensor33<T>&ten);
     
     /*! \brief Trace of the 3 x 3 tensor
     
         \param[in] a    Tensor to take the trace of
     */
     template <typename T>
-    constexpr T     trace(const Tensor33<T>& ten)
-    {
-        return ten.trace();
-    }
+    constexpr T     trace(const Tensor33<T>& ten);
 }
 
 YQ_TYPE_DECLARE(yq::Tensor33D)

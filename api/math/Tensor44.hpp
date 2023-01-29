@@ -97,6 +97,9 @@ namespace yq {
         {
         }
 
+        template <glm::qualifier Q>
+        explicit constexpr Tensor44(const glm::mat<4,4,T,Q>& t) noexcept;
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor44&) const noexcept = default;
         
@@ -258,7 +261,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor44<T>  columns(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z, const Vector4<T>&w) noexcept
     {
-        return Tensor44<T>(columns_, x, y, z, w);
+        return Tensor44<T>(COLUMNS, x, y, z, w);
     }
 
     /*! \brief Creates 4x4 tensor by specifying diagonal 
@@ -268,7 +271,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor44<T>  diagonal(const Vector4<T>&v) noexcept
     {
-        return Tensor44<T>(diagonal_, v);
+        return Tensor44<T>(DIAGONAL, v);
     }
     
     /*! \brief Creates 4x4 tensor by specifying diagonal
@@ -278,7 +281,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor44<T>  diagonal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w) noexcept
     {
-        return Tensor44<T>(diagonal_, x, y, z, w);
+        return Tensor44<T>(DIAGONAL, x, y, z, w);
     }
 
     /*! \brief Creates 4x4 tensor by specifying the rows
@@ -286,21 +289,13 @@ namespace yq {
     template <typename T>
     constexpr Tensor44<T>  rows(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z, const Vector4<T>&w) noexcept
     {
-        return Tensor44<T>(rows_, x, y, z, w);
+        return Tensor44<T>(ROWS, x, y, z, w);
     }
 
     /*! \brief Creates 4x4 tensor from the GLM equivalent
     */
     template <typename T, glm::qualifier Q>
-    constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t) noexcept
-    {
-        return Tensor44<T>( 
-            t.x.x, t.y.x, t.z.x, t.w.x,
-            t.x.y, t.y.y, t.z.y, t.w.y,
-            t.x.z, t.y.z, t.z.z, t.w.z,
-            t.x.w, t.y.w, t.z.w, t.w.w
-        );
-    }
+    constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t) noexcept;
     
     YQ_IDENTITY_1(Tensor44, Tensor44<T>(IDENTITY))
     YQ_NAN_1(Tensor44, Tensor44<T>(NAN))

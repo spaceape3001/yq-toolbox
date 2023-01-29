@@ -73,6 +73,9 @@ namespace yq {
         {
         }
 
+        template <glm::qualifier Q>
+        explicit constexpr Tensor34(const glm::mat<3,4,T,Q>& t) noexcept;
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor34&) const noexcept = default;
 

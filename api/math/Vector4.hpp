@@ -51,28 +51,28 @@ namespace yq {
         */
         static consteval Vector4 unit_x() noexcept
         {
-            return Vector4(x_);
+            return Vector4(X);
         }
         
         /*! \brief Creates a unit-vector in the y-dimension.
         */
         static consteval Vector4 unit_y() noexcept
         {
-            return Vector4(y_);
+            return Vector4(Y);
         }
         
         /*! \brief Creates a unit-vector in the z-dimension.
         */
         static consteval Vector4 unit_z() noexcept
         {
-            return Vector4(z_);
+            return Vector4(Z);
         }
         
         /*! \brief Creates a unit-vector in the w-dimension.
         */
         static consteval Vector4 unit_w() noexcept
         {
-            return Vector4(w_);
+            return Vector4(W);
         }
 
 

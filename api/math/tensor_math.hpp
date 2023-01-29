@@ -660,53 +660,7 @@ namespace yq {
     //  Tensor33 * (OTHER)
 
     
-    template <typename T, typename U>
-    constexpr Tensor31<product_t<T,U>> operator*(const Tensor33<T>& a, const Tensor31<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx
-        };
-    }
     
-    template <typename T, typename U>
-    constexpr Tensor32<product_t<T,U>> operator*(const Tensor33<T>& a, const Tensor32<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-            a.zx*b.xy + a.zy*b.yy + a.zz*b.zy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor34<product_t<T,U>> operator*(const Tensor33<T>& a, const Tensor34<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-            a.xx*b.xz + a.xy*b.yz + a.xz*b.zz,
-            a.xx*b.xw + a.xy*b.yw + a.xz*b.zw,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-            a.yx*b.xz + a.yy*b.yz + a.yz*b.zz,
-            a.yx*b.xw + a.yy*b.yw + a.yz*b.zw,
-
-            a.zx*b.xx + a.zy*b.yx + a.zz*b.zx,
-            a.zx*b.xy + a.zy*b.yy + a.zz*b.zy,
-            a.zx*b.xz + a.zy*b.yz + a.zz*b.zz,
-            a.zx*b.xw + a.zy*b.yw + a.zz*b.zw
-        };
-    }
     
     //  -------------------------
     //  Tensor34 * (OTHER)

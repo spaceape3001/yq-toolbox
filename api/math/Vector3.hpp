@@ -48,21 +48,21 @@ namespace yq {
         */
         static consteval Vector3 unit_x() noexcept
         {
-            return Vector3(x_);
+            return Vector3(X);
         }
         
         /*! \brief Creates a unit-vector in the y-dimension.
         */
         static consteval Vector3 unit_y() noexcept
         {
-            return Vector3(y_);
+            return Vector3(Y);
         }
         
         /*! \brief Creates a unit-vector in the z-dimension.
         */
         static consteval Vector3 unit_z() noexcept
         {
-            return Vector3(z_);
+            return Vector3(Z);
         }
 
         //! Equality operator (using default)
