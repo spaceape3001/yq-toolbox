@@ -101,7 +101,6 @@
 #include <basic/meta/Init.hpp>
 
 #include <math/glm_types.hpp>
-#include <math/tensor_math.hpp>
 #include <math/shape_utils.hpp>
 #include <math/Units.hpp>
 

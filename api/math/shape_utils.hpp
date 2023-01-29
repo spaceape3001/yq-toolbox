@@ -46,7 +46,6 @@
 #include <math/Vector2.hpp>
 #include <math/Vector3.hpp>
 #include <math/Vector4.hpp>
-#include "tensor_math.hpp"
 
 namespace yq {
     

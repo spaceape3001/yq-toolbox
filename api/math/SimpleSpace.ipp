@@ -7,7 +7,6 @@
 #pragma once
 
 #include "SimpleSpace.hpp"
-#include <math/tensor_math.hpp>
 
 namespace yq {
     Tensor44D       SimpleSpace::local2parent() const
