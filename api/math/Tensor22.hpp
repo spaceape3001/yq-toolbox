@@ -312,34 +312,12 @@ namespace yq {
 
 
 //  --------------------------------------------------------
-//  ADDITION
-
-
 //  --------------------------------------------------------
-//  SUBTRACTION
-
-    
-//  --------------------------------------------------------
-//  MULTIPLICATION
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
     constexpr Tensor22<product_t<T,U>>  operator*(T a, const Tensor22<T>& b);
     
-    
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-
-
-//  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
 
     //! Determinant of a 2x2 tensor
     template <typename T>

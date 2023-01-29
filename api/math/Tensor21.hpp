@@ -197,61 +197,13 @@ namespace yq {
     constexpr Vector1<T>  y_row(const Tensor21<T>&ten);
 
 
-
 //  --------------------------------------------------------
-//  ADDITION
-
-
 //  --------------------------------------------------------
-//  SUBTRACTION
-    
-//  --------------------------------------------------------
-//  MULTIPLICATION
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
     constexpr Tensor21<product_t<T,U>>  operator*(T a, const Tensor21<U>& b);
     
-    
-    template <typename T, typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Tensor21<product_t<T,U>>  operator*(const Tensor21<T>& a, U b)
-    {
-        return {
-            a.xx*b,
-            a.yx*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor21<T>&  operator*=(const Tensor21<T>& a, U b)
-    {
-        a.xx*=b;
-        a.yx*=b;        
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector2<product_t<T,U>> operator*(const Tensor21<T>&a, const Vector1<U>&b)
-    {
-        return {
-            a.xx*b.x,
-            a.yx*b.x
-        };
-    }
-
-//  --------------------------------------------------------
-//  DIVISION
-
-
-//  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
 }
 
 YQ_TYPE_DECLARE(yq::Tensor21D)
