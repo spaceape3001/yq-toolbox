@@ -103,23 +103,6 @@ namespace yq {
     }
 
 
-    template <typename T>
-    constexpr Tensor13<T>  transpose(const Tensor31<T>&v)
-    {
-        return {
-            v.xx, v.yx, v.zx
-        };
-    }
-
-    
-
-
-    
-
-
-
-    
-
     
 //  --------------------------------------------------------
 //  POSITIVE
@@ -496,80 +479,6 @@ namespace yq {
     //  Tensor31 * (OTHER)
 
 
-    template <typename T, typename U>
-    constexpr Tensor31<product_t<T,U>> operator*(const Tensor31<T>& a, const Tensor11<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-
-            a.yx*b.xx,
-
-            a.zx*b.xx
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor31<T>& operator*=(Tensor31<T>&a, const Tensor11<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor32<product_t<T,U>> operator*(const Tensor31<T>& a, const Tensor12<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-
-            a.zx*b.xx,
-            a.zx*b.xy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor33<product_t<T,U>> operator*(const Tensor31<T>& a, const Tensor13<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-            a.yx*b.xz,
-
-            a.zx*b.xx,
-            a.zx*b.xy,
-            a.zx*b.xz
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor34<product_t<T,U>> operator*(const Tensor31<T>& a, const Tensor14<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-            a.xx*b.xw,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-            a.yx*b.xz,
-            a.yx*b.xw,
-
-            a.zx*b.xx,
-            a.zx*b.xy,
-            a.zx*b.xz,
-            a.zx*b.xw
-        };
-    }
-    
     //  -------------------------
     //  Tensor32 * (OTHER)
     

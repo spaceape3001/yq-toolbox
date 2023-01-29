@@ -26,115 +26,150 @@ namespace yq {
         T yx;
         T zx;
 
+        constexpr Tensor31() noexcept = default;
+
+        constexpr Tensor31(
+            T _xx, 
+            T _yx, 
+            T _zx
+        ) : 
+            xx(_xx),
+            yx(_yx),
+            zx(_zx)
+        {
+        }
+        
+        constexpr Tensor31(columns_t, const Vector3<T>& x) noexcept :
+            xx(x.x),
+            yx(x.y),
+            zx(x.z)
+        {
+        }
+
+        consteval Tensor31(identity_t) : 
+            xx(one_v<T>),  
+            yx(zero_v<T>), 
+            zx(zero_v<T>)
+        {
+        }
+
+        consteval Tensor31(nan_t) : 
+            xx(nan_v<T>), 
+            yx(nan_v<T>), 
+            zx(nan_v<T>)
+        {
+        }
+
+        constexpr Tensor31(rows_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z) :
+            xx(x.x), 
+            yx(y.x), 
+            zx(z.x)
+        {
+        }
+
+        consteval Tensor31(zero_t) : 
+            xx(zero_v<T>), 
+            yx(zero_v<T>), 
+            zx(zero_v<T>)
+        {
+        }
+        
+        template <glm::qualifier Q>
+        explicit constexpr Tensor31(const glm::mat<3,1,T,Q>& t) noexcept;
+        
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor31&) const noexcept = default;
 
+        //! Conversion to GLM
+        constexpr operator glm::mat<3,1,T,glm::defaultp>() const noexcept;
+
         //! Positive (affirmation) operator
-        constexpr const Tensor31&  operator+() const noexcept
-        { 
-            return *this; 
-        }
+        constexpr const Tensor31&  operator+() const noexcept;
 
         //! Negation
-        constexpr Tensor31  operator-() const noexcept
-        {
-            return {
-                -xx,
-                -yx,
-                -zx
-            };
-        }
+        constexpr Tensor31  operator-() const noexcept;
+        
+        constexpr Tensor31<T>   operator+ (const Tensor31<T> &b) const noexcept;
+        Tensor31<T>&            operator+=(const Tensor31<T> &b) noexcept;
+        constexpr Tensor31<T>   operator- (const Tensor31<T> &b) const noexcept;
+        Tensor31<T>&            operator-=(const Tensor31<T> &b) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor31<product_t<T,U>>  operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor31<T>&  operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Tensor31<product_t<T,U>> operator*(const Tensor11<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor32<product_t<T,U>> operator*(const Tensor12<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor33<product_t<T,U>> operator*(const Tensor13<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor34<product_t<T,U>> operator*(const Tensor14<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor31<T>& operator*=(const Tensor11<U>& b) noexcept;
+        
+        template <typename U>
+        constexpr Vector3<product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor31<quotient_t<T,U>>  operator/(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor31<T>&  operator/=(U b) noexcept;
+
+        constexpr Tensor13<T> transpose() const noexcept;
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! X-column of this vector
-            constexpr Vector3<T>  x_column() const noexcept
-            {
-                return {xx, yx, zx};
-            }
+            constexpr Vector3<T>  x_column() const noexcept;
 
             //! X-row of this vector
-            constexpr Vector1<T>  x_row() const noexcept
-            {
-                return {xx};
-            }
+            constexpr Vector1<T>  x_row() const noexcept;
 
             //! Y-row of this vector
-            constexpr Vector1<T>  y_row() const noexcept
-            {
-                return {yx};
-            }
+            constexpr Vector1<T>  y_row() const noexcept;
 
             //! Z-row of this vector
-            constexpr Vector1<T>  z_row() const noexcept
-            {
-                return {zx};
-            }
+            constexpr Vector1<T>  z_row() const noexcept;
 
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Sets the x-column
-            Tensor31& x_column(const Vector3<T>& v)
-            {
-                xx = v.x;
-                yx = v.y;
-                zx = v.z;
-                return *this;
-            }
+            Tensor31& x_column(const Vector3<T>& v);
 
             //! Sets the x-column
-            Tensor31& x_column(T _xx, T _yx, T _zx)
-            {
-                xx = _xx;
-                yx = _yx;
-                zx = _zx;
-                return *this;
-            }
+            Tensor31& x_column(T _xx, T _yx, T _zx);
 
             //! Sets the x-row
-            Tensor31& x_row(const Vector1<T>& v)
-            {
-                xx = v.x;
-                return *this;
-            }
+            Tensor31& x_row(const Vector1<T>& v);
 
             //! Sets the x-row
-            Tensor31& x_row(T _xx)
-            {
-                xx = _xx;
-                return *this;
-            }
+            Tensor31& x_row(T _xx);
 
             //! Sets the y-row
-            Tensor31& y_row(const Vector1<T>& v)
-            {
-                yx = v.x;
-                return *this;
-            }
+            Tensor31& y_row(const Vector1<T>& v);
 
             //! Sets the y-row
-            Tensor31& y_row(T _yx)
-            {
-                yx = _yx;
-                return *this;
-            }
+            Tensor31& y_row(T _yx);
 
             //! Sets the z-row
-            Tensor31& z_row(const Vector1<T>& v)
-            {
-                zx = v.x;
-                return *this;
-            }    
+            Tensor31& z_row(const Vector1<T>& v);
 
             //! Sets the z-row
-            Tensor31& z_row(T _zx)
-            {
-                zx = _zx;
-                return *this;
-            }    
+            Tensor31& z_row(T _zx);
     };
 
     YQ_IEEE754_1(Tensor31)
@@ -147,11 +182,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor31<T>  columns(const Vector3<T>&x)
     {
-        return {
-            x.x,
-            x.y,
-            x.z
-        };
+        return Tensor31<T>(ROWS, x);
     }
 
     /*! \brief Create 3x1 tensor by rows
@@ -159,30 +190,14 @@ namespace yq {
     template <typename T>
     constexpr Tensor31<T>  rows(const Vector1<T>&x, const Vector1<T>&y, const Vector1<T>&z)
     {
-        return {
-            x.x,
-            y.x,
-            z.x
-        };
+        return Tensor31<T>(ROWS, x, y, z);
     }
     
-    YQ_IDENTITY_1(Tensor31, {
-        one_v<T>,
-        zero_v<T>,
-        zero_v<T>
-    })
+    YQ_IDENTITY_1(Tensor31, Tensor31<T>(IDENTITY))
 
-    YQ_NAN_1(Tensor31, {
-        nan_v<T>,
-        nan_v<T>,
-        nan_v<T> 
-    })
+    YQ_NAN_1(Tensor31, Tensor31<T>(NAN))
     
-    YQ_ZERO_1(Tensor31, {
-        zero_v<T>,
-        zero_v<T>,
-        zero_v<T> 
-     })
+    YQ_ZERO_1(Tensor31, Tensor31<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -199,161 +214,47 @@ namespace yq {
         is_nan(v.yx) ||
         is_nan(v.zx)
     )
+    
+    template <typename T>
+    constexpr Tensor13<T>  transpose(const Tensor31<T>&v);
 
 //  --------------------------------------------------------
 //  GETTERS
 
     //! X-column of given tensor
     template <typename T>
-    constexpr Vector3<T>  x_column(const Tensor31<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector3<T>  x_column(const Tensor31<T>&ten);
 
     //! X-row of given tensor
     template <typename T>
-    constexpr Vector1<T>  x_row(const Tensor31<T>&ten)
-    {
-        return ten.x_row();
-    }
+    constexpr Vector1<T>  x_row(const Tensor31<T>&ten);
 
     //! Y-row of given tensor
     template <typename T>
-    constexpr Vector1<T>  y_row(const Tensor31<T>&ten)
-    {
-        return ten.y_row();
-    }
+    constexpr Vector1<T>  y_row(const Tensor31<T>&ten);
 
     //! Z-row of given tensor
     template <typename T>
-    constexpr Vector1<T>  z_row(const Tensor31<T>&ten)
-    {
-        return ten.z_row();
-    }
-
+    constexpr Vector1<T>  z_row(const Tensor31<T>&ten);
 
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor31<T>   operator+ (const Tensor31<T> &a, const Tensor31<T> &b) 
-    {
-        return {
-            a.xx+b.xx,
-            a.yx+b.yx,
-            a.zx+b.zx
-        };
-    }
-
-    template <typename T>
-    Tensor31<T>&   operator+=(Tensor31<T> &a, const Tensor31<T> &b) 
-    {
-        a.xx+=b.xx;
-        a.yx+=b.yx;
-        a.zx+=b.zx;
-        return a;
-    }
-
-
 //  --------------------------------------------------------
 //  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor31<T>   operator- (const Tensor31<T> &a, const Tensor31<T> &b) 
-    {
-        return {
-            a.xx-b.xx,
-            a.yx-b.yx,
-            a.zx-b.zx
-        };
-    }
-    
-
-    template <typename T>
-    Tensor31<T>&   operator-=(Tensor31<T> &a, const Tensor31<T> &b) 
-    {
-        a.xx-=b.xx;
-        a.yx-=b.yx;
-        a.zx-=b.zx;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor31<product_t<T,U>>  operator*(T a, const Tensor31<T>& b)
-    {
-        return {
-            a*b.xx,
-            a*b.yx,
-            a*b.zx
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor31<product_t<T,U>>  operator*(T a, const Tensor31<U>& b);
     
-    
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor31<product_t<T,U>>  operator*(const Tensor31<T>& a, U b)
-    {
-        return {
-            a.xx*b,
-            a.yx*b,
-            a.zx*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor31<product_t<T,U>>  operator*=(const Tensor31<T>& a, U b)
-    {
-        a.xx*=b;
-        a.yx*=b;
-        a.zx*=b;        
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>> operator*(const Tensor31<T>&a, const Vector1<U>&b)
-    {
-        return {
-            a.xx*b.x,
-            a.yx*b.x,
-            a.zx*b.x
-        };
-    }
-
-
 //  --------------------------------------------------------
 //  DIVISION
 
-
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor31<quotient_t<T,U>>  operator/(const Tensor31<T>& a, U b)
-    {
-        return {
-            a.xx/b,
-            a.yx/b,
-            a.zx/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor31<quotient_t<T,U>>  operator/=(const Tensor31<T>& a, U b)
-    {
-        a.xx/=b;
-        a.yx/=b;
-        a.zx/=b;        
-        return a;
-    }
-
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
-
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

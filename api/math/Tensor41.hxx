@@ -122,7 +122,7 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor41<product_t<T,U>>  Tensor41<T>::operator*=(U b) noexcept
+    Tensor41<T>&  Tensor41<T>::operator*=(U b) noexcept
     {
         xx*=b;
         yx*=b;
@@ -253,7 +253,7 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor41<quotient_t<T,U>>  Tensor41<T>::operator/=(U b) noexcept
+    Tensor41<T>&  Tensor41<T>::operator/=(U b) noexcept
     {
         xx/=b;
         yx/=b;

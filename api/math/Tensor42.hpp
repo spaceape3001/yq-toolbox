@@ -121,7 +121,7 @@ namespace yq {
 
         template <typename U>
         requires trait::self_mul_v<T,U>
-        Tensor42<T>& operator*=(const Tensor22<U>& b) noexcept;
+        Tensor42& operator*=(const Tensor22<U>& b) noexcept;
 
         template <typename U>
         constexpr Vector4<product_t<T,U>> operator*(const Vector2<U>&b) const noexcept;

@@ -116,7 +116,7 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-        Tensor33<product_t<T,U>>  operator*=(U b) noexcept;
+        Tensor33&  operator*=(U b) noexcept;
 
         template <typename U>
         constexpr Tensor31<product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
@@ -132,7 +132,7 @@ namespace yq {
 
         template <typename U>
         requires trait::self_mul_v<T,U>
-        Tensor33<T>& operator*=(const Tensor33<U>& b) noexcept;
+        Tensor33& operator*=(const Tensor33<U>& b) noexcept;
 
         template <typename U>
         constexpr Vector3<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
@@ -143,7 +143,7 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-        Tensor33<quotient_t<T,U>>  operator/=(U b) noexcept;
+        Tensor33&  operator/=(U b) noexcept;
 
         //! Determinant of this matrix
         constexpr cube_t<T> determinant() const noexcept;

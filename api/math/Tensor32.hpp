@@ -100,7 +100,7 @@ namespace yq {
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-        Tensor32<product_t<T,U>>  operator*=(U b) noexcept;
+        Tensor32&  operator*=(U b) noexcept;
 
         template <typename U>
         constexpr Tensor31<product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
@@ -124,7 +124,7 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-        Tensor32<quotient_t<T,U>>  operator/=(U b) noexcept;
+        Tensor32&  operator/=(U b) noexcept;
 
         constexpr Tensor23<T> transpose() const noexcept;
     

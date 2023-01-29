@@ -82,16 +82,16 @@ namespace yq {
         constexpr operator glm::mat<3,4,T,glm::defaultp>() const noexcept;
         
         //! Positive (affirmation) operator
-        constexpr Tensor34<T>  operator+() const noexcept;
+        constexpr Tensor34<T>   operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor34<T>  operator-() const noexcept;
+        constexpr Tensor34<T>   operator-() const noexcept;
 
         constexpr Tensor34<T>   operator+ (const Tensor34<T> &b)  const noexcept;
-        Tensor34<T>&            operator+=(const Tensor34<T> &b)  noexcept;
+        Tensor34&               operator+=(const Tensor34<T> &b)  noexcept;
 
         constexpr Tensor34<T>   operator- (const Tensor34<T> &b)  const noexcept;
-        Tensor34<T>&            operator-=(const Tensor34<T> &b)  noexcept;
+        Tensor34&               operator-=(const Tensor34<T> &b)  noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
@@ -99,7 +99,7 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-        Tensor34<product_t<T,U>>  operator*=(U b) noexcept;
+        Tensor34&  operator*=(U b) noexcept;
 
         
         template <typename U>
@@ -113,7 +113,7 @@ namespace yq {
 
         template <typename U>
         requires trait::self_mul_v<T,U>
-        Tensor34<T>& operator*=(const Tensor44<U>& b) noexcept;
+        Tensor34& operator*=(const Tensor44<U>& b) noexcept;
 
         template <typename U>
         constexpr Vector3<product_t<T,U>> operator*(const Vector4<U>&b) const noexcept;
@@ -124,7 +124,7 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-        Tensor34<quotient_t<T,U>>  operator/=(U b) noexcept;
+        Tensor34&  operator/=(U b) noexcept;
 
         constexpr Tensor43<T>   transpose() const noexcept;
 

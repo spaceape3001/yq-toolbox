@@ -91,15 +91,15 @@ namespace yq {
         constexpr operator glm::mat<4,3,T,glm::defaultp>() const noexcept ;
 
         //! Positive (affirmation) operator
-        constexpr Tensor43<T>  operator+() const noexcept;
+        constexpr Tensor43  operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor43<T>  operator-() const noexcept;
+        constexpr Tensor43  operator-() const noexcept;
 
-        constexpr Tensor43<T>   operator+ (const Tensor43<T> &b)  const noexcept;
-        Tensor43<T>&            operator+=(const Tensor43<T> &b)  noexcept;
-        constexpr Tensor43<T>   operator- (const Tensor43<T> &b)  const noexcept;
-        Tensor43<T>&            operator-=(const Tensor43<T> &b)  noexcept;
+        constexpr Tensor43   operator+ (const Tensor43 &b)  const noexcept;
+        Tensor43&            operator+=(const Tensor43 &b)  noexcept;
+        constexpr Tensor43   operator- (const Tensor43 &b)  const noexcept;
+        Tensor43&            operator-=(const Tensor43 &b)  noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
@@ -107,7 +107,7 @@ namespace yq {
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-        Tensor43<product_t<T,U>>  operator*=(U b) noexcept;
+        Tensor43&  operator*=(U b) noexcept;
 
         template <typename U>
         constexpr Tensor41<product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
@@ -123,7 +123,7 @@ namespace yq {
 
         template <typename U>
         requires trait::self_mul_v<T,U>
-        Tensor43<T>& operator*=(const Tensor33<U>& b) noexcept;
+        Tensor43& operator*=(const Tensor33<U>& b) noexcept;
 
         template <typename U>
         constexpr Vector4<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
@@ -134,7 +134,7 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-        Tensor43<quotient_t<T,U>>  operator/=(U b) noexcept;
+        Tensor43&  operator/=(U b) noexcept;
 
         constexpr Tensor34<T>   transpose() const noexcept;
 
