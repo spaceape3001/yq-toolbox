@@ -137,14 +137,6 @@ namespace yq {
 
 
 
-    template <typename T>
-    constexpr Tensor14<T>  transpose(const Tensor41<T>&v)
-    {
-        return {
-            v.xx, v.yx, v.zx, v.wx
-        };
-    }
-
 
     
 
@@ -807,94 +799,6 @@ namespace yq {
     //  -------------------------
     //  Tensor41 * (OTHER)
 
-    template <typename T, typename U>
-    constexpr Tensor41<product_t<T,U>> operator*(const Tensor41<T>& a, const Tensor11<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-
-            a.yx*b.xx,
-
-            a.zx*b.xx,
-
-            a.wx*b.xx
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor41<T>& operator*=(Tensor41<T>&a, const Tensor11<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor42<product_t<T,U>> operator*(const Tensor41<T>& a, const Tensor12<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-
-            a.zx*b.xx,
-            a.zx*b.xy,
-
-            a.wx*b.xx,
-            a.wx*b.xy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor43<product_t<T,U>> operator*(const Tensor41<T>& a, const Tensor13<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-            a.yx*b.xz,
-
-            a.zx*b.xx,
-            a.zx*b.xy,
-            a.zx*b.xz,
-
-            a.wx*b.xx,
-            a.wx*b.xy,
-            a.wx*b.xz
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor44<product_t<T,U>> operator*(const Tensor41<T>& a, const Tensor14<U>& b)
-    {
-        return {
-            a.xx*b.xx,
-            a.xx*b.xy,
-            a.xx*b.xz,
-            a.xx*b.xw,
-
-            a.yx*b.xx,
-            a.yx*b.xy,
-            a.yx*b.xz,
-            a.yx*b.xw,
-
-            a.zx*b.xx,
-            a.zx*b.xy,
-            a.zx*b.xz,
-            a.zx*b.xw,
-
-            a.wx*b.xx,
-            a.wx*b.xy,
-            a.wx*b.xz,
-            a.wx*b.xw
-        };
-    }
-    
     //  -------------------------
     //  Tensor42 * (OTHER)
 

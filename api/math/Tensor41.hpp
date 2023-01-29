@@ -27,146 +27,168 @@ namespace yq {
         T zx;
         T wx;
 
+
+        constexpr Tensor41() noexcept = default;
+
+        constexpr Tensor41(
+            T _xx, 
+            T _yx, 
+            T _zx, 
+            T _wx
+        ) : 
+            xx(_xx),
+            yx(_yx),
+            zx(_zx),
+            wx(_wx)
+        {
+        }
+        
+        constexpr Tensor41(columns_t, const Vector4<T>& x) noexcept :
+            xx(x.x),
+            yx(x.y),
+            zx(x.z),
+            wx(x.w)
+        {
+        }
+
+        consteval Tensor41(identity_t) : 
+            xx(one_v<T>),  
+            yx(zero_v<T>), 
+            zx(zero_v<T>), 
+            wx(zero_v<T>)
+        {
+        }
+
+        constexpr Tensor41(ordered_t,
+            T _xx, 
+            T _yx, 
+            T _zx, 
+            T _wx
+        ) : 
+            xx(_xx), 
+            yx(_yx), 
+            zx(_zx), 
+            wx(_wx)
+        {
+        }
+
+        constexpr Tensor41(rows_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z, const Vector1<T>& w) :
+            xx(x.x), 
+            yx(y.x), 
+            zx(z.x),
+            wx(w.x)
+        {
+        }
+
+        consteval Tensor41(zero_t) : 
+            xx(zero_v<T>), 
+            yx(zero_v<T>), 
+            zx(zero_v<T>), 
+            wx(zero_v<T>)
+        {
+        }
+        
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor41&) const noexcept = default;
 
+        //! Conversion to GLM
+        operator glm::mat<4,1,T,glm::defaultp>() const noexcept ;
 
-        //  --------------------------------------------------------
-        //  POSITIVE
+        //! Positive (affirmation) operator
+        constexpr Tensor41<T>  operator+() const noexcept;
+        //! Negation operator
+        constexpr Tensor41<T>  operator-() const noexcept;
 
-            //! Positive (affirmation) operator
-            constexpr Tensor41<T>  operator+() const noexcept
-            { 
-                return *this; 
-            }
+        constexpr Tensor41<T>   operator+ (const Tensor41<T> &b) const noexcept;
+        Tensor41<T>&            operator+=(const Tensor41<T> &b)  noexcept;
+        constexpr Tensor41<T>   operator- (const Tensor41<T> &b) const noexcept;
+        Tensor41<T>&            operator-=(const Tensor41<T> &b)  noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor41<product_t<T,U>>  operator*(U b) const noexcept;
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor41<product_t<T,U>>            operator*=(U b) noexcept;
 
+        template <typename U>
+        constexpr Tensor41<product_t<T,U>> operator*(const Tensor11<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor42<product_t<T,U>> operator*(const Tensor12<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor43<product_t<T,U>> operator*(const Tensor13<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor44<product_t<T,U>> operator*(const Tensor14<U>& b) const noexcept;
 
-        //  --------------------------------------------------------
-        //  NEGATIVE
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor41<T>& operator*=(const Tensor11<U>& b) noexcept;
 
-            //! Negation operator
-            constexpr Tensor41<T>  operator-() const noexcept
-            {
-                return {
-                    -xx,
-                    -yx,
-                    -zx,
-                    -wx
-                };
-            }
+        template <typename U>
+        constexpr Vector4<product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor41<quotient_t<T,U>>  operator/(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor41<quotient_t<T,U>>  operator/=(U b) noexcept;
+
+        constexpr Tensor14<T> transpose() const noexcept;
+
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! X column of this tensor
-            constexpr Vector4<T>  x_column() const noexcept
-            {
-                return {xx, yx, zx, wx};
-            }
+            constexpr Vector4<T>  x_column() const noexcept;
 
             //! X row of this tensor
-            constexpr Vector1<T>  x_row() const noexcept
-            {
-                return {xx};
-            }
+            constexpr Vector1<T>  x_row() const noexcept;
 
             //! Y row of this tensor
-            constexpr Vector1<T>  y_row() const noexcept
-            {
-                return {yx};
-            }
+            constexpr Vector1<T>  y_row() const noexcept;
 
             //! Z row of this tensor
-            constexpr Vector1<T>  z_row() const noexcept
-            {
-                return {zx};
-            }
+            constexpr Vector1<T>  z_row() const noexcept;
 
             //! W row of this tensor
-            constexpr Vector1<T>  w_row() const noexcept
-            {
-                return {wx};
-            }
+            constexpr Vector1<T>  w_row() const noexcept;
 
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Sets the X-column
-            Tensor41& x_column(const Vector4<T>& v) noexcept
-            {
-                xx = v.x;
-                yx = v.y;
-                zx = v.z;
-                wx = v.w;
-                return *this;
-            }
+            Tensor41& x_column(const Vector4<T>& v) noexcept;
 
             //! Sets the X-column
-            Tensor41& x_column(T _xx, T _yx, T _zx, T _wx) noexcept
-            {
-                xx = _xx;
-                yx = _yx;
-                zx = _zx;
-                wx = _wx;
-                return *this;
-            }
+            Tensor41& x_column(T _xx, T _yx, T _zx, T _wx) noexcept;
 
             //! Sets the X-row
-            Tensor41& x_row(const Vector1<T>& v) noexcept
-            {
-                xx = v.x;
-                return *this;
-            }
+            Tensor41& x_row(const Vector1<T>& v) noexcept;
 
             //! Sets the X-row
-            Tensor41& x_row(T _xx) noexcept
-            {
-                xx = _xx;
-                return *this;
-            }
+            Tensor41& x_row(T _xx) noexcept;
 
             //! Sets the Y-row
-            Tensor41& y_row(const Vector1<T>& v) noexcept
-            {
-                yx = v.x;
-                return *this;
-            }
+            Tensor41& y_row(const Vector1<T>& v) noexcept;
 
             //! Sets the Y-row
-            Tensor41& y_row(T _yx) noexcept
-            {
-                yx = _yx;
-                return *this;
-            }
+            Tensor41& y_row(T _yx) noexcept;
 
             //! Sets the Z-row
-            Tensor41& z_row(const Vector1<T>& v) noexcept
-            {
-                zx = v.x;
-                return *this;
-            }
+            Tensor41& z_row(const Vector1<T>& v) noexcept;
 
             //! Sets the Z-row
-            Tensor41& z_row(T _zx) noexcept
-            {
-                zx = _zx;
-                return *this;
-            }
+            Tensor41& z_row(T _zx) noexcept;
 
             //! Sets the W-row
-            Tensor41& w_row(const Vector1<T>& v) noexcept
-            {
-                wx = v.x;
-                return *this;
-            }
+            Tensor41& w_row(const Vector1<T>& v) noexcept;
 
             //! Sets the W-row
-            Tensor41& w_row(T _wx) noexcept
-            {
-                wx = _wx;
-                return *this;
-            }
+            Tensor41& w_row(T _wx) noexcept;
     };
 
     YQ_IEEE754_1(Tensor41)
@@ -179,12 +201,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor41<T>  columns(const Vector4<T>&x) noexcept
     {
-        return {
-            x.x,
-            x.y,
-            x.z,
-            x.w
-        };
+        return Tensor41<T>(columns_, x);
     }
 
     /*! \brief Create 4x1 tensor by rows
@@ -192,12 +209,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor41<T>  rows(const Vector1<T>&x, const Vector1<T>&y, const Vector1<T>&z, const Vector1<T>&w) noexcept
     {
-        return {
-            x.x,
-            y.x,
-            z.x,
-            w.x
-        };
+        return Tensor41<T>(rows_, x, y, z, w);
     }
     
     YQ_IDENTITY_1(Tensor41, {
@@ -220,6 +232,9 @@ namespace yq {
         zero_v<T>,
         zero_v<T> 
      })
+
+    template <typename T>
+    constexpr Tensor14<T>  transpose(const Tensor41<T>&v);
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -282,130 +297,24 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor41<T>   operator+ (const Tensor41<T> &a, const Tensor41<T> &b)  noexcept
-    {
-        return {
-            a.xx+b.xx,
-            a.yx+b.yx,
-            a.zx+b.zx,
-            a.wx+b.wx
-        };
-    }
-
-    template <typename T>
-    Tensor41<T>&   operator+=(Tensor41<T> &a, const Tensor41<T> &b)  noexcept
-    {
-        a.xx+=b.xx;
-        a.yx+=b.yx;
-        a.zx+=b.zx;
-        a.wx+=b.wx;
-        return a;
-    }
 
 
 //  --------------------------------------------------------
 //  SUBTRACTION
 
-    template <typename T>
-    constexpr Tensor41<T>   operator- (const Tensor41<T> &a, const Tensor41<T> &b)  noexcept
-    {
-        return {
-            a.xx-b.xx,
-            a.yx-b.yx,
-            a.zx-b.zx,
-            a.wx-b.wx
-        };
-    }
-    
-
-    template <typename T>
-    Tensor41<T>&   operator-=(Tensor41<T> &a, const Tensor41<T> &b) noexcept
-    {
-        a.xx-=b.xx;
-        a.yx-=b.yx;
-        a.zx-=b.zx;
-        a.wx-=b.wx;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor41<product_t<T,U>>  operator*(T a, const Tensor41<T>& b) noexcept
-    {
-        return {
-            a*b.xx,
-            a*b.yx,
-            a*b.zx,
-            a*b.wx
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor41<product_t<T,U>>  operator*(T a, const Tensor41<T>& b) noexcept;
     
     
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor41<product_t<T,U>>  operator*(const Tensor41<T>& a, U b) noexcept
-    {
-        return {
-            a.xx*b,
-            a.yx*b,
-            a.zx*b,
-            a.wx*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor41<product_t<T,U>>  operator*=(const Tensor41<T>& a, U b) noexcept
-    {
-        a.xx*=b;
-        a.yx*=b;
-        a.zx*=b;
-        a.wx*=b;        
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector4<product_t<T,U>> operator*(const Tensor41<T>&a, const Vector1<U>&b) noexcept
-    {
-        return {
-            a.xx*b.x,
-            a.yx*b.x,
-            a.zx*b.x,
-            a.wx*b.x
-        };
-    }
 
 //  --------------------------------------------------------
 //  DIVISION
 
-
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor41<quotient_t<T,U>>  operator/(const Tensor41<T>& a, U b) noexcept
-    {
-        return {
-            a.xx/b,
-            a.yx/b,
-            a.zx/b,
-            a.wx/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor41<quotient_t<T,U>>  operator/=(const Tensor41<T>& a, U b) noexcept
-    {
-        a.xx/=b;
-        a.yx/=b;
-        a.zx/=b;
-        a.wx/=b;        
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
