@@ -204,6 +204,12 @@ namespace yq {
         template <typename U>
         constexpr Multivector3<quotient_t<T,U>>   operator/ (const Vector3<U>&b) const noexcept;
 
+        //! Union
+        constexpr AxBox3<T>  operator|(const AxBox3<T>& b) const noexcept;
+
+        //! Create a box as a union of two vectors
+        constexpr AxBox3<T> operator|(const Vector3&b) const noexcept;
+
         template <typename R>
         bool close(const Vector3& expected, const R& compare) const
         {
@@ -348,6 +354,20 @@ namespace yq {
             return pred(x, b) || pred(y, b) || pred(z, b);
         }
 
+        static bool less_x( const Vector3& a, const Vector3& b) 
+        {
+            return a.x < b.x;
+        }
+
+        static bool less_y( const Vector3& a, const Vector3& b) 
+        {
+            return a.y < b.y;
+        }
+
+        static bool less_z( const Vector3& a, const Vector3& b) 
+        {
+            return a.z < b.z;
+        }
     };
 
     YQ_IEEE754_1(Vector3)
@@ -375,32 +395,32 @@ namespace yq {
 
     constexpr Vector3D operator "" _x3(unsigned long long int v) noexcept
     {
-        return Vector3D(x_, (double) v);
+        return Vector3D(X, (double) v);
     }
 
     constexpr Vector3D operator "" _x3(long double v) noexcept
     {
-        return Vector3D(x_, (double) v);
+        return Vector3D(X, (double) v);
     }
 
     constexpr Vector3D operator "" _y3(unsigned long long int v) noexcept
     {
-        return Vector3D(y_, (double) v);
+        return Vector3D(Y, (double) v);
     }
 
     constexpr Vector3D operator "" _y3(long double v) noexcept
     {
-        return Vector3D(y_, (double) v);
+        return Vector3D(Y, (double) v);
     }
 
     constexpr Vector3D operator "" _z3(unsigned long long int v) noexcept
     {
-        return Vector3D(z_, (double) v);
+        return Vector3D(Z, (double) v);
     }
 
     constexpr Vector3D operator "" _z3(long double v) noexcept
     {
-        return Vector3D(z_, (double) v);
+        return Vector3D(Z, (double) v);
     }
 
 

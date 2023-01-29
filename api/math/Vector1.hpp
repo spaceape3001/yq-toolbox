@@ -42,7 +42,7 @@ namespace yq {
         */
         static consteval Vector1 unit_x() noexcept
         {
-            return Vector1(x_t());
+            return Vector1(X);
         }
         
         //constexpr Vector1(const glm::vec<1, T, glm::defaultp>& v) noexcept : x(v.x) {}
@@ -170,6 +170,11 @@ namespace yq {
         //! Division with vector
         template <typename U>
         constexpr quotient_t<T,U> operator/(const Vector1<U>& b) const noexcept;
+
+        //! Union with a box
+        constexpr AxBox1<T> operator|(const AxBox1<T>&b) const noexcept;
+        //! Create a box as a union of two vectors
+        constexpr AxBox1<T> operator|(const Vector1&b) const noexcept;
 
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
@@ -315,6 +320,11 @@ namespace yq {
             return pred(x, b.x);
         }
         
+        
+        static bool less_x( const Vector1& a, const Vector1& b) 
+        {
+            return a.x < b.x;
+        }
 
     };
 
@@ -344,12 +354,12 @@ namespace yq {
 
     constexpr Vector1D operator "" _x1(unsigned long long int v) noexcept
     {
-        return Vector1D(x_, (double) v);
+        return Vector1D(X, (double) v);
     }
 
     constexpr Vector1D operator "" _x1(long double v) noexcept
     {
-        return Vector1D(x_, (double) v);
+        return Vector1D(X, (double) v);
     }
 
     YQ_NAN_1(Vector1, Vector1<T>(NAN))

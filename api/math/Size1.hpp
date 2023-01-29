@@ -51,14 +51,6 @@ namespace yq {
     YQ_ZERO_1(Size1, Size1<T>{ zero_v<T> })
     
     
-    /*! \brief Computes the area of this size
-    */
-    template <typename T>
-    constexpr auto    area(const Size1<T>& sz) noexcept
-    {
-        return sz.x*sz.y;
-    }
-    
     /*! \brief Streams the size to a stream-like object */
     template <typename S, typename T>
     S&  as_stream(S& s, const Size1<T>& v)

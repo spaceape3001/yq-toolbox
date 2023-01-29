@@ -17,15 +17,15 @@
 #include "Quadvector4.hpp"
 #include "Trivector4.hpp"
 
-#include "Vector1.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include <math/Tensor41.hpp>
+#include <math/Tensor42.hpp>
+#include <math/Tensor43.hpp>
+#include <math/Tensor44.hpp>
 
-#include "Tensor41.hpp"
-#include "Tensor42.hpp"
-#include "Tensor43.hpp"
-#include "Tensor44.hpp"
+#include <math/Vector1.hpp>
+#include <math/Vector2.hpp>
+#include <math/Vector3.hpp>
+#include <math/Vector4.hpp>
 
 #include <math/trig.hpp>
 #include <math/Units.hpp>
@@ -393,6 +393,18 @@ namespace yq {
         return (*this * b) / b.length²();
     }
 
+    template <typename T>
+    constexpr AxBox4<T> Vector4<T>::operator|(const AxBox4<T>&b) const noexcept
+    {
+        return AxBox4<T>(UNION, {*this, b.lo, b.hi});
+    }
+
+    template <typename T>
+    constexpr AxBox4<T> Vector4<T>::operator|(const Vector4&b) const noexcept
+    {
+        return AxBox4<T>(UNION, *this, b);
+    }
+    
     template <typename T>
     constexpr Vector4<T> Vector4<T>::all_add(T b) const noexcept
     {

@@ -29,100 +29,68 @@ namespace yq {
         //! Our high corner
         Vector1<T>  hi;
         
+        constexpr AxBox1() noexcept = default;
+        constexpr AxBox1(const Vector1<T>& a) noexcept : lo(a), hi(a) {}
+        constexpr AxBox1(const Vector1<T>& _lo, const Vector1<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
+        constexpr AxBox1(intersection_t, std::initializer_list<Vector1<T>>, std::initializer_list<Vector1<T>>) noexcept;
+        constexpr AxBox1(intersection_t, std::span<const Vector1<T>>, std::span<const Vector1<T>>) noexcept;
+        constexpr AxBox1(sort_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
+        constexpr AxBox1(union_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
+        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>) noexcept;
+        constexpr AxBox1(union_t, std::span<const Vector1<T>>) noexcept;
+        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>, std::initializer_list<Vector1<T>>) noexcept;
+        constexpr AxBox1(union_t, std::span<const Vector1<T>>, std::span<const Vector1<T>>) noexcept;
+        
+        
         //! Defaulted equatlity operator
         constexpr bool operator==(const AxBox1&) const noexcept = default;
 
         /*! \brief Union of two AABBs
         */
-        constexpr AxBox1<T> operator|(const AxBox1<T>&b) const noexcept
-        {
-            return { min_elem(lo, b.lo), max_elem(hi, b.hi) };
-        }
+        constexpr AxBox1<T> operator|(const AxBox1<T>&b) const noexcept;
+
+        constexpr AxBox1<T> operator|(const Vector1<T>&b) const noexcept;
 
         //! Union in a box
-        AxBox1& operator|=(const AxBox1& b) 
-        {
-            lo  = min_elem(lo, b.lo);
-            hi  = max_elem(hi, b.hi);
-            return *this;
-        }
+        AxBox1& operator|=(const AxBox1& b) noexcept;
 
         //! Unions in a vector
-        AxBox1& operator|=(const Vector1<T>& b) 
-        {
-            lo  = min_elem(lo, b);
-            hi  = max_elem(hi, b);
-            return *this;
-        }
+        AxBox1& operator|=(const Vector1<T>& b) noexcept;
 
         /*! \brief Intersection of two AABBs
         */
-        constexpr AxBox1<T> operator&(const AxBox1<T>&b) const noexcept
-        {
-            return { max_elem(lo, b.lo), min_elem(hi, b.hi) };
-        }
+        constexpr AxBox1<T> operator&(const AxBox1<T>&b) const noexcept;
 
         //! Intersection into self 
-        AxBox1& operator&=(const AxBox1& b) 
-        {
-            lo  = max_elem(lo, b.lo);
-            hi  = min_elem(hi, b.hi);
-            return *this;
-        }
+        AxBox1& operator&=(const AxBox1& b) noexcept;
 
         /*! \brief Computes the center of a 1D axially aligned box
         */
-        constexpr Vector1<T> center() const noexcept
-        {
-            if constexpr (std::is_floating_point_v<T>)
-                return ieee754_t<T>(0.5)*(lo+hi);
-            if constexpr (std::is_integral_v<T>)
-                return (lo+hi) / T(2);
-            return {};
-        }
+        constexpr Vector1<T> center() const noexcept;
 
         /*! \brief Checks if the point is inside (or touching) the box
         */
-        constexpr bool contains(const Vector1<T>& pt) const noexcept
-        {
-            return (all(lo) <= pt) && (all(pt) <= hi);
-        }
+        constexpr bool contains(const Vector1<T>& pt) const noexcept;
 
         /*! \brief Returns the enumerated corners of the box
         */
-        constexpr AxCorners1<Vector1<T>>  corners() const noexcept
-        {
-            return { 
-                lo,
-                hi
-            };
-        }
+        constexpr AxCorners1<Vector1<T>>  corners() const noexcept;
 
         /*! \brief Checks for full occlusion
         
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
             \param[in] b     The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox1<T>& b) const noexcept
-        {
-            return (all(lo) <= b.lo) && (all(b.hi) <= hi);
-        }
-
+        constexpr bool eclipses(const AxBox1<T>& b) const noexcept;
 
         /*! \brief Tests for a valid box */
-        constexpr bool    is_valid() const noexcept
-        {
-            return all(lo) <= hi;
-        }
+        constexpr bool    is_valid() const noexcept;
 
         /*! \brief Checks for any overlap
         
             This returns TRUE if *ANY* part of the boxes overlap (or touch)
         */
-        constexpr bool overlaps(const AxBox1<T>& b) const noexcept
-        {
-            return (all(lo) <= b.hi) && (all(b.lo) <= hi);
-        }
+        constexpr bool overlaps(const AxBox1<T>& b) const noexcept;
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate
         
@@ -131,21 +99,11 @@ namespace yq {
         */
         template <typename=void>
         requires std::is_floating_point_v<T>
-        constexpr Vector1<T>   project(const Vector1<T>& v) const noexcept
-        {
-            return (one_v<Vector1<T>>-v).emul(lo) + v.emul(hi);
-        }
+        constexpr Vector1<T>   project(const Vector1<T>& v) const noexcept;
         
-        constexpr Size1<T> size() const noexcept 
-        {
-            auto s = span();
-            return Size1<T>{ s.x }; 
-        }
+        constexpr Size1<T> size() const noexcept ;
 
-        constexpr Vector1<T>    span() const noexcept
-        {
-            return hi - lo;
-        }
+        constexpr Vector1<T>    span() const noexcept;
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate
             \param[in] v    The global coordinate
@@ -153,23 +111,14 @@ namespace yq {
         */
         template <typename=void>
         requires std::is_floating_point_v<T>
-        constexpr Vector1<T>   unproject(const Vector1<T>& v) const noexcept
-        {
-            return div_elem(v-lo, hi-lo);
-        }
-
+        constexpr Vector1<T>   unproject(const Vector1<T>& v) const noexcept;
+        
         //! Tests this box for validness
-        constexpr bool          valid() const noexcept 
-        {
-            return all(lo) <= hi;
-        }
+        constexpr bool          valid() const noexcept ;
 
         /*! \brief Returns the x-range of the box
         */
-        constexpr Range<T>  x_range() const noexcept
-        {
-            return range(lo.x, hi.x);
-        }
+        constexpr Range<T>  x_range() const noexcept;
     };
     
     YQ_IEEE754_1(AxBox1)
@@ -177,40 +126,17 @@ namespace yq {
     /*! \brief Creates an axially alligned box from one corner vertex
     */
     template <typename T>
-    constexpr AxBox1<T> aabb(const Vector1<T>& a) noexcept
-    {
-        return { a, a };
-    }
+    constexpr AxBox1<T> aabb(const Vector1<T>& a) noexcept;
 
     /*! \brief Creates an axially alligned box from two corner vertices
     */
     template <typename T>
-    constexpr AxBox1<T> aabb(const Vector1<T>& a, const Vector1<T>& b) noexcept
-    {
-        return { min_elem(a,b), max_elem(a,b) };
-    }
+    constexpr AxBox1<T> aabb(const Vector1<T>& a, const Vector1<T>& b) noexcept;
 
     /*! \brief Creates a 3D axially aligned box from container of Vector2's
     */
     template <typename T>
-    AxBox1<T> aabb(const std::vector<Vector1<T>>& vals)
-    {
-        switch(vals.size()){
-        case 0:
-            return {};
-        case 1:
-            return aabb(vals[0]);
-        case 2:
-            return aabb(vals[0],vals[1]);
-        default:
-            break;
-        }
-
-        AxBox1<T>   ret = aabb(vals[0], vals[1]);
-        for(size_t i=2;i<vals.size();++i)
-            ret |= vals[i];
-        return vals;
-    }
+    AxBox1<T> aabb(const std::vector<Vector1<T>>& vals);
 
 
     YQ_NAN_1(AxBox1, { nan_v<Vector1<T>>, nan_v<Vector1<T>>});
@@ -223,24 +149,15 @@ namespace yq {
     /*! \brief Computes the center of a 1D axially aligned box
     */
     template <typename T>
-    constexpr Vector1<T> center(const AxBox1<T>& box)  noexcept
-    {
-        return box.center();
-    }
+    constexpr Vector1<T> center(const AxBox1<T>& box)  noexcept;
 
     /*! \brief Tests for a valid box */
     template <typename T>
-    constexpr bool    is_valid(const AxBox1<T>& box) noexcept
-    {
-        return box.is_valid();
-    }
+    constexpr bool    is_valid(const AxBox1<T>& box) noexcept;
 
     //! Computes the span for a given box
     template <typename T>
-    constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept
-    {
-        return box.span();
-    }
+    constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::AxBox1D)

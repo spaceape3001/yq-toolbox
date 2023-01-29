@@ -29,80 +29,51 @@ namespace yq {
         //! High corner
         Vector3<T>  hi;
         
+        constexpr AxBox3() noexcept = default;
+        constexpr AxBox3(const Vector3<T>& a) noexcept : lo(a), hi(a) {}
+        constexpr AxBox3(const Vector3<T>& _lo, const Vector3<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
+        constexpr AxBox3(intersection_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
+        constexpr AxBox3(intersection_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
+        constexpr AxBox3(sort_t, const Vector3<T>&a, const Vector3<T>& b) noexcept;
+        constexpr AxBox3(union_t, const Vector3<T>&a, const Vector3<T>& b) noexcept;
+        constexpr AxBox3(union_t, std::initializer_list<Vector3<T>>) noexcept;
+        constexpr AxBox3(union_t, std::span<const Vector3<T>>) noexcept;
+        constexpr AxBox3(union_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
+        constexpr AxBox3(union_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
+
         //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox3&) const noexcept = default;
 
         /*! \brief Union of two AABBs
         */
-        constexpr AxBox3<T> operator|(const AxBox3<T>&b) const noexcept
-        {
-            return { min_elem(lo, b.lo), max_elem(hi, b.hi) };
-        }
+        constexpr AxBox3<T> operator|(const AxBox3<T>&b) const noexcept;
+
+        constexpr AxBox3<T> operator|(const Vector3<T>&b) const noexcept;
 
         //! Union in a box
-        AxBox3& operator|=(const AxBox3& b) 
-        {
-            lo  = min_elem(lo, b.lo);
-            hi  = max_elem(hi, b.hi);
-            return *this;
-        }
+        AxBox3& operator|=(const AxBox3& b) noexcept;
 
         //! Unions in a vector
-        AxBox3& operator|=(const Vector3<T>& b) 
-        {
-            lo  = min_elem(lo, b);
-            hi  = max_elem(hi, b);
-            return *this;
-        }
+        AxBox3& operator|=(const Vector3<T>& b) noexcept;
 
         /*! \brief Intersection of two AABBs
         */
-        constexpr AxBox3<T> operator&(const AxBox3<T>&b) const noexcept
-        {
-            return { max_elem(lo, b.lo), min_elem(hi, b.hi) };
-        }
+        constexpr AxBox3<T> operator&(const AxBox3<T>&b) const noexcept;
 
         //! Intersection into self 
-        AxBox3& operator&=(const AxBox3& b) 
-        {
-            lo  = max_elem(lo, b.lo);
-            hi  = min_elem(hi, b.hi);
-            return *this;
-        }
+        AxBox3& operator&=(const AxBox3& b) noexcept;
 
         /*! \brief Computes the center of a 3D axially aligned box
         */
-        constexpr Vector3<T>      center() const noexcept
-        {
-            if constexpr (std::is_floating_point_v<T>)
-                return ieee754_t<T>(0.5)*(lo+hi);
-            if constexpr (std::is_integral_v<T>)
-                return (lo+hi) / T(2);
-            return {};
-        }
+        constexpr Vector3<T>      center() const noexcept;
 
         /*! \brief Checks if the point is inside (or touching) the box
         */
-        constexpr bool contains(const Vector3<T>& pt) const noexcept
-        {
-            return (all(lo) <= pt) && (all(pt) <= hi);
-        }
+        constexpr bool contains(const Vector3<T>& pt) const noexcept;
 
         /*! \brief Returns ALL the corners of the box 
         */
-        constexpr AxCorners3<Vector3<T>>  corners() const noexcept
-        {
-            return { 
-                lo,
-                { lo.x, lo.y, hi.z  }, 
-                { lo.x, hi.y, lo.z  }, 
-                { lo.x, hi.y, hi.z  }, 
-                { hi.x, lo.y, lo.z  }, 
-                { hi.x, lo.y, hi.z  }, 
-                { hi.x, hi.y, lo.z  }, 
-                hi
-            };
-        }
+        constexpr AxCorners3<Vector3<T>>  corners() const noexcept;
 
         /*! \brief Checks for full occlusion
         
@@ -110,54 +81,32 @@ namespace yq {
             \param[in] Big   The "bigger" box, if eclipsed
             \param[in] Small The "smaller" box, if eclipsed
         */
-        constexpr bool eclipses(const AxBox3<T>& b) const noexcept
-        {
-            return (all(lo) <= b.lo) && (all(b.hi) <= hi);
-        }
-
+        constexpr bool eclipses(const AxBox3<T>& b) const noexcept;
 
         //! Check for validity
-        constexpr bool    is_valid() const noexcept
-        {
-            return all(lo) <= hi;
-        }
+        constexpr bool    is_valid() const noexcept;
 
        /*! \brief Returns the north east bottom corner
         */
-        constexpr Vector3<T>  northeast_bottom() const noexcept
-        {
-            return { hi.x, hi.y, lo.z };
-       }
+        constexpr Vector3<T>  northeast_bottom() const noexcept;
 
         /*! \brief Returns the north east top corner
         */
-        constexpr Vector3<T>  northeast_top() const noexcept
-        {
-            return hi;
-        }
+        constexpr Vector3<T>  northeast_top() const noexcept;
 
         /*! \brief Returns the north west bottom corner
         */
-        constexpr Vector3<T>  northwest_bottom() const noexcept
-        {
-            return { lo.x, hi.y, lo.z };
-        }
+        constexpr Vector3<T>  northwest_bottom() const noexcept;
 
         /*! \brief Returns the north west top corner
         */
-        constexpr Vector3<T>  northwest_top() const noexcept
-        {
-            return { lo.x, hi.y, hi.z };
-        }
+        constexpr Vector3<T>  northwest_top() const noexcept;
 
         /*! \brief Checks for any overlap
         
             This returns TRUE if *ANY* part of the boxes overlap (or touch)
         */
-        constexpr bool overlaps(const AxBox3<T>& b) const noexcept
-        {
-            return (all(lo) <= b.hi) && (all(b.lo) <= hi);
-        }
+        constexpr bool overlaps(const AxBox3<T>& b) const noexcept;
 
         /*! \brief Projects a local [0,1] coordinate to a global coordinate based on the provided axially aligned box
         
@@ -166,59 +115,33 @@ namespace yq {
         */
         template <typename=void>
         requires std::is_floating_point_v<T>
-        constexpr Vector3<T>   project(const Vector3<T>& v) const noexcept
-        {
-            return (one_v<Vector3<T>>-v).emul(lo) + v.emul(hi);
-        }
+        constexpr Vector3<T>   project(const Vector3<T>& v) const noexcept;
 
-        constexpr Size3<T> size() const noexcept 
-        {
-            auto s = span();
-            return Size3<T>{ s.x, s.y, s.z }; 
-        }
+        constexpr Size3<T> size() const noexcept ;
 
         /*! \brief Returns the south east bottom corner
         */
-        constexpr Vector3<T>  southeast_bottom() const noexcept
-        {
-            return { hi.x, lo.y, lo.z };
-        }
+        constexpr Vector3<T>  southeast_bottom() const noexcept;
 
         /*! \brief Returns the south east top corner
         */
-        constexpr Vector3<T>  southeast_top() const noexcept
-        {
-            return { hi.x, lo.y, hi.z };
-        }
+        constexpr Vector3<T>  southeast_top() const noexcept;
 
         /*! \brief Returns the south west bottom corner
         */
-        constexpr Vector3<T>  southwest_bottom() const noexcept
-        {
-            return lo;
-        }
+        constexpr Vector3<T>  southwest_bottom() const noexcept;
 
         /*! \brief Returns the south west top corner
         */
-        constexpr Vector3<T>  southwest_top() const noexcept
-        {
-            return { lo.x, lo.y, hi.z };
-        }
+        constexpr Vector3<T>  southwest_top() const noexcept;
 
         /*! \brief Returns the span (dimensions) of the box
         */
-        constexpr Vector3<T>    span() const noexcept
-        {
-            return hi - lo;
-        }
+        constexpr Vector3<T>    span() const noexcept;
 
         /*! \brief Computes the surface area of a 3D axially aligned bounding box
         */
-        constexpr square_t<T>    surface_area() const noexcept
-        {
-            Vector3<T>  del     = hi - lo;
-            return 2.0 * ((del.x*del.y)+(del.y*del.z)+(del.z*del.x));
-        }
+        constexpr square_t<T>    surface_area() const noexcept;
 
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
@@ -228,41 +151,23 @@ namespace yq {
         */
         template <typename=void>
         requires std::is_floating_point_v<T>
-        constexpr Vector3<T>   unproject(const Vector3<T>& v) const noexcept
-        {
-            return div_elem(v-lo, hi-lo);
-        }
+        constexpr Vector3<T>   unproject(const Vector3<T>& v) const noexcept;
 
         //! Tests this box for validness
-        constexpr bool          valid() const noexcept 
-        {
-            return all(lo) <= hi;
-        }
+        constexpr bool          valid() const noexcept ;
 
         /*! \brief Computes the volume of the box
         */
-        constexpr cube_t<T>       volume() const noexcept
-        {
-            return (hi-lo).cproduct();
-        }
+        constexpr cube_t<T>       volume() const noexcept;
 
         //! X Range of the box
-        constexpr Range<T>  x_range() const noexcept
-        {
-            return range(lo.x, hi.x);
-        }
+        constexpr Range<T>  x_range() const noexcept;
 
         //! Y Range of the box
-        constexpr Range<T>  y_range() const noexcept
-        {
-            return range(lo.y, hi.y);
-        }
+        constexpr Range<T>  y_range() const noexcept;
 
         //! Z Range of the box
-        constexpr Range<T>  z_range() const noexcept
-        {
-            return range(lo.z, hi.z);
-        }
+        constexpr Range<T>  z_range() const noexcept;
 
     };
 
@@ -272,40 +177,17 @@ namespace yq {
     /*! \brief Creates a 3D axially aligned box from one vector
     */
     template <typename T>
-    constexpr AxBox3<T> aabb(const Vector3<T>& a) noexcept
-    {
-        return { a, a };
-    }
+    constexpr AxBox3<T> aabb(const Vector3<T>& a) noexcept;
 
     /*! \brief Creates a 3D axially aligned box from two vectors
     */
     template <typename T>
-    constexpr AxBox3<T> aabb(const Vector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        return { min_elem(a,b), max_elem(a,b) };
-    }
+    constexpr AxBox3<T> aabb(const Vector3<T>& a, const Vector3<T>& b) noexcept;
 
     /*! \brief Creates a 3D axially aligned box from container of Vector2's
     */
     template <typename T>
-    AxBox3<T> aabb(const std::vector<Vector3<T>>& vals)
-    {
-        switch(vals.size()){
-        case 0:
-            return {};
-        case 1:
-            return aabb(vals[0]);
-        case 2:
-            return aabb(vals[0],vals[1]);
-        default:
-            break;
-        }
-
-        AxBox3<T>   ret = aabb(vals[0], vals[1]);
-        for(size_t i=2;i<vals.size();++i)
-            ret |= vals[i];
-        return vals;
-    }
+    AxBox3<T> aabb(const std::vector<Vector3<T>>& vals);
 
     YQ_NAN_1(AxBox3, { nan_v<Vector3<T>>, nan_v<Vector3<T>>});
     YQ_ZERO_1(AxBox3, { zero_v<Vector3<T>>, zero_v<Vector3<T>>});
@@ -317,42 +199,27 @@ namespace yq {
     /*! \brief Computes the center of a 3D axially aligned box
     */
     template <typename T>
-    constexpr Vector3<T>      center(const AxBox3<T>& box) noexcept
-    {
-        return box.center();
-    }
+    constexpr Vector3<T>      center(const AxBox3<T>& box) noexcept;
 
     //! Checks for validity (hi >= lo)
     template <typename T>
-    constexpr bool    is_valid(const AxBox3<T>& box) noexcept
-    {
-        return box.is_valid();
-    }
+    constexpr bool    is_valid(const AxBox3<T>& box) noexcept;
 
 
     /*! \brief Returns the span (dimensions) of the box
     */
     template <typename T>
-    constexpr Vector3<T>    span(const AxBox3<T>&box) noexcept
-    {
-        return box.span();
-    }
+    constexpr Vector3<T>    span(const AxBox3<T>&box) noexcept;
 
     /*! \brief Computes the surface area of a 3D axially aligned bounding box
     */
     template <typename T>
-    constexpr square_t<T>    surface_area(const AxBox3<T>& box) noexcept
-    {
-        return box.surface_area();
-    }
+    constexpr square_t<T>    surface_area(const AxBox3<T>& box) noexcept;
 
     /*! \brief Computes the volume of the box
     */
     template <typename T>
-    constexpr cube_t<T>       volume(const AxBox3<T>& box) noexcept
-    {
-        return box.volume();
-    }
+    constexpr cube_t<T>       volume(const AxBox3<T>& box) noexcept;
 
 }
 

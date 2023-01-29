@@ -219,7 +219,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor34<T>  columns(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z, const Vector3<T>&w) noexcept
     {
-        return Tensor34<T>(columns_, x, y, z, w);
+        return Tensor34<T>(COLUMNS, x, y, z, w);
     }
 
     /*! \brief Create 3x4 tensor by rows
@@ -227,7 +227,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor34<T>  rows(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z) noexcept
     {
-        return Tensor34<T>(rows_, x, y, z);
+        return Tensor34<T>(ROWS, x, y, z);
     }
     
     YQ_IDENTITY_1(Tensor34, Tensor34<T>(ZERO))

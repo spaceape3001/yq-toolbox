@@ -43,13 +43,7 @@ namespace yq {
         constexpr AxBox2<T>   bounds() const noexcept 
         {
             T       r   = abs(radius);
-            return {{
-                point.x - r,
-                point.y - r
-            },{
-                point.x + r,
-                point.y + r
-            }};
+            return AxBox2<T>(all(point) - r, all(point) + r);
         }
         
         /*! \brief Computes the circumference
@@ -95,27 +89,7 @@ namespace yq {
     YQ_IS_FINITE_1(Circle2, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Circle2, is_nan(v.point) || is_nan(v.radius))
 
-    //  AxBox2D's helpers
-    template <typename T>
-    Circle2<T>          AxBox2<T>::circumcircle() const
-    {
-        return circle( center(), half_v<T>*span().length() );
-    }
     
-    template <typename T>
-    constexpr bool        AxBox2<T>::eclipses(const Circle2<T>& b) const noexcept
-    {
-        return eclipses(b.bounds());
-    }
-
-    template <typename T>
-    constexpr Circle2<T>  AxBox2<T>::incircle() const noexcept
-    {
-        return circle(center(), middivide(span().cmin()));
-    }
-    
-
-
     /*! \brief Bounding box for a circle
     */
     template <typename T>

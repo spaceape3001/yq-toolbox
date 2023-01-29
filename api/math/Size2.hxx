@@ -6,6 +6,7 @@
 
 #pragma once
 
+
 /* 
     This is the template IMPLEMENTATION of the size2 code.  Include this
     *IF* you need the operator and it's not yet available as explicit 
@@ -13,4 +14,5 @@
 */
 
 namespace yq {
+
 }

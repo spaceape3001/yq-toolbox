@@ -220,7 +220,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor43<T>  columns(const Vector4<T>&x, const Vector4<T>&y, const Vector4<T>&z) noexcept
     {
-        return Tensor43<T>(columns_, x, y, z);
+        return Tensor43<T>(COLUMNS, x, y, z);
     }
 
     /*! \brief Creates 4x3 tensor by specifying the rows
@@ -228,7 +228,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor43<T>  rows(const Vector3<T>&x, const Vector3<T>&y, const Vector3<T>&z, const Vector3<T>&w) noexcept
     {
-        return Tensor43<T>(rows_, x, y, z, w);
+        return Tensor43<T>(ROWS, x, y, z, w);
     }
     
     YQ_IDENTITY_1(Tensor43, Tensor43<T>(IDENTITY))

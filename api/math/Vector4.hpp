@@ -218,6 +218,12 @@ namespace yq {
         template <typename U>
         constexpr Multivector4<quotient_t<T,U>>   operator/ (const Vector4<U>&b) const noexcept;
 
+        //! unions with a box
+        constexpr AxBox4<T> operator|(const AxBox4<T>&b) const noexcept;
+
+        //! Create a box as a union of two vectors
+        constexpr AxBox4<T> operator|(const Vector4&b) const noexcept;
+
         //! Tests to see if this vector is "close" to the other
         template <typename R>
         bool close(const Vector4& expected, const R& compare)
@@ -361,6 +367,26 @@ namespace yq {
         {
             return pred(x, b) || pred(y, b) || pred(z, b) || pred(w, b);
         }
+
+        static bool less_x( const Vector4& a, const Vector4& b) 
+        {
+            return a.x < b.x;
+        }
+
+        static bool less_y( const Vector4& a, const Vector4& b) 
+        {
+            return a.y < b.y;
+        }
+
+        static bool less_z( const Vector4& a, const Vector4& b) 
+        {
+            return a.z < b.z;
+        }
+
+        static bool less_w( const Vector4& a, const Vector4& b) 
+        {
+            return a.w < b.w;
+        }
     };
     
     YQ_IEEE754_1(Vector4)
@@ -388,42 +414,42 @@ namespace yq {
 
     constexpr Vector4D operator "" _x4(unsigned long long int v) noexcept
     {
-        return Vector4D(x_, (double) v);
+        return Vector4D(X, (double) v);
     }
 
     constexpr Vector4D operator "" _x4(long double v) noexcept
     {
-        return Vector4D(x_, (double) v);
+        return Vector4D(X, (double) v);
     }
 
     constexpr Vector4D operator "" _y4(unsigned long long int v) noexcept
     {
-        return Vector4D(y_, (double) v);
+        return Vector4D(Y, (double) v);
     }
 
     constexpr Vector4D operator "" _y4(long double v) noexcept
     {
-        return Vector4D(y_, (double) v);
+        return Vector4D(Y, (double) v);
     }
 
     constexpr Vector4D operator "" _z4(unsigned long long int v) noexcept
     {
-        return Vector4D(z_, (double) v);
+        return Vector4D(Z, (double) v);
     }
 
     constexpr Vector4D operator "" _z4(long double v) noexcept
     {
-        return Vector4D(z_, (double) v);
+        return Vector4D(Z, (double) v);
     }
 
     constexpr Vector4D operator "" _w4(unsigned long long int v) noexcept
     {
-        return Vector4D(w_, (double) v);
+        return Vector4D(W, (double) v);
     }
 
     constexpr Vector4D operator "" _w4(long double v) noexcept
     {
-        return Vector4D(w_, (double) v);
+        return Vector4D(W, (double) v);
     }
 
     YQ_NAN_1(Vector4, Vector4<T>(NAN))

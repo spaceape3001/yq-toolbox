@@ -47,14 +47,14 @@ namespace yq {
         */
         static consteval Vector2 unit_x() noexcept
         {
-            return Vector2(x_);
+            return Vector2(X);
         }
         
         /*! \brief Creates a unit-vector in the y-dimension.
         */
         static consteval Vector2 unit_y() noexcept
         {
-            return Vector2(y_);
+            return Vector2(Y);
         }
 
         //! Equality operator (using default)
@@ -183,6 +183,12 @@ namespace yq {
         template <typename U>
         constexpr Multivector2<quotient_t<T,U>>   operator/ (const Vector2<U>&b) const noexcept;
 
+        //! Union
+        constexpr AxBox2<T> operator|(const AxBox2<T>&b) const noexcept;
+
+        //! Create a box as a union of two vectors
+        constexpr AxBox2<T> operator|(const Vector2&b) const noexcept;
+
         //! TRUE if the second vector is CLOSE to this vector, as defined by the comparison operator
         template <typename R=Absolute>
         bool close(const Vector2&b, R compare) const 
@@ -245,17 +251,11 @@ namespace yq {
 
         /*! Adds a value to all the components
         */
-        constexpr Vector2 all_add(T b) const noexcept
-        {
-            return Vector2( x+b, y+b );
-        }
+        constexpr Vector2 all_add(T b) const noexcept;
         
         /*! \brief Subtracts value to all components
         */
-        constexpr Vector2 all_subtract(T b) const noexcept
-        {
-            return Vector2( x-b, x-b );
-        }
+        constexpr Vector2 all_subtract(T b) const noexcept;
 
        /*! Tests every element
             This applies the given test to every component, 
@@ -347,6 +347,15 @@ namespace yq {
             //  The following are for the ElemComponents Adapters
             //  ===================================================================================================
 
+        static bool less_x( const Vector2& a, const Vector2& b) 
+        {
+            return a.x < b.x;
+        }
+
+        static bool less_y( const Vector2& a, const Vector2& b) 
+        {
+            return a.y < b.y;
+        }
     };
 
     YQ_IEEE754_1(Vector2)
@@ -374,22 +383,22 @@ namespace yq {
 
     constexpr Vector2D operator "" _x2(unsigned long long int v) noexcept
     {
-        return Vector2D(x_, (double) v);
+        return Vector2D(X, (double) v);
     }
 
     constexpr Vector2D operator "" _x2(long double v) noexcept
     {
-        return Vector2D(x_, (double) v);
+        return Vector2D(X, (double) v);
     }
 
     constexpr Vector2D operator "" _y2(unsigned long long int v) noexcept
     {
-        return Vector2D(y_, (double) v);
+        return Vector2D(Y, (double) v);
     }
 
     constexpr Vector2D operator "" _y2(long double v) noexcept
     {
-        return Vector2D(y_, (double) v);
+        return Vector2D(Y, (double) v);
     }
 
     //! Creates a two dimension unit vector

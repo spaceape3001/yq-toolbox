@@ -16,15 +16,15 @@
 #include "Multivector3.hpp"
 #include "Trivector3.hpp"
 
-#include "Tensor31.hpp"
-#include "Tensor32.hpp"
-#include "Tensor33.hpp"
-#include "Tensor34.hpp"
+#include <math/Tensor31.hpp>
+#include <math/Tensor32.hpp>
+#include <math/Tensor33.hpp>
+#include <math/Tensor34.hpp>
 
-#include "Vector1.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include <math/Vector1.hpp>
+#include <math/Vector2.hpp>
+#include <math/Vector3.hpp>
+#include <math/Vector4.hpp>
 
 #include <math/Units.hpp>
 #include <math/trig.hpp>
@@ -356,6 +356,18 @@ namespace yq {
     constexpr Multivector3<quotient_t<T,U>>   Vector3<T>::operator/ (const Vector3<U>&b) const noexcept
     {
         return (*this * b) / b.length²();
+    }
+
+    template <typename T>
+    constexpr AxBox3<T> Vector3<T>::operator|(const AxBox3<T>& b) const noexcept
+    {
+        return AxBox3<T>(UNION, { *this, b.lo, b.hi });
+    }
+
+    template <typename T>
+    constexpr AxBox3<T> Vector3<T>::operator|(const Vector3&b) const noexcept
+    {
+        return AxBox3<T>(UNION, *this, b);
     }
 
     template <typename T>

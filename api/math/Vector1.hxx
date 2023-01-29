@@ -12,18 +12,19 @@
     template instantiation.  
 */
 
+#include <math/AxBox1.hpp>
 
 #include "Multivector1.hpp"
 
-#include "Tensor11.hpp"
-#include "Tensor12.hpp"
-#include "Tensor13.hpp"
-#include "Tensor14.hpp"
+#include <math/Tensor11.hpp>
+#include <math/Tensor12.hpp>
+#include <math/Tensor13.hpp>
+#include <math/Tensor14.hpp>
 
-#include "Vector1.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include <math/Vector1.hpp>
+#include <math/Vector2.hpp>
+#include <math/Vector3.hpp>
+#include <math/Vector4.hpp>
 
 
 namespace yq {
@@ -262,6 +263,18 @@ namespace yq {
     constexpr quotient_t<T,U> Vector1<T>::operator/(const Vector1<U>& b) const noexcept
     {
         return (*this * b)/b.length²();
+    }
+
+    template <typename T>
+    constexpr AxBox1<T> Vector1<T>::operator|(const AxBox1<T>&b) const noexcept
+    {
+        return AxBox1<T>(UNION, {*this, b.lo, b.hi});
+    }
+
+    template <typename T>
+    constexpr AxBox1<T> Vector1<T>::operator|(const Vector1&b) const noexcept
+    {
+        return AxBox1<T>(UNION, *this, b);
     }
 
     template <typename T>

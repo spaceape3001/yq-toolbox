@@ -198,7 +198,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor41<T>  columns(const Vector4<T>&x) noexcept
     {
-        return Tensor41<T>(columns_, x);
+        return Tensor41<T>(COLUMNS, x);
     }
 
     /*! \brief Create 4x1 tensor by rows
@@ -206,7 +206,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor41<T>  rows(const Vector1<T>&x, const Vector1<T>&y, const Vector1<T>&z, const Vector1<T>&w) noexcept
     {
-        return Tensor41<T>(rows_, x, y, z, w);
+        return Tensor41<T>(ROWS, x, y, z, w);
     }
     
     YQ_IDENTITY_1(Tensor41, Tensor41<T>(IDENTITY))

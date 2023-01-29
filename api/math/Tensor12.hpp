@@ -142,7 +142,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor12<T>  columns(const Vector1<T>&x, const Vector1<T>&y)
     {
-        return Tensor12<T>(columns_, x, y);
+        return Tensor12<T>(COLUMNS, x, y);
     }
 
     /*! \brief Create 1x2 tensor by rows
@@ -150,7 +150,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor12<T>  rows(const Vector2<T>&x)
     {
-        return Tensor12<T>(rows_, x);
+        return Tensor12<T>(ROWS, x);
     }
     
     YQ_IDENTITY_1(Tensor12, Tensor12<T>(IDENTITY))

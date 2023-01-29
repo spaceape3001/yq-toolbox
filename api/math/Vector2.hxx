@@ -15,15 +15,15 @@
 #include "Bivector2.hpp"
 #include "Multivector2.hpp"
 
-#include "Tensor21.hpp"
-#include "Tensor22.hpp"
-#include "Tensor23.hpp"
-#include "Tensor24.hpp"
+#include <math/Tensor21.hpp>
+#include <math/Tensor22.hpp>
+#include <math/Tensor23.hpp>
+#include <math/Tensor24.hpp>
 
-#include "Vector1.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
+#include <math/Vector1.hpp>
+#include <math/Vector2.hpp>
+#include <math/Vector3.hpp>
+#include <math/Vector4.hpp>
 
 #include <math/trig.hpp>
 #include <math/Units.hpp>
@@ -316,6 +316,31 @@ namespace yq {
     constexpr Multivector2<quotient_t<T,U>>   Vector2<T>::operator/ (const Vector2<U>&b) const noexcept
     {
         return (*this * b) / b.length²();
+    }
+
+    //! Union
+    template <typename T>
+    constexpr AxBox2<T> Vector2<T>::operator|(const AxBox2<T>&b) const noexcept
+    {
+        return AxBox2<T>(UNION, {*this, b.lo, b.hi});
+    }
+
+    template <typename T>
+    constexpr AxBox2<T> Vector2<T>::operator|(const Vector2&b) const noexcept
+    {
+        return AxBox2<T>(UNION, *this, b);
+    }
+
+    template <typename T>
+    constexpr Vector2<T> Vector2<T>::all_add(T b) const noexcept
+    {
+        return Vector2( x+b, y+b );
+    }
+    
+    template <typename T>
+    constexpr Vector2<T> Vector2<T>::all_subtract(T b) const noexcept
+    {
+        return Vector2( x-b, x-b );
     }
 
     template <typename T>

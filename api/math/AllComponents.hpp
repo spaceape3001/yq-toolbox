@@ -209,12 +209,12 @@ namespace yq {
         
         constexpr value_type    operator+(component_type rhs) const noexcept
         {
-            return value.elem_add(rhs);
+            return value.all_add(rhs);
         }
 
         constexpr value_type    operator-(component_type rhs) const noexcept
         {
-            return value.elem_subtract(rhs);
+            return value.all_subtract(rhs);
         }
     };
 }

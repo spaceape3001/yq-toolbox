@@ -59,7 +59,7 @@
         priorities are based on C++'s interpretation of the actual symbol,
         which is not necessarily our intended order.
 */
-#define DOT         |
+#define DOT         ||
 
 /*! \brief Inner product operator
 
