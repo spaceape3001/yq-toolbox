@@ -26,144 +26,158 @@ namespace yq {
         T yx, yy;
         T zx, zy;
 
+        constexpr Tensor32() noexcept = default;
+
+        constexpr Tensor32(
+            T _xx, T _xy, 
+            T _yx, T _yy, 
+            T _zx, T _zy
+        ) : 
+            xx(_xx), xy(_xy),
+            yx(_yx), yy(_yy),
+            zx(_zx), zy(_zy)
+        {
+        }
+        
+        constexpr Tensor32(columns_t, const Vector3<T>& x, const Vector3<T>& y) noexcept :
+            xx(x.x), xy(y.x), 
+            yx(x.y), yy(y.y), 
+            zx(x.z), zy(y.z)
+        {
+        }
+
+        consteval Tensor32(identity_t) : 
+            xx(one_v<T>),  xy(zero_v<T>), 
+            yx(zero_v<T>), yy(one_v<T>),  
+            zx(zero_v<T>), zy(zero_v<T>)
+        {
+        }
+
+        consteval Tensor32(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), 
+            yx(nan_v<T>), yy(nan_v<T>), 
+            zx(nan_v<T>), zy(nan_v<T>)
+        {
+        }
+
+        constexpr Tensor32(rows_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z) :
+            xx(x.x), xy(x.y), 
+            yx(y.x), yy(y.y), 
+            zx(z.x), zy(z.y)
+        {
+        }
+
+        consteval Tensor32(zero_t) : 
+            xx(zero_v<T>), xy(zero_v<T>), 
+            yx(zero_v<T>), yy(zero_v<T>), 
+            zx(zero_v<T>), zy(zero_v<T>)
+        {
+        }
+
+        template <glm::qualifier Q>
+        explicit constexpr Tensor32(const glm::mat<3,2,T,Q>& t) noexcept;
+
         //! Default equality operator
         constexpr bool operator==(const Tensor32&) const noexcept = default;
 
+        //! Conversion to GLM
+        constexpr operator glm::mat<3,2,T,glm::defaultp>() const noexcept;
+
         //! Positive (affirmation) operator
-        constexpr Tensor32  operator+() const noexcept
-        { 
-            return *this; 
-        }
+        constexpr Tensor32  operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor32  operator-() const noexcept
-        {
-            return {
-                -xx, -xy,
-                -yx, -yy,
-                -zx, -zy
-            };
-        }
+        constexpr Tensor32  operator-() const noexcept;
+        
+        constexpr Tensor32   operator+ (const Tensor32 &b) const noexcept;
+        Tensor32&            operator+=(const Tensor32 &b) noexcept;
+        constexpr Tensor32   operator- (const Tensor32 &b) const noexcept;
+        Tensor32&            operator-=(const Tensor32 &b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor32<product_t<T,U>>  operator*(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor32<product_t<T,U>>  operator*=(U b) noexcept;
+
+        template <typename U>
+        constexpr Tensor31<product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor32<product_t<T,U>> operator*(const Tensor22<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor33<product_t<T,U>> operator*(const Tensor23<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor34<product_t<T,U>> operator*(const Tensor24<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor32<T>& operator*=(const Tensor22<U>& b) noexcept;
+
+        template <typename U>
+        constexpr Vector3<product_t<T,U>> operator*(const Vector2<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor32<quotient_t<T,U>>  operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor32<quotient_t<T,U>>  operator/=(U b) noexcept;
+
+        constexpr Tensor23<T> transpose() const noexcept;
     
         //  --------------------------------------------------------
         //  GETTERS
 
             //! X-column of this tensor
-            constexpr Vector3<T>  x_column() const noexcept
-            {
-                return {xx, yx, zx};
-            }
+            constexpr Vector3<T>  x_column() const noexcept;
 
             //! Y-column of this tensor
-            constexpr Vector3<T>  y_column() const noexcept
-            {
-                return {xy, yy, zy};
-            }
+            constexpr Vector3<T>  y_column() const noexcept;
 
             //! X-row of this tensor
-            constexpr Vector2<T>  x_row() const noexcept
-            {
-                return {xx, xy};
-            }
+            constexpr Vector2<T>  x_row() const noexcept;
 
             //! Y-row of this tensor
-            constexpr Vector2<T>  y_row() const noexcept
-            {
-                return {yx, yy};
-            }
+            constexpr Vector2<T>  y_row() const noexcept;
 
             //! Z-row of this tensor
-            constexpr Vector2<T>  z_row() const noexcept
-            {
-                return {zx, zy};
-            }
+            constexpr Vector2<T>  z_row() const noexcept;
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Set x-column
-            Tensor32& x_column(const Vector3<T>& v)
-            {
-                xx = v.x;
-                yx = v.y;
-                zx = v.z;
-                return *this;
-            }
+            Tensor32& x_column(const Vector3<T>& v);
 
             //! Set x-column
-            Tensor32& x_column(T _xx, T _yx, T _zx)
-            {
-                xx = _xx;
-                yx = _yx;
-                zx = _zx;
-                return *this;
-            }
+            Tensor32& x_column(T _xx, T _yx, T _zx);
 
             //! Set y-column
-            Tensor32& y_column(const Vector3<T>& v)
-            {
-                xy = v.x;
-                yy = v.y;
-                zy = v.z;
-                return *this;
-            }
+            Tensor32& y_column(const Vector3<T>& v);
 
             //! Set y-column
-            Tensor32& y_column(T _xy, T _yy, T _zy)
-            {
-                xy = _xy;
-                yy = _yy;
-                zy = _zy;
-                return *this;
-            }
+            Tensor32& y_column(T _xy, T _yy, T _zy);
 
             //! Set x-row
-            Tensor32& x_row(const Vector2<T>& v)
-            {
-                xx = v.x;
-                xy = v.y;
-                return *this;
-            }
+            Tensor32& x_row(const Vector2<T>& v);
 
             //! Set x-row
-            Tensor32& x_row(T _xx, T _xy)
-            {
-                xx = _xx;
-                xy = _xy;
-                return *this;
-            }
+            Tensor32& x_row(T _xx, T _xy);
 
             //! Set y-row
-            Tensor32& y_row(const Vector2<T>& v)
-            {
-                yx = v.x;
-                yy = v.y;
-                return *this;
-            }
+            Tensor32& y_row(const Vector2<T>& v);
 
             //! Set y-row
-            Tensor32& y_row(T _yx, T _yy)
-            {
-                yx = _yx;
-                yy = _yy;
-                return *this;
-            }
+            Tensor32& y_row(T _yx, T _yy);
 
             //! Set z-row
-            Tensor32& z_row(const Vector2<T>& v)
-            {
-                zx = v.x;
-                zy = v.y;
-                return *this;
-            }
+            Tensor32& z_row(const Vector2<T>& v);
 
             //! Set z-row
-            Tensor32& z_row(T _zx, T _zy)
-            {
-                zx = _zx;
-                zy = _zy;
-                return *this;
-            }
+            Tensor32& z_row(T _zx, T _zy);
 
 
     };
@@ -178,11 +192,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor32<T>  columns(const Vector3<T>&x, const Vector3<T>&y)
     {
-        return {
-            x.x, y.x,
-            x.y, y.y,
-            x.z, y.z
-        };
+        return Tensor32<T>(COLUMNS, x, y);
     }
 
     /*! \brief Create 3x2 tensor by rows
@@ -190,30 +200,12 @@ namespace yq {
     template <typename T>
     constexpr Tensor32<T>  rows(const Vector2<T>&x, const Vector2<T>&y, const Vector2<T>&z)
     {
-        return {
-            x.x, x.y,
-            y.x, y.y,
-            z.x, z.y
-        };
+        return Tensor32<T>(ROWS, x, y, z);
     }
     
-    YQ_IDENTITY_1(Tensor32, {
-        one_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>,
-        zero_v<T>, zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor32, {
-        nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor32, {
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor32, Tensor32<T>(IDENTITY))
+    YQ_NAN_1(Tensor32, Tensor32<T>(NAN))
+    YQ_ZERO_1(Tensor32, Tensor32<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -231,164 +223,45 @@ namespace yq {
         is_nan(v.zx) || is_nan(v.zy)
     )
 
+    template <typename T>
+    constexpr Tensor23<T>  transpose(const Tensor32<T>&v);
+    
 //  --------------------------------------------------------
 //  GETTERS
 
     template <typename T>
-    constexpr Vector3<T>  x_column(const Tensor32<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector3<T>  x_column(const Tensor32<T>&ten);
 
     template <typename T>
-    constexpr Vector3<T>  y_column(const Tensor32<T>&ten) 
-    {
-        return ten.y_column();
-    }
+    constexpr Vector3<T>  y_column(const Tensor32<T>&ten);
 
     template <typename T>
-    constexpr Vector2<T>  x_row(const Tensor32<T>&ten)
-    {
-        return ten.x_row();
-    }
+    constexpr Vector2<T>  x_row(const Tensor32<T>&ten);
+    
+    template <typename T>
+    constexpr Vector2<T>  y_row(const Tensor32<T>&ten);
 
     template <typename T>
-    constexpr Vector2<T>  y_row(const Tensor32<T>&ten)
-    {
-        return ten.y_row();
-    }
-
-    template <typename T>
-    constexpr Vector2<T>  z_row(const Tensor32<T>&ten)
-    {
-        return ten.z_row();
-    }
-
-
-
-
+    constexpr Vector2<T>  z_row(const Tensor32<T>&ten);
 
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor32<T>   operator+ (const Tensor32<T> &a, const Tensor32<T> &b) 
-    {
-        return {
-            a.xx+b.xx, a.xy+b.xy,
-            a.yx+b.yx, a.yy+b.yy,
-            a.zx+b.zx, a.zy+b.zy
-        };
-    }
-
-    template <typename T>
-    Tensor32<T>&   operator+=(Tensor32<T> &a, const Tensor32<T> &b) 
-    {
-        a.xx+=b.xx;  a.xy+=b.xy;
-        a.yx+=b.yx;  a.yy+=b.yy;
-        a.zx+=b.zx;  a.zy+=b.zy;
-        return a;
-    }
-
-
 //  --------------------------------------------------------
 //  SUBTRACTION
-
-    template <typename T>
-    constexpr Tensor32<T>   operator- (const Tensor32<T> &a, const Tensor32<T> &b) 
-    {
-        return {
-            a.xx-b.xx, a.xy-b.xy,
-            a.yx-b.yx, a.yy-b.yy,
-            a.zx-b.zx, a.zy-b.zy
-        };
-    }
-    
-
-    template <typename T>
-    Tensor32<T>&   operator-=(Tensor32<T> &a, const Tensor32<T> &b) 
-    {
-        a.xx-=b.xx;  a.xy-=b.xy;
-        a.yx-=b.yx;  a.yy-=b.yy;
-        a.zx-=b.zx;  a.zy-=b.zy;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor32<product_t<T,U>>  operator*(T a, const Tensor32<T>& b)
-    {
-        return {
-            a*b.xx, a*b.xy,
-            a*b.yx, a*b.yy,
-            a*b.zx, a*b.zy
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor32<product_t<T,U>>  operator*(T a, const Tensor32<U>& b);
     
-    
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor32<product_t<T,U>>  operator*(const Tensor32<T>& a, U b)
-    {
-        return {
-            a.xx*b, a.xy*b,
-            a.yx*b, a.yy*b,
-            a.zx*b, a.zy*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor32<product_t<T,U>>  operator*=(const Tensor32<T>& a, U b)
-    {
-        a.xx*=b; a.xy*=b;
-        a.yx*=b; a.yy*=b;
-        a.zx*=b; a.zy*=b;        
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>> operator*(const Tensor32<T>&a, const Vector2<U>&b)
-    {
-        return {
-            a.xx*b.x + a.xy*b.y,
-            a.yx*b.x + a.yy*b.y,
-            a.zx*b.x + a.zy*b.y
-        };
-    }
-
 //  --------------------------------------------------------
 //  DIVISION
 
-
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor32<quotient_t<T,U>>  operator/(const Tensor32<T>& a, U b)
-    {
-        return {
-            a.xx/b, a.xy/b,
-            a.yx/b, a.yy/b,
-            a.zx/b, a.zy/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor32<quotient_t<T,U>>  operator/=(const Tensor32<T>& a, U b)
-    {
-        a.xx/=b; a.xy/=b;
-        a.yx/=b; a.yy/=b;
-        a.zx/=b; a.zy/=b;        
-        return a;
-    }
-
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
-
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
