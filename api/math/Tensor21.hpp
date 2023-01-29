@@ -24,6 +24,50 @@ namespace yq {
         T xx;
         T yx;
 
+
+        constexpr Tensor21() noexcept = default;
+
+        constexpr Tensor21(
+            T _xx, 
+            T _yx
+        ) : 
+            xx(_xx),
+            yx(_yx)
+        {
+        }
+        
+        consteval Tensor21(all_t, T v) : 
+            xx(v), 
+            yx(v)
+        {
+        }
+
+        constexpr Tensor21(columns_t, const Vector2<T>& x) noexcept :
+            xx(x.x),
+            yx(x.y)
+        {
+        }
+
+        consteval Tensor21(identity_t) : 
+            xx(one_v<T>),  
+            yx(zero_v<T>)
+        {
+        }
+
+        consteval Tensor21(nan_t) : Tensor21(ALL, nan_v<T>) {}
+
+        constexpr Tensor21(rows_t, const Vector1<T>& x, const Vector1<T>& y) :
+            xx(x.x), 
+            yx(y.x)
+        {
+        }
+
+        consteval Tensor21(zero_t) : Tensor21(ALL, zero_v<T>) {} 
+        
+        template <glm::qualifier Q>
+        explicit constexpr Tensor21(const glm::mat<2,1,T,Q>& t) noexcept;
+        
+        
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor21&) const noexcept = default;
 

@@ -6,11 +6,21 @@
 
 #pragma once
 
+
 /* 
     This is the template IMPLEMENTATION of the tensor22 code.  Include this
     *IF* you need the operator and it's not yet available as explicit 
     template instantiation.  
 */
+
+#include <math/Tensor21.hpp>
+#include <math/Tensor22.hpp>
+#include <math/Tensor23.hpp>
+#include <math/Tensor24.hpp>
+
+#include <math/Vector2.hpp>
+
+#include <math/trig.hpp>
 
 namespace yq {
     template <typename T>

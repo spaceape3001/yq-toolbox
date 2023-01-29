@@ -12,11 +12,13 @@
     template instantiation.  
 */
 
-#include "Tensor41.hpp"
-#include "Tensor42.hpp"
-#include "Tensor43.hpp"
-#include "Tensor44.hpp"
-#include "Vector4.hpp"
+#include <math/Tensor41.hpp>
+#include <math/Tensor42.hpp>
+#include <math/Tensor43.hpp>
+#include <math/Tensor44.hpp>
+
+#include <math/Vector3.hpp>
+#include <math/Vector4.hpp>
 
 namespace yq {
     template <typename T>

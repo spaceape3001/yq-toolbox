@@ -13,18 +13,18 @@
 */
 
 
-#include "Tensor21.hpp"
-#include "Tensor22.hpp"
-#include "Tensor23.hpp"
-#include "Tensor24.hpp"
+#include <math/Tensor21.hpp>
+#include <math/Tensor22.hpp>
+#include <math/Tensor23.hpp>
+#include <math/Tensor24.hpp>
 
-#include "Tensor41.hpp"
-#include "Tensor42.hpp"
-#include "Tensor43.hpp"
-#include "Tensor44.hpp"
+#include <math/Tensor41.hpp>
+#include <math/Tensor42.hpp>
+#include <math/Tensor43.hpp>
+#include <math/Tensor44.hpp>
 
-#include "Vector2.hpp"
-#include "Vector4.hpp"
+#include <math/Vector2.hpp>
+#include <math/Vector4.hpp>
 
 namespace yq {
     template <typename T>

@@ -12,12 +12,12 @@
     template instantiation.  
 */
 
-#include "Tensor31.hpp"
-#include "Tensor32.hpp"
-#include "Tensor33.hpp"
-#include "Tensor34.hpp"
+#include <math/Tensor31.hpp>
+#include <math/Tensor32.hpp>
+#include <math/Tensor33.hpp>
+#include <math/Tensor34.hpp>
 
-#include "Vector3.hpp"
+#include <math/Vector3.hpp>
 
 #include <math/trig.hpp>
 #include <math/Units.hpp>
