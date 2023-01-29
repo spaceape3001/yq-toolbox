@@ -391,5 +391,40 @@ namespace yq {
         return v.transpose();
     }
 
+    template <typename T>
+    constexpr Vector2<T>  w_column(const Tensor24<T>&ten) 
+    {
+        return ten.w_column();
+    }
+
+    template <typename T>
+    constexpr Vector2<T>  x_column(const Tensor24<T>&ten) 
+    {
+        return ten.x_column();
+    }
+
+    template <typename T>
+    constexpr Vector4<T>  x_row(const Tensor24<T>&ten)
+    {
+        return ten.x_row();
+    }
+
+    template <typename T>
+    constexpr Vector2<T>  y_column(const Tensor24<T>&ten) 
+    {
+        return ten.y_column();
+    }
+
+    template <typename T>
+    constexpr Vector4<T>  y_row(const Tensor24<T>&ten)
+    {
+        return ten.y_row();
+    }
+
+    template <typename T>
+    constexpr Vector2<T>  z_column(const Tensor24<T>&ten) 
+    {
+        return ten.z_column();
+    }
             
 }

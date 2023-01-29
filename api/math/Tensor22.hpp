@@ -24,189 +24,182 @@ namespace yq {
         T xx, xy;
         T yx, yy;
 
+        constexpr Tensor22() noexcept = default;
+
+        constexpr Tensor22(
+            T _xx, T _xy, 
+            T _yx, T _yy
+        ) : 
+            xx(_xx), xy(_xy),
+            yx(_yx), yy(_yy)
+        {
+        }
+        
+        constexpr Tensor22(columns_t, const Vector2<T>& x, const Vector2<T>& y) noexcept :
+            xx(x.x), xy(y.x), 
+            yx(x.y), yy(y.y)
+        {
+        }
+
+        constexpr Tensor22(diagonal_t, T _xx, T _yy) : 
+            xx(_xx),  xy(zero_v<T>), 
+            yx(zero_v<T>), yy(_yy)
+        {
+        }
+
+        constexpr Tensor22(diagonal_t, const Vector2<T>& v) : 
+            xx(v.x),  xy(zero_v<T>), 
+            yx(zero_v<T>), yy(v.y)
+        {
+        }
+
+        consteval Tensor22(identity_t) : 
+            xx(one_v<T>),  xy(zero_v<T>), 
+            yx(zero_v<T>), yy(one_v<T>)
+        {
+        }
+
+        consteval Tensor22(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), 
+            yx(nan_v<T>), yy(nan_v<T>)
+        {
+        }
+
+        constexpr Tensor22(rows_t, const Vector2<T>& x, const Vector2<T>& y) :
+            xx(x.x), xy(x.y), 
+            yx(y.x), yy(y.y)
+        {
+        }
+
+        consteval Tensor22(zero_t) : 
+            xx(zero_v<T>), xy(zero_v<T>), 
+            yx(zero_v<T>), yy(zero_v<T>)
+        {
+        }
+
+        template <glm::qualifier Q>
+        explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;
+        
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor22&) const noexcept = default;
 
         //! Implicit conversion to GLM
-        operator glm::mat<2,2,T,glm::defaultp>() const noexcept 
-        {
-            return {
-                xx, yx,
-                xy, yy
-            };
-        }
+        explicit operator glm::mat<2,2,T,glm::defaultp>() const noexcept;
 
 
         //! Positive (affirmation) operator
-        constexpr Tensor22  operator+() const noexcept
-        { 
-            return *this; 
-        }
-
+        constexpr Tensor22  operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor22  operator-() const noexcept
-        {
-            return {
-                -xx, -xy,
-                -yx, -yy
-            };
-        }
+        constexpr Tensor22  operator-() const noexcept;
+        
+        constexpr Tensor22   operator+ (const Tensor22 &b) const noexcept;
+        Tensor22&            operator+=(const Tensor22 &b);
+        constexpr Tensor22   operator- (const Tensor22 &b) const noexcept;
+        Tensor22&            operator-=(const Tensor22 &b);
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor22<product_t<T,U>>  operator*(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Tensor22&  operator*=(U b) noexcept;
+        
+        template <typename U>
+        constexpr Tensor21<product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor22<product_t<T,U>> operator*(const Tensor22<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor23<product_t<T,U>> operator*(const Tensor23<U>& b) const noexcept;
+        template <typename U>
+        constexpr Tensor24<product_t<T,U>> operator*(const Tensor24<U>& b) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Tensor22& operator*=(const Tensor22<U>& b) noexcept;
+
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Vector2<U>&b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Tensor22<quotient_t<T,U>>  operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Tensor22&  operator/=(U b) noexcept;
 
         //! Computes the determinant of this matrix
-        constexpr square_t<T> determinant() const noexcept
-        {
-            return xx*yy-xy*yx;
-        }
+        constexpr square_t<T> determinant() const noexcept;
 
         //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
         //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
 
         //! Computes the inverse of this matrix
-        constexpr Tensor22<inverse_t<T>> inverse() const noexcept
-        {
-            auto    di = one_v<T> / determinant();
-            return {
-                 di * yy, -di * xy,
-                -di * yx,  di * xx
-            };
-        }
+        constexpr Tensor22<inverse_t<T>> inverse() const noexcept;
 
         /*! \brief Trace of the 2 x 2 tensor
         
             \param[in] a    Tensor to take the trace of
         */
-        constexpr T     trace() const noexcept
-        {
-            return xx+yy;
-        }
+        constexpr T     trace() const noexcept;
 
         //! Transpose of this matrix
-        constexpr Tensor22  transpose() const noexcept
-        {
-            return {
-                xx, yx,
-                xy, yy
-            };
-        }
+        constexpr Tensor22  transpose() const noexcept;
 
 
         //  --------------------------------------------------------
         //  GETTERS
 
             //! Returns the diagonal
-            constexpr Vector2<T>  diagonal() const noexcept
-            {
-                return {xx, yy};
-            }
+            constexpr Vector2<T>  diagonal() const noexcept;
 
             //! X-column of this tensor
-            constexpr Vector2<T>  x_column() const noexcept
-            {
-                return {xx, yx};
-            }
+            constexpr Vector2<T>  x_column() const noexcept;
 
             //! Y-column of this tensor
-            constexpr Vector2<T>  y_column() const noexcept
-            {
-                return {xy, yy};
-            }
+            constexpr Vector2<T>  y_column() const noexcept;
 
             //! X-row of this tensor
-            constexpr Vector2<T>  x_row() const noexcept
-            {
-                return {xx, xy};
-            }
+            constexpr Vector2<T>  x_row() const noexcept;
 
             //! Y-row of this tensor
-            constexpr Vector2<T>  y_row() const noexcept
-            {
-                return {yx, yy};
-            }
+            constexpr Vector2<T>  y_row() const noexcept;
 
 
         //  --------------------------------------------------------
         //  SETTERS
 
             //! Sets the diagonal
-            Tensor22<T>&  diagonal(const Vector2<T>& v)
-            {        
-                xx = v.x;
-                yy = v.y;
-                return *this;
-            }
+            Tensor22&  diagonal(const Vector2<T>& v);
 
             //! Sets the diagonal
-            Tensor22<T>&  diagonal(T _xx, T _yy)
-            {        
-                xx = _xx;
-                yy = _yy;
-                return *this;
-            }
+            Tensor22&  diagonal(T _xx, T _yy);
 
             //! Sets the X-column
-            Tensor22<T>& x_column(const Vector2<T>& v)
-            {
-                xx = v.x;
-                yx = v.y;
-                return *this;
-            }
+            Tensor22& x_column(const Vector2<T>& v);
 
             //! Sets the X-column
-            Tensor22<T>& x_column(T _xx, T _yx)
-            {
-                xx = _xx;
-                yx = _yx;
-                return *this;
-            }
+            Tensor22& x_column(T _xx, T _yx);
 
             //! Sets the Y-column
-            Tensor22<T>& y_column(const Vector2<T>& v)
-            {
-                xy = v.x;
-                yy = v.y;
-                return *this;
-            }
+            Tensor22& y_column(const Vector2<T>& v);
 
             //! Sets the Y-column
-            Tensor22<T>& y_column(T _xy, T _yy)
-            {
-                xy = _xy;
-                yy = _yy;
-                return *this;
-            }
+            Tensor22& y_column(T _xy, T _yy);
 
             //! Sets the X-row
-            Tensor22<T>& x_row(const Vector2<T>& v)
-            {
-                xx = v.x;
-                xy = v.y;
-                return *this;
-            }
+            Tensor22& x_row(const Vector2<T>& v);
 
             //! Sets the X-row
-            Tensor22<T>& x_row(T _xx, T _xy)
-            {
-                xx = _xx;
-                xy = _xy;
-                return *this;
-            }
+            Tensor22& x_row(T _xx, T _xy);
 
             //! Sets the Y-row
-            Tensor22<T>& y_row(const Vector2<T>& v)
-            {
-                yx = v.x;
-                yy = v.y;
-                return *this;
-            }
+            Tensor22& y_row(const Vector2<T>& v);
     
             //! Sets the Y-row
-            Tensor22<T>& y_row(T _yx, T _yy)
-            {
-                yx = _yx;
-                yy = _yy;
-                return *this;
-            }
+            Tensor22& y_row(T _yx, T _yy);
     
     };
 
@@ -220,10 +213,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor22<T>  columns(const Vector2<T>&x, const Vector2<T>&y)
     {
-        return {
-            x.x, y.x,
-            x.y, y.y
-        };
+        return Tensor22<T>(COLUMNS, x, y);
     }
 
     /*! \brief Create 2x2 tensor by its diagonal
@@ -231,10 +221,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor22<T>  diagonal(const Vector2<T>&v)
     {
-        return {
-            v.x, zero_v<T>,
-            zero_v<T>, v.y
-        };
+        return Tensor22<T>(DIAGONAL, v);
     }
     
     /*! \brief Create 2x2 tensor by its diagonal
@@ -242,10 +229,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor22<T>  diagonal(T x, std::type_identity_t<T> y)
     {
-        return {
-            x, zero_v<T>,
-            zero_v<T>, y
-        };
+        return Tensor22<T>(DIAGONAL, x, y);
     }
     
 
@@ -254,10 +238,7 @@ namespace yq {
     template <typename T>
     constexpr Tensor22<T>  rows(const Vector2<T>&x, const Vector2<T>&y)
     {
-        return {
-            x.x, x.y,
-            y.x, y.y
-        };
+        return Tensor22<T>(ROWS, x, y);
     }
     
     //! Creates a matrix that can rotate a vector by the specfied angle
@@ -276,26 +257,13 @@ namespace yq {
     template <typename T, glm::qualifier Q>
     constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t)
     {
-        return {
-            t.x.x, t.y.x, 
-            t.x.y, t.y.y
-        };
+        return Tensor22<T>(t);
     }
 
-    YQ_IDENTITY_1(Tensor22, {
-        one_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>
-    })
-
-    YQ_NAN_1(Tensor22, {
-        nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T> 
-    })
+    YQ_IDENTITY_1(Tensor22, Tensor22<T>(IDENTITY))
+    YQ_NAN_1(Tensor22, Tensor22<T>(NAN))
     
-    YQ_ZERO_1(Tensor22, {
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T> 
-     })
+    YQ_ZERO_1(Tensor22, Tensor22<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -314,10 +282,7 @@ namespace yq {
     /*! \brief Transpose of a 2x2 tensor
     */
     template <typename T>
-    constexpr Tensor22<T>  transpose(const Tensor22<T>& ten)
-    {
-        return ten.transpose();
-    }
+    constexpr Tensor22<T>  transpose(const Tensor22<T>& ten);
 
 //  --------------------------------------------------------
 //  GETTERS
@@ -325,172 +290,51 @@ namespace yq {
     /*! \brief Diagonal of the given tensor
     */
     template <typename T>
-    constexpr Vector2<T>  diagonal(const Tensor22<T>& ten)
-    {
-        return ten.diagonal();
-    }
+    constexpr Vector2<T>  diagonal(const Tensor22<T>& ten);
 
     /*! \brief X-column of the given tensor
     */
     template <typename T>
-    constexpr Vector2<T>  x_column(const Tensor22<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector2<T>  x_column(const Tensor22<T>&ten);
 
     /*! \brief Y-column of the given tensor
     */
     template <typename T>
-    constexpr Vector2<T>  y_column(const Tensor22<T>&ten) 
-    {
-        return ten.y_column();
-    }
+    constexpr Vector2<T>  y_column(const Tensor22<T>&ten);
 
     /*! \brief X-row of the given tensor
     */
     template <typename T>
-    constexpr Vector2<T>  x_row(const Tensor22<T>&ten)
-    {
-        return ten.x_row();
-    }
+    constexpr Vector2<T>  x_row(const Tensor22<T>&ten);
 
     /*! \brief Y-row of the given tensor
     */
     template <typename T>
-    constexpr Vector2<T>  y_row(const Tensor22<T>&ten)
-    {
-        return ten.y_row();
-    }
+    constexpr Vector2<T>  y_row(const Tensor22<T>&ten);
 
 
 //  --------------------------------------------------------
 //  ADDITION
 
-    template <typename T>
-    constexpr Tensor22<T>   operator+ (const Tensor22<T> &a, const Tensor22<T> &b) 
-    {
-        return {
-            a.xx+b.xx, a.xy+b.xy,
-            a.yx+b.yx, a.yy+b.yy
-        };
-    }
-
-    template <typename T>
-    Tensor22<T>&   operator+=(Tensor22<T> &a, const Tensor22<T> &b) 
-    {
-        a.xx+=b.xx;  a.xy+=b.xy;
-        a.yx+=b.yx;  a.yy+=b.yy;
-        return a;
-    }
-
 
 //  --------------------------------------------------------
 //  SUBTRACTION
 
-    template <typename T>
-    constexpr Tensor22<T>   operator- (const Tensor22<T> &a, const Tensor22<T> &b) 
-    {
-        return {
-            a.xx-b.xx, a.xy-b.xy,
-            a.yx-b.yx, a.yy-b.yy
-        };
-    }
-    
-
-    template <typename T>
-    Tensor22<T>&   operator-=(Tensor22<T> &a, const Tensor22<T> &b) 
-    {
-        a.xx-=b.xx;  a.xy-=b.xy;
-        a.yx-=b.yx;  a.yy-=b.yy;
-        return a;
-    }
     
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires std::is_arithmetic_v<T>
-    constexpr Tensor22<product_t<T,U>>  operator*(T a, const Tensor22<T>& b)
-    {
-        return {
-            a*b.xx, a*b.xy,
-            a*b.yx, a*b.yy
-        };
-    }
+    requires trait::is_arithmetic_v<T>
+    constexpr Tensor22<product_t<T,U>>  operator*(T a, const Tensor22<T>& b);
     
     
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor22<product_t<T,U>>  operator*(const Tensor22<T>& a, U b)
-    {
-        return {
-            a.xx*b, a.xy*b,
-            a.yx*b, a.yy*b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Tensor22<product_t<T,U>>  operator*=(const Tensor22<T>& a, U b)
-    {
-        a.xx*=b; a.xy*=b;
-        a.yx*=b; a.yy*=b;        
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor22<product_t<T,U>> operator*(const Tensor22<T>& a, const Tensor22<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-            a.xx*b.xy + a.xy*b.yy,
-
-            a.yx*b.xx + a.yy*b.yx,
-            a.yx*b.xy + a.yy*b.yy
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor22<T>& operator*=(Tensor22<T>&a, const Tensor22<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-        
-    template <typename T, typename U>
-    constexpr Vector2<product_t<T,U>> operator*(const Tensor22<T>&a, const Vector2<U>&b)
-    {
-        return {
-            a.xx*b.x + a.xy*b.y,
-            a.yx*b.x + a.yy*b.y
-        };
-    }
 
 
 //  --------------------------------------------------------
 //  DIVISION
 
 
-    template <typename T, typename U>
-    requires std::is_arithmetic_v<U>
-    constexpr Tensor22<quotient_t<T,U>>  operator/(const Tensor22<T>& a, U b)
-    {
-        return {
-            a.xx/b, a.xy/b,
-            a.yx/b, a.yy/b
-        };
-    }
-    
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Tensor22<quotient_t<T,U>>  operator/=(const Tensor22<T>& a, U b)
-    {
-        a.xx/=b; a.xy/=b;
-        a.yx/=b; a.yy/=b;        
-        return a;
-    }
 
 //  --------------------------------------------------------
 //  OTIMES PRODUCT
@@ -501,30 +345,21 @@ namespace yq {
 
     //! Determinant of a 2x2 tensor
     template <typename T>
-    square_t<T> determinant(const Tensor22<T>& ten)
-    {
-        return ten.determinant();
-    }
+    square_t<T> determinant(const Tensor22<T>& ten);
 
     //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
     //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
 
     //! Inverse of a 2x2 tensor
     template <typename T>
-    auto inverse(const Tensor22<T>&ten)
-    {
-        return ten.inverse();
-    }
+    Tensor22<inverse_t<T>> inverse(const Tensor22<T>&ten);
 
     /*! \brief Trace of the 2 x 2 tensor
     
         \param[in] a    Tensor to take the trace of
     */
     template <typename T>
-    constexpr T     trace(const Tensor22<T>& ten)
-    {
-        return ten.trace();
-    }
+    constexpr T     trace(const Tensor22<T>& ten);
 
 }
 

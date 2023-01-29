@@ -228,45 +228,27 @@ namespace yq {
 
     //! Gets the x-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  x_column(const Tensor24<T>&ten) 
-    {
-        return ten.x_column();
-    }
+    constexpr Vector2<T>  x_column(const Tensor24<T>&ten);
 
     //! Gets the y-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  y_column(const Tensor24<T>&ten) 
-    {
-        return ten.y_column();
-    }
+    constexpr Vector2<T>  y_column(const Tensor24<T>&ten);
 
     //! Gets the z-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  z_column(const Tensor24<T>&ten) 
-    {
-        return ten.z_column();
-    }
+    constexpr Vector2<T>  z_column(const Tensor24<T>&ten);
 
     //! Gets the w-column of the provided tensor
     template <typename T>
-    constexpr Vector2<T>  w_column(const Tensor24<T>&ten) 
-    {
-        return ten.w_column();
-    }
+    constexpr Vector2<T>  w_column(const Tensor24<T>&ten);
 
     //! Gets the x-row of the provided tensor
     template <typename T>
-    constexpr Vector4<T>  x_row(const Tensor24<T>&ten)
-    {
-        return ten.x_row();
-    }
+    constexpr Vector4<T>  x_row(const Tensor24<T>&ten);
 
     //! Gets the y-row of the provided tensor
     template <typename T>
-    constexpr Vector4<T>  y_row(const Tensor24<T>&ten)
-    {
-        return ten.y_row();
-    }
+    constexpr Vector4<T>  y_row(const Tensor24<T>&ten);
 
 //  --------------------------------------------------------
 //  --------------------------------------------------------

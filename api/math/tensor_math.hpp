@@ -81,15 +81,6 @@ namespace yq {
 
 
     
-    template <typename T>
-    constexpr Tensor32<T>  transpose(const Tensor23<T>&v)
-    {
-        return {
-            v.xx, v.yx,
-            v.xy, v.yy,
-            v.xz, v.yz
-        };
-    }
     
 
 
@@ -296,111 +287,10 @@ namespace yq {
     //  Tensor22 * (OTHER)
 
     
-    template <typename T, typename U>
-    constexpr Tensor21<product_t<T,U>> operator*(const Tensor22<T>& a, const Tensor21<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-
-            a.yx*b.xx + a.yy*b.yx
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor23<product_t<T,U>> operator*(const Tensor22<T>& a, const Tensor23<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-            a.xx*b.xy + a.xy*b.yy,
-            a.xx*b.xz + a.xy*b.yz,
-
-            a.yx*b.xx + a.yy*b.yx,
-            a.yx*b.xy + a.yy*b.yy,
-            a.yx*b.xz + a.yy*b.yz
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor24<product_t<T,U>> operator*(const Tensor22<T>& a, const Tensor24<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx,
-            a.xx*b.xy + a.xy*b.yy,
-            a.xx*b.xz + a.xy*b.yz,
-            a.xx*b.xw + a.xy*b.yw,
-
-            a.yx*b.xx + a.yy*b.yx,
-            a.yx*b.xy + a.yy*b.yy,
-            a.yx*b.xz + a.yy*b.yz,
-            a.yx*b.xw + a.yy*b.yw
-        };
-    }
     
     //  -------------------------
     //  Tensor23 * (OTHER)
 
-
-
-    template <typename T, typename U>
-    constexpr Tensor21<product_t<T,U>> operator*(const Tensor23<T>& a, const Tensor31<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor22<product_t<T,U>> operator*(const Tensor23<T>& a, const Tensor32<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy
-        };
-    }
-    
-    template <typename T, typename U>
-    constexpr Tensor23<product_t<T,U>> operator*(const Tensor23<T>& a, const Tensor33<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-            a.xx*b.xz + a.xy*b.yz + a.xz*b.zz,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-            a.yx*b.xz + a.yy*b.yz + a.yz*b.zz
-        };
-    }
-    
-    template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
-    Tensor23<T>& operator*=(Tensor23<T>&a, const Tensor33<U>& b)
-    {
-        a = a * b;
-        return a;
-    }
-
-    template <typename T, typename U>
-    constexpr Tensor24<product_t<T,U>> operator*(const Tensor23<T>& a, const Tensor34<U>& b)
-    {
-        return {
-            a.xx*b.xx + a.xy*b.yx + a.xz*b.zx,
-            a.xx*b.xy + a.xy*b.yy + a.xz*b.zy,
-            a.xx*b.xz + a.xy*b.yz + a.xz*b.zz,
-            a.xx*b.xw + a.xy*b.yw + a.xz*b.zw,
-
-            a.yx*b.xx + a.yy*b.yx + a.yz*b.zx,
-            a.yx*b.xy + a.yy*b.yy + a.yz*b.zy,
-            a.yx*b.xz + a.yy*b.yz + a.yz*b.zz,
-            a.yx*b.xw + a.yy*b.yw + a.yz*b.zw
-        };
-    }
-    
     //  -------------------------
     //  Tensor24 * (OTHER)
 
