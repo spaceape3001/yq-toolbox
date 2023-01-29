@@ -43,13 +43,6 @@ namespace yq {
         {
         }
 
-        constexpr Tensor14(ordered_t,
-            T _xx, T _xy, T _xz, T _xw
-        ) : 
-            xx(_xx), xy(_xy), xz(_xz), xw(_xw)
-        {
-        }
-
         constexpr Tensor14(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w)
         {

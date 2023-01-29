@@ -58,16 +58,11 @@ namespace yq {
         {
         }
 
-        constexpr Tensor42(ordered_t,
-            T _xx, T _xy, 
-            T _yx, T _yy, 
-            T _zx, T _zy, 
-            T _wx, T _wy
-        ) : 
-            xx(_xx), xy(_xy), 
-            yx(_yx), yy(_yy), 
-            zx(_zx), zy(_zy), 
-            wx(_wx), wy(_wy)
+        consteval Tensor42(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), 
+            yx(nan_v<T>), yy(nan_v<T>), 
+            zx(nan_v<T>), zy(nan_v<T>), 
+            wx(nan_v<T>), wy(nan_v<T>)
         {
         }
 
@@ -91,7 +86,7 @@ namespace yq {
         constexpr bool operator==(const Tensor42&) const noexcept = default;
 
         //! Conversion to GLM
-        operator glm::mat<4,2,T,glm::defaultp>() const noexcept ;
+        constexpr operator glm::mat<4,2,T,glm::defaultp>() const noexcept ;
 
         //! Positive (affirmation) operator
         constexpr Tensor42<T>  operator+() const noexcept;
@@ -221,26 +216,9 @@ namespace yq {
         return Tensor42<T>(rows_, x, y, z, w);
     }
     
-    YQ_IDENTITY_1(Tensor42, {
-        one_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>,
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor42, {
-        nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor42, {
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor42, Tensor42<T>(IDENTITY))
+    YQ_NAN_1(Tensor42, Tensor42<T>(NAN))
+    YQ_ZERO_1(Tensor42, Tensor42<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

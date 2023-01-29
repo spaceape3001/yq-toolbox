@@ -25,6 +25,7 @@
 #include <math/trait/is_arithmetic.hpp>
 
 #include <math/dims.hpp>
+#include <math/keywords.hpp>
 
 #include <algorithm>
 #include <cmath>
@@ -131,34 +132,8 @@ namespace yq {
     static constexpr const int64_t  max64   = std::numeric_limits<int64_t>::max();
     static constexpr const uint64_t maxu64  = std::numeric_limits<uint64_t>::max();
     
-    struct all_t {};
-    struct columns_t {};
-    struct diagonal_t {};
-    struct identity_t {};
-    struct ordered_t {};   //! Used in constructors to get the as-is ordered
-    struct rows_t {};
-    struct three_t {};
-    struct two_t {};
-    struct w_t {};
-    struct x_t {};
-    struct y_t {};
-    struct z_t {};
-    struct zero_t {};
-
-    static constexpr const all_t        all_;
-    static constexpr const columns_t    columns_;
-    static constexpr const diagonal_t   diagonal_;
-    static constexpr const identity_t   identity_;
-    static constexpr const ordered_t    ordered_;
-    static constexpr const rows_t       rows_;
-    static constexpr const w_t          w_;
-    static constexpr const x_t          x_;
-    static constexpr const y_t          y_;
-    static constexpr const z_t          z_;
-    static constexpr const zero_t       zero_;
+        //  Some types/constants to work the constructors in magical ways :)
     
-    static constexpr const two_t        ²;
-    static constexpr const three_t      ³;
 
     namespace def {
         static constexpr const long double   long_pi     = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862;
@@ -1103,9 +1078,6 @@ namespace yq {
         template <typename T, typename U>  static constexpr const bool self_div_v = std::is_same_v<T,quotient_t<T,U>>;
         
         template <typename T> static constexpr const bool is_basic_v = std::is_floating_point_v<T>;
-        template <typename T> struct is_arithmetic<std::complex<T>> : is_arithmetic<T> {};
-        template <typename T, typename D>             struct is_arithmetic<MKS<T,D>> : is_arithmetic<T> {};
-        template <typename T, typename D, double K>   struct is_arithmetic<SCALED<T,D,K>> : is_arithmetic<T> {};
     }
     
     //! Fast way to what something's sign is

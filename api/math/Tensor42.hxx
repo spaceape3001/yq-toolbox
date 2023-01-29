@@ -24,12 +24,12 @@
 
 namespace yq {
     template <typename T>
-    Tensor42<T>::operator glm::mat<4,2,T,glm::defaultp>() const noexcept 
+    constexpr Tensor42<T>::operator glm::mat<4,2,T,glm::defaultp>() const noexcept 
     {
-        return {
+        return glm::mat<4,2,T,glm::defaultp>(
             xx, yx, zx, wx,
             xy, yy, zy, wy
-        };
+        );
     }
 
     template <typename T>

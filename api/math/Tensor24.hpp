@@ -48,15 +48,6 @@ namespace yq {
         {
         }
 
-        constexpr Tensor24(ordered_t,
-            T _xx, T _xy, T _xz, T _xw,
-            T _yx, T _yy, T _yz, T _yw
-        ) : 
-            xx(_xx), xy(_xy), xz(_xz), xw(_xw),
-            yx(_yx), yy(_yy), yz(_yz), yw(_yw)
-        {
-        }
-
         constexpr Tensor24(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
             yx(y.x), yy(y.y), yz(y.z), yw(y.w)

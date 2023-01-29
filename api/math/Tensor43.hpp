@@ -57,16 +57,11 @@ namespace yq {
         {
         }
 
-        constexpr Tensor43(ordered_t,
-            T _xx, T _xy, T _xz, 
-            T _yx, T _yy, T _yz, 
-            T _zx, T _zy, T _zz, 
-            T _wx, T _wy, T _wz
-        ) : 
-            xx(_xx), xy(_xy), xz(_xz),
-            yx(_yx), yy(_yy), yz(_yz),
-            zx(_zx), zy(_zy), zz(_zz),
-            wx(_wx), wy(_wy), wz(_wz)
+        consteval Tensor43(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), 
+            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), 
+            zx(nan_v<T>), zy(nan_v<T>), zz(nan_v<T>), 
+            wx(nan_v<T>), wy(nan_v<T>), wz(nan_v<T>)
         {
         }
 
@@ -91,7 +86,7 @@ namespace yq {
         constexpr bool operator==(const Tensor43&) const noexcept = default;
 
         //! Conversion to GLM
-        operator glm::mat<4,3,T,glm::defaultp>() const noexcept ;
+        constexpr operator glm::mat<4,3,T,glm::defaultp>() const noexcept ;
 
         //! Positive (affirmation) operator
         constexpr Tensor43<T>  operator+() const noexcept;
@@ -235,26 +230,9 @@ namespace yq {
         return Tensor43<T>(rows_, x, y, z, w);
     }
     
-    YQ_IDENTITY_1(Tensor43, {
-        one_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, one_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor43, {
-        nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor43, {
-        zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor43, Tensor43<T>(IDENTITY))
+    YQ_NAN_1(Tensor43, Tensor43<T>(NAN))
+    YQ_ZERO_1(Tensor43, Tensor43<T>(ZERO))
     
     template <typename T>
     constexpr Tensor34<T>  transpose(const Tensor43<T>&v);

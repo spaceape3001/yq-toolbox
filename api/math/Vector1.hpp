@@ -29,7 +29,6 @@ namespace yq {
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
         constexpr Vector1(all_t, T v) noexcept : x(v) {}
-        constexpr Vector1(ordered_t, T _x) noexcept : x(_x) {}  // for those templated methods
         constexpr Vector1(x_t, T v) noexcept : x(v) {}
         consteval Vector1(x_t) noexcept : x(one_v<T>) {}
         consteval Vector1(zero_t) noexcept : x(zero_v<T>) {}

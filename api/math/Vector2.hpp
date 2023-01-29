@@ -31,7 +31,6 @@ namespace yq {
         constexpr Vector2() noexcept = default;
         constexpr Vector2(T _x, T _y) noexcept : x(_x), y(_y) {}
         constexpr Vector2(all_t, T v) noexcept : x(v), y(v) {}
-        constexpr Vector2(ordered_t, T _x, T _y) noexcept : x(_x), y(_y) {}
         consteval Vector2(x_t) noexcept : x(one_v<T>), y(zero_v<T>) {}
         constexpr Vector2(x_t, T v) noexcept : x(v), y(zero_v<T>) {}
         consteval Vector2(y_t) noexcept : x(zero_v<T>), y(one_v<T>) {}

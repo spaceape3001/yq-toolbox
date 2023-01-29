@@ -32,8 +32,6 @@ namespace yq {
         constexpr Vector4(T _x, T _y, T _z, T _w) noexcept : 
             x(_x), y(_y), z(_z), w(_w) {}
         constexpr Vector4(all_t, T v) noexcept : x(v), y(v), z(v), w(v) {}
-        constexpr Vector4(ordered_t, T _x, T _y, T _z, T _w) noexcept : 
-            x(_x), y(_y), z(_z), w(_w) {}
         consteval Vector4(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
         constexpr Vector4(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
         consteval Vector4(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>), w(zero_v<T>) {}

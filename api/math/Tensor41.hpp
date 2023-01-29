@@ -59,16 +59,11 @@ namespace yq {
         {
         }
 
-        constexpr Tensor41(ordered_t,
-            T _xx, 
-            T _yx, 
-            T _zx, 
-            T _wx
-        ) : 
-            xx(_xx), 
-            yx(_yx), 
-            zx(_zx), 
-            wx(_wx)
+        consteval Tensor41(nan_t) : 
+            xx(nan_v<T>), 
+            yx(nan_v<T>), 
+            zx(nan_v<T>), 
+            wx(nan_v<T>)
         {
         }
 
@@ -92,7 +87,7 @@ namespace yq {
         constexpr bool operator==(const Tensor41&) const noexcept = default;
 
         //! Conversion to GLM
-        operator glm::mat<4,1,T,glm::defaultp>() const noexcept ;
+        constexpr operator glm::mat<4,1,T,glm::defaultp>() const noexcept ;
 
         //! Positive (affirmation) operator
         constexpr Tensor41<T>  operator+() const noexcept;
@@ -212,26 +207,9 @@ namespace yq {
         return Tensor41<T>(rows_, x, y, z, w);
     }
     
-    YQ_IDENTITY_1(Tensor41, {
-        one_v<T>,
-        zero_v<T>,
-        zero_v<T>,
-        zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor41, {
-        nan_v<T>,
-        nan_v<T>,
-        nan_v<T>,
-        nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor41, {
-        zero_v<T>,
-        zero_v<T>,
-        zero_v<T>,
-        zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor41, Tensor41<T>(IDENTITY))
+    YQ_NAN_1(Tensor41, Tensor41<T>(NAN))
+    YQ_ZERO_1(Tensor41, Tensor41<T>(ZERO))
 
     template <typename T>
     constexpr Tensor14<T>  transpose(const Tensor41<T>&v);

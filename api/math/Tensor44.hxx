@@ -20,14 +20,14 @@
 
 namespace yq {
     template <typename T>
-    Tensor44<T>::operator glm::mat<4,4,T,glm::defaultp>() const noexcept 
+    constexpr Tensor44<T>::operator glm::mat<4,4,T,glm::defaultp>() const noexcept 
     {
-        return {
+        return glm::mat<4,4,T,glm::defaultp>(
             xx, yx, zx, wx,
             xy, yy, zy, wy,
             xz, yz, zz, wz,
             xw, yw, zw, ww
-        };
+        );
     }
 
 
@@ -97,12 +97,12 @@ namespace yq {
     requires trait::is_arithmetic_v<U>
     constexpr Tensor44<product_t<T,U>>  Tensor44<T>::operator*(U b) const noexcept
     {
-        return {
+        return Tensor44<product_t<T,U>>(
             xx*b, xy*b, xz*b, xw*b,
             yx*b, yy*b, yz*b, yw*b,
             zx*b, zy*b, zz*b, zw*b,
             wx*b, wy*b, wz*b, ww*b
-        };
+        );
     }
     
     template <typename T>

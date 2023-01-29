@@ -27,7 +27,7 @@
 
 namespace yq {
     template <typename T>
-    Tensor41<T>::operator glm::mat<4,1,T,glm::defaultp>() const noexcept 
+    constexpr Tensor41<T>::operator glm::mat<4,1,T,glm::defaultp>() const noexcept 
     {
         return glm::mat<4,1,T,glm::defaultp>(
             xx, yx, zx, wx
@@ -367,7 +367,6 @@ namespace yq {
         zx = _zx;
         return *this;
     }
-
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

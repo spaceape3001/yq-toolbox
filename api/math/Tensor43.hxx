@@ -16,6 +16,7 @@
 #include "Tensor32.hpp"
 #include "Tensor33.hpp"
 #include "Tensor34.hpp"
+
 #include "Tensor41.hpp"
 #include "Tensor42.hpp"
 #include "Tensor43.hpp"
@@ -26,13 +27,13 @@
 
 namespace yq {
     template <typename T>
-    Tensor43<T>::operator glm::mat<4,3,T,glm::defaultp>() const noexcept 
+    constexpr Tensor43<T>::operator glm::mat<4,3,T,glm::defaultp>() const noexcept 
     {
-        return {
+        return glm::mat<4,3,T,glm::defaultp>(
             xx, yx, zx, wx,
             xy, yy, zy, wy,
             xz, yz, zz, wz
-        };
+        );
     }
 
     template <typename T>

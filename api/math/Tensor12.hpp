@@ -30,7 +30,6 @@ namespace yq {
         constexpr Tensor12(columns_t, const Vector1<T>& x, const Vector1<T>& y) noexcept : xx(x.x), xy(y.x) {}
         consteval Tensor12(identity_t) noexcept : xx(one_v<T>), xy(zero_v<T>) {}
         constexpr Tensor12(rows_t, Vector2<T>& v) noexcept : xx(v.x), xy(v.y) {}
-        constexpr Tensor12(ordered_t, T _xx, T _xy) noexcept : xx(_xx), xy(_xy) {}
         consteval Tensor12(zero_t) noexcept : xx(zero_v<T>), xy(zero_v<T>) {}
         
 

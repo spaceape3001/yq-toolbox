@@ -73,16 +73,11 @@ namespace yq {
         {
         }
 
-        constexpr Tensor44(ordered_t,
-            T _xx, T _xy, T _xz, T _xw,
-            T _yx, T _yy, T _yz, T _yw,
-            T _zx, T _zy, T _zz, T _zw,
-            T _wx, T _wy, T _wz, T _ww
-        ) : 
-            xx(_xx), xy(_xy), xz(_xz), xw(_xw),
-            yx(_yx), yy(_yy), yz(_yz), yw(_yw),
-            zx(_zx), zy(_zy), zz(_zz), zw(_zw),
-            wx(_wx), wy(_wy), wz(_wz), ww(_ww)
+        consteval Tensor44(nan_t) : 
+            xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), xw(nan_v<T>),
+            yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), yw(nan_v<T>),
+            zx(nan_v<T>), zy(nan_v<T>), zz(nan_v<T>), zw(nan_v<T>),
+            wx(nan_v<T>), wy(nan_v<T>), wz(nan_v<T>), ww(nan_v<T>)
         {
         }
 
@@ -106,7 +101,7 @@ namespace yq {
         constexpr bool operator==(const Tensor44&) const noexcept = default;
         
         //! Conversion to GLM
-        operator glm::mat<4,4,T,glm::defaultp>() const noexcept ;
+        constexpr operator glm::mat<4,4,T,glm::defaultp>() const noexcept ;
 
 
         //! Positive (affirmation) operator
@@ -299,7 +294,7 @@ namespace yq {
     template <typename T, glm::qualifier Q>
     constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t) noexcept
     {
-        return Tensor44<T>( ordered_,
+        return Tensor44<T>( 
             t.x.x, t.y.x, t.z.x, t.w.x,
             t.x.y, t.y.y, t.z.y, t.w.y,
             t.x.z, t.y.z, t.z.z, t.w.z,
@@ -307,26 +302,9 @@ namespace yq {
         );
     }
     
-    YQ_IDENTITY_1(Tensor44, {
-        one_v<T>, zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, one_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, one_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>, one_v<T>
-    })
-
-    YQ_NAN_1(Tensor44, {
-        nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>,
-        nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor44, {
-        zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>,
-        zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor44, Tensor44<T>(IDENTITY))
+    YQ_NAN_1(Tensor44, Tensor44<T>(NAN))
+    YQ_ZERO_1(Tensor44, Tensor44<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

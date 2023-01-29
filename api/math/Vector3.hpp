@@ -33,7 +33,6 @@ namespace yq {
         constexpr Vector3() noexcept = default;
         constexpr Vector3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
         constexpr Vector3(all_t, T v) noexcept : x(v), y(v), z(v) {}
-        constexpr Vector3(ordered_t, T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
         consteval Vector3(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
         constexpr Vector3(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>) {}
         consteval Vector3(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
