@@ -21,6 +21,27 @@
 
 namespace yq {
     template <typename T>
+        template <glm::qualifier Q>
+    constexpr Tensor11<T>::Tensor11(const glm::mat<1,1,T,Q>& t) noexcept :
+        xx(t.x.x)
+    {
+    }
+
+    template <typename T>
+    constexpr Tensor11<T>::operator glm::mat<1,1,T,glm::defaultp>() const noexcept 
+    {
+        return glm::mat<1,1,T,glm::defaultp>(
+            xx
+        );
+    }
+
+    template <typename T>
+    constexpr Tensor11<T>  Tensor11<T>::operator+() const noexcept
+    { 
+        return *this; 
+    }
+
+    template <typename T>
     constexpr Tensor11<T>  Tensor11<T>::operator-() const noexcept
     {
         return Tensor11(

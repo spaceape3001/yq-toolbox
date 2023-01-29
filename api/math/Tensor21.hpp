@@ -24,6 +24,8 @@ namespace yq {
         T xx;
         T yx;
 
+        static constexpr const unsigned rows_count  = 2;
+        static constexpr const unsigned cols_count  = 1;
 
         constexpr Tensor21() noexcept = default;
 
@@ -36,7 +38,7 @@ namespace yq {
         {
         }
         
-        consteval Tensor21(all_t, T v) : 
+        constexpr Tensor21(all_t, T v) : 
             xx(v), 
             yx(v)
         {

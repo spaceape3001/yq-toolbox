@@ -21,6 +21,9 @@ namespace yq {
     
         //! Component type (captures the template parameter)
         using component_type = T;
+        static constexpr const unsigned rows_count  = 1;
+        static constexpr const unsigned cols_count  = 3;
+
         T xx, xy, xz;
         
         constexpr Tensor13() noexcept = default;

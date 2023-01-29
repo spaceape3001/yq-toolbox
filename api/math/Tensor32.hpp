@@ -21,6 +21,9 @@ namespace yq {
     
         //! Component type (captures the template parameter)
         using component_type = T;
+
+        static constexpr const unsigned rows_count  = 3;
+        static constexpr const unsigned cols_count  = 2;
         
         T xx, xy;
         T yx, yy;
@@ -39,7 +42,7 @@ namespace yq {
         {
         }
         
-        consteval Tensor32(all_t, T v) : 
+        constexpr Tensor32(all_t, T v) : 
             xx(v), xy(v),
             yx(v), yy(v),
             zx(v), zy(v)

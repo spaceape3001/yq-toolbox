@@ -23,18 +23,30 @@ namespace yq {
         //! Component type
         using component_type = T;
         
+        static constexpr const unsigned rows_count  = 1;
+        static constexpr const unsigned cols_count  = 2;
+        
         T xx, xy;
         
         constexpr Tensor12() noexcept {}
         constexpr Tensor12(T _xx, T _xy) noexcept : xx(_xx), xy(_xy) {}
+        constexpr Tensor12(all_t, T v) : 
+            xx(v), xy(v)
+        {
+        }
         constexpr Tensor12(columns_t, const Vector1<T>& x, const Vector1<T>& y) noexcept : xx(x.x), xy(y.x) {}
         consteval Tensor12(identity_t) noexcept : xx(one_v<T>), xy(zero_v<T>) {}
+        consteval Tensor12(nan_t) noexcept : Tensor12(ALL, nan_v<T>) {}
         constexpr Tensor12(rows_t, Vector2<T>& v) noexcept : xx(v.x), xy(v.y) {}
-        consteval Tensor12(zero_t) noexcept : xx(zero_v<T>), xy(zero_v<T>) {}
+        consteval Tensor12(zero_t) noexcept : Tensor12(ALL, zero_v<T>) {}
         
+        template <glm::qualifier Q>
+        explicit constexpr Tensor12(const glm::mat<1,2,T,Q>& t) noexcept;
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor12&) const noexcept = default;
+
+        constexpr operator glm::mat<1,2,T,glm::defaultp>() const noexcept;
 
         //! Positive (affirmation) operator
         constexpr Tensor12  operator+() const noexcept;
@@ -141,17 +153,9 @@ namespace yq {
         return Tensor12<T>(rows_, x);
     }
     
-    YQ_IDENTITY_1(Tensor12, {
-        one_v<T>, zero_v<T>
-    })
-
-    YQ_NAN_1(Tensor12, {
-        nan_v<T>, nan_v<T> 
-    })
-    
-    YQ_ZERO_1(Tensor12, {
-        zero_v<T>, zero_v<T> 
-     })
+    YQ_IDENTITY_1(Tensor12, Tensor12<T>(IDENTITY))
+    YQ_NAN_1(Tensor12, Tensor12<T>(NAN))
+    YQ_ZERO_1(Tensor12, Tensor12<T>(ZERO))
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS

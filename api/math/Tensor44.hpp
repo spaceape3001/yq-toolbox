@@ -19,6 +19,9 @@ namespace yq {
     struct Tensor44 {
         //! Component type
         using component_type = T;
+
+        static constexpr const unsigned rows_count  = 4;
+        static constexpr const unsigned cols_count  = 4;
         
         T xx, xy, xz, xw;
         T yx, yy, yz, yw;
@@ -41,7 +44,7 @@ namespace yq {
         {
         }
         
-        consteval Tensor44(all_t, T v) : 
+        constexpr Tensor44(all_t, T v) : 
             xx(v), xy(v), xz(v), xw(v),
             yx(v), yy(v), yz(v), yw(v),
             zx(v), zy(v), zz(v), zw(v),
