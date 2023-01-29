@@ -8,7 +8,6 @@
 
 #define YQ__API__MATH__TENSOR_2_2__HPP 1
 #include <math/preamble.hpp>
-#include <math/trig.hpp>
 #include <math/Vector2.hpp>
 
 namespace yq {
@@ -78,6 +77,14 @@ namespace yq {
         }
 
         consteval Tensor22(zero_t) : Tensor22(ALL, zero_v<T>) {}
+        
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor22(ccw_t, MKS<T,dim::Angle>);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor22(clockwise_t, MKS<T,dim::Angle>);
 
         template <glm::qualifier Q>
         explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;
@@ -246,21 +253,10 @@ namespace yq {
     //! Creates a matrix that can rotate a vector by the specfied angle
     //! In the counter-clockwise direction
     template <typename T>
-    constexpr Tensor22<T>   rotation2(MKS<T,dim::Angle> r)
-    {
-        auto c  = cos(r);
-        auto s  = sin(r);
-        return {
-            c, -s,
-            s, c
-        };
-    }
+    constexpr Tensor22<T>   rotation2(MKS<T,dim::Angle> r);
 
     template <typename T, glm::qualifier Q>
-    constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t)
-    {
-        return Tensor22<T>(t);
-    }
+    constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t);
 
     YQ_IDENTITY_1(Tensor22, Tensor22<T>(IDENTITY))
     YQ_NAN_1(Tensor22, Tensor22<T>(NAN))

@@ -19,10 +19,108 @@
 
 #include <math/Vector3.hpp>
 
+#include <math/Quaternion3.hpp>
+
 #include <math/trig.hpp>
 #include <math/Units.hpp>
 
 namespace yq {
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(const Quaternion3<T>&q) : 
+        Tensor33(COLUMNS,  q * Vector3<T>(X), q * Vector3<T>(Y), q * Vector3<T>(Z) )
+    {
+    }
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(hpr_t, MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
+    {
+        auto ch = cos(hdg);
+        auto sh = sin(hdg);
+
+        auto cp = cos(pitch);
+        auto sp = sin(pitch);
+
+        auto cr = cos(roll);
+        auto sr = sin(roll);
+        
+        xx  = ch*cp;
+        xy  = sh*cp;
+        xz  = -sp;
+        
+        yx  = ch*sp*sr-sh*cr;
+        yy  = sh*sp*sr+ch*cr;
+        yz  = cp*sr;
+        
+        zx  = ch*sp*cr+sh*sr;
+        zy  = sh*sp*cr-ch*sr;
+        zz  = cp*cr;
+    }
+
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(x_t, ccw_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    {
+        auto c  = cos(v);
+        auto s  = sin(v);
+        
+        yy  = c;
+        yz  = -s,
+        
+        zy  = s;
+        zz  = c;
+    }
+    
+    
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(x_t, clockwise_t, MKS<T,dim::Angle>v) : Tensor33(X, CCW, -v) {}
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(y_t, ccw_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    {
+        auto c  = cos(v);
+        auto s  = sin(v);
+        
+        xx  = c;
+        xz  = -s;
+        zx  = s;
+        zz  = c;
+    }
+    
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(y_t, clockwise_t, MKS<T,dim::Angle>v) : Tensor33(Y, CCW, -v) {}
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(z_t, ccw_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    {
+        auto c  = cos(v);
+        auto s  = sin(v);
+        
+        yy  = c;
+        yz  = -s;
+        zy  = s;
+        zz  = c;
+    }
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>::Tensor33(z_t, clockwise_t, MKS<T,dim::Angle>v) : Tensor33(Z, CCW, -v) {}
+
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor33<T>::Tensor33(const glm::mat<3,3,T,Q>& t) noexcept :
@@ -474,11 +572,48 @@ namespace yq {
     }
 
     template <typename T>
+    Tensor33<T> hpr33(MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
+    {
+        return Tensor33<T>(HPR, hdg, pitch, roll);
+    }
+
+    template <typename T>
     Tensor33<inverse_t<T>> inverse(const Tensor33<T>&ten)
     {
         return ten.inverse();
     }
 
+    template <typename T>
+    constexpr Tensor33<T>   rotation3X(MKS<T,dim::Angle> r)
+    {
+        return Tensor33<T>(X, CCW, r);
+    }
+
+    template <typename T>
+    constexpr Tensor33<T>   rotation3Y(MKS<T,dim::Angle> r)
+    {
+        return Tensor33<T>(Y, CCW, r);
+    }
+
+    template <typename T>
+    constexpr Tensor33<T>   rotation3Z(MKS<T,dim::Angle> r)
+    {
+        return Tensor33<T>(Z, CCW, r);
+    }
+
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>     tensor(const Quaternion3<T>& q)
+    {
+        return Tensor33<T>(q);
+    }
+
+    template <typename T, glm::qualifier Q>
+    constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t)
+    {
+        return Tensor33<T>(t);
+    }
+    
     template <typename T>
     constexpr T     trace(const Tensor33<T>& ten)
     {

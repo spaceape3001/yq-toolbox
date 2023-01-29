@@ -24,6 +24,23 @@
 
 namespace yq {
     template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor22<T>::Tensor22(ccw_t, MKS<T,dim::Angle> v)
+    {
+        auto c  = cos(v);
+        auto s  = sin(v);
+        xx = yy = c;
+        xy  = -s;
+        yx  = s;
+    }
+
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor22<T>::Tensor22(clockwise_t, MKS<T,dim::Angle>v) : Tensor22(CCW, -v) {}
+
+    template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor22<T>::Tensor22(const glm::mat<2,2,T,Q>& t) noexcept :
         xx(t.x.x), xy(t.y.x),
@@ -229,7 +246,7 @@ namespace yq {
     {        
         xx = v.x;
         yy = v.y;
-        return *this;
+        return *this;    
     }
 
     template <typename T>
@@ -385,6 +402,18 @@ namespace yq {
     Tensor22<inverse_t<T>> inverse(const Tensor22<T>&ten)
     {
         return ten.inverse();
+    }
+
+    template <typename T>
+    constexpr Tensor22<T>   rotation2(MKS<T,dim::Angle> r)
+    {
+        return Tensor22<T>(CCW, r);
+    }
+
+    template <typename T, glm::qualifier Q>
+    constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t)
+    {
+        return Tensor22<T>(t);
     }
 
     template <typename T>

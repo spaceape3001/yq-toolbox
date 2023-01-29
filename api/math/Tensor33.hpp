@@ -8,7 +8,6 @@
 
 #define YQ__API__MATH__TENSOR_3_3__HPP 1
 #include <math/preamble.hpp>
-#include <math/trig.hpp>
 #include <math/Vector3.hpp>
 
 namespace yq {
@@ -89,6 +88,38 @@ namespace yq {
 
         consteval Tensor33(zero_t) : Tensor33(ALL, zero_v<T>) {}
         
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        explicit Tensor33(const Quaternion3<T>&);
+        
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(hpr_t, MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
+        
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(x_t, ccw_t, MKS<T,dim::Angle>v);
+        
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(x_t, clockwise_t, MKS<T,dim::Angle>v);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(y_t, ccw_t, MKS<T,dim::Angle>v);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(y_t, clockwise_t, MKS<T,dim::Angle>v);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(z_t, ccw_t, MKS<T,dim::Angle>v);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Tensor33(z_t, clockwise_t, MKS<T,dim::Angle>v);
+
         template <glm::qualifier Q>
         explicit constexpr Tensor33(const glm::mat<3,3,T,Q>& t) noexcept;
 
@@ -99,16 +130,16 @@ namespace yq {
         constexpr operator glm::mat<3,3,T,glm::defaultp>() const noexcept;
 
         //! Positive (affirmation) operator
-        constexpr Tensor33  operator+() const noexcept;
+        constexpr Tensor33      operator+() const noexcept;
 
         //! Negation operator
-        constexpr Tensor33  operator-() const noexcept;
+        constexpr Tensor33      operator-() const noexcept;
 
-        constexpr Tensor33   operator+ (const Tensor33 &b) const noexcept;
-        Tensor33&            operator+=(const Tensor33 &b) noexcept;
+        constexpr Tensor33      operator+ (const Tensor33 &b) const noexcept;
+        Tensor33&               operator+=(const Tensor33 &b) noexcept;
 
-        constexpr Tensor33   operator- (const Tensor33 &b) const noexcept;
-        Tensor33&            operator-=(const Tensor33 &b) noexcept;
+        constexpr Tensor33      operator- (const Tensor33 &b) const noexcept;
+        Tensor33&               operator-=(const Tensor33 &b) noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
@@ -274,66 +305,23 @@ namespace yq {
         \return 3x3 rotation matrix
     */
     template <typename T>
-    Tensor33<T> hpr33(MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
-    {
-        auto ch = cos(hdg);
-        auto sh = sin(hdg);
-
-        auto cp = cos(pitch);
-        auto sp = sin(pitch);
-
-        auto cr = cos(roll);
-        auto sr = sin(roll);
-        
-        return {
-            ch*cp, sh*cp, -sp,
-            ch*sp*sr-sh*cr, sh*sp*sr+ch*cr, cp*sr,
-            ch*sp*cr+sh*sr, sh*sp*cr-ch*sr, cp*cr
-        };
-    }
+    Tensor33<T> hpr33(MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
 
     //! Creates a matrix that can rotate a vector by the specfied angle
     //! In the counter-clockwise direction
     template <typename T>
-    constexpr Tensor33<T>   rotation3X(MKS<T,dim::Angle> r)
-    {
-        auto c  = cos(r);
-        auto s  = sin(r);
-        return {
-            1., 0., 0.,
-            0., c, -s,
-            0., s, c
-        };
-    }
+    constexpr Tensor33<T>   rotation3X(MKS<T,dim::Angle> r);
 
     //! Creates a matrix that can rotate a vector by the specfied angle
     //! In the counter-clockwise direction
     template <typename T>
-    constexpr Tensor33<T>   rotation3Y(MKS<T,dim::Angle> r)
-    {
-        auto c  = cos(r);
-        auto s  = sin(r);
-        return {
-            c, 0., -s,
-            0., 1., 0.,
-            s, 0., c
-        };
-    }
+    constexpr Tensor33<T>   rotation3Y(MKS<T,dim::Angle> r);
 
 
     //! Creates a matrix that can rotate a vector by the specfied angle
     //! In the counter-clockwise direction
     template <typename T>
-    constexpr Tensor33<T>   rotation3Z(MKS<T,dim::Angle> r)
-    {
-        auto c  = cos(r);
-        auto s  = sin(r);
-        return {
-            1., 0., 0.,
-            0., c, -s,
-            0., s, c
-        };
-    }
+    constexpr Tensor33<T>   rotation3Z(MKS<T,dim::Angle> r);
 
 
     /*! \brief Create 3x3 tensor by rows
@@ -344,13 +332,14 @@ namespace yq {
         return Tensor33<T>(ROWS, x, y, z);
     }
 
+    template <typename T>
+    requires std::is_floating_point_v<T>
+    Tensor33<T>     tensor(const Quaternion3<T>& q);
+
     /*! \brief Create 3x3 tensor from GLM
     */
     template <typename T, glm::qualifier Q>
-    constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t)
-    {
-        return Tensor33<T>(t);
-    }
+    constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t);
     
     
     YQ_IDENTITY_1(Tensor33, Tensor33<T>(IDENTITY))
@@ -448,6 +437,7 @@ namespace yq {
     template <typename T>
     Tensor33<inverse_t<T>> inverse(const Tensor33<T>&ten);
     
+
     /*! \brief Trace of the 3 x 3 tensor
     
         \param[in] a    Tensor to take the trace of
