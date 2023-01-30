@@ -32,8 +32,63 @@ namespace yq {
         //! XY (bivector component)
         T               xy;
         
+        constexpr Multivector2() noexcept = default;
+        constexpr Multivector2(T _a, T _x, T _y, T _xy) noexcept : a(_a), x(_x), y(_y), xy(_xy) {}
+        constexpr Multivector2(T _a, const Vector2<T>& v, const Bivector2<T>& b) noexcept : a(_a), x(v.x), y(v.y), xy(b.xy) {}
+        constexpr Multivector2(all_t, T v) noexcept : a(v), x(v), y(v), xy(v) {}
+        consteval Multivector2(nan_t) noexcept : Multivector2(ALL, nan_v<T>) {}
+        consteval Multivector2(one_t) noexcept : Multivector2(ALL, one_v<T>) {}
+        consteval Multivector2(zero_t) noexcept : Multivector2(ALL, zero_v<T>) {}
+
         //! Defaulted equality operator
         constexpr bool operator==(const Multivector2&) const noexcept = default;
+
+        constexpr Multivector2<T> operator+() const noexcept;
+        constexpr Multivector2<T> operator-() const noexcept;
+        
+        constexpr Multivector2<T> operator+(T b) const noexcept;
+        Multivector2<T>& operator+=(T b) noexcept;
+        
+        constexpr Multivector2<T> operator+(const Bivector2<T>& b) const noexcept;
+        Multivector2<T>& operator+=(const Bivector2<T>& b) noexcept;
+        
+        constexpr Multivector2<T> operator+(const Multivector2<T>& b) const noexcept;
+        Multivector2<T>& operator+=(const Multivector2<T>& b) noexcept;
+        
+        constexpr Multivector2<T> operator+(const Vector2<T>& b) const noexcept;
+        Multivector2<T>& operator+=(const Vector2<T>& b) noexcept;
+
+        constexpr Multivector2<T> operator-(T b) const noexcept;
+        Multivector2<T>& operator-=(T b) noexcept;
+        
+        constexpr Multivector2<T> operator-(const Bivector2<T>& b) const noexcept;
+        Multivector2<T>& operator-=(const Bivector2<T>& b) noexcept;
+        
+        constexpr Multivector2<T> operator-(const Multivector2<T>& b) const noexcept;
+        Multivector2<T>& operator-=(const Multivector2<T>& b) noexcept;
+        
+        constexpr Multivector2<T> operator-(const Vector2<T>& b) const noexcept;
+        Multivector2<T>& operator-=(const Vector2<T>& b) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Multivector2<product_t<T,U>> operator*(U b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Multivector2<T>& operator*=(U b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Multivector2<quotient_t<T,U>> operator/(U b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Multivector2<T>& operator/=(U b) noexcept;
+
+        constexpr Bivector2<T>  bivector() const noexcept;
+        constexpr Vector2<T>    vector() const noexcept;
+        
     };
 
     YQ_IEEE754_1(Multivector2)
@@ -49,17 +104,11 @@ namespace yq {
 
     //! Extracts the bivector part
     template <typename T>
-    constexpr Bivector2<T> bivector(const Multivector2<T>& a) noexcept
-    {
-        return { a.xy };
-    }
+    constexpr Bivector2<T> bivector(const Multivector2<T>& a) noexcept;
 
     //! Extracts the vector part
     template <typename T>
-    constexpr Vector2<T> vector(const Multivector2<T>& a) noexcept
-    {
-        return { a.x, a.y };
-    }
+    constexpr Vector2<T> vector(const Multivector2<T>& a) noexcept;
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -69,326 +118,20 @@ namespace yq {
 
 
 //  --------------------------------------------------------
-//  POSITIVE
+//  --------------------------------------------------------
 
-    //! Affirmation operator (to complement the negative)
     template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a) noexcept
-    {
-        return a;
-    }
+    constexpr Multivector2<T> operator+(T a, const Multivector2<T>& b) noexcept;
 
-//  --------------------------------------------------------
-//  NEGATIVE
 
-    //! Negation operatpr
     template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a) noexcept
-    {
-        return {-a.a, -a.x, -a.y, -a.xy};
-    }
-
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
+    constexpr Multivector2<T> operator-(T a, const Multivector2<T>& b) noexcept;
 
 
     
-
-    //! Adds multivector with bivector
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, const Bivector2<T>& b) noexcept
-    {
-        return {
-            a.a,
-            a.x, a.y,
-            a.xy + b.xy
-        };
-    }
-
-    //! Self-addition, adds right bivector into the left multivector
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, const Bivector2<T>& b) noexcept
-    {
-        a.xy += b.xy;
-        return a;
-    }
-
-    //! Adds two multivectors together
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, const Multivector2<T>&  b) noexcept
-    {
-        return {
-            a.a+b.a,
-            a.x+b.x, a.y+b.y,
-            a.xy+b.xy
-        };
-    }
-
-    //! Self-addition, adds right multivector into left multivector
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, const Multivector2<T>& b) noexcept
-    {
-        a.a += b.a;
-        a.x += b.x; a.y += b.y; 
-        a.xy += b.xy;
-        return a;
-    }
-        
-    //! Adds multivector with scalar
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, unity_t<T>  b) noexcept
-    {
-        return {
-            a.a+b,
-            a.x, a.y,
-            a.xy
-        };
-    }
-
-    //! Self-addition, adds right scalar into left multivector
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, unity_t<T>  b) noexcept
-    {
-        a.a += b;
-        return a;
-    }
-
-    //! Adds multivector with vector
-    template <typename T>
-    constexpr Multivector2<T> operator+(const Multivector2<T>& a, const Vector2<T>&  b) noexcept
-    {
-        return {
-            a.a,
-            a.x+b.x, a.y+b.y,
-            a.xy
-        };
-    }
-
-    //! Self-addition, adds right vector into left multivector
-    template <typename T>
-    Multivector2<T>& operator+=(Multivector2<T>& a, const Vector2<T>& b) noexcept
-    {
-        a.x += b.x; a.y += b.y; 
-        return a;
-    }
-
-
-    //! Adds scalar with multivector
-    template <typename T>
-    constexpr Multivector2<T> operator+(unity_t<T> a, const Multivector2<T>& b) noexcept
-    {
-        return { 
-            a+b.a, 
-            b.x, b.y, 
-            b.xy
-        };
-    }
-
-
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-
-
-    //! Subtracts bivector from multivector
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, const Bivector2<T>& b) noexcept
-    {
-        return {
-            a.a,
-            a.x, a.y,
-            a.xy - b.xy
-        };
-    }
-
-    //! Self-subtraction, subtracts the right bivector from the left multivector
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, const Bivector2<T>& b) noexcept
-    {
-        a.xy -= b.xy;
-        return a;
-    }
-
-    //! Subtracts two multivectors
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, const Multivector2<T>& b) noexcept
-    {
-        return {
-            a.a-b.a,
-            a.x-b.x, a.y-b.y,
-            a.xy-b.xy
-        };
-    }
-
-    //! Self-subtraction, subtracts the right multivector from the left multivector
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, const Multivector2<T>& b) noexcept
-    {
-        a.a -= b.a;
-        a.x -= b.x; a.y -= b.y; 
-        a.xy -= b.xy;
-        return a;
-    }
-    
-    //! Subtracts the scalar from the multivector
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, unity_t<T> b) noexcept
-    {
-        return {
-            a.a-b,
-            a.x, a.y,
-            a.xy
-        };
-    }
-
-    //! Self-subtraction, subtracts the right scalar from the left multivector
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, unity_t<T> b) noexcept
-    {
-        a.a -= b;
-        return a;
-    }
-
-    //! Subtracts the vector from the multivector
-    template <typename T>
-    constexpr Multivector2<T> operator-(const Multivector2<T>& a, const Vector2<T>& b) noexcept
-    {
-        return {
-            a.a,
-            a.x-b.x, a.y-b.y,
-            a.xy
-        };
-    }
-
-    //! Self-subtraction, subtracts the right vector from the left multivector
-    template <typename T>
-    Multivector2<T>& operator-=(Multivector2<T>& a, const Vector2<T>& b) noexcept
-    {
-        a.x -= b.x; a.y -= b.y; 
-        return a;
-    }
-    
-
-    //! Subtracts multivector from scalar
-    template <typename T>
-    constexpr Multivector2<T> operator-(unity_t<T> a, const Multivector2<T>& b) noexcept
-    {
-        return { 
-            a-b.a, 
-            -b.x, -b.y, 
-            -b.xy
-        };
-    }
-
-    
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-    //! Scaling multiplication of scalar with multivector
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector2<T> operator*(T a, const Multivector2<T>&b) noexcept
-    {
-        return { 
-            a*b.a, 
-            a*b.x, a*b.y, 
-            a*b.xy 
-        };
-    }
-
-    //! Scaling multiplication of scalar with multivector
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector2<T> operator*(const Multivector2<T>& a, T b) noexcept
-    {
-        return { 
-            a.a*b, 
-            a.x*b, a.y*b, 
-            a.xy*b 
-        };
-    }
-
-    //! Self-scalaring multiplying left multivector by right scalar
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Multivector2<T>& operator*=(Multivector2<T>& a, T b) noexcept
-    {
-        a.a  *= b;
-        a.x  *= b; a.y *= b; 
-        a.xy *= b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  DIVISION
-
-    //! Scaling division, reducing the left mulitvector by the right value
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Multivector2<T> operator/(const Multivector2<T>& a, T b) noexcept
-    {
-        return { 
-            a.a/b, 
-            a.x/b, a.y/b, 
-            a.xy/b 
-        };
-    }
-
-    //! Self-scaling division, reducing the left mulitvector by the right value
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Multivector2<T>& operator/=(Multivector2<T>& a, T b) noexcept
-    {
-        a.a  /= b;
-        a.x  /= b; a.y /= b; 
-        a.xy /= b;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<U>
+    constexpr Multivector2<product_t<T,U>> operator*(T a, const Multivector2<U>&b) noexcept;
 
 }
 
