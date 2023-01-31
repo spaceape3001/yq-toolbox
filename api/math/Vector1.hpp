@@ -111,6 +111,9 @@ namespace yq {
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Vector1<T>& operator*=(U b) noexcept;
 
+        template <typename U>
+        constexpr Multivector1<product_t<T,U>> operator*(const Multivector1<U>& b) const noexcept;
+
         //! Vector/tensor multiplication
         template <typename U>
         constexpr Vector1<product_t<T,U>> operator*(const Tensor11<U>&) const noexcept;
@@ -143,6 +146,9 @@ namespace yq {
         //! Inner product
         template <typename U>
         constexpr product_t<T,U> operator INNER (const Vector1<U>&b) const noexcept;
+
+        template <typename U>
+        constexpr product_t<T,U>   operator INNER(const Multivector1<T>&b) const noexcept;
 
         //! OTIMES Vector1
         template <typename U>

@@ -14,7 +14,7 @@
 
 #include <math/AxBox1.hpp>
 
-#include "Multivector1.hpp"
+#include <math/Multivector1.hpp>
 
 #include <math/Tensor11.hpp>
 #include <math/Tensor12.hpp>
@@ -135,6 +135,14 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    constexpr Multivector1<product_t<T,U>> Vector1<T>::operator*(const Multivector1<U>& b) const noexcept
+    {
+        return Multivector1<T>( x * b.x, x * b.a);
+    }
+
+
+    template <typename T>
+        template <typename U>
     constexpr Vector1<product_t<T,U>> Vector1<T>::operator*(const Tensor11<U>&b) const noexcept
     {
         return Vector1<product_t<T,U>>(
@@ -196,6 +204,13 @@ namespace yq {
     constexpr product_t<T,U> Vector1<T>::operator DOT (const Vector1<U>&b) const noexcept
     {
         return x*b.x;
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr product_t<T,U>   Vector1<T>::operator INNER(const Multivector1<T>&b) const noexcept
+    {
+        return x * b.x;
     }
 
     template <typename T>
