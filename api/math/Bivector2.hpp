@@ -28,7 +28,7 @@ namespace yq {
         consteval Bivector2(nan_t) noexcept : Bivector2(ALL, nan_v<T>) {}
         consteval Bivector2(one_t) noexcept : Bivector2(ALL, one_v<T>) {}
         constexpr Bivector2(xy_t, T v) noexcept : xy(v) {}
-        consteval Bivector2(xy_t) noexcept : Bivector2(XY, ONE) {}
+        consteval Bivector2(xy_t) noexcept : Bivector2(XY, one_v<T>) {}
         consteval Bivector2(zero_t) noexcept : Bivector2(ALL, zero_v<T>) {}
         
         

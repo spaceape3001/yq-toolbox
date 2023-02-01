@@ -107,52 +107,6 @@ namespace yq {
 //  ADDITION
 
     template <typename T>
-    constexpr Multivector3<T> operator+(const Bivector3<T>& a, const Multivector3<T>& b) noexcept
-    {
-        return { 
-            b.a, 
-            b.x, b.y, b.z,
-            a.xy+b.xy, a.yz+b.yz, a.zx+b.zx,
-            b.xyz
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector3<T> operator+(const Bivector3<T>& a, const Trivector3<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            {}, {}, {}, 
-            a.xy, a.yz, a.zx, 
-            b.xyz
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector3<T> operator+(const Bivector3<T>& a, unity_t<T>  b) noexcept
-    {
-        return { 
-            b, 
-            {}, {}, {}, 
-            a.xy, a.yz, a.zx, 
-            {} 
-        };
-    }
-
-
-    template <typename T>
-    constexpr Multivector3<T> operator+(const Bivector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            b.x, b.y, b.z, 
-            a.xy, a.yz, a.zx, 
-            {} 
-        };
-    }
-
-
-    template <typename T>
     constexpr Multivector3<T> operator+(const Multivector3<T>& a, const Bivector3<T>& b) noexcept
     {
         return {
@@ -291,16 +245,6 @@ namespace yq {
         };
     }
     
-    template <typename T>
-    constexpr Multivector3<T> operator+(unity_t<T> a, const Bivector3<T>& b) noexcept
-    {
-        return { 
-            a, 
-            {}, {}, {}, 
-            b.xy, b.yz, b.zx, 
-            {} 
-        };
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator+(unity_t<T> a, const Multivector3<T>& b) noexcept
@@ -314,7 +258,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Multivector3<T> operator+(unity_t<T> a, const Trivector3<T>& b) noexcept
+    constexpr Multivector3<T> operator+(T a, const Trivector3<T>& b) noexcept
     {
         return { 
             a, 
@@ -324,55 +268,9 @@ namespace yq {
         };
     }
 
-
     
 //  --------------------------------------------------------
 //  SUBTRACTION
-
-    template <typename T>
-    constexpr Multivector3<T> operator-(const Bivector3<T>& a, const Multivector3<T>& b) noexcept
-    {
-        return { 
-            -b.a, 
-            -b.x, -b.y, -b.z,
-            a.xy-b.xy, a.yz-b.yz, a.zx-b.zx,
-            -b.xyz
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector3<T> operator-(const Bivector3<T>& a, const Trivector3<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            {}, {}, {}, 
-            a.xy, a.yz, a.zx, 
-            -b.xyz
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector3<T> operator-(const Bivector3<T>& a, unity_t<T> b) noexcept
-    {
-        return { 
-            -b, 
-            {}, {}, {}, 
-            a.xy, a.yz, a.zx, 
-            {} 
-        };
-    }
-
-
-    template <typename T>
-    constexpr Multivector3<T> operator-(const Bivector3<T>& a, const Vector3<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            -b.x, -b.y, -b.z, 
-            a.xy, a.yz, a.zx, 
-            {} 
-        };
-    }
 
     template <typename T>
     constexpr Multivector3<T> operator-(const Multivector3<T>& a, const Bivector3<T>& b) noexcept
@@ -510,17 +408,6 @@ namespace yq {
             -b.x, -b.y, -b.z,
             {}, {}, {}, 
             a.xyz 
-        };
-    }
-
-    template <typename T>
-    constexpr Multivector3<T> operator-(unity_t<T> a, const Bivector3<T>& b) noexcept
-    {
-        return { 
-            a, 
-            {}, {}, {}, 
-            -b.xy, -b.yz, -b.zx, 
-            {} 
         };
     }
 

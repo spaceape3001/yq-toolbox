@@ -28,9 +28,56 @@ namespace yq {
 
         //! ZX component
         square_t<T>     zx;
+
+        constexpr Bivector3() noexcept = default;
+        constexpr Bivector3(T _xy, T _yz, T _zx) noexcept : xy(_xy), yz(_yz), zx(_zx) {}
+        constexpr Bivector3(all_t, T v) noexcept : xy(v), yz(yz), zx(zx) {}
+        consteval Bivector3(nan_t) noexcept : Bivector3(ALL, nan_v<T>) {}
+        consteval Bivector3(one_t) noexcept : Bivector3(ALL, one_v<T>) {}
+        constexpr Bivector3(xy_t, T v) noexcept : xy(v), yz(zero_v<T>), zx(zero_v<T>) {}
+        consteval Bivector3(xy_t) noexcept : Bivector3(XY, one_v<T>) {}
+        constexpr Bivector3(yz_t, T v) noexcept : xy(zero_v<T>), yz(v), zx(zero_v<T>) {}
+        consteval Bivector3(yz_t) noexcept : Bivector3(YZ, one_v<T>) {}
+        constexpr Bivector3(zx_t, T v) noexcept : xy(zero_v<T>), yz(zero_v<T>), zx(v) {}
+        consteval Bivector3(zx_t) noexcept : Bivector3(ZX, one_v<T>) {}
+        consteval Bivector3(zero_t) noexcept : Bivector3(ALL, zero_v<T>) {}
         
         //! Defaulted comparison operator
         constexpr bool operator==(const Bivector3&) const noexcept = default;
+
+        constexpr Bivector3         operator+() const noexcept;
+        constexpr Bivector3         operator-() const noexcept;
+
+        constexpr Multivector3<T>   operator+(T b) const noexcept;
+        constexpr Bivector3         operator+(const Bivector3& b) const noexcept;
+        Bivector3&                  operator+=(const Bivector3&b) noexcept;
+        constexpr Multivector3<T>   operator+(const Multivector3<T>& b) const noexcept;
+        constexpr Multivector3<T>   operator+(const Trivector3<T>& b) const noexcept;
+        constexpr Multivector3<T>   operator+(const Vector3<T>& b) const noexcept;
+
+        constexpr Multivector3<T>   operator-(T b) const noexcept;
+        constexpr Bivector3         operator-(const Bivector3& b) const noexcept;
+        Bivector3&                  operator-=(const Bivector3&b) noexcept;
+        constexpr Multivector3<T>   operator-(const Multivector3<T>& b) const noexcept;
+        constexpr Multivector3<T>   operator-(const Trivector3<T>& b) const noexcept;
+        constexpr Multivector3<T>   operator-(const Vector3<T>& b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Bivector3<product_t<T,U>> operator*(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Bivector3<product_t<T,U>>& operator*=(U b) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<T>
+        Bivector3<quotient_t<T,U>> operator/(U b) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<T> && trait::self_div_v<T,U>)
+        Bivector3& operator/=(U b) noexcept;
+
     };
 
     YQ_IEEE754_1(Bivector3)
@@ -43,42 +90,42 @@ namespace yq {
     */
     constexpr Bivector3D   operator "" _xy3(unsigned long long int v) noexcept
     {
-        return {(double) v, 0., 0.};
+        return Bivector3D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
     constexpr Bivector3D   operator "" _xy3(long double v) noexcept
     {
-        return {(double) v, 0., 0.};
+        return Bivector3D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
     constexpr Bivector3D   operator "" _yz3(unsigned long long int v) noexcept
     {
-        return {0., (double) v,  0.};
+        return Bivector3D(YZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _xz3(long double v) noexcept
+    constexpr Bivector3D   operator "" _yz3(long double v) noexcept
     {
-        return {0., (double) v, 0.};
+        return Bivector3D(YZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
     constexpr Bivector3D   operator "" _zx3(unsigned long long int v) noexcept
     {
-        return {0., 0., (double) v};
+        return Bivector3D(ZX, (double) v);
     }
 
     /*! \brief Literal constructor
     */
     constexpr Bivector3D   operator "" _zx3(long double v) noexcept
     {
-        return {0., 0., (double) v};
+        return Bivector3D(ZX, (double) v);
     }
 
     YQ_NAN_1(Bivector3, Bivector3<T>{nan_v<square_t<T>>, nan_v<square_t<T>>, nan_v<square_t<T>>})
@@ -92,171 +139,18 @@ namespace yq {
 
 
 //  --------------------------------------------------------
-//  POSITIVE
+//  --------------------------------------------------------
 
-    /*! \brief Affirmation (positive) operator
+template <typename T>
+    constexpr Multivector3<T> operator+(T a, const Bivector3<T>& b) noexcept;
+
+    template <typename T>
+    constexpr Multivector3<T> operator-(T a, const Bivector3<T>& b) noexcept;
     
-        \note Here to complement the negation operator
-    */
-    template <typename T>
-    constexpr Bivector3<T> operator+(const Bivector3<T>& a) noexcept
-    {
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    /*! \brief Negation operator of a bivector
-    */
-    template <typename T>
-    constexpr Bivector3<T> operator-(const Bivector3<T>& a) noexcept
-    {
-        return {-a.xy, -a.yz, -a.zx};
-    }
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-    /*! \brief Addition operator
-    */
-    template <typename T>
-    constexpr Bivector3<T> operator+(const Bivector3<T>& a, const Bivector3<T>& b) noexcept
-    {
-        return {a.xy+b.xy, a.yz+b.yz, a.zx+b.zx};
-    }
-
-    /*! \brief Self-Addition operator
-    */
-    template <typename T>
-    Bivector3<T>&       operator+=(Bivector3<T>&a, const Bivector3<T>&b) noexcept
-    {
-        a.xy+=b.xy; a.yz+=b.yz; a.zx+=b.zx;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    /*! \brief Subtraction operator
-    */
-    template <typename T>
-    constexpr Bivector3<T> operator-(const Bivector3<T>& a, const Bivector3<T>& b) noexcept
-    {
-        return {a.xy-b.xy, a.yz-b.yz, a.zx-b.zx};
-    }
-
-    /*! \brief Self-subtraction operator 
-    */
-    template <typename T>
-    Bivector3<T>&       operator-=(Bivector3<T>&a, const Bivector3<T>&b) noexcept
-    {
-        a.xy-=b.xy; a.yz-=b.yz; a.zx-=b.zx;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-    /*! \brief Scaling multiplication operator
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    Bivector3<product_t<T,U>> operator*(T a, const Bivector3<U>& b) noexcept;
     
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector3<T> operator*(T a, const Bivector3<T>& b) noexcept
-    {
-        return { a*b.xy, a*b.yz, a*b.zx };
-    }
-
-    /*! \brief Scaling multiplication operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector3<T> operator*(const Bivector3<T>& a, T  b) noexcept
-    {
-        return { a.xy*b, a.yz*b, a.zx*b };
-    }
-
-    /*! \brief Self-scaling multiplication operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector3<T>& operator*=(Bivector3<T>& a, T  b) noexcept
-    {
-        a.xy*=b, a.yz*=b, a.zx*=b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  DIVISION
-
-    /*! \brief Scaling division operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector3<T> operator/(const Bivector3<T>& a, T  b) noexcept
-    {
-        return { a.xy/b, a.yz/b, a.zx/b };
-    }
-
-    /*! \brief Self-scaling division operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Bivector3<T>& operator/=(Bivector3<T>& a, T  b) noexcept
-    {
-        a.xy/=b, a.yz/=b, a.zx/=b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
 }
 
 YQ_TYPE_DECLARE(yq::Bivector3D)
