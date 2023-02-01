@@ -98,27 +98,27 @@ namespace yq {
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(x_t, ccw_t, MKS<T,dim::Angle>v);
+        Tensor33(ccw_t, x_t, MKS<T,dim::Angle>v);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(x_t, clockwise_t, MKS<T,dim::Angle>v);
+        Tensor33(clockwise_t, x_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(y_t, ccw_t, MKS<T,dim::Angle>v);
+        Tensor33(ccw_t, y_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(y_t, clockwise_t, MKS<T,dim::Angle>v);
+        Tensor33(clockwise_t, y_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(z_t, ccw_t, MKS<T,dim::Angle>v);
+        Tensor33(ccw_t, z_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(z_t, clockwise_t, MKS<T,dim::Angle>v);
+        Tensor33(clockwise_t, z_t, MKS<T,dim::Angle>v);
 
         template <glm::qualifier Q>
         explicit constexpr Tensor33(const glm::mat<3,3,T,Q>& t) noexcept;

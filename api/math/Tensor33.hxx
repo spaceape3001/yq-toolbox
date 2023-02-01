@@ -64,7 +64,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(x_t, ccw_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    Tensor33<T>::Tensor33(ccw_t, x_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -80,12 +80,12 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(x_t, clockwise_t, MKS<T,dim::Angle>v) : Tensor33(X, CCW, -v) {}
+    Tensor33<T>::Tensor33(clockwise_t, x_t, MKS<T,dim::Angle>v) : Tensor33(CCW, X, -v) {}
 
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(y_t, ccw_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    Tensor33<T>::Tensor33(ccw_t, y_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -100,12 +100,12 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(y_t, clockwise_t, MKS<T,dim::Angle>v) : Tensor33(Y, CCW, -v) {}
+    Tensor33<T>::Tensor33(clockwise_t, y_t, MKS<T,dim::Angle>v) : Tensor33(CCW, Y, -v) {}
 
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(z_t, ccw_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    Tensor33<T>::Tensor33(ccw_t, z_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -119,7 +119,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(z_t, clockwise_t, MKS<T,dim::Angle>v) : Tensor33(Z, CCW, -v) {}
+    Tensor33<T>::Tensor33(clockwise_t, z_t, MKS<T,dim::Angle>v) : Tensor33(CCW, Z, -v) {}
 
     template <typename T>
         template <glm::qualifier Q>
@@ -586,19 +586,19 @@ namespace yq {
     template <typename T>
     constexpr Tensor33<T>   rotation3X(MKS<T,dim::Angle> r)
     {
-        return Tensor33<T>(X, CCW, r);
+        return Tensor33<T>(CCW, X, r);
     }
 
     template <typename T>
     constexpr Tensor33<T>   rotation3Y(MKS<T,dim::Angle> r)
     {
-        return Tensor33<T>(Y, CCW, r);
+        return Tensor33<T>(CCW, Y, r);
     }
 
     template <typename T>
     constexpr Tensor33<T>   rotation3Z(MKS<T,dim::Angle> r)
     {
-        return Tensor33<T>(Z, CCW, r);
+        return Tensor33<T>(CCW, Z, r);
     }
 
     template <typename T>

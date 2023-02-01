@@ -37,27 +37,27 @@ namespace yq {
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(x_t, ccw_t, MKS<T,dim::Angle>v);
+        Quaternion3(ccw_t, x_t, MKS<T,dim::Angle>v);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(x_t, clockwise_t, MKS<T,dim::Angle>v);
+        Quaternion3(clockwise_t, x_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(y_t, ccw_t, MKS<T,dim::Angle>v);
+        Quaternion3(ccw_t, y_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(y_t, clockwise_t, MKS<T,dim::Angle>v);
+        Quaternion3(clockwise_t, y_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(z_t, ccw_t, MKS<T,dim::Angle>v);
+        Quaternion3(ccw_t, z_t, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(z_t, clockwise_t, MKS<T,dim::Angle>v);
+        Quaternion3(clockwise_t, z_t, MKS<T,dim::Angle>v);
         
         
         
@@ -114,6 +114,8 @@ namespace yq {
         template <typename U>
         requires (trait::is_arithmetic_v<T>)
         constexpr Quaternion3<quotient_t<T,U>>  operator/ (U b) const noexcept;
+        
+        Vector3<unity_t<T>>  axis() const;
         
         constexpr Quaternion3    conj() const noexcept;
         constexpr Quaternion3    conjugate() const noexcept;
