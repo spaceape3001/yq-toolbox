@@ -16,24 +16,55 @@ namespace yq {
         //! Our argument type
         using component_type = T;
         cube_t<T>     xyz;
+
+        constexpr Trivector3() noexcept = default;
+        constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
+        constexpr Trivector3(all_t, T v) noexcept : xyz(v) {}
+        consteval Trivector3(nan_t) noexcept : Trivector3(ALL, nan_v<T>) {}
+        consteval Trivector3(one_t) noexcept : Trivector3(ALL, one_v<T>) {}
+        constexpr Trivector3(xyz_t, T v) noexcept : xyz(v) {}
+        consteval Trivector3(xyz_t) noexcept : Trivector3(XYZ, one_v<T>) {}
+        consteval Trivector3(zero_t) noexcept : Trivector3(ALL, zero_v<T>) {}
         
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Trivector3&) const noexcept = default;
 
         /*! \brief Affirmation (positive) operator
         */
-        constexpr Trivector3 operator+() const noexcept
-        {
-            return *this;
-        }
+        constexpr Trivector3 operator+() const noexcept;
 
         /*! \brief Negation operator
         */
-        constexpr Trivector3 operator-() const noexcept
-        {
-            return {-xyz};
-        }
+        constexpr Trivector3 operator-() const noexcept;
 
+        constexpr Multivector3<T> operator+(T b) const noexcept;
+        constexpr Trivector3 operator+(const Trivector3& b) const noexcept;
+        Trivector3& operator+=(const Trivector3& b) noexcept;
+        constexpr Multivector3<T> operator+(const Bivector3<T>& b) const noexcept;
+        constexpr Multivector3<T> operator+(const Multivector3<T>& b) const noexcept;
+        constexpr Multivector3<T> operator+(const Vector3<T>& b) const noexcept;
+        constexpr Multivector3<T> operator-(T b) const noexcept;
+        constexpr Trivector3 operator-(const Trivector3& b) const noexcept;
+        Trivector3& operator-=(const Trivector3& b) noexcept;
+        constexpr Multivector3<T> operator-(const Bivector3<T>& b) const noexcept;
+        constexpr Multivector3<T> operator-(const Multivector3<T>& b) const noexcept;
+        constexpr Multivector3<T> operator-(const Vector3<T>& b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<T>
+        constexpr Trivector3<product_t<T,U>> operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<T> && trait::self_mul_v<T,U>)
+        Trivector3& operator*=(U b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<T>
+        constexpr Trivector3<quotient_t<T,U>> operator/(const U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<T> && trait::self_div_v<T,U>)
+        constexpr Trivector3& operator/=(U b) noexcept;
     };
 
     YQ_IEEE754_1(Trivector3)
@@ -45,14 +76,14 @@ namespace yq {
     */
     constexpr Trivector3D   operator "" _xyz3(unsigned long long int v) noexcept
     {
-        return {(double) v};
+        return Trivector3D(XYZ, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector3D   operator "" _xyz3(long double v) noexcept
     {
-        return {(double) v};
+        return Trivector3D(XYZ, (double) v);
     }
 
     YQ_NAN_1(Trivector3, Trivector3<T>{nan_v<cube_t<T>>})
@@ -69,148 +100,23 @@ namespace yq {
 
 
 //  --------------------------------------------------------
-//  ADDITION
-
-    /*! \brief Addition of two trivectors
-    */
-    template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector3<T>& a, const Trivector3<T>& b) noexcept
-    {
-        return { a.xyz+b.xyz };
-    }
-
-    /*! \brief Self-addition operator
-    
-        Adds the right to the left term.
-    */
-    template <typename T>
-    Trivector4<T>& operator+=(Trivector3<T>& a, const Trivector3<T>& b) noexcept
-    {
-        a.xyz+=b.xyz;
-        return a;
-    }
-
 //  --------------------------------------------------------
-//  SUBTRACTION
 
-    /*! \brief Subtraction of two trivectors
-    */
     template <typename T>
-    constexpr Trivector3<T> operator-(const Trivector3<T>& a, const Trivector3<T>& b) noexcept
-    {
-        return { a.xyz-b.xyz };
-    }
+    constexpr Multivector3<T> operator+(T a, const Trivector3<T>& b) noexcept;
 
-    /*! \brief Self-subtraction operator
-        
-        Subtracts the right from the left term.
-    */
     template <typename T>
-    Trivector3<T>& operator-=(Trivector3<T>& a, const Trivector3<T>& b) noexcept
-    {
-        a.xyz-=b.xyz;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
+    constexpr Multivector3<T> operator-(T a, const Trivector3<T>& b) noexcept;
 
     /*! \brief Scaling multiplication of trivector
     
         This will (scale) multiply a trivector, returns the result.
     */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector3<T> operator*(T a, const Trivector3<T>& b) noexcept
-    {
-        return { a*b.xyz };
-    }
-
-    /*! \brief Scaling multiplication of trivector
-    
-        This will (scale) multiply a trivector, returns the result.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector3<T> operator*(const Trivector3<T>& a, T b) noexcept
-    {
-        return { a.xyz*b };
-    }
-
-    /*! \brief Scaling self-multiplication of trivector
-        
-        This multiplies the trivector (in place) with the right term, returns a reference.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Trivector3<T>& operator*=(Trivector3<T>& a, T b) noexcept
-    {
-        a.xyz *= b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  DIVISION
-
-    /*! \brief Scaling division of trivector
-        
-        This scale divides the trivector with the right.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector3<T> operator/(const Trivector3<T>& a, T b) noexcept
-    {
-        return { a.xyz/b };
-    }
-
-    /*! \brief Self-scaling division of trivector
-    
-        This reduces the trivector (in place) with the right,
-        returns reference to the trivector.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector3<T>& operator/=(Trivector3<T>& a, T b) noexcept
-    {
-        a.xyz /= b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Trivector3<T> operator*(T a, const Trivector3<U>& b) noexcept;
 
 
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
- 
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
 
 }
 
