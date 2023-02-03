@@ -52,6 +52,7 @@ namespace yq {
             xy(v), yz(v), zw(v), wx(v), xz(v), yw(v),
             xyz(v), yzw(v), zwx(v), wxy(v),
             xyzw(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Multivector4(nan_t) noexcept : Multivector4(ALL, nan_v<T>) {}
         consteval Multivector4(one_t) noexcept : Multivector4(ALL, one_v<T>) {}
         consteval Multivector4(zero_t) noexcept : Multivector4(ALL, zero_v<T>) {}

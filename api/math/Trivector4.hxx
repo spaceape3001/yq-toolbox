@@ -12,5 +12,11 @@
     template instantiation.  
 */
 
+#include <math/Bivector4.hpp>
+#include <math/Multivector4.hpp>
+#include <math/Quadvector4.hpp>
+#include <math/Trivector4.hpp>
+
+
 namespace yq {
 }

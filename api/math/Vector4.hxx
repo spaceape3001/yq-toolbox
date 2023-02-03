@@ -12,10 +12,10 @@
     template instantiation.  
 */
 
-#include "Bivector4.hpp"
-#include "Multivector4.hpp"
-#include "Quadvector4.hpp"
-#include "Trivector4.hpp"
+#include <math/Bivector4.hpp>
+#include <math/Multivector4.hpp>
+#include <math/Quadvector4.hpp>
+#include <math/Trivector4.hpp>
 
 #include <math/Tensor41.hpp>
 #include <math/Tensor42.hpp>
@@ -60,11 +60,11 @@ namespace yq {
     constexpr Multivector4<T> Vector4<T>::operator+(const Bivector4<T>&b) const noexcept
     {
         return Multivector4<T>(
-            {}, 
+            zero_v<T>, 
             x, y, z, w, 
             b.xy, b.yz, b.zw, b.wx, b.xz, b.yw,
-            {}, {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         );
     }
 
@@ -84,10 +84,10 @@ namespace yq {
     constexpr Multivector4<T> Vector4<T>::operator+(const Quadvector4<T>&b) const noexcept
     {
         return Multivector4<T>(
-            {}, 
+            zero_v<T>, 
             x, y, z, w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             b.xyzw
         );
     }
@@ -96,11 +96,11 @@ namespace yq {
     constexpr Multivector4<T> Vector4<T>::operator+(const Trivector4<T>&b) const noexcept
     {
         return Multivector4<T>(
-            {}, 
+            zero_v<T>, 
             x, y, z, w, 
-            {}, {}, {}, {}, {}, {}, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             b.xyz, b.yzw, b.zwx, b.wxy,
-            {} 
+            zero_v<T> 
         );
     }
 
@@ -110,9 +110,9 @@ namespace yq {
         return Multivector4<T>(
             b, 
             x, y, z, w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         );
     }
 
@@ -155,9 +155,9 @@ namespace yq {
         return { 
             -b, 
             x, y, z, w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         };
     }
 
@@ -165,11 +165,11 @@ namespace yq {
     constexpr Multivector4<T> Vector4<T>::operator-(const Bivector4<T>& b) const noexcept
     {
         return { 
-            {}, 
+            zero_v<T>, 
             x, y, z, w, 
             -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
-            {}, {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         };
     }
 
@@ -189,10 +189,10 @@ namespace yq {
     constexpr Multivector4<T> Vector4<T>::operator-(const Quadvector4<T>& b) const noexcept
     {
         return { 
-            {}, 
+            zero_v<T>, 
             x, y, z, w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             -b.xyzw
         };
     }
@@ -201,11 +201,11 @@ namespace yq {
     constexpr Multivector4<T> Vector4<T>::operator-( const Trivector4<T>& b) const noexcept
     {
         return { 
-            {}, 
+            zero_v<T>, 
             x, y, z, w, 
-            {}, {}, {}, {}, {}, {}, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             -b.xyz, -b.yzw, -b.zwx, -b.wxy,
-            {} 
+            zero_v<T> 
         };
     }    
 
@@ -499,9 +499,9 @@ namespace yq {
         return { 
             a, 
             -b.x, -b.y, -b.z, -b.w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         };
     }
 
@@ -513,9 +513,9 @@ namespace yq {
         return { 
             a, 
             b.x, b.y, b.z, b.w, 
-            {}, {}, {}, {}, {}, {}, 
-            {}, {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         };
     }
 

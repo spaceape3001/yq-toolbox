@@ -70,6 +70,7 @@ namespace yq {
         {
         }
 
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Tensor41(nan_t) : Tensor41(ALL, nan_v<T>) {}
 
         constexpr Tensor41(rows_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z, const Vector1<T>& w) :

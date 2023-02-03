@@ -32,6 +32,7 @@ namespace yq {
         constexpr Vector4(T _x, T _y, T _z, T _w) noexcept : 
             x(_x), y(_y), z(_z), w(_w) {}
         constexpr Vector4(all_t, T v) noexcept : x(v), y(v), z(v), w(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Vector4(nan_t) noexcept : Vector4(ALL, nan_v<T>) {}
         consteval Vector4(one_t) noexcept : Vector4(ALL, one_v<T>) {}
         consteval Vector4(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}

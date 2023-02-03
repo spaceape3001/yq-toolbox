@@ -77,6 +77,7 @@ namespace yq {
         {
         }
 
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Tensor33(nan_t) : Tensor33(ALL, nan_v<T>) {}
 
         constexpr Tensor33(rows_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) :

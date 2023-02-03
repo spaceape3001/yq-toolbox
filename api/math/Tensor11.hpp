@@ -32,6 +32,7 @@ namespace yq {
         constexpr Tensor11(diagonal_t, T _xx) noexcept : xx(_xx) {}
         constexpr Tensor11(diagonal_t, const Vector1<T>& v) noexcept : xx(v.x) {}
         constexpr Tensor11(identity_t) noexcept : xx( one_v<T> ) {}
+        template <typename=void> requires trait::has_nan_v<T>
         constexpr Tensor11(nan_t) noexcept : Tensor11(ALL, nan_v<T> ) {}
         constexpr Tensor11(rows_t,    const Vector1<T>& x) noexcept : xx(x.x) {}
         constexpr Tensor11(zero_t) noexcept : Tensor11(ALL, zero_v<T> ) {}

@@ -38,6 +38,7 @@ namespace yq {
     struct w_t {};
     struct ww_t {};
     struct wx_t {};
+    struct wxy_t {};
     struct wy_t {};
     struct wz_t {};
     struct x_t {};
@@ -51,8 +52,10 @@ namespace yq {
     struct yx_t {};
     struct yy_t {};
     struct yz_t {};
+    struct yzw_t {};
     struct z_t {};
     struct zw_t {};
+    struct zwx_t {};
     struct zx_t {};
     struct zy_t {};
     struct zz_t {};
@@ -89,6 +92,7 @@ namespace yq {
     static constexpr const w_t              W;
     static constexpr const ww_t             WW;
     static constexpr const wx_t             WX;
+    static constexpr const wxy_t            WXY;
     static constexpr const wy_t             WY;
     static constexpr const wz_t             WZ;
     static constexpr const x_t              X;
@@ -102,8 +106,10 @@ namespace yq {
     static constexpr const yx_t             YX;
     static constexpr const yy_t             YY;
     static constexpr const yz_t             YZ;
+    static constexpr const yzw_t            YZW;
     static constexpr const z_t              Z;
     static constexpr const zw_t             ZW;
+    static constexpr const zwx_t            ZWX;
     static constexpr const zx_t             ZX;
     static constexpr const zy_t             ZY;
     static constexpr const zz_t             ZZ;

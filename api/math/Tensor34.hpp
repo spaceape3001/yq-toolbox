@@ -62,6 +62,7 @@ namespace yq {
         {
         }
 
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Tensor34(nan_t) : 
             xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), xw(nan_v<T>),
             yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), yw(nan_v<T>),

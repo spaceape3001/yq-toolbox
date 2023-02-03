@@ -17,6 +17,22 @@ namespace yq {
         using component_type = T;
         T     xyz, yzw, zwx, wxy;
 
+        constexpr Trivector4() noexcept = default;
+        constexpr Trivector4(T _xyz, T _yzw, T _zwx, T _wxy) noexcept : xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy) {}
+        constexpr Trivector4(all_t, T v) noexcept : xyz(v), yzw(v), zwx(v), wxy(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval Trivector4(nan_t) noexcept : Trivector4(ALL, nan_v<T>) {}
+        consteval Trivector4(one_t) noexcept : Trivector4(ALL, one_v<T>) {}
+        constexpr Trivector4(wxy_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(zero_v<T>), wxy(v) {}
+        consteval Trivector4(wxy_t) noexcept : Trivector4(WXY, one_v<T>) {}
+        constexpr Trivector4(xyz_t, T v) noexcept : xyz(v), yzw(zero_v<T>), zwx(zero_v<T>), wxy(zero_v<T>) {}
+        consteval Trivector4(xyz_t) noexcept : Trivector4(XYZ, one_v<T>) {}
+        constexpr Trivector4(yzw_t, T v) noexcept : xyz(zero_v<T>), yzw(v), zwx(zero_v<T>), wxy(zero_v<T>) {}
+        consteval Trivector4(yzw_t) noexcept : Trivector4(YZW, one_v<T>) {}
+        constexpr Trivector4(zwx_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(v), wxy(zero_v<T>) {}
+        consteval Trivector4(zwx_t) noexcept : Trivector4(ZWX, one_v<T>) {}
+        consteval Trivector4(zero_t) noexcept : Trivector4(ALL, zero_v<T>) {}
+
         //! Defaulted comparison operator
         constexpr bool operator==(const Trivector4&) const noexcept = default;
 

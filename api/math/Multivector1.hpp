@@ -32,6 +32,7 @@ namespace yq {
         constexpr Multivector1(T _a, T _x) noexcept : a(_a), x(_x) {}
         constexpr Multivector1(T _a, const Vector1<T>& v) noexcept : a(_a), x(v.x) {}
         constexpr Multivector1(all_t, T v) noexcept : a(v), x(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Multivector1(nan_t) noexcept : Multivector1(ALL, nan_v<T>) {}
         consteval Multivector1(one_t) noexcept : Multivector1(ALL, one_v<T>) {}
         consteval Multivector1(zero_t) noexcept : Multivector1(ALL, zero_v<T>) {}

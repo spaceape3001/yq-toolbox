@@ -12,9 +12,9 @@
     template instantiation.  
 */
 
-#include "Bivector3.hpp"
-#include "Multivector3.hpp"
-#include "Trivector3.hpp"
+#include <math/Bivector3.hpp>
+#include <math/Multivector3.hpp>
+#include <math/Trivector3.hpp>
 
 #include <math/Tensor31.hpp>
 #include <math/Tensor32.hpp>
@@ -61,8 +61,8 @@ namespace yq {
         return Multivector3<T>(
             b, 
             x, y, z,
-            {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         );
     }
 
@@ -70,10 +70,10 @@ namespace yq {
     constexpr Multivector3<T> Vector3<T>::operator+(const Bivector3<T>& b) const noexcept
     {
         return Multivector3<T>(
-            {}, 
+            zero_v<T>, 
             x, y, z,
             b.xy, b.yz, b.zx,
-            {} 
+            zero_v<T> 
         );
     }
 
@@ -92,9 +92,9 @@ namespace yq {
     constexpr Multivector3<T> Vector3<T>::operator+(const Trivector3<T>& b) const noexcept
     {
         return Multivector3<T>( 
-            {}, 
+            zero_v<T>, 
             x, y, z,
-            {}, {}, {}, 
+            zero_v<T>, zero_v<T>, zero_v<T>, 
             b.xyz
         );
     }
@@ -118,10 +118,10 @@ namespace yq {
     constexpr Multivector3<T> Vector3<T>::operator-(const Bivector3<T>& b) const noexcept
     {
         return Multivector3<T>( 
-            {}, 
+            zero_v<T>, 
             x, y, z,
             -b.xy, -b.yz, -b.zx,
-            {} 
+            zero_v<T> 
         );
     }
 
@@ -140,9 +140,9 @@ namespace yq {
     constexpr Multivector3<T> Vector3<T>::operator-(const Trivector3<T>& b) const noexcept
     {
         return Multivector3<T>( 
-            {}, 
+            zero_v<T>, 
             x, y, z,
-            {}, {}, {}, 
+            zero_v<T>, zero_v<T>, zero_v<T>, 
             -b.xyz
         );
     }
@@ -153,8 +153,8 @@ namespace yq {
         return Multivector3<T>(
             -b, 
             x, y, z,
-            {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         );
     }
 
@@ -449,7 +449,7 @@ namespace yq {
     {
         if constexpr (trait::has_sqrt_v<square_t<T>>)
             return sqrt(length²());
-        return {};
+        return zero_v<T>;
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -461,8 +461,8 @@ namespace yq {
         return Multivector3<T>(
             a, 
             b.x, b.y, b.z, 
-            {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         );
     }
 
@@ -473,8 +473,8 @@ namespace yq {
         return Multivector3<T>(
             a, 
             -b.x, -b.y, -b.z, 
-            {}, {}, {}, 
-            {} 
+            zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
         );
     }
 
@@ -606,7 +606,7 @@ namespace yq {
         else if constexpr (std::is_integral_v<T>)
             return (a+b) / T(2);
         else
-            return {};
+            return Vector3<T>(ZERO);
     }
 
     template <typename T>

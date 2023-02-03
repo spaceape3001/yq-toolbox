@@ -12,8 +12,8 @@
     template instantiation.  
 */
 
-#include "Bivector2.hpp"
-#include "Multivector2.hpp"
+#include <math/Bivector2.hpp>
+#include <math/Multivector2.hpp>
 
 #include <math/Tensor21.hpp>
 #include <math/Tensor22.hpp>

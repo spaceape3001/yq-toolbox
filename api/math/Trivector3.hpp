@@ -20,6 +20,7 @@ namespace yq {
         constexpr Trivector3() noexcept = default;
         constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
         constexpr Trivector3(all_t, T v) noexcept : xyz(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Trivector3(nan_t) noexcept : Trivector3(ALL, nan_v<T>) {}
         consteval Trivector3(one_t) noexcept : Trivector3(ALL, one_v<T>) {}
         constexpr Trivector3(xyz_t, T v) noexcept : xyz(v) {}

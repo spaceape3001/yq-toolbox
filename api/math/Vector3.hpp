@@ -33,6 +33,7 @@ namespace yq {
         constexpr Vector3() noexcept = default;
         constexpr Vector3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
         constexpr Vector3(all_t, T v) noexcept : x(v), y(v), z(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Vector3(nan_t) noexcept : Vector3(ALL, nan_v<T>) {}
         consteval Vector3(one_t) noexcept : Vector3(ALL, one_v<T>) {}
         consteval Vector3(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}

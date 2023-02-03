@@ -50,6 +50,7 @@ namespace yq {
         {
         }
 
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Tensor14(nan_t) : Tensor14(ALL, nan_v<T>) {}
 
         constexpr Tensor14(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :

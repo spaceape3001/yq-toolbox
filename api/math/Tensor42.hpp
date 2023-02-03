@@ -69,6 +69,7 @@ namespace yq {
         {
         }
 
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Tensor42(nan_t) : Tensor42(ALL, nan_v<T>) {}
 
         constexpr Tensor42(rows_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :

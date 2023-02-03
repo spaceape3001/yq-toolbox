@@ -29,6 +29,7 @@ namespace yq {
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
         constexpr Vector1(all_t, T v) noexcept : x(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
         consteval Vector1(nan_t) noexcept : Vector1(ALL, nan_v<T>) {}
         consteval Vector1(one_t) noexcept : Vector1(ALL, one_v<T>) {}
         constexpr Vector1(x_t, T v) noexcept : x(v) {}

@@ -31,7 +31,7 @@ namespace yq {
 
         constexpr Bivector3() noexcept = default;
         constexpr Bivector3(T _xy, T _yz, T _zx) noexcept : xy(_xy), yz(_yz), zx(_zx) {}
-        constexpr Bivector3(all_t, T v) noexcept : xy(v), yz(yz), zx(zx) {}
+        constexpr Bivector3(all_t, T v) noexcept : xy(v), yz(v), zx(v) {}
         consteval Bivector3(nan_t) noexcept : Bivector3(ALL, nan_v<T>) {}
         consteval Bivector3(one_t) noexcept : Bivector3(ALL, one_v<T>) {}
         constexpr Bivector3(xy_t, T v) noexcept : xy(v), yz(zero_v<T>), zx(zero_v<T>) {}
