@@ -12,6 +12,11 @@
     template instantiation.  
 */
 
+#include <math/Bivector3.hpp>
+#include <math/Multivector3.hpp>
+#include <math/Trivector3.hpp>
+#include <math/Vector3.hpp>
+
 namespace yq {
     template <typename T>
     constexpr Trivector3<T> Trivector3<T>::operator+() const noexcept
