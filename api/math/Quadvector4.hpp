@@ -21,7 +21,7 @@ namespace yq {
         using component_type = T;
 
         //! Component
-        fourth_t<T>     xyzw;
+        T     xyzw;
 
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Quadvector4&) const noexcept = default;

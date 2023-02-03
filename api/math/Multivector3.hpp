@@ -17,6 +17,9 @@ namespace yq {
     */
     template <typename T>
     struct Multivector3 {
+        //! Captures the template parameter
+        using component_type    = T;
+
         T   a;
         T   x, y, z;
         T   xy, yz, zx;

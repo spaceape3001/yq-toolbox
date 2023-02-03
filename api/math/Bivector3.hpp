@@ -21,13 +21,13 @@ namespace yq {
         using component_type = T;
         
         //! XY component
-        square_t<T>     xy;
+        T     xy;
 
         //! YZ component
-        square_t<T>     yz;
+        T     yz;
 
         //! ZX component
-        square_t<T>     zx;
+        T     zx;
 
         constexpr Bivector3() noexcept = default;
         constexpr Bivector3(T _xy, T _yz, T _zx) noexcept : xy(_xy), yz(_yz), zx(_zx) {}

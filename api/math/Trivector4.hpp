@@ -15,7 +15,7 @@ namespace yq {
 
         //! Component type
         using component_type = T;
-        cube_t<T>     xyz, yzw, zwx, wxy;
+        T     xyz, yzw, zwx, wxy;
 
         //! Defaulted comparison operator
         constexpr bool operator==(const Trivector4&) const noexcept = default;

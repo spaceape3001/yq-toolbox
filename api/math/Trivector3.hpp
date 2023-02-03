@@ -15,7 +15,7 @@ namespace yq {
     struct Trivector3 {
         //! Our argument type
         using component_type = T;
-        cube_t<T>     xyz;
+        T     xyz;
 
         constexpr Trivector3() noexcept = default;
         constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
