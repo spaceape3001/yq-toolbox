@@ -114,6 +114,9 @@ namespace yq {
         */
         constexpr bool eclipses(const AxBox3<T>& b) const noexcept;
 
+        //! Returns a fixed copy of the box (assuming it's possible to do)
+        constexpr AxBox3 fixed() const noexcept;
+
         //! Check for validity
         constexpr bool    is_valid() const noexcept;
 

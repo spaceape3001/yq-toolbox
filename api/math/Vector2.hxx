@@ -14,6 +14,7 @@
 
 #include <math/AxBox1.hpp>
 #include <math/Bivector2.hpp>
+#include <math/Circle2.hpp>
 #include <math/Multivector2.hpp>
 #include <math/Segment1.hpp>
 
@@ -83,6 +84,12 @@ namespace yq {
             b.xy 
         );
     }
+
+    template <typename T>
+    constexpr Circle2<T> Vector2<T>::operator+(const Circle2<T>&b) const
+    {
+        return Circle2<T>(*this + b.point, b.radius);
+    }
     
     template <typename T>
     constexpr Multivector2<T> Vector2<T>::operator+(const Multivector2<T>& b) const noexcept
@@ -140,6 +147,12 @@ namespace yq {
         };
     }
     
+    template <typename T>
+    constexpr Circle2<T> Vector2<T>::operator-(const Circle2<T>&b) const
+    {
+        return Circle2<T>(*this - b.point, b.radius);
+    }
+
     template <typename T>
     constexpr Multivector2<T> Vector2<T>::operator-(const Multivector2<T>& b) const noexcept
     {

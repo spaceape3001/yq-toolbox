@@ -284,6 +284,11 @@ namespace yq {
         return (all(lo) <= b.lo) && (all(b.hi) <= hi);
     }
     
+    template <typename T>
+    constexpr AxBox4<T> AxBox4<T>::fixed() const noexcept
+    {
+        return AxBox4(UNION, lo, hi);
+    }
 
     template <typename T>
     constexpr fourth_t<T> AxBox4<T>::hypervolume() const noexcept

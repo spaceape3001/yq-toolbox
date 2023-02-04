@@ -771,5 +771,17 @@ namespace yq {
         else
             return {};
     }
+
+    template <typename T>
+    constexpr T   positive(T b) noexcept
+    {
+        return (b >= zero_v<T>) ? b : -b;
+    }
+
+    template <typename T>
+    constexpr T   negative(T b) noexcept
+    {
+        return (b >= zero_v<T>) ? -b : b;
+    }
 }
 

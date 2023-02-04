@@ -264,6 +264,11 @@ namespace yq {
         return (all(lo) <= b.lo) && (all(b.hi) <= hi);
     }
 
+    template <typename T>
+    constexpr AxBox3<T> AxBox3<T>::fixed() const noexcept
+    {
+        return AxBox3(UNION, lo, hi);
+    }
 
     template <typename T>
     constexpr bool    AxBox3<T>::is_valid() const noexcept

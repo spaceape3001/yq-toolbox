@@ -113,6 +113,9 @@ namespace yq {
         */
         constexpr bool eclipses(const AxBox4<T>& b) const noexcept;
 
+        //! Returns a fixed copy of the box (assuming it's possible to do)
+        constexpr AxBox4 fixed() const noexcept;
+
         /*! \brief Computes the hyper volume of the box
         */
         constexpr fourth_t<T> hypervolume() const noexcept;

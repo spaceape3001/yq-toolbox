@@ -8,7 +8,6 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
-#include <math/AxBox2.hpp>
 
 namespace yq {
 
@@ -26,56 +25,66 @@ namespace yq {
         //! Radius
         T           radius;
         
+        constexpr Circle2() noexcept = default;
+        constexpr Circle2(const Vector2<T>& pt, T r) : point(pt), radius(r) {}
+        constexpr Circle2(nan_t) : Circle2(Vector2<T>(NAN), nan_v<T>) {}
+        constexpr Circle2(zero_t) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
+        
         //! Equality operator (defaulted)
         constexpr bool operator==(const Circle2&) const noexcept = default;
             
+        constexpr Circle2   operator+() const noexcept;
+        constexpr Circle2   operator-() const noexcept;
+        
+        constexpr Circle2   operator+(const Vector2<T>&) const noexcept;
+        Circle2&            operator+=(const Vector2<T>&) noexcept;
+        constexpr Circle2   operator-(const Vector2<T>&) const noexcept;
+        Circle2&            operator-=(const Vector2<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Circle2<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Circle2<T>& operator*=(U) noexcept;
+            
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Circle2<quotient_t<T,U>> operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Circle2<T>& operator/=(U) noexcept;
+
         /*! \brief Computes the area of this circle
         */
-        constexpr square_t<T> area() const noexcept
-        {
-            if constexpr ( has_ieee754_v<T> )
-                return std::numbers::pi_v<ieee754_t<T>> * (radius*radius);
-            else
-                return {};
-        }
+        constexpr square_t<T> area() const noexcept;
 
         //! Returns the bounding box for this circle
-        constexpr AxBox2<T>   bounds() const noexcept 
-        {
-            T       r   = abs(radius);
-            return AxBox2<T>(all(point) - r, all(point) + r);
-        }
+        constexpr AxBox2<T>   bounds() const noexcept;
         
         /*! \brief Computes the circumference
         */
-        constexpr T     circumference() const noexcept
-        {
-            if constexpr ( has_ieee754_v<T> )
-                return ieee754_t<T>(2.) * std::numbers::pi_v<ieee754_t<T>> * radius;
-            else
-                return {};
-        }
+        constexpr T     circumference() const noexcept;
 
         /*! \brief Computes the diameter
         */
-        constexpr T     diameter() const noexcept
-        {
-            return radius + radius;
-        }
+        constexpr T     diameter() const noexcept;
+        
+        //! Returns a fixed copy of the circle (if it's invalid and possible to do)
+        constexpr Circle2   fixed() const noexcept;
 
         //! TRUE if the radius is greater than zero!
-        constexpr bool    valid() const noexcept
-        {
-            return radius >= T{};
-        }
+        constexpr bool    valid() const noexcept;
     };
 
     YQ_IEEE754_1(Circle2)
 
 
 
-    YQ_NAN_1(Circle2, { nan_v<Vector2<T>>, nan_v<T> })
-    YQ_ZERO_1(Circle2, { zero_v<Vector2<T>>, zero_v<T> })
+    YQ_NAN_1(Circle2, Circle2<T>(NAN))
+    YQ_ZERO_1(Circle2, Circle2<T>(ZERO))
 
     /*! \brief Creates cricle from point and radius
     */
@@ -89,77 +98,45 @@ namespace yq {
     YQ_IS_FINITE_1(Circle2, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Circle2, is_nan(v.point) || is_nan(v.radius))
 
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    Circle2<product_t<T,U>> operator*(T, const Circle2<U>&);
+
     
     /*! \brief Bounding box for a circle
     */
     template <typename T>
-    constexpr AxBox2<T>   aabb(const Circle2<T>& cir) noexcept
-    {   
-        return cir.bounds();
-    }
+    constexpr AxBox2<T>   aabb(const Circle2<T>& cir) noexcept;
     
     /*! \brief Checks for validity
     
         A valid circle is one whose radius is greater or equal to zer
     */
     template <typename T>
-    constexpr bool  is_valid(const Circle2<T>&cir) noexcept
-    {
-        return cir.valid();
-    }
+    constexpr bool  is_valid(const Circle2<T>&cir) noexcept;
 
 
     /*! \brief Computes the area of a 2D circle
     */
     template <typename T>
-    constexpr square_t<T> area(const Circle2<T>& cir) noexcept
-    {
-        return cir.area();
-    }
+    constexpr square_t<T> area(const Circle2<T>& cir) noexcept;
     
-    /*! \brief Computes smallest circle containing the given box
-    
-        \note The resulting circle will be centered within the box
-    */
-    template <typename T>
-    Circle2<T>    circumcircle(const AxBox2<T>& box) 
-    {
-        return box.circumcircle();
-    }
     
     /*! \brief Computes the circumference of a circle
     */
     template <typename T>
-    constexpr T     circumference(const Circle2<T>& cir) noexcept
-    {
-        return cir.circumference();
-    }
+    constexpr T     circumference(const Circle2<T>& cir) noexcept;
 
     /*! \brief Computes the diameter of a circle
     */
     template <typename T>
-    constexpr T     diameter(const Circle2<T>& cir) noexcept
-    {
-        return cir.diameter();
-    }
+    constexpr T     diameter(const Circle2<T>& cir) noexcept;
 
-    /*! \brief Computes biggest circle within the bounding box
-    
-        \note The resulting circle will be centered within the box
-    */
-    template <typename T>
-    constexpr Circle2<T>    incircle(const AxBox2<T>& box) noexcept
-    {
-        return box.incircle();
-    }
 
     /*! \brief Computes the perimeter (aka circumference) of a circle
     */
     template <typename T>
-    constexpr T   permimeter(const Circle2<T>& cir) noexcept
-    {
-        return cir.circumference();
-    }
+    constexpr T   permimeter(const Circle2<T>& cir) noexcept;
 
 }
 

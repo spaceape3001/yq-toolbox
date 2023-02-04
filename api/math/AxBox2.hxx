@@ -244,7 +244,7 @@ namespace yq {
     template <typename T>
     Circle2<T>          AxBox2<T>::circumcircle() const
     {
-        return circle( center(), half_v<T>*span().length() );
+        return Circle2<T>( center(), half_v<T>*span().length() );
     }
 
     template <typename T>
@@ -277,9 +277,15 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox2<T> AxBox2<T>::fixed() const noexcept
+    {
+        return AxBox2(UNION, lo, hi);
+    }
+
+    template <typename T>
     constexpr Circle2<T>  AxBox2<T>::incircle() const noexcept
     {
-        return circle(center(), middivide(span().cmin()));
+        return Circle2<T>(center(), middivide(span().cmin()));
     }
 
     template <typename T>
@@ -440,6 +446,26 @@ namespace yq {
     constexpr Vector2<T>    center(const AxBox2<T>& box) noexcept
     {
         return box.center();
+    }
+
+    /*! \brief Computes smallest circle containing the given box
+    
+        \note The resulting circle will be centered within the box
+    */
+    template <typename T>
+    Circle2<T>    circumcircle(const AxBox2<T>& box) 
+    {
+        return box.circumcircle();
+    }
+
+    /*! \brief Computes biggest circle within the bounding box
+    
+        \note The resulting circle will be centered within the box
+    */
+    template <typename T>
+    constexpr Circle2<T>    incircle(const AxBox2<T>& box) noexcept
+    {
+        return box.incircle();
     }
 
     //! Checks for validity (hi >= lo)

@@ -114,6 +114,9 @@ namespace yq {
             \param[in] b     The "smaller" box, if eclipsed
         */
         constexpr bool eclipses(const AxBox1<T>& b) const noexcept;
+        
+        //! Returns a fixed copy of the box (assuming it's possible to do)
+        constexpr AxBox1 fixed() const noexcept;
 
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept;

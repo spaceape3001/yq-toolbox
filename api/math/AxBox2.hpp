@@ -127,6 +127,9 @@ namespace yq {
         */
         constexpr bool          eclipses(const Circle2<T>& b) const noexcept;
 
+        //! Returns a fixed copy of the box (assuming it's possible to do)
+        constexpr AxBox2 fixed() const noexcept;
+
         /*! \brief Computes largest circle that's inside the box
             \note The resulting circle will be centered within the box
         */
@@ -237,6 +240,20 @@ namespace yq {
     */
     template <typename T>
     constexpr Vector2<T>    center(const AxBox2<T>& box) noexcept;
+
+    /*! \brief Computes smallest circle containing the given box
+    
+        \note The resulting circle will be centered within the box
+    */
+    template <typename T>
+    Circle2<T>    circumcircle(const AxBox2<T>& box);
+
+    /*! \brief Computes biggest circle within the bounding box
+    
+        \note The resulting circle will be centered within the box
+    */
+    template <typename T>
+    constexpr Circle2<T>    incircle(const AxBox2<T>& box) noexcept;
 
     //! Checks for validity (hi >= lo)
     template <typename T>
