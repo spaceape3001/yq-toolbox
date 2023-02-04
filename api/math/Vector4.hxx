@@ -491,8 +491,6 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
 
-    /*! Scalar/vector subtraction
-    */
     template <typename T>
     constexpr Multivector4<T> operator-(T a, const Vector4<T>& b) noexcept
     {
@@ -505,8 +503,6 @@ namespace yq {
         };
     }
 
-    /*! Scalar/vector addition
-    */
     template <typename T>
     constexpr Multivector4<T> operator+(T a, const Vector4<T>& b) noexcept
     {
