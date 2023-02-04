@@ -23,8 +23,53 @@ namespace yq {
         //! Component
         T     xyzw;
 
+        constexpr Quadvector4() noexcept = default;
+        constexpr Quadvector4(T _xyzw) noexcept : xyzw(_xyzw) {}
+        constexpr Quadvector4(all_t, T v) noexcept : xyzw(v) {}
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval Quadvector4(nan_t) noexcept : Quadvector4(ALL, nan_v<T>) {}
+        consteval Quadvector4(one_t) noexcept : Quadvector4(ALL, one_v<T>) {}
+        constexpr Quadvector4(xyzw_t, T v) noexcept : xyzw(v) {}
+        consteval Quadvector4(xyzw_t) noexcept : Quadvector4(XYZW, one_v<T>) {}
+        consteval Quadvector4(zero_t) noexcept : Quadvector4(ALL, zero_v<T>) {}
+
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Quadvector4&) const noexcept = default;
+
+        constexpr Quadvector4       operator+() const noexcept;
+        constexpr Quadvector4       operator-() const noexcept;
+
+        constexpr Multivector4<T>   operator+(T b) const noexcept;
+        constexpr Multivector4<T>   operator+(const Bivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator+(const Multivector4<T>& b) const noexcept;
+        constexpr Quadvector4       operator+(const Quadvector4& b) const noexcept;
+        Quadvector4&                operator+=(const Quadvector4& b) noexcept;
+        constexpr Multivector4<T>   operator+(const Trivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator+(const Vector4<T>& b) const noexcept;
+
+        constexpr Multivector4<T>   operator-(T b) const noexcept;
+        constexpr Multivector4<T>   operator-(const Bivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator-(const Multivector4<T>& b) const noexcept;
+        constexpr Quadvector4       operator-(const Quadvector4& b) const noexcept;
+        Quadvector4&                operator-=(const Quadvector4& b) noexcept;
+        constexpr Multivector4<T>   operator-(const Trivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Quadvector4<product_t<T,U>> operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Quadvector4& operator*=(U b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Quadvector4<quotient_t<T,U>> operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Quadvector4& operator/=(U b) noexcept;
     };
 
     YQ_IEEE754_1(Quadvector4)
@@ -36,18 +81,18 @@ namespace yq {
     */
     constexpr Quadvector4D   operator "" _xyzw4(unsigned long long int v) noexcept
     {
-        return {(double) v};
+        return Quadvector4D(XYZW, (double) v);
     }
 
     /*! \brief Literal constructor
     */
     constexpr Quadvector4D   operator "" _xyzw4(long double v) noexcept
     {
-        return {(double) v};
+        return Quadvector4D(XYZW, (double) v);
     }
 
-    YQ_NAN_1(Quadvector4, Quadvector4<T>{nan_v<fourth_t<T>>})
-    YQ_ZERO_1(Quadvector4, Quadvector4<T>{zero_v<fourth_t<T>>})
+    YQ_NAN_1(Quadvector4, Quadvector4<T>(NAN))
+    YQ_ZERO_1(Quadvector4, Quadvector4<T>(ZERO))
 
 //  --------------------------------------------------------
 //  GETTERS
@@ -60,173 +105,16 @@ namespace yq {
 
 
 //  --------------------------------------------------------
-//  POSITIVE
+//  --------------------------------------------------------
 
-    /*! \brief Affirmation (positive) operator
-    
-        \note Here to complement the negation operator
-    */
     template <typename T>
-    constexpr Quadvector4<T> operator+(const Quadvector4<T>& a) noexcept
-    {
-        return a;
-    }
-    
-//  --------------------------------------------------------
-//  NEGATIVE
-
-    /*! \brief Negation operator of a bivector
-    */
+    constexpr Multivector4<T> operator+(T a, const Quadvector4<T>& b) noexcept;
     template <typename T>
-    constexpr Quadvector4<T> operator-(const Quadvector4<T>& a) noexcept
-    {
-        return {-a.xyzw};
-    }
-    
+    constexpr Multivector4<T> operator-(T a, const Quadvector4<T>& b) noexcept;
 
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-    /*! \brief Addition operator
-    */
-    template <typename T>
-    constexpr Quadvector4<T> operator+(const Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        return { a.xyzw + b.xyzw };
-    }
-
-    /*! \brief Self-Addition operator
-    */
-    template <typename T>
-    Quadvector4<T>& operator+=(Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        a.xyzw += b.xyzw;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    /*! \brief Subtraction operator
-    */
-    template <typename T>
-    constexpr Quadvector4<T> operator-(const Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        return { a.xyzw - b.xyzw };
-    }
-
-    /*! \brief Self-subtraction operator 
-    */
-    template <typename T>
-    Quadvector4<T>& operator-=(Quadvector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        a.xyzw -= b.xyzw;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-    /*! \brief Scaling multiplication operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Quadvector4<T> operator*(T a, const Quadvector4<T>& b) noexcept
-    {
-        return { a*b.xyzw };
-    }
-
-    /*! \brief Scaling multiplication operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Quadvector4<T> operator*(const Quadvector4<T>& a, T b) noexcept
-    {
-        return { a.xyzw*b };
-    }
-
-    /*! \brief Self-scaling multiplication operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Quadvector4<T> operator*=(Quadvector4<T>& a, T b) noexcept
-    {
-        a.xyzw*=b;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-    /*! \brief Scaling division operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Quadvector4<T> operator/(const Quadvector4<T>& a, T b) noexcept
-    {
-        return { a.xyzw/b };
-    }
-
-    /*! \brief Self-scaling division operator
-    
-        \note currently limited to floating points due to uncertainty 
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Quadvector4<T> operator/=(Quadvector4<T>& a, T b) noexcept
-    {
-        a.xyzw/=b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Quadvector4<product_t<T,U>> operator*(T a, const Quadvector4<U>& b) noexcept;
 
 }
 

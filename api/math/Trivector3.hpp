@@ -52,19 +52,19 @@ namespace yq {
         constexpr Multivector3<T> operator-(const Vector3<T>& b) const noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<T>
+        requires trait::is_arithmetic_v<U>
         constexpr Trivector3<product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<T> && trait::self_mul_v<T,U>)
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Trivector3& operator*=(U b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<T>
+        requires trait::is_arithmetic_v<U>
         constexpr Trivector3<quotient_t<T,U>> operator/(const U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<T> && trait::self_div_v<T,U>)
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
         constexpr Trivector3& operator/=(U b) noexcept;
     };
 

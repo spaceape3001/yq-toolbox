@@ -46,6 +46,7 @@ namespace yq {
     struct xx_t {};
     struct xy_t {};
     struct xyz_t {};
+    struct xyzw_t {};
     struct xz_t {};
     struct y_t {};
     struct yw_t {};
@@ -100,6 +101,7 @@ namespace yq {
     static constexpr const xx_t             XX;
     static constexpr const xy_t             XY;
     static constexpr const xyz_t            XYZ;
+    static constexpr const xyzw_t           XYZW;
     static constexpr const xz_t             XZ;
     static constexpr const y_t              Y;
     static constexpr const yw_t             YW;

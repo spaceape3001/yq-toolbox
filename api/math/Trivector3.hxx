@@ -149,7 +149,7 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<T>
+    requires trait::is_arithmetic_v<U>
     constexpr Trivector3<product_t<T,U>> Trivector3<T>::operator*(U b) const noexcept
     {
         return Trivector3<product_t<T,U>>( xyz*b );
@@ -157,7 +157,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<T> && trait::self_mul_v<T,U>)
+    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
     Trivector3<T>& Trivector3<T>::operator*=(U b) noexcept
     {
         xyz *= b;
@@ -166,20 +166,15 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<T>
+    requires trait::is_arithmetic_v<U>
     constexpr Trivector3<quotient_t<T,U>> Trivector3<T>::operator/(const U b) const noexcept
     {
         return Trivector3<quotient_t<T,U>>( xyz/b );
     }
 
-    /*! \brief Self-scaling division of trivector
-    
-        This reduces the trivector (in place) with the right,
-        returns reference to the trivector.
-    */
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<T> && trait::self_div_v<T,U>)
+    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
     constexpr Trivector3<T>& Trivector3<T>::operator/=(U b) noexcept
     {
         xyz /= b;
