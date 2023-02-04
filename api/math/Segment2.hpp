@@ -41,6 +41,22 @@ namespace yq {
         Segment2&               operator-=(const Vector2<T>&) noexcept;
         
         template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Segment2<product_t<T,U>>    operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Segment2<T>&                operator*=(U)  noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Segment2<quotient_t<T,U>>   operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Segment2<T>&                operator/=(U)  noexcept;
+
+        template <typename U>
         Segment1<product_t<T,U>>    operator*(const Tensor21<U>&) const noexcept;
 
         template <typename U>
@@ -100,6 +116,10 @@ namespace yq {
 
     YQ_IS_FINITE_1( Segment2, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment2, is_nan(v.a) || is_nan(v.b))
+
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T,U>
+    constexpr Segment2<product_t<T,U>> operator*(T, const Segment2<T>&) noexcept;
 
     /*! \brief Creates axially aligned bounding box from the segment
     */

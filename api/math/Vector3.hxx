@@ -97,6 +97,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Segment3<T> Vector3<T>::operator+(const Segment3<T>&rhs) const noexcept
+    {
+        return Segment3<T>( *this + rhs.a, *this + rhs.b );
+    }
+
+    template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(const Trivector3<T>& b) const noexcept
     {
         return Multivector3<T>( 
@@ -148,6 +154,12 @@ namespace yq {
             -b.xy, -b.yz, -b.zx,
             -b.xyz
         );
+    }
+
+    template <typename T>
+    constexpr Segment3<T> Vector3<T>::operator-(const Segment3<T>&rhs) const noexcept
+    {
+        return Segment3<T>( *this - rhs.a, *this - rhs.b );
     }
 
     template <typename T>

@@ -20,6 +20,12 @@
 #include <math/Segment4.hpp>
 #include <math/SegmentData.hpp>
 
+#include <math/Tensor21.hpp>
+#include <math/Tensor22.hpp>
+#include <math/Tensor23.hpp>
+#include <math/Tensor24.hpp>
+
+
 namespace yq {
 
     template <typename T>
@@ -66,6 +72,39 @@ namespace yq {
     {
         a -= rhs;
         b -= rhs;
+        return *this;
+    }
+    
+    template <typename T>
+        template <typename U> requires trait::is_arithmetic_v<U>
+    constexpr Segment2<product_t<T,U>>    Segment2<T>::operator*(U rhs) const noexcept
+    {
+        return Segment2<product_t<T,U>>(a*rhs, b*rhs);
+    }
+    
+    template <typename T>
+        template <typename U> requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    Segment2<T>&                Segment2<T>::operator*=(U rhs)  noexcept
+    {
+        a *= rhs;
+        b *= rhs;
+        return *this;
+    }
+        
+    template <typename T>
+        template <typename U> requires trait::is_arithmetic_v<U>
+    constexpr Segment2<quotient_t<T,U>>   Segment2<T>::operator/(U rhs) const noexcept
+    {
+        return Segment2<quotient_t<T,U>>(a/rhs, b/rhs);
+    }
+    
+    
+    template <typename T>
+        template <typename U> requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    Segment2<T>&                Segment2<T>::operator/=(U rhs)  noexcept
+    {
+        a /= rhs;
+        b /= rhs;
         return *this;
     }
     
@@ -148,6 +187,13 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T,U>
+    constexpr Segment2<product_t<T,U>> operator*(T lhs, const Segment2<T>& rhs) noexcept
+    {
+        return Segment2<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
+    }
 
     template <typename T>
     constexpr AxBox2<T>   aabb(const Segment2<T>& seg) noexcept

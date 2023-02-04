@@ -12,6 +12,8 @@
     template instantiation.  
 */
 
+#include <math/Segment2.hpp>
+
 #include <math/Tensor11.hpp>
 #include <math/Tensor12.hpp>
 #include <math/Tensor13.hpp>

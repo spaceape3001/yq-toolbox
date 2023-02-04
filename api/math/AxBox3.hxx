@@ -104,6 +104,9 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox3<T>::AxBox3(const Segment3<T>&seg) noexcept : AxBox3<T>(seg.bounds()) {}
+
+    template <typename T>
     AxBox3<T>  AxBox3<T>::operator+() const noexcept
     {
         return *this;

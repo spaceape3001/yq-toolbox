@@ -12,6 +12,8 @@
     template instantiation.  
 */
 
+#include <math/Segment4.hpp>
+
 #include <math/Tensor41.hpp>
 #include <math/Tensor42.hpp>
 #include <math/Tensor43.hpp>

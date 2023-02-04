@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <math/Segment2.hpp>
+
 #include <math/Tensor21.hpp>
 #include <math/Tensor22.hpp>
 #include <math/Tensor23.hpp>
