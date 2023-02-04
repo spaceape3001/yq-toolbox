@@ -44,6 +44,8 @@ namespace yq {
         template <typename=void> requires trait::has_nan_v<T>
         consteval AxBox1(nan_t) : AxBox1(Vector1<T>(NAN)) {}
         consteval AxBox1(zero_t) : AxBox1(Vector1<T>(ZERO)) {}
+        
+        explicit constexpr AxBox1(const Segment1<T>&) noexcept;
 
         
         //! Defaulted equatlity operator

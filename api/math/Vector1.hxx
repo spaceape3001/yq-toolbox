@@ -16,6 +16,8 @@
 
 #include <math/Multivector1.hpp>
 
+#include <math/Segment1.hpp>
+
 #include <math/Tensor11.hpp>
 #include <math/Tensor12.hpp>
 #include <math/Tensor13.hpp>
@@ -55,23 +57,29 @@ namespace yq {
     }    
 
     template <typename T>
-    constexpr Multivector1<T> Vector1<T>::operator+(const Multivector1<T>& b) const noexcept
+    constexpr Multivector1<T> Vector1<T>::operator+(T b) const noexcept
     {
-        return { 
-            b.a, 
-            x+b.x
-        };
+        return Multivector1<T>(
+            b, 
+            x 
+        );
     }
 
     template <typename T>
-    constexpr Multivector1<T> Vector1<T>::operator+(T b) const noexcept
+    constexpr Multivector1<T> Vector1<T>::operator+(const Multivector1<T>& b) const noexcept
     {
-        return { 
-            b, 
-            x 
-        };
+        return Multivector1<T>(
+            b.a, 
+            x+b.x
+        );
     }
 
+    template <typename T>
+    constexpr Segment1<T> Vector1<T>::operator+(const Segment1<T>&rhs) const noexcept
+    {
+        return Segment1<T>( *this + rhs.a, *this + rhs.b );
+    }
+    
     template <typename T>
     constexpr Vector1<T> Vector1<T>::operator+(const Vector1& b) const noexcept
     {
@@ -101,6 +109,12 @@ namespace yq {
             -b.a, 
             x-b.x
         };
+    }
+
+    template <typename T>
+    constexpr Segment1<T> Vector1<T>::operator-(const Segment1<T>&rhs) const noexcept
+    {
+        return Segment1<T>( *this - rhs.a, *this - rhs.b );
     }
 
     template <typename T>

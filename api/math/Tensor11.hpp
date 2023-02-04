@@ -61,6 +61,9 @@ namespace yq {
         Tensor11<product_t<T,U>>  operator*=(U b) noexcept;
 
         template <typename U>
+        constexpr Segment1<product_t<T,U>>  operator*(const Segment1<U>&) const noexcept;
+
+        template <typename U>
         constexpr Tensor11<product_t<T,U>> operator*(const Tensor11<U>& b) const noexcept;
         template <typename U>
         constexpr Tensor12<product_t<T,U>> operator*(const Tensor12<U>& b) const noexcept;
@@ -72,7 +75,6 @@ namespace yq {
         template <typename U>
         requires trait::self_mul_v<T,U>
         Tensor11<T>& operator*=(const Tensor11<U>& b) const noexcept;
-
 
         template <typename U>
         constexpr Vector1<product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;

@@ -121,6 +121,12 @@ namespace yq {
         return *this;
     }
 
+    template <typename T>
+        template <typename U>
+    constexpr Segment3<product_t<T,U>>  Tensor31<T>::operator*(const Segment1<U>&rhs) const noexcept
+    {
+        return Segment3<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
+    }
 
     template <typename T>
         template <typename U>
