@@ -38,6 +38,11 @@ namespace yq {
         constexpr AxBox4(union_t, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
         constexpr AxBox4(union_t, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
 
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval AxBox4(nan_t) : AxBox4(Vector4<T>(NAN)) {}
+
+        consteval AxBox4(zero_t) : AxBox4(Vector4<T>(ZERO)) {}
+
         //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox4&) const noexcept = default;
 
@@ -152,8 +157,8 @@ namespace yq {
     template <typename T>
     AxBox4<T> aabb(const std::vector<Vector4<T>>& vals);
 
-    YQ_NAN_1(AxBox4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>});
-    YQ_ZERO_1(AxBox4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>});
+    YQ_NAN_1(AxBox4, AxBox4<T>(NAN));
+    YQ_ZERO_1(AxBox4, AxBox4<T>(ZERO));
 
     YQ_IS_FINITE_1( AxBox4, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox4, is_nan(v.lo) || is_nan(v.hi))

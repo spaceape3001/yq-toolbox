@@ -38,6 +38,11 @@ namespace yq {
         constexpr AxBox2(union_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
         constexpr AxBox2(union_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
         
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval AxBox2(nan_t) : AxBox2(Vector2<T>(NAN)) {}
+
+        consteval AxBox2(zero_t) : AxBox2(Vector2<T>(ZERO)) {}
+
         explicit constexpr AxBox2(const Circle2<T>&) noexcept;
 
         //! Equality operator (defaulted)
@@ -189,8 +194,8 @@ namespace yq {
     template <typename T>
     AxBox2<T> aabb(const std::vector<Vector2<T>>& vals);
 
-    YQ_NAN_1(AxBox2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>});
-    YQ_ZERO_1(AxBox2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>});
+    YQ_NAN_1(AxBox2, AxBox2<T>(NAN));
+    YQ_ZERO_1(AxBox2, AxBox2<T>(ZERO));
 
     YQ_IS_FINITE_1( AxBox2, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox2, is_nan(v.lo) || is_nan(v.hi))
