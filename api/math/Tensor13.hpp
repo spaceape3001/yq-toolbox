@@ -89,6 +89,9 @@ namespace yq {
         Tensor13&  operator*=(U b) noexcept;
 
         template <typename U>
+        constexpr Segment1<product_t<T,U>>  operator*(const Segment3<U>&) const noexcept;
+
+        template <typename U>
         constexpr Tensor11<product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
         template <typename U>
         constexpr Tensor12<product_t<T,U>> operator*(const Tensor32<U>& b) const noexcept;

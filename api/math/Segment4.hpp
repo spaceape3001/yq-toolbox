@@ -7,7 +7,6 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector4.hpp>
-#include <math/SegmentData.hpp>
 
 namespace yq {
 
@@ -18,42 +17,75 @@ namespace yq {
     
         Vector4<T>  a, b;
         
+        constexpr Segment4() noexcept = default;
+        constexpr Segment4(const Vector4<T>& _a, const Vector4<T>& _b) : a(_a), b(_b) {}
+        template <typename=void> requires trait::has_nan_v<T>
+        constexpr Segment4(nan_t) : Segment4( Vector4<T>(NAN), Vector4<T>(NAN)) {}
+        constexpr Segment4(zero_t) : Segment4( Vector4<T>(ZERO), Vector4<T>(ZERO)) {}
+
         //! Defaulted equality
         constexpr bool operator==(const Segment4&) const noexcept = default;
 
-        constexpr operator SegmentData<Vector4<T>>() const noexcept
-        {
-            return { a, b };
-        }
+        constexpr operator SegmentData<Vector4<T>>() const noexcept;
 
-        constexpr AxBox4<T>     bounds() const noexcept
-        {
-            return aabb(a, b);
-        }
+        constexpr operator SegmentData<Vector3<T>>() const noexcept;
 
+        constexpr Segment4      operator+() const noexcept;
+        constexpr Segment4      operator-() const noexcept;
+        
+        
+        Segment4                operator+(const Vector4<T>&) const noexcept;
+        Segment4                operator-(const Vector4<T>&) const noexcept;
+        
+        Segment4&               operator+=(const Vector4<T>&) noexcept;
+        Segment4&               operator-=(const Vector4<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Segment4<product_t<T,U>>    operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Segment4<T>&                operator*=(U)  noexcept;
+        
+
+        template <typename U>
+        Segment1<product_t<T,U>>    operator*(const Tensor41<U>&) const noexcept;
+
+        template <typename U>
+        Segment2<product_t<T,U>>    operator*(const Tensor42<U>&) const noexcept;
+
+        template <typename U>
+        Segment3<product_t<T,U>>    operator*(const Tensor43<U>&) const noexcept;
+
+        template <typename U>
+        Segment4<product_t<T,U>>    operator*(const Tensor44<U>&) const noexcept;
+        
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Segment4&                   operator*=(const Tensor44<U>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Segment4<quotient_t<T,U>>   operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Segment4<T>&                operator/=(U)  noexcept;
+
+        constexpr AxBox4<T>     bounds() const noexcept;
+        
         //! Net displacement
-        constexpr Vector4<T>  delta() const noexcept
-        {
-            return b - a;
-        }
+        constexpr Vector4<T>  delta() const noexcept;
         
         //! Length of the segment
-        T   length() const 
-        { 
-            return delta().length(); 
-        }
+        T   length() const;
 
         //! Square of the length
-        constexpr square_t<T> length²() const noexcept
-        {
-            return delta().length²();
-        }
+        constexpr square_t<T> length²() const noexcept;
         
         //! Segment mid-point
-        Vector4<T>  midpoint() const
-        {
-            return midvector(a, b);
-        }
+        Vector4<T>  midpoint() const;
 
         /*! \brief Computes a point along the segment based on a fractional position
         
@@ -61,10 +93,7 @@ namespace yq {
         */
         template <typename=void>
         requires has_ieee754_v<T>
-        constexpr Vector4<T>     point(ieee754_t<T> f) const noexcept
-        {
-            return (one_v<ieee754_t<T>> - f) * a + f * b;
-        }
+        constexpr Vector4<T>     point(ieee754_t<T> f) const noexcept;
 
     };
         YQ_IEEE754_1(Segment4)
@@ -80,103 +109,33 @@ namespace yq {
         return { a, b };
     }
 
-    YQ_NAN_1(Segment4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>});
-    YQ_ZERO_1(Segment4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>});
+    YQ_NAN_1(Segment4, Segment4<T>(NAN))
+    YQ_ZERO_1(Segment4, Segment4<T>(ZERO))
 
 //  --------------------------------------------------------
-//  GETTERS
-
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
 
     YQ_IS_FINITE_1( Segment4, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment4, is_nan(v.a) || is_nan(v.b))
     
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T,U>
+    constexpr Segment4<product_t<T,U>> operator*(T, const Segment4<T>&) noexcept;
+
     /*! \brief Creates axially aligned bounding box from the segment
     */
     template <typename T>
-    constexpr AxBox4<T>   aabb(const Segment4<T>& seg) noexcept
-    {
-        return aabb(seg.a, seg.b);
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
+    constexpr AxBox4<T>   aabb(const Segment4<T>& seg) noexcept;
 
     /*! \brief Computes the length of the segmetn
     */
     template <typename T>
-    T       length(const Segment4<T>& seg)
-    {
-        return seg.length();
-    }
+    T       length(const Segment4<T>& seg);
 
     /*! \brief Computes the midpoint of the segmetn
     */
     template <typename T>
-    constexpr Vector4<T>     midpoint(const Segment4<T>& seg) noexcept
-    {
-        return seg.midpoint();
-    }
+    constexpr Vector4<T>     midpoint(const Segment4<T>& seg) noexcept;
     
     /*! \brief Computes a point along the segment based on a fractional position
     
@@ -185,10 +144,7 @@ namespace yq {
     */
     template <typename T>
     requires has_ieee754_v<T>
-    constexpr Vector4<T>     point(const Segment4<T>& seg, ieee754_t<T> f) noexcept
-    {
-        return seg.point(f);
-    }
+    constexpr Vector4<T>     point(const Segment4<T>& seg, ieee754_t<T> f) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Segment4D)

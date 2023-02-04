@@ -50,13 +50,6 @@ namespace yq {
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Segment1<T>&                operator*=(U)  noexcept;
         
-        template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Segment1<quotient_t<T,U>>   operator/(U) const noexcept;
-        
-        template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-        Segment1<T>&                operator/=(U)  noexcept;
 
         template <typename U>
         Segment1<product_t<T,U>>    operator*(const Tensor11<U>&) const noexcept;
@@ -73,6 +66,14 @@ namespace yq {
         template <typename U>
         requires trait::self_mul_v<T,U>
         Segment1&                   operator*=(const Tensor11<U>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Segment1<quotient_t<T,U>>   operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Segment1<T>&                operator/=(U)  noexcept;
 
         constexpr AxBox1<T>     bounds() const noexcept;
         

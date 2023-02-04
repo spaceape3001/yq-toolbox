@@ -16,6 +16,7 @@
 #include <math/AxCorners4.hpp>
 #include <math/Range.hpp>
 #include <math/Size4.hpp>
+#include <math/Segment4.hpp>
 
 namespace yq {
     template <typename T>
@@ -111,6 +112,9 @@ namespace yq {
             hi      = Vector4<T>(ZERO);
         }
     }
+
+    template <typename T>
+    constexpr AxBox4<T>::AxBox4(const Segment4<T>&seg) noexcept : AxBox4<T>(seg.bounds()) {}
 
     template <typename T>
     AxBox4<T>  AxBox4<T>::operator+() const noexcept

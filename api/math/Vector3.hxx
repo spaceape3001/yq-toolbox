@@ -129,6 +129,17 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr Multivector3<T> Vector3<T>::operator-(T b) const noexcept
+    {
+        return Multivector3<T>(
+            -b, 
+            x, y, z,
+            zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
+        );
+    }
+
+    template <typename T>
     constexpr AxBox3<T> Vector3<T>::operator-(const AxBox3<T>&b) const noexcept
     {
         return AxBox3<T>(*this - b.hi, *this - b.lo);
@@ -170,17 +181,6 @@ namespace yq {
             x, y, z,
             zero_v<T>, zero_v<T>, zero_v<T>, 
             -b.xyz
-        );
-    }
-
-    template <typename T>
-    constexpr Multivector3<T> Vector3<T>::operator-(T b) const noexcept
-    {
-        return Multivector3<T>(
-            -b, 
-            x, y, z,
-            zero_v<T>, zero_v<T>, zero_v<T>, 
-            zero_v<T> 
         );
     }
 

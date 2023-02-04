@@ -7,7 +7,6 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector3.hpp>
-#include <math/SegmentData.hpp>
 
 namespace yq {
 
@@ -48,14 +47,6 @@ namespace yq {
         Segment3<T>&                operator*=(U)  noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Segment3<quotient_t<T,U>>   operator/(U) const noexcept;
-        
-        template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-        Segment3<T>&                operator/=(U)  noexcept;
-
-        template <typename U>
         Segment1<product_t<T,U>>    operator*(const Tensor31<U>&) const noexcept;
 
         template <typename U>
@@ -71,6 +62,15 @@ namespace yq {
         requires trait::self_mul_v<T,U>
         Segment3&                   operator*=(const Tensor33<U>&) noexcept;
         
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Segment3<quotient_t<T,U>>   operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Segment3<T>&                operator/=(U)  noexcept;
+
+
         constexpr AxBox3<T>     bounds() const noexcept;
 
         //! Net displacement

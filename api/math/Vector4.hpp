@@ -111,6 +111,8 @@ namespace yq {
         //! Addition
         constexpr Vector4 operator+(const Vector4& b) const noexcept;
 
+        constexpr Multivector4<T> operator+(T) const noexcept;
+
         constexpr AxBox4<T> operator+(const AxBox4<T>&) const noexcept;
 
         //! Addition with bivector
@@ -119,16 +121,20 @@ namespace yq {
         constexpr Multivector4<T> operator+(const Multivector4<T>&) const noexcept;
         //! Addition with quadvector
         constexpr Multivector4<T> operator+(const Quadvector4<T>&) const noexcept;
+
+        constexpr Segment4<T> operator+(const Segment4<T>&) const noexcept;
+
         //! Addition with trivector
         constexpr Multivector4<T> operator+(const Trivector4<T>&) const noexcept;
-        //! Addition with scalar
-        constexpr Multivector4<T> operator+(T) const noexcept;
         
         //! Self-addition
         Vector4& operator+=(const Vector4& b) noexcept;
 
         //! Subtraction
         constexpr Vector4 operator-(const Vector4& b) const noexcept;
+
+        //! Addition with scalar
+        constexpr Multivector4<T> operator-(T) const noexcept;
 
         constexpr AxBox4<T> operator-(const AxBox4<T>&) const noexcept;
 
@@ -138,10 +144,11 @@ namespace yq {
         constexpr Multivector4<T> operator-(const Multivector4<T>&) const noexcept;
         //! Addition with quadvector
         constexpr Multivector4<T> operator-(const Quadvector4<T>&) const noexcept;
+
+        constexpr Segment4<T> operator-(const Segment4<T>&) const noexcept;
+
         //! Addition with trivector
         constexpr Multivector4<T> operator-(const Trivector4<T>&) const noexcept;
-        //! Addition with scalar
-        constexpr Multivector4<T> operator-(T) const noexcept;
         
         //! Self-subtraction
         Vector4& operator-=(const Vector4& b) noexcept;

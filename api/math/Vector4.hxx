@@ -59,6 +59,18 @@ namespace yq {
     }    
 
     template <typename T>
+    constexpr Multivector4<T> Vector4<T>::operator+(T b) const noexcept
+    {
+        return Multivector4<T>(
+            b, 
+            x, y, z, w, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
+            zero_v<T> 
+        );
+    }
+
+    template <typename T>
     constexpr AxBox4<T> Vector4<T>::operator+(const AxBox4<T>&b) const noexcept
     {
         return AxBox4<T>(*this + b.lo, *this + b.hi);
@@ -101,6 +113,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Segment4<T> Vector4<T>::operator+(const Segment4<T>&rhs) const noexcept
+    {
+        return Segment4<T>( *this + rhs.a, *this + rhs.b );
+    }
+
+    template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator+(const Trivector4<T>&b) const noexcept
     {
         return Multivector4<T>(
@@ -108,18 +126,6 @@ namespace yq {
             x, y, z, w, 
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             b.xyz, b.yzw, b.zwx, b.wxy,
-            zero_v<T> 
-        );
-    }
-
-    template <typename T>
-    constexpr Multivector4<T> Vector4<T>::operator+(T b) const noexcept
-    {
-        return Multivector4<T>(
-            b, 
-            x, y, z, w, 
-            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
-            zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             zero_v<T> 
         );
     }
@@ -144,13 +150,13 @@ namespace yq {
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-(T b) const noexcept
     {
-        return { 
+        return Multivector4<T>( 
             -b, 
             x, y, z, w, 
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             zero_v<T> 
-        };
+        );
     }
 
     template <typename T>
@@ -162,49 +168,55 @@ namespace yq {
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-(const Bivector4<T>& b) const noexcept
     {
-        return { 
+        return Multivector4<T>(
             zero_v<T>, 
             x, y, z, w, 
             -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             zero_v<T> 
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-(const Multivector4<T>& b) const noexcept
     {
-        return { 
+        return Multivector4<T>(
             -b.a, 
             x-b.x, y-b.y, z-b.z, w-b.w, 
             -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
             -b.xyz, -b.yzw, -b.zwx, -b.wxy,
             -b.xyzw
-        };
+        );
     }
 
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-(const Quadvector4<T>& b) const noexcept
     {
-        return { 
+        return Multivector4<T>(
             zero_v<T>, 
             x, y, z, w, 
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             -b.xyzw
-        };
+        );
+    }
+
+    template <typename T>
+    constexpr Segment4<T> Vector4<T>::operator-(const Segment4<T>&rhs) const noexcept
+    {
+        return Segment4<T>( *this - rhs.a, *this - rhs.b );
     }
 
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-( const Trivector4<T>& b) const noexcept
     {
-        return { 
+        return Multivector4<T>(
             zero_v<T>, 
             x, y, z, w, 
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             -b.xyz, -b.yzw, -b.zwx, -b.wxy,
             zero_v<T> 
-        };
+        );
     }    
 
 

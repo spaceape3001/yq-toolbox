@@ -112,6 +112,8 @@ namespace yq {
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Tensor34&  operator*=(U b) noexcept;
 
+        template <typename U>
+        constexpr Segment3<product_t<T,U>>  operator*(const Segment4<U>&) const noexcept;
         
         template <typename U>
         constexpr Tensor31<product_t<T,U>> operator*(const Tensor41<U>& b) const noexcept;

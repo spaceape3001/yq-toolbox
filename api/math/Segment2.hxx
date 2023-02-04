@@ -92,23 +92,6 @@ namespace yq {
     }
         
     template <typename T>
-        template <typename U> requires trait::is_arithmetic_v<U>
-    constexpr Segment2<quotient_t<T,U>>   Segment2<T>::operator/(U rhs) const noexcept
-    {
-        return Segment2<quotient_t<T,U>>(a/rhs, b/rhs);
-    }
-    
-    
-    template <typename T>
-        template <typename U> requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
-    Segment2<T>&                Segment2<T>::operator/=(U rhs)  noexcept
-    {
-        a /= rhs;
-        b /= rhs;
-        return *this;
-    }
-    
-    template <typename T>
         template <typename U>
     Segment1<product_t<T,U>> Segment2<T>::operator*(const Tensor21<U>&rhs) const noexcept
     {
@@ -147,6 +130,24 @@ namespace yq {
         return *this;
     }
     
+    template <typename T>
+        template <typename U> requires trait::is_arithmetic_v<U>
+    constexpr Segment2<quotient_t<T,U>>   Segment2<T>::operator/(U rhs) const noexcept
+    {
+        return Segment2<quotient_t<T,U>>(a/rhs, b/rhs);
+    }
+    
+    
+    template <typename T>
+        template <typename U> requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    Segment2<T>&                Segment2<T>::operator/=(U rhs)  noexcept
+    {
+        a /= rhs;
+        b /= rhs;
+        return *this;
+    }
+    
+
     template <typename T>
     constexpr AxBox2<T>     Segment2<T>::bounds() const noexcept
     {
