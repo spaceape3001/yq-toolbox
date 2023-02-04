@@ -374,76 +374,6 @@ namespace yq {
         };
     }
 
-    /*! Trivector/bivector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Bivector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            {}, {}, {}, {}, 
-            b.xy, b.yz, b.zw, b.wx, b.xz, b.yw,
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            {} 
-        };
-    }
-
-    /*! Trivector/multivector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Multivector4<T>& b) noexcept
-    {
-        return { 
-            b.a, 
-            b.x, b.y, b.z, b.w, 
-            b.xy, b.yz, b.zw, b.wx, b.xz, b.yw,
-            a.xyz+b.xyz, a.yzw+b.yzw, a.zwx+b.zwx, a.wxy+b.wxy,
-            b.xyzw
-        };
-    }
-
-    /*! Trivector/quadvector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            {}, {}, {}, {}, 
-            {}, {}, {}, {}, {}, {}, 
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            b.xyzw 
-        };
-    }
-
-    /*! Trivector/scalar addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Trivector4<T>& a, T  b) noexcept
-    {
-        return { 
-            b, 
-            {}, {}, {}, {}, 
-            {}, {}, {}, {}, {}, {}, 
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            {} 
-        };
-    }
-        
-
-    /*! Trivector/vector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(const Trivector4<T>& a, const Vector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            b.x, b.y, b.z, b.w, 
-            {}, {}, {}, {}, {}, {}, 
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            {} 
-        };
-    }
 
     /*! scalar/multivector addition
     */
@@ -473,19 +403,6 @@ namespace yq {
         };
     }
 
-    /*! Scalar/trivector addition
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator+(T a, const Trivector4<T>& b) noexcept
-    {
-        return { 
-            a, 
-            {}, {}, {}, {}, 
-            {}, {}, {}, {}, {}, {}, 
-            b.xyz, b.yzw, b.zwx, b.wxy, 
-            {} 
-        };
-    }
 
 
 
@@ -708,76 +625,6 @@ namespace yq {
         };
     }
 
-    /*! Trivector/bivector subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Bivector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            {}, {}, {}, {}, 
-            -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            {} 
-        };
-    }
-
-    /*! Trivector/multivector subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Multivector4<T>& b) noexcept
-    {
-        return { 
-            -b.a, 
-            -b.x, -b.y, -b.z, -b.w, 
-            -b.xy, -b.yz, -b.zw, -b.wx, -b.xz, -b.yw,
-            a.xyz-b.xyz, a.yzw-b.yzw, a.zwx-b.zwx, a.wxy-b.wxy,
-            -b.xyzw
-        };
-    }
-
-    /*! Trivector/quadvector subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Quadvector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            {}, {}, {}, {}, 
-            {}, {}, {}, {}, {}, {}, 
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            -b.xyzw 
-        };
-    }
-    
-    /*! Trivector/scalar subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(const Trivector4<T>& a, T b) noexcept
-    {
-        return { 
-            -b, 
-            {}, {}, {}, {}, 
-            {}, {}, {}, {}, {}, {}, 
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            {} 
-        };
-    }
-        
-    /*! Trivector/vector subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(const Trivector4<T>& a, const Vector4<T>& b) noexcept
-    {
-        return { 
-            {}, 
-            -b.x, -b.y, -b.z, -b.w, 
-            {}, {}, {}, {}, {}, {}, 
-            a.xyz, a.yzw, a.zwx, a.wxy, 
-            {} 
-        };
-    }
-
 
 
     /*! Scalar/multivector subtraction
@@ -808,19 +655,6 @@ namespace yq {
         };
     }
 
-    /*! Scalar/trivector subtraction
-    */
-    template <typename T>
-    constexpr Multivector4<T> operator-(T a, const Trivector4<T>& b) noexcept
-    {
-        return { 
-            a, 
-            {}, {}, {}, {}, 
-            {}, {}, {}, {}, {}, {}, 
-            -b.xyz, -b.yzw, -b.zwx, -b.wxy, 
-            {} 
-        };
-    }
 
 
 //  --------------------------------------------------------

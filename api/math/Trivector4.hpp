@@ -40,17 +40,43 @@ namespace yq {
         
             \note Here to complement the negation operator
         */
-        constexpr Trivector4 operator+() const noexcept
-        {
-            return *this;
-        }
+        constexpr Trivector4 operator+() const noexcept;
 
         /*! \brief Negation operator
         */
-        constexpr Trivector4 operator-() const noexcept
-        {
-            return {-xyz, -yzw, -zwx, -wxy};
-        }
+        constexpr Trivector4 operator-() const noexcept;
+
+        constexpr Multivector4<T>   operator+(T b) const noexcept;
+        constexpr Multivector4<T>   operator+(const Bivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator+(const Multivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator+(const Quadvector4<T>& b) const noexcept;
+        constexpr Trivector4        operator+(const Trivector4& b) const noexcept;
+        Trivector4&                 operator+=(const Trivector4& b) noexcept;
+        constexpr Multivector4<T>   operator+(const Vector4<T>& b) const noexcept;
+
+        constexpr Multivector4<T>   operator-(T b) const noexcept;
+        constexpr Multivector4<T>   operator-(const Bivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator-(const Multivector4<T>& b) const noexcept;
+        constexpr Multivector4<T>   operator-(const Quadvector4<T>& b) const noexcept;
+        constexpr Trivector4        operator-(const Trivector4& b) const noexcept;
+        Trivector4&                 operator-=(const Trivector4& b) noexcept;
+        constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Trivector4<product_t<T,U>> operator*(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Trivector4& operator*=(U b) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Trivector4<quotient_t<T,U>> operator/(U b) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Trivector4& operator/=(U b) noexcept;
     };
 
     YQ_IEEE754_1(Trivector4)
@@ -63,56 +89,56 @@ namespace yq {
     */
     constexpr Trivector4D   operator "" _xyz4(unsigned long long int v) noexcept
     {
-        return {(double) v, 0., 0., 0.};
+        return Trivector4D(XYZ, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _xyz4(long double v) noexcept
     {
-        return {(double) v, 0., 0., 0.};
+        return Trivector4D(XYZ, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _yzw4(unsigned long long int v) noexcept
     {
-        return {0., (double) v, 0., 0.};
+        return Trivector4D(YZW, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _yzw4(long double v) noexcept
     {
-        return {0., (double) v, 0., 0.};
+        return Trivector4D(YZW, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _zwx4(unsigned long long int v) noexcept
     {
-        return {0., 0.,  (double) v, 0.};
+        return Trivector4D(ZWX, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _zwx4(long double v) noexcept
     {
-        return {0., 0., (double) v,  0.};
+        return Trivector4D(ZWX, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _wxy4(unsigned long long int v) noexcept
     {
-        return {0., 0.,  0., (double) v };
+        return Trivector4D(WXY, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
     constexpr Trivector4D   operator "" _wxy4(long double v) noexcept
     {
-        return {0., 0., 0., (double) v};
+        return Trivector4D(WXY, (double) v);
     }
 
     YQ_NAN_1(Trivector4, Trivector4<T>{nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>})
@@ -130,156 +156,22 @@ namespace yq {
     YQ_IS_FINITE_1(Trivector4, is_finite(v.xyz) && is_finite(v.yzw) && is_finite(v.zwx) && is_finite(v.wxy))
 
 
-
 //  --------------------------------------------------------
-//  NORMALIZATION
-
-
 //  --------------------------------------------------------
-//  ADDITION
 
-    /*! \brief Addition of two trivectors
-    */
     template <typename T>
-    constexpr Trivector4<T> operator+(const Trivector4<T>& a, const Trivector4<T>& b) noexcept
-    {
-        return { a.xyz+b.xyz, a.yzw+b.yzw, a.zwx+b.zwx, a.wxy+b.wxy };
-    }
+    constexpr Multivector4<T> operator+(T a, const Trivector4<T>& b) noexcept;
 
-    /*! \brief Self-addition operator
-    
-        Adds the right to the left term.
-    */
     template <typename T>
-    Trivector4<T>& operator+(Trivector4<T>& a, const Trivector4<T>& b) noexcept
-    {
-        a.xyz+=b.xyz; a.yzw+=b.yzw; a.zwx+=b.zwx; a.wxy+=b.wxy;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-    /*! \brief Subtraction of two trivectors
-    */
-    template <typename T>
-    constexpr Trivector4<T> operator-(const Trivector4<T>& a, const Trivector4<T>& b) noexcept
-    {
-        return { a.xyz-b.xyz, a.yzw-b.yzw, a.zwx-b.zwx, a.wxy-b.wxy };
-    }
-
-    /*! \brief Self-subtraction operator
-        
-        Subtracts the right from the left term.
-    */
-    template <typename T>
-    Trivector4<T>& operator-(Trivector4<T>& a, const Trivector4<T>& b) noexcept
-    {
-        a.xyz-=b.xyz; a.yzw-=b.yzw; a.zwx-=b.zwx; a.wxy-=b.wxy;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
+    constexpr Multivector4<T> operator-(T a, const Trivector4<T>& b) noexcept;
 
     /*! \brief Scaling multiplication of trivector
     
         This will (scale) multiply a trivector, returns the result.
     */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector4<T> operator*(T a, const Trivector4<T>& b) noexcept
-    {
-        return { a*b.xyz, a*b.yzw, a*b.zwx, a*b.wxy, };
-    }
-
-    /*! \brief Scaling multiplication of trivector
-    
-        This will (scale) multiply a trivector, returns the result.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector4<T> operator*(const Trivector4<T>& a, T b) noexcept
-    {
-        return { a.xyz*b, a.yzw*b, a.zwx*b, a.wxy*b, };
-    }
-
-    /*! \brief Scaling self-multiplication of trivector
-        
-        This multiplies the trivector (in place) with the right term, returns a reference.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Trivector4<T>& operator*=(Trivector4<T>& a, T b) noexcept
-    {
-        a.xyz*=b; a.yzw*=b; a.zwx*=b; a.wxy*=b;
-        return a;
-    }
-
-//  --------------------------------------------------------
-//  DIVISION
-
-    /*! \brief Scaling division of trivector
-        
-        This scale divides the trivector with the right.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    constexpr Trivector4<T> operator/(const Trivector4<T>& a, T b) noexcept
-    {
-        return { a.xyz/b, a.yzw/b, a.zwx/b, a.wxy/b, };
-    }
-
-    /*! \brief Self-scaling division of trivector
-    
-        This reduces the trivector (in place) with the right,
-        returns reference to the trivector.
-    */
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    Trivector4<T>& operator/=(Trivector4<T>& a, T b) noexcept
-    {
-        a.xyz/=b; a.yzw/=b; a.zwx/=b; a.wxy/=b;
-        return a;
-    }
-
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
-
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Trivector4<product_t<T,U>> operator*(T a, const Trivector4<U>& b) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Trivector4D)
