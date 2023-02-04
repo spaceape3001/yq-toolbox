@@ -16,7 +16,8 @@
 #include <math/Bivector2.hpp>
 #include <math/Circle2.hpp>
 #include <math/Multivector2.hpp>
-#include <math/Segment1.hpp>
+#include <math/Segment2.hpp>
+#include <math/Triangle2.hpp>
 
 #include <math/Tensor21.hpp>
 #include <math/Tensor22.hpp>
@@ -108,6 +109,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Triangle2<T> Vector2<T>::operator+(const Triangle2<T>&rhs) const noexcept
+    {
+        return Triangle2<T>(*this+rhs.a, *this+rhs.b, *this+rhs.c);
+    }
+
+    template <typename T>
     constexpr Vector2<T> Vector2<T>::operator+(const Vector2& b) const noexcept
     {
         return Vector2(x+b.x, y+b.y);
@@ -167,6 +174,12 @@ namespace yq {
     constexpr Segment2<T> Vector2<T>::operator-(const Segment2<T>&rhs) const noexcept
     {
         return Segment2<T>( *this - rhs.a, *this - rhs.b );
+    }
+
+    template <typename T>
+    constexpr Triangle2<T> Vector2<T>::operator-(const Triangle2<T>&rhs) const noexcept
+    {
+        return Triangle2<T>(*this-rhs.a, *this-rhs.b, *this-rhs.c);
     }
 
     template <typename T>
@@ -632,7 +645,7 @@ namespace yq {
         no sign correction, no scaling.
     */
     template <typename T>
-    square_t<T>    delta_area(const std::span<Vector2<T>>& vertex)
+    constexpr square_t<T>    delta_area(const std::span<Vector2<T>>& vertex) noexcept
     {
         if(vertex.empty())
             return square_t<T>{};

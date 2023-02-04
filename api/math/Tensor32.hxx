@@ -24,6 +24,9 @@
 #include <math/Tensor33.hpp>
 #include <math/Tensor34.hpp>
 
+#include <math/Triangle2.hpp>
+#include <math/Triangle3.hpp>
+
 #include <math/Vector2.hpp>
 #include <math/Vector3.hpp>
 
@@ -209,6 +212,13 @@ namespace yq {
             zx*b.xz + zy*b.yz,
             zx*b.xw + zy*b.yw
         );
+    }
+
+    template <typename T>
+        template <typename U>
+    Triangle3<product_t<T,U>> Tensor32<T>::operator*(const Triangle2<U>&rhs) const noexcept
+    {
+        return Triangle3<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
     }
         
     template <typename T>

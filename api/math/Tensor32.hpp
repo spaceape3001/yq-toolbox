@@ -120,6 +120,9 @@ namespace yq {
         Tensor32<T>& operator*=(const Tensor22<U>& b) noexcept;
 
         template <typename U>
+        Triangle3<product_t<T,U>> operator*(const Triangle2<U>&) const noexcept;
+
+        template <typename U>
         constexpr Vector3<product_t<T,U>> operator*(const Vector2<U>&b) const noexcept;
 
         template <typename U>

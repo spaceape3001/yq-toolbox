@@ -8,7 +8,6 @@
 
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
-#include <math/TriangleData.hpp>
 
 namespace yq {
 
@@ -21,49 +20,87 @@ namespace yq {
     
         Vector2<T>   a, b, c;
         
+        constexpr Triangle2() noexcept = default;
+        constexpr Triangle2(const Vector2<T>& _a, const Vector2<T>& _b, const Vector2<T>& _c) noexcept : a(_a), b(_b), c(_c) {}
+        constexpr Triangle2(all_t, const Vector2<T>& v) noexcept : a(v), b(v), c(v) {}
+        consteval Triangle2(nan_t) noexcept : Triangle2(ALL, Vector2<T>(NAN)) {}
+        consteval Triangle2(zero_t) noexcept : Triangle2(ALL, Vector2<T>(ZERO)) {}
+        
         //! Defaulted equality operator
         constexpr bool operator==(const Triangle2&) const noexcept = default;
         
+        
         //! Implicit conversion to triangle data
-        constexpr operator TriangleData<Vector2<T>> () const noexcept 
-        { 
-            return { a, b, c }; 
-        }
+        constexpr operator TriangleData<Vector2<T>> () const noexcept;
+
+        constexpr Triangle2 operator+() const noexcept;
+        constexpr Triangle2 operator-() const noexcept;
+        
+        constexpr Triangle2 operator+(const Vector2<T>&) const noexcept;
+        Triangle2& operator+=(const Vector2<T>&) noexcept;
+        constexpr Triangle2 operator-(const Vector2<T>&) const noexcept;
+        Triangle2& operator-=(const Vector2<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Triangle2<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Triangle2& operator*=(U) noexcept;
+
+        template <typename U>
+        Triangle2<product_t<T,U>>   operator*(const Tensor22<U>&) const noexcept;
+
+        template <typename U>
+        Triangle3<product_t<T,U>>   operator*(const Tensor23<U>&) const noexcept;
+
+        template <typename U>
+        Triangle4<product_t<T,U>>   operator*(const Tensor24<U>&) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Triangle2&   operator*=(const Tensor22<U>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Triangle2<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Triangle2& operator/=(U) noexcept;
 
         //! Area of this triangle
-        constexpr square_t<T>    area() const noexcept
-        {
-            return middivice(abs(point_area()));
-        }
+        constexpr square_t<T>    area() const noexcept;
         
         /*! \brief Returns the bounding box for this triangle
         */
-        constexpr AxBox2<T>   bounds() const noexcept
-        {
-            return {
-                min_elem(min_elem(a, b), c), 
-                max_elem(max_elem(a, b), c)
-            };
-        }
+        constexpr AxBox2<T>   bounds() const noexcept;
         
+        //! Edge opposite the "A" vertex
+        constexpr Segment2<T>   edge_a() const noexcept;
+        constexpr T             edge_a_length() const noexcept;
+        constexpr square_t<T>   edge_a_length²() const noexcept;
+
+        //! Edge opposite the "B" vertex
+        constexpr Segment2<T>   edge_b() const noexcept;
+        constexpr T             edge_b_length() const noexcept;
+        constexpr square_t<T>   edge_b_length²() const noexcept;
+
+        //! Edge opposite the "C" vertex
+        constexpr Segment2<T>   edge_c() const noexcept;
+        constexpr T             edge_c_length() const noexcept;
+        constexpr square_t<T>   edge_c_length²() const noexcept;
+
         //! TRUE if this triangle is wound in counter-clockwise with its points
-        constexpr bool    is_ccw() const noexcept
-        {
-            return point_area() < zero_v<T>;
-        }
+        constexpr bool    is_ccw() const noexcept;
         
         //! TRUE if this triangle is wound in clockwise with its points
-        constexpr bool      is_clockwise() const noexcept
-        {
-            return point_area() > zero_v<T>;
-        }
+        constexpr bool      is_clockwise() const noexcept;
         
         //! Perimeter of this triangel
         //! \note Might not be reliable for non-floating point types
-        T       perimeter() const
-        {
-            return (b-a).length() + (c-b).length() + (a-c).length();
-        }
+        T       perimeter() const;
 
         /*! \brief "Point area" of the points
         
@@ -71,10 +108,7 @@ namespace yq {
             simply does an "area" of the point deltas, 
             no sign correction, no scaling.
         */
-        constexpr square_t<T>   point_area() const noexcept
-        {
-            return delta_area(b, a) + delta_area(c, b) + delta_area(a, c);
-        }
+        constexpr square_t<T>   _area() const noexcept;
     };
 
     YQ_IEEE754_1(Triangle2)
@@ -83,83 +117,50 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    YQ_NAN_1(Triangle2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>, nan_v<Vector2<T>> })
-    YQ_ZERO_1(Triangle2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>, zero_v<Vector2<T>> })
+    YQ_NAN_1(Triangle2, Triangle2<T>(NAN))
+    YQ_ZERO_1(Triangle2, Triangle2<T>(ZERO))
 
     /*! \brief Create a triangle from three points */
     template <typename T>
     Triangle2<T>    triangle(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c)
     {
-        return { a, b, c };
+        return Triangle2<T>( a, b, c );
     }
 
 
 //  --------------------------------------------------------
-//  GETTERS
-
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
 
     YQ_IS_FINITE_1(Triangle2, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle2, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Triangle2<product_t<T,U>> operator*(T lhs, const Triangle2<U>& rhs) noexcept;
+
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
-    constexpr AxBox2<T>   aabb(const Triangle2<T>& tri) noexcept
-    {
-        return tri.bounds();
-    }
-
-
-//  --------------------------------------------------------
-//  UTILITY FUNCTIONS (FOR OTHER ADVANCED THINGS TO WORK)
-
-    /*! \brief "Point area" of the points
+    constexpr AxBox2<T>   aabb(const Triangle2<T>& tri) noexcept;
     
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
-    template <typename T>
-    square_t<T>    point_area(const Triangle2<T>& tri)
-    {
-        return tri.point_area();
-    }
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
     /*! \brief Computes the area of a 2D triangle
     */
     template <typename T>
-    constexpr square_t<T>    area(const Triangle2<T>& tri) noexcept
-    {
-        return tri.area();
-    }
+    constexpr square_t<T>    area(const Triangle2<T>& tri) noexcept;
 
     /*! \brief TRUE if the triangle is defined in a counter-clockwise fashion
     */
     template <typename T>
-    constexpr bool    is_ccw(const Triangle2<T>& tri)noexcept
-    {
-        return tri.is_ccw();
-    }
-
+    constexpr bool    is_ccw(const Triangle2<T>& tri)noexcept;
+    
     /*! \brief TRUE if the triangle is defined in a clockwise fashion
     */
     template <typename T>
-    bool    is_clockwise(const Triangle2<T>& tri)
-    {
-        return tri.is_clockwise();
-    }
+    constexpr bool    is_clockwise(const Triangle2<T>& tri) noexcept;
 
     /*! \brief Computes the perimeter of the triangle
     */
     template <typename T>
-    T       perimeter(const Triangle2<T>& tri)
-    {   
-        return tri.perimeter();
-    }
+    T       perimeter(const Triangle2<T>& tri);
 
 
 }

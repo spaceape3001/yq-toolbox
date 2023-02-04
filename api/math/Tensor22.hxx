@@ -19,6 +19,7 @@
 #include <math/Tensor22.hpp>
 #include <math/Tensor23.hpp>
 #include <math/Tensor24.hpp>
+#include <math/Triangle2.hpp>
 
 #include <math/Vector2.hpp>
 
@@ -203,6 +204,13 @@ namespace yq {
             yx*b.xz + yy*b.yz,
             yx*b.xw + yy*b.yw
         );
+    }
+
+    template <typename T>
+        template <typename U>
+    Triangle2<product_t<T,U>> Tensor22<T>::operator*(const Triangle2<U>&rhs) const noexcept
+    {
+        return Triangle2<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
     }
         
     template <typename T>

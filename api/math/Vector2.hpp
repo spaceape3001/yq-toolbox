@@ -100,6 +100,8 @@ namespace yq {
         constexpr Multivector2<T> operator+(const Multivector2<T>& b) const noexcept;
 
         constexpr Segment2<T> operator+(const Segment2<T>&) const noexcept;
+        
+        constexpr Triangle2<T> operator+(const Triangle2<T>&) const noexcept;
 
         //! Addition to vector
         constexpr Vector2 operator+(const Vector2& b) const noexcept;
@@ -121,6 +123,8 @@ namespace yq {
         constexpr Multivector2<T> operator-(const Multivector2<T>& b) const noexcept;
 
         constexpr Segment2<T> operator-(const Segment2<T>&) const noexcept;
+
+        constexpr Triangle2<T> operator-(const Triangle2<T>&) const noexcept;
 
         //! Subtraction
         constexpr Vector2 operator-(const Vector2& b) const noexcept;
@@ -561,7 +565,7 @@ namespace yq {
         no sign correction, no scaling.
     */
     template <typename T>
-    square_t<T>    delta_area(const std::span<Vector2<T>>& vertex);
+    constexpr square_t<T>    delta_area(const std::span<Vector2<T>>& vertex) noexcept;
 
 
     template <typename T, typename R>
