@@ -108,11 +108,9 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Vector1<product_t<T,U>> Tensor12<T>::operator*(const Vector2<U>&b) const noexcept
+    constexpr Segment1<product_t<T,U>>  Tensor12<T>::operator*(const Segment2<U>&rhs) const noexcept
     {
-        return Vector1<product_t<T,U>>(
-            xx*b.x + xy*b.y
-        );
+        return Segment1<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
 
     template <typename T>
@@ -163,6 +161,15 @@ namespace yq {
             xx*b.xy + xy*b.yy,
             xx*b.xz + xy*b.yz,
             xx*b.xw + xy*b.yw
+        );
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Vector1<product_t<T,U>> Tensor12<T>::operator*(const Vector2<U>&b) const noexcept
+    {
+        return Vector1<product_t<T,U>>(
+            xx*b.x + xy*b.y
         );
     }
 

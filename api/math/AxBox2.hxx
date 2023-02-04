@@ -16,6 +16,7 @@
 #include <math/AxCorners2.hpp>
 #include <math/Circle2.hpp>
 #include <math/Range.hpp>
+#include <math/Segment2.hpp>
 #include <math/Size2.hpp>
 
 
@@ -100,6 +101,9 @@ namespace yq {
     constexpr AxBox2<T>::AxBox2(const Circle2<T>& cir) noexcept : AxBox2(cir.bounds())
     {
     }
+
+    template <typename T>
+    constexpr AxBox2<T>::AxBox2(const Segment2<T>&seg) noexcept : AxBox2<T>(seg.bounds()) {}
 
     template <typename T>
     constexpr AxBox2<T> AxBox2<T>::operator|(const AxBox2<T>&b) const noexcept

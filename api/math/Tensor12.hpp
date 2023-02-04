@@ -69,7 +69,7 @@ namespace yq {
         Tensor12<product_t<T,U>>            operator*=(U b) noexcept;
 
         template <typename U>
-        constexpr Vector1<product_t<T,U>>   operator*(const Vector2<U>&b) const noexcept;
+        constexpr Segment1<product_t<T,U>>  operator*(const Segment2<U>&) const noexcept;
 
         template <typename U>
         constexpr Tensor11<product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
@@ -86,6 +86,9 @@ namespace yq {
 
         template <typename U>
         constexpr Tensor14<product_t<T,U>> operator*(const Tensor24<U>& b) const noexcept;
+
+        template <typename U>
+        constexpr Vector1<product_t<T,U>>   operator*(const Vector2<U>&b) const noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>

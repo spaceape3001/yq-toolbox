@@ -86,6 +86,11 @@ namespace yq {
         );
     }
 
+    template <typename T>
+    constexpr Segment2<T> Vector2<T>::operator+(const Segment2<T>&rhs) const noexcept
+    {
+        return Segment2<T>( *this + rhs.a, *this + rhs.b );
+    }
 
     template <typename T>
     constexpr Vector2<T> Vector2<T>::operator+(const Vector2& b) const noexcept
@@ -129,6 +134,12 @@ namespace yq {
             x-b.x, y-b.y,
             -b.xy
         };
+    }
+
+    template <typename T>
+    constexpr Segment2<T> Vector2<T>::operator-(const Segment2<T>&rhs) const noexcept
+    {
+        return Segment2<T>( *this - rhs.a, *this - rhs.b );
     }
 
     template <typename T>

@@ -133,6 +133,13 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    constexpr Segment2<product_t<T,U>>  Tensor22<T>::operator*(const Segment2<U>&rhs) const noexcept
+    {
+        return Segment2<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
+    }
+
+    template <typename T>
+        template <typename U>
     constexpr Tensor21<product_t<T,U>> Tensor22<T>::operator*(const Tensor21<U>& b) const noexcept
     {
         return {

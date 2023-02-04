@@ -95,6 +95,8 @@ namespace yq {
         //! Addition with multivector
         constexpr Multivector2<T> operator+(const Multivector2<T>& b) const noexcept;
 
+        constexpr Segment2<T> operator+(const Segment2<T>&) const noexcept;
+
         //! Addition to vector
         constexpr Vector2 operator+(const Vector2& b) const noexcept;
         
@@ -109,6 +111,8 @@ namespace yq {
         
         //! Subtraction with multivector
         constexpr Multivector2<T> operator-(const Multivector2<T>& b) const noexcept;
+
+        constexpr Segment2<T> operator-(const Segment2<T>&) const noexcept;
 
         //! Subtraction
         constexpr Vector2 operator-(const Vector2& b) const noexcept;

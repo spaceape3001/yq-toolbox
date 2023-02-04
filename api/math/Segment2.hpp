@@ -19,42 +19,56 @@ namespace yq {
     
         Vector2<T>  a, b;
         
+        constexpr Segment2() noexcept = default;
+        constexpr Segment2(const Vector2<T>& _a, const Vector2<T>& _b) : a(_a), b(_b) {}
+        template <typename=void> requires trait::has_nan_v<T>
+        constexpr Segment2(nan_t) : Segment2( Vector2<T>(NAN), Vector2<T>(NAN)) {}
+        constexpr Segment2(zero_t) : Segment2( Vector2<T>(ZERO), Vector2<T>(ZERO)) {}
+
         //! Defaulted equality
         constexpr bool operator==(const Segment2&) const noexcept = default;
 
-        constexpr operator SegmentData<Vector2<T>>() const noexcept
-        {
-            return { a, b };
-        }
+        constexpr operator SegmentData<Vector2<T>>() const noexcept;
 
-        constexpr AxBox2<T>     bounds() const noexcept
-        {
-            return aabb(a, b);
-        }
+        constexpr Segment2      operator+() const noexcept;
+        constexpr Segment2      operator-() const noexcept;
+        
+        
+        Segment2                operator+(const Vector2<T>&) const noexcept;
+        Segment2                operator-(const Vector2<T>&) const noexcept;
+        
+        Segment2&               operator+=(const Vector2<T>&) noexcept;
+        Segment2&               operator-=(const Vector2<T>&) noexcept;
+        
+        template <typename U>
+        Segment1<product_t<T,U>>    operator*(const Tensor21<U>&) const noexcept;
+
+        template <typename U>
+        Segment2<product_t<T,U>>    operator*(const Tensor22<U>&) const noexcept;
+
+        template <typename U>
+        Segment3<product_t<T,U>>    operator*(const Tensor23<U>&) const noexcept;
+
+        template <typename U>
+        Segment4<product_t<T,U>>    operator*(const Tensor24<U>&) const noexcept;
+        
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Segment2&                   operator*=(const Tensor22<U>&) noexcept;
+        
+        constexpr AxBox2<T>     bounds() const noexcept;
 
         //! Net displacement
-        constexpr Vector2<T>  delta() const noexcept
-        {
-            return b - a;
-        }
+        constexpr Vector2<T>  delta() const noexcept;
         
         //! Length of the segment
-        T   length() const 
-        { 
-            return delta().length(); 
-        }
+        T   length() const;
 
         //! Square of the length
-        constexpr square_t<T> length²() const noexcept
-        {
-            return delta().length²();
-        }
+        constexpr square_t<T> length²() const noexcept;
         
         //! Segment mid-point
-        constexpr Vector2<T>  midpoint() const noexcept
-        {
-            return midvector(a, b);
-        }
+        constexpr Vector2<T>  midpoint() const noexcept;
 
         /*! \brief Computes a point along the segment based on a fractional position
         
@@ -62,11 +76,7 @@ namespace yq {
         */
         template <typename=void>
         requires has_ieee754_v<T>
-        constexpr Vector2<T>     point(ieee754_t<T> f) const noexcept
-        {
-            return (one_v<ieee754_t<T>> - f) * a + f * b;
-        }
-
+        constexpr Vector2<T>     point(ieee754_t<T> f) const noexcept;
     };
 
     YQ_IEEE754_1(Segment2)
@@ -82,14 +92,11 @@ namespace yq {
         return { a, b };
     }
 
-    YQ_NAN_1(Segment2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>});
-    YQ_ZERO_1(Segment2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>});
+    YQ_NAN_1(Segment2, Segment2<T>(NAN))
+    YQ_ZERO_1(Segment2, Segment2<T>(ZERO))
 
 //  --------------------------------------------------------
-//  GETTERS
-
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
 
     YQ_IS_FINITE_1( Segment2, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment2, is_nan(v.a) || is_nan(v.b))
@@ -97,89 +104,17 @@ namespace yq {
     /*! \brief Creates axially aligned bounding box from the segment
     */
     template <typename T>
-    constexpr AxBox2<T>   aabb(const Segment2<T>& seg) noexcept
-    {
-        return aabb(seg.a, seg.b);
-    }
+    constexpr AxBox2<T>   aabb(const Segment2<T>& seg) noexcept;
     
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
     /*! \brief Computes the length of the segmetn
     */
     template <typename T>
-    T       length(const Segment2<T>& seg)
-    {
-        return seg.length();
-    }
+    T       length(const Segment2<T>& seg);
 
     /*! \brief Computes the midpoint of the segmetn
     */
     template <typename T>
-    constexpr Vector2<T>     midpoint(const Segment2<T>& seg) noexcept
-    {
-        return seg.midpoint();
-    }
+    constexpr Vector2<T>     midpoint(const Segment2<T>& seg) noexcept;
 
     /*! \brief Computes a point along the segment based on a fractional position
     
@@ -188,10 +123,7 @@ namespace yq {
     */
     template <typename T>
     requires has_ieee754_v<T>
-    constexpr Vector2<T>     point(const Segment2<T>& seg, ieee754_t<T> f) noexcept
-    {
-        return seg.point(f);
-    }
+    constexpr Vector2<T>     point(const Segment2<T>& seg, ieee754_t<T> f) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Segment2D)
