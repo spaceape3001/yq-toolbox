@@ -66,6 +66,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox1<T> Vector1<T>::operator+(const AxBox1<T>&b) const noexcept
+    {
+        return AxBox1<T>(*this + b.lo, *this + b.hi);
+    }
+
+    template <typename T>
     constexpr Multivector1<T> Vector1<T>::operator+(const Multivector1<T>& b) const noexcept
     {
         return Multivector1<T>(
@@ -100,6 +106,12 @@ namespace yq {
             -b, 
             x 
         };
+    }
+
+    template <typename T>
+    constexpr AxBox1<T> Vector1<T>::operator-(const AxBox1<T>&b) const noexcept
+    {
+        return AxBox1<T>(*this - b.hi, *this - b.lo);
     }
 
     template <typename T>

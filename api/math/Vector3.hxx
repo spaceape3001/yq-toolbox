@@ -12,8 +12,10 @@
     template instantiation.  
 */
 
+#include <math/AxBox3.hpp>
 #include <math/Bivector3.hpp>
 #include <math/Multivector3.hpp>
+#include <math/Segment3.hpp>
 #include <math/Trivector3.hpp>
 
 #include <math/Tensor31.hpp>
@@ -67,6 +69,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox3<T> Vector3<T>::operator+(const AxBox3<T>&b) const noexcept
+    {
+        return AxBox3<T>(*this + b.lo, *this + b.hi);
+    }
+
+    template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(const Bivector3<T>& b) const noexcept
     {
         return Multivector3<T>(
@@ -114,6 +122,12 @@ namespace yq {
         return *this;
     }
     
+    template <typename T>
+    constexpr AxBox3<T> Vector3<T>::operator-(const AxBox3<T>&b) const noexcept
+    {
+        return AxBox3<T>(*this - b.hi, *this - b.lo);
+    }
+
     template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator-(const Bivector3<T>& b) const noexcept
     {

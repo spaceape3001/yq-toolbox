@@ -12,8 +12,10 @@
     template instantiation.  
 */
 
+#include <math/AxBox1.hpp>
 #include <math/Bivector2.hpp>
 #include <math/Multivector2.hpp>
+#include <math/Segment1.hpp>
 
 #include <math/Tensor21.hpp>
 #include <math/Tensor22.hpp>
@@ -67,6 +69,12 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr AxBox2<T> Vector2<T>::operator+(const AxBox2<T>&b) const noexcept
+    {
+        return AxBox2<T>(*this + b.lo, *this + b.hi);
+    }
+
+    template <typename T>
     constexpr Multivector2<T> Vector2<T>::operator+(const Bivector2<T>& b) const noexcept
     {
         return Multivector2<T>(
@@ -116,6 +124,12 @@ namespace yq {
         };
     }
     
+    template <typename T>
+    constexpr AxBox2<T> Vector2<T>::operator-(const AxBox2<T>&b) const noexcept
+    {
+        return AxBox2<T>(*this - b.hi, *this - b.lo);
+    }
+
     template <typename T>
     constexpr Multivector2<T> Vector2<T>::operator-(const Bivector2<T>& b) const noexcept
     {

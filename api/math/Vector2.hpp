@@ -89,6 +89,8 @@ namespace yq {
         //! Addition with number
         constexpr Multivector2<T> operator+(T b) const noexcept;
         
+        constexpr AxBox2<T> operator+(const AxBox2<T>&) const noexcept;
+
         //! Addition with bivector
         constexpr Multivector2<T> operator+(const Bivector2<T>& b) const noexcept;
         
@@ -106,6 +108,8 @@ namespace yq {
         //! Subtraction with number
         constexpr Multivector2<T> operator-(T b) const noexcept;
         
+        constexpr AxBox2<T> operator-(const AxBox2<T>&) const noexcept;
+
         //! Subtraction with bivector
         constexpr Multivector2<T> operator-(const Bivector2<T>& b) const noexcept;
         

@@ -104,6 +104,87 @@ namespace yq {
     }
 
     template <typename T>
+    AxBox3<T>  AxBox3<T>::operator+() const noexcept
+    {
+        return *this;
+    }
+
+    template <typename T>
+    AxBox3<T>  AxBox3<T>::operator-() const noexcept
+    {
+        return AxBox3<T>(-hi, -lo);
+    }
+
+    template <typename T>
+    AxBox3<T>  AxBox3<T>::operator+(const Vector3<T>&b) const noexcept
+    {
+        return AxBox3<T>(lo+b, hi+b);
+    }
+
+    template <typename T>
+    AxBox3<T>& AxBox3<T>::operator+=(const Vector3<T>&b) noexcept
+    {
+        lo += b;
+        hi += b;
+        return *this;
+    }
+
+    template <typename T>
+    AxBox3<T>  AxBox3<T>::operator-(const Vector3<T>&b) const noexcept
+    {
+        return AxBox3<T>(lo-b, hi-b);
+    }
+
+    template <typename T>
+    AxBox3<T>& AxBox3<T>::operator-=(const Vector3<T>&b) noexcept
+    {
+        lo -= b;
+        hi -= b;
+        return *this;
+    }
+
+    template <typename T>
+        template <typename U>
+    requires trait::is_arithmetic_v<U>
+    AxBox3<product_t<T,U>> AxBox3<T>::operator*(U b) const noexcept
+    {
+        if(b >= zero_v<U>)
+            return AxBox3<product_t<T,U>>(lo*b,hi*b);
+        else
+            return AxBox3<product_t<T,U>>(hi*b,lo*b);
+    }
+
+    template <typename T>
+        template <typename U>
+    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    AxBox3<T>& AxBox3<T>::operator*=(U b) noexcept
+    {
+        *this = *this * b;
+        return *this;
+    }
+        
+    template <typename T>
+        template <typename U>
+    requires trait::is_arithmetic_v<U>
+    AxBox3<quotient_t<T,U>> AxBox3<T>::operator/(U b) const noexcept
+    {
+        if(b >= zero_v<U>)
+            return AxBox3<quotient_t<T,U>>(lo/b,hi/b);
+        else
+            return AxBox3<quotient_t<T,U>>(hi/b,lo/b);
+    }
+
+    template <typename T>
+        template <typename U>
+    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    AxBox3<T>& AxBox3<T>::operator/=(U b) noexcept
+    {
+        *this = *this / b;
+        return *this;
+    }
+        
+
+    template <typename T>
     constexpr AxBox3<T> AxBox3<T>::operator|(const AxBox3<T>&b) const noexcept
     {
         return AxBox3(UNION, {lo, hi, b.lo, b.hi});
@@ -311,6 +392,16 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr AxBox3<product_t<T,U>> operator*(T a, const AxBox3<U>& b) noexcept
+    {
+        if(a >= zero_v<T>)
+            return AxBox3<product_t<T,U>>(a*b.lo, a*b.hi);
+        else
+            return AxBox3<product_t<T,U>>(a*b.hi, a*b.lo);
+    }
 
 
     template <typename T>

@@ -46,6 +46,32 @@ namespace yq {
         //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox4&) const noexcept = default;
 
+        AxBox4  operator+() const noexcept;
+        AxBox4  operator-() const noexcept;
+
+
+        AxBox4  operator+(const Vector4<T>&) const noexcept;
+        AxBox4& operator+=(const Vector4<T>&) noexcept;
+        AxBox4  operator-(const Vector4<T>&) const noexcept;
+        AxBox4& operator-=(const Vector4<T>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        AxBox4<product_t<T,U>> operator*(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        AxBox4& operator*=(U) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        AxBox4<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        AxBox4& operator/=(U) noexcept;
+        
+        
         /*! \brief Union of two AABBs
         */
         constexpr AxBox4<T> operator|(const AxBox4<T>&b) const noexcept;
@@ -163,6 +189,10 @@ namespace yq {
     YQ_IS_FINITE_1( AxBox4, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox4, is_nan(v.lo) || is_nan(v.hi))
 
+
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr AxBox4<product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept;
 
     /*! \brief Computes the center of a 4D axially aligned box
     */

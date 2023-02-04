@@ -81,6 +81,8 @@ namespace yq {
         //! Addition with scalar
         constexpr Multivector1<T> operator+(T b) const noexcept;
 
+        constexpr AxBox1<T> operator+(const AxBox1<T>&) const noexcept;
+
         //! Addition with multivector
         constexpr Multivector1<T> operator+(const Multivector1<T>& b) const noexcept;
         
@@ -95,6 +97,8 @@ namespace yq {
         //! Subtraction with scalar
         constexpr Multivector1<T> operator-(T b) const noexcept;
         
+        constexpr AxBox1<T> operator-(const AxBox1<T>&) const noexcept;
+
         //! Subtraction with multivector
         constexpr Multivector1<T> operator-(const Multivector1<T>& b) const noexcept;
         

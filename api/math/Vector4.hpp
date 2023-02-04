@@ -111,6 +111,8 @@ namespace yq {
         //! Addition
         constexpr Vector4 operator+(const Vector4& b) const noexcept;
 
+        constexpr AxBox4<T> operator+(const AxBox4<T>&) const noexcept;
+
         //! Addition with bivector
         constexpr Multivector4<T> operator+(const Bivector4<T>&) const noexcept;
         //! Addition with multivector
@@ -127,6 +129,8 @@ namespace yq {
 
         //! Subtraction
         constexpr Vector4 operator-(const Vector4& b) const noexcept;
+
+        constexpr AxBox4<T> operator-(const AxBox4<T>&) const noexcept;
 
         //! Addition with bivector
         constexpr Multivector4<T> operator-(const Bivector4<T>&) const noexcept;

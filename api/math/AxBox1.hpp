@@ -51,6 +51,32 @@ namespace yq {
         //! Defaulted equatlity operator
         constexpr bool operator==(const AxBox1&) const noexcept = default;
 
+        AxBox1  operator+() const noexcept;
+        AxBox1  operator-() const noexcept;
+
+        AxBox1  operator+(const Vector1<T>&) const noexcept;
+        AxBox1& operator+=(const Vector1<T>&) noexcept;
+        AxBox1  operator-(const Vector1<T>&) const noexcept;
+        AxBox1& operator-=(const Vector1<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        AxBox1<product_t<T,U>> operator*(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        AxBox1& operator*=(U) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        AxBox1<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        AxBox1& operator/=(U) noexcept;
+        
+
+
         /*! \brief Union of two AABBs
         */
         constexpr AxBox1<T> operator|(const AxBox1<T>&b) const noexcept;

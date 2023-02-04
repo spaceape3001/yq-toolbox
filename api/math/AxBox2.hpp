@@ -49,6 +49,31 @@ namespace yq {
         //! Equality operator (defaulted)
         constexpr bool operator==(const AxBox2&) const noexcept = default;
 
+        AxBox2  operator+() const noexcept;
+        AxBox2  operator-() const noexcept;
+
+        AxBox2  operator+(const Vector2<T>&) const noexcept;
+        AxBox2& operator+=(const Vector2<T>&) noexcept;
+        AxBox2  operator-(const Vector2<T>&) const noexcept;
+        AxBox2& operator-=(const Vector2<T>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        AxBox2<product_t<T,U>> operator*(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        AxBox2& operator*=(U) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        AxBox2<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        AxBox2& operator/=(U) noexcept;
+        
+
         //! Union
         constexpr AxBox2 operator|(const AxBox2<T>&b) const noexcept;
 
@@ -65,6 +90,7 @@ namespace yq {
         
         //! Intersection into self 
         AxBox2& operator&=(const AxBox2& b) noexcept;
+        
 
         /*! \brief Computes the area
         */

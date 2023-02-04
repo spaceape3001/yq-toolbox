@@ -12,9 +12,11 @@
     template instantiation.  
 */
 
+#include <math/AxBox4.hpp>
 #include <math/Bivector4.hpp>
 #include <math/Multivector4.hpp>
 #include <math/Quadvector4.hpp>
+#include <math/Segment4.hpp>
 #include <math/Trivector4.hpp>
 
 #include <math/Tensor41.hpp>
@@ -55,6 +57,12 @@ namespace yq {
     {
         return x*x + y*y + z*z + w*w;
     }    
+
+    template <typename T>
+    constexpr AxBox4<T> Vector4<T>::operator+(const AxBox4<T>&b) const noexcept
+    {
+        return AxBox4<T>(*this + b.lo, *this + b.hi);
+    }
 
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator+(const Bivector4<T>&b) const noexcept
@@ -132,22 +140,6 @@ namespace yq {
         return *this;
     }
 
-    template <typename T>
-    constexpr Vector4<T> Vector4<T>::operator-(const Vector4& b) const noexcept
-    {
-        return Vector4(x-b.x, y-b.y, z-b.z, w-b.w);
-    }
-    
-    template <typename T>
-    Vector4<T>& Vector4<T>::operator-=(const Vector4& b) noexcept
-    {
-        x -= b.x;
-        y -= b.y;
-        z -= b.z;
-        w -= b.w;
-        return *this;
-    }
-
 
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-(T b) const noexcept
@@ -159,6 +151,12 @@ namespace yq {
             zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>, 
             zero_v<T> 
         };
+    }
+
+    template <typename T>
+    constexpr AxBox4<T> Vector4<T>::operator-(const AxBox4<T>&b) const noexcept
+    {
+        return AxBox4<T>(*this - b.hi, *this - b.lo);
     }
 
     template <typename T>
@@ -208,6 +206,23 @@ namespace yq {
             zero_v<T> 
         };
     }    
+
+
+    template <typename T>
+    constexpr Vector4<T> Vector4<T>::operator-(const Vector4& b) const noexcept
+    {
+        return Vector4(x-b.x, y-b.y, z-b.z, w-b.w);
+    }
+    
+    template <typename T>
+    Vector4<T>& Vector4<T>::operator-=(const Vector4& b) noexcept
+    {
+        x -= b.x;
+        y -= b.y;
+        z -= b.z;
+        w -= b.w;
+        return *this;
+    }
 
     template <typename T>
         template <typename U>
