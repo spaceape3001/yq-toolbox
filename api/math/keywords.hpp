@@ -25,7 +25,7 @@ namespace yq {
     struct euler_t {};
     struct hpr_t {};
     struct identity_t {};
-    struct intersection_t {};
+    struct intersect_t {};
     struct nan_t {};
     struct one_t {};
     struct rotor_t {};
@@ -82,7 +82,7 @@ namespace yq {
     static constexpr const euler_t          EULER;
     static constexpr const hpr_t            HPR;
     static constexpr const identity_t       IDENTITY;
-    static constexpr const intersection_t   INTERSECT;
+    static constexpr const intersect_t   INTERSECT;
     static constexpr const nan_t            NAN;
     static constexpr const one_t            ONE;
     static constexpr const rotor_t          ROTOR;

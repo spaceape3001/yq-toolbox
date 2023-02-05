@@ -27,13 +27,14 @@ namespace yq {
         auto to() const;
         
         constexpr auto operator<=>(const MKS&) const noexcept = default;
-        
-        
-        
     };
     
     template<typename T, typename DIM> 
     struct ieee754<MKS<T,DIM>> : public ieee754<T> {
+    };
+
+    template<typename T, typename DIM> 
+    struct integer<MKS<T,DIM>> : public integer<T> {
     };
 
     template <typename T, typename DIM>

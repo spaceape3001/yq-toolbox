@@ -19,12 +19,12 @@
 
 namespace yq {
     template <typename T>
-    constexpr AxBox3<T>::AxBox3(intersection_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept:
+    constexpr AxBox3<T>::AxBox3(intersect_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept:
         AxBox3(INTERSECT, std::span<const Vector3<T>>(ls.data(), ls.size()), std::span<const Vector3<T>>(hs.data(), hs.size()))
     {}
 
     template <typename T>
-    constexpr AxBox3<T>::AxBox3(intersection_t, std::span<const Vector3<T>>ls, std::span<const Vector3<T>>hs) noexcept
+    constexpr AxBox3<T>::AxBox3(intersect_t, std::span<const Vector3<T>>ls, std::span<const Vector3<T>>hs) noexcept
     {
         if(!ls.empty()){
             lo.x    = std::max_element(ls.begin(), ls.end(), Vector3<T>::less_x) -> x;

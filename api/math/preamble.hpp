@@ -22,8 +22,10 @@
 #include <math/trait/has_sqrt.hpp>
 #include <math/trait/has_zero.hpp>
 #include <math/trait/ieee754.hpp>
+#include <math/trait/integer.hpp>
 #include <math/trait/is_arithmetic.hpp>
 #include <math/trait/is_floating_point.hpp>
+#include <math/trait/is_integral.hpp>
 
 #include <math/dims.hpp>
 #include <math/keywords.hpp>
@@ -203,6 +205,10 @@ namespace yq {
     template <typename> struct Bivector3;
     template <typename> struct Bivector4;
     template <typename> struct Circle2;
+    template <typename> struct Data1;
+    template <typename> struct Data2;
+    template <typename> struct Data3;
+    template <typename> struct Data4;
     template <typename> struct Fraction;
     template <typename> struct Multivector1;
     template <typename> struct Multivector2;
@@ -709,55 +715,7 @@ namespace yq {
         POS        =  1
     };
     
-    //! Denote sides of shapes, planes, etc
-    enum class Side : unsigned {
-    
-        // Mind-boggling how this gets defined...we're undoing that!
-        #ifdef ERROR
-        #undef ERROR
-        #endif
-        
-        //! Error detected
-        ERROR       = 1 << 0,
-        
-        //! Below the threshhold
-        BELOW       = 1 << 1,
-        
-        //! Inside the threshhold (or center)
-        MIDDLE      = 1 << 2,
-        
-        ABOVE       = 1 << 3,
-        
-        XNEG        = 1 << 4,
-        YNEG        = 1 << 5,
-        ZNEG        = 1 << 6,
-        WNEG        = 1 << 7,
-
-        XMID        = 1 << 8,
-        YMID        = 1 << 9,
-        ZMID        = 1 << 10,
-        WMID        = 1 << 11,
-
-        XPOS        = 1 << 12,
-        YPOS        = 1 << 13,
-        ZPOS        = 1 << 14,
-        WPOS        = 1 << 15,
-        
-        COPLANAR    = 1 << 16,
-        
-        CENTER      = MIDDLE,
-        INSIDE      = BELOW,
-        TOUCH       = MIDDLE,
-        OUTSIDE     = ABOVE,
-
-        EAST        = XPOS,
-        WEST        = XNEG,
-        NORTH       = YPOS,
-        SOUTH       = YNEG,
-        TOP         = ZPOS,
-        BOTTOM      = ZNEG
-        
-    };
+    struct Side;
     
     /*! \brief Mid-way divide two numbers
     */
