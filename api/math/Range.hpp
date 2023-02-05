@@ -181,6 +181,10 @@ namespace yq {
     YQ_IS_NAN_1(Range, is_nan(v.lo) || is_nan(v.hi))
     YQ_IS_FINITE_1(Range, is_finite(v.lo) && is_finite(v.hi))
 
+    //! Classify this value in the range
+    template <typename T>
+    constexpr Side     _classify(T, T lo, T hi) noexcept;
+
     template <typename T>
     constexpr bool    is_valid(const Range<T>& a) noexcept
     {

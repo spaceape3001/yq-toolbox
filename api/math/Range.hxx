@@ -17,6 +17,164 @@
 
 namespace yq {
     template <typename T>
+    constexpr Side     _classify(T v, T lo, T hi) noexcept
+    {
+        auto lc = v <=> lo;
+        auto hc = v <=> hi;
+    
+        static_assert(std::is_same_v<decltype(lc),decltype(hc)>);
+
+        if constexpr ( std::is_same_v<decltype(lc), std::strong_ordering> ){
+            switch(lc){
+            case std::strong_ordering::less:
+                switch(hc){
+                case std::strong_ordering::less:
+                    return Side::BELOW;
+                case std::strong_ordering::equal:   
+                    return Side::ERROR | Side::BELOW | Side::HIGH;
+                case std::strong_ordering::greater: 
+                    return Side::ERROR | Side::BELOW | Side::ABOVE;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::strong_ordering::equal:
+                switch(hc){
+                case std::strong_ordering::less:
+                    return Side::LOW;
+                case std::strong_ordering::equal:
+                    return Side::LOW | Side::HIGH;
+                case std::strong_ordering::greater:
+                    return Side::ERROR | Side::LOW | Side::ABOVE;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::strong_ordering::greater:
+                switch(hc){
+                case std::strong_ordering::less:
+                    return Side::MIDDLE;
+                case std::strong_ordering::equal:
+                    return Side::HIGH;
+                case std::strong_ordering::greater:
+                    return Side::ABOVE;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            default:
+                return Side::ERROR;
+            }
+        } else if constexpr ( std::is_same_v<decltype(lc), std::weak_ordering> ){
+            switch(lc){
+            case std::weak_ordering::less:
+                switch(hc){
+                case std::weak_ordering::less:
+                    return Side::BELOW;
+                case std::weak_ordering::equivalent:
+                    return Side::ERROR | Side::BELOW | Side::HIGH;
+                case std::weak_ordering::greater:
+                    return Side::ERROR | Side::BELOW | Side::ABOVE;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::weak_ordering::equivalent:
+                switch(hc){
+                case std::weak_ordering::less:
+                    return Side::LOW;
+                case std::weak_ordering::equivalent:
+                    return Side::LOW | Side::HIGH;
+                case std::weak_ordering::greater:
+                    return Side::ERROR | Side::LOW | Side::ABOVE;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::weak_ordering::greater:
+                switch(hc){
+                case std::weak_ordering::less:
+                    return Side::MIDDLE;
+                case std::weak_ordering::equivalent:
+                    return Side::HIGH;
+                case std::weak_ordering::greater:
+                    return Side::ABOVE;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            default:
+                return Side::ERROR;
+            }
+        } else if constexpr ( std::is_same_v<decltype(lc), std::partial_ordering>){
+            switch(lc){
+            case std::partial_ordering::less:
+                switch(hc){
+                case std::partial_ordering::less:
+                    return Side::BELOW;
+                case std::partial_ordering::equivalent:
+                    return Side::ERROR | Side::BELOW | Side::HIGH;
+                case std::partial_ordering::greater:
+                    return Side::ERROR | Side::BELOW | Side::ABOVE;
+                case std::partial_ordering::unordered:
+                    return Side::UNKNOWN | Side::BELOW;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::partial_ordering::equivalent:
+                switch(hc){
+                case std::partial_ordering::less:
+                    return Side::LOW;
+                case std::partial_ordering::equivalent:
+                    return Side::LOW | Side::HIGH;
+                case std::partial_ordering::greater:
+                    return Side::ERROR | Side::LOW | Side::ABOVE;
+                case std::partial_ordering::unordered:
+                    return Side::UNKNOWN | Side::LOW;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::partial_ordering::greater:
+                switch(hc){
+                case std::partial_ordering::less:
+                    return Side::MIDDLE;
+                case std::partial_ordering::equivalent:
+                    return Side::HIGH;
+                case std::partial_ordering::greater:
+                    return Side::ABOVE;
+                case std::partial_ordering::unordered:
+                    return Side::MIDDLE | Side::UNKNOWN;
+                default:
+                    return Side::ERROR;
+                }
+                break;
+            case std::partial_ordering::unordered:
+                switch(hc){
+                case std::partial_ordering::less:
+                    return Side::UNKNOWN | Side::MIDDLE;
+                case std::partial_ordering::equivalent:
+                    return Side::UNKNOWN | Side::HIGH;
+                case std::partial_ordering::greater:
+                    return Side::UNKNOWN | Side::ABOVE;
+                case std::partial_ordering::unordered:
+                    return Side::UNKNOWN | Side::MIDDLE | Side::UNKNOWN;
+                default:
+                    return Side::UNKNOWN | Side::ERROR;
+                }
+                break;
+            default:
+                return Side::ERROR;
+            }
+        }
+        return Side::ERROR;
+    }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    template <typename T>
     constexpr Range<T>::Range(intersect_t, std::initializer_list<T> ls, std::initializer_list<T> hs) :
         Range(INTERSECT, std::span<const T>(ls.data(), ls.size()), std::span<const T>(hs.data(), hs.size())){}
 
@@ -274,156 +432,7 @@ namespace yq {
     template <typename T>
     constexpr Side   Range<T>::classify(T v) const noexcept
     {   
-        auto lc = v <=> lo;
-        auto hc = v <=> hi;
-    
-        static_assert(std::is_same_v<decltype(lc),decltype(hc)>);
-
-        if constexpr ( std::is_same_v<decltype(lc), std::strong_ordering> ){
-            switch(lc){
-            case std::strong_ordering::less:
-                switch(hc){
-                case std::strong_ordering::less:
-                    return Side::BELOW;
-                case std::strong_ordering::equal:   
-                    return Side::ERROR | Side::BELOW | Side::HIGH;
-                case std::strong_ordering::greater: 
-                    return Side::ERROR | Side::BELOW | Side::ABOVE;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::strong_ordering::equal:
-                switch(hc){
-                case std::strong_ordering::less:
-                    return Side::LOW;
-                case std::strong_ordering::equal:
-                    return Side::LOW | Side::HIGH;
-                case std::strong_ordering::greater:
-                    return Side::ERROR | Side::LOW | Side::ABOVE;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::strong_ordering::greater:
-                switch(hc){
-                case std::strong_ordering::less:
-                    return Side::MIDDLE;
-                case std::strong_ordering::equal:
-                    return Side::HIGH;
-                case std::strong_ordering::greater:
-                    return Side::ABOVE;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            default:
-                return Side::ERROR;
-            }
-        } else if constexpr ( std::is_same_v<decltype(lc), std::weak_ordering> ){
-            switch(lc){
-            case std::weak_ordering::less:
-                switch(hc){
-                case std::weak_ordering::less:
-                    return Side::BELOW;
-                case std::weak_ordering::equivalent:
-                    return Side::ERROR | Side::BELOW | Side::HIGH;
-                case std::weak_ordering::greater:
-                    return Side::ERROR | Side::BELOW | Side::ABOVE;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::weak_ordering::equivalent:
-                switch(hc){
-                case std::weak_ordering::less:
-                    return Side::LOW;
-                case std::weak_ordering::equivalent:
-                    return Side::LOW | Side::HIGH;
-                case std::weak_ordering::greater:
-                    return Side::ERROR | Side::LOW | Side::ABOVE;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::weak_ordering::greater:
-                switch(hc){
-                case std::weak_ordering::less:
-                    return Side::MIDDLE;
-                case std::weak_ordering::equivalent:
-                    return Side::HIGH;
-                case std::weak_ordering::greater:
-                    return Side::ABOVE;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            default:
-                return Side::ERROR;
-            }
-        } else if constexpr ( std::is_same_v<decltype(lc), std::partial_ordering>){
-            switch(lc){
-            case std::partial_ordering::less:
-                switch(hc){
-                case std::partial_ordering::less:
-                    return Side::BELOW;
-                case std::partial_ordering::equivalent:
-                    return Side::ERROR | Side::BELOW | Side::HIGH;
-                case std::partial_ordering::greater:
-                    return Side::ERROR | Side::BELOW | Side::ABOVE;
-                case std::partial_ordering::unordered:
-                    return Side::UNKNOWN | Side::BELOW;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::partial_ordering::equivalent:
-                switch(hc){
-                case std::partial_ordering::less:
-                    return Side::LOW;
-                case std::partial_ordering::equivalent:
-                    return Side::LOW | Side::HIGH;
-                case std::partial_ordering::greater:
-                    return Side::ERROR | Side::LOW | Side::ABOVE;
-                case std::partial_ordering::unordered:
-                    return Side::UNKNOWN | Side::LOW;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::partial_ordering::greater:
-                switch(hc){
-                case std::partial_ordering::less:
-                    return Side::MIDDLE;
-                case std::partial_ordering::equivalent:
-                    return Side::HIGH;
-                case std::partial_ordering::greater:
-                    return Side::ABOVE;
-                case std::partial_ordering::unordered:
-                    return Side::MIDDLE | Side::UNKNOWN;
-                default:
-                    return Side::ERROR;
-                }
-                break;
-            case std::partial_ordering::unordered:
-                switch(hc){
-                case std::partial_ordering::less:
-                    return Side::UNKNOWN | Side::MIDDLE;
-                case std::partial_ordering::equivalent:
-                    return Side::UNKNOWN | Side::HIGH;
-                case std::partial_ordering::greater:
-                    return Side::UNKNOWN | Side::ABOVE;
-                case std::partial_ordering::unordered:
-                    return Side::UNKNOWN | Side::MIDDLE | Side::UNKNOWN;
-                default:
-                    return Side::UNKNOWN | Side::ERROR;
-                }
-                break;
-            default:
-                return Side::ERROR;
-            }
-        }
-        return Side::ERROR;
+        return _classify(v, lo, hi);
     }
 
     template <typename T>
