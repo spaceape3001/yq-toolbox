@@ -124,6 +124,8 @@ namespace yq {
 
         constexpr Segment4<T> operator+(const Segment4<T>&) const noexcept;
 
+        constexpr Triangle4<T> operator+(const Triangle4<T>&) const noexcept;
+
         //! Addition with trivector
         constexpr Multivector4<T> operator+(const Trivector4<T>&) const noexcept;
         
@@ -146,6 +148,8 @@ namespace yq {
         constexpr Multivector4<T> operator-(const Quadvector4<T>&) const noexcept;
 
         constexpr Segment4<T> operator-(const Segment4<T>&) const noexcept;
+
+        constexpr Triangle4<T> operator-(const Triangle4<T>&) const noexcept;
 
         //! Addition with trivector
         constexpr Multivector4<T> operator-(const Trivector4<T>&) const noexcept;

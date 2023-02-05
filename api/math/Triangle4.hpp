@@ -21,32 +21,79 @@ namespace yq {
         using component_type    = T;
     
         Vector4<T>   a, b, c;
+
+        constexpr Triangle4() noexcept = default;
+        constexpr Triangle4(const Vector4<T>& _a, const Vector4<T>& _b, const Vector4<T>& _c) noexcept : a(_a), b(_b), c(_c) {}
+        constexpr Triangle4(const Segment4<T>&, const Vector4<T>& c) noexcept;
+        constexpr Triangle4(all_t, const Vector4<T>& v) noexcept : a(v), b(v), c(v) {}
+        consteval Triangle4(nan_t) noexcept : Triangle4(ALL, Vector4<T>(NAN)) {}
+        consteval Triangle4(zero_t) noexcept : Triangle4(ALL, Vector4<T>(ZERO)) {}
         
         //! Defaulted equality operator
         constexpr bool operator==(const Triangle4&) const noexcept = default;
         
         //! Implicit conversion to triangle data
-        constexpr operator TriangleData<Vector4<T>> () const noexcept 
-        { 
-            return { a, b, c }; 
-        }
+        constexpr operator TriangleData<Vector4<T>> () const noexcept;
 
-        /*! \brief Returns the bounding box for this triangle
+        constexpr Triangle4 operator+() const noexcept;
+        constexpr Triangle4 operator-() const noexcept;
+        
+        constexpr Triangle4 operator+(const Vector4<T>&) const noexcept;
+        Triangle4& operator+=(const Vector4<T>&) noexcept;
+        constexpr Triangle4 operator-(const Vector4<T>&) const noexcept;
+        Triangle4& operator-=(const Vector4<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Triangle4<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Triangle4& operator*=(U) noexcept;
+
+        template <typename U>
+        Triangle2<product_t<T,U>>   operator*(const Tensor42<U>&) const noexcept;
+
+        template <typename U>
+        Triangle3<product_t<T,U>>   operator*(const Tensor43<U>&) const noexcept;
+
+        template <typename U>
+        Triangle4<product_t<T,U>>   operator*(const Tensor44<U>&) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Triangle4&   operator*=(const Tensor44<U>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Triangle4<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Triangle4& operator/=(U) noexcept;
+        
+        /*! \brief Bounding box for this triangle
         */
-        constexpr AxBox4<T>   bounds() const noexcept
-        {
-            return {
-                min_elem(min_elem(a, b), c), 
-                max_elem(max_elem(a, b), c)
-            };
-        }
+        constexpr AxBox4<T>   bounds() const noexcept;
 
+        //! Edge opposite the "A" vertex
+        constexpr Segment4<T>   edge_a() const noexcept;
+        constexpr T             edge_a_length() const noexcept;
+        constexpr square_t<T>   edge_a_length²() const noexcept;
+
+        //! Edge opposite the "B" vertex
+        constexpr Segment4<T>   edge_b() const noexcept;
+        constexpr T             edge_b_length() const noexcept;
+        constexpr square_t<T>   edge_b_length²() const noexcept;
+
+        //! Edge opposite the "C" vertex
+        constexpr Segment4<T>   edge_c() const noexcept;
+        constexpr T             edge_c_length() const noexcept;
+        constexpr square_t<T>   edge_c_length²() const noexcept;
+        
         //! Perimeter of this triangel
         //! \note Might not be reliable for non-floating point types
-        T       perimeter() const
-        {
-            return (b-a).length() + (c-b).length() + (a-c).length();
-        }
+        T       perimeter() const;
     };
 
     YQ_IEEE754_1(Triangle4)
@@ -61,32 +108,28 @@ namespace yq {
         return { a, b, c };
     }
 
-    YQ_NAN_1(Triangle4, { nan_v<Vector4<T>>, nan_v<Vector4<T>>, nan_v<Vector4<T>> })
-    YQ_ZERO_1(Triangle4, { zero_v<Vector4<T>>, zero_v<Vector4<T>>, zero_v<Vector4<T>> })
+    YQ_NAN_1(Triangle4, Triangle4<T>(NAN))
+    YQ_ZERO_1(Triangle4, Triangle4<T>(ZERO))
 
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
+//  --------------------------------------------------------
+
 
     YQ_IS_FINITE_1(Triangle4, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle4, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Triangle4<product_t<T,U>> operator*(T lhs, const Triangle4<U>& rhs) noexcept;
+
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
-    constexpr AxBox4<T>   aabb(const Triangle4<T>& tri) noexcept
-    {
-        return tri.bounds();
-    }
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
+    constexpr AxBox4<T>   aabb(const Triangle4<T>& tri) noexcept;
 
     /*! \brief Computes the perimeter of the triangle
     */
     template <typename T>
-    constexpr T       perimeter(const Triangle4<T>& tri)noexcept
-    {
-        return tri.perimeter();
-    }
+    T       perimeter(const Triangle4<T>& tri);
 
 }
 

@@ -119,6 +119,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Triangle4<T> Vector4<T>::operator+(const Triangle4<T>&rhs) const noexcept
+    {
+        return Triangle4<T>(*this+rhs.a, *this+rhs.b, *this+rhs.c);
+    }
+
+    template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator+(const Trivector4<T>&b) const noexcept
     {
         return Multivector4<T>(
@@ -205,6 +211,12 @@ namespace yq {
     constexpr Segment4<T> Vector4<T>::operator-(const Segment4<T>&rhs) const noexcept
     {
         return Segment4<T>( *this - rhs.a, *this - rhs.b );
+    }
+
+    template <typename T>
+    constexpr Triangle4<T> Vector4<T>::operator-(const Triangle4<T>&rhs) const noexcept
+    {
+        return Triangle4<T>(*this-rhs.a, *this-rhs.b, *this-rhs.c);
     }
 
     template <typename T>

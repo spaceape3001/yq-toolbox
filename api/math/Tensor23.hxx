@@ -24,6 +24,9 @@
 #include <math/Tensor33.hpp>
 #include <math/Tensor34.hpp>
 
+#include <math/Triangle2.hpp>
+#include <math/Triangle3.hpp>
+
 #include <math/Vector2.hpp>
 #include <math/Vector3.hpp>
 

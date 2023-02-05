@@ -19,6 +19,8 @@
 #include <math/Tensor33.hpp>
 #include <math/Tensor34.hpp>
 
+#include <math/Triangle3.hpp>
+
 #include <math/Vector3.hpp>
 
 #include <math/Quaternion3.hpp>

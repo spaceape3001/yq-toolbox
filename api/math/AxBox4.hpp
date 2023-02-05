@@ -44,6 +44,7 @@ namespace yq {
         consteval AxBox4(zero_t) : AxBox4(Vector4<T>(ZERO)) {}
 
         explicit constexpr AxBox4(const Segment4<T>&) noexcept;
+        explicit constexpr AxBox4(const Triangle4<T>&) noexcept;
 
         //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox4&) const noexcept = default;

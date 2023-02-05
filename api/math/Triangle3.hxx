@@ -243,8 +243,6 @@ namespace yq {
         return Triangle3<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b, lhs*rhs.c);
     }
 
-    
-    /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
     constexpr AxBox3<T>   aabb(const Triangle3<T>& tri) noexcept
     {
@@ -252,14 +250,12 @@ namespace yq {
     }
 
     #if 0
-    /*! \brief Reduces 3D triangle into 2D along xy plane */
     template <typename T>
     Triangle2<T>   xy(const Triangle3<T>& a)
     {
         return { xy(a.a), xy(a.b), xy(a.c) };
     }
     
-    /*! \brief Promotes 2D triangle to 3D triangle */
     template <typename T>
     Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z)
     {
@@ -267,8 +263,6 @@ namespace yq {
     }
     #endif
 
-    /*! \brief Computes the perimeter of the triangle
-    */
     template <typename T>
     T       perimeter(const Triangle3<T>& tri)
     {
