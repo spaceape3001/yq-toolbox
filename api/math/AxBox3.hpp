@@ -30,7 +30,7 @@ namespace yq {
         Vector3<T>  hi;
         
         constexpr AxBox3() noexcept = default;
-        constexpr AxBox3(const Vector3<T>& a) noexcept : lo(a), hi(a) {}
+        explicit constexpr AxBox3(const Vector3<T>& a) noexcept : lo(a), hi(a) {}
         constexpr AxBox3(const Vector3<T>& _lo, const Vector3<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
         constexpr AxBox3(intersection_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
         constexpr AxBox3(intersection_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;

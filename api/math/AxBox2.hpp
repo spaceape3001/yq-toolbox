@@ -27,7 +27,7 @@ namespace yq {
         Vector2<T>  hi; //!< Upper bounds
         
         constexpr AxBox2() noexcept = default;
-        constexpr AxBox2(const Vector2<T>& a) noexcept : lo(a), hi(a) {}
+        explicit constexpr AxBox2(const Vector2<T>& a) noexcept : lo(a), hi(a) {}
         constexpr AxBox2(const Vector2<T>& _lo, const Vector2<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
         constexpr AxBox2(intersection_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
         constexpr AxBox2(intersection_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;

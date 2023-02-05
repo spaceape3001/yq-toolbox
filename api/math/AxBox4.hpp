@@ -27,7 +27,7 @@ namespace yq {
         Vector4<T>  hi;
         
         constexpr AxBox4() noexcept = default;
-        constexpr AxBox4(const Vector4<T>& a)  noexcept: lo(a), hi(a) {}
+        explicit constexpr AxBox4(const Vector4<T>& a)  noexcept: lo(a), hi(a) {}
         constexpr AxBox4(const Vector4<T>& _lo, const Vector4<T>& _hi)  noexcept: lo(_lo), hi(_hi) {}
         constexpr AxBox4(intersection_t, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
         constexpr AxBox4(intersection_t, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
