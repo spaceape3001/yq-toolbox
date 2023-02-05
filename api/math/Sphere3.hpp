@@ -48,14 +48,14 @@ namespace yq {
 
         /*! \brief Computes the surface area of a 3D sphere
         */
-        constexpr square_t<T>     surface_area() const noexcept
+        constexpr trait::square_t<T>     surface_area() const noexcept
         {
             return 4.0*pi*(radius*radius);
         }
 
         /*! \brief Computes the volume of a 3D sphere
         */
-        constexpr cube_t<T>       volume() const noexcept
+        constexpr trait::cube_t<T>       volume() const noexcept
         {
             return (4.0/3.0)*pi*(radius*radius*radius);
         }
@@ -166,7 +166,7 @@ namespace yq {
     /*! \brief Computes the surface area of a 3D sphere
     */
     template <typename T>
-    constexpr square_t<T>     surface_area(const Sphere3<T>& sph) noexcept
+    constexpr trait::square_t<T>     surface_area(const Sphere3<T>& sph) noexcept
     {
         return sph.surface_area();
     }
@@ -174,7 +174,7 @@ namespace yq {
     /*! \brief Computes the volume of a 3D sphere
     */
     template <typename T>
-    constexpr cube_t<T>       volume(const Sphere3<T>&sph) noexcept
+    constexpr trait::cube_t<T>       volume(const Sphere3<T>&sph) noexcept
     {
         return sph.volume();
     }

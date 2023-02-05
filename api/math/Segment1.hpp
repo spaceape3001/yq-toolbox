@@ -44,7 +44,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Segment1<product_t<T,U>>    operator*(U) const noexcept;
+        constexpr Segment1<trait::product_t<T,U>>    operator*(U) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -52,16 +52,16 @@ namespace yq {
         
 
         template <typename U>
-        Segment1<product_t<T,U>>    operator*(const Tensor11<U>&) const noexcept;
+        Segment1<trait::product_t<T,U>>    operator*(const Tensor11<U>&) const noexcept;
 
         template <typename U>
-        Segment2<product_t<T,U>>    operator*(const Tensor12<U>&) const noexcept;
+        Segment2<trait::product_t<T,U>>    operator*(const Tensor12<U>&) const noexcept;
 
         template <typename U>
-        Segment3<product_t<T,U>>    operator*(const Tensor13<U>&) const noexcept;
+        Segment3<trait::product_t<T,U>>    operator*(const Tensor13<U>&) const noexcept;
 
         template <typename U>
-        Segment4<product_t<T,U>>    operator*(const Tensor14<U>&) const noexcept;
+        Segment4<trait::product_t<T,U>>    operator*(const Tensor14<U>&) const noexcept;
         
         template <typename U>
         requires trait::self_mul_v<T,U>
@@ -69,7 +69,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Segment1<quotient_t<T,U>>   operator/(U) const noexcept;
+        constexpr Segment1<trait::quotient_t<T,U>>   operator/(U) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -84,7 +84,7 @@ namespace yq {
         T   length() const;
 
         //! Square of the length
-        constexpr square_t<T> length²() const noexcept;
+        constexpr trait::square_t<T> length²() const noexcept;
         
         //! Segment mid-point
         Vector1<T>  midpoint() const;
@@ -122,7 +122,7 @@ namespace yq {
     
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T,U>
-    constexpr Segment1<product_t<T,U>> operator*(T, const Segment1<T>&) noexcept;
+    constexpr Segment1<trait::product_t<T,U>> operator*(T, const Segment1<T>&) noexcept;
 
     /*! \brief Creates an axially aligned bounding box from a segment
     */

@@ -60,7 +60,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox4<product_t<T,U>> operator*(U) const noexcept;
+        AxBox4<trait::product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -68,7 +68,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox4<quotient_t<T,U>> operator/(U) const noexcept;
+        AxBox4<trait::quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -119,7 +119,7 @@ namespace yq {
 
         /*! \brief Computes the hyper volume of the box
         */
-        constexpr fourth_t<T> hypervolume() const noexcept;
+        constexpr trait::fourth_t<T> hypervolume() const noexcept;
 
         //! Checks for validity (hi >= lo)
         constexpr bool    is_valid() const noexcept;
@@ -198,7 +198,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr AxBox4<product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept;
+    constexpr AxBox4<trait::product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept;
 
     /*! \brief Computes the center of a 4D axially aligned box
     */
@@ -208,7 +208,7 @@ namespace yq {
     /*! \brief Computes the hyper volume of the box
     */
     template <typename T>
-    constexpr fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept;
+    constexpr trait::fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept;
 
     //! Checks for validity (hi >= lo)
     template <typename T>

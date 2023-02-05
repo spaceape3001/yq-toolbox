@@ -25,6 +25,14 @@ namespace yq {
         
         //! Y-size
         T   y;
+
+        constexpr Size2() noexcept = default;
+        constexpr Size2(T _x, T _y) noexcept : x(_x), y(_y) {}
+        constexpr Size2(all_t, T v) noexcept : x(v), y(v) {}
+        
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval Size2(nan_t) : Size2(ALL, nan_v<T>) {}
+        consteval Size2(zero_t) : Size2(ALL, zero_v<T>) {}
         
         //! Defaulted comparsion operator
         constexpr bool    operator==(const Size2&) const noexcept = default;
@@ -39,7 +47,7 @@ namespace yq {
         }
       
         //! Returns the area
-        constexpr auto      area() const noexcept
+        constexpr trait::square_t<T> area() const noexcept
         {
             return x*y;
         }
@@ -105,10 +113,11 @@ namespace yq {
         }
     };
 
-    YQ_NAN_1(Size2, Size2<T>{ nan_v<T>, nan_v<T> })
+    YQ_NAN_1(Size2, Size2<T>(NAN))
+    YQ_ZERO_1(Size2, Size2<T>(ZERO))
+
     YQ_IS_NAN_1(Size2, is_nan(v.x) || is_nan(v.y) )
     YQ_IS_FINITE_1(Size2, is_finite(v.x) && is_finite(v.y) )
-    YQ_ZERO_1(Size2, Size2<T>{ zero_v<T>, zero_v<T> })
     
     
     /*! \brief Computes the area of this size

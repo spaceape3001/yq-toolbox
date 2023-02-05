@@ -61,7 +61,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox3<product_t<T,U>> operator*(U) const noexcept;
+        AxBox3<trait::product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -69,7 +69,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox3<quotient_t<T,U>> operator/(U) const noexcept;
+        AxBox3<trait::quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -176,7 +176,7 @@ namespace yq {
 
         /*! \brief Computes the surface area of a 3D axially aligned bounding box
         */
-        constexpr square_t<T>    surface_area() const noexcept;
+        constexpr trait::square_t<T>    surface_area() const noexcept;
 
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
@@ -193,7 +193,7 @@ namespace yq {
 
         /*! \brief Computes the volume of the box
         */
-        constexpr cube_t<T>       volume() const noexcept;
+        constexpr trait::cube_t<T>       volume() const noexcept;
 
         //! X Range of the box
         constexpr Range<T>  x_range() const noexcept;
@@ -249,12 +249,12 @@ namespace yq {
     /*! \brief Computes the surface area of a 3D axially aligned bounding box
     */
     template <typename T>
-    constexpr square_t<T>    surface_area(const AxBox3<T>& box) noexcept;
+    constexpr trait::square_t<T>    surface_area(const AxBox3<T>& box) noexcept;
 
     /*! \brief Computes the volume of the box
     */
     template <typename T>
-    constexpr cube_t<T>       volume(const AxBox3<T>& box) noexcept;
+    constexpr trait::cube_t<T>       volume(const AxBox3<T>& box) noexcept;
 
 }
 

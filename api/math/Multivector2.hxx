@@ -174,9 +174,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Multivector2<product_t<T,U>> Multivector2<T>::operator*(U b) const noexcept
+    constexpr Multivector2<trait::product_t<T,U>> Multivector2<T>::operator*(U b) const noexcept
     {
-        return Multivector2<product_t<T,U>>(
+        return Multivector2<trait::product_t<T,U>>(
             a*b, 
             x*b, y*b, 
             xy*b 
@@ -199,9 +199,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Multivector2<quotient_t<T,U>> Multivector2<T>::operator/(U b) const noexcept
+    constexpr Multivector2<trait::quotient_t<T,U>> Multivector2<T>::operator/(U b) const noexcept
     {
-        return Multivector2<quotient_t<T,U>>(
+        return Multivector2<trait::quotient_t<T,U>>(
             a/b, 
             x/b, y/b, 
             xy/b 
@@ -259,9 +259,9 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Multivector2<product_t<T,U>> operator*(T a, const Multivector2<U>&b) noexcept
+    constexpr Multivector2<trait::product_t<T,U>> operator*(T a, const Multivector2<U>&b) noexcept
     {
-        return Multivector2<product_t<T,U>>(
+        return Multivector2<trait::product_t<T,U>>(
             a*b.a, 
             a*b.x, a*b.y, 
             a*b.xy 

@@ -310,12 +310,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Range<product_t<T,U>>    Range<T>::operator*(U b) noexcept
+    constexpr Range<trait::product_t<T,U>>    Range<T>::operator*(U b) noexcept
     {
         if(b >= zero_v<U>)
-            return Range<product_t<T,U>>(lo*b, hi*b);
+            return Range<trait::product_t<T,U>>(lo*b, hi*b);
         else
-            return Range<product_t<T,U>>(hi*b, lo*b);
+            return Range<trait::product_t<T,U>>(hi*b, lo*b);
     }
     
     template <typename T>
@@ -329,9 +329,9 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Range<product_t<T,U>>   Range<T>::operator*(const Range<U>&b) const noexcept
+    constexpr Range<trait::product_t<T,U>>   Range<T>::operator*(const Range<U>&b) const noexcept
     {
-        return Range<product_t<T,U>>(UNION, {lo*b.lo, lo*b.hi, hi*b.lo, hi*b.hi });
+        return Range<trait::product_t<T,U>>(UNION, {lo*b.lo, lo*b.hi, hi*b.lo, hi*b.hi });
     }
 
     template <typename T>
@@ -346,12 +346,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Range<quotient_t<T,U>>    Range<T>::operator/(U b) const noexcept
+    constexpr Range<trait::quotient_t<T,U>>    Range<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return Range<quotient_t<T,U>>( lo/b, hi/b);
+            return Range<trait::quotient_t<T,U>>( lo/b, hi/b);
         else
-            return Range<quotient_t<T,U>>( hi/b, lo/b);
+            return Range<trait::quotient_t<T,U>>( hi/b, lo/b);
     }
     
     template <typename T>
@@ -365,9 +365,9 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Range<quotient_t<T,U>>   Range<T>::operator/(const Range<U>&b) const noexcept
+    constexpr Range<trait::quotient_t<T,U>>   Range<T>::operator/(const Range<U>&b) const noexcept
     {
-        return Range<quotient_t<T,U>>(UNION, {lo/b.lo, lo/b.hi, hi/b.lo, hi/b.hi });
+        return Range<trait::quotient_t<T,U>>(UNION, {lo/b.lo, lo/b.hi, hi/b.lo, hi/b.hi });
     }
 
     template <typename T>
@@ -511,17 +511,17 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Range<product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept
+    constexpr Range<trait::product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return Range<product_t<T,U>>(a*b.lo, a*b.hi);
+            return Range<trait::product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return Range<product_t<T,U>>(a*b.hi, a*b.lo);
+            return Range<trait::product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Range<product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept
+    constexpr Range<trait::product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept
     {
         if(a >= zero_v<T>)
             return range(a/b.hi, a/b.lo);

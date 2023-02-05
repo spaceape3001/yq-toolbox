@@ -41,7 +41,7 @@ namespace yq {
         
         /*! \brief Computes the area of a 2D polygon
         */
-        square_t<T>    area() const
+        trait::square_t<T>    area() const
         {
             return 0.5*abs(point_area());
         }
@@ -91,7 +91,7 @@ namespace yq {
             simply does an "area" of the point deltas, 
             no sign correction, no scaling.
         */
-        square_t<T>    point_area() const
+        trait::square_t<T>    point_area() const
         {
             return delta_area(vertex);
         }
@@ -214,7 +214,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D polygon
     */
     template <typename T>
-    square_t<T>    area(const Polygon2<T>& poly)
+    trait::square_t<T>    area(const Polygon2<T>& poly)
     {
         return poly.area();
     }

@@ -110,50 +110,50 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Tensor22<product_t<T,U>>  operator*(U b) const noexcept;
+        constexpr Tensor22<trait::product_t<T,U>>  operator*(U b) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Tensor22&  operator*=(U b) noexcept;
         
         template <typename U>
-        constexpr Segment2<product_t<T,U>>  operator*(const Segment2<U>&) const noexcept;
+        constexpr Segment2<trait::product_t<T,U>>  operator*(const Segment2<U>&) const noexcept;
 
         template <typename U>
-        constexpr Tensor21<product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
+        constexpr Tensor21<trait::product_t<T,U>> operator*(const Tensor21<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor22<product_t<T,U>> operator*(const Tensor22<U>& b) const noexcept;
+        constexpr Tensor22<trait::product_t<T,U>> operator*(const Tensor22<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor23<product_t<T,U>> operator*(const Tensor23<U>& b) const noexcept;
+        constexpr Tensor23<trait::product_t<T,U>> operator*(const Tensor23<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor24<product_t<T,U>> operator*(const Tensor24<U>& b) const noexcept;
+        constexpr Tensor24<trait::product_t<T,U>> operator*(const Tensor24<U>& b) const noexcept;
 
         template <typename U>
         requires trait::self_mul_v<T,U>
         Tensor22& operator*=(const Tensor22<U>& b) noexcept;
         
         template <typename U>
-        Triangle2<product_t<T,U>> operator*(const Triangle2<U>&) const noexcept;
+        Triangle2<trait::product_t<T,U>> operator*(const Triangle2<U>&) const noexcept;
 
         template <typename U>
-        constexpr Vector2<product_t<T,U>> operator*(const Vector2<U>&b) const noexcept;
+        constexpr Vector2<trait::product_t<T,U>> operator*(const Vector2<U>&b) const noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Tensor22<quotient_t<T,U>>  operator/(U b) const noexcept;
+        constexpr Tensor22<trait::quotient_t<T,U>>  operator/(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
         Tensor22&  operator/=(U b) noexcept;
 
         //! Computes the determinant of this matrix
-        constexpr square_t<T> determinant() const noexcept;
+        constexpr trait::square_t<T> determinant() const noexcept;
 
         //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
         //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
 
         //! Computes the inverse of this matrix
-        constexpr Tensor22<inverse_t<T>> inverse() const noexcept;
+        constexpr Tensor22<trait::inverse_t<T>> inverse() const noexcept;
 
         /*! \brief Trace of the 2 x 2 tensor
         
@@ -323,19 +323,19 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Tensor22<product_t<T,U>>  operator*(T a, const Tensor22<T>& b);
+    constexpr Tensor22<trait::product_t<T,U>>  operator*(T a, const Tensor22<T>& b);
     
 
     //! Determinant of a 2x2 tensor
     template <typename T>
-    square_t<T> determinant(const Tensor22<T>& ten);
+    trait::square_t<T> determinant(const Tensor22<T>& ten);
 
     //void        eigenvalues(zreal&,zreal&,zreal&,zreal&b) const;
     //void        eigensystem(zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&,zreal&,zvector4&b) const;
 
     //! Inverse of a 2x2 tensor
     template <typename T>
-    Tensor22<inverse_t<T>> inverse(const Tensor22<T>&ten);
+    Tensor22<trait::inverse_t<T>> inverse(const Tensor22<T>&ten);
 
     /*! \brief Trace of the 2 x 2 tensor
     

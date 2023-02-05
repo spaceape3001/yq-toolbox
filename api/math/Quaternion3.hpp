@@ -81,7 +81,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3<T>          operator~() const;
         
-        constexpr square_t<T>   operator^(two_t) const noexcept;
+        constexpr trait::square_t<T>   operator^(two_t) const noexcept;
 
         constexpr Quaternion3   operator+ (const Quaternion3<T>&b) const noexcept;
         Quaternion3&            operator+=(const Quaternion3<T>&b) noexcept;
@@ -90,14 +90,14 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<U>)
-        constexpr Quaternion3<product_t<T,U>>  operator* (U b) const noexcept;
+        constexpr Quaternion3<trait::product_t<T,U>>  operator* (U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Quaternion3& operator*=(U b) noexcept;
 
         template <typename U>
-        constexpr Quaternion3<product_t<T,U>>  operator* (const Quaternion3<U>&b) const noexcept;
+        constexpr Quaternion3<trait::product_t<T,U>>  operator* (const Quaternion3<U>&b) const noexcept;
 
         template <typename U>
         requires trait::self_mul_v<T,U>
@@ -105,7 +105,7 @@ namespace yq {
 
         template <typename U>
         requires (std::is_floating_point_v<T> && std::is_floating_point_v<U>)
-        constexpr Vector3<product_t<T,U>>   operator* (const Vector3<U>&b) const noexcept;
+        constexpr Vector3<trait::product_t<T,U>>   operator* (const Vector3<U>&b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -113,14 +113,14 @@ namespace yq {
 
         template <typename U>
         requires (trait::is_arithmetic_v<T>)
-        constexpr Quaternion3<quotient_t<T,U>>  operator/ (U b) const noexcept;
+        constexpr Quaternion3<trait::quotient_t<T,U>>  operator/ (U b) const noexcept;
         
-        Vector3<unity_t<T>>  axis() const;
+        Vector3<trait::unity_t<T>>  axis() const;
         
         constexpr Quaternion3    conj() const noexcept;
         constexpr Quaternion3    conjugate() const noexcept;
-        constexpr Quaternion3<inverse_t<T>>   inverse() const noexcept;
-        constexpr square_t<T>    length²() const noexcept;
+        constexpr Quaternion3<trait::inverse_t<T>>   inverse() const noexcept;
+        constexpr trait::square_t<T>    length²() const noexcept;
         T                        length() const;
     };
 
@@ -168,7 +168,7 @@ namespace yq {
     constexpr Quaternion3<T> conjugate(const Quaternion3<T>&a);
 
     template <typename T>
-    constexpr square_t<T>  length²(const Quaternion3<T>&a);
+    constexpr trait::square_t<T>  length²(const Quaternion3<T>&a);
 
     template <typename T>
     constexpr T  length(const Quaternion3<T>&a);
@@ -203,7 +203,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
-    constexpr Quaternion3<product_t<T,U>>  operator*(T a, const Quaternion3<U>&b);
+    constexpr Quaternion3<trait::product_t<T,U>>  operator*(T a, const Quaternion3<U>&b);
 
 
 

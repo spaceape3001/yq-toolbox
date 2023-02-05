@@ -152,12 +152,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    AxBox3<product_t<T,U>> AxBox3<T>::operator*(U b) const noexcept
+    AxBox3<trait::product_t<T,U>> AxBox3<T>::operator*(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox3<product_t<T,U>>(lo*b,hi*b);
+            return AxBox3<trait::product_t<T,U>>(lo*b,hi*b);
         else
-            return AxBox3<product_t<T,U>>(hi*b,lo*b);
+            return AxBox3<trait::product_t<T,U>>(hi*b,lo*b);
     }
 
     template <typename T>
@@ -172,12 +172,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    AxBox3<quotient_t<T,U>> AxBox3<T>::operator/(U b) const noexcept
+    AxBox3<trait::quotient_t<T,U>> AxBox3<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox3<quotient_t<T,U>>(lo/b,hi/b);
+            return AxBox3<trait::quotient_t<T,U>>(lo/b,hi/b);
         else
-            return AxBox3<quotient_t<T,U>>(hi/b,lo/b);
+            return AxBox3<trait::quotient_t<T,U>>(hi/b,lo/b);
     }
 
     template <typename T>
@@ -355,7 +355,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr square_t<T>    AxBox3<T>::surface_area() const noexcept
+    constexpr trait::square_t<T>    AxBox3<T>::surface_area() const noexcept
     {
         Vector3<T>  del     = hi - lo;
         return 2.0 * ((del.x*del.y)+(del.y*del.z)+(del.z*del.x));
@@ -377,7 +377,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr cube_t<T>       AxBox3<T>::volume() const noexcept
+    constexpr trait::cube_t<T>       AxBox3<T>::volume() const noexcept
     {
         return span().cproduct();
     }
@@ -406,12 +406,12 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr AxBox3<product_t<T,U>> operator*(T a, const AxBox3<U>& b) noexcept
+    constexpr AxBox3<trait::product_t<T,U>> operator*(T a, const AxBox3<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return AxBox3<product_t<T,U>>(a*b.lo, a*b.hi);
+            return AxBox3<trait::product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return AxBox3<product_t<T,U>>(a*b.hi, a*b.lo);
+            return AxBox3<trait::product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
 
@@ -465,13 +465,13 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr square_t<T>    surface_area(const AxBox3<T>& box) noexcept
+    constexpr trait::square_t<T>    surface_area(const AxBox3<T>& box) noexcept
     {
         return box.surface_area();
     }
 
     template <typename T>
-    constexpr cube_t<T>       volume(const AxBox3<T>& box) noexcept
+    constexpr trait::cube_t<T>       volume(const AxBox3<T>& box) noexcept
     {
         return box.volume();
     }    

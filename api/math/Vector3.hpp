@@ -91,10 +91,10 @@ namespace yq {
         constexpr Vector3 operator-() const noexcept;
 
         //! Normalizations operator
-        Vector3<quotient_t<T,T>> operator~() const;
+        Vector3<trait::quotient_t<T,T>> operator~() const;
 
         //! Square (ie, length2)
-        constexpr square_t<T> operator^(two_t) const noexcept;
+        constexpr trait::square_t<T> operator^(two_t) const noexcept;
 
         //! Addition with number
         constexpr Multivector3<T> operator+(T b) const noexcept;
@@ -147,7 +147,7 @@ namespace yq {
         //! Multiplication with scalar
         template <typename U>
         requires (trait::is_arithmetic_v<U>)
-        constexpr Vector3<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Vector3<trait::product_t<T,U>> operator*(U b) const noexcept;
 
         //! Self-multiplication
         template <typename U>
@@ -156,16 +156,16 @@ namespace yq {
 
         //! Vector/tensor multiplication
         template <typename U>
-        constexpr Vector1<product_t<T,U>> operator*(const Tensor31<U>&b) const noexcept;
+        constexpr Vector1<trait::product_t<T,U>> operator*(const Tensor31<U>&b) const noexcept;
         //! Vector/tensor multiplication
         template <typename U>
-        constexpr Vector2<product_t<T,U>> operator*(const Tensor32<U>&b) const noexcept;
+        constexpr Vector2<trait::product_t<T,U>> operator*(const Tensor32<U>&b) const noexcept;
         //! Vector/tensor multiplication
         template <typename U>
-        constexpr Vector3<product_t<T,U>> operator*(const Tensor33<U>&b) const noexcept;
+        constexpr Vector3<trait::product_t<T,U>> operator*(const Tensor33<U>&b) const noexcept;
         //! Vector/tensor multiplication
         template <typename U>
-        constexpr Vector4<product_t<T,U>> operator*(const Tensor34<U>&b) const noexcept;
+        constexpr Vector4<trait::product_t<T,U>> operator*(const Tensor34<U>&b) const noexcept;
         //! Vector/tensor self multiplication
         template <typename U>
         requires (trait::self_mul_v<T,U>)
@@ -173,41 +173,41 @@ namespace yq {
 
         //! Geometric product
         template <typename U>
-        constexpr Multivector3<product_t<U,T>> operator*(const Vector3<U>&) const noexcept;
+        constexpr Multivector3<trait::product_t<U,T>> operator*(const Vector3<U>&) const noexcept;
 
         //! Dot product
         template <typename U>
-        constexpr product_t<T,U> operator DOT (const Vector3<U>&b) const noexcept;
+        constexpr trait::product_t<T,U> operator DOT (const Vector3<U>&b) const noexcept;
 
         //! Inner product
         template <typename U>
-        constexpr product_t<T,U> operator INNER (const Vector3<U>&b) const noexcept;
+        constexpr trait::product_t<T,U> operator INNER (const Vector3<U>&b) const noexcept;
 
         //! Cross product
         template <typename U>
-        constexpr Vector3<product_t<T,U>> operator CROSS (const Vector3<U>&b) const noexcept;
+        constexpr Vector3<trait::product_t<T,U>> operator CROSS (const Vector3<U>&b) const noexcept;
 
         //! Outer product
         template <typename U>
-        constexpr Bivector3<product_t<T,U>> operator OUTER (const Vector3<U>& b) noexcept;
+        constexpr Bivector3<trait::product_t<T,U>> operator OUTER (const Vector3<U>& b) noexcept;
 
         //! OTIMES Vector1
         template <typename U>
-        constexpr Tensor31<product_t<T,U>> operator OTIMES(const Vector1<U>&b) const noexcept;
+        constexpr Tensor31<trait::product_t<T,U>> operator OTIMES(const Vector1<U>&b) const noexcept;
         //! OTIMES Vector2
         template <typename U>
-        constexpr Tensor32<product_t<T,U>> operator OTIMES(const Vector2<U>&b) const noexcept;
+        constexpr Tensor32<trait::product_t<T,U>> operator OTIMES(const Vector2<U>&b) const noexcept;
         //! OTIMES Vector3
         template <typename U>
-        constexpr Tensor33<product_t<T,U>> operator OTIMES(const Vector3<U>&b) const noexcept;
+        constexpr Tensor33<trait::product_t<T,U>> operator OTIMES(const Vector3<U>&b) const noexcept;
         //! OTIMES Vector4
         template <typename U>
-        constexpr Tensor34<product_t<T,U>> operator OTIMES(const Vector4<U>&b) const noexcept;
+        constexpr Tensor34<trait::product_t<T,U>> operator OTIMES(const Vector4<U>&b) const noexcept;
     
         //! Division
         template <typename U>
         requires (std::is_arithmetic_v<U>)
-        constexpr  Vector3<quotient_t<T,U>> operator/(U b) const noexcept;
+        constexpr  Vector3<trait::quotient_t<T,U>> operator/(U b) const noexcept;
 
         //! Self-division
         template <typename U>
@@ -215,7 +215,7 @@ namespace yq {
         Vector3<T>& operator/=(U b) noexcept;
 
         template <typename U>
-        constexpr Multivector3<quotient_t<T,U>>   operator/ (const Vector3<U>&b) const noexcept;
+        constexpr Multivector3<trait::quotient_t<T,U>>   operator/ (const Vector3<U>&b) const noexcept;
 
         //! Union
         constexpr AxBox3<T>  operator|(const AxBox3<T>& b) const noexcept;
@@ -236,7 +236,7 @@ namespace yq {
         constexpr T cmin() const noexcept;
 
         //! Product of the vector's components
-        constexpr cube_t<T>     cproduct() const noexcept;
+        constexpr trait::cube_t<T>     cproduct() const noexcept;
         
         //! Sum of the vector's components
         constexpr T   csum() const noexcept;
@@ -246,7 +246,7 @@ namespace yq {
 
         //! Element by element division
         template <typename U>
-        constexpr Vector3<quotient_t<T,U>>    ediv(const Vector3<U>&b) const noexcept;
+        constexpr Vector3<trait::quotient_t<T,U>>    ediv(const Vector3<U>&b) const noexcept;
 
         //! Biggest (max) applied element by element
         constexpr Vector3   emax(const Vector3&b) const noexcept;
@@ -256,13 +256,13 @@ namespace yq {
 
         //! Element by element multiplication
         template <typename U>
-        constexpr Vector3<product_t<T,U>>    emul(const Vector3<U>&b) const noexcept;
+        constexpr Vector3<trait::product_t<T,U>>    emul(const Vector3<U>&b) const noexcept;
  
         /*! \brief Square of the vector's length
         
             This returns the SQUARE of the given vector's length.
         */
-        constexpr square_t<T> length²() const noexcept;
+        constexpr trait::square_t<T> length²() const noexcept;
         
         /*! \brief Length of the vector
             
@@ -490,7 +490,7 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length²(const Vector3<T>& a) noexcept
+    constexpr trait::square_t<T> length²(const Vector3<T>& a) noexcept
     {
         return a.length²();
     }    
@@ -530,10 +530,10 @@ namespace yq {
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
-    constexpr Vector3<product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept;
+    constexpr Vector3<trait::product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept;
     
     template <typename T, typename U>
-    constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
+    constexpr Vector3<trait::product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
     {
         return a.emul(b);
     }
@@ -543,11 +543,11 @@ namespace yq {
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr  Vector3<quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept;
+    constexpr  Vector3<trait::quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept;
 
 
     template <typename T, typename U>
-    constexpr Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
+    constexpr Vector3<trait::quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
     {
         return a.ediv(b);
     }
@@ -627,7 +627,7 @@ namespace yq {
     constexpr T             component_min(const Vector3<T>&a) noexcept;
 
     template <typename T>
-    constexpr cube_t<T>       component_product(const Vector3<T>& a) noexcept;
+    constexpr trait::cube_t<T>       component_product(const Vector3<T>& a) noexcept;
     
     template <typename T>
     constexpr T   component_sum(const Vector3<T>& a) noexcept;

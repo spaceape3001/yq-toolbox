@@ -65,7 +65,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector3<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Multivector3<trait::product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -73,7 +73,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector3<quotient_t<T,U>> operator/(U b) const noexcept;
+        constexpr Multivector3<trait::quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -89,18 +89,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    YQ_NAN_1(Multivector3, Multivector3<T>{
-        nan_v<unity_t<T>>, 
-        nan_v<T>, nan_v<T>, nan_v<T>, 
-        nan_v<square_t<T>>, nan_v<square_t<T>>, nan_v<square_t<T>>, 
-        nan_v<cube_t<T>>
-    })
-    YQ_ZERO_1(Multivector3, Multivector3<T>{
-        zero_v<unity_t<T>>, 
-        zero_v<T>, zero_v<T>, zero_v<T>, 
-        zero_v<square_t<T>>, zero_v<square_t<T>>, zero_v<square_t<T>>, 
-        zero_v<cube_t<T>>
-    })
+    YQ_NAN_1(Multivector3, Multivector3<T>(NAN))
+    YQ_ZERO_1(Multivector3, Multivector3<T>(ZERO))
 
 //  --------------------------------------------------------
 //  GETTERS
@@ -142,7 +132,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Multivector3<product_t<T,U>> operator*(T a, const Multivector3<U>&b) noexcept;
+    constexpr Multivector3<trait::product_t<T,U>> operator*(T a, const Multivector3<U>&b) noexcept;
 
 
 

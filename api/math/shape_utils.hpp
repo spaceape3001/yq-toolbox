@@ -130,9 +130,9 @@ namespace yq {
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    Polygon2<product_t<T,U>>    operator*(const Polygon2<T>&a, const Tensor22<U>& b)
+    Polygon2<trait::product_t<T,U>>    operator*(const Polygon2<T>&a, const Tensor22<U>& b)
     {
-        Polygon2<product_t<T,U>>    ret;
+        Polygon2<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector2<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -140,9 +140,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon3<product_t<T,U>>    operator*(const Polygon2<T>&a, const Tensor23<U>& b)
+    Polygon3<trait::product_t<T,U>>    operator*(const Polygon2<T>&a, const Tensor23<U>& b)
     {
-        Polygon3<product_t<T,U>>    ret;
+        Polygon3<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector2<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -150,9 +150,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon4<product_t<T,U>>    operator*(const Polygon2<T>&a, const Tensor24<U>& b)
+    Polygon4<trait::product_t<T,U>>    operator*(const Polygon2<T>&a, const Tensor24<U>& b)
     {
-        Polygon4<product_t<T,U>>    ret;
+        Polygon4<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector2<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -160,9 +160,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon2<product_t<T,U>>    operator*(const Polygon3<T>&a, const Tensor32<U>& b)
+    Polygon2<trait::product_t<T,U>>    operator*(const Polygon3<T>&a, const Tensor32<U>& b)
     {
-        Polygon2<product_t<T,U>>    ret;
+        Polygon2<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector3<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -170,9 +170,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon3<product_t<T,U>>    operator*(const Polygon3<T>&a, const Tensor33<U>& b)
+    Polygon3<trait::product_t<T,U>>    operator*(const Polygon3<T>&a, const Tensor33<U>& b)
     {
-        Polygon3<product_t<T,U>>    ret;
+        Polygon3<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector3<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -180,9 +180,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon4<product_t<T,U>>    operator*(const Polygon3<T>&a, const Tensor34<U>& b)
+    Polygon4<trait::product_t<T,U>>    operator*(const Polygon3<T>&a, const Tensor34<U>& b)
     {
-        Polygon4<product_t<T,U>>    ret;
+        Polygon4<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector3<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -190,9 +190,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon2<product_t<T,U>>    operator*(const Polygon4<T>&a, const Tensor42<U>& b)
+    Polygon2<trait::product_t<T,U>>    operator*(const Polygon4<T>&a, const Tensor42<U>& b)
     {
-        Polygon2<product_t<T,U>>    ret;
+        Polygon2<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector4<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -200,9 +200,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon3<product_t<T,U>>    operator*(const Polygon4<T>&a, const Tensor43<U>& b)
+    Polygon3<trait::product_t<T,U>>    operator*(const Polygon4<T>&a, const Tensor43<U>& b)
     {
-        Polygon3<product_t<T,U>>    ret;
+        Polygon3<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector4<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -210,9 +210,9 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    Polygon4<product_t<T,U>>    operator*(const Polygon4<T>&a, const Tensor44<U>& b)
+    Polygon4<trait::product_t<T,U>>    operator*(const Polygon4<T>&a, const Tensor44<U>& b)
     {
-        Polygon4<product_t<T,U>>    ret;
+        Polygon4<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector4<T>& v : a.vertex)
             ret.vertex.push_back(v*b);
@@ -223,97 +223,97 @@ namespace yq {
     //  ----------------------------------------------
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor11<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor11<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor12<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor12<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor13<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor13<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor14<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Segment1<T>&a, const Tensor14<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor21<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor21<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor22<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor22<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor23<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor23<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor24<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Segment2<T>&a, const Tensor24<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor31<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor31<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor32<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor32<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor33<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor33<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor34<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Segment3<T>&a, const Tensor34<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor41<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor41<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor42<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor42<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor43<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor43<U>&b)
     {
         return { a.a * b, a.b * b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor44<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Segment4<T>&a, const Tensor44<U>&b)
     {
         return { a.a * b, a.b * b };
     }
@@ -321,55 +321,55 @@ namespace yq {
     //  ----------------------------------------------
 
     template <typename T, typename U>
-    Triangle2<product_t<T,U>>    operator*(const Triangle2<T>&a, const Tensor22<U>&b)
+    Triangle2<trait::product_t<T,U>>    operator*(const Triangle2<T>&a, const Tensor22<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle3<product_t<T,U>>    operator*(const Triangle2<T>&a, const Tensor23<U>&b)
+    Triangle3<trait::product_t<T,U>>    operator*(const Triangle2<T>&a, const Tensor23<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle4<product_t<T,U>>    operator*(const Triangle2<T>&a, const Tensor24<U>&b)
+    Triangle4<trait::product_t<T,U>>    operator*(const Triangle2<T>&a, const Tensor24<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle2<product_t<T,U>>    operator*(const Triangle3<T>&a, const Tensor32<U>&b)
+    Triangle2<trait::product_t<T,U>>    operator*(const Triangle3<T>&a, const Tensor32<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle3<product_t<T,U>>    operator*(const Triangle3<T>&a, const Tensor33<U>&b)
+    Triangle3<trait::product_t<T,U>>    operator*(const Triangle3<T>&a, const Tensor33<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle4<product_t<T,U>>    operator*(const Triangle3<T>&a, const Tensor34<U>&b)
+    Triangle4<trait::product_t<T,U>>    operator*(const Triangle3<T>&a, const Tensor34<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle2<product_t<T,U>>    operator*(const Triangle4<T>&a, const Tensor42<U>&b)
+    Triangle2<trait::product_t<T,U>>    operator*(const Triangle4<T>&a, const Tensor42<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle3<product_t<T,U>>    operator*(const Triangle4<T>&a, const Tensor43<U>&b)
+    Triangle3<trait::product_t<T,U>>    operator*(const Triangle4<T>&a, const Tensor43<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
 
     template <typename T, typename U>
-    Triangle4<product_t<T,U>>    operator*(const Triangle4<T>&a, const Tensor44<U>&b)
+    Triangle4<trait::product_t<T,U>>    operator*(const Triangle4<T>&a, const Tensor44<U>&b)
     {
         return { a.a * b, a.b * b, a.c*b };
     }
@@ -377,9 +377,9 @@ namespace yq {
     //  ----------------------------------------------
 
     template <typename T, typename U>
-    Polygon2<product_t<T,U>>    operator*(const Tensor22<T>& a, const Polygon2<U>&b)
+    Polygon2<trait::product_t<T,U>>    operator*(const Tensor22<T>& a, const Polygon2<U>&b)
     {
-        Polygon2<product_t<T,U>>    ret;
+        Polygon2<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector2<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -387,9 +387,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon2<product_t<T,U>>    operator*(const Tensor23<T>& a, const Polygon3<U>&b)
+    Polygon2<trait::product_t<T,U>>    operator*(const Tensor23<T>& a, const Polygon3<U>&b)
     {
-        Polygon2<product_t<T,U>>    ret;
+        Polygon2<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector3<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -397,9 +397,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon2<product_t<T,U>>    operator*(const Tensor24<T>& a, const Polygon4<U>&b)
+    Polygon2<trait::product_t<T,U>>    operator*(const Tensor24<T>& a, const Polygon4<U>&b)
     {
-        Polygon2<product_t<T,U>>    ret;
+        Polygon2<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector4<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -407,9 +407,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon3<product_t<T,U>>    operator*(const Tensor32<T>& a, const Polygon2<U>&b)
+    Polygon3<trait::product_t<T,U>>    operator*(const Tensor32<T>& a, const Polygon2<U>&b)
     {
-        Polygon3<product_t<T,U>>    ret;
+        Polygon3<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector2<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -417,9 +417,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon3<product_t<T,U>>    operator*(const Tensor33<T>& a, const Polygon3<U>&b)
+    Polygon3<trait::product_t<T,U>>    operator*(const Tensor33<T>& a, const Polygon3<U>&b)
     {
-        Polygon3<product_t<T,U>>    ret;
+        Polygon3<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector3<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -427,9 +427,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon3<product_t<T,U>>    operator*(const Tensor34<T>& a, const Polygon4<U>&b)
+    Polygon3<trait::product_t<T,U>>    operator*(const Tensor34<T>& a, const Polygon4<U>&b)
     {
-        Polygon3<product_t<T,U>>    ret;
+        Polygon3<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector4<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -437,9 +437,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon4<product_t<T,U>>    operator*(const Tensor42<T>& a, const Polygon2<U>&b)
+    Polygon4<trait::product_t<T,U>>    operator*(const Tensor42<T>& a, const Polygon2<U>&b)
     {
-        Polygon4<product_t<T,U>>    ret;
+        Polygon4<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector2<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -447,9 +447,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon4<product_t<T,U>>    operator*(const Tensor43<T>& a, const Polygon3<U>&b)
+    Polygon4<trait::product_t<T,U>>    operator*(const Tensor43<T>& a, const Polygon3<U>&b)
     {
-        Polygon4<product_t<T,U>>    ret;
+        Polygon4<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector3<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -457,9 +457,9 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    Polygon4<product_t<T,U>>    operator*(const Tensor44<T>& a, const Polygon4<U>&b)
+    Polygon4<trait::product_t<T,U>>    operator*(const Tensor44<T>& a, const Polygon4<U>&b)
     {
-        Polygon4<product_t<T,U>>    ret;
+        Polygon4<trait::product_t<T,U>>    ret;
         ret.vertex.reserve(a.vertex.size());
         for(const Vector4<U>& v : b.vertex)
             ret.vertex.push_back(a*v);
@@ -469,97 +469,97 @@ namespace yq {
     //  ----------------------------------------------
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Tensor11<T>&a, const Segment1<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Tensor11<T>&a, const Segment1<U>&b)
     {
         return { a * b.a, a * b.b };
     }
     
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Tensor12<T>&a, const Segment2<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Tensor12<T>&a, const Segment2<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Tensor13<T>&a, const Segment3<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Tensor13<T>&a, const Segment3<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment1<product_t<T,U>>    operator*(const Tensor14<T>&a, const Segment4<U>&b)
+    Segment1<trait::product_t<T,U>>    operator*(const Tensor14<T>&a, const Segment4<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Tensor21<T>&a, const Segment1<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Tensor21<T>&a, const Segment1<U>&b)
     {
         return { a * b.a, a * b.b };
     }
     
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Tensor22<T>&a, const Segment2<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Tensor22<T>&a, const Segment2<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Tensor23<T>&a, const Segment3<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Tensor23<T>&a, const Segment3<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment2<product_t<T,U>>    operator*(const Tensor24<T>&a, const Segment4<U>&b)
+    Segment2<trait::product_t<T,U>>    operator*(const Tensor24<T>&a, const Segment4<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Tensor31<T>&a, const Segment1<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Tensor31<T>&a, const Segment1<U>&b)
     {
         return { a * b.a, a * b.b };
     }
     
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Tensor32<T>&a, const Segment2<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Tensor32<T>&a, const Segment2<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Tensor33<T>&a, const Segment3<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Tensor33<T>&a, const Segment3<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment3<product_t<T,U>>    operator*(const Tensor34<T>&a, const Segment4<U>&b)
+    Segment3<trait::product_t<T,U>>    operator*(const Tensor34<T>&a, const Segment4<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Tensor41<T>&a, const Segment1<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Tensor41<T>&a, const Segment1<U>&b)
     {
         return { a * b.a, a * b.b };
     }
     
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Tensor42<T>&a, const Segment2<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Tensor42<T>&a, const Segment2<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Tensor43<T>&a, const Segment3<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Tensor43<T>&a, const Segment3<U>&b)
     {
         return { a * b.a, a * b.b };
     }
 
     template <typename T, typename U>
-    Segment4<product_t<T,U>>    operator*(const Tensor44<T>&a, const Segment4<U>&b)
+    Segment4<trait::product_t<T,U>>    operator*(const Tensor44<T>&a, const Segment4<U>&b)
     {
         return { a * b.a, a * b.b };
     }
@@ -568,55 +568,55 @@ namespace yq {
 
     
     template <typename T, typename U>
-    Triangle2<product_t<T,U>>    operator*(const Tensor22<T>&a, const Triangle2<U>&b)
+    Triangle2<trait::product_t<T,U>>    operator*(const Tensor22<T>&a, const Triangle2<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle2<product_t<T,U>>    operator*(const Tensor23<T>&a, const Triangle3<U>&b)
+    Triangle2<trait::product_t<T,U>>    operator*(const Tensor23<T>&a, const Triangle3<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle2<product_t<T,U>>    operator*(const Tensor24<T>&a, const Triangle4<U>&b)
+    Triangle2<trait::product_t<T,U>>    operator*(const Tensor24<T>&a, const Triangle4<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle3<product_t<T,U>>    operator*(const Tensor32<T>&a, const Triangle2<U>&b)
+    Triangle3<trait::product_t<T,U>>    operator*(const Tensor32<T>&a, const Triangle2<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle3<product_t<T,U>>    operator*(const Tensor33<T>&a, const Triangle3<U>&b)
+    Triangle3<trait::product_t<T,U>>    operator*(const Tensor33<T>&a, const Triangle3<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle3<product_t<T,U>>    operator*(const Tensor34<T>&a, const Triangle4<U>&b)
+    Triangle3<trait::product_t<T,U>>    operator*(const Tensor34<T>&a, const Triangle4<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle4<product_t<T,U>>    operator*(const Tensor42<T>&a, const Triangle2<U>&b)
+    Triangle4<trait::product_t<T,U>>    operator*(const Tensor42<T>&a, const Triangle2<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle4<product_t<T,U>>    operator*(const Tensor43<T>&a, const Triangle3<U>&b)
+    Triangle4<trait::product_t<T,U>>    operator*(const Tensor43<T>&a, const Triangle3<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }
 
     template <typename T, typename U>
-    Triangle4<product_t<T,U>>    operator*(const Tensor44<T>&a, const Triangle4<U>&b)
+    Triangle4<trait::product_t<T,U>>    operator*(const Tensor44<T>&a, const Triangle4<U>&b)
     {
         return { a * b.a, a * b.b, a * b.c };
     }

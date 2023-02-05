@@ -73,7 +73,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector2<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Multivector2<trait::product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
@@ -81,7 +81,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector2<quotient_t<T,U>> operator/(U b) const noexcept;
+        constexpr Multivector2<trait::quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
@@ -97,8 +97,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    YQ_NAN_1(Multivector2, Multivector2<T>{nan_v<unity_t<T>>, nan_v<T>, nan_v<T>, nan_v<square_t<T>>})
-    YQ_ZERO_1(Multivector2, Multivector2<T>{zero_v<unity_t<T>>, zero_v<T>, zero_v<T>, zero_v<square_t<T>>})
+    YQ_NAN_1(Multivector2, Multivector2<T>(NAN))
+    YQ_ZERO_1(Multivector2, Multivector2<T>(ZERO))
 
 //  --------------------------------------------------------
 //  GETTERS
@@ -132,7 +132,7 @@ namespace yq {
     
     template <typename T, typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Multivector2<product_t<T,U>> operator*(T a, const Multivector2<U>&b) noexcept;
+    constexpr Multivector2<trait::product_t<T,U>> operator*(T a, const Multivector2<U>&b) noexcept;
 
 }
 

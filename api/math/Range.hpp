@@ -60,14 +60,14 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Range<product_t<T,U>>    operator*(U b) noexcept;
+        constexpr Range<trait::product_t<T,U>>    operator*(U b) noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>) 
         Range<T>&           operator*=(U b) noexcept;
 
         template <typename U>
-        constexpr Range<product_t<T,U>>   operator*(const Range<U>&b) const noexcept;
+        constexpr Range<trait::product_t<T,U>>   operator*(const Range<U>&b) const noexcept;
         
         template <typename U>
         requires trait::self_mul_v<T,U>
@@ -75,21 +75,21 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Range<quotient_t<T,U>>    operator/(U b) const noexcept;
+        constexpr Range<trait::quotient_t<T,U>>    operator/(U b) const noexcept;
 
         template <typename U>
         requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>) 
         Range<T>&    operator/=(U b) noexcept;
 
         template <typename U>
-        constexpr Range<quotient_t<T,U>>   operator/(const Range<U>&b) const noexcept;
+        constexpr Range<trait::quotient_t<T,U>>   operator/(const Range<U>&b) const noexcept;
 
         template <typename U>
         requires trait::self_div_v<T,U>
         Range<T>&    operator/=(const Range<U>& b) noexcept;
 
         template <typename U>
-        constexpr Range<product_t<T,U>>   operator/(const Range<U>&b) const noexcept;
+        constexpr Range<trait::product_t<T,U>>   operator/(const Range<U>&b) const noexcept;
 
         constexpr Range<T>  operator|(T) const noexcept;
         Range<T>&           operator|=(T) noexcept;
@@ -203,12 +203,12 @@ namespace yq {
     //! Multiplication (assumes b to be valid)
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Range<product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept;
+    constexpr Range<trait::product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept;
 
     //! Division (assumes b to be valid)
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Range<product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept;
+    constexpr Range<trait::product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept;
 
     //! Union (assumes b to be valid)
     template <typename T>

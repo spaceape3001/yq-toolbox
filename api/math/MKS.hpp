@@ -112,13 +112,13 @@ namespace yq {
     template <typename T, typename DIM>
     auto cube(const MKS<T,DIM>& v)
     {
-        return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
+        return MKS<trait::cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
     }
 
     template <typename T, typename DIM>
     auto operator^(const MKS<T,DIM>& v,three_t)
     {
-        return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
+        return MKS<trait::cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
     }
 
     template <typename T, typename DIM>
@@ -144,13 +144,13 @@ namespace yq {
     template <typename T, typename DIM>
     auto square(const MKS<T,DIM>& v)
     {
-        return MKS<square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
+        return MKS<trait::square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
     }
 
     template <typename T, typename DIM>
     auto operator^(const MKS<T,DIM>& v, two_t)
     {
-        return MKS<square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
+        return MKS<trait::square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
     }
 
 //  --------------------------------------------------------
@@ -235,7 +235,7 @@ namespace yq {
     }
 
     template <typename T, typename U, typename DIMT, typename DIMU>
-    MKS<product_t<T,U>,typename DIMT::template _mult_<DIMU>> operator*(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
+    MKS<trait::product_t<T,U>,typename DIMT::template _mult_<DIMU>> operator*(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
     {
         return { a.value * b.value };
     }
@@ -267,7 +267,7 @@ namespace yq {
     }
 
     template <typename T, typename U, typename DIMT, typename DIMU>
-    MKS<quotient_t<T,U>,typename DIMT::template _div_<DIMU>> operator/(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
+    MKS<trait::quotient_t<T,U>,typename DIMT::template _div_<DIMU>> operator/(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
     {
         return { a.value / b.value };
     }

@@ -64,7 +64,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Trivector4<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Trivector4<trait::product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -72,7 +72,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Trivector4<quotient_t<T,U>> operator/(U b) const noexcept;
+        constexpr Trivector4<trait::quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -141,8 +141,8 @@ namespace yq {
         return Trivector4D(WXY, (double) v);
     }
 
-    YQ_NAN_1(Trivector4, Trivector4<T>{nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>})
-    YQ_ZERO_1(Trivector4, Trivector4<T>{zero_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>})
+    YQ_NAN_1(Trivector4, Trivector4<T>{nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>})
+    YQ_ZERO_1(Trivector4, Trivector4<T>{zero_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>})
     
 
 //  --------------------------------------------------------
@@ -171,7 +171,7 @@ namespace yq {
     */
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Trivector4<product_t<T,U>> operator*(T a, const Trivector4<U>& b) noexcept;
+    constexpr Trivector4<trait::product_t<T,U>> operator*(T a, const Trivector4<U>& b) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Trivector4D)

@@ -42,20 +42,20 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Triangle3<product_t<T,U>> operator*(U) const noexcept;
+        constexpr Triangle3<trait::product_t<T,U>> operator*(U) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Triangle3& operator*=(U) noexcept;
 
         template <typename U>
-        Triangle2<product_t<T,U>>   operator*(const Tensor32<U>&) const noexcept;
+        Triangle2<trait::product_t<T,U>>   operator*(const Tensor32<U>&) const noexcept;
 
         template <typename U>
-        Triangle3<product_t<T,U>>   operator*(const Tensor33<U>&) const noexcept;
+        Triangle3<trait::product_t<T,U>>   operator*(const Tensor33<U>&) const noexcept;
 
         template <typename U>
-        Triangle4<product_t<T,U>>   operator*(const Tensor34<U>&) const noexcept;
+        Triangle4<trait::product_t<T,U>>   operator*(const Tensor34<U>&) const noexcept;
 
         template <typename U>
         requires trait::self_mul_v<T,U>
@@ -63,7 +63,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Triangle3<quotient_t<T,U>> operator/(U) const noexcept;
+        constexpr Triangle3<trait::quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -76,17 +76,17 @@ namespace yq {
         //! Edge opposite the "A" vertex
         constexpr Segment3<T>   edge_a() const noexcept;
         constexpr T             edge_a_length() const noexcept;
-        constexpr square_t<T>   edge_a_length²() const noexcept;
+        constexpr trait::square_t<T>   edge_a_length²() const noexcept;
 
         //! Edge opposite the "B" vertex
         constexpr Segment3<T>   edge_b() const noexcept;
         constexpr T             edge_b_length() const noexcept;
-        constexpr square_t<T>   edge_b_length²() const noexcept;
+        constexpr trait::square_t<T>   edge_b_length²() const noexcept;
 
         //! Edge opposite the "C" vertex
         constexpr Segment3<T>   edge_c() const noexcept;
         constexpr T             edge_c_length() const noexcept;
-        constexpr square_t<T>   edge_c_length²() const noexcept;
+        constexpr trait::square_t<T>   edge_c_length²() const noexcept;
 
 
         //! Perimeter of this triangel
@@ -121,7 +121,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Triangle3<product_t<T,U>> operator*(T lhs, const Triangle3<U>& rhs) noexcept;
+    constexpr Triangle3<trait::product_t<T,U>> operator*(T lhs, const Triangle3<U>& rhs) noexcept;
     
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>

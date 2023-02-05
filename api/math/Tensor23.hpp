@@ -93,37 +93,37 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Tensor23<product_t<T,U>>  operator*(U b) const noexcept;
+        constexpr Tensor23<trait::product_t<T,U>>  operator*(U b) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Tensor23&  operator*=(U b) noexcept;
 
         template <typename U>
-        constexpr Segment2<product_t<T,U>>  operator*(const Segment3<U>&) const noexcept;
+        constexpr Segment2<trait::product_t<T,U>>  operator*(const Segment3<U>&) const noexcept;
 
         template <typename U>
-        constexpr Tensor21<product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
+        constexpr Tensor21<trait::product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor22<product_t<T,U>> operator*(const Tensor32<U>& b) const noexcept;
+        constexpr Tensor22<trait::product_t<T,U>> operator*(const Tensor32<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor23<product_t<T,U>> operator*(const Tensor33<U>& b) const noexcept;
+        constexpr Tensor23<trait::product_t<T,U>> operator*(const Tensor33<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor24<product_t<T,U>> operator*(const Tensor34<U>& b) const noexcept;
+        constexpr Tensor24<trait::product_t<T,U>> operator*(const Tensor34<U>& b) const noexcept;
 
         template <typename U>
         requires trait::self_mul_v<T,U>
         Tensor23& operator*=(const Tensor33<U>& b) noexcept;
 
         template <typename U>
-        Triangle2<product_t<T,U>> operator*(const Triangle3<U>&) const noexcept;
+        Triangle2<trait::product_t<T,U>> operator*(const Triangle3<U>&) const noexcept;
 
         template <typename U>
-        constexpr Vector2<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
+        constexpr Vector2<trait::product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Tensor23<quotient_t<T,U>>  operator/(U b) const noexcept;
+        constexpr Tensor23<trait::quotient_t<T,U>>  operator/(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -263,7 +263,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Tensor23<product_t<T,U>>  operator*(T a, const Tensor23<U>& b);
+    constexpr Tensor23<trait::product_t<T,U>>  operator*(T a, const Tensor23<U>& b);
     
 
 //  --------------------------------------------------------

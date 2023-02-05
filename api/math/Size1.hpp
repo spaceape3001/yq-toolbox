@@ -23,6 +23,15 @@ namespace yq {
         //! X-size
         T   x;
         
+        constexpr Size1() noexcept = default;
+        constexpr Size1(T _x) noexcept : x(_x) {}
+        constexpr Size1(all_t, T v) noexcept : x(v) {}
+        
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval Size1(nan_t) : Size1(ALL, nan_v<T>) {}
+        consteval Size1(zero_t) : Size1(ALL, zero_v<T>) {}
+        
+        
         //! Defaulted comparsion operator
         constexpr bool    operator==(const Size1&) const noexcept = default;
         
@@ -36,20 +45,23 @@ namespace yq {
         }
 
         //! Tests to see if the left fully encloses the right
-        bool                contains(const Size1& b) const noexcept
+        constexpr bool  contains(const Size1& b) const noexcept
         {
             return (x >= b.x);
         }
+        
+        constexpr T         length() const noexcept { return x; }
 
         //! Width (X-dimension)
         constexpr T         width() const { return x; }
     };
 
-    YQ_NAN_1(Size1, Size1<T>{ nan_v<T> })
+    YQ_NAN_1(Size1, Size1<T>(NAN))
+    YQ_ZERO_1(Size1, Size1<T>(ZERO))
+    
     YQ_IS_NAN_1(Size1, is_nan(v.x) )
     YQ_IS_FINITE_1(Size1, is_finite(v.x) )
-    YQ_ZERO_1(Size1, Size1<T>{ zero_v<T> })
-    
+
     
     /*! \brief Streams the size to a stream-like object */
     template <typename S, typename T>

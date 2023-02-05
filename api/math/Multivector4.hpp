@@ -91,7 +91,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector4<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Multivector4<trait::product_t<T,U>> operator*(U b) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -99,7 +99,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector4<quotient_t<T,U>> operator/(U b) const noexcept;
+        constexpr Multivector4<trait::quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -173,7 +173,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Multivector4<product_t<T,U>> operator*(T a, const Multivector4<U>&b) noexcept;
+    constexpr Multivector4<trait::product_t<T,U>> operator*(T a, const Multivector4<U>&b) noexcept;
 
 }
 

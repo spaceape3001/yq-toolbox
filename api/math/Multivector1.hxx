@@ -133,9 +133,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Multivector1<product_t<T,U>> Multivector1<T>::operator*(U b) const noexcept
+    constexpr Multivector1<trait::product_t<T,U>> Multivector1<T>::operator*(U b) const noexcept
     {
-        return Multivector1<product_t<T,U>>( a*b, x*b );
+        return Multivector1<trait::product_t<T,U>>( a*b, x*b );
     }
 
     template <typename T>
@@ -149,9 +149,9 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Multivector1<product_t<T,U>> Multivector1<T>::operator*(const Vector1<U>& b) const noexcept
+    constexpr Multivector1<trait::product_t<T,U>> Multivector1<T>::operator*(const Vector1<U>& b) const noexcept
     {
-        return Multivector1<product_t<T,U>>( x*b.x, a*b.x );
+        return Multivector1<trait::product_t<T,U>>( x*b.x, a*b.x );
     }
 
     template <typename T>
@@ -166,9 +166,9 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Multivector1<product_t<T,U>> Multivector1<T>::operator*(const Multivector1<U>& b) const noexcept
+    constexpr Multivector1<trait::product_t<T,U>> Multivector1<T>::operator*(const Multivector1<U>& b) const noexcept
     {
-        return Multivector1<product_t<T,U>>( a*b.a+x*b.x, a*b.x+x*b.a );
+        return Multivector1<trait::product_t<T,U>>( a*b.a+x*b.x, a*b.x+x*b.a );
     }
     
     template <typename T>
@@ -183,9 +183,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Multivector1<quotient_t<T,U>> Multivector1<T>::operator/(U b) const noexcept
+    constexpr Multivector1<trait::quotient_t<T,U>> Multivector1<T>::operator/(U b) const noexcept
     {
-        return Multivector1<quotient_t<T,U>>( a/b, x/b );
+        return Multivector1<trait::quotient_t<T,U>>( a/b, x/b );
     }
 
     template <typename T>
@@ -201,14 +201,14 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr product_t<T,U>   Multivector1<T>::operator INNER(const Multivector1<U>&b)  const noexcept
+    constexpr trait::product_t<T,U>   Multivector1<T>::operator INNER(const Multivector1<U>&b)  const noexcept
     {
         return x * b.x;
     }
 
     template <typename T>
         template <typename U>
-    constexpr product_t<T,U>   Multivector1<T>::operator INNER(const Vector1<U>&b) const noexcept
+    constexpr trait::product_t<T,U>   Multivector1<T>::operator INNER(const Vector1<U>&b) const noexcept
     {
         return x * b.x;
     }
@@ -243,9 +243,9 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Multivector1<product_t<T,U>> operator*(T a, const Multivector1<U>&b) noexcept
+    constexpr Multivector1<trait::product_t<T,U>> operator*(T a, const Multivector1<U>&b) noexcept
     {
-        return Multivector1<product_t<T,U>>( a*b.a, a*b.x );
+        return Multivector1<trait::product_t<T,U>>( a*b.a, a*b.x );
     }
 
     template <typename T>

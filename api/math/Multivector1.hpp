@@ -20,7 +20,7 @@ namespace yq {
         using component_type    = T;
     
         //! Scalar
-        unity_t<T>  a;
+        trait::unity_t<T>  a;
         
         //! X
         T           x;
@@ -55,35 +55,35 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector1<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Multivector1<trait::product_t<T,U>> operator*(U b) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
         Multivector1& operator*=(U b) noexcept;
 
         template <typename U>
-        constexpr Multivector1<product_t<T,U>> operator*(const Multivector1<U>& b) const noexcept;
+        constexpr Multivector1<trait::product_t<T,U>> operator*(const Multivector1<U>& b) const noexcept;
 
         template <typename U>
         requires trait::self_mul_v<T,U>
         Multivector1<T>& operator*=(const Multivector1<U>& b) noexcept;
         
         template <typename U>
-        constexpr Multivector1<product_t<T,U>> operator*(const Vector1<U>& b) const noexcept;
+        constexpr Multivector1<trait::product_t<T,U>> operator*(const Vector1<U>& b) const noexcept;
         
         template <typename U>
         requires trait::self_mul_v<T,U>
         Multivector1<T>& operator*=(const Vector1<U>& b) noexcept;
 
         template <typename U>
-        constexpr product_t<T,U>   operator INNER(const Multivector1<U>&b)  const noexcept;
+        constexpr trait::product_t<T,U>   operator INNER(const Multivector1<U>&b)  const noexcept;
 
         template <typename U>
-        constexpr product_t<T,U>   operator INNER(const Vector1<U>&b) const noexcept;
+        constexpr trait::product_t<T,U>   operator INNER(const Vector1<U>&b) const noexcept;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Multivector1<quotient_t<T,U>> operator/(U b) const noexcept;
+        constexpr Multivector1<trait::quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -97,8 +97,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
-    YQ_NAN_1(Multivector1, Multivector1<T>{nan_v<unity_t<T>>, nan_v<T>})
-    YQ_ZERO_1(Multivector1, Multivector1<T>{zero_v<unity_t<T>>, zero_v<T>})
+    YQ_NAN_1(Multivector1, Multivector1<T>(NAN))
+    YQ_ZERO_1(Multivector1, Multivector1<T>(ZERO))
     
 //  --------------------------------------------------------
 //  GETTERS
@@ -125,7 +125,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Multivector1<product_t<T,U>> operator*(T a, const Multivector1<U>&b) noexcept;
+    constexpr Multivector1<trait::product_t<T,U>> operator*(T a, const Multivector1<U>&b) noexcept;
 
 
 }

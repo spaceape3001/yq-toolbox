@@ -27,6 +27,14 @@ namespace yq {
         //! Z-size
         T   z;
         
+        constexpr Size3() noexcept = default;
+        constexpr Size3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
+        constexpr Size3(all_t, T v) noexcept : x(v), y(v), z(v) {}
+        
+        template <typename=void> requires trait::has_nan_v<T>
+        consteval Size3(nan_t) : Size3(ALL, nan_v<T>) {}
+        consteval Size3(zero_t) : Size3(ALL, zero_v<T>) {}
+
         //! Defaulted comparison operator
         constexpr bool    operator==(const Size3&) const noexcept = default;
         
@@ -52,7 +60,7 @@ namespace yq {
         constexpr T   height() const { return y; }
 
         //! Volume of this size
-        constexpr cube_t<T> volume() const noexcept
+        constexpr trait::cube_t<T> volume() const noexcept
         {
             return x*y*z;
         }
@@ -64,10 +72,11 @@ namespace yq {
         constexpr Size2<T>  xy() const noexcept { return { x, y }; }
     };
 
-    YQ_NAN_1(Size3, Size3<T>{ nan_v<T>, nan_v<T>, nan_v<T>  })
+    YQ_NAN_1(Size3, Size3<T>(NAN))
+    YQ_ZERO_1(Size3, Size3<T>(ZERO))
+    
     YQ_IS_NAN_1(Size3, is_nan(v.x) || is_nan(v.y) || is_nan(v.z))
     YQ_IS_FINITE_1(Size3, is_finite(v.x) && is_finite(v.y) && is_finite(v.z) )
-    YQ_ZERO_1(Size3, Size3<T>{ zero_v<T>, zero_v<T>, zero_v<T> })
     
     //! Computes volume of the size
     template <typename T>

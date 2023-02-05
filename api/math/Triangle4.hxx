@@ -78,9 +78,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Triangle4<product_t<T,U>> Triangle4<T>::operator*(U rhs) const noexcept
+    constexpr Triangle4<trait::product_t<T,U>> Triangle4<T>::operator*(U rhs) const noexcept
     {
-        return Triangle4<product_t<T,U>>( a*rhs, b*rhs, c*rhs );
+        return Triangle4<trait::product_t<T,U>>( a*rhs, b*rhs, c*rhs );
     }
     
     
@@ -97,23 +97,23 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    Triangle2<product_t<T,U>>   Triangle4<T>::operator*(const Tensor42<U>&rhs) const noexcept
+    Triangle2<trait::product_t<T,U>>   Triangle4<T>::operator*(const Tensor42<U>&rhs) const noexcept
     {
-        return Triangle2<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
+        return Triangle2<trait::product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
 
     template <typename T>
         template <typename U>
-    Triangle3<product_t<T,U>>   Triangle4<T>::operator*(const Tensor43<U>&rhs) const noexcept
+    Triangle3<trait::product_t<T,U>>   Triangle4<T>::operator*(const Tensor43<U>&rhs) const noexcept
     {
-        return Triangle3<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
+        return Triangle3<trait::product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
 
     template <typename T>
         template <typename U>
-    Triangle4<product_t<T,U>>   Triangle4<T>::operator*(const Tensor44<U>&rhs) const noexcept
+    Triangle4<trait::product_t<T,U>>   Triangle4<T>::operator*(const Tensor44<U>&rhs) const noexcept
     {
-        return Triangle4<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
+        return Triangle4<trait::product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
 
     template <typename T>
@@ -130,9 +130,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Triangle4<quotient_t<T,U>> Triangle4<T>::operator/(U rhs) const noexcept
+    constexpr Triangle4<trait::quotient_t<T,U>> Triangle4<T>::operator/(U rhs) const noexcept
     {
-        return Triangle4<quotient_t<T,U>>(a/rhs, b/rhs, c/rhs);
+        return Triangle4<trait::quotient_t<T,U>>(a/rhs, b/rhs, c/rhs);
     }
 
     template <typename T>
@@ -166,7 +166,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr square_t<T>   Triangle4<T>::edge_a_length²() const noexcept
+    constexpr trait::square_t<T>   Triangle4<T>::edge_a_length²() const noexcept
     {
         return (c-b).length²();
     }
@@ -184,7 +184,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr square_t<T>   Triangle4<T>::edge_b_length²() const noexcept
+    constexpr trait::square_t<T>   Triangle4<T>::edge_b_length²() const noexcept
     {
         return (a-c).length²();
     }
@@ -202,7 +202,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr square_t<T>   Triangle4<T>::edge_c_length²() const noexcept
+    constexpr trait::square_t<T>   Triangle4<T>::edge_c_length²() const noexcept
     {
         return (b-a).length²();
     }
@@ -219,9 +219,9 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Triangle4<product_t<T,U>> operator*(T lhs, const Triangle4<U>& rhs) noexcept
+    constexpr Triangle4<trait::product_t<T,U>> operator*(T lhs, const Triangle4<U>& rhs) noexcept
     {
-        return Triangle4<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b, lhs*rhs.c);
+        return Triangle4<trait::product_t<T,U>>(lhs*rhs.a, lhs*rhs.b, lhs*rhs.c);
     }
 
     template <typename T>

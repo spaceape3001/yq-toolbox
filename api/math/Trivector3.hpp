@@ -53,7 +53,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Trivector3<product_t<T,U>> operator*(U b) const noexcept;
+        constexpr Trivector3<trait::product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -61,7 +61,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        constexpr Trivector3<quotient_t<T,U>> operator/(const U b) const noexcept;
+        constexpr Trivector3<trait::quotient_t<T,U>> operator/(const U b) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -87,8 +87,8 @@ namespace yq {
         return Trivector3D(XYZ, (double) v);
     }
 
-    YQ_NAN_1(Trivector3, Trivector3<T>{nan_v<cube_t<T>>})
-    YQ_ZERO_1(Trivector3, Trivector3<T>{zero_v<cube_t<T>>})
+    YQ_NAN_1(Trivector3, Trivector3<T>{nan_v<trait::cube_t<T>>})
+    YQ_ZERO_1(Trivector3, Trivector3<T>{zero_v<trait::cube_t<T>>})
     
 //  --------------------------------------------------------
 //  GETTERS

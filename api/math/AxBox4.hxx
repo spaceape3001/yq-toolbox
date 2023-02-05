@@ -161,12 +161,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    AxBox4<product_t<T,U>> AxBox4<T>::operator*(U b) const noexcept
+    AxBox4<trait::product_t<T,U>> AxBox4<T>::operator*(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox4<product_t<T,U>>(lo*b,hi*b);
+            return AxBox4<trait::product_t<T,U>>(lo*b,hi*b);
         else
-            return AxBox4<product_t<T,U>>(hi*b,lo*b);
+            return AxBox4<trait::product_t<T,U>>(hi*b,lo*b);
     }
 
     template <typename T>
@@ -181,12 +181,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    AxBox4<quotient_t<T,U>> AxBox4<T>::operator/(U b) const noexcept
+    AxBox4<trait::quotient_t<T,U>> AxBox4<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox4<quotient_t<T,U>>(lo/b,hi/b);
+            return AxBox4<trait::quotient_t<T,U>>(lo/b,hi/b);
         else
-            return AxBox4<quotient_t<T,U>>(hi/b,lo/b);
+            return AxBox4<trait::quotient_t<T,U>>(hi/b,lo/b);
     }
 
     template <typename T>
@@ -293,7 +293,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr fourth_t<T> AxBox4<T>::hypervolume() const noexcept
+    constexpr trait::fourth_t<T> AxBox4<T>::hypervolume() const noexcept
     {
         return (hi-lo).cproduct();
     }
@@ -373,12 +373,12 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr AxBox4<product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept
+    constexpr AxBox4<trait::product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return AxBox4<product_t<T,U>>(a*b.lo, a*b.hi);
+            return AxBox4<trait::product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return AxBox4<product_t<T,U>>(a*b.hi, a*b.lo);
+            return AxBox4<trait::product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
     template <typename T>
@@ -423,7 +423,7 @@ namespace yq {
     /*! \brief Computes the hyper volume of the box
     */
     template <typename T>
-    constexpr fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept
+    constexpr trait::fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept
     {
         return box.hypervolume();
     }

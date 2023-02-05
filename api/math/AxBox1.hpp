@@ -61,7 +61,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox1<product_t<T,U>> operator*(U) const noexcept;
+        AxBox1<trait::product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -69,7 +69,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox1<quotient_t<T,U>> operator/(U) const noexcept;
+        AxBox1<trait::quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)

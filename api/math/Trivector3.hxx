@@ -150,9 +150,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Trivector3<product_t<T,U>> Trivector3<T>::operator*(U b) const noexcept
+    constexpr Trivector3<trait::product_t<T,U>> Trivector3<T>::operator*(U b) const noexcept
     {
-        return Trivector3<product_t<T,U>>( xyz*b );
+        return Trivector3<trait::product_t<T,U>>( xyz*b );
     }
 
     template <typename T>
@@ -167,9 +167,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Trivector3<quotient_t<T,U>> Trivector3<T>::operator/(const U b) const noexcept
+    constexpr Trivector3<trait::quotient_t<T,U>> Trivector3<T>::operator/(const U b) const noexcept
     {
-        return Trivector3<quotient_t<T,U>>( xyz/b );
+        return Trivector3<trait::quotient_t<T,U>>( xyz/b );
     }
 
     template <typename T>
@@ -210,9 +210,9 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Trivector3<product_t<T,U>> operator*(T a, const Trivector3<U>& b) noexcept
+    constexpr Trivector3<trait::product_t<T,U>> operator*(T a, const Trivector3<U>& b) noexcept
     {
-        return Trivector3<product_t<T,U>>( a*b.xyz );
+        return Trivector3<trait::product_t<T,U>>( a*b.xyz );
     }
 
 

@@ -43,7 +43,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        Circle2<product_t<T,U>> operator*(U) const noexcept;
+        Circle2<trait::product_t<T,U>> operator*(U) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -51,7 +51,7 @@ namespace yq {
             
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        Circle2<quotient_t<T,U>> operator/(U) const noexcept;
+        Circle2<trait::quotient_t<T,U>> operator/(U) const noexcept;
         
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -59,7 +59,7 @@ namespace yq {
 
         /*! \brief Computes the area of this circle
         */
-        constexpr square_t<T> area() const noexcept;
+        constexpr trait::square_t<T> area() const noexcept;
 
         //! Returns the bounding box for this circle
         constexpr AxBox2<T>   bounds() const noexcept;
@@ -100,7 +100,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    Circle2<product_t<T,U>> operator*(T, const Circle2<U>&);
+    Circle2<trait::product_t<T,U>> operator*(T, const Circle2<U>&);
 
     
     /*! \brief Bounding box for a circle
@@ -119,7 +119,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D circle
     */
     template <typename T>
-    constexpr square_t<T> area(const Circle2<T>& cir) noexcept;
+    constexpr trait::square_t<T> area(const Circle2<T>& cir) noexcept;
     
     
     /*! \brief Computes the circumference of a circle

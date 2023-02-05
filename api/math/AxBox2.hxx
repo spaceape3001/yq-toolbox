@@ -152,12 +152,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    AxBox2<product_t<T,U>> AxBox2<T>::operator*(U b) const noexcept
+    AxBox2<trait::product_t<T,U>> AxBox2<T>::operator*(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox2<product_t<T,U>>(lo*b,hi*b);
+            return AxBox2<trait::product_t<T,U>>(lo*b,hi*b);
         else
-            return AxBox2<product_t<T,U>>(hi*b,lo*b);
+            return AxBox2<trait::product_t<T,U>>(hi*b,lo*b);
     }
 
     template <typename T>
@@ -172,12 +172,12 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    AxBox2<quotient_t<T,U>> AxBox2<T>::operator/(U b) const noexcept
+    AxBox2<trait::quotient_t<T,U>> AxBox2<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox2<quotient_t<T,U>>(lo/b,hi/b);
+            return AxBox2<trait::quotient_t<T,U>>(lo/b,hi/b);
         else
-            return AxBox2<quotient_t<T,U>>(hi/b,lo/b);
+            return AxBox2<trait::quotient_t<T,U>>(hi/b,lo/b);
     }
 
     template <typename T>
@@ -230,7 +230,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr square_t<T> AxBox2<T>::area() const noexcept
+    constexpr trait::square_t<T> AxBox2<T>::area() const noexcept
     {
         return span().cproduct();
     }
@@ -393,12 +393,12 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr AxBox2<product_t<T,U>> operator*(T a, const AxBox2<U>& b) noexcept
+    constexpr AxBox2<trait::product_t<T,U>> operator*(T a, const AxBox2<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return AxBox2<product_t<T,U>>(a*b.lo, a*b.hi);
+            return AxBox2<trait::product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return AxBox2<product_t<T,U>>(a*b.hi, a*b.lo);
+            return AxBox2<trait::product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
     /*! \brief Creates a 2D axially aligned box from one vector
@@ -439,7 +439,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D axially aligned bounding box
     */
     template <typename T>
-    constexpr square_t<T>   area(const AxBox2<T>& ax) noexcept
+    constexpr trait::square_t<T>   area(const AxBox2<T>& ax) noexcept
     {
         return ax.area();
     }

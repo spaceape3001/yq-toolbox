@@ -76,7 +76,7 @@ namespace yq {
         no sign correction, no scaling.
     */
     template <typename T>
-    square_t<T>    point_area(const Quadrilateral2<T>& quad)
+    trait::square_t<T>    point_area(const Quadrilateral2<T>& quad)
     {
         return delta_area(quad.b, quad.a) + delta_area(quad.c, quad.b) + delta_area(quad.d, quad.c) + delta_area(quad.a, quad.d);
     }
@@ -87,7 +87,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D quatrilateral
     */
     template <typename T>
-    square_t<T>    area(const Quadrilateral2<T>& quad)
+    trait::square_t<T>    area(const Quadrilateral2<T>& quad)
     {
         return 0.5*abs(point_area(quad));
     }
@@ -99,7 +99,7 @@ namespace yq {
     }
 
     template <typename T>
-    requires trait::has_sqrt_v<square_t<T>>
+    requires trait::has_sqrt_v<trait::square_t<T>>
     T       perimeter(const Quadrilateral2<T>& quad)
     {
         return length(quad.b-quad.a)+length(quad.c-quad.b)+length(quad.d-quad.c)+length(quad.a-quad.d);

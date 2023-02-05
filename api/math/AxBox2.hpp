@@ -60,7 +60,7 @@ namespace yq {
 
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox2<product_t<T,U>> operator*(U) const noexcept;
+        AxBox2<trait::product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
@@ -68,7 +68,7 @@ namespace yq {
         
         template <typename U>
         requires trait::is_arithmetic_v<U>
-        AxBox2<quotient_t<T,U>> operator/(U) const noexcept;
+        AxBox2<trait::quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
         requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
@@ -95,7 +95,7 @@ namespace yq {
 
         /*! \brief Computes the area
         */
-        constexpr square_t<T>               area() const noexcept;
+        constexpr trait::square_t<T>               area() const noexcept;
 
         /*! \brief Computes the center
         */
@@ -235,7 +235,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D axially aligned bounding box
     */
     template <typename T>
-    constexpr square_t<T>   area(const AxBox2<T>& ax) noexcept;
+    constexpr trait::square_t<T>   area(const AxBox2<T>& ax) noexcept;
 
     /*! \brief Computes the center of a 2D axially aligned box
     */

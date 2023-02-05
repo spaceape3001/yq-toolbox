@@ -103,9 +103,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Tensor31<product_t<T,U>>  Tensor31<T>::operator*(U b) const noexcept
+    constexpr Tensor31<trait::product_t<T,U>>  Tensor31<T>::operator*(U b) const noexcept
     {
-        return Tensor31<product_t<T,U>>(
+        return Tensor31<trait::product_t<T,U>>(
             xx*b,
             yx*b,
             zx*b
@@ -125,16 +125,16 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Segment3<product_t<T,U>>  Tensor31<T>::operator*(const Segment1<U>&rhs) const noexcept
+    constexpr Segment3<trait::product_t<T,U>>  Tensor31<T>::operator*(const Segment1<U>&rhs) const noexcept
     {
-        return Segment3<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
+        return Segment3<trait::product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
 
     template <typename T>
         template <typename U>
-    constexpr Tensor31<product_t<T,U>> Tensor31<T>::operator*(const Tensor11<U>& b) const noexcept
+    constexpr Tensor31<trait::product_t<T,U>> Tensor31<T>::operator*(const Tensor11<U>& b) const noexcept
     {
-        return Tensor31<product_t<T,U>>(
+        return Tensor31<trait::product_t<T,U>>(
             xx*b.xx,
 
             yx*b.xx,
@@ -154,9 +154,9 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Tensor32<product_t<T,U>> Tensor31<T>::operator*(const Tensor12<U>& b) const noexcept
+    constexpr Tensor32<trait::product_t<T,U>> Tensor31<T>::operator*(const Tensor12<U>& b) const noexcept
     {
-        return Tensor32<product_t<T,U>>(
+        return Tensor32<trait::product_t<T,U>>(
             xx*b.xx,
             xx*b.xy,
 
@@ -170,9 +170,9 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    constexpr Tensor33<product_t<T,U>> Tensor31<T>::operator*(const Tensor13<U>& b) const noexcept
+    constexpr Tensor33<trait::product_t<T,U>> Tensor31<T>::operator*(const Tensor13<U>& b) const noexcept
     {
-        return Tensor33<product_t<T,U>>(
+        return Tensor33<trait::product_t<T,U>>(
             xx*b.xx,
             xx*b.xy,
             xx*b.xz,
@@ -189,9 +189,9 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    constexpr Tensor34<product_t<T,U>> Tensor31<T>::operator*(const Tensor14<U>& b) const noexcept
+    constexpr Tensor34<trait::product_t<T,U>> Tensor31<T>::operator*(const Tensor14<U>& b) const noexcept
     {
-        return Tensor34<product_t<T,U>>(
+        return Tensor34<trait::product_t<T,U>>(
             xx*b.xx,
             xx*b.xy,
             xx*b.xz,
@@ -211,9 +211,9 @@ namespace yq {
             
     template <typename T>
         template <typename U>
-    constexpr Vector3<product_t<T,U>> Tensor31<T>::operator*(const Vector1<U>&b) const noexcept
+    constexpr Vector3<trait::product_t<T,U>> Tensor31<T>::operator*(const Vector1<U>&b) const noexcept
     {
-        return Vector3<product_t<T,U>>(
+        return Vector3<trait::product_t<T,U>>(
             xx*b.x,
             yx*b.x,
             zx*b.x
@@ -224,9 +224,9 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>
-    constexpr Tensor31<quotient_t<T,U>>  Tensor31<T>::operator/(U b) const noexcept
+    constexpr Tensor31<trait::quotient_t<T,U>>  Tensor31<T>::operator/(U b) const noexcept
     {
-        return Tensor31<quotient_t<T,U>>(
+        return Tensor31<trait::quotient_t<T,U>>(
             xx/b,
             yx/b,
             zx/b
@@ -342,9 +342,9 @@ namespace yq {
 
     template <typename T, typename U>
     requires trait::is_arithmetic_v<T>
-    constexpr Tensor31<product_t<T,U>>  operator*(T a, const Tensor31<U>& b)
+    constexpr Tensor31<trait::product_t<T,U>>  operator*(T a, const Tensor31<U>& b)
     {
-        return Tensor31<product_t<T,U>>(
+        return Tensor31<trait::product_t<T,U>>(
             a*b.xx,
             a*b.yx,
             a*b.zx
