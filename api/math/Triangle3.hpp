@@ -7,8 +7,6 @@
 #pragma once
 
 #include <math/preamble.hpp>
-#include <math/AxBox3.hpp>
-#include <math/Triangle2.hpp>
 #include <math/Vector3.hpp>
 
 namespace yq {
@@ -21,31 +19,83 @@ namespace yq {
     
         Vector3<T>   a, b, c;
         
+        constexpr Triangle3() noexcept = default;
+        constexpr Triangle3(const Vector3<T>& _a, const Vector3<T>& _b, const Vector3<T>& _c) noexcept : a(_a), b(_b), c(_c) {}
+        constexpr Triangle3(const Segment3<T>&, const Vector3<T>& c) noexcept;
+        constexpr Triangle3(all_t, const Vector3<T>& v) noexcept : a(v), b(v), c(v) {}
+        consteval Triangle3(nan_t) noexcept : Triangle3(ALL, Vector3<T>(NAN)) {}
+        consteval Triangle3(zero_t) noexcept : Triangle3(ALL, Vector3<T>(ZERO)) {}
+
         //! Defaulted equality operator
         constexpr bool operator==(const Triangle3&) const noexcept = default;
         
         //! Implicit conversion to triangle data
-        constexpr operator TriangleData<Vector3<T>> () const noexcept 
-        { 
-            return { a, b, c }; 
-        }
+        constexpr operator TriangleData<Vector3<T>> () const noexcept;
 
+        constexpr Triangle3 operator+() const noexcept;
+        constexpr Triangle3 operator-() const noexcept;
+        
+        constexpr Triangle3 operator+(const Vector3<T>&) const noexcept;
+        Triangle3& operator+=(const Vector3<T>&) noexcept;
+        constexpr Triangle3 operator-(const Vector3<T>&) const noexcept;
+        Triangle3& operator-=(const Vector3<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Triangle3<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Triangle3& operator*=(U) noexcept;
+
+        template <typename U>
+        Triangle2<product_t<T,U>>   operator*(const Tensor32<U>&) const noexcept;
+
+        template <typename U>
+        Triangle3<product_t<T,U>>   operator*(const Tensor33<U>&) const noexcept;
+
+        template <typename U>
+        Triangle4<product_t<T,U>>   operator*(const Tensor34<U>&) const noexcept;
+
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Triangle3&   operator*=(const Tensor33<U>&) noexcept;
+
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        constexpr Triangle3<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Triangle3& operator/=(U) noexcept;
+        
         /*! \brief Returns the bounding box for this triangle
         */
-        constexpr AxBox3<T>   bounds() const noexcept
-        {
-            return {
-                min_elem(min_elem(a, b), c), 
-                max_elem(max_elem(a, b), c)
-            };
-        }
+        constexpr AxBox3<T>   bounds() const noexcept;
+
+        //! Edge opposite the "A" vertex
+        constexpr Segment3<T>   edge_a() const noexcept;
+        constexpr T             edge_a_length() const noexcept;
+        constexpr square_t<T>   edge_a_length²() const noexcept;
+
+        //! Edge opposite the "B" vertex
+        constexpr Segment3<T>   edge_b() const noexcept;
+        constexpr T             edge_b_length() const noexcept;
+        constexpr square_t<T>   edge_b_length²() const noexcept;
+
+        //! Edge opposite the "C" vertex
+        constexpr Segment3<T>   edge_c() const noexcept;
+        constexpr T             edge_c_length() const noexcept;
+        constexpr square_t<T>   edge_c_length²() const noexcept;
+
 
         //! Perimeter of this triangel
         //! \note Might not be reliable for non-floating point types
-        T       perimeter() const
-        {
-            return (b-a).length() + (c-b).length() + (a-c).length();
-        }
+        T       perimeter() const;
+
+        constexpr Triangle2<T>    xy() const noexcept;
+        constexpr Triangle2<T>    yz() const noexcept;
+        constexpr Triangle2<T>    zx() const noexcept;
     };
     
     YQ_IEEE754_1(Triangle3)
@@ -57,50 +107,40 @@ namespace yq {
     template <typename T>
     Triangle3<T>    triangle(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c)
     {
-        return { a, b, c };
+        return Triangle3<T>( a, b, c );
     }
 
-    YQ_NAN_1(Triangle3, { nan_v<Vector3<T>>, nan_v<Vector3<T>>, nan_v<Vector3<T>> })
-    YQ_ZERO_1(Triangle3, { zero_v<Vector3<T>>, zero_v<Vector3<T>>, zero_v<Vector3<T>> })
+    YQ_NAN_1(Triangle3, Triangle3<T>(NAN))
+    YQ_ZERO_1(Triangle3, Triangle3<T>(ZERO))
 
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
+//  --------------------------------------------------------
 
     YQ_IS_FINITE_1(Triangle3, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle3, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    constexpr Triangle3<product_t<T,U>> operator*(T lhs, const Triangle3<U>& rhs) noexcept;
     
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
-    constexpr AxBox3<T>   aabb(const Triangle3<T>& tri) noexcept
-    {
-        return tri.bounds();
-    }
+    constexpr AxBox3<T>   aabb(const Triangle3<T>& tri) noexcept;
 
+    #if 0
     /*! \brief Reduces 3D triangle into 2D along xy plane */
     template <typename T>
-    Triangle2<T>   xy(const Triangle3<T>& a)
-    {
-        return { xy(a.a), xy(a.b), xy(a.c) };
-    }
+    Triangle2<T>   xy(const Triangle3<T>& a);
     
     /*! \brief Promotes 2D triangle to 3D triangle */
     template <typename T>
-    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z)
-    {
-        return { xy(a.a, z), xy(a.b, z), xy(a.c, z) };
-    }
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
+    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z);
+    #endif
 
     /*! \brief Computes the perimeter of the triangle
     */
     template <typename T>
-    T       perimeter(const Triangle3<T>& tri)
-    {
-        return tri.perimeter();
-    }
+    T       perimeter(const Triangle3<T>& tri);
 
 }
 

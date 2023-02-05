@@ -308,6 +308,13 @@ namespace yq {
             zx*b.xw + zy*b.yw + zz*b.zw
         );
     }
+
+    template <typename T>
+        template <typename U>
+    Triangle3<product_t<T,U>> Tensor33<T>::operator*(const Triangle3<U>&rhs) const noexcept
+    {
+        return Triangle3<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
+    }
         
     template <typename T>
         template <typename U>

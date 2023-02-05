@@ -45,6 +45,7 @@ namespace yq {
 
         explicit constexpr AxBox2(const Circle2<T>&) noexcept;
         explicit constexpr AxBox2(const Segment2<T>&) noexcept;
+        explicit constexpr AxBox2(const Triangle2<T>&) noexcept;
 
         //! Equality operator (defaulted)
         constexpr bool operator==(const AxBox2&) const noexcept = default;

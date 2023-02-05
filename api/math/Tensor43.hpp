@@ -129,6 +129,9 @@ namespace yq {
         Tensor43& operator*=(const Tensor33<U>& b) noexcept;
 
         template <typename U>
+        Triangle4<product_t<T,U>> operator*(const Triangle3<U>&) const noexcept;
+
+        template <typename U>
         constexpr Vector4<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
 
         template <typename U>

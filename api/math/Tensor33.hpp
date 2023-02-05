@@ -170,6 +170,9 @@ namespace yq {
         Tensor33& operator*=(const Tensor33<U>& b) noexcept;
 
         template <typename U>
+        Triangle3<product_t<T,U>> operator*(const Triangle3<U>&) const noexcept;
+        
+        template <typename U>
         constexpr Vector3<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
 
         template <typename U>

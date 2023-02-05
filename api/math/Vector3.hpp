@@ -109,6 +109,8 @@ namespace yq {
 
         constexpr Segment3<T> operator+(const Segment3<T>&) const noexcept;
 
+        constexpr Triangle3<T> operator+(const Triangle3<T>&) const noexcept;
+
         //! Addition with trivector
         constexpr Multivector3<T> operator+(const Trivector3<T>& b) const noexcept;
 
@@ -130,6 +132,8 @@ namespace yq {
         constexpr Multivector3<T> operator-(const Multivector3<T>& b) const noexcept;
 
         constexpr Segment3<T> operator-(const Segment3<T>&) const noexcept;
+
+        constexpr Triangle3<T> operator-(const Triangle3<T>&) const noexcept;
 
         //! Subtraction with trivector
         constexpr Multivector3<T> operator-(const Trivector3<T>& b) const noexcept;
@@ -265,6 +269,10 @@ namespace yq {
             This returns the length of this vector.
         */
         T       length() const;
+        
+        Vector2<T>  xy() const;
+        Vector2<T>  yz() const;
+        Vector2<T>  zx() const;
 
             //  ===================================================================================================
             //  AllComponents Adapters

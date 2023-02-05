@@ -18,6 +18,7 @@
 #include <math/Range.hpp>
 #include <math/Segment2.hpp>
 #include <math/Size2.hpp>
+#include <math/Triangle2.hpp>
 
 
 namespace yq {
@@ -104,6 +105,9 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Segment2<T>&seg) noexcept : AxBox2<T>(seg.bounds()) {}
+
+    template <typename T>
+    constexpr AxBox2<T>::AxBox2(const Triangle2<T>&tri) noexcept : AxBox2<T>(tri.bounds()) {}
 
     template <typename T>
     AxBox2<T>  AxBox2<T>::operator+() const noexcept

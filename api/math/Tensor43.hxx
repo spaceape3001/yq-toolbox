@@ -235,6 +235,13 @@ namespace yq {
     
     template <typename T>
         template <typename U>
+    Triangle4<product_t<T,U>> Tensor43<T>::operator*(const Triangle3<U>&rhs) const noexcept
+    {
+        return Triangle4<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
+    }
+
+    template <typename T>
+        template <typename U>
     constexpr Vector4<product_t<T,U>> Tensor43<T>::operator*(const Vector3<U>&b) const noexcept
     {
         return Vector4<product_t<T,U>>(

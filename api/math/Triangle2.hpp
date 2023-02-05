@@ -22,6 +22,7 @@ namespace yq {
         
         constexpr Triangle2() noexcept = default;
         constexpr Triangle2(const Vector2<T>& _a, const Vector2<T>& _b, const Vector2<T>& _c) noexcept : a(_a), b(_b), c(_c) {}
+        constexpr Triangle2(const Segment2<T>&, const Vector2<T>& c) noexcept;
         constexpr Triangle2(all_t, const Vector2<T>& v) noexcept : a(v), b(v), c(v) {}
         consteval Triangle2(nan_t) noexcept : Triangle2(ALL, Vector2<T>(NAN)) {}
         consteval Triangle2(zero_t) noexcept : Triangle2(ALL, Vector2<T>(ZERO)) {}

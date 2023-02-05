@@ -11,6 +11,8 @@
 #include <math/Tensor23.hpp>
 #include <math/Tensor24.hpp>
 #include <math/Triangle2.hpp>
+#include <math/Triangle3.hpp>
+#include <math/Triangle4.hpp>
 #include <math/TriangleData.hpp>
 
 /* 
@@ -21,9 +23,12 @@
 
 namespace yq {
     template <typename T>
+    constexpr Triangle2<T>::Triangle2(const Segment2<T>&seg, const Vector2<T>& c) noexcept : Triangle2(seg.a, seg.b, c) {}
+
+    template <typename T>
     constexpr Triangle2<T>::operator TriangleData<Vector2<T>> () const noexcept 
     { 
-        return { a, b, c }; 
+        return TriangleData<Vector2<T>>( a, b, c ); 
     }
 
     template <typename T>

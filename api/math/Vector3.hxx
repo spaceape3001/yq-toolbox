@@ -103,6 +103,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Triangle3<T> Vector3<T>::operator+(const Triangle3<T>&rhs) const noexcept
+    {
+        return Triangle3<T>(*this+rhs.a, *this+rhs.b, *this+rhs.c);
+    }
+
+    template <typename T>
     constexpr Multivector3<T> Vector3<T>::operator+(const Trivector3<T>& b) const noexcept
     {
         return Multivector3<T>( 
@@ -171,6 +177,12 @@ namespace yq {
     constexpr Segment3<T> Vector3<T>::operator-(const Segment3<T>&rhs) const noexcept
     {
         return Segment3<T>( *this - rhs.a, *this - rhs.b );
+    }
+
+    template <typename T>
+    constexpr Triangle3<T> Vector3<T>::operator-(const Triangle3<T>&rhs) const noexcept
+    {
+        return Triangle3<T>(*this-rhs.a, *this-rhs.b, *this-rhs.c);
     }
 
     template <typename T>
@@ -477,6 +489,25 @@ namespace yq {
             return sqrt(length²());
         return zero_v<T>;
     }
+
+    template <typename T>
+    Vector2<T>  Vector3<T>::xy() const
+    {
+        return Vector2<T>(x,y);
+    }
+
+    template <typename T>
+    Vector2<T>  Vector3<T>::yz() const
+    {
+        return Vector2<T>(y,z);
+    }
+
+    template <typename T>
+    Vector2<T>  Vector3<T>::zx() const
+    {
+        return Vector2<T>(z,x);
+    }
+
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
