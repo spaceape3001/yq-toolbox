@@ -15,8 +15,10 @@
 #include <math/AxBox2.hpp>
 #include <math/AxCorners2.hpp>
 #include <math/Circle2.hpp>
+#include <math/Data2.hpp>
 #include <math/Range.hpp>
 #include <math/Segment2.hpp>
+#include <math/Side.hpp>
 #include <math/Size2.hpp>
 #include <math/Triangle2.hpp>
 
@@ -249,6 +251,36 @@ namespace yq {
     Circle2<T>          AxBox2<T>::circumcircle() const
     {
         return Circle2<T>( center(), half_v<T>*span().length() );
+    }
+    
+    template <typename T>
+    constexpr Data2<Side>       AxBox2<T>::classify(const Vector2<T>&v) const noexcept
+    {
+        return Data2<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
+    }
+
+    template <typename T>
+    constexpr Side              AxBox2<T>::classify_x(T v) const noexcept
+    {
+        return _classify(v, lo.x, hi.x);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox2<T>::classify_x(const Vector2<T>&v) const noexcept
+    {
+        return classify_x(v.x);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox2<T>::classify_y(T v) const noexcept
+    {
+        return _classify(v, lo.y, hi.y);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox2<T>::classify_y(const Vector2<T>&v) const noexcept
+    {
+        return classify_y(v.y);
     }
 
     template <typename T>

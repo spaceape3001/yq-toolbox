@@ -100,6 +100,11 @@ namespace yq {
         */
         constexpr Vector1<T> center() const noexcept;
 
+        constexpr Data1<Side>       classify(const Vector1<T>&) const noexcept;
+
+        constexpr Side              classify_x(T) const noexcept;
+        constexpr Side              classify_x(const Vector1<T>&) const noexcept;
+
         /*! \brief Checks if the point is inside (or touching) the box
         */
         constexpr bool contains(const Vector1<T>& pt) const noexcept;

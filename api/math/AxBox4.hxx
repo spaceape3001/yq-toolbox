@@ -14,7 +14,9 @@
 
 #include <math/AxBox4.hpp>
 #include <math/AxCorners4.hpp>
+#include <math/Data4.hpp>
 #include <math/Range.hpp>
+#include <math/Side.hpp>
 #include <math/Size4.hpp>
 #include <math/Segment4.hpp>
 
@@ -247,6 +249,61 @@ namespace yq {
             return (lo+hi) / T(2);
         return {};
     }
+
+    template <typename T>
+    constexpr Data4<Side>       AxBox4<T>::classify(const Vector4<T>&v) const noexcept
+    {
+        return Data4<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
+    }
+    
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_w(T v) const noexcept
+    {
+        return _classify(v, lo.w, hi.w);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_w(const Vector4<T>&v) const noexcept
+    {
+        return classify_w(v.w);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_x(T v) const noexcept
+    {
+        return _classify(v, lo.x, hi.x);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_x(const Vector4<T>&v) const noexcept
+    {
+        return classify_x(v.x);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_y(T v) const noexcept
+    {
+        return _classify(v, lo.y, hi.y);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_y(const Vector4<T>&v) const noexcept
+    {
+        return classify_y(v.y);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_z(T v) const noexcept
+    {
+        return _classify(v, lo.z, hi.z);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox4<T>::classify_z(const Vector4<T>&v) const noexcept
+    {
+        return classify_z(v.z);
+    }
+
 
     template <typename T>
     constexpr bool AxBox4<T>::contains (const Vector4<T>& pt) const noexcept

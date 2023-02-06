@@ -14,8 +14,10 @@
 
 #include <math/AxBox1.hpp>
 #include <math/AxCorners1.hpp>
+#include <math/Data1.hpp>
 #include <math/Range.hpp>
 #include <math/Segment1.hpp>
+#include <math/Side.hpp>
 #include <math/Size1.hpp>
 
 
@@ -218,6 +220,24 @@ namespace yq {
         if constexpr (std::is_integral_v<T>)
             return (lo+hi) / T(2);
         return {};
+    }
+
+    template <typename T>
+    constexpr Data1<Side>       AxBox1<T>::classify(const Vector1<T>&v) const noexcept
+    {
+        return Data1<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
+    }
+
+    template <typename T>
+    constexpr Side              AxBox1<T>::classify_x(T v) const noexcept
+    {
+        return _classify(v, lo.x, hi.x);
+    }
+
+    template <typename T>
+    constexpr Side              AxBox1<T>::classify_x(const Vector1<T>&v) const noexcept
+    {
+        return classify_x(v.x);
     }
 
     template <typename T>

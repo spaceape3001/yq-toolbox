@@ -97,6 +97,21 @@ namespace yq {
         /*! \brief Computes the center of a 4D axially aligned box
         */
         constexpr Vector4<T>      center() const noexcept;
+        
+        constexpr Data4<Side>       classify(const Vector4<T>&) const noexcept;
+
+        constexpr Side              classify_w(T) const noexcept;
+        constexpr Side              classify_w(const Vector4<T>&) const noexcept;
+
+        constexpr Side              classify_x(T) const noexcept;
+        constexpr Side              classify_x(const Vector4<T>&) const noexcept;
+
+        constexpr Side              classify_y(T) const noexcept;
+        constexpr Side              classify_y(const Vector4<T>&) const noexcept;
+
+        constexpr Side              classify_z(T) const noexcept;
+        constexpr Side              classify_z(const Vector4<T>&) const noexcept;
+
 
         /*! \brief Checks if the point is inside (or touching) the box
         */

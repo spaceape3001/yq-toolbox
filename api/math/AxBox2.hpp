@@ -106,6 +106,14 @@ namespace yq {
         */
         Circle2<T>  circumcircle() const;
 
+        constexpr Data2<Side>       classify(const Vector2<T>&) const noexcept;
+
+        constexpr Side              classify_x(T) const noexcept;
+        constexpr Side              classify_x(const Vector2<T>&) const noexcept;
+
+        constexpr Side              classify_y(T) const noexcept;
+        constexpr Side              classify_y(const Vector2<T>&) const noexcept;
+
         /*! \brief Checks if the point is inside (or touching) the box
         */
         constexpr bool          contains(const Vector2<T>& pt) const noexcept;
