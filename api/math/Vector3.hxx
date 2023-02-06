@@ -103,6 +103,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Sphere3<T> Vector3<T>::operator+(const Sphere3<T>&b) const noexcept
+    {
+        return Sphere3<T>(*this + b.point, b.radius);
+    }
+
+    template <typename T>
     constexpr Triangle3<T> Vector3<T>::operator+(const Triangle3<T>&rhs) const noexcept
     {
         return Triangle3<T>(*this+rhs.a, *this+rhs.b, *this+rhs.c);
@@ -177,6 +183,12 @@ namespace yq {
     constexpr Segment3<T> Vector3<T>::operator-(const Segment3<T>&rhs) const noexcept
     {
         return Segment3<T>( *this - rhs.a, *this - rhs.b );
+    }
+
+    template <typename T>
+    constexpr Sphere3<T> Vector3<T>::operator-(const Sphere3<T>&b) const noexcept
+    {
+        return Sphere3<T>(*this - b.point, b.radius);
     }
 
     template <typename T>

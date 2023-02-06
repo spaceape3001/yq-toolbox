@@ -144,27 +144,12 @@ namespace yq {
         return Circle2<trait::product_t<T,U>>(a*b.point, positive(a)*b.radius);
     }
 
-    /*! \brief Bounding box for a circle
-    */
     template <typename T>
     constexpr AxBox2<T>   aabb(const Circle2<T>& cir) noexcept
     {   
         return cir.bounds();
     }
     
-    /*! \brief Checks for validity
-    
-        A valid circle is one whose radius is greater or equal to zer
-    */
-    template <typename T>
-    constexpr bool  is_valid(const Circle2<T>&cir) noexcept
-    {
-        return cir.valid();
-    }
-
-
-    /*! \brief Computes the area of a 2D circle
-    */
     template <typename T>
     constexpr trait::square_t<T> area(const Circle2<T>& cir) noexcept
     {
@@ -188,8 +173,13 @@ namespace yq {
         return cir.diameter();
     }
 
-    /*! \brief Computes the perimeter (aka circumference) of a circle
-    */
+    template <typename T>
+    constexpr bool  is_valid(const Circle2<T>&cir) noexcept
+    {
+        return cir.valid();
+    }
+
+
     template <typename T>
     constexpr T   permimeter(const Circle2<T>& cir) noexcept
     {

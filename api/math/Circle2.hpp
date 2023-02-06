@@ -108,13 +108,6 @@ namespace yq {
     template <typename T>
     constexpr AxBox2<T>   aabb(const Circle2<T>& cir) noexcept;
     
-    /*! \brief Checks for validity
-    
-        A valid circle is one whose radius is greater or equal to zer
-    */
-    template <typename T>
-    constexpr bool  is_valid(const Circle2<T>&cir) noexcept;
-
 
     /*! \brief Computes the area of a 2D circle
     */
@@ -131,6 +124,13 @@ namespace yq {
     */
     template <typename T>
     constexpr T     diameter(const Circle2<T>& cir) noexcept;
+
+    /*! \brief Checks for validity
+    
+        A valid circle is one whose radius is greater or equal to zer
+    */
+    template <typename T>
+    constexpr bool  is_valid(const Circle2<T>&cir) noexcept;
 
 
     /*! \brief Computes the perimeter (aka circumference) of a circle

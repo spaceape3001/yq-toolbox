@@ -87,7 +87,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Circle2<T> Vector2<T>::operator+(const Circle2<T>&b) const
+    constexpr Circle2<T> Vector2<T>::operator+(const Circle2<T>&b) const noexcept
     {
         return Circle2<T>(*this + b.point, b.radius);
     }
@@ -155,7 +155,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr Circle2<T> Vector2<T>::operator-(const Circle2<T>&b) const
+    constexpr Circle2<T> Vector2<T>::operator-(const Circle2<T>&b) const noexcept
     {
         return Circle2<T>(*this - b.point, b.radius);
     }
