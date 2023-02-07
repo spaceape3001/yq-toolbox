@@ -117,6 +117,11 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox4<T>::AxBox4(const Segment4<T>&seg) noexcept : AxBox4<T>(seg.bounds()) {}
+
+
+    template <typename T>
+    constexpr AxBox4<T>::AxBox4(const Sphere4<T>& sph) noexcept : AxBox4(sph.bounds()) {}
+
     template <typename T>
     constexpr AxBox4<T>::AxBox4(const Triangle4<T>&tri) noexcept : AxBox4<T>(tri.bounds()) {}
 

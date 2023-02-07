@@ -25,22 +25,44 @@ namespace yq {
         //! Radius of the hypersphere
         T           radius;
         
+        constexpr Sphere4() noexcept = default;
+        constexpr Sphere4(const Vector4<T>& pt, T r) : point(pt), radius(r) {}
+        constexpr Sphere4(nan_t) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
+        constexpr Sphere4(zero_t) : Sphere4(Vector4<T>(ZERO), zero_v<T>) {}
+
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
 
-        //! Returns the bounding box for this sphere
-        constexpr AxBox4<T>   bounds() const noexcept
-        {
-            T       r   = abs(radius);
-            return { all(point) - r, all(point) + r };
-        }
+        constexpr Sphere4   operator+() const noexcept;
+        constexpr Sphere4   operator-() const noexcept;
+        
+        constexpr Sphere4   operator+(const Vector4<T>&) const noexcept;
+        Sphere4&            operator+=(const Vector4<T>&) noexcept;
+        constexpr Sphere4   operator-(const Vector4<T>&) const noexcept;
+        Sphere4&            operator-=(const Vector4<T>&) noexcept;
+        
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Sphere4<trait::product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        Sphere4<T>& operator*=(U) noexcept;
+            
+        template <typename U>
+        requires trait::is_arithmetic_v<U>
+        Sphere4<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        Sphere4<T>& operator/=(U) noexcept;
+        
+                //! Returns the bounding box for this sphere
+        constexpr AxBox4<T>   bounds() const noexcept;
 
         /*! \brief Computes the diameter of a hyper sphere
         */
-        constexpr T     diameter() const noexcept
-        {
-            return radius + radius;
-        }
+        constexpr T     diameter() const noexcept;
     };
     
     YQ_IEEE754_1(Sphere4)
@@ -63,95 +85,27 @@ namespace yq {
         return {point, radius};
     }
 
-    YQ_NAN_1(Sphere4, { nan_v<Vector4<T>>, nan_v<T> })
-    YQ_ZERO_1(Sphere4, { zero_v<Vector4<T>>, zero_v<T> })
+    YQ_NAN_1(Sphere4, Sphere4<T>(NAN))
+    YQ_ZERO_1(Sphere4, Sphere4<T>(ZERO))
 
 //  --------------------------------------------------------
-//  GETTERS
-
 //  --------------------------------------------------------
-//  BASIC FUNCTIONS
     
     YQ_IS_FINITE_1(Sphere4, is_finite(v.point) && is_finite(v.radius))
     YQ_IS_NAN_1(Sphere4, is_nan(v.point) || is_nan(v.radius))
 
+    template <typename T, typename U>
+    requires trait::is_arithmetic_v<T>
+    Sphere4<trait::product_t<T,U>> operator*(T a, const Sphere4<U>& b);
+
     //! Returns the axially aligned box of a sphere
     template <typename T>
-    AxBox4<T>   aabb(const Sphere4<T>& sph)
-    {
-        return sph.bounds();
-    }
-
-//  --------------------------------------------------------
-//  POSITIVE
-
-
-//  --------------------------------------------------------
-//  NEGATIVE
-
-
-//  --------------------------------------------------------
-//  NORMALIZATION
-
-
-//  --------------------------------------------------------
-//  ADDITION
-
-
-//  --------------------------------------------------------
-//  SUBTRACTION
-
-
-//  --------------------------------------------------------
-//  MULTIPLICATION
-
-
-//  --------------------------------------------------------
-//  DIVISION
-
-//  --------------------------------------------------------
-//  POWERS
-
-//  --------------------------------------------------------
-//  DOT PRODUCT
-
-
-//  --------------------------------------------------------
-//  INNER PRODUCT
-
-
-//  --------------------------------------------------------
-//  OUTER PRODUCT
-
-
-//  --------------------------------------------------------
-//  CROSS PRODUCT
-
-
-///  --------------------------------------------------------
-//  OTIMES PRODUCT
-
-//  --------------------------------------------------------
-//  UNIONS
-
-//  --------------------------------------------------------
-//  INTERSECTIONS
-
-
-//  --------------------------------------------------------
-//  PROJECTIONS
-
-//  --------------------------------------------------------
-//  ADVANCED FUNCTIONS
-
+    AxBox4<T>   aabb(const Sphere4<T>& sph);
 
     /*! \brief Computes the diameter of a hyper sphere
     */
     template <typename T>
-    constexpr T  diameter(const Sphere4<T>& sph) noexcept
-    {   
-        return sph.diameter();
-    }
+    constexpr T  diameter(const Sphere4<T>& sph) noexcept;
 
 
 }

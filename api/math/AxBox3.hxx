@@ -106,10 +106,13 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr AxBox3<T>::AxBox3(const Segment3<T>&seg) noexcept : AxBox3<T>(seg.bounds()) {}
+    constexpr AxBox3<T>::AxBox3(const Segment3<T>&seg) noexcept : AxBox3(seg.bounds()) {}
 
     template <typename T>
-    constexpr AxBox3<T>::AxBox3(const Triangle3<T>&tri) noexcept : AxBox3<T>(tri.bounds()) {}
+    constexpr AxBox3<T>::AxBox3(const Sphere3<T>& sph) noexcept : AxBox3(sph.bounds()) {}
+
+    template <typename T>
+    constexpr AxBox3<T>::AxBox3(const Triangle3<T>&tri) noexcept : AxBox3(tri.bounds()) {}
 
     template <typename T>
     AxBox3<T>  AxBox3<T>::operator+() const noexcept
