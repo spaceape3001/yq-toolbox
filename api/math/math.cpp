@@ -2915,6 +2915,8 @@ namespace yq {
 #include "Circle2.hxx"
 #include "Circle3.hxx"
 
+#include "Fraction.hxx"
+
 #include "MKS.hxx"
 
 #include "Multivector1.hxx"

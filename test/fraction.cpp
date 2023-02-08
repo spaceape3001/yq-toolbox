@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <math/Fraction.hpp>
+#include <math/Fraction.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;
