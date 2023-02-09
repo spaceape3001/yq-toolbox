@@ -268,6 +268,20 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox1<T>    AxBox1<T>::inflate(T d) const noexcept
+    {
+        return AxBox1(all(lo) - d, all(hi) + d);
+    }
+
+    template <typename T>
+    constexpr AxBox1<T>    AxBox1<T>::inflate(guard_t, T d) const noexcept
+    {
+        AxBox1  bx  = fixed();
+        T       dx  = -midspan(span().cmin());
+        return bx.inflate(std::max(d, dx));
+    }
+
+    template <typename T>
     constexpr bool    AxBox1<T>::is_valid() const noexcept
     {
         return all(lo) <= hi;
@@ -298,6 +312,12 @@ namespace yq {
     constexpr Vector1<T>    AxBox1<T>::span() const noexcept
     {
         return hi - lo;
+    }
+
+    template <typename T>
+    constexpr Vector1<T>    AxBox1<T>::span(guard_t) const noexcept
+    {
+        return span().eabs();
     }
 
     template <typename T>

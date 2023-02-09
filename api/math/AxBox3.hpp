@@ -131,6 +131,20 @@ namespace yq {
         //! Returns a fixed copy of the box (assuming it's possible to do)
         constexpr AxBox3 fixed() const noexcept;
 
+        /*! \brief Inflates the box
+        
+            This inflates the box by the specified amount.  
+            \note Negatives will shrink the box, and the shrunken box may be invalid.
+        */
+        constexpr AxBox3    inflate(T) const noexcept;
+
+        /*! \brief Inflates the box
+        
+            This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
+            half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
+        */
+        constexpr AxBox3    inflate(guard_t, T) const noexcept;
+
         //! Check for validity
         constexpr bool    is_valid() const noexcept;
 
@@ -187,6 +201,12 @@ namespace yq {
         */
         constexpr Vector3<T>    span() const noexcept;
 
+        /*! \brief Span (dimensions) of this box
+        
+            This guards against negative values (ie, takes absolute value)
+        */
+        constexpr Vector3<T>    span(guard_t) const noexcept;
+
         /*! \brief Computes the surface area of a 3D axially aligned bounding box
         */
         constexpr trait::square_t<T>    surface_area() const noexcept;
@@ -207,6 +227,12 @@ namespace yq {
         /*! \brief Computes the volume of the box
         */
         constexpr trait::cube_t<T>       volume() const noexcept;
+
+        /*! \brief Computes the volume of the box
+            
+            \note This one guards against negative volumes (ie, takes the absolute value)
+        */
+        constexpr trait::cube_t<T>       volume(guard_t) const noexcept;
 
         //! X Range of the box
         constexpr Range<T>  x_range() const noexcept;

@@ -238,6 +238,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr trait::square_t<T> AxBox2<T>::area(guard_t) const noexcept
+    {
+        return abs(area());
+    }
+
+    template <typename T>
     constexpr Vector2<T>  AxBox2<T>::center() const noexcept
     {
         if constexpr (trait::is_floating_point_v<T>)
@@ -325,6 +331,20 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox2<T>    AxBox2<T>::inflate(T d) const noexcept
+    {
+        return AxBox2(all(lo) - d, all(hi) + d);
+    }
+
+    template <typename T>
+    constexpr AxBox2<T>    AxBox2<T>::inflate(guard_t, T d) const noexcept
+    {
+        AxBox2  bx  = fixed();
+        T       dx  = -midspan(span().cmin());
+        return bx.inflate(std::max(d, dx));
+    }
+
+    template <typename T>
     constexpr bool          AxBox2<T>::is_valid() const noexcept 
     {
         return all(lo) <= hi;
@@ -381,6 +401,12 @@ namespace yq {
         return hi - lo;
     }
     
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::span(guard_t) const noexcept
+    {
+        return span().eabs();
+    }
 
     template <typename T>
     template <typename>

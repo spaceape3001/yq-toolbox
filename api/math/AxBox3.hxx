@@ -321,6 +321,20 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr AxBox3<T>    AxBox3<T>::inflate(T d) const noexcept
+    {
+        return AxBox3(all(lo) - d, all(hi) + d);
+    }
+
+    template <typename T>
+    constexpr AxBox3<T>    AxBox3<T>::inflate(guard_t, T d) const noexcept
+    {
+        AxBox3  bx  = fixed();
+        T       dx  = -midspan(span().cmin());
+        return bx.inflate(std::max(d, dx));
+    }
+
+    template <typename T>
     constexpr bool    AxBox3<T>::is_valid() const noexcept
     {
         return all(lo) <= hi;
@@ -401,6 +415,13 @@ namespace yq {
         return hi - lo;
     }
 
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::span(guard_t) const noexcept
+    {
+        return span().eabs();
+    }
+
     template <typename T>
     constexpr trait::square_t<T>    AxBox3<T>::surface_area() const noexcept
     {
@@ -427,6 +448,12 @@ namespace yq {
     constexpr trait::cube_t<T>       AxBox3<T>::volume() const noexcept
     {
         return span().cproduct();
+    }
+
+    template <typename T>
+    constexpr trait::cube_t<T>       AxBox3<T>::volume(guard_t) const noexcept
+    {
+        return abs(volume());
     }
 
     template <typename T>

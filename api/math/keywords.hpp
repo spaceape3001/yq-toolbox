@@ -23,6 +23,7 @@ namespace yq {
     struct diagonal_t {};
     struct down_t {};
     struct euler_t {};
+    struct guard_t {};
     struct hpr_t {};
     struct identity_t {};
     struct intersect_t {};
@@ -80,6 +81,7 @@ namespace yq {
     static constexpr const diagonal_t       DIAGONAL;
     static constexpr const down_t           DOWN;
     static constexpr const euler_t          EULER;
+    static constexpr const guard_t          GUARD;
     static constexpr const hpr_t            HPR;
     static constexpr const identity_t       IDENTITY;
     static constexpr const intersect_t   INTERSECT;

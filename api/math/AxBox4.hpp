@@ -137,6 +137,26 @@ namespace yq {
         */
         constexpr trait::fourth_t<T> hypervolume() const noexcept;
 
+        /*! \brief Computes the hyper volume of the box
+        
+            \note This instance guards against negative numbers
+        */
+        constexpr trait::fourth_t<T> hypervolume(guard_t) const noexcept;
+
+        /*! \brief Inflates the box
+        
+            This inflates the box by the specified amount.  
+            \note Negatives will shrink the box, and the shrunken box may be invalid.  Use "shrink" to safeguard.
+        */
+        constexpr AxBox4    inflate(T) const noexcept;
+
+        /*! \brief Inflates the box
+        
+            This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
+            half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
+        */
+        constexpr AxBox4    inflate(guard_t, T) const noexcept;
+
         //! Checks for validity (hi >= lo)
         constexpr bool    is_valid() const noexcept;
 
@@ -161,6 +181,12 @@ namespace yq {
         /*! \brief Returns the span (dimensions) of the box
         */
         constexpr Vector4<T>    span() const noexcept;
+
+        /*! \brief Span (dimensions) of this box
+        
+            This guards against negative values (ie, takes absolute value)
+        */
+        constexpr Vector4<T>    span(guard_t) const noexcept;
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
 

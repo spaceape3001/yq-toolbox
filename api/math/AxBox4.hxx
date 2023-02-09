@@ -361,6 +361,26 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr trait::fourth_t<T> AxBox4<T>::hypervolume(guard_t) const noexcept
+    {
+        return abs(hypervolume());
+    }
+
+    template <typename T>
+    constexpr AxBox4<T>    AxBox4<T>::inflate(T d) const noexcept
+    {
+        return AxBox4(all(lo) - d, all(hi) + d);
+    }
+
+    template <typename T>
+    constexpr AxBox4<T>    AxBox4<T>::inflate(guard_t, T d) const noexcept
+    {
+        AxBox4  bx  = fixed();
+        T       dx  = -midspan(span().cmin());
+        return bx.inflate(std::max(d, dx));
+    }
+
+    template <typename T>
     constexpr bool    AxBox4<T>::is_valid() const noexcept
     {
         return all(lo) <= hi;
@@ -392,6 +412,14 @@ namespace yq {
     {
         return hi - lo;
     }
+    
+
+    template <typename T>
+    constexpr Vector4<T>    AxBox4<T>::span(guard_t) const noexcept
+    {
+        return span().eabs();
+    }
+    
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>

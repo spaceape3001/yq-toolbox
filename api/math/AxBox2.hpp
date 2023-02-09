@@ -97,6 +97,8 @@ namespace yq {
         */
         constexpr trait::square_t<T>               area() const noexcept;
 
+        constexpr trait::square_t<T>               area(guard_t) const noexcept;
+
         /*! \brief Computes the center
         */
         constexpr Vector2<T>                center() const noexcept;
@@ -144,6 +146,20 @@ namespace yq {
         */
         constexpr Circle2<T>  incircle() const noexcept;
 
+        /*! \brief Inflates the box
+        
+            This inflates the box by the specified amount.  
+            \note Negatives will shrink the box, and the shrunken box may be invalid.
+        */
+        constexpr AxBox2    inflate(T) const noexcept;
+
+        /*! \brief Inflates the box
+        
+            This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
+            half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
+        */
+        constexpr AxBox2    inflate(guard_t, T) const noexcept;
+
         //! Tests this box for validness
         constexpr bool          is_valid() const noexcept;
             
@@ -186,6 +202,11 @@ namespace yq {
         */
         constexpr Vector2<T>    span() const noexcept;
         
+        /*! \brief Span (dimensions) of this box
+        
+            This guards against negative values (ie, takes absolute value)
+        */
+        constexpr Vector2<T>    span(guard_t) const noexcept;
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
 

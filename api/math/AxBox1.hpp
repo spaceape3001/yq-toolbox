@@ -121,11 +121,26 @@ namespace yq {
         constexpr bool eclipses(const AxBox1<T>& b) const noexcept;
         
         //! Returns a fixed copy of the box (assuming it's possible to do)
-        constexpr AxBox1 fixed() const noexcept;
+        constexpr AxBox1    fixed() const noexcept;
+        
+        /*! \brief Inflates the box
+        
+            This inflates a VALID box by the specified amount.  Negatives will shrink, invalids 
+            will remain invalid.
+        
+        */
+        constexpr AxBox1    inflate(T) const noexcept;
+
+        /*! \brief Inflates the box
+        
+            This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
+            half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
+        */
+        constexpr AxBox1    inflate(guard_t, T) const noexcept;
 
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept;
-
+        
         /*! \brief Checks for any overlap
         
             This returns TRUE if *ANY* part of the boxes overlap (or touch)
@@ -141,9 +156,22 @@ namespace yq {
         requires std::is_floating_point_v<T>
         constexpr Vector1<T>   project(const Vector1<T>& v) const noexcept;
         
+        /*! \brief Shrinks the box
+        */
+        constexpr AxBox1<T> shrink(T amt) const noexcept;
+        
         constexpr Size1<T> size() const noexcept ;
 
+        /*! \brief Span (dimensions) of this box
+        */
         constexpr Vector1<T>    span() const noexcept;
+        
+        /*! \brief Span (dimensions) of this box
+        
+            This guards against negative values (ie, takes absolute value)
+        */
+        constexpr Vector1<T>    span(guard_t) const noexcept;
+
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate
             \param[in] v    The global coordinate
