@@ -12,6 +12,9 @@
     template instantiation.  
 */
 
+#include <math/Polygon4.hpp>
+#include <math/Polyline4.hpp>
+
 #include <math/Segment4.hpp>
 
 #include <math/Tensor41.hpp>
@@ -135,6 +138,20 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    Polygon4<trait::product_t<T,U>>  Tensor44<T>::operator*(const Polygon4<U>&b) const
+    {
+        return Polygon4<trait::product_t<T,U>>( *this * b.vertex );
+    }
+    
+    template <typename T>
+        template <typename U>
+    Polyline4<trait::product_t<T,U>>  Tensor44<T>::operator*(const Polyline4<U>&b) const
+    {
+        return Polyline4<trait::product_t<T,U>>( *this * b.vertex );
+    }
+
+    template <typename T>
+        template <typename U>
     constexpr Segment4<trait::product_t<T,U>>  Tensor44<T>::operator*(const Segment4<U>&rhs) const noexcept
     {
         return Segment4<trait::product_t<T,U>>( *this * rhs.a, *this * rhs.b );
@@ -252,6 +269,17 @@ namespace yq {
         );
     }
     
+    template <typename T>
+        template <typename U>
+    std::vector<Vector4<trait::product_t<T,U>>>    Tensor44<T>::operator*(std::span<const Vector4<U>> bs) const
+    {
+        std::vector<Vector4<trait::product_t<T,U>>>    ret;
+        ret.reserve(bs.size());
+        for(const Vector4<U>& v : bs)
+            ret.push_back(*this * v);
+        return ret;
+    }
+
     template <typename T>
         template <typename U>
     requires trait::is_arithmetic_v<U>

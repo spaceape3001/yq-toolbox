@@ -39,6 +39,16 @@ namespace yq {
         //! Addsa a point to the polygon
         Polygon2&   operator<<(const Vector2<T>& pt);
         
+        template <typename U>
+        Polygon2<trait::product_t<T,U>>   operator*(const Tensor22<U>&) const;
+        template <typename U>
+        Polygon3<trait::product_t<T,U>>   operator*(const Tensor23<U>&) const;
+        template <typename U>
+        Polygon4<trait::product_t<T,U>>   operator*(const Tensor24<U>&) const;
+        
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Polygon2&  operator*=(const Tensor22<U>&);
         
         /*! \brief Computes the area of a 2D polygon
         */

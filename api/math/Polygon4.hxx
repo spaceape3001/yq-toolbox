@@ -36,6 +36,37 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename U>
+    Polygon2<trait::product_t<T,U>>   Polygon4<T>::operator*(const Tensor42<U>& b) const
+    {
+        return Polygon2<trait::product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polygon3<trait::product_t<T,U>>   Polygon4<T>::operator*(const Tensor43<U>&b) const
+    {
+        return Polygon3<trait::product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polygon4<trait::product_t<T,U>>   Polygon4<T>::operator*(const Tensor44<U>&b) const
+    {
+        return Polygon4<trait::product_t<T,U>>(vertex * b);
+    }
+    
+    template <typename T>
+        template <typename U>
+    requires trait::self_mul_v<T,U>
+    Polygon4<T>&  Polygon4<T>::operator*=(const Tensor44<U>&b)
+    {
+        for(Vector4<T>& v : vertex)
+            v *= b;
+        return *this;
+    }
+    
+    template <typename T>
     constexpr AxBox4<T>   Polygon4<T>::bounds() const noexcept
     {
         return AxBox4<T>(UNION, vertex);

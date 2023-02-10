@@ -167,6 +167,16 @@ namespace yq {
         );
     }
 
+    template <typename T>
+        template <typename U>
+    std::vector<Vector1<trait::product_t<T,U>>>    Tensor11<T>::operator*(std::span<const Vector1<U>> bs) const
+    {
+        std::vector<Vector1<trait::product_t<T,U>>>    ret;
+        ret.reserve(bs.size());
+        for(const Vector1<U>& v : bs)
+            ret.push_back(*this * v);
+        return ret;
+    }
 
         //! Returns the determinant
     template <typename T>

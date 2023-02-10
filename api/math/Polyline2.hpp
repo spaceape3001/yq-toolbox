@@ -33,6 +33,17 @@ namespace yq {
         constexpr bool operator==(const Polyline2&) const noexcept = default;
 
         operator PolylineData<Vector2<T>>() const;
+        
+        template <typename U>
+        Polyline2<trait::product_t<T,U>>   operator*(const Tensor22<U>&) const;
+        template <typename U>
+        Polyline3<trait::product_t<T,U>>   operator*(const Tensor23<U>&) const;
+        template <typename U>
+        Polyline4<trait::product_t<T,U>>   operator*(const Tensor24<U>&) const;
+        
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Polyline2&  operator*=(const Tensor22<U>&);
 
         //! Addsa a point to the polyline
         Polyline2&   operator<<(const Vector2<T>& pt);

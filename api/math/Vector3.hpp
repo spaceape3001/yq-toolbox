@@ -537,6 +537,15 @@ namespace yq {
     constexpr Vector3<trait::product_t<T,U>> operator*(T a, const Vector3<U>&b) noexcept;
     
     template <typename T, typename U>
+    std::vector<Vector1<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>, const Tensor31<U>&);
+    template <typename T, typename U>
+    std::vector<Vector2<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>, const Tensor32<U>&);
+    template <typename T, typename U>
+    std::vector<Vector3<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>, const Tensor33<U>&);
+    template <typename T, typename U>
+    std::vector<Vector4<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>, const Tensor34<U>&);
+
+    template <typename T, typename U>
     constexpr Vector3<trait::product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept
     {
         return a.emul(b);

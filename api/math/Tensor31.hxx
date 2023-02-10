@@ -220,6 +220,16 @@ namespace yq {
         );
     }
 
+    template <typename T>
+        template <typename U>
+    std::vector<Vector3<trait::product_t<T,U>>>    Tensor31<T>::operator*(std::span<const Vector1<U>> bs) const
+    {
+        std::vector<Vector3<trait::product_t<T,U>>>    ret;
+        ret.reserve(bs.size());
+        for(const Vector1<U>& v : bs)
+            ret.push_back(*this * v);
+        return ret;
+    }
 
     template <typename T>
         template <typename U>

@@ -151,6 +151,11 @@ namespace yq {
         Tensor33&  operator*=(U b) noexcept;
 
         template <typename U>
+        Polygon3<trait::product_t<T,U>>  operator*(const Polygon3<U>&) const;
+        template <typename U>
+        Polyline3<trait::product_t<T,U>>  operator*(const Polyline3<U>&) const;
+
+        template <typename U>
         constexpr Segment3<trait::product_t<T,U>>  operator*(const Segment3<U>&) const noexcept;
 
         template <typename U>
@@ -174,6 +179,9 @@ namespace yq {
         
         template <typename U>
         constexpr Vector3<trait::product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
+
+        template <typename U>
+        std::vector<Vector3<trait::product_t<T,U>>>    operator*(std::span<const Vector3<U>> b) const;
 
         template <typename U>
         requires trait::is_arithmetic_v<U>

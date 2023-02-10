@@ -548,8 +548,44 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<T>)
-    constexpr  Vector3<trait::quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept;
+    std::vector<Vector1<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor31<U>&b)
+    {
+        std::vector<Vector1<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector3<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+    
+    template <typename T, typename U>
+    std::vector<Vector2<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor32<U>&b)
+    {
+        std::vector<Vector2<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector3<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+
+    template <typename T, typename U>
+    std::vector<Vector3<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor33<U>&b)
+    {
+        std::vector<Vector3<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector3<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+    
+    template <typename T, typename U>
+    std::vector<Vector4<trait::product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor34<U>&b)
+    {
+        std::vector<Vector4<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector3<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
@@ -557,6 +593,14 @@ namespace yq {
     {
         return Vector3<trait::product_t<T,U>>(a*b.x, a*b.y, a*b.z);
     }
+
+    template <typename T, typename U>
+    requires (std::is_arithmetic_v<T>)
+    constexpr  Vector3<trait::quotient_t<T,U>> operator/(T a, const  Vector3<U>&b) noexcept
+    {
+        return (a*b) / b.length²();
+    }
+
 
     template <typename T>
     constexpr Vector3<T>   abs_elem(const Vector3<T>&a) noexcept

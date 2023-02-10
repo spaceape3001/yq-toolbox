@@ -37,6 +37,17 @@ namespace yq {
         //! Addsa a point to the polyline
         Polyline3&   operator<<(const Vector3<T>& pt);
 
+        template <typename U>
+        Polyline2<trait::product_t<T,U>>   operator*(const Tensor32<U>&) const;
+        template <typename U>
+        Polyline3<trait::product_t<T,U>>   operator*(const Tensor33<U>&) const;
+        template <typename U>
+        Polyline4<trait::product_t<T,U>>   operator*(const Tensor34<U>&) const;
+        
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Polyline3&  operator*=(const Tensor33<U>&);
+
         //! Compute the bounding box to this polyline
         constexpr AxBox3<T>   bounds() const noexcept;
         

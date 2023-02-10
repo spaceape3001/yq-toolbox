@@ -423,6 +423,14 @@ namespace yq {
     constexpr Vector1<trait::product_t<T,U>> operator*(T a, const Vector1<U>&b) noexcept;
 
 
+    template <typename T, typename U>
+    std::vector<Vector1<trait::product_t<T,U>>> operator*(std::span<const Vector1<T>>, const Tensor11<U>&);
+    template <typename T, typename U>
+    std::vector<Vector2<trait::product_t<T,U>>> operator*(std::span<const Vector1<T>>, const Tensor12<U>&);
+    template <typename T, typename U>
+    std::vector<Vector3<trait::product_t<T,U>>> operator*(std::span<const Vector1<T>>, const Tensor13<U>&);
+    template <typename T, typename U>
+    std::vector<Vector4<trait::product_t<T,U>>> operator*(std::span<const Vector1<T>>, const Tensor14<U>&);
 
     template <typename T, typename U>
     constexpr Vector1<trait::product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept;

@@ -41,6 +41,17 @@ namespace yq {
         Polygon3&   operator<<(const Vector3<T>& pt);
 
 
+        template <typename U>
+        Polygon2<trait::product_t<T,U>>   operator*(const Tensor32<U>&) const;
+        template <typename U>
+        Polygon3<trait::product_t<T,U>>   operator*(const Tensor33<U>&) const;
+        template <typename U>
+        Polygon4<trait::product_t<T,U>>   operator*(const Tensor34<U>&) const;
+        
+        template <typename U>
+        requires trait::self_mul_v<T,U>
+        Polygon3&  operator*=(const Tensor33<U>&);
+        
         /*! \brief Computes the axially aligned bounding box of this polygon
         */
         constexpr AxBox3<T>   bounds() const noexcept;

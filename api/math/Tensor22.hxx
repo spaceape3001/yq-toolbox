@@ -13,6 +13,9 @@
     template instantiation.  
 */
 
+#include <math/Polygon2.hpp>
+#include <math/Polyline2.hpp>
+
 #include <math/Segment2.hpp>
 
 #include <math/Tensor21.hpp>
@@ -136,6 +139,21 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    Polygon2<trait::product_t<T,U>>  Tensor22<T>::operator*(const Polygon2<U>&b) const
+    {
+        return Polygon2<trait::product_t<T,U>>( *this * b.vertex );
+    }
+    
+    template <typename T>
+        template <typename U>
+    Polyline2<trait::product_t<T,U>>  Tensor22<T>::operator*(const Polyline2<U>&b) const
+    {
+        return Polyline2<trait::product_t<T,U>>( *this * b.vertex );
+        
+    }
+
+    template <typename T>
+        template <typename U>
     constexpr Segment2<trait::product_t<T,U>>  Tensor22<T>::operator*(const Segment2<U>&rhs) const noexcept
     {
         return Segment2<trait::product_t<T,U>>( *this * rhs.a, *this * rhs.b );
@@ -221,6 +239,17 @@ namespace yq {
             xx*b.x + xy*b.y,
             yx*b.x + yy*b.y
         );
+    }
+
+    template <typename T>
+        template <typename U>
+    std::vector<Vector2<trait::product_t<T,U>>>    Tensor22<T>::operator*(std::span<const Vector2<U>> bs) const
+    {
+        std::vector<Vector2<trait::product_t<T,U>>>    ret;
+        ret.reserve(bs.size());
+        for(const Vector2<U>& v : bs)
+            ret.push_back(*this * v);
+        return ret;
     }
 
     template <typename T>

@@ -108,6 +108,9 @@ namespace yq {
         constexpr Vector1<trait::product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
 
         template <typename U>
+        std::vector<Vector1<trait::product_t<T,U>>>    operator*(std::span<const Vector3<U>> b) const;
+
+        template <typename U>
         requires trait::is_arithmetic_v<U>
         constexpr Tensor13<trait::quotient_t<T,U>>  operator/(U b) const noexcept;
 

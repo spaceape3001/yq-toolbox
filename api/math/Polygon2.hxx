@@ -39,6 +39,36 @@ namespace yq {
         return *this;
     }
     
+    template <typename T>
+        template <typename U>
+    Polygon2<trait::product_t<T,U>>   Polygon2<T>::operator*(const Tensor22<U>& b) const
+    {
+        return Polygon2<trait::product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polygon3<trait::product_t<T,U>>   Polygon2<T>::operator*(const Tensor23<U>&b) const
+    {
+        return Polygon3<trait::product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polygon4<trait::product_t<T,U>>   Polygon2<T>::operator*(const Tensor24<U>&b) const
+    {
+        return Polygon4<trait::product_t<T,U>>(vertex * b);
+    }
+    
+    template <typename T>
+        template <typename U>
+    requires trait::self_mul_v<T,U>
+    Polygon2<T>&  Polygon2<T>::operator*=(const Tensor22<U>&b)
+    {
+        for(Vector2<T>& v : vertex)
+            v *= b;
+        return *this;
+    }
     
     template <typename T>
     constexpr trait::square_t<T>    Polygon2<T>::area() const noexcept

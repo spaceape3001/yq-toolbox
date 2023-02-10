@@ -121,6 +121,8 @@ namespace yq {
 
         template <typename U>
         constexpr Vector3<trait::product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;
+        template <typename U>
+        std::vector<Vector3<trait::product_t<T,U>>>    operator*(std::span<const Vector1<U>> b) const;
         
         template <typename U>
         requires trait::is_arithmetic_v<U>

@@ -96,6 +96,11 @@ namespace yq {
         Tensor24<T>&  operator*=(U b) noexcept;
 
         template <typename U>
+        Polygon2<trait::product_t<T,U>>  operator*(const Polygon4<U>&) const;
+        template <typename U>
+        Polyline2<trait::product_t<T,U>>  operator*(const Polyline4<U>&) const;
+
+        template <typename U>
         constexpr Segment2<trait::product_t<T,U>>  operator*(const Segment4<U>&) const noexcept;
 
         template <typename U>
@@ -112,6 +117,9 @@ namespace yq {
 
         template <typename U>
         constexpr Vector2<trait::product_t<T,U>> operator*(const Vector4<U>&b) const noexcept;
+
+        template <typename U>
+        std::vector<Vector2<trait::product_t<T,U>>>    operator*(std::span<const Vector4<U>> b) const;
 
         template <typename U>
         requires trait::self_mul_v<T,U>

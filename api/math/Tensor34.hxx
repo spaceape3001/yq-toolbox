@@ -12,6 +12,11 @@
     template instantiation.  
 */
 
+#include <math/Polygon3.hpp>
+#include <math/Polygon4.hpp>
+#include <math/Polyline3.hpp>
+#include <math/Polyline4.hpp>
+
 #include <math/Segment4.hpp>
 
 #include <math/Tensor31.hpp>
@@ -131,6 +136,20 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    Polygon3<trait::product_t<T,U>>  Tensor34<T>::operator*(const Polygon4<U>&b) const
+    {
+        return Polygon3<trait::product_t<T,U>>( *this * b.vertex );
+    }
+    
+    template <typename T>
+        template <typename U>
+    Polyline3<trait::product_t<T,U>>  Tensor34<T>::operator*(const Polyline4<U>&b) const
+    {
+        return Polyline3<trait::product_t<T,U>>( *this * b.vertex );
+    }
+
+    template <typename T>
+        template <typename U>
     constexpr Segment3<trait::product_t<T,U>>  Tensor34<T>::operator*(const Segment4<U>&rhs) const noexcept
     {
         return Segment3<trait::product_t<T,U>>( *this * rhs.a, *this * rhs.b );
@@ -232,6 +251,17 @@ namespace yq {
             yx*b.x + yy*b.y + yz*b.z + yw*b.w,
             zx*b.x + zy*b.y + zz*b.z + zw*b.w
         );
+    }
+
+    template <typename T>
+        template <typename U>
+    std::vector<Vector3<trait::product_t<T,U>>>    Tensor34<T>::operator*(std::span<const Vector4<U>> bs) const
+    {
+        std::vector<Vector3<trait::product_t<T,U>>>    ret;
+        ret.reserve(bs.size());
+        for(const Vector4<U>& v : bs)
+            ret.push_back(*this * v);
+        return ret;
     }
     
     template <typename T>

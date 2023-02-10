@@ -79,6 +79,9 @@ namespace yq {
         template <typename U>
         constexpr Vector1<trait::product_t<T,U>> operator*(const Vector1<U>&b) const noexcept;
 
+        template <typename U>
+        std::vector<Vector1<trait::product_t<T,U>>>    operator*(std::span<const Vector1<U>> b) const;
+
             //! Returns the determinant
         constexpr T determinant() const noexcept;
 

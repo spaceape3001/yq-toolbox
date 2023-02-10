@@ -35,6 +35,37 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename U>
+    Polyline2<trait::product_t<T,U>>   Polyline2<T>::operator*(const Tensor22<U>& b) const
+    {
+        return Polyline2<trait::product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polyline3<trait::product_t<T,U>>   Polyline2<T>::operator*(const Tensor23<U>&b) const
+    {
+        return Polyline3<trait::product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polyline4<trait::product_t<T,U>>   Polyline2<T>::operator*(const Tensor24<U>&b) const
+    {
+        return Polyline4<trait::product_t<T,U>>(vertex * b);
+    }
+    
+    template <typename T>
+        template <typename U>
+    requires trait::self_mul_v<T,U>
+    Polyline2<T>&  Polyline2<T>::operator*=(const Tensor22<U>&b)
+    {
+        for(Vector2<T>& v : vertex)
+            v *= b;
+        return *this;
+    }
+
+    template <typename T>
     constexpr AxBox2<T>   Polyline2<T>::bounds() const noexcept
     {
         if(vertex.empty())

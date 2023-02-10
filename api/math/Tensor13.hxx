@@ -182,6 +182,17 @@ namespace yq {
 
     template <typename T>
         template <typename U>
+    std::vector<Vector1<trait::product_t<T,U>>>    Tensor13<T>::operator*(std::span<const Vector3<U>> bs) const
+    {
+        std::vector<Vector1<trait::product_t<T,U>>>    ret;
+        ret.reserve(bs.size());
+        for(const Vector3<U>& v : bs)
+            ret.push_back(*this * v);
+        return ret;
+    }
+
+    template <typename T>
+        template <typename U>
     requires trait::is_arithmetic_v<U>
     constexpr Tensor13<trait::quotient_t<T,U>>  Tensor13<T>::operator/(U b) const noexcept
     {

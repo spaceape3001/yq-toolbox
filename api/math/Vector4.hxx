@@ -574,6 +574,47 @@ namespace yq {
         return Vector4<trait::product_t<T,U>>(a*b.x, a*b.y, a*b.z, a*b.w);
     }
     
+
+    template <typename T, typename U>
+    std::vector<Vector1<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor41<U>&b)
+    {
+        std::vector<Vector1<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector4<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+    
+    template <typename T, typename U>
+    std::vector<Vector2<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor42<U>&b)
+    {
+        std::vector<Vector2<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector4<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+
+    template <typename T, typename U>
+    std::vector<Vector3<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor43<U>&b)
+    {
+        std::vector<Vector3<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector4<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+    
+    template <typename T, typename U>
+    std::vector<Vector4<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor44<U>&b)
+    {
+        std::vector<Vector4<trait::product_t<T,U>>> ret;
+        ret.reserve(as.size());
+        for(const Vector4<T>& a : as)
+            ret.push_back(a*b);
+        return ret;
+    }
+
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
     constexpr  Vector4<trait::quotient_t<T,U>> operator/(T a, const  Vector4<U>&b) noexcept
