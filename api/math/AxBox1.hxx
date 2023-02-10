@@ -249,10 +249,34 @@ namespace yq {
     template <typename T>
     constexpr AxCorners1<Vector1<T>>  AxBox1<T>::corners() const noexcept
     {
-        return { 
-            lo,
-            hi
-        };
+        return AxCorners1<Vector1<T>>( 
+            l(),
+            h()
+        );
+    }
+
+    template <typename T>
+    constexpr AxCorners1<Vector1<T>>    AxBox1<T>::corners(T adjust) const noexcept
+    {
+        return inflate(adjust).corners();
+    }
+
+    template <typename T>
+    T                       AxBox1<T>::distance(const Vector1<T>&v) const
+    {
+        if constexpr ( trait::has_abs_v<T> )
+            return abs(_gap(v.x, lo.x, hi.x));
+        if constexpr ( trait::has_sqrt_v<T> )
+            return sqrt(distance²(v));
+        return zero_v<T>;
+    }
+    
+    template <typename T>
+    constexpr trait::square_t<T>   AxBox1<T>::distance²(const Vector1<T>&v) const noexcept
+    {
+        return 
+            (_gap(v.x, lo.x, hi.x)^²)
+        ;
     }
 
     template <typename T>
@@ -268,6 +292,18 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector1<T>   AxBox1<T>::h() const noexcept
+    {
+        return h;
+    }
+
+    template <typename T>
+    constexpr Vector1<T>    AxBox1<T>::h(T adjust) const noexcept
+    {
+        return Vector1<T>(hi.x+adjust);
+    }
+
+    template <typename T>
     constexpr AxBox1<T>    AxBox1<T>::inflate(T d) const noexcept
     {
         return AxBox1(all(lo) - d, all(hi) + d);
@@ -277,14 +313,31 @@ namespace yq {
     constexpr AxBox1<T>    AxBox1<T>::inflate(guard_t, T d) const noexcept
     {
         AxBox1  bx  = fixed();
-        T       dx  = -midspan(span().cmin());
-        return bx.inflate(std::max(d, dx));
+        return bx.inflate(std::max(d, bx.min_inflate()));
     }
 
     template <typename T>
     constexpr bool    AxBox1<T>::is_valid() const noexcept
     {
         return all(lo) <= hi;
+    }
+
+    template <typename T>
+    constexpr Vector1<T>   AxBox1<T>::l() const noexcept
+    {
+        return h;
+    }
+
+    template <typename T>
+    constexpr Vector1<T>    AxBox1<T>::l(T adjust) const noexcept
+    {
+        return Vector1<T>(lo.x-adjust);
+    }
+
+    template <typename T>
+    constexpr T AxBox1<T>::min_inflate() const noexcept
+    {
+        return -midspan(span().cmin());
     }
 
     template <typename T>

@@ -44,6 +44,8 @@ namespace yq {
         consteval AxBox2(zero_t) : AxBox2(Vector2<T>(ZERO)) {}
 
         explicit constexpr AxBox2(const Circle2<T>&) noexcept;
+        explicit constexpr AxBox2(const Polygon2<T>&) noexcept;
+        explicit constexpr AxBox2(const Polyline2<T>&) noexcept;
         explicit constexpr AxBox2(const Segment2<T>&) noexcept;
         explicit constexpr AxBox2(const Triangle2<T>&) noexcept;
 
@@ -123,6 +125,13 @@ namespace yq {
         /*! \brief Our corners
         */
         constexpr AxCorners2<Vector2<T>>    corners() const noexcept;
+        constexpr AxCorners2<Vector2<T>>    corners(T adjust) const noexcept;
+
+        //! Distance to box (zero if inside)
+        T                       distance(const Vector2<T>&) const;
+        
+        //! Distance² to box (zero if inside)
+        constexpr trait::square_t<T>   distance²(const Vector2<T>&) const noexcept;
 
         /*! \brief Checks for full occlusion
         
@@ -140,6 +149,11 @@ namespace yq {
 
         //! Returns a fixed copy of the box (assuming it's possible to do)
         constexpr AxBox2 fixed() const noexcept;
+
+        constexpr Vector2<T>    hh() const noexcept;
+        constexpr Vector2<T>    hh(T adjust) const noexcept;
+        constexpr Vector2<T>    hl() const noexcept;
+        constexpr Vector2<T>    hl(T adjust) const noexcept;
 
         /*! \brief Computes largest circle that's inside the box
             \note The resulting circle will be centered within the box
@@ -162,6 +176,18 @@ namespace yq {
 
         //! Tests this box for validness
         constexpr bool          is_valid() const noexcept;
+
+        //! Low x/High y corner
+        constexpr Vector2<T>    lh() const noexcept;
+        //! Low x/High y corner, adjusted outward
+        constexpr Vector2<T>    lh(T adjust) const noexcept;
+        //! Low x/Low y corner
+        constexpr Vector2<T>    ll() const noexcept;
+        //! Low x/Low y corner, adjusted outward
+        constexpr Vector2<T>    ll(T adjust) const noexcept;
+
+        //! Minimum inflation number on a valid box to keep it from going invalid
+        constexpr T min_inflate() const noexcept;
             
         //! Returns the northeast corner of the box
         constexpr Vector2<T>    northeast() const noexcept;

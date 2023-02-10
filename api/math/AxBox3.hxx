@@ -296,16 +296,40 @@ namespace yq {
     template <typename T>
     constexpr AxCorners3<Vector3<T>>  AxBox3<T>::corners() const noexcept
     {
-        return { 
-            lo,
-            { lo.x, lo.y, hi.z  }, 
-            { lo.x, hi.y, lo.z  }, 
-            { lo.x, hi.y, hi.z  }, 
-            { hi.x, lo.y, lo.z  }, 
-            { hi.x, lo.y, hi.z  }, 
-            { hi.x, hi.y, lo.z  }, 
-            hi
-        };
+        return AxCorners3<Vector3<T>>(
+            lll(),
+            llh(),
+            lhl(),
+            lhh(),
+            hll(),
+            hlh(),
+            hhl(),
+            hhh()
+        );
+    }
+
+    template <typename T>
+    constexpr AxCorners3<Vector3<T>>    AxBox3<T>::corners(T adjust) const noexcept
+    {
+        return inflate(adjust).corners();
+    }
+
+    template <typename T>
+    T                       AxBox3<T>::distance(const Vector3<T>&v) const
+    {
+        if constexpr ( trait::has_sqrt_v<T> )
+            return sqrt(distance²(v));
+        return zero_v<T>;
+    }
+    
+    template <typename T>
+    constexpr trait::square_t<T>   AxBox3<T>::distance²(const Vector3<T>&v) const noexcept
+    {
+        return 
+            (_gap(v.x, lo.x, hi.x)^²) +
+            (_gap(v.y, lo.y, hi.y)^²) +
+            (_gap(v.z, lo.z, hi.z)^²)
+        ;
     }
 
     template <typename T>
@@ -321,6 +345,60 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hhh() const noexcept
+    {
+        return hi;
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hhh(T adjust) const noexcept
+    {
+        return Vector3(hi.x+adjust,hi.y+adjust,hi.z+adjust);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hhl() const noexcept
+    {
+        return Vector3(hi.x, hi.y, lo.z);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hhl(T adjust) const noexcept
+    {
+        return Vector3(hi.x+adjust,hi.y+adjust,lo.z-adjust);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hlh() const noexcept
+    {
+        return Vector3(hi.x, lo.y, hi.z);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hlh(T adjust) const noexcept
+    {
+        return Vector3(hi.x+adjust,lo.y-adjust,hi.z+adjust);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hll() const noexcept
+    {
+        return Vector3(hi.x, lo.y, lo.z);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::hll(T adjust) const noexcept
+    {
+        return Vector3(hi.x+adjust,lo.y-adjust,lo.z-adjust);
+    }
+
+    template <typename T>
+    constexpr T AxBox3<T>::min_inflate() const noexcept
+    {
+        return -midspan(span().cmin());
+    }
+
+    template <typename T>
     constexpr AxBox3<T>    AxBox3<T>::inflate(T d) const noexcept
     {
         return AxBox3(all(lo) - d, all(hi) + d);
@@ -330,8 +408,7 @@ namespace yq {
     constexpr AxBox3<T>    AxBox3<T>::inflate(guard_t, T d) const noexcept
     {
         AxBox3  bx  = fixed();
-        T       dx  = -midspan(span().cmin());
-        return bx.inflate(std::max(d, dx));
+        return bx.inflate(std::max(d, bx.min_inflate()));
     }
 
     template <typename T>
@@ -341,27 +418,76 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::lhh() const noexcept
+    {
+        return Vector3<T>(lo.x, hi.y, hi.z);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::lhh(T adjust) const noexcept
+    {
+        return Vector3<T>(lo.x-adjust, hi.y+adjust, hi.z+adjust);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::lhl() const noexcept
+    {
+        return Vector3<T>(lo.x, hi.y, lo.z);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::lhl(T adjust) const noexcept
+    {
+        return Vector3<T>(lo.x-adjust, hi.y+adjust, lo.z-adjust);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::llh() const noexcept
+    {
+        return Vector3<T>(lo.x, lo.y, hi.z);
+    }
+    
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::llh(T adjust) const noexcept
+    {
+        return Vector3<T>(lo.x-adjust, lo.y-adjust, hi.z+adjust);
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::lll() const noexcept
+    {
+        return lo;
+    }
+
+    template <typename T>
+    constexpr Vector3<T>    AxBox3<T>::lll(T adjust) const noexcept
+    {
+        return Vector3<T>(lo.x-adjust, lo.y-adjust, lo.z-adjust);
+    }
+
+    template <typename T>
     constexpr Vector3<T>  AxBox3<T>::northeast_bottom() const noexcept
     {
-        return { hi.x, hi.y, lo.z };
+        return hhl();
    }
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::northeast_top() const noexcept
     {
-        return hi;
+        return hhh();
     }
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::northwest_bottom() const noexcept
     {
-        return { lo.x, hi.y, lo.z };
+        return lhl();
     }
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::northwest_top() const noexcept
     {
-        return { lo.x, hi.y, hi.z };
+        return llh();
     }
 
     template <typename T>
@@ -388,25 +514,25 @@ namespace yq {
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::southeast_bottom() const noexcept
     {
-        return { hi.x, lo.y, lo.z };
+        return hll();
     }
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::southeast_top() const noexcept
     {
-        return { hi.x, lo.y, hi.z };
+        return hlh();
     }
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::southwest_bottom() const noexcept
     {
-        return lo;
+        return lll();
     }
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::southwest_top() const noexcept
     {
-        return { lo.x, lo.y, hi.z };
+        return llh();
     }
 
     template <typename T>

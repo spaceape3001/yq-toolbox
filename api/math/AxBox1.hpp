@@ -113,6 +113,16 @@ namespace yq {
         */
         constexpr AxCorners1<Vector1<T>>  corners() const noexcept;
 
+        /*! \brief Returns the enumerated corners of the box
+        */
+        constexpr AxCorners1<Vector1<T>>  corners(T adjust) const noexcept;
+
+        //! Distance to box (zero if inside)
+        T                       distance(const Vector1<T>&) const;
+        
+        //! Distance² to box (zero if inside)
+        constexpr trait::square_t<T>   distance²(const Vector1<T>&) const noexcept;
+
         /*! \brief Checks for full occlusion
         
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
@@ -123,6 +133,9 @@ namespace yq {
         //! Returns a fixed copy of the box (assuming it's possible to do)
         constexpr AxBox1    fixed() const noexcept;
         
+        constexpr Vector1<T>    h() const noexcept;
+        constexpr Vector1<T>    h(T adjust) const noexcept;
+
         /*! \brief Inflates the box
         
             This inflates a VALID box by the specified amount.  Negatives will shrink, invalids 
@@ -141,6 +154,12 @@ namespace yq {
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept;
         
+        constexpr Vector1<T>    l() const noexcept;
+        constexpr Vector1<T>    l(T adjust) const noexcept;
+        
+        //! Minimum inflation number on a valid box to keep it from going invalid
+        constexpr T min_inflate() const noexcept;
+
         /*! \brief Checks for any overlap
         
             This returns TRUE if *ANY* part of the boxes overlap (or touch)

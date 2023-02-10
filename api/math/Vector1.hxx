@@ -505,10 +505,21 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Vector1<T>   min_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
+    constexpr Vector1<T>   max_elem(std::initializer_list<Vector1<T>> vs) noexcept
     {
-        return a.emin(b);
+        return max_elem(std::span<const Vector1<T>>(vs.data(), vs.size()));
     }
+
+    template <typename T>
+    constexpr Vector1<T>   max_elem(std::span<const Vector1<T>>vs) noexcept
+    {
+        if(vs.empty())
+            return Vector1<T>(NAN);
+        return Vector1<T>(
+            std::max_element(vs.begin(), vs.end(), Vector1<T>::less_x) -> x
+        );
+    }
+
 
     /*! \brief Mid-way divide two vectors
     */
@@ -523,6 +534,28 @@ namespace yq {
             return {};
     }
     
+    template <typename T>
+    constexpr Vector1<T>   min_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept
+    {
+        return a.emin(b);
+    }
+
+    template <typename T>
+    constexpr Vector1<T>   min_elem(std::initializer_list<Vector1<T>>vs) noexcept
+    {
+        return min_elem(std::span<const Vector1<T>>(vs.data(), vs.size()));
+    }
+
+    template <typename T>
+    constexpr Vector1<T>   min_elem(std::span<const Vector1<T>>vs) noexcept
+    {
+        if(vs.empty())
+            return Vector1<T>(NAN);
+        return Vector1<T>(
+            std::min_element(vs.begin(), vs.end(), Vector1<T>::less_x) -> x
+        );
+    }
+
     template <typename T, typename U>
     constexpr Vector1<trait::product_t<T,U>>    mul_elem(const Vector1<T>&a, const Vector1<U>&b) noexcept
     {

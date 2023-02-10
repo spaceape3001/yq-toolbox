@@ -120,6 +120,14 @@ namespace yq {
         */
         constexpr AxCorners3<Vector3<T>>  corners() const noexcept;
 
+        constexpr AxCorners3<Vector3<T>>  corners(T adjust) const noexcept;
+
+        //! Distance to box (zero if inside)
+        T                       distance(const Vector3<T>&) const;
+        
+        //! Distance² to box (zero if inside)
+        constexpr trait::square_t<T>   distance²(const Vector3<T>&) const noexcept;
+
         /*! \brief Checks for full occlusion
         
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
@@ -130,6 +138,15 @@ namespace yq {
 
         //! Returns a fixed copy of the box (assuming it's possible to do)
         constexpr AxBox3 fixed() const noexcept;
+
+        constexpr Vector3<T>    hhh() const noexcept;
+        constexpr Vector3<T>    hhh(T adjust) const noexcept;
+        constexpr Vector3<T>    hhl() const noexcept;
+        constexpr Vector3<T>    hhl(T adjust) const noexcept;
+        constexpr Vector3<T>    hlh() const noexcept;
+        constexpr Vector3<T>    hlh(T adjust) const noexcept;
+        constexpr Vector3<T>    hll() const noexcept;
+        constexpr Vector3<T>    hll(T adjust) const noexcept;
 
         /*! \brief Inflates the box
         
@@ -147,6 +164,18 @@ namespace yq {
 
         //! Check for validity
         constexpr bool    is_valid() const noexcept;
+
+        constexpr Vector3<T>    lhh() const noexcept;
+        constexpr Vector3<T>    lhh(T adjust) const noexcept;
+        constexpr Vector3<T>    lhl() const noexcept;
+        constexpr Vector3<T>    lhl(T adjust) const noexcept;
+        constexpr Vector3<T>    llh() const noexcept;
+        constexpr Vector3<T>    llh(T adjust) const noexcept;
+        constexpr Vector3<T>    lll() const noexcept;
+        constexpr Vector3<T>    lll(T adjust) const noexcept;
+
+        //! Minimum inflation number on a valid box to keep it from going invalid
+        constexpr T min_inflate() const noexcept;
 
        /*! \brief Returns the north east bottom corner
         */

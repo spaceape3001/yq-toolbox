@@ -6,9 +6,7 @@
 
 #pragma once
 
-#include "PolygonData.hpp"
 #include <math/preamble.hpp>
-#include <math/AxBox2.hpp>
 #include <math/Vector2.hpp>
 
 namespace yq {
@@ -23,67 +21,42 @@ namespace yq {
         //! Vertex data
         std::vector<Vector2<T>>     vertex;
         
+        constexpr Polygon2() noexcept = default;
+        Polygon2(const std::vector<Vector2<T>>&);
+        Polygon2(std::vector<Vector2<T>>&&);
+        Polygon2(std::span<const Vector2<T>>);
+        Polygon2(std::initializer_list<Vector2<T>>);
+        
+        explicit Polygon2(const AxBox2<T>&);
+        explicit Polygon2(const Triangle2<T>&);
+        
+        
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon2&) const noexcept = default;
         
-        operator PolygonData<Vector2<T>>() const 
-        {
-            return { vertex };
-        }
+        operator PolygonData<Vector2<T>>() const;
 
         //! Addsa a point to the polygon
-        Polygon2&   operator<<(const Vector2<T>& pt) 
-        {
-            vertex.push_back(pt);
-            return *this;
-        }
+        Polygon2&   operator<<(const Vector2<T>& pt);
         
         
         /*! \brief Computes the area of a 2D polygon
         */
-        trait::square_t<T>    area() const
-        {
-            return 0.5*abs(point_area());
-        }
+        constexpr trait::square_t<T>    area() const noexcept;
 
         //! Compute the bounding box to this polygon
-        AxBox2<T>   bounds() const 
-        {
-            if(vertex.empty())
-                return nan_v<AxBox2<T>>;
-            AxBox2<T>   ret;
-            ret.lo = ret.hi = vertex.front();
-            size_t n = vertex.size();
-            for(size_t i=1;i<n;++i)
-                ret |= vertex[i];
-            return ret;
-        }
+        constexpr AxBox2<T>   bounds() const noexcept;
 
         //! \brief Tests the polygon to determine if it's points are counter clockwise order
-        bool    is_ccw() const
-        {
-            return point_area() < zero_v<T>;
-        }
+        constexpr bool    is_ccw() const noexcept;
 
 
         //! \brief Tests the polygon to determine if it's points are clockwise order
-        bool    is_clockwise() const
-        {
-            return point_area() > zero_v<T>;
-        }
+        constexpr bool    is_clockwise() const noexcept;
         
         //! Computes the perimeter of the polygon
         //! \note May be less accurate with non-floating point types
-        T       perimeter() const
-        {
-            if(vertex.empty())
-                return T{};
-            T   ret = (vertex.back()-vertex.front()).length();
-            size_t n = vertex.size() - 1;
-            for(size_t i=0;i<n;++i)
-                ret += (vertex[i+1]-vertex[i]).length();
-            return ret;
-        }
+        T       perimeter() const;
 
         /*! \brief "Point area" of the points
         
@@ -91,10 +64,7 @@ namespace yq {
             simply does an "area" of the point deltas, 
             no sign correction, no scaling.
         */
-        trait::square_t<T>    point_area() const
-        {
-            return delta_area(vertex);
-        }
+        constexpr trait::square_t<T>    point_area() const noexcept;
     };
 
 
@@ -104,10 +74,19 @@ namespace yq {
     /*! \brief Creates a polygon from a box
     */
     template <typename T>
-    Polygon2<T> polygon(const AxBox2<T>& ax)
-    {
-        return { { southwest(ax), southeast(ax), northeast(ax), northwest(ax) } };
-    }
+    Polygon2<T> polygon(const AxBox2<T>& ax);
+
+    template <typename T>
+    Polygon2<T> polygon(std::vector<Vector2<T>>&& pts);
+
+    template <typename T>
+    Polygon2<T> polygon(std::span<const Vector2<T>> pts);
+
+    template <typename T>
+    Polygon2<T> polygon(std::initializer_list<const Vector2<T>> pts);
+
+    template <typename T>
+    Polygon2<T> polygon(const Triangle2<T>& ax);
 
     YQ_IEEE754_1(Polygon2)
     YQ_ZERO_1(Polygon2, { })
@@ -118,10 +97,7 @@ namespace yq {
     /*! \brief Create an axially aligned bounding box from a polygon
     */
     template <typename T>
-    AxBox2<T>   aabb(const Polygon2<T>&poly)
-    {
-        return poly.bounds();
-    }
+    AxBox2<T>   aabb(const Polygon2<T>&poly);
 
     //! Tests that all vertices are finite
     template <typename T>
@@ -214,32 +190,19 @@ namespace yq {
     /*! \brief Computes the area of a 2D polygon
     */
     template <typename T>
-    trait::square_t<T>    area(const Polygon2<T>& poly)
-    {
-        return poly.area();
-    }
+    trait::square_t<T>    area(const Polygon2<T>& poly);
 
     //! \brief Tests the polygon to determine if it's points are counter clockwise order
     template <typename T>
-    bool    is_ccw(const Polygon2<T>& poly)
-    {
-        return poly.is_ccw();
-    }
-
+    bool    is_ccw(const Polygon2<T>& poly);
 
     //! \brief Tests the polygon to determine if it's points are clockwise order
     template <typename T>
-    bool    is_clockwise(const Polygon2<T>& poly)
-    {
-        return poly.is_clockwise();
-    }
+    bool    is_clockwise(const Polygon2<T>& poly);
     
     //! Computes the perimeter of the polygon
     template <typename T>
-    T       perimeter(const Polygon2<T>& poly)
-    {
-        return poly.perimeter();
-    }
+    T       perimeter(const Polygon2<T>& poly);
     
 }
 

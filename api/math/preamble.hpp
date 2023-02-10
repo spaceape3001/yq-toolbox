@@ -188,6 +188,7 @@ namespace yq {
     }
     
     template <typename> struct PolygonData;
+    template <typename> struct PolylineData;
     template <typename> struct QuadrilateralData;
     template <typename> struct SegmentData;
     template <typename> struct TetrahedronData;
@@ -220,6 +221,9 @@ namespace yq {
     template <typename> struct Polygon2;
     template <typename> struct Polygon3;
     template <typename> struct Polygon4;
+    template <typename> struct Polyline2;
+    template <typename> struct Polyline3;
+    template <typename> struct Polyline4;
     //template <typename> struct Pose2;
     template <typename> struct Pose3;
     template <typename> struct Quadvector4;
@@ -742,6 +746,13 @@ namespace yq {
     constexpr T   negative(T b) noexcept
     {
         return (b >= zero_v<T>) ? -b : b;
+    }
+    
+    template <typename T>
+    requires trait::is_arithmetic_v<T>
+    constexpr trait::square_t<T>    operator^(T v, two_t) noexcept
+    {
+        return v*v;
     }
 }
 

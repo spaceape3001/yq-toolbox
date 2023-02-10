@@ -185,6 +185,10 @@ namespace yq {
     template <typename T>
     constexpr Side     _classify(T, T lo, T hi) noexcept;
 
+    //! Computes the delta in the gap b
+    template <typename T>
+    constexpr T         _gap(T v, T lo, T hi) noexcept;
+
     template <typename T>
     constexpr bool    is_valid(const Range<T>& a) noexcept
     {

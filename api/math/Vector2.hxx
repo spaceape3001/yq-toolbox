@@ -627,23 +627,12 @@ namespace yq {
         return a.csum();
     }
 
-    /*! \brief "Delta Area"
-    
-        This is a building block for triangle & polygon area code, computes the "delta area" between two points
-        (almost the same as area(aabb(a,b)) but can be negative.)
-    */
     template <typename T>
     constexpr trait::square_t<T>    delta_area(const Vector2<T>&a, const Vector2<T>& b) noexcept
     {
         return (b-a).cproduct();
     }
 
-    /*! \brief "Point area" of the points
-    
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
     template <typename T>
     constexpr trait::square_t<T>    delta_area(const std::span<Vector2<T>>& vertex) noexcept
     {
@@ -705,10 +694,22 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Vector2<T>   min_elem(const Vector2<T>&a, const Vector2<T>&b) noexcept
+    constexpr Vector2<T>   max_elem(std::initializer_list<Vector2<T>> vs) noexcept
     {
-        return a.emin(b);
+        return max_elem(std::span<const Vector2<T>>(vs.data(), vs.size()));
     }
+
+    template <typename T>
+    constexpr Vector2<T>   max_elem(std::span<const Vector2<T>>vs) noexcept
+    {
+        if(vs.empty())
+            return Vector2<T>(NAN);
+        return Vector2<T>(
+            std::max_element(vs.begin(), vs.end(), Vector2<T>::less_x) -> x,
+            std::max_element(vs.begin(), vs.end(), Vector2<T>::less_y) -> y
+        );
+    }
+
 
     /*! \brief Mid-way divide two vectors
     */
@@ -721,6 +722,29 @@ namespace yq {
             return (a+b) / T(2);
         else
             return {};
+    }
+
+    template <typename T>
+    constexpr Vector2<T>   min_elem(const Vector2<T>&a, const Vector2<T>&b) noexcept
+    {
+        return a.emin(b);
+    }
+
+    template <typename T>
+    constexpr Vector2<T>   min_elem(std::initializer_list<Vector2<T>>vs) noexcept
+    {
+        return min_elem(std::span<const Vector2<T>>(vs.data(), vs.size()));
+    }
+
+    template <typename T>
+    constexpr Vector2<T>   min_elem(std::span<const Vector2<T>>vs) noexcept
+    {
+        if(vs.empty())
+            return Vector2<T>(NAN);
+        return Vector2<T>(
+            std::min_element(vs.begin(), vs.end(), Vector2<T>::less_x) -> x,
+            std::min_element(vs.begin(), vs.end(), Vector2<T>::less_y) -> y
+        );
     }
 
     template <typename T, typename U>

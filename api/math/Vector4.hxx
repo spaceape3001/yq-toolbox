@@ -666,9 +666,47 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr Vector4<T>   max_elem(std::initializer_list<Vector4<T>> vs) noexcept
+    {
+        return max_elem(std::span<const Vector4<T>>(vs.data(), vs.size()));
+    }
+
+    template <typename T>
+    constexpr Vector4<T>   max_elem(std::span<const Vector4<T>>vs) noexcept
+    {
+        if(vs.empty())
+            return Vector4<T>(NAN);
+        return Vector4<T>(
+            std::max_element(vs.begin(), vs.end(), Vector4<T>::less_x) -> x,
+            std::max_element(vs.begin(), vs.end(), Vector4<T>::less_y) -> y,
+            std::max_element(vs.begin(), vs.end(), Vector4<T>::less_z) -> z,
+            std::max_element(vs.begin(), vs.end(), Vector4<T>::less_w) -> w
+        );
+    }
+
+    template <typename T>
     constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept
     {
         return a.emin(b);
+    }
+
+    template <typename T>
+    constexpr Vector4<T>   min_elem(std::initializer_list<Vector4<T>>vs) noexcept
+    {
+        return min_elem(std::span<const Vector4<T>>(vs.data(), vs.size()));
+    }
+
+    template <typename T>
+    constexpr Vector4<T>   min_elem(std::span<const Vector4<T>>vs) noexcept
+    {
+        if(vs.empty())
+            return Vector4<T>(NAN);
+        return Vector4<T>(
+            std::min_element(vs.begin(), vs.end(), Vector4<T>::less_x) -> x,
+            std::min_element(vs.begin(), vs.end(), Vector4<T>::less_y) -> y,
+            std::min_element(vs.begin(), vs.end(), Vector4<T>::less_z) -> z,
+            std::min_element(vs.begin(), vs.end(), Vector4<T>::less_w) -> w
+        );
     }
 
     /*! \brief Mid-way divide two vectors

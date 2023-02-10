@@ -121,7 +121,14 @@ namespace yq {
         /*! \brief Returns ALL the corners of the box 
         */
         constexpr AxCorners4<Vector4<T>>  corners() const noexcept;
+        constexpr AxCorners4<Vector4<T>>  corners(T adjust) const noexcept;
         
+        //! Distance to box (zero if inside)
+        T                       distance(const Vector4<T>&) const;
+        
+        //! Distance² to box (zero if inside)
+        constexpr trait::square_t<T>   distance²(const Vector4<T>&) const noexcept;
+
         /*! \brief Checks for full occlusion
         
             A small box is "eclipsed" if it's wholy contained (or touching edges) of the bigger box.
@@ -132,6 +139,23 @@ namespace yq {
 
         //! Returns a fixed copy of the box (assuming it's possible to do)
         constexpr AxBox4 fixed() const noexcept;
+
+        constexpr Vector4<T>    hhhh() const noexcept;
+        constexpr Vector4<T>    hhhh(T adjust) const noexcept;
+        constexpr Vector4<T>    hhhl() const noexcept;
+        constexpr Vector4<T>    hhhl(T adjust) const noexcept;
+        constexpr Vector4<T>    hhlh() const noexcept;
+        constexpr Vector4<T>    hhlh(T adjust) const noexcept;
+        constexpr Vector4<T>    hhll() const noexcept;
+        constexpr Vector4<T>    hhll(T adjust) const noexcept;
+        constexpr Vector4<T>    hlhh() const noexcept;
+        constexpr Vector4<T>    hlhh(T adjust) const noexcept;
+        constexpr Vector4<T>    hlhl() const noexcept;
+        constexpr Vector4<T>    hlhl(T adjust) const noexcept;
+        constexpr Vector4<T>    hllh() const noexcept;
+        constexpr Vector4<T>    hllh(T adjust) const noexcept;
+        constexpr Vector4<T>    hlll() const noexcept;
+        constexpr Vector4<T>    hlll(T adjust) const noexcept;
 
         /*! \brief Computes the hyper volume of the box
         */
@@ -159,6 +183,29 @@ namespace yq {
 
         //! Checks for validity (hi >= lo)
         constexpr bool    is_valid() const noexcept;
+
+        constexpr Vector4<T>    lhhh() const noexcept;
+        constexpr Vector4<T>    lhhh(T adjust) const noexcept;
+        constexpr Vector4<T>    lhhl() const noexcept;
+        constexpr Vector4<T>    lhhl(T adjust) const noexcept;
+        constexpr Vector4<T>    lhlh() const noexcept;
+        constexpr Vector4<T>    lhlh(T adjust) const noexcept;
+        constexpr Vector4<T>    lhll() const noexcept;
+        constexpr Vector4<T>    lhll(T adjust) const noexcept;
+        constexpr Vector4<T>    llhh() const noexcept;
+        constexpr Vector4<T>    llhh(T adjust) const noexcept;
+        constexpr Vector4<T>    llhl() const noexcept;
+        constexpr Vector4<T>    llhl(T adjust) const noexcept;
+        constexpr Vector4<T>    lllh() const noexcept;
+        constexpr Vector4<T>    lllh(T adjust) const noexcept;
+        constexpr Vector4<T>    llll() const noexcept;
+        constexpr Vector4<T>    llll(T adjust) const noexcept;
+
+        //! Minimum inflation number on a valid box to keep it from going invalid
+        constexpr T min_inflate() const noexcept;
+
+        //! Nearest point (itself if inside)
+        //constexpr Vector4<T>    nearest(const Vector4<T>&) const noexcept;
 
         /*! \brief Checks for any overlap
         

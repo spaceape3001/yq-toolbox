@@ -17,6 +17,8 @@
 #include <math/Circle2.hpp>
 #include <math/Data2.hpp>
 #include <math/Range.hpp>
+#include <math/Polygon2.hpp>
+#include <math/Polyline2.hpp>
 #include <math/Segment2.hpp>
 #include <math/Side.hpp>
 #include <math/Size2.hpp>
@@ -104,6 +106,12 @@ namespace yq {
     constexpr AxBox2<T>::AxBox2(const Circle2<T>& cir) noexcept : AxBox2(cir.bounds())
     {
     }
+
+    template <typename T>
+    constexpr AxBox2<T>::AxBox2(const Polygon2<T>&p) noexcept : AxBox2(p.bounds()) {}
+
+    template <typename T>
+    constexpr AxBox2<T>::AxBox2(const Polyline2<T>&p) noexcept : AxBox2(p.bounds()) {}
 
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Segment2<T>&seg) noexcept : AxBox2<T>(seg.bounds()) {}
@@ -298,12 +306,35 @@ namespace yq {
     template <typename T>
     constexpr AxCorners2<Vector2<T>>    AxBox2<T>::corners() const noexcept 
     {
-        return { 
-            southwest(),
-            northwest(),
-            southeast(),
-            northeast()
-        };
+        return AxCorners2<Vector2<T>>(
+            ll(),
+            lh(),
+            hl(),
+            hh()
+        );
+    }
+
+    template <typename T>
+    constexpr AxCorners2<Vector2<T>>    AxBox2<T>::corners(T adjust) const noexcept
+    {
+        return inflate(adjust).corners();
+    }
+
+    template <typename T>
+    T                       AxBox2<T>::distance(const Vector2<T>&v) const
+    {
+        if constexpr ( trait::has_sqrt_v<T> )
+            return sqrt(distance²(v));
+        return zero_v<T>;
+    }
+    
+    template <typename T>
+    constexpr trait::square_t<T>   AxBox2<T>::distance²(const Vector2<T>&v) const noexcept
+    {
+        return 
+            (_gap(v.x, lo.x, hi.x)^²) +
+            (_gap(v.y, lo.y, hi.y)^²)
+        ;
     }
 
     template <typename T>
@@ -325,6 +356,32 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::hh() const noexcept
+    {
+        return hi;
+    }
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::hh(T adjust) const noexcept
+    {
+        return Vector2<T>(hi.x+adjust, hi.adjust);
+    }
+    
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::hl() const noexcept
+    {
+        return Vector2<T>(hi.x, lo.y);
+    }
+    
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::hl(T adjust) const noexcept
+    {
+        return Vector2<T>(hi.x+adjust, lo.y-adjust);
+    }
+
+    template <typename T>
     constexpr Circle2<T>  AxBox2<T>::incircle() const noexcept
     {
         return Circle2<T>(center(), middivide(span().cmin()));
@@ -340,8 +397,7 @@ namespace yq {
     constexpr AxBox2<T>    AxBox2<T>::inflate(guard_t, T d) const noexcept
     {
         AxBox2  bx  = fixed();
-        T       dx  = -midspan(span().cmin());
-        return bx.inflate(std::max(d, dx));
+        return bx.inflate(std::max(d, bx.min_inflate()));
     }
 
     template <typename T>
@@ -349,12 +405,50 @@ namespace yq {
     {
         return all(lo) <= hi;
     }
-        
-    template <typename T>
-    constexpr Vector2<T>    AxBox2<T>::northeast() const noexcept { return hi; };
 
     template <typename T>
-    constexpr Vector2<T>    AxBox2<T>::northwest() const noexcept { return { lo.x, hi.y}; }
+    constexpr Vector2<T>    AxBox2<T>::lh() const noexcept
+    {
+        return Vector2<T>(lo.x, hi.y);
+    }
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::lh(T adjust) const noexcept
+    {
+        return Vector2<T>(lo.x-adjust, hi.y+adjust);
+    }
+    
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::ll() const noexcept
+    {
+        return lo;
+    }
+    
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::ll(T adjust) const noexcept
+    {
+        return Vector2<T>(lo.x-adjust, lo.y-adjust);
+    }
+        
+    template <typename T>
+    constexpr T AxBox2<T>::min_inflate() const noexcept
+    {
+        return -midspan(span().cmin());
+    }
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::northeast() const noexcept 
+    { 
+        return hh(); 
+    }
+
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::northwest() const noexcept 
+    { 
+        return lh(); 
+    }
     
     template <typename T>
     constexpr bool          AxBox2<T>::overlaps(const AxBox2<T>& b) noexcept
@@ -386,13 +480,13 @@ namespace yq {
     template <typename T>
     constexpr Vector2<T>    AxBox2<T>::southeast() const noexcept 
     { 
-        return Vector2<T>( hi.x, lo.y ); 
+        return hl();
     }
     
     template <typename T>
     constexpr Vector2<T>    AxBox2<T>::southwest() const noexcept 
     { 
-        return lo; 
+        return ll(); 
     }
 
     template <typename T>

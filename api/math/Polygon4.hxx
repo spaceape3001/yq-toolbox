@@ -12,5 +12,7 @@
     template instantiation.  
 */
 
+#include <math/Polygon4.hpp>
+
 namespace yq {
 }

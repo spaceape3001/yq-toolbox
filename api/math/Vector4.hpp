@@ -292,6 +292,7 @@ namespace yq {
         */
         T    length() const;
 
+
             //  ===================================================================================================
             //  AllComponents Adapters
             //  ===================================================================================================
@@ -567,12 +568,25 @@ namespace yq {
     constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;
     
     template <typename T>
-    constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;
+    constexpr Vector4<T>   max_elem(std::initializer_list<Vector4<T>>) noexcept;
+    
+    template <typename T>
+    constexpr Vector4<T>   max_elem(std::span<const Vector4<T>>) noexcept;
+
 
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
     constexpr Vector4<T>    midvector(const Vector4<T>& a, const Vector4<T>& b=Vector4<T>{}) noexcept;
+
+    template <typename T>
+    constexpr Vector4<T>   min_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;
+
+    template <typename T>
+    constexpr Vector4<T>   min_elem(std::initializer_list<Vector4<T>>) noexcept;
+
+    template <typename T>
+    constexpr Vector4<T>   min_elem(std::span<const Vector4<T>>) noexcept;
 
     template <typename T>
     AllComponents<Vector4<T>>   all(const Vector4<T>& val)

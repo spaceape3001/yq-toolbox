@@ -171,6 +171,16 @@ namespace yq {
         return Side::ERROR;
     }
 
+    template <typename T>
+    constexpr T         _gap(T v, T lo, T hi) noexcept
+    {
+        if(lo <= v)
+            return v - lo;
+        if(v <= hi)
+            return hi - v;
+        return zero_v<T>;
+    }
+
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

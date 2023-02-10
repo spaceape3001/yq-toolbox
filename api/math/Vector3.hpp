@@ -646,12 +646,25 @@ namespace yq {
     constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;
 
     template <typename T>
-    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;
+    constexpr Vector3<T>   max_elem(std::initializer_list<Vector3<T>>) noexcept;
+    
+    template <typename T>
+    constexpr Vector3<T>   max_elem(std::span<const Vector3<T>>) noexcept;
 
     /*! \brief Mid-way divide two vectors
     */
     template <typename T>
     constexpr Vector3<T>     midvector(const Vector3<T>& a, const Vector3<T>& b=Vector3<T>{}) noexcept;
+
+    template <typename T>
+    constexpr Vector3<T>   min_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;
+
+    template <typename T>
+    constexpr Vector3<T>   min_elem(std::initializer_list<Vector3<T>>) noexcept;
+
+    template <typename T>
+    constexpr Vector3<T>   min_elem(std::span<const Vector3<T>>) noexcept;
+
 
     template <typename T>
     AllComponents<Vector3<T>>   all(const Vector3<T>& val)
