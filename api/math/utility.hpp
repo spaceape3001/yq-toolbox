@@ -112,5 +112,15 @@ namespace yq {
     {
         return sum(span(data));
     }
+    
+    template <typename T, typename Pred>
+    constexpr auto   transform(std::span<const T> input, Pred pred) noexcept -> std::vector<decltype(pred(T()))> 
+    {
+        std::vector<decltype(pred(T()))>    ret;
+        ret.reserve(input.size());
+        for(const T& t : input)
+            ret.push_back(pred(t));
+        return ret;
+    }
 
 }

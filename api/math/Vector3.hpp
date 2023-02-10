@@ -107,6 +107,9 @@ namespace yq {
         //! Addition with multivector
         constexpr Multivector3<T> operator+(const Multivector3<T>& b) const noexcept;
         
+        Polygon3<T> operator+(const Polygon3<T>&) const;
+        Polyline3<T> operator+(const Polyline3<T>&) const;
+
         constexpr Segment3<T> operator+(const Segment3<T>&) const noexcept;
 
         constexpr Sphere3<T> operator+(const Sphere3<T>&) const noexcept;
@@ -122,6 +125,8 @@ namespace yq {
         //! Self-addition
         Vector3& operator+=(const Vector3& b) noexcept;
         
+        std::vector<Vector3> operator+(std::span<const Vector3>) const;
+
         //! Subtraction with number
         constexpr Multivector3<T> operator-(T b) const noexcept;
         
@@ -132,6 +137,9 @@ namespace yq {
         
         //! Subtraction with multivector
         constexpr Multivector3<T> operator-(const Multivector3<T>& b) const noexcept;
+
+        Polygon3<T> operator-(const Polygon3<T>&) const;
+        Polyline3<T> operator-(const Polyline3<T>&) const;
 
         constexpr Segment3<T> operator-(const Segment3<T>&) const noexcept;
 
@@ -147,6 +155,8 @@ namespace yq {
 
         //! Self-subtraction
         Vector3& operator-=(const Vector3& b) noexcept;
+
+        std::vector<Vector3> operator-(std::span<const Vector3>) const;
 
         //! Multiplication with scalar
         template <typename U>
@@ -522,12 +532,16 @@ namespace yq {
 
     template <typename T>
     constexpr Multivector3<T> operator+(T a, const Vector3<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector3<T>>   operator+(std::span<Vector3<T>>, Vector3<T>);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
 
     template <typename T>
     constexpr Multivector3<T> operator-(T a, const Vector3<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector3<T>>   operator-(std::span<Vector3<T>>, Vector3<T>);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION

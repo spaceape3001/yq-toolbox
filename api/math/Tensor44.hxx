@@ -26,6 +26,7 @@
 
 #include <math/Vector3.hpp>
 #include <math/Vector4.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
@@ -273,11 +274,9 @@ namespace yq {
         template <typename U>
     std::vector<Vector4<trait::product_t<T,U>>>    Tensor44<T>::operator*(std::span<const Vector4<U>> bs) const
     {
-        std::vector<Vector4<trait::product_t<T,U>>>    ret;
-        ret.reserve(bs.size());
-        for(const Vector4<U>& v : bs)
-            ret.push_back(*this * v);
-        return ret;
+        return transform(bs, [&](const Vector4<U>& b) -> Vector4<trait::product_t<T,U>> {
+            return *this * b;
+        });
     }
 
     template <typename T>

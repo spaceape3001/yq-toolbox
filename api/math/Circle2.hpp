@@ -30,6 +30,10 @@ namespace yq {
         constexpr Circle2(nan_t) : Circle2(Vector2<T>(NAN), nan_v<T>) {}
         constexpr Circle2(zero_t) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
         
+        constexpr Circle2(focus_t, const Vector2<T>& focus, const T dist) noexcept : Circle2(focus, dist) {}
+        Circle2(focus_t, const Vector2<T>& focus, const Vector2<T>& edge);
+        Circle2(opposite_t, const Vector2<T>&, const Vector2<T>&);
+
         //! Equality operator (defaulted)
         constexpr bool operator==(const Circle2&) const noexcept = default;
             

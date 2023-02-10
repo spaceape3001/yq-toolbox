@@ -30,6 +30,7 @@
 
 #include <math/trig.hpp>
 #include <math/Units.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
@@ -350,11 +351,9 @@ namespace yq {
         template <typename U>
     std::vector<Vector3<trait::product_t<T,U>>>    Tensor33<T>::operator*(std::span<const Vector3<U>> bs) const
     {
-        std::vector<Vector3<trait::product_t<T,U>>>    ret;
-        ret.reserve(bs.size());
-        for(const Vector3<U>& v : bs)
-            ret.push_back(*this * v);
-        return ret;
+        return transform(bs, [&](const Vector3<U>& b) -> Vector3<trait::product_t<T,U>> {
+            return *this * b;
+        });
     }
 
     template <typename T>

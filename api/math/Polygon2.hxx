@@ -40,6 +40,49 @@ namespace yq {
     }
     
     template <typename T>
+    const Polygon2<T>&    Polygon2<T>::operator+() const
+    {
+        return *this;
+    }
+    
+    template <typename T>
+    Polygon2<T>           Polygon2<T>::operator-() const
+    {
+        return Polygon2(transform(vertex, [](const Vector2<T>& a) -> Vector2<T> {
+            return -a;
+        }));
+    }
+    
+    template <typename T>
+    Polygon2<T>   Polygon2<T>::operator+(const Vector2<T>&b) const
+    {
+        return Polygon2(vertex+b);
+    }
+    
+    template <typename T>
+    Polygon2<T>&  Polygon2<T>::operator+=(const Vector2<T>& b)
+    {
+        for(Vector2<T>& v : vertex)
+            v += b;
+        return *this;
+    }
+    
+
+    template <typename T>
+    Polygon2<T>   Polygon2<T>::operator-(const Vector2<T>&b) const
+    {
+        return Polygon2(vertex-b);
+    }
+    
+    template <typename T>
+    Polygon2<T>&  Polygon2<T>::operator-=(const Vector2<T>&b)
+    {
+        for(Vector2<T>& v : vertex)
+            v -= b;
+        return *this;
+    }
+    
+    template <typename T>
         template <typename U>
     Polygon2<trait::product_t<T,U>>   Polygon2<T>::operator*(const Tensor22<U>& b) const
     {
@@ -111,8 +154,8 @@ namespace yq {
     T       Polygon2<T>::perimeter() const
     {
         T   ret = zero_v<T>;
-        segments([&](const Segment2<T>& seg){
-            ret += seg.length();
+        segments([&](const Vector2<T>& a, const Vector2<T>&b){
+            ret += (a-b).length();
         });
         return ret;
     }

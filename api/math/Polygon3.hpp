@@ -40,6 +40,13 @@ namespace yq {
         //! Addsa a point to the polygon
         Polygon3&   operator<<(const Vector3<T>& pt);
 
+        const Polygon3&    operator+() const;
+        Polygon3           operator-() const;
+        
+        Polygon3   operator+(const Vector3<T>&) const;
+        Polygon3&  operator+=(const Vector3<T>&);
+        Polygon3   operator-(const Vector3<T>&) const;
+        Polygon3&  operator-=(const Vector3<T>&);
 
         template <typename U>
         Polygon2<trait::product_t<T,U>>   operator*(const Tensor32<U>&) const;

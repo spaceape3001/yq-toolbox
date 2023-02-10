@@ -16,6 +16,8 @@
 #include <math/Bivector4.hpp>
 #include <math/Multivector4.hpp>
 #include <math/Quadvector4.hpp>
+#include <math/Polygon4.hpp>
+#include <math/Polyline4.hpp>
 #include <math/Segment4.hpp>
 #include <math/Trivector4.hpp>
 
@@ -31,6 +33,7 @@
 
 #include <math/trig.hpp>
 #include <math/Units.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
@@ -101,6 +104,18 @@ namespace yq {
     }
 
     template <typename T>
+    Polygon4<T> Vector4<T>::operator+(const Polygon4<T>&b) const
+    {
+        return Polygon4<T>(*this + b.vertex);
+    }
+
+    template <typename T>
+    Polyline4<T> Vector4<T>::operator+(const Polyline4<T>&b) const
+    {
+        return Polygon4<T>(*this - b.vertex);
+    }
+
+    template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator+(const Quadvector4<T>&b) const noexcept
     {
         return Multivector4<T>(
@@ -158,6 +173,13 @@ namespace yq {
         return *this;
     }
 
+    template <typename T>
+    std::vector<Vector4<T>> Vector4<T>::operator+(std::span<const Vector4>bs) const
+    {
+        return transform(bs, [&](const Vector4<T>& b) -> Vector4<T> {
+            return *this + b;
+        });
+    }
 
     template <typename T>
     constexpr Multivector4<T> Vector4<T>::operator-(T b) const noexcept
@@ -199,6 +221,18 @@ namespace yq {
             -b.xyz, -b.yzw, -b.zwx, -b.wxy,
             -b.xyzw
         );
+    }
+
+    template <typename T>
+    Polygon4<T> Vector4<T>::operator-(const Polygon4<T>&b) const
+    {
+        return Polygon4<T>(*this - b.vertex);
+    }
+
+    template <typename T>
+    Polyline4<T> Vector4<T>::operator-(const Polyline4<T>&b) const
+    {
+        return Polygon4<T>(*this - b.vertex);
     }
 
     template <typename T>
@@ -258,6 +292,14 @@ namespace yq {
         z -= b.z;
         w -= b.w;
         return *this;
+    }
+
+    template <typename T>
+    std::vector<Vector4<T>> Vector4<T>::operator-(std::span<const Vector4>bs) const
+    {
+        return transform(bs, [&](const Vector4<T>& b) -> Vector4<T> {
+            return *this - b;
+        });
     }
 
     template <typename T>
@@ -555,6 +597,14 @@ namespace yq {
     }
 
     template <typename T>
+    std::vector<Vector4<T>>   operator+(std::span<Vector4<T>>as, Vector4<T>b)
+    {
+        return transform(as, [&](const Vector4<T>&a) -> Vector4<T> {
+            return a + b;
+        });
+    }
+
+    template <typename T>
     constexpr Multivector4<T> operator+(T a, const Vector4<T>& b) noexcept
     {
         return { 
@@ -566,6 +616,13 @@ namespace yq {
         };
     }
 
+    template <typename T>
+    std::vector<Vector4<T>>   operator-(std::span<Vector4<T>>as, Vector4<T>b)
+    {
+        return transform(as, [&](const Vector4<T>&a) -> Vector4<T> {
+            return a - b;
+        });
+    }
 
     template <typename T, typename U>
     requires (trait::is_arithmetic_v<T>)
@@ -578,41 +635,33 @@ namespace yq {
     template <typename T, typename U>
     std::vector<Vector1<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor41<U>&b)
     {
-        std::vector<Vector1<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector4<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector4<T>&v) -> Vector1<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
     
     template <typename T, typename U>
     std::vector<Vector2<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor42<U>&b)
     {
-        std::vector<Vector2<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector4<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector4<T>&v) -> Vector2<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
 
     template <typename T, typename U>
     std::vector<Vector3<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor43<U>&b)
     {
-        std::vector<Vector3<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector4<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector4<T>&v) -> Vector3<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
     
     template <typename T, typename U>
     std::vector<Vector4<trait::product_t<T,U>>> operator*(std::span<const Vector4<T>>as, const Tensor44<U>&b)
     {
-        std::vector<Vector4<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector4<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector4<T>&v) -> Vector4<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
 
     template <typename T, typename U>

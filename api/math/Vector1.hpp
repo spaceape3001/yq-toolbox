@@ -94,6 +94,8 @@ namespace yq {
         //! Self-addition
         Vector1& operator+=(const Vector1& b) noexcept;
 
+        std::vector<Vector1> operator+(std::span<const Vector1>) const;
+
         //! Subtraction with scalar
         constexpr Multivector1<T> operator-(T b) const noexcept;
         
@@ -110,6 +112,8 @@ namespace yq {
         //! Self-subtraction
         Vector1& operator-=(const Vector1& b) noexcept;
         
+        std::vector<Vector1> operator-(std::span<const Vector1>) const;
+
         //! Multiplication with scalar
         template <typename U>
         requires (trait::is_arithmetic_v<U>)
@@ -408,12 +412,17 @@ namespace yq {
 
     template <typename T>
     constexpr Multivector1<T> operator+(T a, const Vector1<T>& b) noexcept;
+    
+    template <typename T>
+    std::vector<Vector1<T>>   operator+(std::span<Vector1<T>>, Vector1<T>);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
 
     template <typename T>
     constexpr Multivector1<T> operator-(T a, const Vector1<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector1<T>>   operator-(std::span<Vector1<T>>, Vector1<T>);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION

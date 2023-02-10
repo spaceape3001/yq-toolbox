@@ -35,6 +35,49 @@ namespace yq {
     }
 
     template <typename T>
+    const Polyline4<T>&    Polyline4<T>::operator+() const
+    {
+        return *this;
+    }
+    
+    template <typename T>
+    Polyline4<T>           Polyline4<T>::operator-() const
+    {
+        return Polyline4(transform(vertex, [](const Vector4<T>& a) -> Vector4<T> {
+            return -a;
+        }));
+    }
+    
+    template <typename T>
+    Polyline4<T>   Polyline4<T>::operator+(const Vector4<T>&b) const
+    {
+        return Polyline4(vertex+b);
+    }
+    
+    template <typename T>
+    Polyline4<T>&  Polyline4<T>::operator+=(const Vector4<T>& b)
+    {
+        for(Vector4<T>& v : vertex)
+            v += b;
+        return *this;
+    }
+    
+
+    template <typename T>
+    Polyline4<T>   Polyline4<T>::operator-(const Vector4<T>&b) const
+    {
+        return Polyline4(vertex-b);
+    }
+    
+    template <typename T>
+    Polyline4<T>&  Polyline4<T>::operator-=(const Vector4<T>&b)
+    {
+        for(Vector4<T>& v : vertex)
+            v -= b;
+        return *this;
+    }
+    
+    template <typename T>
         template <typename U>
     Polyline2<trait::product_t<T,U>>   Polyline4<T>::operator*(const Tensor42<U>& b) const
     {
@@ -77,8 +120,8 @@ namespace yq {
     T       Polyline4<T>::length() const
     {
         T   ret = zero_v<T>;
-        segments([&](const Segment4<T>& seg){
-            ret += seg.length();
+        segments([&](const Vector4<T>& a, const Vector4<T>&b){
+            ret += (a-b).length();
         });
         return ret;
     }

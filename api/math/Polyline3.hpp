@@ -37,6 +37,14 @@ namespace yq {
         //! Addsa a point to the polyline
         Polyline3&   operator<<(const Vector3<T>& pt);
 
+        const Polyline3&    operator+() const;
+        Polyline3           operator-() const;
+        
+        Polyline3   operator+(const Vector3<T>&) const;
+        Polyline3&  operator+=(const Vector3<T>&);
+        Polyline3   operator-(const Vector3<T>&) const;
+        Polyline3&  operator-=(const Vector3<T>&);
+
         template <typename U>
         Polyline2<trait::product_t<T,U>>   operator*(const Tensor32<U>&) const;
         template <typename U>

@@ -35,6 +35,49 @@ namespace yq {
     }
 
     template <typename T>
+    const Polyline3<T>&    Polyline3<T>::operator+() const
+    {
+        return *this;
+    }
+    
+    template <typename T>
+    Polyline3<T>           Polyline3<T>::operator-() const
+    {
+        return Polyline3(transform(vertex, [](const Vector3<T>& a) -> Vector3<T> {
+            return -a;
+        }));
+    }
+    
+    template <typename T>
+    Polyline3<T>   Polyline3<T>::operator+(const Vector3<T>&b) const
+    {
+        return Polyline3(vertex+b);
+    }
+    
+    template <typename T>
+    Polyline3<T>&  Polyline3<T>::operator+=(const Vector3<T>& b)
+    {
+        for(Vector3<T>& v : vertex)
+            v += b;
+        return *this;
+    }
+    
+
+    template <typename T>
+    Polyline3<T>   Polyline3<T>::operator-(const Vector3<T>&b) const
+    {
+        return Polyline3(vertex-b);
+    }
+    
+    template <typename T>
+    Polyline3<T>&  Polyline3<T>::operator-=(const Vector3<T>&b)
+    {
+        for(Vector3<T>& v : vertex)
+            v -= b;
+        return *this;
+    }
+    
+    template <typename T>
         template <typename U>
     Polyline2<trait::product_t<T,U>>   Polyline3<T>::operator*(const Tensor32<U>& b) const
     {
@@ -77,8 +120,8 @@ namespace yq {
     T       Polyline3<T>::length() const
     {
         T   ret = zero_v<T>;
-        segments([&](const Segment3<T>& seg){
-            ret += seg.length();
+        segments([&](const Vector3<T>& a, const Vector3<T>&b){
+            ret += (a-b).length();
         });
         return ret;
     }

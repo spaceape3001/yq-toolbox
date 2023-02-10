@@ -14,6 +14,7 @@
 
 #include <math/Polyline2.hpp>
 #include <math/Segment2.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T> Polyline2<T>::Polyline2(const std::vector<Vector2<T>>&pts) : vertex(pts) {}
@@ -31,6 +32,49 @@ namespace yq {
     Polyline2<T>&   Polyline2<T>::operator<<(const Vector2<T>& pt) 
     {
         vertex.push_back(pt);
+        return *this;
+    }
+
+    template <typename T>
+    const Polyline2<T>&    Polyline2<T>::operator+() const
+    {
+        return *this;
+    }
+    
+    template <typename T>
+    Polyline2<T>           Polyline2<T>::operator-() const
+    {
+        return Polyline2(transform(vertex, [](const Vector2<T>& a) -> Vector2<T> {
+            return -a;
+        }));
+    }
+    
+    template <typename T>
+    Polyline2<T>   Polyline2<T>::operator+(const Vector2<T>&b) const
+    {
+        return Polyline2(vertex+b);
+    }
+    
+    template <typename T>
+    Polyline2<T>&  Polyline2<T>::operator+=(const Vector2<T>& b)
+    {
+        for(Vector2<T>& v : vertex)
+            v += b;
+        return *this;
+    }
+    
+
+    template <typename T>
+    Polyline2<T>   Polyline2<T>::operator-(const Vector2<T>&b) const
+    {
+        return Polyline2(vertex-b);
+    }
+    
+    template <typename T>
+    Polyline2<T>&  Polyline2<T>::operator-=(const Vector2<T>&b)
+    {
+        for(Vector2<T>& v : vertex)
+            v -= b;
         return *this;
     }
 
@@ -77,8 +121,8 @@ namespace yq {
     T       Polyline2<T>::length() const
     {
         T   ret = zero_v<T>;
-        segments([&](const Segment2<T>& seg){
-            ret += seg.length();
+        segments([&](const Vector2<T>& a, const Vector2<T>&b){
+            ret += (a-b).length();
         });
         return ret;
     }

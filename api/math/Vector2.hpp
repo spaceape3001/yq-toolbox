@@ -99,12 +99,17 @@ namespace yq {
         //! Addition with multivector
         constexpr Multivector2<T> operator+(const Multivector2<T>& b) const noexcept;
 
+        Polygon2<T> operator+(const Polygon2<T>&) const;
+        Polyline2<T> operator+(const Polyline2<T>&) const;
+
         constexpr Segment2<T> operator+(const Segment2<T>&) const noexcept;
         
         constexpr Triangle2<T> operator+(const Triangle2<T>&) const noexcept;
 
         //! Addition to vector
         constexpr Vector2 operator+(const Vector2& b) const noexcept;
+        
+        std::vector<Vector2<T>> operator+(std::span<const Vector2>) const;
         
         //! Self-addition to vector
         Vector2& operator+=(const Vector2& b) noexcept;
@@ -122,12 +127,16 @@ namespace yq {
         //! Subtraction with multivector
         constexpr Multivector2<T> operator-(const Multivector2<T>& b) const noexcept;
 
+        Polygon2<T> operator-(const Polygon2<T>&) const;
+        Polyline2<T> operator-(const Polyline2<T>&) const;
+
         constexpr Segment2<T> operator-(const Segment2<T>&) const noexcept;
 
         constexpr Triangle2<T> operator-(const Triangle2<T>&) const noexcept;
 
         //! Subtraction
         constexpr Vector2 operator-(const Vector2& b) const noexcept;
+        std::vector<Vector2<T>> operator-(std::span<const Vector2>) const;
 
         //! Self-subtraction
         Vector2& operator-=(const Vector2& b) noexcept;
@@ -460,12 +469,16 @@ namespace yq {
     //! Adds scalar with vector
     template <typename T>
     constexpr Multivector2<T> operator+(T a, const Vector2<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector2<T>>   operator+(std::span<Vector2<T>>, Vector2<T>);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
 
     template <typename T>
     constexpr Multivector2<T> operator-(T a, const Vector2<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector2<T>>   operator-(std::span<Vector2<T>>, Vector2<T>);
 
 
 //  --------------------------------------------------------

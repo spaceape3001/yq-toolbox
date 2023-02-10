@@ -119,6 +119,10 @@ namespace yq {
         constexpr Multivector4<T> operator+(const Bivector4<T>&) const noexcept;
         //! Addition with multivector
         constexpr Multivector4<T> operator+(const Multivector4<T>&) const noexcept;
+
+        Polygon4<T> operator+(const Polygon4<T>&) const;
+        Polyline4<T> operator+(const Polyline4<T>&) const;
+
         //! Addition with quadvector
         constexpr Multivector4<T> operator+(const Quadvector4<T>&) const noexcept;
 
@@ -134,6 +138,8 @@ namespace yq {
         //! Self-addition
         Vector4& operator+=(const Vector4& b) noexcept;
 
+        std::vector<Vector4> operator+(std::span<const Vector4>) const;
+
         //! Subtraction
         constexpr Vector4 operator-(const Vector4& b) const noexcept;
 
@@ -146,8 +152,13 @@ namespace yq {
         constexpr Multivector4<T> operator-(const Bivector4<T>&) const noexcept;
         //! Addition with multivector
         constexpr Multivector4<T> operator-(const Multivector4<T>&) const noexcept;
+
+        Polygon4<T> operator-(const Polygon4<T>&) const;
+        Polyline4<T> operator-(const Polyline4<T>&) const;
+
         //! Addition with quadvector
         constexpr Multivector4<T> operator-(const Quadvector4<T>&) const noexcept;
+
 
         constexpr Segment4<T> operator-(const Segment4<T>&) const noexcept;
 
@@ -160,6 +171,8 @@ namespace yq {
         
         //! Self-subtraction
         Vector4& operator-=(const Vector4& b) noexcept;
+
+        std::vector<Vector4> operator-(std::span<const Vector4>) const;
 
         //! Multiplication with scalar
         template <typename U>
@@ -503,12 +516,16 @@ namespace yq {
 
     template <typename T>
     constexpr Multivector4<T> operator+(T a, const Vector4<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector4<T>>   operator+(std::span<Vector4<T>>, Vector4<T>);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
 
     template <typename T>
     constexpr Multivector4<T> operator-(T a, const Vector4<T>& b) noexcept;
+    template <typename T>
+    std::vector<Vector4<T>>   operator-(std::span<Vector4<T>>, Vector4<T>);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION

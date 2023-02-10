@@ -34,6 +34,14 @@ namespace yq {
 
         operator PolylineData<Vector4<T>>() const;
 
+        const Polyline4&    operator+() const;
+        Polyline4           operator-() const;
+        
+        Polyline4   operator+(const Vector4<T>&) const;
+        Polyline4&  operator+=(const Vector4<T>&);
+        Polyline4   operator-(const Vector4<T>&) const;
+        Polyline4&  operator-=(const Vector4<T>&);
+
         template <typename U>
         Polyline2<trait::product_t<T,U>>   operator*(const Tensor42<U>&) const;
         template <typename U>

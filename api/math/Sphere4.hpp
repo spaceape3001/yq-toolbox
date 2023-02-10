@@ -30,6 +30,10 @@ namespace yq {
         constexpr Sphere4(nan_t) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
         constexpr Sphere4(zero_t) : Sphere4(Vector4<T>(ZERO), zero_v<T>) {}
 
+        constexpr Sphere4(focus_t, const Vector4<T>& focus, const T dist) noexcept : Sphere4(focus, dist) {}
+        Sphere4(focus_t, const Vector4<T>& focus, const Vector4<T>& edge);
+        Sphere4(opposite_t, const Vector4<T>&, const Vector4<T>&);
+
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
 

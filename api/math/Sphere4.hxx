@@ -17,6 +17,14 @@
 
 namespace yq {
     template <typename T>
+    Sphere4<T>::Sphere4(focus_t, const Vector4<T>& focus, const Vector4<T>& edge) : 
+        Sphere4(focus, (edge-focus).length()) {}
+
+    template <typename T>
+    Sphere4<T>::Sphere4(opposite_t, const Vector4<T>&a, const Vector4<T>&b) : 
+        Sphere4(middivide(a,b), middivide((a-b).length())) {}
+
+    template <typename T>
     constexpr Sphere4<T> Sphere4<T>::operator+() const noexcept
     {
         return Sphere4<T>(point, radius);

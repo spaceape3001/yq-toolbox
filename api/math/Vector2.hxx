@@ -16,6 +16,8 @@
 #include <math/Bivector2.hpp>
 #include <math/Circle2.hpp>
 #include <math/Multivector2.hpp>
+#include <math/Polygon2.hpp>
+#include <math/Polyline2.hpp>
 #include <math/Segment2.hpp>
 #include <math/Triangle2.hpp>
 
@@ -31,6 +33,7 @@
 
 #include <math/trig.hpp>
 #include <math/Units.hpp>
+#include <math/utility.hpp>
 
 
 namespace yq {
@@ -103,6 +106,18 @@ namespace yq {
     }
 
     template <typename T>
+    Polygon2<T> Vector2<T>::operator+(const Polygon2<T>&b) const
+    {
+        return Polygon2<T>(*this + b.vertex);
+    }
+
+    template <typename T>
+    Polyline2<T> Vector2<T>::operator+(const Polyline2<T>&b) const
+    {
+        return Polygon2<T>(*this - b.vertex);
+    }
+
+    template <typename T>
     constexpr Segment2<T> Vector2<T>::operator+(const Segment2<T>&rhs) const noexcept
     {
         return Segment2<T>( *this + rhs.a, *this + rhs.b );
@@ -126,6 +141,14 @@ namespace yq {
         x += b.x;
         y += b.y;
         return *this;
+    }
+
+    template <typename T>
+    std::vector<Vector2<T>> Vector2<T>::operator+(std::span<const Vector2>bs) const
+    {
+        return transform(bs, [&](const Vector2<T>& b) -> Vector2<T> {
+            return *this + b;
+        });
     }
 
     template <typename T>
@@ -171,6 +194,18 @@ namespace yq {
     }
 
     template <typename T>
+    Polygon2<T> Vector2<T>::operator-(const Polygon2<T>&b) const
+    {
+        return Polygon2<T>(*this - b.vertex);
+    }
+
+    template <typename T>
+    Polyline2<T> Vector2<T>::operator-(const Polyline2<T>&b) const
+    {
+        return Polygon2<T>(*this - b.vertex);
+    }
+
+    template <typename T>
     constexpr Segment2<T> Vector2<T>::operator-(const Segment2<T>&rhs) const noexcept
     {
         return Segment2<T>( *this - rhs.a, *this - rhs.b );
@@ -188,6 +223,7 @@ namespace yq {
         return Vector2(x-b.x, y-b.y);
     }
 
+
     template <typename T>
     Vector2<T>& Vector2<T>::operator-=(const Vector2& b) noexcept
     {
@@ -196,6 +232,13 @@ namespace yq {
         return *this;
     }
 
+    template <typename T>
+    std::vector<Vector2<T>> Vector2<T>::operator-(std::span<const Vector2>bs) const 
+    {
+        return transform(bs, [&](const Vector2<T>& b) -> Vector2<T> {
+            return *this - b;
+        });
+    }
 
     template <typename T>
         template <typename U>
@@ -496,6 +539,14 @@ namespace yq {
         );
     }
 
+    template <typename T>
+    std::vector<Vector2<T>>   operator+(std::span<Vector2<T>>as, Vector2<T>b)
+    {
+        return transform(as, [&](const Vector2<T>&a) -> Vector2<T> {
+            return a + b;
+        });
+    }
+
     //! Subtracts vector from scalar
     template <typename T>
     constexpr Multivector2<T> operator-(T a, const Vector2<T>& b) noexcept
@@ -505,6 +556,14 @@ namespace yq {
             -b.x, -b.y, 
             {} 
         );
+    }
+
+    template <typename T>
+    std::vector<Vector2<T>>   operator-(std::span<Vector2<T>>as, Vector2<T>b)
+    {
+        return transform(as, [&](const Vector2<T>&a) -> Vector2<T> {
+            return a - b;
+        });
     }
 
     template <typename T, typename U>
@@ -517,41 +576,33 @@ namespace yq {
     template <typename T, typename U>
     std::vector<Vector1<trait::product_t<T,U>>> operator*(std::span<const Vector2<T>>as, const Tensor21<U>&b)
     {
-        std::vector<Vector1<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector2<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector2<T>&v) -> Vector1<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
     
     template <typename T, typename U>
     std::vector<Vector2<trait::product_t<T,U>>> operator*(std::span<const Vector2<T>>as, const Tensor22<U>&b)
     {
-        std::vector<Vector2<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector2<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector2<T>&v) -> Vector2<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
 
     template <typename T, typename U>
     std::vector<Vector3<trait::product_t<T,U>>> operator*(std::span<const Vector2<T>>as, const Tensor23<U>&b)
     {
-        std::vector<Vector3<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector2<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector2<T>&v) -> Vector3<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
     
     template <typename T, typename U>
     std::vector<Vector4<trait::product_t<T,U>>> operator*(std::span<const Vector2<T>>as, const Tensor24<U>&b)
     {
-        std::vector<Vector4<trait::product_t<T,U>>> ret;
-        ret.reserve(as.size());
-        for(const Vector2<T>& a : as)
-            ret.push_back(a*b);
-        return ret;
+        return transform(as, [&](const Vector2<T>&v) -> Vector4<trait::product_t<T,U>>{
+            return v * b;
+        });
     }
 
     template <typename T, typename U>

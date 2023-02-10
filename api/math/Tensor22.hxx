@@ -27,6 +27,7 @@
 #include <math/Vector2.hpp>
 
 #include <math/trig.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
@@ -245,11 +246,9 @@ namespace yq {
         template <typename U>
     std::vector<Vector2<trait::product_t<T,U>>>    Tensor22<T>::operator*(std::span<const Vector2<U>> bs) const
     {
-        std::vector<Vector2<trait::product_t<T,U>>>    ret;
-        ret.reserve(bs.size());
-        for(const Vector2<U>& v : bs)
-            ret.push_back(*this * v);
-        return ret;
+        return transform(bs, [&](const Vector2<U>& b) -> Vector2<trait::product_t<T,U>> {
+            return *this * b;
+        });
     }
 
     template <typename T>

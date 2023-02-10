@@ -40,6 +40,13 @@ namespace yq {
         //! Addsa a point to the polygon
         Polygon4&   operator<<(const Vector4<T>& pt);
 
+        const Polygon4&    operator+() const;
+        Polygon4           operator-() const;
+        
+        Polygon4   operator+(const Vector4<T>&) const;
+        Polygon4&  operator+=(const Vector4<T>&);
+        Polygon4   operator-(const Vector4<T>&) const;
+        Polygon4&  operator-=(const Vector4<T>&);
 
         template <typename U>
         Polygon2<trait::product_t<T,U>>   operator*(const Tensor42<U>&) const;
