@@ -83,6 +83,18 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector2<T>    Polygon2<T>::centroid() const noexcept
+    {
+        if(vertex.empty())
+            return Vector2<T>(ZERO);
+        if constexpr (trait::is_floating_point_v<T>)
+            return sum(vertex) / ieee754_t<T>(vertex.size());
+        if constexpr (trait::is_integer_v<T>)
+            return sum(vertex) / vertex.size();
+        return Vector2<T>(ZERO);
+    }
+
+    template <typename T>
     constexpr bool    Polygon2<T>::is_ccw() const noexcept
     {
         return point_area() < zero_v<T>;
@@ -160,6 +172,12 @@ namespace yq {
     trait::square_t<T>    area(const Polygon2<T>& poly)
     {
         return poly.area();
+    }
+
+    template <typename T>
+    Vector2<T>  centroid(const Polygon2<T>& poly)
+    {
+        return poly.centroid();
     }
 
     template <typename T>

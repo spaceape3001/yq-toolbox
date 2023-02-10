@@ -73,6 +73,18 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector4<T>    Polygon4<T>::centroid() const noexcept
+    {
+        if(vertex.empty())
+            return Vector4<T>(ZERO);
+        if constexpr (trait::is_floating_point_v<T>)
+            return sum(vertex) / ieee754_t<T>(vertex.size());
+        if constexpr (trait::is_integer_v<T>)
+            return sum(vertex) / vertex.size();
+        return Vector4<T>(ZERO);
+    }
+
+    template <typename T>
     T       Polygon4<T>::perimeter() const
     {
         T   ret = zero_v<T>;
@@ -123,6 +135,12 @@ namespace yq {
     AxBox4<T>   aabb(const Polygon4<T>&poly)
     {
         return poly.bounds();
+    }
+
+    template <typename T>
+    Vector4<T>  centroid(const Polygon4<T>& poly)
+    {
+        return poly.centroid();
     }
 
     template <typename T>

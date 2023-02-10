@@ -304,6 +304,10 @@ namespace yq {
     template <typename T>
     constexpr Vector3<T>      center(const AxBox3<T>& box) noexcept;
 
+    //! Computes the centroid of the given box (same as the center)
+    template <typename T>
+    Vector3<T>  centroid(const AxBox3<T>& box);
+
     //! Checks for validity (hi >= lo)
     template <typename T>
     constexpr bool    is_valid(const AxBox3<T>& box) noexcept;

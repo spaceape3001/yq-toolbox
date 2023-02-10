@@ -57,6 +57,9 @@ namespace yq {
         //! Compute the bounding box to this polygon
         constexpr AxBox2<T>   bounds() const noexcept;
 
+        //! Geometric center of the polygon (ie, average of the points)
+        constexpr Vector2<T>    centroid() const noexcept;
+        
         //! \brief Tests the polygon to determine if it's points are counter clockwise order
         constexpr bool    is_ccw() const noexcept;
 
@@ -206,6 +209,10 @@ namespace yq {
     */
     template <typename T>
     trait::square_t<T>    area(const Polygon2<T>& poly);
+
+    //! Computes the centroid of the given polygon
+    template <typename T>
+    Vector2<T>  centroid(const Polygon2<T>& poly);
 
     //! \brief Tests the polygon to determine if it's points are counter clockwise order
     template <typename T>

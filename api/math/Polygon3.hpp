@@ -56,6 +56,8 @@ namespace yq {
         */
         constexpr AxBox3<T>   bounds() const noexcept;
         
+        //! Geometric center of the polygon (ie, average of the points)
+        constexpr Vector3<T>    centroid() const noexcept;
 
         //! Computes the perimeter of the polygon (ie, sum of lengths of the segments)
         //! \note accuracy may vary on integral types
@@ -93,6 +95,10 @@ namespace yq {
     */
     template <typename T>
     AxBox3<T>   aabb(const Polygon3<T>&poly);
+
+    //! Computes the centroid of the given polygon
+    template <typename T>
+    Vector3<T>  centroid(const Polygon3<T>& poly);
 
     //! Tests that all vertices are finite
     template <typename T>

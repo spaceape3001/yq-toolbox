@@ -19,13 +19,12 @@
 #include <math/Segment1.hpp>
 #include <math/Side.hpp>
 #include <math/Size1.hpp>
-
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
     constexpr AxBox1<T>::AxBox1(intersect_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept:
-        AxBox1(INTERSECT, std::span<const Vector1<T>>(ls.data(), ls.size()), std::span<const Vector1<T>>(hs.data(), hs.size()))
-    {}
+        AxBox1(INTERSECT, span(ls), span(hs)) {}
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(intersect_t, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
@@ -54,7 +53,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::initializer_list<Vector1<T>> list) noexcept : 
-        AxBox1(UNION, std::span<const Vector1<T>>(list.data(), list.size())){}
+        AxBox1(UNION, span(list)){}
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::span<const Vector1<T>> data) noexcept
@@ -70,8 +69,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept :
-        AxBox1(UNION, std::span<const Vector1<T>>(ls.data(), ls.size()), std::span<const Vector1<T>>(hs.data(), hs.size()))
-    {}
+        AxBox1(UNION, span(ls), span(hs)) {}
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
@@ -406,24 +404,18 @@ namespace yq {
             return AxBox1<trait::product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
-    /*! \brief Creates an axially alligned box from one corner vertex
-    */
     template <typename T>
     constexpr AxBox1<T> aabb(const Vector1<T>& a) noexcept
     {
         return AxBox1<T>(a);
     }
 
-    /*! \brief Creates an axially alligned box from two corner vertices
-    */
     template <typename T>
     constexpr AxBox1<T> aabb(const Vector1<T>& a, const Vector1<T>& b) noexcept
     {
         return AxBox1<T>(UNION, a, b);
     }
 
-    /*! \brief Creates a 3D axially aligned box from container of Vector2's
-    */
     template <typename T>
     AxBox1<T> aabb(const std::vector<Vector1<T>>& vals)
     {
@@ -441,22 +433,24 @@ namespace yq {
         return AxBox1<T>(vals);
     }
 
-    /*! \brief Computes the center of a 1D axially aligned box
-    */
     template <typename T>
     constexpr Vector1<T> center(const AxBox1<T>& box)  noexcept
     {
         return box.center();
     }
 
-    /*! \brief Tests for a valid box */
+    template <typename T>
+    Vector1<T>  centroid(const AxBox1<T>& box)
+    {
+        return box.center();
+    }
+
     template <typename T>
     constexpr bool    is_valid(const AxBox1<T>& box) noexcept
     {
         return box.is_valid();
     }
 
-    //! Computes the span for a given box
     template <typename T>
     constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept
     {

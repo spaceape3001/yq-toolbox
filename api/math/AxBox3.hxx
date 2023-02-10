@@ -18,12 +18,12 @@
 #include <math/Range.hpp>
 #include <math/Side.hpp>
 #include <math/Size3.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
     constexpr AxBox3<T>::AxBox3(intersect_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept:
-        AxBox3(INTERSECT, std::span<const Vector3<T>>(ls.data(), ls.size()), std::span<const Vector3<T>>(hs.data(), hs.size()))
-    {}
+        AxBox3(INTERSECT, span(ls), span(hs)) {}
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(intersect_t, std::span<const Vector3<T>>ls, std::span<const Vector3<T>>hs) noexcept
@@ -58,7 +58,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(union_t, std::initializer_list<Vector3<T>> list) noexcept : 
-        AxBox3(UNION, std::span<const Vector3<T>>(list.data(), list.size())){}
+        AxBox3(UNION, span(list)){}
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(union_t, std::span<const Vector3<T>> data) noexcept
@@ -82,7 +82,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(union_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept :
-        AxBox3(UNION, std::span<const Vector3<T>>(ls.data(), ls.size()), std::span<const Vector3<T>>(hs.data(), hs.size()))
+        AxBox3(UNION, span(ls), span(hs))
     {}
 
     template <typename T>
@@ -647,6 +647,12 @@ namespace yq {
 
     template <typename T>
     constexpr Vector3<T>      center(const AxBox3<T>& box) noexcept
+    {
+        return box.center();
+    }
+
+    template <typename T>
+    Vector3<T>  centroid(const AxBox3<T>& box)
     {
         return box.center();
     }

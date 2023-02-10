@@ -294,6 +294,10 @@ namespace yq {
     template <typename T>
     constexpr Vector4<T>    center(const AxBox4<T>& box) noexcept;
 
+    //! Computes the centroid of the given box (same as the center)
+    template <typename T>
+    Vector4<T>  centroid(const AxBox4<T>& box);
+
     /*! \brief Computes the hyper volume of the box
     */
     template <typename T>

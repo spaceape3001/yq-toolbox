@@ -19,11 +19,12 @@
 #include <math/Side.hpp>
 #include <math/Size4.hpp>
 #include <math/Segment4.hpp>
+#include <math/utility.hpp>
 
 namespace yq {
     template <typename T>
     constexpr AxBox4<T>::AxBox4(intersect_t, std::initializer_list<Vector4<T>> ls, std::initializer_list<Vector4<T>> hs) noexcept:
-        AxBox4(INTERSECT, std::span<const Vector4<T>>(ls.data(), ls.size()), std::span<const Vector4<T>>(hs.data(), hs.size()))
+        AxBox4(INTERSECT, span(ls), span(hs))
     {}
 
     template <typename T>
@@ -62,7 +63,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox4<T>::AxBox4(union_t, std::initializer_list<Vector4<T>> list) noexcept : 
-        AxBox4(UNION, std::span<const Vector4<T>>(list.data(), list.size())){}
+        AxBox4(UNION, span(list)){}
 
     template <typename T>
     constexpr AxBox4<T>::AxBox4(union_t, std::span<const Vector4<T>> data) noexcept : AxBox4{}
@@ -90,8 +91,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox4<T>::AxBox4(union_t, std::initializer_list<Vector4<T>> ls, std::initializer_list<Vector4<T>> hs) noexcept :
-        AxBox4(UNION, std::span<const Vector4<T>>(ls.data(), ls.size()), std::span<const Vector4<T>>(hs.data(), hs.size()))
-    {}
+        AxBox4(UNION, span(ls), span(hs)) {}
 
     template <typename T>
     constexpr AxBox4<T>::AxBox4(union_t, std::span<const Vector4<T>>ls, std::span<const Vector4<T>>hs) noexcept
@@ -697,16 +697,12 @@ namespace yq {
         return AxBox4<T>(a);
     }
 
-    /*! \brief Creates a 4D axially aligned box from two vectors
-    */
     template <typename T>
     constexpr AxBox4<T> aabb(const Vector4<T>& a, const Vector4<T>& b) noexcept
     {
         return AxBox4<T>(UNION,a,b);
     }
 
-    /*! \brief Creates a 4D axially aligned box from container of Vector4's
-    */
     template <typename T>
     AxBox4<T> aabb(const std::vector<Vector4<T>>& vals)
     {
@@ -730,8 +726,12 @@ namespace yq {
         return box.center();
     }
 
-    /*! \brief Computes the hyper volume of the box
-    */
+    template <typename T>
+    Vector4<T>  centroid(const AxBox4<T>& box)
+    {
+        return box.center();
+    }
+
     template <typename T>
     constexpr trait::fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept
     {
@@ -739,15 +739,12 @@ namespace yq {
     }
 
 
-    //! Checks for validity (hi >= lo)
     template <typename T>
     constexpr bool    is_valid(const AxBox4<T>& box) noexcept
     {
         return box.is_valid();
     }
 
-    /*! \brief Returns the span (dimensions) of the box
-    */
     template <typename T>
     constexpr Vector4<T>    span(const AxBox4<T>&box) noexcept
     {

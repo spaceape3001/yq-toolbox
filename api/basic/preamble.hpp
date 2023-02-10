@@ -8,6 +8,7 @@
 
 #include <chrono>
 #include <filesystem>
+#include <initializer_list>
 #include <span>
 #include <string>
 #include <string_view>
@@ -284,6 +285,13 @@ namespace yq {
     
     //! Used for detection of overrides
     struct disabled {};
+
+    //! creates a span from an initializer list
+    template <typename T>
+    constexpr std::span<const T> span(const std::initializer_list<T>& data) noexcept
+    {
+        return std::span<const T>(data.data(), data.size());
+    }
 }
 
 

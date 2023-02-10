@@ -23,13 +23,13 @@
 #include <math/Side.hpp>
 #include <math/Size2.hpp>
 #include <math/Triangle2.hpp>
+#include <math/utility.hpp>
 
 
 namespace yq {
     template <typename T>
     constexpr AxBox2<T>::AxBox2(intersect_t, std::initializer_list<Vector2<T>> ls, std::initializer_list<Vector2<T>> hs) noexcept:
-        AxBox2(INTERSECT, std::span<const Vector2<T>>(ls.data(), ls.size()), std::span<const Vector2<T>>(hs.data(), hs.size()))
-    {}
+        AxBox2(INTERSECT, span(ls), span(hs)) {}
 
     template <typename T>
     constexpr AxBox2<T>::AxBox2(intersect_t, std::span<const Vector2<T>>ls, std::span<const Vector2<T>>hs) noexcept
@@ -60,8 +60,7 @@ namespace yq {
     constexpr AxBox2<T>::AxBox2(union_t, const Vector2<T>&a, const Vector2<T>& b) noexcept : AxBox2(SORT, a, b) {}
 
     template <typename T>
-    constexpr AxBox2<T>::AxBox2(union_t, std::initializer_list<Vector2<T>> list) noexcept : 
-        AxBox2(UNION, std::span<const Vector2<T>>(list.data(), list.size())){}
+    constexpr AxBox2<T>::AxBox2(union_t, std::initializer_list<Vector2<T>> list) noexcept :  AxBox2(UNION, span(list)){}
 
     template <typename T>
     constexpr AxBox2<T>::AxBox2(union_t, std::span<const Vector2<T>> data) noexcept
@@ -81,8 +80,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox2<T>::AxBox2(union_t, std::initializer_list<Vector2<T>> ls, std::initializer_list<Vector2<T>> hs) noexcept :
-        AxBox2(UNION, std::span<const Vector2<T>>(ls.data(), ls.size()), std::span<const Vector2<T>>(hs.data(), hs.size()))
-    {}
+        AxBox2(UNION, span(ls), span(hs)) {}
 
     template <typename T>
     constexpr AxBox2<T>::AxBox2(union_t, std::span<const Vector2<T>>ls, std::span<const Vector2<T>>hs) noexcept
@@ -553,24 +551,18 @@ namespace yq {
             return AxBox2<trait::product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
-    /*! \brief Creates a 2D axially aligned box from one vector
-    */
     template <typename T>
     constexpr AxBox2<T> aabb(const Vector2<T>& a)
     {
         return AxBox2<T>(a);
     }
-    
-    /*! \brief Creates a 2D axially aligned box from two vectors
-    */
+
     template <typename T>
     constexpr AxBox2<T> aabb(const Vector2<T>& a, const Vector2<T>& b)
     {
         return AxBox2<T>(UNION, a, b);
     }
 
-    /*! \brief Creates a 2D axially aligned box from container of Vector2's
-    */
     template <typename T>
     AxBox2<T> aabb(const std::vector<Vector2<T>>& vals)
     {
@@ -588,58 +580,48 @@ namespace yq {
         return AxBox2<T>(UNION, vals);
     }
     
-    /*! \brief Computes the area of a 2D axially aligned bounding box
-    */
     template <typename T>
     constexpr trait::square_t<T>   area(const AxBox2<T>& ax) noexcept
     {
         return ax.area();
     }
 
-    /*! \brief Computes the center of a 2D axially aligned box
-    */
     template <typename T>
     constexpr Vector2<T>    center(const AxBox2<T>& box) noexcept
     {
         return box.center();
     }
 
-    /*! \brief Computes smallest circle containing the given box
-    
-        \note The resulting circle will be centered within the box
-    */
+    template <typename T>
+    Vector2<T>  centroid(const AxBox2<T>& box)
+    {
+        return box.center();
+    }
+
     template <typename T>
     Circle2<T>    circumcircle(const AxBox2<T>& box) 
     {
         return box.circumcircle();
     }
 
-    /*! \brief Computes biggest circle within the bounding box
-    
-        \note The resulting circle will be centered within the box
-    */
     template <typename T>
     constexpr Circle2<T>    incircle(const AxBox2<T>& box) noexcept
     {
         return box.incircle();
     }
 
-    //! Checks for validity (hi >= lo)
     template <typename T>
     constexpr bool          is_valid(const AxBox2<T>& a) noexcept
     {
         return a.is_valid();
     }
 
-    /*! \brief Computes the perimeter of the box */
     template <typename T>
     constexpr T             perimeter(const AxBox2<T>& ax) noexcept
     {
         return ax.perimeter();
     }
 
-    /*! \brief Returns the span (dimensions) of the box
-    */
     template <typename T>
     constexpr Vector2<T>    span(const AxBox2<T>&a) noexcept
     {

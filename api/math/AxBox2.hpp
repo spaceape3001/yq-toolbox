@@ -297,6 +297,10 @@ namespace yq {
     template <typename T>
     constexpr Vector2<T>    center(const AxBox2<T>& box) noexcept;
 
+    //! Computes the centroid of the given box (same as the center)
+    template <typename T>
+    Vector2<T>  centroid(const AxBox2<T>& box);
+
     /*! \brief Computes smallest circle containing the given box
     
         \note The resulting circle will be centered within the box

@@ -22,6 +22,7 @@ namespace yq {
         template <typename T, typename D>             struct is_integral<MKS<T,D>> : is_integral<T> {};
         template <typename T, typename D, double K>   struct is_integral<SCALED<T,D,K>> : is_integral<T> {};
         template <typename T> static constexpr const bool is_integral_v = is_integral<T>::value;
+        template <typename T> static constexpr const bool is_integer_v = is_integral<T>::value;
     }
 }
 

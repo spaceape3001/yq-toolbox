@@ -238,6 +238,10 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T> center(const AxBox1<T>& box)  noexcept;
 
+    //! Computes the centroid of the given box (same as the center)
+    template <typename T>
+    Vector1<T>  centroid(const AxBox1<T>& box);
+
     /*! \brief Tests for a valid box */
     template <typename T>
     constexpr bool    is_valid(const AxBox1<T>& box) noexcept;
