@@ -45,12 +45,37 @@ namespace yq {
     template <typename T>
     T       Polyline2<T>::length() const
     {
-        if(vertex.empty())
-            return zero_v<T>;
         T   ret = zero_v<T>;
+        segments([&](const Segment2<T>& seg){
+            ret += seg.length();
+        });
+        return ret;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    void    Polyline2<T>::segments(Pred pred) const
+    {
+        if(vertex.empty())
+            return ;
         size_t n = vertex.size() - 1;
-        for(size_t i=0;i<n;++i)
-            ret += (vertex[i+1]-vertex[i]).length();
+        for(size_t i=0;i<n;++i){
+            if constexpr (std::is_invocable_v<Pred, Segment2<T>>){
+                pred(Segment2<T>(vertex[i], vertex[i+1]));
+            } else if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
+                pred(vertex[i], vertex[i+1]);
+            }
+        }
+    }
+
+    template <typename T>
+    std::vector<Segment2<T>>    Polyline2<T>::segments() const
+    {
+        std::vector<Segment2<T>>    ret;
+        ret.reserve(vertex.size());
+        segments([&](const Segment2<T>& s){
+            ret.push_back(s);
+        });
         return ret;
     }
 

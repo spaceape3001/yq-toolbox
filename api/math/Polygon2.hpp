@@ -65,6 +65,11 @@ namespace yq {
             no sign correction, no scaling.
         */
         constexpr trait::square_t<T>    point_area() const noexcept;
+
+        template <typename Pred>
+        void    segments(Pred) const;
+        
+        std::vector<Segment2<T>>    segments() const;
     };
 
 

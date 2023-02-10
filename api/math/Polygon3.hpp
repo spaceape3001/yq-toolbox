@@ -24,86 +24,53 @@ namespace yq {
         //! Vertex data
         std::vector<Vector3<T>>  vertex;
         
+        constexpr Polygon3() noexcept = default;
+        Polygon3(const std::vector<Vector3<T>>&);
+        Polygon3(std::vector<Vector3<T>>&&);
+        Polygon3(std::span<const Vector3<T>>);
+        Polygon3(std::initializer_list<Vector3<T>>);
+        explicit Polygon3(const Triangle3<T>&);
+
+
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon3&) const noexcept = default;
         
-        operator PolygonData<Vector3<T>>() const 
-        {
-            return { vertex };
-        }
+        operator PolygonData<Vector3<T>>() const;
 
         //! Addsa a point to the polygon
-        Polygon3&   operator<<(const Vector3<T>& pt) 
-        {
-            vertex.push_back(pt);
-            return *this;
-        }
+        Polygon3&   operator<<(const Vector3<T>& pt);
 
 
         /*! \brief Computes the axially aligned bounding box of this polygon
         */
-        AxBox3<T>   bounds() const
-        {
-            if(vertex.empty())
-                return nan_v<AxBox2<T>>;
-            AxBox3<T>   ret;
-            ret.lo = ret.hi = vertex.front();
-            size_t n = vertex.size();
-            for(size_t i=1;i<n;++i)
-                ret |= vertex[i];
-            return ret;
-        }
+        constexpr AxBox3<T>   bounds() const noexcept;
         
-        /*
-            //  visitor patterns... eventually
-        template <typename Pred>
-        auto    per_segment(Pred pred) const
-        {
-            static constexpr const bool     has_first_flag  = std::is_invocable<pred, Segment3<T>, bool>;
-        }
-        
-        template <typename Pred>
-        auto    per_side(Pred pred) const
-        {
-        }
 
-        template <typename Pred>
-        auto    per_vertex(Pred pred) const
-        {
-        }
-        */
-
-        //! Computes the perimeter of the polygon 
+        //! Computes the perimeter of the polygon (ie, sum of lengths of the segments)
         //! \note accuracy may vary on integral types
-        T       perimeter() const
-        {
-            if(vertex.empty())
-                return T{};
-            T   ret = (vertex.back()-vertex.front()).length();
-            size_t n = vertex.size() - 1;
-            for(size_t i=0;i<n;++i)
-                ret += (vertex[i+1]-vertex[i]).length();
-            return ret;
-        }
+        T       perimeter() const;
+        
+        template <typename Pred>
+        void    segments(Pred) const;
         
         //! Converts the polygon to segments
-        std::vector<Segment3<T>>    segments() const
-        {
-            std::vector<Segment3<T>>    ret;
-            if(!vertex.empty()){
-                ret.reserve(vertex.size());
-                ret.push_back(segment(vertex.back(), vertex.front()));
-                size_t n = vertex.size() - 1;
-                for(size_t i=0;i<n;++i)
-                    ret.push_back(segment(vertex[i], vertex[i+1]));
-            }
-            return ret;
-        }
-
+        std::vector<Segment3<T>>    segments() const;
     };
     
 //  --------------------------------------------------------
 //  COMPOSITION
+
+    template <typename T>
+    Polygon3<T> polygon(std::vector<Vector3<T>>&& pts);
+
+    template <typename T>
+    Polygon3<T> polygon(std::span<const Vector3<T>> pts);
+
+    template <typename T>
+    Polygon3<T> polygon(std::initializer_list<const Vector3<T>> pts);
+
+    template <typename T>
+    Polygon3<T> polygon(const Triangle3<T>& ax);
 
     YQ_IEEE754_1(Polygon3)
     YQ_ZERO_1(Polygon3, { })
@@ -114,10 +81,7 @@ namespace yq {
     /*! \brief Create an axially aligned bounding box from a polygon
     */
     template <typename T>
-    AxBox3<T>   aabb(const Polygon3<T>&poly)
-    {
-        return poly.bounds();
-    }
+    AxBox3<T>   aabb(const Polygon3<T>&poly);
 
     //! Tests that all vertices are finite
     template <typename T>
@@ -141,10 +105,7 @@ namespace yq {
 
     //! Computes the perimeter of the polygon
     template <typename T>
-    T       perimeter(const Polygon3<T>& poly)
-    {
-        return poly.perimeter();
-    }
+    T       perimeter(const Polygon3<T>& poly);
 
 }
 

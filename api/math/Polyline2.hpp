@@ -43,6 +43,11 @@ namespace yq {
         //! Computes the length of the polyline
         //! \note May be less accurate with non-floating point types
         T       length() const;
+
+        template <typename Pred>
+        void    segments(Pred) const;
+
+        std::vector<Segment2<T>>    segments() const;
     };
 
     /*! \brief Creates a polyline from a box

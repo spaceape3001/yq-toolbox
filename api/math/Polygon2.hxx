@@ -49,8 +49,6 @@ namespace yq {
     template <typename T>
     constexpr AxBox2<T>   Polygon2<T>::bounds() const noexcept
     {
-        if(vertex.empty())
-            return nan_v<AxBox2<T>>;
         return AxBox2<T>(UNION, vertex);
     }
 
@@ -70,12 +68,10 @@ namespace yq {
     template <typename T>
     T       Polygon2<T>::perimeter() const
     {
-        if(vertex.empty())
-            return zero_v<T>;
-        T   ret = (vertex.back()-vertex.front()).length();
-        size_t n = vertex.size() - 1;
-        for(size_t i=0;i<n;++i)
-            ret += (vertex[i+1]-vertex[i]).length();
+        T   ret = zero_v<T>;
+        segments([&](const Segment2<T>& seg){
+            ret += seg.length();
+        });
         return ret;
     }
 
@@ -83,6 +79,41 @@ namespace yq {
     constexpr trait::square_t<T>    Polygon2<T>::point_area() const noexcept
     {
         return delta_area(vertex);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    void    Polygon2<T>::segments(Pred pred) const
+    {
+        if(vertex.empty())
+            return ;
+            
+        if constexpr (std::is_invocable_v<Pred, Segment2<T>>){
+            pred(Segment2<T>(vertex.back(), vertex.front));
+        } else if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
+            pred(vertex.back(), vertex.front);
+        }
+
+        size_t n = vertex.size() - 1;
+        for(size_t i=0;i<n;++i){
+            if constexpr (std::is_invocable_v<Pred, Segment2<T>>){
+                pred(Segment2<T>(vertex[i], vertex[i+1]));
+            } else if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
+                pred(vertex[i], vertex[i+1]);
+            }
+        }
+    }
+
+    //! Converts the polygon to segments
+    template <typename T>
+    std::vector<Segment2<T>>    Polygon2<T>::segments() const
+    {
+        std::vector<Segment2<T>>    ret;
+        ret.reserve(vertex.size());
+        segments([&](const Segment2<T>& s){
+            ret.push_back(s);
+        });
+        return ret;
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -92,17 +92,6 @@ namespace yq {
     }
 
     
-    template <typename T>
-    Polygon3<T> polygon(const Triangle3<T>& tri)
-    {
-        return { { tri.a, tri.b, tri.c } };
-    }
-
-    template <typename T>
-    Polygon4<T> polygon(const Triangle4<T>& tri)
-    {
-        return { { tri.a, tri.b, tri.c } };
-    }
 
     template <typename T>
     TriangleData<RGB<T>>     rgb(const TriangleData<RGBA<T>>& t)
