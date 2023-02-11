@@ -34,6 +34,20 @@ namespace yq {
         Circle2(focus_t, const Vector2<T>& focus, const Vector2<T>& edge);
         Circle2(opposite_t, const Vector2<T>&, const Vector2<T>&);
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Circle2<U>() const noexcept
+        {
+            return { (Vector2<U>) point, (U) radius };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Circle2<U>() const 
+        {
+            return { (Vector2<U>) point, (U) radius };
+        }
+
         //! Equality operator (defaulted)
         constexpr bool operator==(const Circle2&) const noexcept = default;
             

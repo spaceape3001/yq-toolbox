@@ -57,6 +57,32 @@ namespace yq {
         consteval Multivector4(one_t) noexcept : Multivector4(ALL, one_v<T>) {}
         consteval Multivector4(zero_t) noexcept : Multivector4(ALL, zero_v<T>) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Multivector4<U>() const noexcept
+        {
+            return {
+                (U) a,
+                (U) x, (U) y, (U) z, (U) w,
+                (U) xy, (U) yz, (U) zw, (U) wx, (U) xz, (U) yw,
+                (U) xyz, (U) yzw, (U) zwx, (U) wxy,
+                (U) xyzw
+            };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Multivector4<U>() const 
+        {
+            return {
+                (U) a,
+                (U) x, (U) y, (U) z, (U) w,
+                (U) xy, (U) yz, (U) zw, (U) wx, (U) xz, (U) yw,
+                (U) xyz, (U) yzw, (U) zwx, (U) wxy,
+                (U) xyzw
+            };
+        }
+
         //! Equality (defaulted) 
         constexpr bool operator==(const Multivector4&) const noexcept = default;
         

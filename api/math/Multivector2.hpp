@@ -41,6 +41,28 @@ namespace yq {
         consteval Multivector2(one_t) noexcept : Multivector2(ALL, one_v<T>) {}
         consteval Multivector2(zero_t) noexcept : Multivector2(ALL, zero_v<T>) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Multivector2<U>() const noexcept
+        {
+            return {
+                (U) a,
+                (U) x, (U) y,
+                (U) xy
+            };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Multivector2<U>() const 
+        {
+            return {
+                (U) a,
+                (U) x, (U) y,
+                (U) xy
+            };
+        }
+
         //! Defaulted equality operator
         constexpr bool operator==(const Multivector2&) const noexcept = default;
 

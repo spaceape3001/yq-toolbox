@@ -40,6 +40,20 @@ namespace yq {
         constexpr Vector2(y_t, T v) noexcept : x(zero_v<T>), y(v) {}
         consteval Vector2(zero_t) noexcept : Vector2(ALL, zero_v<T>) {}
         
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Vector2<U>() const noexcept
+        {
+            return { (U) x, (U) y };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Vector2<U>() const 
+        {
+            return { (U) x, (U) y };
+        }
+        
         
         template <glm::qualifier Q>
         explicit constexpr Vector2(const glm::vec<2, T, Q>& v) : x(v.x), y(v.y) {}

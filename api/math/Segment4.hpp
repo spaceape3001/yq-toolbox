@@ -23,12 +23,24 @@ namespace yq {
         constexpr Segment4(nan_t) : Segment4( Vector4<T>(NAN), Vector4<T>(NAN)) {}
         constexpr Segment4(zero_t) : Segment4( Vector4<T>(ZERO), Vector4<T>(ZERO)) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Segment4<U>() const noexcept
+        {
+            return { (Vector4<U>) a, (Vector4<U>) b };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Segment4<U>() const 
+        {
+            return { (Vector4<U>) a, (Vector4<U>) b };
+        }
+
         //! Defaulted equality
         constexpr bool operator==(const Segment4&) const noexcept = default;
 
         constexpr operator SegmentData<Vector4<T>>() const noexcept;
-
-        constexpr operator SegmentData<Vector3<T>>() const noexcept;
 
         constexpr Segment4      operator+() const noexcept;
         constexpr Segment4      operator-() const noexcept;

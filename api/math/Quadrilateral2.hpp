@@ -6,10 +6,8 @@
 
 #pragma once
 
-#include "QuadrilateralData.hpp"
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
-#include <math/AxBox2.hpp>
 
 namespace yq {
     /*! \brief Quadrilateral in two dimensions
@@ -20,17 +18,49 @@ namespace yq {
         using component_type = T;
     
         Vector2<T>     a, b, c, d;
-
-        constexpr AxBox2<T>   bounds() const
+        
+        constexpr Quadrilateral2() noexcept = default;
+        constexpr Quadrilateral2(const Vector2<T>& _a, const Vector2<T>& _b, const Vector2<T>& _c, const Vector2<T>& _d) :
+            a(_a), b(_b), c(_c), d(_d) {}
+        constexpr Quadrilateral2(all_t, T v) : a(ALL, v), b(ALL, v), c(ALL, v), d(ALL, v) {}
+        constexpr Quadrilateral2(all_t, const Vector2<T>& v) : a(v), b(v), c(v), d(v) {}
+        template <typename=void> requires has_nan_v<T>
+        consteval Quadrilateral2(nan_t) noexcept : Quadrilateral2(ALL, nan_v<T>) {}
+        consteval Quadrilateral2(zero_t) noexcept : Quadrilateral2(ALL, zero_v<T>) {}
+        
+        explicit constexpr Quadrilateral2(const AxBox2<T>&) noexcept;
+        explicit constexpr Quadrilateral2(const Rectangle2<T>&) noexcept;
+        
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Quadrilateral2<U>() const noexcept
         {
-            return { 
-                min_elem(min_elem(a, b), min_elem(c, d)), 
-                max_elem(max_elem(a, b), max_elem(c, d))
-            };
+            return {(Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d};
         }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Quadrilateral2<U>() const 
+        {
+            return {(Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d};
+        }
+
+        constexpr operator QuadrilateralData<Vector2<T>>() const noexcept;
+
 
         //! Defaulted comparison operator
         constexpr bool operator==(const Quadrilateral2&) const noexcept = default;
+        
+        //! The point "area" (not the actual area, but a component of it)
+        constexpr square_t<T>   _area() const noexcept;
+
+        constexpr square_t<T>   area() const noexcept;
+
+        constexpr AxBox2<T>   bounds() const noexcept;
+        
+        constexpr bool      is_ccw() const noexcept;
+        constexpr bool      is_clockwise() const noexcept;
+        T         perimeter() const;
     };
 
     YQ_IEEE754_1(Quadrilateral2)
@@ -44,10 +74,10 @@ namespace yq {
     YQ_ZERO_1(Quadrilateral2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>, zero_v<Vector2<T>>, zero_v<Vector2<T>> })
 
     template <typename T>
-    Quadrilateral2<T> quadrilateral(const AxBox2<T>& ax)
-    {
-        return { southwest(ax), southeast(ax), northeast(ax), northwest(ax) };
-    }
+    Quadrilateral2<T> quadrilateral(const AxBox2<T>& ax);
+
+    template <typename T>
+    Quadrilateral2<T> quadrilateral(const Rectangle2<T>& ax);
 
     template <typename T>
     Quadrilateral2<T> quadrilateral(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c, const Vector2<T>& d)
@@ -62,28 +92,11 @@ namespace yq {
     YQ_IS_NAN_1(Quadrilateral2, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) || is_nan(v.d) )
 
     template <typename T>
-    AxBox2<T>   aabb(const Quadrilateral2<T>& quad)
-    {
-        return { 
-            min_elem(min_elem(quad.a, quad.b), min_elem(quad.c, quad.d)), 
-            max_elem(max_elem(quad.a, quad.b), min_elem(quad.c, quad.d))
-        };
-    }
+    AxBox2<T>   aabb(const Quadrilateral2<T>& quad);
 
 //  --------------------------------------------------------
 //  UTILITY FUNCTIONS (FOR OTHER ADVANCED THINGS TO WORK)
 
-    /*! \brief "Point area" of the points
-    
-        This is a helper to area and other functions, 
-        simply does an "area" of the point deltas, 
-        no sign correction, no scaling.
-    */
-    template <typename T>
-    square_t<T>    point_area(const Quadrilateral2<T>& quad)
-    {
-        return delta_area(quad.b, quad.a) + delta_area(quad.c, quad.b) + delta_area(quad.d, quad.c) + delta_area(quad.a, quad.d);
-    }
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
@@ -91,23 +104,13 @@ namespace yq {
     /*! \brief Computes the area of a 2D quatrilateral
     */
     template <typename T>
-    square_t<T>    area(const Quadrilateral2<T>& quad)
-    {
-        return 0.5*abs(point_area(quad));
-    }
+    square_t<T>    area(const Quadrilateral2<T>& quad);
 
     template <typename T>
-    bool    is_ccw(const Quadrilateral2<T>& quad)
-    {
-        return point_area(quad) < zero_v<T>;
-    }
+    bool    is_ccw(const Quadrilateral2<T>& quad);
 
     template <typename T>
-    requires has_sqrt_v<square_t<T>>
-    T       perimeter(const Quadrilateral2<T>& quad)
-    {
-        return length(quad.b-quad.a)+length(quad.c-quad.b)+length(quad.d-quad.c)+length(quad.a-quad.d);
-    }
+    T       perimeter(const Quadrilateral2<T>& quad);
 
 }
 

@@ -49,6 +49,20 @@ namespace yq {
         explicit constexpr AxBox3(const Sphere3<T>&) noexcept;
         explicit constexpr AxBox3(const Triangle3<T>&) noexcept;
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator AxBox3<U>() const noexcept
+        {
+            return { (Vector3<U>) lo, (Vector3<U>) hi };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator AxBox3<U>() const 
+        {
+            return { (Vector3<U>) lo, (Vector3<U>) hi };
+        }
+
         //! Equality operator (defaulted);
         constexpr bool operator==(const AxBox3&) const noexcept = default;
 

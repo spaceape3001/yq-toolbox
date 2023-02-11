@@ -35,17 +35,23 @@ namespace yq {
         consteval Size3(nan_t) : Size3(ALL, nan_v<T>) {}
         consteval Size3(zero_t) : Size3(ALL, zero_v<T>) {}
 
-        //! Defaulted comparison operator
-        constexpr bool    operator==(const Size3&) const noexcept = default;
-        
-        /*! \brief Implicit Conversion to floating point sizes
-        */
         template <typename U>
-        requires (std::is_integral_v<T> && std::is_floating_point_v<U> && !std::is_same_v<T,U>)
-        constexpr operator Size3<U>() const 
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Size3<U>() const noexcept
         {
             return { (U) x, (U) y, (U) z };
         }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Size3<U>() const 
+        {
+            return { (U) x, (U) y, (U) z };
+        }
+
+        //! Defaulted comparison operator
+        constexpr bool    operator==(const Size3&) const noexcept = default;
+        
         
         //! Depth (Z-dimension)
         constexpr T   depth() const { return z; }

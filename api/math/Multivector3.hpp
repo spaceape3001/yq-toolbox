@@ -36,6 +36,30 @@ namespace yq {
         consteval Multivector3(one_t) noexcept : Multivector3(ALL, one_v<T>) {}
         consteval Multivector3(zero_t) noexcept : Multivector3(ALL, zero_v<T>) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Multivector3<U>() const noexcept
+        {
+            return {
+                (U) a,
+                (U) x, (U) y, (U) z,
+                (U) xy, (U) yz, (U) zx,
+                (U) xyz
+            };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Multivector3<U>() const 
+        {
+            return {
+                (U) a,
+                (U) x, (U) y, (U) z,
+                (U) xy, (U) yz, (U) zx,
+                (U) xyz
+            };
+        }
+        
         constexpr bool operator==(const Multivector3&) const noexcept = default;
 
         constexpr Multivector3 operator+() const noexcept;

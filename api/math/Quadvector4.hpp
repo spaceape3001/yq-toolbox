@@ -33,6 +33,20 @@ namespace yq {
         consteval Quadvector4(xyzw_t) noexcept : Quadvector4(XYZW, one_v<T>) {}
         consteval Quadvector4(zero_t) noexcept : Quadvector4(ALL, zero_v<T>) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Quadvector4<U>() const noexcept
+        {
+            return { (U) xyzw };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Quadvector4<U>() const 
+        {
+            return { (U) xyzw };
+        }
+
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Quadvector4&) const noexcept = default;
 

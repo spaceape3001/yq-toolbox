@@ -41,6 +41,20 @@ namespace yq {
         constexpr Bivector3(zx_t, T v) noexcept : xy(zero_v<T>), yz(zero_v<T>), zx(v) {}
         consteval Bivector3(zx_t) noexcept : Bivector3(ZX, one_v<T>) {}
         consteval Bivector3(zero_t) noexcept : Bivector3(ALL, zero_v<T>) {}
+
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Bivector3<U>() const noexcept
+        {
+            return { (U) xy, (U) yz, (U) zx };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Bivector3<U>() const 
+        {
+            return { (U) xy, (U) yz, (U) zx };
+        }
         
         //! Defaulted comparison operator
         constexpr bool operator==(const Bivector3&) const noexcept = default;

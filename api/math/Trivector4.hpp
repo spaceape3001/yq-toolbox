@@ -33,6 +33,20 @@ namespace yq {
         consteval Trivector4(zwx_t) noexcept : Trivector4(ZWX, one_v<T>) {}
         consteval Trivector4(zero_t) noexcept : Trivector4(ALL, zero_v<T>) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Trivector4<U>() const noexcept
+        {
+            return { (U) xyz, (U) yzw, (U) zwx, (U) wxy };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Trivector4<U>() const 
+        {
+            return { (U) xyz, (U) yzw, (U) zwx, (U) wxy };
+        }
+
         //! Defaulted comparison operator
         constexpr bool operator==(const Trivector4&) const noexcept = default;
 

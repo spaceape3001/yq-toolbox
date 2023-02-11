@@ -47,6 +47,19 @@ namespace yq {
         
         explicit constexpr AxBox1(const Segment1<T>&) noexcept;
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator AxBox1<U>() const noexcept
+        {
+            return { (Vector1<U>) lo, (Vector1<U>) hi };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator AxBox1<U>() const 
+        {
+            return { (Vector1<U>) lo, (Vector1<U>) hi };
+        }
         
         //! Defaulted equatlity operator
         constexpr bool operator==(const AxBox1&) const noexcept = default;

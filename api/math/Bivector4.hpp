@@ -48,6 +48,20 @@ namespace yq {
         consteval Bivector4(yw_t) noexcept : Bivector4(YW, one_v<T>) {}
         consteval Bivector4(zero_t) noexcept : Bivector4(ALL, zero_v<T>) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Bivector4<U>() const noexcept
+        {
+            return { (U) xy, (U) yz, (U) zw, (U) wx, (U) xz, (U) yw };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Bivector4<U>() const 
+        {
+            return { (U) xy, (U) yz, (U) zw, (U) wx, (U) xz, (U) yw };
+        }
+
         //! Defaulted comparison operator
         bool operator==(const Bivector4&) const noexcept = default;
         

@@ -24,9 +24,6 @@ namespace yq {
         
         //! X
         T           x;
-        
-        //! Defaulted equality
-        constexpr bool operator==(const Multivector1&) const noexcept = default;
 
         constexpr Multivector1() noexcept = default;
         constexpr Multivector1(T _a, T _x) noexcept : a(_a), x(_x) {}
@@ -37,6 +34,29 @@ namespace yq {
         consteval Multivector1(one_t) noexcept : Multivector1(ALL, one_v<T>) {}
         consteval Multivector1(zero_t) noexcept : Multivector1(ALL, zero_v<T>) {}
         
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Multivector1<U>() const noexcept
+        {
+            return {
+                (U) a,
+                (U) x
+            };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Multivector1<U>() const 
+        {
+            return {
+                (U) a,
+                (U) x
+            };
+        }
+
+        //! Defaulted equality
+        constexpr bool operator==(const Multivector1&) const noexcept = default;
+
         constexpr Multivector1 operator+() const noexcept;
         constexpr Multivector1 operator-() const noexcept;
         

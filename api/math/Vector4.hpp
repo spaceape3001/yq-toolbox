@@ -48,6 +48,19 @@ namespace yq {
         template <glm::qualifier Q>
         explicit constexpr Vector4(const glm::vec<4, T, Q>& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
         
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Vector4<U>() const noexcept
+        {
+            return { (U) x, (U) y, (U) z, (U) w };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Vector4<U>() const 
+        {
+            return { (U) x, (U) y, (U) z, (U) w };
+        }
         
         
         /*! \brief Creates a unit-vector in the x-dimension.

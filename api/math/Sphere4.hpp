@@ -34,6 +34,20 @@ namespace yq {
         Sphere4(focus_t, const Vector4<T>& focus, const Vector4<T>& edge);
         Sphere4(opposite_t, const Vector4<T>&, const Vector4<T>&);
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Sphere4<U>() const noexcept
+        {
+            return { (Vector4<U>) point, (U) radius };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Sphere4<U>() const 
+        {
+            return { (Vector4<U>) point, (U) radius };
+        }
+
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
 

@@ -41,15 +41,22 @@ namespace yq {
         //! Defaulted comparison operator
         constexpr bool    operator==(const Size4&) const noexcept = default;
         
-        /*! \brief Implicit Conversion to floating point sizes
+        /*! \brief Conversion to other types sizes
         */
         template <typename U>
-        requires (std::is_integral_v<T> && std::is_floating_point_v<U> && !std::is_same_v<T,U>)
-        constexpr operator Size4<U>() const 
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Size4<U>() const noexcept
         {
-            return { (U) x, (U) y, (U) z };
+            return { (U) x, (U) y, (U) z, (U) w };
         }
         
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Size4<U>() const 
+        {
+            return { (U) x, (U) y, (U) z, (U) w };
+        }
+
         //! Duration (W-dimension)
         constexpr T   duration() const { return w; }
 

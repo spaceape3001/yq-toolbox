@@ -35,11 +35,16 @@ namespace yq {
         //! Defaulted comparsion operator
         constexpr bool    operator==(const Size1&) const noexcept = default;
         
-        /*! \brief Implicit Conversion to floating point sizes
-        */
         template <typename U>
-        requires (std::is_integral_v<T> && std::is_floating_point_v<U> && !std::is_same_v<T,U>)
-        constexpr operator Size1<U>() const 
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Size1<U>() const noexcept
+        {
+            return { (U) x };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Size1<U>() const 
         {
             return { (U) x };
         }

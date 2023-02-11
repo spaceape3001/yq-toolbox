@@ -27,6 +27,20 @@ namespace yq {
         consteval Trivector3(xyz_t) noexcept : Trivector3(XYZ, one_v<T>) {}
         consteval Trivector3(zero_t) noexcept : Trivector3(ALL, zero_v<T>) {}
         
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Trivector3<U>() const noexcept
+        {
+            return { (U) xyz };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Trivector3<U>() const 
+        {
+            return { (U) xyz };
+        }
+
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Trivector3&) const noexcept = default;
 

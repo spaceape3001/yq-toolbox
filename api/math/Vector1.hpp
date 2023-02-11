@@ -39,6 +39,20 @@ namespace yq {
         template <glm::qualifier Q>
         explicit constexpr Vector1(const glm::vec<1, T, Q>& v) : x(v.x) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Vector1<U>() const noexcept
+        {
+            return { (U) x };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Vector1<U>() const 
+        {
+            return { (U) x };
+        }
+
         /*! \brief Creates a unit-vector in the x-dimension.
         */
         static consteval Vector1 unit_x() noexcept

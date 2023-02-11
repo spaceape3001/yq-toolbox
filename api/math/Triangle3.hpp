@@ -26,6 +26,20 @@ namespace yq {
         consteval Triangle3(nan_t) noexcept : Triangle3(ALL, Vector3<T>(NAN)) {}
         consteval Triangle3(zero_t) noexcept : Triangle3(ALL, Vector3<T>(ZERO)) {}
 
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Triangle3<U>() const noexcept
+        {
+            return { (Vector3<U>) a, (Vector3<U>) b, (Vector3<U>) c };
+        }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Triangle3<U>() const 
+        {
+            return { (Vector3<U>) a, (Vector3<U>) b, (Vector3<U>) c };
+        }
+
         //! Defaulted equality operator
         constexpr bool operator==(const Triangle3&) const noexcept = default;
         

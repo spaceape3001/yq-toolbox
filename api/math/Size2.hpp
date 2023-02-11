@@ -34,17 +34,23 @@ namespace yq {
         consteval Size2(nan_t) : Size2(ALL, nan_v<T>) {}
         consteval Size2(zero_t) : Size2(ALL, zero_v<T>) {}
         
-        //! Defaulted comparsion operator
-        constexpr bool    operator==(const Size2&) const noexcept = default;
-        
-        /*! \brief Implicit Conversion to floating point sizes
-        */
         template <typename U>
-        requires (std::is_integral_v<T> && std::is_floating_point_v<U> && !std::is_same_v<T,U>)
-        constexpr operator Size2<U>() const 
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Size2<U>() const noexcept
         {
             return { (U) x, (U) y };
         }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Size2<U>() const 
+        {
+            return { (U) x, (U) y };
+        }
+
+        //! Defaulted comparsion operator
+        constexpr bool    operator==(const Size2&) const noexcept = default;
+        
       
         //! Returns the area
         constexpr square_t<T> area() const noexcept

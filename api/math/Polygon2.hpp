@@ -30,7 +30,10 @@ namespace yq {
         explicit Polygon2(const AxBox2<T>&);
         explicit Polygon2(const Triangle2<T>&);
         
-        
+        template <typename U>
+        requires std::is_convertible_v<T,U>
+        explicit operator Polygon2<U>() const;
+
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon2&) const noexcept = default;
         
