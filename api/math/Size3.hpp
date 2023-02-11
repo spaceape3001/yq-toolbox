@@ -31,7 +31,7 @@ namespace yq {
         constexpr Size3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
         constexpr Size3(all_t, T v) noexcept : x(v), y(v), z(v) {}
         
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Size3(nan_t) : Size3(ALL, nan_v<T>) {}
         consteval Size3(zero_t) : Size3(ALL, zero_v<T>) {}
 
@@ -60,7 +60,7 @@ namespace yq {
         constexpr T   height() const { return y; }
 
         //! Volume of this size
-        constexpr trait::cube_t<T> volume() const noexcept
+        constexpr cube_t<T> volume() const noexcept
         {
             return x*y*z;
         }
@@ -71,6 +71,10 @@ namespace yq {
         //! Swizzles the x/y components to a Size2
         constexpr Size2<T>  xy() const noexcept { return { x, y }; }
     };
+
+    YQ_IEEE754_1(Size3)
+    YQ_INTEGER_1(Size3)
+    YQ_IS_INTEGER_1(Size3)
 
     YQ_NAN_1(Size3, Size3<T>(NAN))
     YQ_ZERO_1(Size3, Size3<T>(ZERO))

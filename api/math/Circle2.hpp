@@ -46,24 +46,24 @@ namespace yq {
         Circle2&            operator-=(const Vector2<T>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Circle2<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        Circle2<product_t<T,U>> operator*(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Circle2<T>& operator*=(U) noexcept;
             
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Circle2<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        Circle2<quotient_t<T,U>> operator/(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Circle2<T>& operator/=(U) noexcept;
 
         /*! \brief Computes the area of this circle
         */
-        constexpr trait::square_t<T> area() const noexcept;
+        constexpr square_t<T> area() const noexcept;
 
         //! Returns the bounding box for this circle
         constexpr AxBox2<T>   bounds() const noexcept;
@@ -84,6 +84,8 @@ namespace yq {
     };
 
     YQ_IEEE754_1(Circle2)
+    YQ_INTEGER_1(Circle2)
+    YQ_IS_INTEGER_1(Circle2)
 
 
 
@@ -103,8 +105,8 @@ namespace yq {
     YQ_IS_NAN_1(Circle2, is_nan(v.point) || is_nan(v.radius))
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Circle2<trait::product_t<T,U>> operator*(T, const Circle2<U>&);
+    requires is_arithmetic_v<T>
+    Circle2<product_t<T,U>> operator*(T, const Circle2<U>&);
 
     
     /*! \brief Bounding box for a circle
@@ -116,7 +118,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D circle
     */
     template <typename T>
-    constexpr trait::square_t<T> area(const Circle2<T>& cir) noexcept;
+    constexpr square_t<T> area(const Circle2<T>& cir) noexcept;
     
     
     /*! \brief Computes the circumference of a circle

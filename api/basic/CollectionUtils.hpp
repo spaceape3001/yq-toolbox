@@ -70,7 +70,7 @@ namespace yq {
     template <typename K, typename V, typename C, typename AL, typename AR, typename LEFT, typename MIDDLE, typename RIGHT>
     void    map_difference_exec(const std::map<K,V,C,AL>& A, const std::map<K,V,C,AR>& B, LEFT left, MIDDLE middle, RIGHT right)
     {
-        static_assert( trait::has_inequality_v<V>, "Type V must have an inequality operator for it.");
+        static_assert( has_inequality_v<V>, "Type V must have an inequality operator for it.");
     
         auto    first1  = A.cbegin();
         auto    first2  = B.cbegin();

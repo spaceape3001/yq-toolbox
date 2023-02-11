@@ -19,7 +19,7 @@ namespace yq {
         
         constexpr Segment3() noexcept = default;
         constexpr Segment3(const Vector3<T>& _a, const Vector3<T>& _b) : a(_a), b(_b) {}
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         constexpr Segment3(nan_t) : Segment3( Vector3<T>(NAN), Vector3<T>(NAN)) {}
         constexpr Segment3(zero_t) : Segment3( Vector3<T>(ZERO), Vector3<T>(ZERO)) {}
 
@@ -39,35 +39,35 @@ namespace yq {
         Segment3&               operator-=(const Vector3<T>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Segment3<trait::product_t<T,U>>    operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Segment3<product_t<T,U>>    operator*(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Segment3<T>&                operator*=(U)  noexcept;
         
         template <typename U>
-        Segment1<trait::product_t<T,U>>    operator*(const Tensor31<U>&) const noexcept;
+        Segment1<product_t<T,U>>    operator*(const Tensor31<U>&) const noexcept;
 
         template <typename U>
-        Segment2<trait::product_t<T,U>>    operator*(const Tensor32<U>&) const noexcept;
+        Segment2<product_t<T,U>>    operator*(const Tensor32<U>&) const noexcept;
 
         template <typename U>
-        Segment3<trait::product_t<T,U>>    operator*(const Tensor33<U>&) const noexcept;
+        Segment3<product_t<T,U>>    operator*(const Tensor33<U>&) const noexcept;
 
         template <typename U>
-        Segment4<trait::product_t<T,U>>    operator*(const Tensor34<U>&) const noexcept;
+        Segment4<product_t<T,U>>    operator*(const Tensor34<U>&) const noexcept;
         
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires self_mul_v<T,U>
         Segment3&                   operator*=(const Tensor33<U>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Segment3<trait::quotient_t<T,U>>   operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Segment3<quotient_t<T,U>>   operator/(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Segment3<T>&                operator/=(U)  noexcept;
 
 
@@ -80,7 +80,7 @@ namespace yq {
         T   length() const;
 
         //! Square of the length
-        constexpr trait::square_t<T> length²() const noexcept;
+        constexpr square_t<T> length²() const noexcept;
         
         //! Segment mid-point
         constexpr Vector3<T>  midpoint() const noexcept;
@@ -94,6 +94,8 @@ namespace yq {
         constexpr Vector3<T>     point(ieee754_t<T> f) const noexcept;
     };
 
+    YQ_INTEGER_1(Segment3)
+    YQ_IS_INTEGER_1(Segment3)
     YQ_IEEE754_1(Segment3)
 
 //  --------------------------------------------------------
@@ -118,8 +120,8 @@ namespace yq {
     YQ_IS_NAN_1(Segment3, is_nan(v.a) || is_nan(v.b))
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T,U>
-    constexpr Segment3<trait::product_t<T,U>> operator*(T, const Segment3<T>&) noexcept;
+    requires is_arithmetic_v<T,U>
+    constexpr Segment3<product_t<T,U>> operator*(T, const Segment3<T>&) noexcept;
 
     /*! \brief Creates axially aligned bounding box from the segment
     */

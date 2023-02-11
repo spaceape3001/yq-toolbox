@@ -34,7 +34,7 @@ namespace yq {
         constexpr Size4(T _x, T _y, T _z, T _w) noexcept : x(_x), y(_y), z(_z), w(_w) {}
         constexpr Size4(all_t, T v) noexcept : x(v), y(v), z(v), w(v) {}
         
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Size4(nan_t) : Size4(ALL, nan_v<T>) {}
         consteval Size4(zero_t) : Size4(ALL, zero_v<T>) {}
 
@@ -66,7 +66,7 @@ namespace yq {
         constexpr T   height() const { return y; }
 
         //! Volume of this size
-        constexpr trait::fourth_t<T> hypervolume() const noexcept
+        constexpr fourth_t<T> hypervolume() const noexcept
         {
             return x*y*z*w;
         }
@@ -75,6 +75,10 @@ namespace yq {
         //! Width (X-dimension)
         constexpr T   width() const { return x; }
     };
+
+    YQ_IEEE754_1(Size4)
+    YQ_INTEGER_1(Size4)
+    YQ_IS_INTEGER_1(Size4)
 
     YQ_NAN_1(Size4, Size4<T>(NAN))
     YQ_ZERO_1(Size4, Size4<T>(ZERO))

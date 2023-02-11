@@ -16,7 +16,7 @@ namespace yq {
         For those situations where a unique ID is required (but the actual order unimportant),
         this is that class!
     */
-    class UniqueID : trait::not_copyable, trait::not_moveable {
+    class UniqueID : not_copyable, not_moveable {
     public:
     
         //! This instance's unique ID

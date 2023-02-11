@@ -15,12 +15,10 @@ namespace yq {
     struct copysign_eval : std::false_type {
     };
 
-    namespace trait {
-        template <typename T, typename U=T> static constexpr const bool has_copysign_v = copysign_eval<T,U>::value;
-    }
+    template <typename T, typename U=T> static constexpr const bool has_copysign_v = copysign_eval<T,U>::value;
     
     template <typename T, typename U>
-    requires trait::has_copysign_v<T,U>
+    requires has_copysign_v<T,U>
     auto copysign(const T& mag, const U& sgn)
     {
         return copysign_eval<T,U>::compute(mag, sgn);

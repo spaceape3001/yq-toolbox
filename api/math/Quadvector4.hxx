@@ -183,15 +183,15 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Quadvector4<trait::product_t<T,U>> Quadvector4<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Quadvector4<product_t<T,U>> Quadvector4<T>::operator*(U b) const noexcept
     {
-        return Quadvector4<trait::product_t<T,U>>( xyzw*b );
+        return Quadvector4<product_t<T,U>>( xyzw*b );
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Quadvector4<T>& Quadvector4<T>::operator*=(U b) noexcept
     {
         xyzw*=b;
@@ -201,15 +201,15 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Quadvector4<trait::quotient_t<T,U>> Quadvector4<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Quadvector4<quotient_t<T,U>> Quadvector4<T>::operator/(U b) const noexcept
     {
-        return Quadvector4<trait::quotient_t<T,U>>( xyzw/b );
+        return Quadvector4<quotient_t<T,U>>( xyzw/b );
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Quadvector4<T>& Quadvector4<T>::operator/=(U b) noexcept
     {
         xyzw/=b;
@@ -246,10 +246,10 @@ namespace yq {
 
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Quadvector4<trait::product_t<T,U>> operator*(T a, const Quadvector4<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Quadvector4<product_t<T,U>> operator*(T a, const Quadvector4<U>& b) noexcept
     {
-        return Quadvector4<trait::product_t<T,U>>( a*b.xyzw );
+        return Quadvector4<product_t<T,U>>( a*b.xyzw );
     }
     
 }

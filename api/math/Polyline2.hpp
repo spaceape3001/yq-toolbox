@@ -41,17 +41,34 @@ namespace yq {
         Polyline2&  operator+=(const Vector2<T>&);
         Polyline2   operator-(const Vector2<T>&) const;
         Polyline2&  operator-=(const Vector2<T>&);
+
+        template <typename U>
+        requires is_arithmetic_v<U>
+        Polyline2<product_t<T,U>> operator*(U) const;
         
         template <typename U>
-        Polyline2<trait::product_t<T,U>>   operator*(const Tensor22<U>&) const;
-        template <typename U>
-        Polyline3<trait::product_t<T,U>>   operator*(const Tensor23<U>&) const;
-        template <typename U>
-        Polyline4<trait::product_t<T,U>>   operator*(const Tensor24<U>&) const;
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Polyline2& operator*=(U);
+
         
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        Polyline2<product_t<T,U>>   operator*(const Tensor22<U>&) const;
+        template <typename U>
+        Polyline3<product_t<T,U>>   operator*(const Tensor23<U>&) const;
+        template <typename U>
+        Polyline4<product_t<T,U>>   operator*(const Tensor24<U>&) const;
+        
+        template <typename U>
+        requires self_mul_v<T,U>
         Polyline2&  operator*=(const Tensor22<U>&);
+
+        template <typename U>
+        requires is_arithmetic_v<U>
+        Polyline2<quotient_t<T,U>> operator/(U) const;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Polyline2& operator/=(U);
 
         //! Addsa a point to the polyline
         Polyline2&   operator<<(const Vector2<T>& pt);
@@ -87,8 +104,13 @@ namespace yq {
     Polyline2<T> polyline(const Segment2<T>&);
 
     YQ_IEEE754_1(Polyline2)
+    YQ_INTEGER_1(Polyline2)
+    YQ_IS_INTEGER_1(Polyline2)
     YQ_ZERO_1(Polyline2, { })
 
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    Polyline2<product_t<T,U>> operator*(T, const Polyline2<U>&b);
 
     /*! \brief Create an axially aligned bounding box from a polyline
     */

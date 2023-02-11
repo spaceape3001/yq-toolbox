@@ -26,7 +26,7 @@ namespace yq {
         constexpr Quadvector4() noexcept = default;
         constexpr Quadvector4(T _xyzw) noexcept : xyzw(_xyzw) {}
         constexpr Quadvector4(all_t, T v) noexcept : xyzw(v) {}
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Quadvector4(nan_t) noexcept : Quadvector4(ALL, nan_v<T>) {}
         consteval Quadvector4(one_t) noexcept : Quadvector4(ALL, one_v<T>) {}
         constexpr Quadvector4(xyzw_t, T v) noexcept : xyzw(v) {}
@@ -56,23 +56,25 @@ namespace yq {
         constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Quadvector4<trait::product_t<T,U>> operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Quadvector4<product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Quadvector4& operator*=(U b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Quadvector4<trait::quotient_t<T,U>> operator/(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Quadvector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Quadvector4& operator/=(U b) noexcept;
     };
 
     YQ_IEEE754_1(Quadvector4)
+    YQ_INTEGER_1(Quadvector4)
+    YQ_IS_INTEGER_1(Quadvector4)
 
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -113,8 +115,8 @@ namespace yq {
     constexpr Multivector4<T> operator-(T a, const Quadvector4<T>& b) noexcept;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Quadvector4<trait::product_t<T,U>> operator*(T a, const Quadvector4<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Quadvector4<product_t<T,U>> operator*(T a, const Quadvector4<U>& b) noexcept;
 
 }
 

@@ -167,18 +167,18 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    AxBox4<trait::product_t<T,U>> AxBox4<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    AxBox4<product_t<T,U>> AxBox4<T>::operator*(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox4<trait::product_t<T,U>>(lo*b,hi*b);
+            return AxBox4<product_t<T,U>>(lo*b,hi*b);
         else
-            return AxBox4<trait::product_t<T,U>>(hi*b,lo*b);
+            return AxBox4<product_t<T,U>>(hi*b,lo*b);
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     AxBox4<T>& AxBox4<T>::operator*=(U b) noexcept
     {
         *this = *this * b;
@@ -187,18 +187,18 @@ namespace yq {
         
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    AxBox4<trait::quotient_t<T,U>> AxBox4<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    AxBox4<quotient_t<T,U>> AxBox4<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox4<trait::quotient_t<T,U>>(lo/b,hi/b);
+            return AxBox4<quotient_t<T,U>>(lo/b,hi/b);
         else
-            return AxBox4<trait::quotient_t<T,U>>(hi/b,lo/b);
+            return AxBox4<quotient_t<T,U>>(hi/b,lo/b);
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     AxBox4<T>& AxBox4<T>::operator/=(U b) noexcept
     {
         *this = *this / b;
@@ -248,7 +248,7 @@ namespace yq {
     template <typename T>
     constexpr Vector4<T>      AxBox4<T>::center() const noexcept
     {
-        if constexpr (trait::is_floating_point_v<T>)
+        if constexpr (is_floating_point_v<T>)
             return ieee754_t<T>(0.5)*(lo+hi);
         if constexpr (std::is_integral_v<T>)
             return (lo+hi) / T(2);
@@ -349,13 +349,13 @@ namespace yq {
     template <typename T>
     T                       AxBox4<T>::distance(const Vector4<T>&v) const
     {
-        if constexpr ( trait::has_sqrt_v<T> )
+        if constexpr ( has_sqrt_v<T> )
             return sqrt(distance²(v));
         return zero_v<T>;
     }
     
     template <typename T>
-    constexpr trait::square_t<T>   AxBox4<T>::distance²(const Vector4<T>&v) const noexcept
+    constexpr square_t<T>   AxBox4<T>::distance²(const Vector4<T>&v) const noexcept
     {
         return 
             (_gap(v.x, lo.x, hi.x)^²) +
@@ -474,13 +474,13 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::fourth_t<T> AxBox4<T>::hypervolume() const noexcept
+    constexpr fourth_t<T> AxBox4<T>::hypervolume() const noexcept
     {
         return (hi-lo).cproduct();
     }
 
     template <typename T>
-    constexpr trait::fourth_t<T> AxBox4<T>::hypervolume(guard_t) const noexcept
+    constexpr fourth_t<T> AxBox4<T>::hypervolume(guard_t) const noexcept
     {
         return abs(hypervolume());
     }
@@ -682,13 +682,13 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr AxBox4<trait::product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr AxBox4<product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return AxBox4<trait::product_t<T,U>>(a*b.lo, a*b.hi);
+            return AxBox4<product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return AxBox4<trait::product_t<T,U>>(a*b.hi, a*b.lo);
+            return AxBox4<product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
     template <typename T>
@@ -733,7 +733,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept
+    constexpr fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept
     {
         return box.hypervolume();
     }

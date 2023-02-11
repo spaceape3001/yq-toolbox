@@ -13,9 +13,7 @@ namespace yq {
     struct zero_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const bool has_zero_v = zero_eval<T>::value;
-    }
+    template <typename T> static constexpr const bool has_zero_v = zero_eval<T>::value;
     
     template <typename T>
     static constexpr const T zero_v  = zero_eval<T>::make();
@@ -33,7 +31,7 @@ namespace yq {
         IMPL_YQ_ZERO(type, __VA_ARGS__)
         
     #define YQ_ZERO_1(type, ...)                                \
-        template <typename T> requires trait::has_zero_v<T>     \
+        template <typename T> requires has_zero_v<T>     \
         IMPL_YQ_ZERO(type<T>, __VA_ARGS__)
 
     template <typename T>

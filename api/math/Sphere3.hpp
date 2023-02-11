@@ -47,19 +47,19 @@ namespace yq {
         Sphere3&            operator-=(const Vector3<T>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Sphere3<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        Sphere3<product_t<T,U>> operator*(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Sphere3<T>& operator*=(U) noexcept;
             
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Sphere3<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        Sphere3<quotient_t<T,U>> operator/(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Sphere3<T>& operator/=(U) noexcept;
 
 
@@ -71,7 +71,7 @@ namespace yq {
 
         /*! \brief Computes the surface area of a 3D sphere
         */
-        constexpr trait::square_t<T>     surface_area() const noexcept;
+        constexpr square_t<T>     surface_area() const noexcept;
 
         //! Returns a fixed copy of the circle (if it's invalid and possible to do)
         constexpr Sphere3   fixed() const noexcept;
@@ -81,10 +81,12 @@ namespace yq {
 
         /*! \brief Computes the volume of a 3D sphere
         */
-        constexpr trait::cube_t<T>       volume() const noexcept;
+        constexpr cube_t<T>       volume() const noexcept;
     };
 
     YQ_IEEE754_1(Sphere3)
+    YQ_INTEGER_1(Sphere3)
+    YQ_IS_INTEGER_1(Sphere3)
 
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -106,8 +108,8 @@ namespace yq {
     YQ_IS_NAN_1(Sphere3, is_nan(v.point) || is_nan(v.radius))
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Sphere3<trait::product_t<T,U>> operator*(T, const Sphere3<U>&);
+    requires is_arithmetic_v<T>
+    Sphere3<product_t<T,U>> operator*(T, const Sphere3<U>&);
 
     //! Returns the axially aligned box of a sphere
     template <typename T>
@@ -130,12 +132,12 @@ namespace yq {
     /*! \brief Computes the surface area of a 3D sphere
     */
     template <typename T>
-    constexpr trait::square_t<T>     surface_area(const Sphere3<T>& sph) noexcept;
+    constexpr square_t<T>     surface_area(const Sphere3<T>& sph) noexcept;
 
     /*! \brief Computes the volume of a 3D sphere
     */
     template <typename T>
-    constexpr trait::cube_t<T>       volume(const Sphere3<T>&sph) noexcept;
+    constexpr cube_t<T>       volume(const Sphere3<T>&sph) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Sphere3D)

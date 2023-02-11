@@ -15,12 +15,10 @@ namespace yq {
     struct abs_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const bool has_abs_v = abs_eval<T>::value;
-    }
+    template <typename T> static constexpr const bool has_abs_v = abs_eval<T>::value;
 
     template <typename T>
-    requires trait::has_abs_v<T>
+    requires has_abs_v<T>
     auto abs(const T& v) 
     {
         return abs_eval<T>::compute(v);

@@ -27,7 +27,7 @@ namespace yq {
         future use.
     */
     template <typename S, typename... Params>
-    class SqlQueryMap : public S, trait::not_moveable, trait::not_copyable {
+    class SqlQueryMap : public S, not_moveable, not_copyable {
     public:
         static_assert(std::is_base_of_v<SqlStatement, S>);
 

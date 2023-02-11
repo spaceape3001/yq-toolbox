@@ -273,10 +273,10 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Multivector4<trait::product_t<T,U>> Multivector4<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Multivector4<product_t<T,U>> Multivector4<T>::operator*(U b) const noexcept
     {
-        return Multivector4<trait::product_t<T,U>>(
+        return Multivector4<product_t<T,U>>(
             a*b, 
             x*b, y*b, z*b, w*b,
             xy*b, yz*b, zw*b, wx*b, xz*b, yw*b,
@@ -287,7 +287,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Multivector4<T>& Multivector4<T>::operator*=(U b) noexcept
     {
         a   *=b; 
@@ -300,10 +300,10 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Multivector4<trait::quotient_t<T,U>> Multivector4<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Multivector4<quotient_t<T,U>> Multivector4<T>::operator/(U b) const noexcept
     {
-        return Multivector4<trait::quotient_t<T,U>>(
+        return Multivector4<quotient_t<T,U>>(
             a/b, 
             x/b, y/b, z/b, w/b,
             xy/b, yz/b, zw/b, wx/b, xz/b, yw/b,
@@ -314,7 +314,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Multivector4<T>& Multivector4<T>::operator/=(U b) noexcept
     {
         a   /=b; 
@@ -379,10 +379,10 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Multivector4<trait::product_t<T,U>> operator*(T a, const Multivector4<U>&b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Multivector4<product_t<T,U>> operator*(T a, const Multivector4<U>&b) noexcept
     {
-        return Multivector4<trait::product_t<T,U>>(
+        return Multivector4<product_t<T,U>>(
             a*b.a, 
             a*b.x, a*b.y, a*b.z, a*b.w,
             a*b.xy, a*b.yz, a*b.zw, a*b.wx, a*b.xz, a*b.yw,

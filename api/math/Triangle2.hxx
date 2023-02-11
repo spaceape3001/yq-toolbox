@@ -76,16 +76,16 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Triangle2<trait::product_t<T,U>> Triangle2<T>::operator*(U rhs) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Triangle2<product_t<T,U>> Triangle2<T>::operator*(U rhs) const noexcept
     {
-        return Triangle2<trait::product_t<T,U>>( a*rhs, b*rhs, c*rhs );
+        return Triangle2<product_t<T,U>>( a*rhs, b*rhs, c*rhs );
     }
     
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Triangle2<T>& Triangle2<T>::operator*=(U rhs) noexcept
     {
         a *= rhs;
@@ -96,28 +96,28 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    Triangle2<trait::product_t<T,U>>   Triangle2<T>::operator*(const Tensor22<U>&rhs) const noexcept
+    Triangle2<product_t<T,U>>   Triangle2<T>::operator*(const Tensor22<U>&rhs) const noexcept
     {
-        return Triangle2<trait::product_t<T,U>>(a*rhs, b*rhs, c*rhs);
+        return Triangle2<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
 
     template <typename T>
         template <typename U>
-    Triangle3<trait::product_t<T,U>>   Triangle2<T>::operator*(const Tensor23<U>&rhs) const noexcept
+    Triangle3<product_t<T,U>>   Triangle2<T>::operator*(const Tensor23<U>&rhs) const noexcept
     {
-        return Triangle3<trait::product_t<T,U>>(a*rhs, b*rhs, c*rhs);
+        return Triangle3<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
 
     template <typename T>
         template <typename U>
-    Triangle4<trait::product_t<T,U>>   Triangle2<T>::operator*(const Tensor24<U>&rhs) const noexcept
+    Triangle4<product_t<T,U>>   Triangle2<T>::operator*(const Tensor24<U>&rhs) const noexcept
     {
-        return Triangle4<trait::product_t<T,U>>(a*rhs, b*rhs, c*rhs);
+        return Triangle4<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
 
     template <typename T>
         template <typename U>
-    requires trait::self_mul_v<T,U>
+    requires self_mul_v<T,U>
     Triangle2<T>&   Triangle2<T>::operator*=(const Tensor22<U>&rhs) noexcept
     {
         a *= rhs;
@@ -128,15 +128,15 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Triangle2<trait::quotient_t<T,U>> Triangle2<T>::operator/(U rhs) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Triangle2<quotient_t<T,U>> Triangle2<T>::operator/(U rhs) const noexcept
     {
-        return Triangle2<trait::quotient_t<T,U>>(a/rhs, b/rhs, c/rhs);
+        return Triangle2<quotient_t<T,U>>(a/rhs, b/rhs, c/rhs);
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Triangle2<T>& Triangle2<T>::operator/=(U rhs) noexcept
     {
         a /= rhs;
@@ -147,13 +147,13 @@ namespace yq {
 
 
     template <typename T>
-    constexpr trait::square_t<T>   Triangle2<T>::_area() const noexcept
+    constexpr square_t<T>   Triangle2<T>::_area() const noexcept
     {
         return delta_area(b, a) + delta_area(c, b) + delta_area(a, c);
     }
 
     template <typename T>
-    constexpr trait::square_t<T>    Triangle2<T>::area() const noexcept
+    constexpr square_t<T>    Triangle2<T>::area() const noexcept
     {
         return middivide(abs(_area()));
     }
@@ -177,7 +177,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr trait::square_t<T>   Triangle2<T>::edge_a_length²() const noexcept
+    constexpr square_t<T>   Triangle2<T>::edge_a_length²() const noexcept
     {
         return (c-b).length²();
     }
@@ -195,7 +195,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr trait::square_t<T>   Triangle2<T>::edge_b_length²() const noexcept
+    constexpr square_t<T>   Triangle2<T>::edge_b_length²() const noexcept
     {
         return (a-c).length²();
     }
@@ -213,7 +213,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr trait::square_t<T>   Triangle2<T>::edge_c_length²() const noexcept
+    constexpr square_t<T>   Triangle2<T>::edge_c_length²() const noexcept
     {
         return (b-a).length²();
     }
@@ -240,10 +240,10 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Triangle2<trait::product_t<T,U>> operator*(T lhs, const Triangle2<U>& rhs) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Triangle2<product_t<T,U>> operator*(T lhs, const Triangle2<U>& rhs) noexcept
     {
-        return Triangle2<trait::product_t<T,U>>(lhs*rhs.a, lhs*rhs.b, lhs*rhs.c);
+        return Triangle2<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b, lhs*rhs.c);
     }
 
     template <typename T>
@@ -253,7 +253,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::square_t<T>    area(const Triangle2<T>& tri) noexcept
+    constexpr square_t<T>    area(const Triangle2<T>& tri) noexcept
     {
         return tri.area();
     }

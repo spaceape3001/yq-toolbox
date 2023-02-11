@@ -17,7 +17,7 @@ namespace yq {
 
         /*! \brief Stream based on C++ ofstream
         */
-        class File : public Stream, trait::not_copyable, trait::not_moveable {
+        class File : public Stream, not_copyable, not_moveable {
         public:
     
             //! Default constructor

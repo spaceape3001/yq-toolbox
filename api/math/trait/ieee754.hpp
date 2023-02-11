@@ -8,6 +8,9 @@
 #include <type_traits>
 
 namespace yq {
+    template <typename T, typename DIM>             struct MKS;
+    template <typename T, typename DIM, double K>   struct SCALED;
+
     template <typename T> struct ieee754 : public std::false_type {};
     
     template <typename T> static constexpr const bool has_ieee754_v = ieee754<T>::value;
@@ -20,5 +23,13 @@ namespace yq {
     YQ_IEEE754(float)
     
     #define YQ_IEEE754_1(theType) template<typename T> struct ieee754<theType<T>> : public ieee754<T> {};
+
+    template<typename T, typename DIM> 
+    struct ieee754<MKS<T,DIM>> : public ieee754<T> {
+    };
+
+    template<typename T, typename DIM,double K> 
+    struct ieee754<SCALED<T,DIM,K>> : public ieee754<T> {
+    };
 }
 

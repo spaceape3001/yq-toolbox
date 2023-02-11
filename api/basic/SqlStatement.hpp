@@ -196,7 +196,7 @@ namespace yq {
     };
 
 
-    class SqlStatement::AutoFinish : trait::not_copyable {
+    class SqlStatement::AutoFinish : not_copyable {
     public:
         AutoFinish(){}
         AutoFinish(AutoFinish&&);

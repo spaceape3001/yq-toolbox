@@ -73,14 +73,14 @@ namespace yq {
     }
     
     template <typename T>
-        template <typename U> requires trait::is_arithmetic_v<U>
-    constexpr Segment1<trait::product_t<T,U>>    Segment1<T>::operator*(U rhs) const noexcept
+        template <typename U> requires is_arithmetic_v<U>
+    constexpr Segment1<product_t<T,U>>    Segment1<T>::operator*(U rhs) const noexcept
     {
-        return Segment1<trait::product_t<T,U>>(a*rhs, b*rhs);
+        return Segment1<product_t<T,U>>(a*rhs, b*rhs);
     }
     
     template <typename T>
-        template <typename U> requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        template <typename U> requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Segment1<T>&                Segment1<T>::operator*=(U rhs)  noexcept
     {
         a *= rhs;
@@ -90,36 +90,36 @@ namespace yq {
         
     template <typename T>
         template <typename U>
-    Segment1<trait::product_t<T,U>> Segment1<T>::operator*(const Tensor11<U>&rhs) const noexcept
+    Segment1<product_t<T,U>> Segment1<T>::operator*(const Tensor11<U>&rhs) const noexcept
     {
-        return Segment1<trait::product_t<T,U>>( a*rhs, b*rhs );
+        return Segment1<product_t<T,U>>( a*rhs, b*rhs );
     }
     
 
     template <typename T>
         template <typename U>
-    Segment2<trait::product_t<T,U>> Segment1<T>::operator*(const Tensor12<U>&rhs) const noexcept
+    Segment2<product_t<T,U>> Segment1<T>::operator*(const Tensor12<U>&rhs) const noexcept
     {
-        return Segment2<trait::product_t<T,U>>( a*rhs, b*rhs );
+        return Segment2<product_t<T,U>>( a*rhs, b*rhs );
     }
 
     template <typename T>
         template <typename U>
-    Segment3<trait::product_t<T,U>> Segment1<T>::operator*(const Tensor13<U>&rhs) const noexcept
+    Segment3<product_t<T,U>> Segment1<T>::operator*(const Tensor13<U>&rhs) const noexcept
     {
-        return Segment3<trait::product_t<T,U>>( a*rhs, b*rhs );
+        return Segment3<product_t<T,U>>( a*rhs, b*rhs );
     }
 
     template <typename T>
         template <typename U>
-    Segment4<trait::product_t<T,U>> Segment1<T>::operator*(const Tensor14<U>&rhs) const noexcept
+    Segment4<product_t<T,U>> Segment1<T>::operator*(const Tensor14<U>&rhs) const noexcept
     {
-        return Segment4<trait::product_t<T,U>>( a*rhs, b*rhs );
+        return Segment4<product_t<T,U>>( a*rhs, b*rhs );
     }
     
     template <typename T>
         template <typename U>
-    requires trait::self_mul_v<T,U>
+    requires self_mul_v<T,U>
     Segment1<T>&    Segment1<T>::operator*=(const Tensor11<U>&rhs) noexcept
     {   
         a *= rhs;
@@ -128,15 +128,15 @@ namespace yq {
     }
 
     template <typename T>
-        template <typename U> requires trait::is_arithmetic_v<U>
-    constexpr Segment1<trait::quotient_t<T,U>>   Segment1<T>::operator/(U rhs) const noexcept
+        template <typename U> requires is_arithmetic_v<U>
+    constexpr Segment1<quotient_t<T,U>>   Segment1<T>::operator/(U rhs) const noexcept
     {
-        return Segment1<trait::quotient_t<T,U>>(a/rhs, b/rhs);
+        return Segment1<quotient_t<T,U>>(a/rhs, b/rhs);
     }
     
     
     template <typename T>
-        template <typename U> requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        template <typename U> requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Segment1<T>&                Segment1<T>::operator/=(U rhs)  noexcept
     {
         a /= rhs;
@@ -164,7 +164,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::square_t<T> Segment1<T>::length²() const noexcept
+    constexpr square_t<T> Segment1<T>::length²() const noexcept
     {
         return delta().length²();
     }
@@ -188,10 +188,10 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T,U>
-    constexpr Segment1<trait::product_t<T,U>> operator*(T lhs, const Segment1<T>& rhs) noexcept
+    requires is_arithmetic_v<T,U>
+    constexpr Segment1<product_t<T,U>> operator*(T lhs, const Segment1<T>& rhs) noexcept
     {
-        return Segment1<trait::product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
+        return Segment1<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
     }
 
     template <typename T>

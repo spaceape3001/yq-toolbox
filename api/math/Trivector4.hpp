@@ -20,7 +20,7 @@ namespace yq {
         constexpr Trivector4() noexcept = default;
         constexpr Trivector4(T _xyz, T _yzw, T _zwx, T _wxy) noexcept : xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy) {}
         constexpr Trivector4(all_t, T v) noexcept : xyz(v), yzw(v), zwx(v), wxy(v) {}
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Trivector4(nan_t) noexcept : Trivector4(ALL, nan_v<T>) {}
         consteval Trivector4(one_t) noexcept : Trivector4(ALL, one_v<T>) {}
         constexpr Trivector4(wxy_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(zero_v<T>), wxy(v) {}
@@ -63,23 +63,25 @@ namespace yq {
         constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Trivector4<trait::product_t<T,U>> operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Trivector4<product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Trivector4& operator*=(U b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Trivector4<trait::quotient_t<T,U>> operator/(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Trivector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Trivector4& operator/=(U b) noexcept;
     };
 
     YQ_IEEE754_1(Trivector4)
+    YQ_INTEGER_1(Trivector4)
+    YQ_IS_INTEGER_1(Trivector4)
 
 
 //  --------------------------------------------------------
@@ -141,8 +143,8 @@ namespace yq {
         return Trivector4D(WXY, (double) v);
     }
 
-    YQ_NAN_1(Trivector4, Trivector4<T>{nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>})
-    YQ_ZERO_1(Trivector4, Trivector4<T>{zero_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>, nan_v<trait::cube_t<T>>})
+    YQ_NAN_1(Trivector4, Trivector4<T>{nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>})
+    YQ_ZERO_1(Trivector4, Trivector4<T>{zero_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>, nan_v<cube_t<T>>})
     
 
 //  --------------------------------------------------------
@@ -170,8 +172,8 @@ namespace yq {
         This will (scale) multiply a trivector, returns the result.
     */
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Trivector4<trait::product_t<T,U>> operator*(T a, const Trivector4<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Trivector4<product_t<T,U>> operator*(T a, const Trivector4<U>& b) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Trivector4D)

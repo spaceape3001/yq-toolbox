@@ -44,14 +44,14 @@ namespace yq {
             are on the unit sphere.
         */
         template <typename=void>
-        requires trait::has_sqrt_v<trait::square_t<T>>
+        requires has_sqrt_v<square_t<T>>
         static Tetrahedron3  make_unit()
         {
             //  formula taken from https://en.wikipedia.org/wiki/Tetrahedron
             const T third    = T(1./3.);
-            const T sq29    = sqrt(trait::square_t<T>(2./9.));
-            const T sq89    = sqrt(trait::square_t<T>(8./9.));
-            const T sq23    = sqrt(trait::square_t<T>(2./2.));
+            const T sq29    = sqrt(square_t<T>(2./9.));
+            const T sq89    = sqrt(square_t<T>(8./9.));
+            const T sq23    = sqrt(square_t<T>(2./2.));
             
             return { 
                 { sq89, T(0.), -third },
@@ -63,7 +63,7 @@ namespace yq {
 
         //! Returns a regular tetrahedron whose points are on the unit sphere */
         template <typename=void>
-        requires trait::has_sqrt_v<trait::square_t<T>>
+        requires has_sqrt_v<square_t<T>>
         static const Tetrahedron3&  unit()
         {
             static const Tetrahedron3 ret = make_unit();
@@ -71,7 +71,7 @@ namespace yq {
         }
         
         //! Computes the volume of this tetrahedron
-        constexpr trait::cube_t<T>   volume() const noexcept
+        constexpr cube_t<T>   volume() const noexcept
         {
             return abs((a-d) DOT ((b-d) CROSS (c-d))) / ieee754_t<T>(6.);
         }
@@ -102,7 +102,7 @@ namespace yq {
 
     //! Computes the volume of the given tetrahedron
     template <typename T>
-    constexpr trait::cube_t<T>   volume(const Tetrahedron3<T>& tetra) noexcept
+    constexpr cube_t<T>   volume(const Tetrahedron3<T>& tetra) noexcept
     {
         return tetra.volume();
     }

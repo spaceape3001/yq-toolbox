@@ -13,12 +13,10 @@ namespace yq {
     struct sqrt_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const  bool has_sqrt_v = sqrt_eval<T>::value;
-    }
+    template <typename T> static constexpr const  bool has_sqrt_v = sqrt_eval<T>::value;
 
     template <typename T>
-    requires trait::has_sqrt_v<T>
+    requires has_sqrt_v<T>
     auto sqrt(const T& v) 
     {
         return sqrt_eval<T>::compute(v);
@@ -37,7 +35,7 @@ namespace yq {
         IMPL_YQ_SQRT(type, __VA_ARGS__)
         
     #define YQ_SQRT_1(type, ...)                                \
-        template <typename T> requires trait::has_sqrt_v<T>     \
+        template <typename T> requires has_sqrt_v<T>     \
         IMPL_YQ_SQRT(type<T>, __VA_ARGS__)
         
         

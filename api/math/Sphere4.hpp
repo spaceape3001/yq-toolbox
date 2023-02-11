@@ -46,19 +46,19 @@ namespace yq {
         Sphere4&            operator-=(const Vector4<T>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Sphere4<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        Sphere4<product_t<T,U>> operator*(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Sphere4<T>& operator*=(U) noexcept;
             
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Sphere4<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        Sphere4<quotient_t<T,U>> operator/(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Sphere4<T>& operator/=(U) noexcept;
         
                 //! Returns the bounding box for this sphere
@@ -70,6 +70,8 @@ namespace yq {
     };
     
     YQ_IEEE754_1(Sphere4)
+    YQ_INTEGER_1(Sphere4)
+    YQ_IS_INTEGER_1(Sphere4)
 
 
 //  --------------------------------------------------------
@@ -99,8 +101,8 @@ namespace yq {
     YQ_IS_NAN_1(Sphere4, is_nan(v.point) || is_nan(v.radius))
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Sphere4<trait::product_t<T,U>> operator*(T a, const Sphere4<U>& b);
+    requires is_arithmetic_v<T>
+    Sphere4<product_t<T,U>> operator*(T a, const Sphere4<U>& b);
 
     //! Returns the axially aligned box of a sphere
     template <typename T>

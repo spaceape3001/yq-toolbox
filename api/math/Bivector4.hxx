@@ -185,15 +185,15 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Bivector4<trait::product_t<T,U>> Bivector4<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Bivector4<product_t<T,U>> Bivector4<T>::operator*(U b) const noexcept
     {
-        return Bivector4<trait::product_t<T,U>>( xy*b, yz*b, zw*b, wx*b, xz*b, yw*b );
+        return Bivector4<product_t<T,U>>( xy*b, yz*b, zw*b, wx*b, xz*b, yw*b );
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Bivector4<T>& Bivector4<T>::operator*=(U b) noexcept
     {
         xy*=b, yz*=b, zw*=b, wx*=b, xz*=b, yw*=b;
@@ -202,15 +202,15 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Bivector4<trait::quotient_t<T,U>> Bivector4<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Bivector4<quotient_t<T,U>> Bivector4<T>::operator/(U b) const noexcept
     {
-        return Bivector4<trait::quotient_t<T,U>>( xy/b, yz/b, zw/b, wx/b, xz/b, yw/b );
+        return Bivector4<quotient_t<T,U>>( xy/b, yz/b, zw/b, wx/b, xz/b, yw/b );
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Bivector4<T>& Bivector4<T>::operator/=(U b) noexcept
     {
         xy/=b, yz/=b, zw/=b, wx/=b, xz/=b, yw/=b;
@@ -246,10 +246,10 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Bivector4<trait::product_t<T,U>> operator*(T a, const Bivector4<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Bivector4<product_t<T,U>> operator*(T a, const Bivector4<U>& b) noexcept
     {
-        return Bivector4<trait::product_t<T,U>>( a*b.xy, a*b.yz, a*b.zw, a*b.wx, a*b.xz, a*b.yw );
+        return Bivector4<product_t<T,U>>( a*b.xy, a*b.yz, a*b.zw, a*b.wx, a*b.xz, a*b.yw );
     }
 
 

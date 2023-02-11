@@ -64,15 +64,15 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Circle2<trait::product_t<T,U>> Circle2<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Circle2<product_t<T,U>> Circle2<T>::operator*(U b) const noexcept
     {
-        return Circle2<trait::product_t<T,U>>( point*b, radius*positive(b));
+        return Circle2<product_t<T,U>>( point*b, radius*positive(b));
     }
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Circle2<T>& Circle2<T>::operator*=(U b) noexcept
     {
         point  *= b;
@@ -82,16 +82,16 @@ namespace yq {
         
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Circle2<trait::quotient_t<T,U>> Circle2<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Circle2<quotient_t<T,U>> Circle2<T>::operator/(U b) const noexcept
     {
-        return Circle2<trait::quotient_t<T,U>>( point/b, radius/positive(b));
+        return Circle2<quotient_t<T,U>>( point/b, radius/positive(b));
     }
     
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Circle2<T>& Circle2<T>::operator/=(U b) noexcept
     {
         point  /= b;
@@ -100,7 +100,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::square_t<T> Circle2<T>::area() const noexcept
+    constexpr square_t<T> Circle2<T>::area() const noexcept
     {
         if constexpr ( has_ieee754_v<T> )
             return std::numbers::pi_v<ieee754_t<T>> * (radius*radius);
@@ -146,10 +146,10 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Circle2<trait::product_t<T,U>> operator*(T a, const Circle2<U>& b)
+    requires is_arithmetic_v<T>
+    Circle2<product_t<T,U>> operator*(T a, const Circle2<U>& b)
     {
-        return Circle2<trait::product_t<T,U>>(a*b.point, positive(a)*b.radius);
+        return Circle2<product_t<T,U>>(a*b.point, positive(a)*b.radius);
     }
 
     template <typename T>
@@ -159,7 +159,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr trait::square_t<T> area(const Circle2<T>& cir) noexcept
+    constexpr square_t<T> area(const Circle2<T>& cir) noexcept
     {
         return cir.area();
     }

@@ -71,23 +71,25 @@ namespace yq {
         constexpr Multivector4<T> operator-(const Vector4<T>& b) const noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Bivector4<trait::product_t<T,U>> operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Bivector4<product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Bivector4& operator*=(U b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Bivector4<trait::quotient_t<T,U>> operator/(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Bivector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Bivector4& operator/=(U b) noexcept;
     };
     
     YQ_IEEE754_1(Bivector4)
+    YQ_INTEGER_1(Bivector4)
+    YQ_IS_INTEGER_1(Bivector4)
 
 
 //  --------------------------------------------------------
@@ -203,8 +205,8 @@ namespace yq {
     constexpr Multivector4<T> operator-(T a, const Bivector4<T>& b) noexcept;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Bivector4<trait::product_t<T,U>> operator*(T a, const Bivector4<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Bivector4<product_t<T,U>> operator*(T a, const Bivector4<U>& b) noexcept;
 
 
 }

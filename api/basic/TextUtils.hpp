@@ -2007,14 +2007,12 @@ namespace yq {
     //  IMPLEMENTATION
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
-    namespace trait {
-        
-        template <typename T>
-        static constexpr const bool     has_to_string_view_v    = std::is_same_v<std::string_view, decltype(to_string_view(T()))>;
+    
+    template <typename T>
+    static constexpr const bool     has_to_string_view_v    = std::is_same_v<std::string_view, decltype(to_string_view(T()))>;
 
-        template <typename T>
-        static constexpr const bool     has_to_string_v    = std::is_same_v<std::string, decltype(to_string(T()))>;
-    }
+    template <typename T>
+    static constexpr const bool     has_to_string_v    = std::is_same_v<std::string, decltype(to_string(T()))>;
     
 
 
@@ -2048,12 +2046,12 @@ namespace yq {
                 ret += s;
             } 
             if constexpr (!is_string){
-                if constexpr ( trait::has_to_string_view_v<value_t> ){
+                if constexpr ( has_to_string_view_v<value_t> ){
                     ret += to_string_view(s);
-                } else if constexpr ( trait::has_to_string_v<value_t> ){ 
+                } else if constexpr ( has_to_string_v<value_t> ){ 
                     ret += to_string(s);
                 } else {
-                    static_assert(trait::always_false_v<value_t>, "Argument deduction failed");
+                    static_assert(always_false_v<value_t>, "Argument deduction failed");
                 }
             }
         }
@@ -2112,12 +2110,12 @@ namespace yq {
                 ret += s;
             } 
             if constexpr (!is_string){
-                if constexpr ( trait::has_to_string_view_v<value_t> ){
+                if constexpr ( has_to_string_view_v<value_t> ){
                     ret += to_string_view(s);
-                } else if constexpr ( trait::has_to_string_v<value_t> ){ 
+                } else if constexpr ( has_to_string_v<value_t> ){ 
                     ret += to_string(s);
                 } else {
-                    static_assert(trait::always_false_v<value_t>, "Argument deduction failed");
+                    static_assert(always_false_v<value_t>, "Argument deduction failed");
                 }
             }
         }
@@ -2161,12 +2159,12 @@ namespace yq {
                 ret += s;
             } 
             if constexpr (!is_string){
-                if constexpr ( trait::has_to_string_view_v<value_t> ){
+                if constexpr ( has_to_string_view_v<value_t> ){
                     ret += to_string_view(s);
-                } else if constexpr ( trait::has_to_string_v<value_t> ){ 
+                } else if constexpr ( has_to_string_v<value_t> ){ 
                     ret += to_string(s);
                 } else {
-                    static_assert(trait::always_false_v<value_t>, "Argument deduction failed");
+                    static_assert(always_false_v<value_t>, "Argument deduction failed");
                 }
             }
         }

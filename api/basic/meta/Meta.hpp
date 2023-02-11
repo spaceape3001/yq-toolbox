@@ -106,7 +106,7 @@ namespace yq {
     
         \note We will ASSUME SINGLE THREADED until AFTER freeze is called, so that no mutex locking is required.
     */
-    class Meta : trait::not_copyable, trait::not_moveable {
+    class Meta : not_copyable, not_moveable {
     public:
     
     

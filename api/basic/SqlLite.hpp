@@ -14,7 +14,7 @@ struct sqlite3;
 
 namespace yq {
     
-    class SqlLite : trait::not_moveable, trait::not_copyable {
+    class SqlLite : not_moveable, not_copyable {
     public:
     
         enum {

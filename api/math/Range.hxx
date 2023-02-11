@@ -319,18 +319,18 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Range<trait::product_t<T,U>>    Range<T>::operator*(U b) noexcept
+    requires is_arithmetic_v<U>
+    constexpr Range<product_t<T,U>>    Range<T>::operator*(U b) noexcept
     {
         if(b >= zero_v<U>)
-            return Range<trait::product_t<T,U>>(lo*b, hi*b);
+            return Range<product_t<T,U>>(lo*b, hi*b);
         else
-            return Range<trait::product_t<T,U>>(hi*b, lo*b);
+            return Range<product_t<T,U>>(hi*b, lo*b);
     }
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>) 
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>) 
     Range<T>&    Range<T>::operator*=(U b) noexcept
     {
         *this   = *this * b;
@@ -339,14 +339,14 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Range<trait::product_t<T,U>>   Range<T>::operator*(const Range<U>&b) const noexcept
+    constexpr Range<product_t<T,U>>   Range<T>::operator*(const Range<U>&b) const noexcept
     {
-        return Range<trait::product_t<T,U>>(UNION, {lo*b.lo, lo*b.hi, hi*b.lo, hi*b.hi });
+        return Range<product_t<T,U>>(UNION, {lo*b.lo, lo*b.hi, hi*b.lo, hi*b.hi });
     }
 
     template <typename T>
         template <typename U>
-    requires trait::self_mul_v<T,U>
+    requires self_mul_v<T,U>
     Range<T>&    Range<T>::operator*=(const Range<U>& b) noexcept
     {
         *this  = *this * b;
@@ -355,18 +355,18 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Range<trait::quotient_t<T,U>>    Range<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Range<quotient_t<T,U>>    Range<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return Range<trait::quotient_t<T,U>>( lo/b, hi/b);
+            return Range<quotient_t<T,U>>( lo/b, hi/b);
         else
-            return Range<trait::quotient_t<T,U>>( hi/b, lo/b);
+            return Range<quotient_t<T,U>>( hi/b, lo/b);
     }
     
     template <typename T>
         template <typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>) 
+    requires (std::is_arithmetic_v<U> && self_div_v<T,U>) 
     Range<T>&    Range<T>::operator/=(U b) noexcept
     {
         *this   = *this / b;
@@ -375,14 +375,14 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    constexpr Range<trait::quotient_t<T,U>>   Range<T>::operator/(const Range<U>&b) const noexcept
+    constexpr Range<quotient_t<T,U>>   Range<T>::operator/(const Range<U>&b) const noexcept
     {
-        return Range<trait::quotient_t<T,U>>(UNION, {lo/b.lo, lo/b.hi, hi/b.lo, hi/b.hi });
+        return Range<quotient_t<T,U>>(UNION, {lo/b.lo, lo/b.hi, hi/b.lo, hi/b.hi });
     }
 
     template <typename T>
         template <typename U>
-    requires trait::self_div_v<T,U>
+    requires self_div_v<T,U>
     Range<T>&    Range<T>::operator/=(const Range<U>& b) noexcept
     {
         *this   = *this / b;
@@ -432,9 +432,9 @@ namespace yq {
     template <typename T>
     constexpr Range<T>  Range<T>::center() const noexcept
     {
-        if constexpr (trait::is_floating_point_v<T>)
+        if constexpr (is_floating_point_v<T>)
             return ieee754_t<T>(0.5)*(lo+hi);
-        if constexpr (trait::is_integral_v<T>)
+        if constexpr (is_integer_v<T>)
             return (lo+hi) / integer_t<T>(2);
         return {};
     }
@@ -478,7 +478,7 @@ namespace yq {
 
     template <typename T>
         template <typename>
-    requires trait::is_floating_point_v<T>
+    requires is_floating_point_v<T>
     constexpr T   Range<T>::project(T v) const noexcept
     {
         return (one_v<T>-v)*lo + v*hi;
@@ -492,7 +492,7 @@ namespace yq {
 
     template <typename T>
         template <typename>
-    requires trait::is_floating_point_v<T>
+    requires is_floating_point_v<T>
     constexpr T   Range<T>::unproject(T v) const noexcept
     {
         return (v-lo)/(hi-lo);
@@ -520,18 +520,18 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Range<trait::product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Range<product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return Range<trait::product_t<T,U>>(a*b.lo, a*b.hi);
+            return Range<product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return Range<trait::product_t<T,U>>(a*b.hi, a*b.lo);
+            return Range<product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Range<trait::product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Range<product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept
     {
         if(a >= zero_v<T>)
             return range(a/b.hi, a/b.lo);

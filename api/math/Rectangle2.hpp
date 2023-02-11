@@ -71,6 +71,8 @@ namespace yq {
         }
     };
 
+    YQ_INTEGER_1(Rectangle2)
+    YQ_IS_INTEGER_1(Rectangle2)
     YQ_IEEE754_1(Rectangle2)
 
     YQ_NAN_1(Rectangle2, Rectangle2<T>{nan_v<Vector2<T>>, nan_v<Size2<T>>})

@@ -18,7 +18,7 @@ namespace yq {
         
             This calls the direct write() api, a stream to a linux file.
         */
-        class OSFile : public Stream, trait::not_copyable, trait::not_moveable {
+        class OSFile : public Stream, not_copyable, not_moveable {
         public:
             enum {
 

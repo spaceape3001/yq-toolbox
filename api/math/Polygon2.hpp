@@ -48,19 +48,36 @@ namespace yq {
         Polygon2&  operator-=(const Vector2<T>&);
 
         template <typename U>
-        Polygon2<trait::product_t<T,U>>   operator*(const Tensor22<U>&) const;
-        template <typename U>
-        Polygon3<trait::product_t<T,U>>   operator*(const Tensor23<U>&) const;
-        template <typename U>
-        Polygon4<trait::product_t<T,U>>   operator*(const Tensor24<U>&) const;
+        requires is_arithmetic_v<U>
+        Polygon2<product_t<T,U>> operator*(U) const;
         
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Polygon2& operator*=(U);
+
+        template <typename U>
+        Polygon2<product_t<T,U>>   operator*(const Tensor22<U>&) const;
+        template <typename U>
+        Polygon3<product_t<T,U>>   operator*(const Tensor23<U>&) const;
+        template <typename U>
+        Polygon4<product_t<T,U>>   operator*(const Tensor24<U>&) const;
+        
+        template <typename U>
+        requires self_mul_v<T,U>
         Polygon2&  operator*=(const Tensor22<U>&);
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        Polygon2<quotient_t<T,U>> operator/(U) const;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Polygon2& operator/=(U);
+
         
         /*! \brief Computes the area of a 2D polygon
         */
-        constexpr trait::square_t<T>    area() const noexcept;
+        constexpr square_t<T>    area() const noexcept;
 
         //! Compute the bounding box to this polygon
         constexpr AxBox2<T>   bounds() const noexcept;
@@ -85,7 +102,7 @@ namespace yq {
             simply does an "area" of the point deltas, 
             no sign correction, no scaling.
         */
-        constexpr trait::square_t<T>    point_area() const noexcept;
+        constexpr square_t<T>    point_area() const noexcept;
 
         template <typename Pred>
         void    segments(Pred) const;
@@ -115,7 +132,9 @@ namespace yq {
     Polygon2<T> polygon(const Triangle2<T>& ax);
 
     YQ_IEEE754_1(Polygon2)
-    YQ_ZERO_1(Polygon2, { })
+    YQ_INTEGER_1(Polygon2)
+    YQ_IS_INTEGER_1(Polygon2)
+    YQ_ZERO_1(Polygon2, Polygon2<T>())
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -173,6 +192,9 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    Polygon2<product_t<T,U>> operator*(T, const Polygon2<U>&b);
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -216,7 +238,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D polygon
     */
     template <typename T>
-    trait::square_t<T>    area(const Polygon2<T>& poly);
+    square_t<T>    area(const Polygon2<T>& poly);
 
     //! Computes the centroid of the given polygon
     template <typename T>

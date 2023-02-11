@@ -13,9 +13,7 @@ namespace yq {
     struct identity_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const bool has_identity_v = identity_eval<T>::value;
-    }
+    template <typename T> static constexpr const bool has_identity_v = identity_eval<T>::value;
     
     template <typename T>
     static constexpr const T identity_v  = identity_eval<T>::make();
@@ -33,6 +31,6 @@ namespace yq {
         IMPL_YQ_IDENTITY(type, __VA_ARGS__)
         
     #define YQ_IDENTITY_1(type, ...)                            \
-        template <typename T> requires trait::has_identity_v<T> \
+        template <typename T> requires has_identity_v<T> \
         IMPL_YQ_IDENTITY(type<T>, __VA_ARGS__)
 }

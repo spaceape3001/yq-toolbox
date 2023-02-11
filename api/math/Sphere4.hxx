@@ -64,15 +64,15 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Sphere4<trait::product_t<T,U>> Sphere4<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Sphere4<product_t<T,U>> Sphere4<T>::operator*(U b) const noexcept
     {
-        return Sphere4<trait::product_t<T,U>>( point*b, radius*positive(b));
+        return Sphere4<product_t<T,U>>( point*b, radius*positive(b));
     }
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Sphere4<T>& Sphere4<T>::operator*=(U b) noexcept
     {
         point  *= b;
@@ -82,15 +82,15 @@ namespace yq {
         
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Sphere4<trait::quotient_t<T,U>> Sphere4<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Sphere4<quotient_t<T,U>> Sphere4<T>::operator/(U b) const noexcept
     {
-        return Sphere4<trait::quotient_t<T,U>>( point/b, radius/positive(b));
+        return Sphere4<quotient_t<T,U>>( point/b, radius/positive(b));
     }
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Sphere4<T>& Sphere4<T>::operator/=(U b) noexcept
     {
         point  /= b;
@@ -116,10 +116,10 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Sphere4<trait::product_t<T,U>> operator*(T a, const Sphere4<U>& b)
+    requires is_arithmetic_v<T>
+    Sphere4<product_t<T,U>> operator*(T a, const Sphere4<U>& b)
     {
-        return Sphere4<trait::product_t<T,U>>(a*b.point, positive(a)*b.radius);
+        return Sphere4<product_t<T,U>>(a*b.point, positive(a)*b.radius);
     }
 
     //! Returns the axially aligned box of a sphere

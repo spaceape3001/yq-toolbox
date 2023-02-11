@@ -10,11 +10,15 @@
 
 namespace yq {
 
+    template <typename T, typename DIM>             struct MKS;
+    template <typename T, typename DIM, double K>   struct SCALED;
+
+    //! Detects the integer type for the object
     template <typename T> struct integer : public std::false_type {};
     
     template <typename T> static constexpr const bool has_integer_v = integer<T>::value;
     template <typename T> using integer_t = typename integer<T>::type;
-    template <typename T> static constexpr const bool is_integer_v = std::is_same_v<T,integer_t<T>>;
+    template <typename T> static constexpr const bool integer_v = std::is_same_v<T,integer_t<T>>;
     
     #define YQ_INTEGER(theType) template <> struct integer<theType> : public std::true_type { using type = theType; };
     
@@ -29,5 +33,15 @@ namespace yq {
     YQ_INTEGER(uint64_t)
     
     #define YQ_INTEGER_1(theType) template<typename T> struct integer<theType<T>> : public integer<T> {};
+
+    template<typename T, typename DIM> 
+    struct integer<MKS<T,DIM>> : public integer<T> {
+    };
+
+    template<typename T, typename DIM, double K> 
+    struct integer<SCALED<T,DIM,K>> : public integer<T> {
+    };
+
+
 }
 

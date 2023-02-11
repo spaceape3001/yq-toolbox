@@ -59,37 +59,37 @@ namespace yq {
         Range<T>&           operator-=(const Range<T>& b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Range<trait::product_t<T,U>>    operator*(U b) noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Range<product_t<T,U>>    operator*(U b) noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>) 
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>) 
         Range<T>&           operator*=(U b) noexcept;
 
         template <typename U>
-        constexpr Range<trait::product_t<T,U>>   operator*(const Range<U>&b) const noexcept;
+        constexpr Range<product_t<T,U>>   operator*(const Range<U>&b) const noexcept;
         
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires self_mul_v<T,U>
         Range<T>&    operator*=(const Range<U>& b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Range<trait::quotient_t<T,U>>    operator/(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Range<quotient_t<T,U>>    operator/(U b) const noexcept;
 
         template <typename U>
-        requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>) 
+        requires (std::is_arithmetic_v<U> && self_div_v<T,U>) 
         Range<T>&    operator/=(U b) noexcept;
 
         template <typename U>
-        constexpr Range<trait::quotient_t<T,U>>   operator/(const Range<U>&b) const noexcept;
+        constexpr Range<quotient_t<T,U>>   operator/(const Range<U>&b) const noexcept;
 
         template <typename U>
-        requires trait::self_div_v<T,U>
+        requires self_div_v<T,U>
         Range<T>&    operator/=(const Range<U>& b) noexcept;
 
         template <typename U>
-        constexpr Range<trait::product_t<T,U>>   operator/(const Range<U>&b) const noexcept;
+        constexpr Range<product_t<T,U>>   operator/(const Range<U>&b) const noexcept;
 
         constexpr Range<T>  operator|(T) const noexcept;
         Range<T>&           operator|=(T) noexcept;
@@ -133,7 +133,7 @@ namespace yq {
             \return The global coordinate
         */
         template <typename=void>
-        requires trait::is_floating_point_v<T>
+        requires is_floating_point_v<T>
         constexpr T   project(T v) const noexcept;
 
         //! Computes the span of the range
@@ -144,7 +144,7 @@ namespace yq {
             \return The local coordinate
         */
         template <typename=void>
-        requires trait::is_floating_point_v<T>
+        requires is_floating_point_v<T>
         constexpr T   unproject(T v) const noexcept;
         
         constexpr bool    valid() const noexcept;
@@ -152,6 +152,8 @@ namespace yq {
     };
 
     YQ_IEEE754_1(Range)
+    YQ_INTEGER_1(Range)
+    YQ_IS_INTEGER_1(Range)
     
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -206,13 +208,13 @@ namespace yq {
 
     //! Multiplication (assumes b to be valid)
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Range<trait::product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Range<product_t<T,U>>    operator*(T a, const Range<U>& b) noexcept;
 
     //! Division (assumes b to be valid)
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Range<trait::product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Range<product_t<T,U>>    operator/(T a, const Range<U>& b) noexcept;
 
     //! Union (assumes b to be valid)
     template <typename T>

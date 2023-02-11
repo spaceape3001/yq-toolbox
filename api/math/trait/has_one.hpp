@@ -13,9 +13,7 @@ namespace yq {
     struct one_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const bool has_one_v = one_eval<T>::value;
-    }
+    template <typename T> static constexpr const bool has_one_v = one_eval<T>::value;
     
     template <typename T>
     static constexpr const T one_v  = one_eval<T>::make();
@@ -33,7 +31,7 @@ namespace yq {
         IMPL_YQ_ONE(type, __VA_ARGS__)
         
     #define YQ_ONE_1(type, ...)                                 \
-        template <typename T> requires trait::has_one_v<T>      \
+        template <typename T> requires has_one_v<T>      \
         IMPL_YQ_ONE(type<T>, __VA_ARGS__)
 
     template <typename T>

@@ -29,13 +29,6 @@ namespace yq {
         constexpr auto operator<=>(const MKS&) const noexcept = default;
     };
     
-    template<typename T, typename DIM> 
-    struct ieee754<MKS<T,DIM>> : public ieee754<T> {
-    };
-
-    template<typename T, typename DIM> 
-    struct integer<MKS<T,DIM>> : public integer<T> {
-    };
 
     template <typename T, typename DIM>
         template <int N>
@@ -112,13 +105,13 @@ namespace yq {
     template <typename T, typename DIM>
     auto cube(const MKS<T,DIM>& v)
     {
-        return MKS<trait::cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
+        return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
     }
 
     template <typename T, typename DIM>
     auto operator^(const MKS<T,DIM>& v,three_t)
     {
-        return MKS<trait::cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
+        return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
     }
 
     template <typename T, typename DIM>
@@ -134,7 +127,7 @@ namespace yq {
     }
     
     template <typename T, typename DIM>
-    requires trait::has_sqrt_v<T>
+    requires has_sqrt_v<T>
     auto sqrt(const MKS<T,DIM>& v)
     {
         auto ret    = sqrt(v.value);
@@ -144,13 +137,13 @@ namespace yq {
     template <typename T, typename DIM>
     auto square(const MKS<T,DIM>& v)
     {
-        return MKS<trait::square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
+        return MKS<square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
     }
 
     template <typename T, typename DIM>
     auto operator^(const MKS<T,DIM>& v, two_t)
     {
-        return MKS<trait::square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
+        return MKS<square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
     }
 
 //  --------------------------------------------------------
@@ -213,21 +206,21 @@ namespace yq {
 //  MULTIPLICATION
 
     template <typename T, typename DIM>
-    requires trait::is_basic_v<T>
+    requires is_basic_v<T>
     MKS<T,DIM> operator*(T a, const MKS<T,DIM>& b)
     {
         return { a * b.value };
     }
     
     template <typename T, typename DIM>
-    requires trait::is_basic_v<T>
+    requires is_basic_v<T>
     MKS<T,DIM> operator*(const MKS<T,DIM>& a, T  b)
     {
         return { a.value * b };
     }
     
     template <typename T, typename DIM>
-    requires trait::is_basic_v<T>
+    requires is_basic_v<T>
     MKS<T,DIM>& operator*=(MKS<T,DIM>& a, T  b)
     {
         a.value *= b;
@@ -235,7 +228,7 @@ namespace yq {
     }
 
     template <typename T, typename U, typename DIMT, typename DIMU>
-    MKS<trait::product_t<T,U>,typename DIMT::template _mult_<DIMU>> operator*(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
+    MKS<product_t<T,U>,typename DIMT::template _mult_<DIMU>> operator*(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
     {
         return { a.value * b.value };
     }
@@ -245,21 +238,21 @@ namespace yq {
 //  DIVISION
 
     template <typename T, typename DIM>
-    requires trait::is_basic_v<T>
+    requires is_basic_v<T>
     MKS<T,typename DIM::template _pow_<-1,1>> operator/(T a, const MKS<T,DIM>& b)
     {
         return { a / b.value };
     }
     
     template <typename T, typename DIM>
-    requires trait::is_basic_v<T>
+    requires is_basic_v<T>
     MKS<T,DIM> operator/(const MKS<T,DIM>& a, T  b)
     {
         return { a.value / b };
     }
     
     template <typename T, typename DIM>
-    requires trait::is_basic_v<T>
+    requires is_basic_v<T>
     MKS<T,DIM>& operator/=(MKS<T,DIM>& a, T  b)
     {
         a.value /= b;
@@ -267,7 +260,7 @@ namespace yq {
     }
 
     template <typename T, typename U, typename DIMT, typename DIMU>
-    MKS<trait::quotient_t<T,U>,typename DIMT::template _div_<DIMU>> operator/(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
+    MKS<quotient_t<T,U>,typename DIMT::template _div_<DIMU>> operator/(const MKS<T,DIMT>& a, const MKS<U,DIMU>& b)
     {
         return { a.value / b.value };
     }

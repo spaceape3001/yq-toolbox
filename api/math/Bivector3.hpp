@@ -63,23 +63,25 @@ namespace yq {
         constexpr Multivector3<T>   operator-(const Vector3<T>& b) const noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        Bivector3<trait::product_t<T,U>> operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        Bivector3<product_t<T,U>> operator*(U b) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-        Bivector3<trait::product_t<T,U>>& operator*=(U b) noexcept;
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Bivector3<product_t<T,U>>& operator*=(U b) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<T>
-        Bivector3<trait::quotient_t<T,U>> operator/(U b) const noexcept;
+        requires is_arithmetic_v<T>
+        Bivector3<quotient_t<T,U>> operator/(U b) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<T> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<T> && self_div_v<T,U>)
         Bivector3& operator/=(U b) noexcept;
 
     };
 
+    YQ_INTEGER_1(Bivector3)
+    YQ_IS_INTEGER_1(Bivector3)
     YQ_IEEE754_1(Bivector3)
 
 //  --------------------------------------------------------
@@ -128,8 +130,8 @@ namespace yq {
         return Bivector3D(ZX, (double) v);
     }
 
-    YQ_NAN_1(Bivector3, Bivector3<T>{nan_v<trait::square_t<T>>, nan_v<trait::square_t<T>>, nan_v<trait::square_t<T>>})
-    YQ_ZERO_1(Bivector3, Bivector3<T>{zero_v<trait::square_t<T>>, zero_v<trait::square_t<T>>, zero_v<trait::square_t<T>>})
+    YQ_NAN_1(Bivector3, Bivector3<T>{nan_v<square_t<T>>, nan_v<square_t<T>>, nan_v<square_t<T>>})
+    YQ_ZERO_1(Bivector3, Bivector3<T>{zero_v<square_t<T>>, zero_v<square_t<T>>, zero_v<square_t<T>>})
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
@@ -148,8 +150,8 @@ template <typename T>
     constexpr Multivector3<T> operator-(T a, const Bivector3<T>& b) noexcept;
     
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Bivector3<trait::product_t<T,U>> operator*(T a, const Bivector3<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    Bivector3<product_t<T,U>> operator*(T a, const Bivector3<U>& b) noexcept;
     
 }
 

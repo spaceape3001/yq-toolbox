@@ -52,7 +52,7 @@ namespace yq {
             xy(v), yz(v), zw(v), wx(v), xz(v), yw(v),
             xyz(v), yzw(v), zwx(v), wxy(v),
             xyzw(v) {}
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Multivector4(nan_t) noexcept : Multivector4(ALL, nan_v<T>) {}
         consteval Multivector4(one_t) noexcept : Multivector4(ALL, one_v<T>) {}
         consteval Multivector4(zero_t) noexcept : Multivector4(ALL, zero_v<T>) {}
@@ -90,19 +90,19 @@ namespace yq {
         Multivector4&           operator-=(const Vector4<T>& b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Multivector4<trait::product_t<T,U>> operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Multivector4<product_t<T,U>> operator*(U b) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Multivector4& operator*=(U b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Multivector4<trait::quotient_t<T,U>> operator/(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Multivector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Multivector4& operator/=(U b) noexcept;
 
         constexpr Bivector4<T> bivector() const noexcept;
@@ -112,6 +112,8 @@ namespace yq {
     };
 
     YQ_IEEE754_1(Multivector4)
+    YQ_INTEGER_1(Multivector4)
+    YQ_IS_INTEGER_1(Multivector4)
 
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -172,8 +174,8 @@ namespace yq {
     constexpr Multivector4<T> operator+(T a, const Multivector4<T>& b) noexcept;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Multivector4<trait::product_t<T,U>> operator*(T a, const Multivector4<U>&b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Multivector4<product_t<T,U>> operator*(T a, const Multivector4<U>&b) noexcept;
 
 }
 

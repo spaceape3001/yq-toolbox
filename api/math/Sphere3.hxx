@@ -64,15 +64,15 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Sphere3<trait::product_t<T,U>> Sphere3<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Sphere3<product_t<T,U>> Sphere3<T>::operator*(U b) const noexcept
     {
-        return Sphere3<trait::product_t<T,U>>( point*b, radius*positive(b));
+        return Sphere3<product_t<T,U>>( point*b, radius*positive(b));
     }
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Sphere3<T>& Sphere3<T>::operator*=(U b) noexcept
     {
         point  *= b;
@@ -82,15 +82,15 @@ namespace yq {
         
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Sphere3<trait::quotient_t<T,U>> Sphere3<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Sphere3<quotient_t<T,U>> Sphere3<T>::operator/(U b) const noexcept
     {
-        return Sphere3<trait::quotient_t<T,U>>( point/b, radius/positive(b));
+        return Sphere3<quotient_t<T,U>>( point/b, radius/positive(b));
     }
     
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Sphere3<T>& Sphere3<T>::operator/=(U b) noexcept
     {
         point  /= b;
@@ -121,7 +121,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::square_t<T>     Sphere3<T>::surface_area() const noexcept
+    constexpr square_t<T>     Sphere3<T>::surface_area() const noexcept
     {
         return 4.0*pi*(radius*radius);
     }
@@ -133,7 +133,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::cube_t<T>       Sphere3<T>::volume() const noexcept
+    constexpr cube_t<T>       Sphere3<T>::volume() const noexcept
     {
         return (4.0/3.0)*pi*(radius*radius*radius);
     }
@@ -142,10 +142,10 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Sphere3<trait::product_t<T,U>> operator*(T a, const Sphere3<U>& b)
+    requires is_arithmetic_v<T>
+    Sphere3<product_t<T,U>> operator*(T a, const Sphere3<U>& b)
     {
-        return Sphere3<trait::product_t<T,U>>(a*b.point, positive(a)*b.radius);
+        return Sphere3<product_t<T,U>>(a*b.point, positive(a)*b.radius);
     }
 
     template <typename T>
@@ -170,13 +170,13 @@ namespace yq {
 
 
     template <typename T>
-    constexpr trait::square_t<T>     surface_area(const Sphere3<T>& sph) noexcept
+    constexpr square_t<T>     surface_area(const Sphere3<T>& sph) noexcept
     {
         return sph.surface_area();
     }
 
     template <typename T>
-    constexpr trait::cube_t<T>       volume(const Sphere3<T>&sph) noexcept
+    constexpr cube_t<T>       volume(const Sphere3<T>&sph) noexcept
     {
         return sph.volume();
     }

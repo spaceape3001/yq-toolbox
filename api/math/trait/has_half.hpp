@@ -13,9 +13,7 @@ namespace yq {
     struct half_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const bool has_half_v = half_eval<T>::value;
-    }
+    template <typename T> static constexpr const bool has_half_v = half_eval<T>::value;
     
     template <typename T>
     static constexpr const T half_v  = half_eval<T>::make();
@@ -33,7 +31,7 @@ namespace yq {
         IMPL_YQ_HALF(type, __VA_ARGS__)
         
     #define YQ_HALF_1(type, ...)                                \
-        template <typename T> requires trait::has_half_v<T>     \
+        template <typename T> requires has_half_v<T>     \
         IMPL_YQ_HALF(type<T>, __VA_ARGS__)
 
     template <typename T>

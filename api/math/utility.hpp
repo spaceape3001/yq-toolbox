@@ -83,21 +83,21 @@ namespace yq {
     }
     
     template <typename T>
-    requires trait::is_arithmetic_v<T>
-    constexpr trait::square_t<T>    operator^(T v, two_t) noexcept
+    requires is_arithmetic_v<T>
+    constexpr square_t<T>    operator^(T v, two_t) noexcept
     {
         return v*v;
     }
 
     template <typename T, typename R>
-    requires trait::is_arithmetic_v<T>
+    requires is_arithmetic_v<T>
     bool    is_close(const R& compare, T actual, T expected)
     {
         return compare(actual-expected, expected);
     }
     
     template <typename T>
-    requires trait::can_add_v<T>
+    requires can_add_v<T>
     constexpr T   sum(std::span<const T> data) noexcept
     {
         T   ret = zero_v<T>;
@@ -107,7 +107,7 @@ namespace yq {
     }
 
     template <typename T>
-    requires trait::can_add_v<T>
+    requires can_add_v<T>
     constexpr T   sum(std::initializer_list<T> data) noexcept
     {
         return sum(span(data));

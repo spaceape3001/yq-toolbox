@@ -38,7 +38,7 @@ namespace yq {
         constexpr AxBox4(union_t, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
         constexpr AxBox4(union_t, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
 
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval AxBox4(nan_t) : AxBox4(Vector4<T>(NAN)) {}
 
         consteval AxBox4(zero_t) : AxBox4(Vector4<T>(ZERO)) {}
@@ -60,19 +60,19 @@ namespace yq {
         AxBox4& operator-=(const Vector4<T>&) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        AxBox4<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        AxBox4<product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         AxBox4& operator*=(U) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        AxBox4<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        AxBox4<quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         AxBox4& operator/=(U) noexcept;
         
         
@@ -127,7 +127,7 @@ namespace yq {
         T                       distance(const Vector4<T>&) const;
         
         //! Distance² to box (zero if inside)
-        constexpr trait::square_t<T>   distance²(const Vector4<T>&) const noexcept;
+        constexpr square_t<T>   distance²(const Vector4<T>&) const noexcept;
 
         /*! \brief Checks for full occlusion
         
@@ -159,13 +159,13 @@ namespace yq {
 
         /*! \brief Computes the hyper volume of the box
         */
-        constexpr trait::fourth_t<T> hypervolume() const noexcept;
+        constexpr fourth_t<T> hypervolume() const noexcept;
 
         /*! \brief Computes the hyper volume of the box
         
             \note This instance guards against negative numbers
         */
-        constexpr trait::fourth_t<T> hypervolume(guard_t) const noexcept;
+        constexpr fourth_t<T> hypervolume(guard_t) const noexcept;
 
         /*! \brief Inflates the box
         
@@ -262,6 +262,8 @@ namespace yq {
     };
     
     YQ_IEEE754_1(AxBox4)
+    YQ_INTEGER_1(AxBox4)
+    YQ_IS_INTEGER_1(AxBox4)
     
     /*! \brief Creates a 4D axially aligned box from one vector
     */
@@ -286,8 +288,8 @@ namespace yq {
 
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr AxBox4<trait::product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr AxBox4<product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept;
 
     /*! \brief Computes the center of a 4D axially aligned box
     */
@@ -301,7 +303,7 @@ namespace yq {
     /*! \brief Computes the hyper volume of the box
     */
     template <typename T>
-    constexpr trait::fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept;
+    constexpr fourth_t<T>   hypervolume(const AxBox4<T>& box) noexcept;
 
     //! Checks for validity (hi >= lo)
     template <typename T>

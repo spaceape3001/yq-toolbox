@@ -30,7 +30,7 @@ namespace yq {
         constexpr Size2(T _x, T _y) noexcept : x(_x), y(_y) {}
         constexpr Size2(all_t, T v) noexcept : x(v), y(v) {}
         
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Size2(nan_t) : Size2(ALL, nan_v<T>) {}
         consteval Size2(zero_t) : Size2(ALL, zero_v<T>) {}
         
@@ -47,7 +47,7 @@ namespace yq {
         }
       
         //! Returns the area
-        constexpr trait::square_t<T> area() const noexcept
+        constexpr square_t<T> area() const noexcept
         {
             return x*y;
         }
@@ -113,6 +113,10 @@ namespace yq {
         }
     };
 
+    YQ_IEEE754_1(Size2)
+    YQ_INTEGER_1(Size2)
+    YQ_IS_INTEGER_1(Size2)
+    
     YQ_NAN_1(Size2, Size2<T>(NAN))
     YQ_ZERO_1(Size2, Size2<T>(ZERO))
 

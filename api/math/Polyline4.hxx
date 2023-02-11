@@ -79,28 +79,46 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    Polyline2<trait::product_t<T,U>>   Polyline4<T>::operator*(const Tensor42<U>& b) const
+    requires is_arithmetic_v<U>
+    Polyline4<product_t<T,U>> Polyline4<T>::operator*(U b) const
     {
-        return Polyline2<trait::product_t<T,U>>(vertex * b);
+        return Polyline4<product_t<T,U>>(vertex*b);
+    }
+        
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    Polyline4<T>& Polyline4<T>::operator*=(U b) 
+    {
+        for(Vector4<T>& v : vertex)
+            v *= b;
+        return *this;
     }
 
     template <typename T>
         template <typename U>
-    Polyline3<trait::product_t<T,U>>   Polyline4<T>::operator*(const Tensor43<U>&b) const
+    Polyline2<product_t<T,U>>   Polyline4<T>::operator*(const Tensor42<U>& b) const
     {
-        return Polyline3<trait::product_t<T,U>>(vertex * b);
+        return Polyline2<product_t<T,U>>(vertex * b);
     }
 
     template <typename T>
         template <typename U>
-    Polyline4<trait::product_t<T,U>>   Polyline4<T>::operator*(const Tensor44<U>&b) const
+    Polyline3<product_t<T,U>>   Polyline4<T>::operator*(const Tensor43<U>&b) const
     {
-        return Polyline4<trait::product_t<T,U>>(vertex * b);
+        return Polyline3<product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polyline4<product_t<T,U>>   Polyline4<T>::operator*(const Tensor44<U>&b) const
+    {
+        return Polyline4<product_t<T,U>>(vertex * b);
     }
     
     template <typename T>
         template <typename U>
-    requires trait::self_mul_v<T,U>
+    requires self_mul_v<T,U>
     Polyline4<T>&  Polyline4<T>::operator*=(const Tensor44<U>&b)
     {
         for(Vector4<T>& v : vertex)
@@ -109,10 +127,26 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename U>
+    requires is_arithmetic_v<U>
+    Polyline4<quotient_t<T,U>> Polyline4<T>::operator/(U b) const
+    {
+        return Polyline4<quotient_t<T,U>>(vertex / b);
+    }
+    
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    Polyline4<T>& Polyline4<T>::operator/=(U b)
+    {
+        for(Vector4<T>&v : vertex)
+            v /= b;
+        return *this;
+    }
+
+    template <typename T>
     constexpr AxBox4<T>   Polyline4<T>::bounds() const noexcept
     {
-        if(vertex.empty())
-            return nan_v<AxBox4<T>>;
         return AxBox4<T>(UNION, vertex);
     }
 
@@ -155,6 +189,13 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    Polyline4<product_t<T,U>> operator*(T a, const Polyline4<U>&b)
+    {   
+        return Polyline4<product_t<T,U>>( a*b.vertex );
+    }
 
     template <typename T>
     AxBox4<T>   aabb(const Polyline4<T>&poly)

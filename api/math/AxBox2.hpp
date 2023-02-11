@@ -38,7 +38,7 @@ namespace yq {
         constexpr AxBox2(union_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
         constexpr AxBox2(union_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
         
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval AxBox2(nan_t) : AxBox2(Vector2<T>(NAN)) {}
 
         consteval AxBox2(zero_t) : AxBox2(Vector2<T>(ZERO)) {}
@@ -61,19 +61,19 @@ namespace yq {
         AxBox2& operator-=(const Vector2<T>&) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        AxBox2<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        AxBox2<product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         AxBox2& operator*=(U) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        AxBox2<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        AxBox2<quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         AxBox2& operator/=(U) noexcept;
         
 
@@ -97,9 +97,9 @@ namespace yq {
 
         /*! \brief Computes the area
         */
-        constexpr trait::square_t<T>               area() const noexcept;
+        constexpr square_t<T>               area() const noexcept;
 
-        constexpr trait::square_t<T>               area(guard_t) const noexcept;
+        constexpr square_t<T>               area(guard_t) const noexcept;
 
         /*! \brief Computes the center
         */
@@ -131,7 +131,7 @@ namespace yq {
         T                       distance(const Vector2<T>&) const;
         
         //! Distance² to box (zero if inside)
-        constexpr trait::square_t<T>   distance²(const Vector2<T>&) const noexcept;
+        constexpr square_t<T>   distance²(const Vector2<T>&) const noexcept;
 
         /*! \brief Checks for full occlusion
         
@@ -261,6 +261,8 @@ namespace yq {
     };
 
     YQ_IEEE754_1(AxBox2)
+    YQ_INTEGER_1(AxBox2)
+    YQ_IS_INTEGER_1(AxBox2)
 
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -290,7 +292,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D axially aligned bounding box
     */
     template <typename T>
-    constexpr trait::square_t<T>   area(const AxBox2<T>& ax) noexcept;
+    constexpr square_t<T>   area(const AxBox2<T>& ax) noexcept;
 
     /*! \brief Computes the center of a 2D axially aligned box
     */

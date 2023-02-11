@@ -24,7 +24,7 @@ namespace yq {
         This is a simple formatter, where the input string is parsed ONCE, stored for
         Further use (or use std::format... which will become the preferred TBH)
     */
-    class Format : trait::not_copyable {
+    class Format : not_copyable {
     public:
 
         class Args;

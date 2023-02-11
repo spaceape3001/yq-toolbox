@@ -224,10 +224,10 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Multivector3<trait::product_t<T,U>> Multivector3<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Multivector3<product_t<T,U>> Multivector3<T>::operator*(U b) const noexcept
     {
-        return Multivector3<trait::product_t<T,U>>(
+        return Multivector3<product_t<T,U>>(
             a*b, 
             x*b, y*b, z*b,
             xy*b, yz*b, zx*b,
@@ -237,7 +237,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Multivector3<T>& Multivector3<T>::operator*=(U b) noexcept
     {
         a  *=b; 
@@ -251,10 +251,10 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    constexpr Multivector3<trait::quotient_t<T,U>> Multivector3<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    constexpr Multivector3<quotient_t<T,U>> Multivector3<T>::operator/(U b) const noexcept
     {
-        return Multivector3<trait::quotient_t<T,U>>(
+        return Multivector3<quotient_t<T,U>>(
             a/b, 
             x/b, y/b, z/b,
             xy/b, yz/b, zx/b,
@@ -264,7 +264,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Multivector3<T>& Multivector3<T>::operator/=(U b) noexcept
     {
         a  /=b; 
@@ -320,10 +320,10 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Multivector3<trait::product_t<T,U>> operator*(T a, const Multivector3<U>&b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Multivector3<product_t<T,U>> operator*(T a, const Multivector3<U>&b) noexcept
     {
-        return Multivector3<trait::product_t<T,U>>(
+        return Multivector3<product_t<T,U>>(
             a*b.a, 
             a*b.x, a*b.y, a*b.z,
             a*b.xy, a*b.yz, a*b.zx,

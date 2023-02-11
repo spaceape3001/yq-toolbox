@@ -20,7 +20,7 @@ namespace yq {
         constexpr Trivector3() noexcept = default;
         constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
         constexpr Trivector3(all_t, T v) noexcept : xyz(v) {}
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Trivector3(nan_t) noexcept : Trivector3(ALL, nan_v<T>) {}
         consteval Trivector3(one_t) noexcept : Trivector3(ALL, one_v<T>) {}
         constexpr Trivector3(xyz_t, T v) noexcept : xyz(v) {}
@@ -52,23 +52,25 @@ namespace yq {
         constexpr Multivector3<T> operator-(const Vector3<T>& b) const noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Trivector3<trait::product_t<T,U>> operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Trivector3<product_t<T,U>> operator*(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Trivector3& operator*=(U b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Trivector3<trait::quotient_t<T,U>> operator/(const U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Trivector3<quotient_t<T,U>> operator/(const U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         constexpr Trivector3& operator/=(U b) noexcept;
     };
 
     YQ_IEEE754_1(Trivector3)
+    YQ_INTEGER_1(Trivector3)
+    YQ_IS_INTEGER_1(Trivector3)
 
 //  --------------------------------------------------------
 //  COMPOSITION
@@ -87,8 +89,8 @@ namespace yq {
         return Trivector3D(XYZ, (double) v);
     }
 
-    YQ_NAN_1(Trivector3, Trivector3<T>{nan_v<trait::cube_t<T>>})
-    YQ_ZERO_1(Trivector3, Trivector3<T>{zero_v<trait::cube_t<T>>})
+    YQ_NAN_1(Trivector3, Trivector3<T>{nan_v<cube_t<T>>})
+    YQ_ZERO_1(Trivector3, Trivector3<T>{zero_v<cube_t<T>>})
     
 //  --------------------------------------------------------
 //  GETTERS
@@ -114,7 +116,7 @@ namespace yq {
         This will (scale) multiply a trivector, returns the result.
     */
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
+    requires is_arithmetic_v<T>
     constexpr Trivector3<T> operator*(T a, const Trivector3<U>& b) noexcept;
 
 

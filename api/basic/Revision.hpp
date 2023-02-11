@@ -18,7 +18,7 @@ namespace yq {
         An optional setting is to specify a "master" so if tracking an invididual component, it'll also 
         trigger an update to the master's revision number too.
     */
-    class Revision : trait::not_copyable, trait::not_moveable {
+    class Revision : not_copyable, not_moveable {
     public:
     
         //! Current revision number.

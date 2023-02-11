@@ -78,32 +78,68 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    Polygon2<trait::product_t<T,U>>   Polygon3<T>::operator*(const Tensor32<U>& b) const
+    requires is_arithmetic_v<U>
+    Polygon3<product_t<T,U>> Polygon3<T>::operator*(U b) const
     {
-        return Polygon2<trait::product_t<T,U>>(vertex * b);
+        return Polygon3<product_t<T,U>>(vertex*b);
+    }
+        
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    Polygon3<T>& Polygon3<T>::operator*=(U b) 
+    {
+        for(Vector3<T>& v : vertex)
+            v *= b;
+        return *this;
     }
 
     template <typename T>
         template <typename U>
-    Polygon3<trait::product_t<T,U>>   Polygon3<T>::operator*(const Tensor33<U>&b) const
+    Polygon2<product_t<T,U>>   Polygon3<T>::operator*(const Tensor32<U>& b) const
     {
-        return Polygon3<trait::product_t<T,U>>(vertex * b);
+        return Polygon2<product_t<T,U>>(vertex * b);
     }
 
     template <typename T>
         template <typename U>
-    Polygon4<trait::product_t<T,U>>   Polygon3<T>::operator*(const Tensor34<U>&b) const
+    Polygon3<product_t<T,U>>   Polygon3<T>::operator*(const Tensor33<U>&b) const
     {
-        return Polygon4<trait::product_t<T,U>>(vertex * b);
+        return Polygon3<product_t<T,U>>(vertex * b);
+    }
+
+    template <typename T>
+        template <typename U>
+    Polygon4<product_t<T,U>>   Polygon3<T>::operator*(const Tensor34<U>&b) const
+    {
+        return Polygon4<product_t<T,U>>(vertex * b);
     }
     
     template <typename T>
         template <typename U>
-    requires trait::self_mul_v<T,U>
+    requires self_mul_v<T,U>
     Polygon3<T>&  Polygon3<T>::operator*=(const Tensor33<U>&b)
     {
         for(Vector3<T>& v : vertex)
             v *= b;
+        return *this;
+    }
+
+    template <typename T>
+        template <typename U>
+    requires is_arithmetic_v<U>
+    Polygon3<quotient_t<T,U>> Polygon3<T>::operator/(U b) const
+    {
+        return Polygon3<quotient_t<T,U>>(vertex / b);
+    }
+    
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    Polygon3<T>& Polygon3<T>::operator/=(U b)
+    {
+        for(Vector3<T>&v : vertex)
+            v /= b;
         return *this;
     }
 
@@ -118,9 +154,9 @@ namespace yq {
     {
         if(vertex.empty())
             return Vector3<T>(ZERO);
-        if constexpr (trait::is_floating_point_v<T>)
+        if constexpr (is_floating_point_v<T>)
             return sum(vertex) / ieee754_t<T>(vertex.size());
-        if constexpr (trait::is_integer_v<T>)
+        if constexpr (is_integer_v<T>)
             return sum(vertex) / vertex.size();
         return Vector3<T>(ZERO);
     }
@@ -172,6 +208,13 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    Polygon3<product_t<T,U>> operator*(T a, const Polygon3<U>&b)
+    {   
+        return Polygon3<product_t<T,U>>( a*b.vertex );
+    }
 
     template <typename T>
     AxBox3<T>   aabb(const Polygon3<T>&poly)

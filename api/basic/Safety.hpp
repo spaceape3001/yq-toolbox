@@ -13,7 +13,7 @@ namespace yq {
     /*! \brief Implementor of the safety function 
     */
     template <typename P>
-    class Safety : trait::not_copyable {
+    class Safety : not_copyable {
     public:
 
         Safety() : m_done(true) {}

@@ -16,7 +16,7 @@
 
 namespace yq {
 
-    class BasicApp : trait::not_copyable, trait::not_moveable {
+    class BasicApp : not_copyable, not_moveable {
     public:
         
         //! Our application pointer

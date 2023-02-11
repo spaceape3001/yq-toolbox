@@ -14,10 +14,8 @@
 
 namespace yq {
 
-    namespace trait {
-        template <typename T>
-        static constexpr bool is_returnable_v   = !(std::is_same_v<T,void> || std::is_same_v<T,std::error_code>);
-    }
+    template <typename T>
+    static constexpr bool is_returnable_v   = !(std::is_same_v<T,void> || std::is_same_v<T,std::error_code>);
 
     template <typename...> 
     struct MethodInfo::DefineArg {
@@ -39,7 +37,7 @@ namespace yq {
     template <typename R, typename...Args> 
     void MethodInfo::define_signature(options_t opts)
     {
-        if constexpr (trait::is_returnable_v<R>){
+        if constexpr (is_returnable_v<R>){
             m_result    = new ArgInfo::Typed<R>(source(), this);
         }
     
@@ -51,7 +49,7 @@ namespace yq {
 
     namespace impl {
         template <typename R, typename Obj, typename... Args, unsigned... Is>
-        std::error_code    invokeConst(R* res, const Obj*obj, R(Obj::*fn)(Args...) const, const void** args, trait::indices<Is...>)
+        std::error_code    invokeConst(R* res, const Obj*obj, R(Obj::*fn)(Args...) const, const void** args, indices<Is...>)
         {
             if constexpr (std::is_same_v<R, std::error_code>){
                 return (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
@@ -92,12 +90,12 @@ namespace yq {
             if(!obj)
                 return errors::null_object();
                 
-            if constexpr (trait::is_returnable_v<R>){
+            if constexpr (is_returnable_v<R>){
                 if(!res)
                     return errors::null_result();
             }
 
-            return impl::invokeConst((R*) res, (const Obj*) obj, m_function, args, trait::indices_gen<ARG_COUNT>() );
+            return impl::invokeConst((R*) res, (const Obj*) obj, m_function, args, indices_gen<ARG_COUNT>() );
         }
 
         virtual size_t          arg_count() const noexcept override final
@@ -114,7 +112,7 @@ namespace yq {
 
     namespace impl {
         template <typename R, typename Obj, typename... Args, unsigned... Is>
-        std::error_code    invokeDynamic(R* res, Obj*obj, R(Obj::*fn)(Args...) const, const void** args, trait::indices<Is...>)
+        std::error_code    invokeDynamic(R* res, Obj*obj, R(Obj::*fn)(Args...) const, const void** args, indices<Is...>)
         {
             if constexpr (std::is_same_v<R, std::error_code>){
                 return (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
@@ -154,12 +152,12 @@ namespace yq {
             if(!obj)
                 return errors::null_object();
 
-            if constexpr (trait::is_returnable_v<R>){
+            if constexpr (is_returnable_v<R>){
                 if(!res)
                     return errors::null_result();
             }
         
-            return impl::invokeDynamic((R*) res, (Obj*) obj, m_function, args, trait::indices_gen<ARG_COUNT>() );
+            return impl::invokeDynamic((R*) res, (Obj*) obj, m_function, args, indices_gen<ARG_COUNT>() );
         }
 
         virtual size_t          arg_count() const noexcept override final
@@ -177,7 +175,7 @@ namespace yq {
     
     namespace impl {
         template <typename R, typename... Args, unsigned... Is>
-        std::error_code    invokeStatic(R* res, R(*fn)(Args...), const void** args, trait::indices<Is...>)
+        std::error_code    invokeStatic(R* res, R(*fn)(Args...), const void** args, indices<Is...>)
         {
             if constexpr (std::is_same_v<R, std::error_code>){
                 return (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
@@ -214,11 +212,11 @@ namespace yq {
 
         std::error_code            _invoke(void* res, void*, const void** args) const override final
         {
-            if constexpr (trait::is_returnable_v<R>){
+            if constexpr (is_returnable_v<R>){
                 if(!res)
                     return errors::null_result();
             }
-            return impl::invokeStatic((R*) res, m_function, args, trait::indices_gen<ARG_COUNT>() );
+            return impl::invokeStatic((R*) res, m_function, args, indices_gen<ARG_COUNT>() );
         }
 
         virtual size_t          arg_count() const noexcept override final

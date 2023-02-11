@@ -60,7 +60,7 @@ namespace yq {
         {
         }
 
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Tensor23(nan_t) : Tensor23(ALL, nan_v<T>) {}
 
         constexpr Tensor23(rows_t, const Vector3<T>& x, const Vector3<T>& y) :
@@ -92,49 +92,49 @@ namespace yq {
         Tensor23&               operator-=(const Tensor23 &b) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Tensor23<trait::product_t<T,U>>  operator*(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Tensor23<product_t<T,U>>  operator*(U b) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Tensor23&  operator*=(U b) noexcept;
 
         template <typename U>
-        Polygon2<trait::product_t<T,U>>  operator*(const Polygon3<U>&) const;
+        Polygon2<product_t<T,U>>  operator*(const Polygon3<U>&) const;
         template <typename U>
-        Polyline2<trait::product_t<T,U>>  operator*(const Polyline3<U>&) const;
+        Polyline2<product_t<T,U>>  operator*(const Polyline3<U>&) const;
 
         template <typename U>
-        constexpr Segment2<trait::product_t<T,U>>  operator*(const Segment3<U>&) const noexcept;
+        constexpr Segment2<product_t<T,U>>  operator*(const Segment3<U>&) const noexcept;
 
         template <typename U>
-        constexpr Tensor21<trait::product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
+        constexpr Tensor21<product_t<T,U>> operator*(const Tensor31<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor22<trait::product_t<T,U>> operator*(const Tensor32<U>& b) const noexcept;
+        constexpr Tensor22<product_t<T,U>> operator*(const Tensor32<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor23<trait::product_t<T,U>> operator*(const Tensor33<U>& b) const noexcept;
+        constexpr Tensor23<product_t<T,U>> operator*(const Tensor33<U>& b) const noexcept;
         template <typename U>
-        constexpr Tensor24<trait::product_t<T,U>> operator*(const Tensor34<U>& b) const noexcept;
+        constexpr Tensor24<product_t<T,U>> operator*(const Tensor34<U>& b) const noexcept;
 
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires self_mul_v<T,U>
         Tensor23& operator*=(const Tensor33<U>& b) noexcept;
 
         template <typename U>
-        Triangle2<trait::product_t<T,U>> operator*(const Triangle3<U>&) const noexcept;
+        Triangle2<product_t<T,U>> operator*(const Triangle3<U>&) const noexcept;
 
         template <typename U>
-        constexpr Vector2<trait::product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
+        constexpr Vector2<product_t<T,U>> operator*(const Vector3<U>&b) const noexcept;
 
         template <typename U>
-        std::vector<Vector2<trait::product_t<T,U>>>    operator*(std::span<const Vector3<U>> b) const;
+        std::vector<Vector2<product_t<T,U>>>    operator*(std::span<const Vector3<U>> b) const;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Tensor23<trait::quotient_t<T,U>>  operator/(U b) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Tensor23<quotient_t<T,U>>  operator/(U b) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Tensor23&  operator/=(U b) noexcept;
 
         constexpr Tensor32<T> transpose() const noexcept;
@@ -270,8 +270,8 @@ namespace yq {
 //  MULTIPLICATION
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Tensor23<trait::product_t<T,U>>  operator*(T a, const Tensor23<U>& b);
+    requires is_arithmetic_v<T>
+    constexpr Tensor23<product_t<T,U>>  operator*(T a, const Tensor23<U>& b);
     
 
 //  --------------------------------------------------------

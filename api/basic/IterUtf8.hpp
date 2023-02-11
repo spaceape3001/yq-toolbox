@@ -135,7 +135,7 @@ namespace yq {
                     // Want the pointer & length
                 pred(p, len);
             } else {
-                static_assert(trait::always_false_v<Pred>, "Argument deduction failed");
+                static_assert(always_false_v<Pred>, "Argument deduction failed");
             }
             p += len;
         }
@@ -183,7 +183,7 @@ namespace yq {
                 if(!pred(p, len))
                     break;
             } else {
-                static_assert(trait::always_false_v<Pred>, "Argument deduction failed");
+                static_assert(always_false_v<Pred>, "Argument deduction failed");
             } 
             p += len;
         }
@@ -224,7 +224,7 @@ namespace yq {
                     if(pred(wc))
                         ret.append(p, len);
                 } else {
-                    static_assert(trait::always_false_v<Pred>, "Argument deduction failed");
+                    static_assert(always_false_v<Pred>, "Argument deduction failed");
                 } 
                 p += len;
             }
@@ -261,7 +261,7 @@ namespace yq {
                 if(pred(wc))
                     return p;
             } else {
-                static_assert(trait::always_false_v<Pred>, "Argument deduction failed");
+                static_assert(always_false_v<Pred>, "Argument deduction failed");
             }
             p += len;
         }
@@ -291,7 +291,7 @@ namespace yq {
                     if(!pred(wc))
                         ret.append(p, len);
                 } else {
-                    static_assert(trait::always_false_v<Pred>, "Argument deduction failed");
+                    static_assert(always_false_v<Pred>, "Argument deduction failed");
                 } 
                 p += len;
             }

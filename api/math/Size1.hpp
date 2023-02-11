@@ -27,7 +27,7 @@ namespace yq {
         constexpr Size1(T _x) noexcept : x(_x) {}
         constexpr Size1(all_t, T v) noexcept : x(v) {}
         
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval Size1(nan_t) : Size1(ALL, nan_v<T>) {}
         consteval Size1(zero_t) : Size1(ALL, zero_v<T>) {}
         
@@ -55,6 +55,10 @@ namespace yq {
         //! Width (X-dimension)
         constexpr T         width() const { return x; }
     };
+
+    YQ_IEEE754_1(Size1)
+    YQ_INTEGER_1(Size1)
+    YQ_IS_INTEGER_1(Size1)
 
     YQ_NAN_1(Size1, Size1<T>(NAN))
     YQ_ZERO_1(Size1, Size1<T>(ZERO))

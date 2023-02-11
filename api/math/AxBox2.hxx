@@ -159,18 +159,18 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    AxBox2<trait::product_t<T,U>> AxBox2<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    AxBox2<product_t<T,U>> AxBox2<T>::operator*(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox2<trait::product_t<T,U>>(lo*b,hi*b);
+            return AxBox2<product_t<T,U>>(lo*b,hi*b);
         else
-            return AxBox2<trait::product_t<T,U>>(hi*b,lo*b);
+            return AxBox2<product_t<T,U>>(hi*b,lo*b);
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     AxBox2<T>& AxBox2<T>::operator*=(U b) noexcept
     {
         *this = *this * b;
@@ -179,18 +179,18 @@ namespace yq {
         
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    AxBox2<trait::quotient_t<T,U>> AxBox2<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<U>
+    AxBox2<quotient_t<T,U>> AxBox2<T>::operator/(U b) const noexcept
     {
         if(b >= zero_v<U>)
-            return AxBox2<trait::quotient_t<T,U>>(lo/b,hi/b);
+            return AxBox2<quotient_t<T,U>>(lo/b,hi/b);
         else
-            return AxBox2<trait::quotient_t<T,U>>(hi/b,lo/b);
+            return AxBox2<quotient_t<T,U>>(hi/b,lo/b);
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
     AxBox2<T>& AxBox2<T>::operator/=(U b) noexcept
     {
         *this = *this / b;
@@ -238,13 +238,13 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr trait::square_t<T> AxBox2<T>::area() const noexcept
+    constexpr square_t<T> AxBox2<T>::area() const noexcept
     {
         return span().cproduct();
     }
 
     template <typename T>
-    constexpr trait::square_t<T> AxBox2<T>::area(guard_t) const noexcept
+    constexpr square_t<T> AxBox2<T>::area(guard_t) const noexcept
     {
         return abs(area());
     }
@@ -252,7 +252,7 @@ namespace yq {
     template <typename T>
     constexpr Vector2<T>  AxBox2<T>::center() const noexcept
     {
-        if constexpr (trait::is_floating_point_v<T>)
+        if constexpr (is_floating_point_v<T>)
             return ieee754_t<T>(0.5)*(lo+hi);
         if constexpr (std::is_integral_v<T>)
             return (lo+hi) / T(2);
@@ -321,13 +321,13 @@ namespace yq {
     template <typename T>
     T                       AxBox2<T>::distance(const Vector2<T>&v) const
     {
-        if constexpr ( trait::has_sqrt_v<T> )
+        if constexpr ( has_sqrt_v<T> )
             return sqrt(distance²(v));
         return zero_v<T>;
     }
     
     template <typename T>
-    constexpr trait::square_t<T>   AxBox2<T>::distance²(const Vector2<T>&v) const noexcept
+    constexpr square_t<T>   AxBox2<T>::distance²(const Vector2<T>&v) const noexcept
     {
         return 
             (_gap(v.x, lo.x, hi.x)^²) +
@@ -542,13 +542,13 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr AxBox2<trait::product_t<T,U>> operator*(T a, const AxBox2<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    constexpr AxBox2<product_t<T,U>> operator*(T a, const AxBox2<U>& b) noexcept
     {
         if(a >= zero_v<T>)
-            return AxBox2<trait::product_t<T,U>>(a*b.lo, a*b.hi);
+            return AxBox2<product_t<T,U>>(a*b.lo, a*b.hi);
         else
-            return AxBox2<trait::product_t<T,U>>(a*b.hi, a*b.lo);
+            return AxBox2<product_t<T,U>>(a*b.hi, a*b.lo);
     }
 
     template <typename T>
@@ -581,7 +581,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr trait::square_t<T>   area(const AxBox2<T>& ax) noexcept
+    constexpr square_t<T>   area(const AxBox2<T>& ax) noexcept
     {
         return ax.area();
     }

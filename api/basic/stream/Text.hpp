@@ -17,7 +17,7 @@ namespace yq {
     namespace stream {
     
         //! Wrapper to stream to a std::string
-        class Text : public Stream, trait::not_copyable, trait::not_moveable {
+        class Text : public Stream, not_copyable, not_moveable {
         public:
         
             //! Constructor that takes in a reference to ta strign

@@ -12,7 +12,7 @@
 
 namespace yq {
 
-    class PidFile : trait::not_copyable, trait::not_moveable {
+    class PidFile : not_copyable, not_moveable {
     public:
 
         PidFile(const std::filesystem::path&, bool autoMake=true);

@@ -43,17 +43,33 @@ namespace yq {
         Polyline4&  operator-=(const Vector4<T>&);
 
         template <typename U>
-        Polyline2<trait::product_t<T,U>>   operator*(const Tensor42<U>&) const;
-        template <typename U>
-        Polyline3<trait::product_t<T,U>>   operator*(const Tensor43<U>&) const;
-        template <typename U>
-        Polyline4<trait::product_t<T,U>>   operator*(const Tensor44<U>&) const;
+        requires is_arithmetic_v<U>
+        Polyline4<product_t<T,U>> operator*(U) const;
         
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Polyline4& operator*=(U);
+
+        template <typename U>
+        Polyline2<product_t<T,U>>   operator*(const Tensor42<U>&) const;
+        template <typename U>
+        Polyline3<product_t<T,U>>   operator*(const Tensor43<U>&) const;
+        template <typename U>
+        Polyline4<product_t<T,U>>   operator*(const Tensor44<U>&) const;
+        
+        template <typename U>
+        requires self_mul_v<T,U>
         Polyline4&  operator*=(const Tensor44<U>&);
 
-        //! Addsa a point to the polyline
+        template <typename U>
+        requires is_arithmetic_v<U>
+        Polyline4<quotient_t<T,U>> operator/(U) const;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Polyline4& operator/=(U);
+
+        //! Adds a point to the polyline
         Polyline4&   operator<<(const Vector4<T>& pt);
 
         //! Compute the bounding box to this polyline
@@ -87,8 +103,13 @@ namespace yq {
     Polyline4<T> polyline(const Segment4<T>&);
 
     YQ_IEEE754_1(Polyline4)
+    YQ_INTEGER_1(Polyline4)
+    YQ_IS_INTEGER_1(Polyline4)
     YQ_ZERO_1(Polyline4, { })
 
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    Polyline4<product_t<T,U>> operator*(T, const Polyline4<U>&b);
 
     /*! \brief Create an axially aligned bounding box from a polyline
     */

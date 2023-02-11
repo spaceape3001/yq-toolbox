@@ -142,13 +142,11 @@ namespace yq {
         static_assert((ORIGIN || GHOST) ? is_signed : true, "Origin & ghost features REQUIRE signed index type.");
     };
     
-    namespace trait {
-        template <typename> struct is_array_coord : std::false_type {};
-        template <typename I, uint8_t N, bool ORIGIN, bool GHOST>
-        struct is_array_coord<ArrayConfig<I,N,ORIGIN,GHOST>> : std::true_type {};
-        template <typename T>
-        inline constexpr bool is_array_coord_v = is_array_coord<T>::value;
-    }
+    template <typename> struct is_array_coord : std::false_type {};
+    template <typename I, uint8_t N, bool ORIGIN, bool GHOST>
+    struct is_array_coord<ArrayConfig<I,N,ORIGIN,GHOST>> : std::true_type {};
+    template <typename T>
+    inline constexpr bool is_array_coord_v = is_array_coord<T>::value;
     
     
     /*! \brief "Array"
@@ -199,16 +197,16 @@ namespace yq {
     class Array {
     public:
     
-        static_assert(trait::is_array_coord_v<COORD>, "COORD parameter must be ArrayConfig based!");
+        static_assert(is_array_coord_v<COORD>, "COORD parameter must be ArrayConfig based!");
 
         using value_type        = DATA;
         using coord_type        = typename COORD::coord_type;
         using index_type        = typename COORD::index_type;
     
-        //static constexpr const bool         is_resizeable   = trait::is_stdvector_v<DATA>;
-        //static constexpr const bool         is_array        = trait::is_stdarray_v<DATA>;
-        //static constexpr const bool         is_span         = trait::is_stdspan_v<DATA>;
-        //static constexpr const bool         is_vector       = trait::is_stdvector_v<DATA>;
+        //static constexpr const bool         is_resizeable   = is_stdvector_v<DATA>;
+        //static constexpr const bool         is_array        = is_stdarray_v<DATA>;
+        //static constexpr const bool         is_span         = is_stdspan_v<DATA>;
+        //static constexpr const bool         is_vector       = is_stdvector_v<DATA>;
         static constexpr const bool         is_constant     = std::is_const_v<value_type>;
         static constexpr const bool         is_mutable      = !std::is_const_v<value_type>;
         static constexpr const bool         is_signed       = std::is_signed_v<index_type>;
@@ -483,7 +481,7 @@ namespace yq {
         }
         
         template <typename F>
-        requires (std::is_floating_point_v<F> && trait::can_add_v<value_type> && trait::can_two_multiply_v<value_type,F>)
+        requires (std::is_floating_point_v<F> && can_add_v<value_type> && can_two_multiply_v<value_type,F>)
         value_type  linear(const coord_type& c, const Coord<F,DIMS>& frac) const
         {
             value_type  ret = {};
@@ -1085,7 +1083,7 @@ namespace yq {
         }               m_calc  = {};
         
         template <typename F, typename Pred>
-        requires (std::is_floating_point_v<F> && trait::can_add_v<value_type> && trait::can_two_multiply_v<value_type,F>)
+        requires (std::is_floating_point_v<F> && can_add_v<value_type> && can_two_multiply_v<value_type,F>)
         void    linear_march(uint64_t idx, const Coord<F, DIMS>& frac, uint8_t n, F prod, Pred pred)
         {
             if(n<DIMS){

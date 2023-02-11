@@ -43,36 +43,36 @@ namespace yq {
         Triangle2& operator-=(const Vector2<T>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Triangle2<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Triangle2<product_t<T,U>> operator*(U) const noexcept;
         
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Triangle2& operator*=(U) noexcept;
 
         template <typename U>
-        Triangle2<trait::product_t<T,U>>   operator*(const Tensor22<U>&) const noexcept;
+        Triangle2<product_t<T,U>>   operator*(const Tensor22<U>&) const noexcept;
 
         template <typename U>
-        Triangle3<trait::product_t<T,U>>   operator*(const Tensor23<U>&) const noexcept;
+        Triangle3<product_t<T,U>>   operator*(const Tensor23<U>&) const noexcept;
 
         template <typename U>
-        Triangle4<trait::product_t<T,U>>   operator*(const Tensor24<U>&) const noexcept;
+        Triangle4<product_t<T,U>>   operator*(const Tensor24<U>&) const noexcept;
 
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires self_mul_v<T,U>
         Triangle2&   operator*=(const Tensor22<U>&) noexcept;
 
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        constexpr Triangle2<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        constexpr Triangle2<quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Triangle2& operator/=(U) noexcept;
 
         //! Area of this triangle
-        constexpr trait::square_t<T>    area() const noexcept;
+        constexpr square_t<T>    area() const noexcept;
         
         /*! \brief Returns the bounding box for this triangle
         */
@@ -81,17 +81,17 @@ namespace yq {
         //! Edge opposite the "A" vertex
         constexpr Segment2<T>   edge_a() const noexcept;
         constexpr T             edge_a_length() const noexcept;
-        constexpr trait::square_t<T>   edge_a_length²() const noexcept;
+        constexpr square_t<T>   edge_a_length²() const noexcept;
 
         //! Edge opposite the "B" vertex
         constexpr Segment2<T>   edge_b() const noexcept;
         constexpr T             edge_b_length() const noexcept;
-        constexpr trait::square_t<T>   edge_b_length²() const noexcept;
+        constexpr square_t<T>   edge_b_length²() const noexcept;
 
         //! Edge opposite the "C" vertex
         constexpr Segment2<T>   edge_c() const noexcept;
         constexpr T             edge_c_length() const noexcept;
-        constexpr trait::square_t<T>   edge_c_length²() const noexcept;
+        constexpr square_t<T>   edge_c_length²() const noexcept;
 
         //! TRUE if this triangle is wound in counter-clockwise with its points
         constexpr bool    is_ccw() const noexcept;
@@ -109,10 +109,12 @@ namespace yq {
             simply does an "area" of the point deltas, 
             no sign correction, no scaling.
         */
-        constexpr trait::square_t<T>   _area() const noexcept;
+        constexpr square_t<T>   _area() const noexcept;
     };
 
     YQ_IEEE754_1(Triangle2)
+    YQ_INTEGER_1(Triangle2)
+    YQ_IS_INTEGER_1(Triangle2)
 
 
 //  --------------------------------------------------------
@@ -136,8 +138,8 @@ namespace yq {
     YQ_IS_NAN_1(Triangle2, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    constexpr Triangle2<trait::product_t<T,U>> operator*(T lhs, const Triangle2<U>& rhs) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Triangle2<product_t<T,U>> operator*(T lhs, const Triangle2<U>& rhs) noexcept;
 
     /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
     template <typename T>
@@ -146,7 +148,7 @@ namespace yq {
     /*! \brief Computes the area of a 2D triangle
     */
     template <typename T>
-    constexpr trait::square_t<T>    area(const Triangle2<T>& tri) noexcept;
+    constexpr square_t<T>    area(const Triangle2<T>& tri) noexcept;
 
     /*! \brief TRUE if the triangle is defined in a counter-clockwise fashion
     */

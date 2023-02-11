@@ -24,7 +24,7 @@ namespace yq {
         \note COLUMNS & PARAMETERS are 1-based, so they go 1...N
     */
     template <typename S>
-    class SqlQueryImpl : public S, trait::not_moveable, trait::not_copyable {
+    class SqlQueryImpl : public S, not_moveable, not_copyable {
     public:
     
         static_assert(std::is_base_of_v<SqlStatement, S>);

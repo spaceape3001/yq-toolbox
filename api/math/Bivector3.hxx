@@ -152,16 +152,16 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<U>
-    Bivector3<trait::product_t<T,U>> Bivector3<T>::operator*(U b) const noexcept
+    requires is_arithmetic_v<U>
+    Bivector3<product_t<T,U>> Bivector3<T>::operator*(U b) const noexcept
     {
-        return Bivector3<trait::product_t<T,U>>( xy*b, yz*b, zx*b );
+        return Bivector3<product_t<T,U>>( xy*b, yz*b, zx*b );
     }
 
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
-    Bivector3<trait::product_t<T,U>>& Bivector3<T>::operator*=(U b) noexcept
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    Bivector3<product_t<T,U>>& Bivector3<T>::operator*=(U b) noexcept
     {
         xy*=b, yz*=b, zx*=b;
         return *this;
@@ -173,10 +173,10 @@ namespace yq {
     */
     template <typename T>
         template <typename U>
-    requires trait::is_arithmetic_v<T>
-    Bivector3<trait::quotient_t<T,U>> Bivector3<T>::operator/(U b) const noexcept
+    requires is_arithmetic_v<T>
+    Bivector3<quotient_t<T,U>> Bivector3<T>::operator/(U b) const noexcept
     {
-        return Bivector3<trait::quotient_t<T,U>>( xy/b, yz/b, zx/b );
+        return Bivector3<quotient_t<T,U>>( xy/b, yz/b, zx/b );
     }
 
     /*! \brief Self-scaling division operator
@@ -185,7 +185,7 @@ namespace yq {
     */
     template <typename T>
         template <typename U>
-    requires (trait::is_arithmetic_v<T> && trait::self_div_v<T,U>)
+    requires (is_arithmetic_v<T> && self_div_v<T,U>)
     Bivector3<T>& Bivector3<T>::operator/=(U b) noexcept
     {
         xy/=b, yz/=b, zx/=b;
@@ -219,10 +219,10 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    requires trait::is_arithmetic_v<T>
-    Bivector3<trait::product_t<T,U>> operator*(T a, const Bivector3<U>& b) noexcept
+    requires is_arithmetic_v<T>
+    Bivector3<product_t<T,U>> operator*(T a, const Bivector3<U>& b) noexcept
     {
-        return Bivector3<trait::product_t<T,U>>( a*b.xy, a*b.yz, a*b.zx );
+        return Bivector3<product_t<T,U>>( a*b.xy, a*b.yz, a*b.zx );
     }
 
 

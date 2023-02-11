@@ -49,15 +49,33 @@ namespace yq {
         Polygon3&  operator-=(const Vector3<T>&);
 
         template <typename U>
-        Polygon2<trait::product_t<T,U>>   operator*(const Tensor32<U>&) const;
-        template <typename U>
-        Polygon3<trait::product_t<T,U>>   operator*(const Tensor33<U>&) const;
-        template <typename U>
-        Polygon4<trait::product_t<T,U>>   operator*(const Tensor34<U>&) const;
+        requires is_arithmetic_v<U>
+        Polygon3<product_t<T,U>> operator*(U) const;
         
         template <typename U>
-        requires trait::self_mul_v<T,U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Polygon3& operator*=(U);
+
+
+        template <typename U>
+        Polygon2<product_t<T,U>>   operator*(const Tensor32<U>&) const;
+        template <typename U>
+        Polygon3<product_t<T,U>>   operator*(const Tensor33<U>&) const;
+        template <typename U>
+        Polygon4<product_t<T,U>>   operator*(const Tensor34<U>&) const;
+        
+        template <typename U>
+        requires self_mul_v<T,U>
         Polygon3&  operator*=(const Tensor33<U>&);
+
+        template <typename U>
+        requires is_arithmetic_v<U>
+        Polygon3<quotient_t<T,U>> operator/(U) const;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Polygon3& operator/=(U);
+
         
         /*! \brief Computes the axially aligned bounding box of this polygon
         */
@@ -93,10 +111,16 @@ namespace yq {
     Polygon3<T> polygon(const Triangle3<T>& ax);
 
     YQ_IEEE754_1(Polygon3)
+    YQ_INTEGER_1(Polygon3)
+    YQ_IS_INTEGER_1(Polygon3)
     YQ_ZERO_1(Polygon3, { })
 
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
+
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    Polygon3<product_t<T,U>> operator*(T, const Polygon3<U>&b);
 
     /*! \brief Create an axially aligned bounding box from a polygon
     */

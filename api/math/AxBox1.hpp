@@ -41,7 +41,7 @@ namespace yq {
         constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>, std::initializer_list<Vector1<T>>) noexcept;
         constexpr AxBox1(union_t, std::span<const Vector1<T>>, std::span<const Vector1<T>>) noexcept;
         
-        template <typename=void> requires trait::has_nan_v<T>
+        template <typename=void> requires has_nan_v<T>
         consteval AxBox1(nan_t) : AxBox1(Vector1<T>(NAN)) {}
         consteval AxBox1(zero_t) : AxBox1(Vector1<T>(ZERO)) {}
         
@@ -60,19 +60,19 @@ namespace yq {
         AxBox1& operator-=(const Vector1<T>&) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        AxBox1<trait::product_t<T,U>> operator*(U) const noexcept;
+        requires is_arithmetic_v<U>
+        AxBox1<product_t<T,U>> operator*(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         AxBox1& operator*=(U) noexcept;
         
         template <typename U>
-        requires trait::is_arithmetic_v<U>
-        AxBox1<trait::quotient_t<T,U>> operator/(U) const noexcept;
+        requires is_arithmetic_v<U>
+        AxBox1<quotient_t<T,U>> operator/(U) const noexcept;
 
         template <typename U>
-        requires (trait::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
         AxBox1& operator/=(U) noexcept;
         
 
@@ -121,7 +121,7 @@ namespace yq {
         T                       distance(const Vector1<T>&) const;
         
         //! Distance² to box (zero if inside)
-        constexpr trait::square_t<T>   distance²(const Vector1<T>&) const noexcept;
+        constexpr square_t<T>   distance²(const Vector1<T>&) const noexcept;
 
         /*! \brief Checks for full occlusion
         
@@ -209,6 +209,8 @@ namespace yq {
     };
     
     YQ_IEEE754_1(AxBox1)
+    YQ_INTEGER_1(AxBox1)
+    YQ_IS_INTEGER_1(AxBox1)
     
     /*! \brief Creates an axially alligned box from one corner vertex
     */

@@ -121,7 +121,7 @@ namespace yq {
                 return a.reference<T>() == b.reference<T>();
             };
             
-            if constexpr (trait::has_less_v<T>){
+            if constexpr (has_less_v<T>){
                 TypeInfo::m_less      = [](const DataBlock& a, const DataBlock& b) -> bool 
                 {
                     return a.reference<T>() < b.reference<T>();
@@ -136,7 +136,7 @@ namespace yq {
             
             TypeInfo::m_size          = sizeof(T);
             
-            if constexpr ( trait::is_template_v<T>) {
+            if constexpr ( is_template_v<T>) {
             #if 0
                 TypeInfo::m_template.params     = GatherTemplateArgs<T>()(TypeInfo::m_template.args);
                 if(!TypeInfo::m_template.args.empty())  // only flag it as a template if any parameters trigger

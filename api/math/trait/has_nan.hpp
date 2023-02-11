@@ -17,9 +17,7 @@ namespace yq {
     struct nan_eval : public std::false_type {
     };
 
-    namespace trait {
-        template <typename T> static constexpr const bool has_nan_v = nan_eval<T>::value;
-    }
+    template <typename T> static constexpr const bool has_nan_v = nan_eval<T>::value;
     
     template <typename T>
     static constexpr const T nan_v  = nan_eval<T>::make();
@@ -37,12 +35,12 @@ namespace yq {
         IMPL_YQ_NAN(type, __VA_ARGS__)
         
     #define YQ_NAN_1(type, ...)                                 \
-        template <typename T> requires trait::has_nan_v<T>      \
+        template <typename T> requires has_nan_v<T>      \
         IMPL_YQ_NAN(type<T>, __VA_ARGS__)
         
     #define YQ_IS_NAN_1(type, ...)                              \
         template <typename T>                                   \
-        requires trait::has_nan_v<T>                            \
+        requires has_nan_v<T>                            \
         bool is_nan(const type<T>& v)                           \
         {                                                       \
             return __VA_ARGS__;                                 \
