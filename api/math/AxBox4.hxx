@@ -378,6 +378,70 @@ namespace yq {
     }
 
     template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_w(T w) const noexcept
+    {
+        return { (w-lo.w) / (hi.w-lo.w), hi.w != lo.w};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_w(T w, T ep) const noexcept
+    {
+        return { (w-lo.w) / (hi.w-lo.w), hi.w - lo.w >= ep};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_x(T x) const noexcept
+    {
+        return { (x-lo.x) / (hi.x-lo.x), hi.x != lo.x};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_x(T x, T ep) const noexcept
+    {
+        return { (x-lo.x) / (hi.x-lo.x), hi.x - lo.x >= ep};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_y(T y) const noexcept
+    {
+        return { (y-lo.y) / (hi.y-lo.y), hi.y != lo.y};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_y(T y, T ep) const noexcept
+    {
+        return { (y-lo.y) / (hi.y-lo.y), hi.y - lo.y >= ep};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_z(T z) const noexcept
+    {
+        return { (z-lo.z) / (hi.z-lo.z), hi.z != lo.z};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_z(T z, T ep) const noexcept
+    {
+        return { (z-lo.z) / (hi.z-lo.z), hi.z - lo.z >= ep};
+    }
+
+    template <typename T>
     constexpr Vector4<T>    AxBox4<T>::hhhh() const noexcept
     {
         return hi;

@@ -140,6 +140,110 @@ namespace yq {
         //! Returns a fixed copy of the box (assuming it's possible to do)
         constexpr AxBox4 fixed() const noexcept;
 
+        /*! \brief Fraction of the box the given w is positioned
+        
+            This gives the fractional "w" that the w-value is positioned across the box (lo -> hi)
+            
+            \param[in] w    W-coordinate to check
+            \return pair, first value is the fraction, second is true if if first is valid
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_w(T w) const noexcept;
+
+        /*! \brief Fraction of the box the given w is positioned
+        
+            This gives the fractional "w" that the w-value is positioned across the box (lo -> hi)
+            
+            \param[in] w    W-coordinate to check
+            \param[in] ep   Epsilon to check the dimensional size
+            \return pair, first value is the fraction, second is true if first is valid
+            \note The epsilon check will be buggy on invalid boxes!
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_w(T w, T ep) const noexcept;
+
+        /*! \brief Fraction of the box the given x is positioned
+        
+            This gives the fractional "x" that the x-value is positioned across the box (lo -> hi)
+            
+            \param[in] x    x-coordinate to check
+            \return pair, first value is the fraction, second is true if first is valid
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_x(T x) const noexcept;
+
+        /*! \brief Fraction of the box the given x is positioned
+        
+            This gives the fractional "x" that the x-value is positioned across the box (lo -> hi)
+            
+            \param[in] x    X-coordinate to check
+            \param[in] ep   Epsilon to check the dimensional size
+            \return pair, first value is the fraction, second is true if first is valid
+            \note The epsilon check will be buggy on invalid boxes!
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_x(T x, T ep) const noexcept;
+
+        /*! \brief Fraction of the box the given y is positioned
+        
+            This gives the fractional "y" that the y-value is positioned across the box (lo -> hi)
+            
+            \param[in] y    Y-coordinate to check
+            \return pair, first value is the fraction, second is true if first is valid
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_y(T y) const noexcept;
+
+        /*! \brief Fraction of the box the given y is positioned
+        
+            This gives the fractional "y" that the y-value is positioned across the box (lo -> hi)
+            
+            \param[in] y    Y-coordinate to check
+            \param[in] ep   Epsilon to check the dimensional size
+            \return pair, first value is the fraction, second is true if first is valid
+            \note The epsilon check will be buggy on invalid boxes!
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_y(T y, T ep) const noexcept;
+
+        /*! \brief Fraction of the box the given z is positioned
+        
+            This gives the fractional "z" that the z-value is positioned across the box (lo -> hi)
+            
+            \param[in] z    Z-coordinate to check
+            \return pair, first value is the fraction, second is true if if first is valid
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_z(T z) const noexcept;
+
+        /*! \brief Fraction of the box the given z is positioned
+        
+            This gives the fractional "z" that the z-value is positioned across the box (lo -> hi)
+            
+            \param[in] z    Z-coordinate to check
+            \param[in] ep   Epsilon to check the dimensional size
+            \return pair, first value is the fraction, second is true if first is valid
+            \note The epsilon check will be buggy on invalid boxes!
+        */
+        //  TODO accommodate integer based T
+        template <typename=void>
+        requires is_floating_point_v<T>
+        constexpr std::pair<unity_t<T>,bool>    fraction_z(T z, T ep) const noexcept;
+
         constexpr Vector4<T>    hhhh() const noexcept;
         constexpr Vector4<T>    hhhh(T adjust) const noexcept;
         constexpr Vector4<T>    hhhl() const noexcept;
@@ -263,7 +367,6 @@ namespace yq {
     
     YQ_IEEE754_1(AxBox4)
     YQ_INTEGER_1(AxBox4)
-    YQ_IS_INTEGER_1(AxBox4)
     
     /*! \brief Creates a 4D axially aligned box from one vector
     */
@@ -295,6 +398,7 @@ namespace yq {
     */
     template <typename T>
     constexpr Vector4<T>    center(const AxBox4<T>& box) noexcept;
+
 
     //! Computes the centroid of the given box (same as the center)
     template <typename T>

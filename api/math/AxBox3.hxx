@@ -345,6 +345,54 @@ namespace yq {
     }
 
     template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox3<T>::fraction_x(T x) const noexcept
+    {
+        return { (x-lo.x) / (hi.x-lo.x), hi.x != lo.x};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox3<T>::fraction_x(T x, T ep) const noexcept
+    {
+        return { (x-lo.x) / (hi.x-lo.x), hi.x - lo.x >= ep};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox3<T>::fraction_y(T y) const noexcept
+    {
+        return { (y-lo.y) / (hi.y-lo.y), hi.y != lo.y};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox3<T>::fraction_y(T y, T ep) const noexcept
+    {
+        return { (y-lo.y) / (hi.y-lo.y), hi.y - lo.y >= ep};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox3<T>::fraction_z(T z) const noexcept
+    {
+        return { (z-lo.z) / (hi.z-lo.z), hi.z != lo.z};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox3<T>::fraction_z(T z, T ep) const noexcept
+    {
+        return { (z-lo.z) / (hi.z-lo.z), hi.z - lo.z >= ep};
+    }
+
+    template <typename T>
     constexpr Vector3<T>    AxBox3<T>::hhh() const noexcept
     {
         return hi;

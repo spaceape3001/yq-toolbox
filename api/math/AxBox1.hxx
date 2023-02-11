@@ -290,6 +290,22 @@ namespace yq {
     }
 
     template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox1<T>::fraction_x(T x) const noexcept
+    {
+        return { (x-lo.x) / (hi.x-lo.x), hi.x != lo.x};
+    }
+
+    template <typename T>
+    template <typename>
+    requires is_floating_point_v<T>
+    constexpr std::pair<unity_t<T>,bool> AxBox1<T>::fraction_x(T x, T ep) const noexcept
+    {
+        return { (x-lo.x) / (hi.x-lo.x), hi.x - lo.x >= ep};
+    }
+    
+    template <typename T>
     constexpr Vector1<T>   AxBox1<T>::h() const noexcept
     {
         return h;
