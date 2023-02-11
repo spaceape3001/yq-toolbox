@@ -69,6 +69,8 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Triangle3& operator/=(U) noexcept;
         
+        square_t<T>             area() const;
+        
         /*! \brief Returns the bounding box for this triangle
         */
         constexpr AxBox3<T>   bounds() const noexcept;

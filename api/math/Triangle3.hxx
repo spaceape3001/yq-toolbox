@@ -149,6 +149,22 @@ namespace yq {
 
     
     template <typename T>
+    square_t<T>           Triangle3<T>::area() const
+    {
+        if constexpr (has_sqrt_v<fourth_t<T>>){
+            // for 3D and above, we use Heron's formula
+            T   sa = edge_a_length();
+            T   sb = edge_b_length();
+            T   sc = edge_c_length();
+            T   s   = middivide(sa+sb+sc);
+            return sqrt(s*(s-a)*(s-b)*(s-c));
+        
+        } else {
+            return zero_v<square_t<T>>;
+        }
+    }
+
+    template <typename T>
     constexpr AxBox3<T>   Triangle3<T>::bounds() const noexcept
     {
         return AxBox3<T>(UNION, { a, b, c });

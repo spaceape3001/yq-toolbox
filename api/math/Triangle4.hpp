@@ -72,6 +72,8 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Triangle4& operator/=(U) noexcept;
         
+        square_t<T>             area() const;
+
         /*! \brief Bounding box for this triangle
         */
         constexpr AxBox4<T>   bounds() const noexcept;
