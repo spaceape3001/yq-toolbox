@@ -29,6 +29,10 @@ namespace yq {
         
         explicit Polyline2(const Segment2<T>&);
 
+        template <typename U>
+        requires std::is_convertible_v<T,U>
+        explicit operator Polyline2<U>() const;
+
         //! Defaulted equality operator
         constexpr bool operator==(const Polyline2&) const noexcept = default;
 

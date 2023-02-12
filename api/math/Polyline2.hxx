@@ -23,6 +23,16 @@ namespace yq {
     template <typename T> Polyline2<T>::Polyline2(const Segment2<T>&s) : Polyline2({s.a, s.b}) {}
 
     template <typename T>
+    template <typename U>
+    requires std::is_convertible_v<T,U>
+    Polyline2<T>::operator Polyline2<U>() const
+    {
+        return Polyline2<U>(transform(vertex, [&](const Vector2<T>& v) -> Vector2<U> {
+            return (Vector2<U>) v;
+        }));
+    }
+
+    template <typename T>
     Polyline2<T>::operator PolylineData<Vector2<T>>() const 
     {
         return { vertex };

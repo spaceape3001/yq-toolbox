@@ -23,6 +23,16 @@ namespace yq {
     template <typename T> Polygon4<T>::Polygon4(const Triangle4<T>& t) : Polygon4({t.a, t.b, t.c}) {}
     
     template <typename T>
+    template <typename U>
+    requires std::is_convertible_v<T,U>
+    Polygon4<T>::operator Polygon4<U>() const
+    {
+        return Polygon4<U>(transform(vertex, [&](const Vector4<T>& v) -> Vector4<U> {
+            return (Vector4<U>) v;
+        }));
+    }
+
+    template <typename T>
     Polygon4<T>::operator PolygonData<Vector4<T>>() const 
     {
         return { vertex };

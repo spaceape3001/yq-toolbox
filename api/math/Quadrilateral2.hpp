@@ -31,18 +31,19 @@ namespace yq {
         explicit constexpr Quadrilateral2(const AxBox2<T>&) noexcept;
         explicit constexpr Quadrilateral2(const Rectangle2<T>&) noexcept;
         
+        
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Quadrilateral2<U>() const noexcept
         {
-            return {(Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d};
+            return Quadrilateral2<U>((Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d);
         }
         
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Quadrilateral2<U>() const 
         {
-            return {(Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d};
+            return Quadrilateral2<U>((Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d);
         }
 
         constexpr operator QuadrilateralData<Vector2<T>>() const noexcept;
@@ -51,6 +52,39 @@ namespace yq {
         //! Defaulted comparison operator
         constexpr bool operator==(const Quadrilateral2&) const noexcept = default;
         
+        constexpr Quadrilateral2 operator+() const noexcept;
+        constexpr Quadrilateral2 operator-() const noexcept;
+        
+        constexpr Quadrilateral2 operator+(const Vector2<T>&) const noexcept;
+        Quadrilateral2& operator+=(const Vector2<T>&) noexcept;
+        
+        constexpr Quadrilateral2 operator-(const Vector2<T>&) const noexcept;
+        Quadrilateral2& operator-=(const Vector2<T>&) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Quadrilateral2<product_t<T,U>>  operator*(U) const noexcept;
+
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Quadrilateral2<T>& operator*=(U) noexcept;
+
+        template <typename U>
+        constexpr Quadrilateral2<product_t<T,U>>  operator*(const Tensor22<U>&) const noexcept;
+
+        template <typename U>
+        requires self_mul_v<T,U>
+        Quadrilateral2<T>& operator*=(const Tensor22<U>&) noexcept;
+
+
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Quadrilateral2<quotient_t<T,U>>  operator/(U) const noexcept;
+
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Quadrilateral2<T>& operator/=(U) noexcept;
+
         //! The point "area" (not the actual area, but a component of it)
         constexpr square_t<T>   _area() const noexcept;
 
@@ -100,6 +134,9 @@ namespace yq {
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
+
+    template <typename T, typename U>
+    constexpr Quadrilateral2<product_t<T,U>> operator*(T, const Quadrilateral2<U>&) noexcept;
 
     /*! \brief Computes the area of a 2D quatrilateral
     */

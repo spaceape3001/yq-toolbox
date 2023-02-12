@@ -116,6 +116,8 @@ namespace yq {
         Polygon2<T> operator+(const Polygon2<T>&) const;
         Polyline2<T> operator+(const Polyline2<T>&) const;
 
+        constexpr Quadrilateral2<T>   operator+(const Quadrilateral2<T>&) const noexcept;
+
         constexpr Segment2<T> operator+(const Segment2<T>&) const noexcept;
         
         constexpr Triangle2<T> operator+(const Triangle2<T>&) const noexcept;
@@ -143,6 +145,8 @@ namespace yq {
 
         Polygon2<T> operator-(const Polygon2<T>&) const;
         Polyline2<T> operator-(const Polyline2<T>&) const;
+        
+        constexpr Quadrilateral2<T>   operator-(const Quadrilateral2<T>&) const noexcept;
 
         constexpr Segment2<T> operator-(const Segment2<T>&) const noexcept;
 

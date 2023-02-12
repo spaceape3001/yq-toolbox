@@ -120,6 +120,9 @@ namespace yq {
         Polygon2<product_t<T,U>>  operator*(const Polygon2<U>&) const;
         template <typename U>
         Polyline2<product_t<T,U>>  operator*(const Polyline2<U>&) const;
+        
+        template <typename U>
+        Quadrilateral2<product_t<T,U>> operator*(const Quadrilateral2<U>&) const;
 
         template <typename U>
         constexpr Segment2<product_t<T,U>>  operator*(const Segment2<U>&) const noexcept;

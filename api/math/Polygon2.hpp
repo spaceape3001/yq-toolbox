@@ -28,6 +28,8 @@ namespace yq {
         Polygon2(std::initializer_list<Vector2<T>>);
         
         explicit Polygon2(const AxBox2<T>&);
+        explicit Polygon2(const Quadrilateral2<T>&);
+        explicit Polygon2(const Rectangle2<T>&);
         explicit Polygon2(const Triangle2<T>&);
         
         template <typename U>

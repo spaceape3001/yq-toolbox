@@ -29,7 +29,111 @@ namespace yq {
     template <typename T>
     constexpr Quadrilateral2<T>::operator QuadrilateralData<Vector2<T>>() const noexcept
     {
-        return { a, b, c, d };
+        return QuadrilateralData<Vector2<T>>( a, b, c, d );
+    }
+
+    template <typename T>
+    constexpr Quadrilateral2<T> Quadrilateral2<T>::operator+() const noexcept
+    {
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Quadrilateral2<T> Quadrilateral2<T>::operator-() const noexcept
+    {
+        return Quadrilateral2<T>( -a, -b, -c, -d );
+    }
+
+    template <typename T>
+    constexpr Quadrilateral2<T> Quadrilateral2<T>::operator+(const Vector2<T>&rhs) const noexcept
+    {
+        return Quadrilateral2<T>(a+rhs, b+rhs, c+rhs, d+rhs);
+    }
+
+    template <typename T>
+    Quadrilateral2<T>& Quadrilateral2<T>::operator+=(const Vector2<T>&rhs) noexcept
+    {
+        a += rhs;
+        b += rhs;
+        c += rhs;
+        d += rhs;
+        return *this;
+    }
+
+    template <typename T>
+    constexpr Quadrilateral2<T> Quadrilateral2<T>::operator-(const Vector2<T>&rhs) const noexcept
+    {
+        return Quadrilateral2<T>(a-rhs, b-rhs, c-rhs, d-rhs);
+    }
+
+    template <typename T>
+    Quadrilateral2<T>& Quadrilateral2<T>::operator-=(const Vector2<T>&rhs) noexcept
+    {
+        a -= rhs;
+        b -= rhs;
+        c -= rhs;
+        d -= rhs;
+        return *this;
+    }
+
+    template <typename T>
+        template <typename U>
+    requires is_arithmetic_v<U>
+    constexpr Quadrilateral2<product_t<T,U>>  Quadrilateral2<T>::operator*(U rhs) const noexcept
+    {
+        return Quadrilateral2<product_t<T,U>>( a*rhs, b*rhs, c*rhs, d*rhs );
+    }
+
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    Quadrilateral2<T>& Quadrilateral2<T>::operator*=(U rhs) noexcept
+    {
+        a *= rhs;
+        b *= rhs;
+        c *= rhs;
+        d *= rhs;
+        return *this;
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Quadrilateral2<product_t<T,U>>  Quadrilateral2<T>::operator*(const Tensor22<U>&rhs) const noexcept
+    {
+        return Quadrilateral2<product_t<T,U>>( a*rhs, b*rhs, c*rhs, d*rhs );
+    }
+
+    template <typename T>
+        template <typename U>
+    requires self_mul_v<T,U>
+    Quadrilateral2<T>& Quadrilateral2<T>::operator*=(const Tensor22<U>&rhs) noexcept
+    {
+        a *= rhs;
+        b *= rhs;
+        c *= rhs;
+        d *= rhs;
+        return *this;
+    }
+
+
+    template <typename T>
+        template <typename U>
+    requires is_arithmetic_v<U>
+    constexpr Quadrilateral2<quotient_t<T,U>>  Quadrilateral2<T>::operator/(U rhs) const noexcept
+    {
+        return Quadrilateral2<quotient_t<T,U>>( a/rhs, b/rhs, c/rhs, d/rhs );
+    }
+
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    Quadrilateral2<T>& Quadrilateral2<T>::operator/=(U rhs) noexcept
+    {
+        a /= rhs;
+        b /= rhs;
+        c /= rhs;
+        d /= rhs;
+        return *this;
     }
 
     template <typename T>
@@ -81,6 +185,12 @@ namespace yq {
     Quadrilateral2<T> quadrilateral(const Rectangle2<T>& rect)
     {
         return Quadrilateral2<T>(rect);
+    }
+
+    template <typename T, typename U>
+    constexpr Quadrilateral2<product_t<T,U>> operator*(T lhs, const Quadrilateral2<U>&rhs) noexcept
+    {
+        return Quadrilateral2<product_t<T,U>>(lhs * rhs.a, lhs * rhs.b, lhs * rhs.c, lhs * rhs.d);
     }
 
     template <typename T>

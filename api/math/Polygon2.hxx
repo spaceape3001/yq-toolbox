@@ -15,6 +15,8 @@
 #include <math/AxBox2.hpp>
 #include <math/PolygonData.hpp>
 #include <math/Polygon2.hpp>
+#include <math/Quadrilateral2.hpp>
+#include <math/Rectangle2.hpp>
 #include <math/Triangle2.hpp>
 
 namespace yq {
@@ -24,6 +26,9 @@ namespace yq {
     template <typename T> Polygon2<T>::Polygon2(std::span<const Vector2<T>> pts) : vertex(pts) {}
 
     template <typename T> Polygon2<T>::Polygon2(const AxBox2<T>&bx) : Polygon2({bx.ll(), bx.hl(), bx.hh(), bx.lh()}) {}
+    template <typename T> Polygon2<T>::Polygon2(const Quadrilateral2<T>&q) : Polygon2({q.a, q.b, q.c, q.d }) {}
+    template <typename T> Polygon2<T>::Polygon2(const Rectangle2<T>&r) : 
+        Polygon2({r.southwest(), r.southeast(), r.northeast(), r.northwest()}) {}
     template <typename T> Polygon2<T>::Polygon2(const Triangle2<T>& t) : Polygon2({t.a, t.b, t.c}) {}
     
     template <typename T>

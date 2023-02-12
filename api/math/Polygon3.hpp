@@ -31,6 +31,9 @@ namespace yq {
         Polygon3(std::initializer_list<Vector3<T>>);
         explicit Polygon3(const Triangle3<T>&);
 
+        template <typename U>
+        requires std::is_convertible_v<T,U>
+        explicit operator Polygon3<U>() const;
 
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon3&) const noexcept = default;

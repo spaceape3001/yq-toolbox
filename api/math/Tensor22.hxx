@@ -15,6 +15,7 @@
 
 #include <math/Polygon2.hpp>
 #include <math/Polyline2.hpp>
+#include <math/Quadrilateral2.hpp>
 
 #include <math/Segment2.hpp>
 
@@ -151,6 +152,13 @@ namespace yq {
     {
         return Polyline2<product_t<T,U>>( *this * b.vertex );
         
+    }
+
+    template <typename T>
+        template <typename U>
+    Quadrilateral2<product_t<T,U>> Tensor22<T>::operator*(const Quadrilateral2<U>&rhs) const
+    {
+        return Quadrilateral2<product_t<T,U>>(*this * rhs.a, *this * rhs.b, *this * rhs.c, *this * rhs.d);
     }
 
     template <typename T>

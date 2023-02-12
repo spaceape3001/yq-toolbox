@@ -18,6 +18,7 @@
 #include <math/Multivector2.hpp>
 #include <math/Polygon2.hpp>
 #include <math/Polyline2.hpp>
+#include <math/Quadrilateral2.hpp>
 #include <math/Segment2.hpp>
 #include <math/Triangle2.hpp>
 
@@ -118,6 +119,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Quadrilateral2<T>   Vector2<T>::operator+(const Quadrilateral2<T>&b) const noexcept
+    {
+        return Quadrilateral2<T>(*this + b.a, *this + b.b, *this + b.c, *this + b.d);
+    }
+
+    template <typename T>
     constexpr Segment2<T> Vector2<T>::operator+(const Segment2<T>&rhs) const noexcept
     {
         return Segment2<T>( *this + rhs.a, *this + rhs.b );
@@ -203,6 +210,12 @@ namespace yq {
     Polyline2<T> Vector2<T>::operator-(const Polyline2<T>&b) const
     {
         return Polygon2<T>(*this - b.vertex);
+    }
+
+    template <typename T>
+    constexpr Quadrilateral2<T>   Vector2<T>::operator-(const Quadrilateral2<T>&b) const noexcept
+    {
+        return Quadrilateral2<T>(*this - b.a, *this - b.b, *this - b.c, *this - b.d);
     }
 
     template <typename T>

@@ -22,6 +22,16 @@ namespace yq {
     template <typename T> Polyline4<T>::Polyline4(const Segment4<T>&s) : Polyline4({s.a, s.b}) {}
 
     template <typename T>
+    template <typename U>
+    requires std::is_convertible_v<T,U>
+    Polyline4<T>::operator Polyline4<U>() const
+    {
+        return Polyline4<U>(transform(vertex, [&](const Vector4<T>& v) -> Vector4<U> {
+            return (Vector4<U>) v;
+        }));
+    }
+
+    template <typename T>
     Polyline4<T>::operator PolylineData<Vector4<T>>() const 
     {
         return { vertex };

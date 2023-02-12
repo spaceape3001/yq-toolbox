@@ -32,6 +32,10 @@ namespace yq {
         
         explicit Polygon4(const Triangle4<T>&);
 
+        template <typename U>
+        requires std::is_convertible_v<T,U>
+        explicit operator Polygon4<U>() const;
+
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon4&) const noexcept = default;
         
