@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/Set.hpp>
 #include <basic/TextUtils.hpp>
 #include <basic/XmlUtils.hpp>

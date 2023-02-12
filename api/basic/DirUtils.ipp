@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/DirUtils.hpp>
 #include <basic/Set.hpp>
 #include <basic/Vector.hpp>

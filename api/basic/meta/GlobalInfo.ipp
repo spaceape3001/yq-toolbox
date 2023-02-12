@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/meta/GlobalInfo.hpp>
 #include <basic/DelayInit.hpp>
 #include <basic/meta/ReservedIDs.hpp>

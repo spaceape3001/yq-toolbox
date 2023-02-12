@@ -10,7 +10,7 @@
 #include <bits/fs_path.h>
 #include <iosfwd>
 #include <basic/preamble.hpp>
-
+#include <system_error>
 
 namespace yq {
 

@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/DelayInit.hpp>
 #include <basic/ThreadId.hpp>
 #include <basic/meta/Meta.hpp>

@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include "Format.hpp"
 #include <basic/CollectionUtils.hpp>
 #include <basic/Map.hpp>

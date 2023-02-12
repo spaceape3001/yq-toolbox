@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/meta/MethodInfo.hpp>
 #include <basic/meta/MetaWriter.hpp>
 #include <basic/meta/GlobalInfo.hpp>

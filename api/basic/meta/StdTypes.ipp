@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/meta/TypeInfo.hpp>
 #include <basic/meta/ReservedIDs.hpp>
 #include <basic/meta/Init.hpp>

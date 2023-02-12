@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/DelayInit.hpp>
 #include <basic/Logging.hpp>
 #include <basic/StreamOps.hpp>

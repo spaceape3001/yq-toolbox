@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/meta/PropGetter.hpp>
 #include <basic/meta/PropertyInfo.hpp>
 #include <cassert>

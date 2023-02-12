@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/Stream.hpp>
 #include <basic/StreamOps.hpp>
 #include <basic/TextUtils.hpp>

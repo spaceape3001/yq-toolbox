@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/Set.hpp>
 #include <basic/SqlError.hpp>
 #include <basic/SqlLite.hpp>

@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/meta/MetaRepo.hpp>
 #include <basic/meta/ObjectInfo.hpp>
 #include <basic/Logging.hpp>

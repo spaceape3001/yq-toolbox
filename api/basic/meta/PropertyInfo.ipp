@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/meta/PropertyInfo.hpp>
 #include <basic/meta/GlobalInfo.hpp>
 #include <basic/meta/ObjectInfo.hpp>

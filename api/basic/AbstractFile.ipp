@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include "AbstractFile.hpp"
 #include <basic/FileUtils.hpp>
 #include <basic/stream/Bytes.hpp>

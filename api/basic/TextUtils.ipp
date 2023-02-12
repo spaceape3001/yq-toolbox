@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include "TextUtils.hpp"
 #include <basic/IterUtf8.hpp>
 #include <basic/IterW.hpp>

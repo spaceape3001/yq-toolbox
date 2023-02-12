@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <basic/ByteArray.hpp>
 #include <basic/Logging.hpp>
 #include <basic/Stream.hpp>
