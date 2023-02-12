@@ -18,11 +18,11 @@ namespace yq {
         XmlFile();
         ~XmlFile();
 
-        virtual bool    read(const XmlDocument&, std::string_view fname) = 0;
-        virtual bool    write(XmlDocument&) const = 0;
+        virtual std::error_code    read(const XmlDocument&, std::string_view fname) = 0;
+        virtual std::error_code    write(XmlDocument&) const = 0;
 
-        virtual bool    read(ByteArray&&, std::string_view fname) override;
-        virtual bool    write(yq::Stream&) const override;
+        virtual std::error_code    read(ByteArray&&, std::string_view fname) override;
+        virtual std::error_code    write(yq::Stream&) const override;
 
         virtual bool    is_binary() const override { return false; }
     };

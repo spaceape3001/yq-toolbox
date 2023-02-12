@@ -10,6 +10,7 @@
 #include <basic/FileUtils.hpp>
 #include <basic/stream/Bytes.hpp>
 #include <basic/ByteArray.hpp>
+#include <basic/Errors.hpp>
 #include <fstream>
 
 namespace yq {
@@ -29,10 +30,12 @@ namespace yq {
         m_file.clear();
     }
 
-    bool            AbstractFile::load(const std::filesystem::path& ipath)
+    std::error_code  AbstractFile::load(const std::filesystem::path& ipath)
     {
         if(!read_enabled())
-            return false;
+            return errors::not_read_enabled();
+        if(ipath.empty())
+            return errors::filepath_empty();
         
         //if(load_it(ipath)){
             //m_file  = ipath;
@@ -46,16 +49,16 @@ namespace yq {
         std::ifstream   fin(ipath, om);
         //u8_ifstream   fin(ipath, om);
         if(!fin)
-            return false;
+            return errors::cant_open_read();
         return load(fin, ipath);
     }
 
 
     //bool            AbstractFile::load(u8_istream&fin, const std::filesystem::path& fp)
-    bool            AbstractFile::load(std::istream&fin, const std::filesystem::path& fp)
+    std::error_code  AbstractFile::load(std::istream&fin, const std::filesystem::path& fp)
     {
         if(!read_enabled())
-            return false;
+            return errors::not_read_enabled();
 
         ByteArray       data;
         fin.seekg( 0, std::ios::end);
@@ -80,52 +83,55 @@ namespace yq {
         return load(std::move(data), fp);
     }
 
-    bool            AbstractFile::load(ByteArray&&data, const std::filesystem::path& fp)
+    std::error_code  AbstractFile::load(ByteArray&&data, const std::filesystem::path& fp)
     {
         if(!read_enabled())
-            return false;
+            return errors::not_read_enabled();
+
         reset();
-        bool ok = read(std::move(data), fp.native());
-        if(ok)
+        std::error_code ec = read(std::move(data), fp.native());
+        if(ec == std::error_code())
             m_file  = fp;
-        return ok;
+        return ec;
     }
 
 
-    bool            AbstractFile::reload()
+    std::error_code  AbstractFile::reload()
     {
         if(m_file.empty())
-            return false;
+            return errors::filepath_empty();
+        reset();
         return load(m_file);
     }
 
 
-    bool            AbstractFile::save()
+    std::error_code  AbstractFile::save()
     {
         if(m_file.empty())
-            return false;
+            return errors::filepath_empty();
         return save_to(m_file);
     }
 
-    bool            AbstractFile::save_as(const std::filesystem::path& oPath)
+    std::error_code  AbstractFile::save_as(const std::filesystem::path& oPath)
     {
-        if(save_to(oPath)){
+        std::error_code ec  = save_to(oPath);
+        if(ec == std::error_code())
             m_file  = oPath;
-            return true;
-        } else
-            return false;
+        return ec;
     }
 
 
-    bool            AbstractFile::save_to(const std::filesystem::path& oPath) const
+    std::error_code  AbstractFile::save_to(const std::filesystem::path& oPath) const
     {
         if(!write_enabled())
-            return false;
+            return errors::not_write_enabled();
         
         ByteArray               data;
         yq::stream::Bytes       output(data);
-        if(!write(output))
-            return false;
+        
+        std::error_code ec = write(output);
+        if(ec != std::error_code())
+            return ec;
             
         std::filesystem::path   tmp  = oPath.string() + ".tmp";
         int         n   = 0;
@@ -134,16 +140,17 @@ namespace yq {
         std::ios_base::openmode om  = std::ios_base::out | std::ios_base::trunc;
         if(is_binary())
             om |= std::ios_base::binary;
-        bool    f   = false;
+        std::error_code    f;
         {
             std::ofstream fout(tmp, om);
             if(!fout)
-                return false;
+                return errors::cant_open_write();
             fout.write(data.data(), data.size());
-            f   = !fout.fail();
+            if(fout.fail())
+                ec  = errors::failed_to_write_file();
             fout.close();
         }
-        if(f){
+        if(f == std::error_code()){
             file_backup(oPath.c_str(), "bck");
             rename(tmp.c_str(), oPath.c_str());
         } else {
@@ -153,13 +160,11 @@ namespace yq {
     }
 
 
-    bool            AbstractFile::save_to(yq::Stream&out) const
+    std::error_code  AbstractFile::save_to(yq::Stream&out) const
     {   
         if(!write_enabled())
-            return false;
-        if(!write(out))
-            return false;
-        return true;
+            return errors::not_write_enabled();
+        return write(out);
     }
 
     void            AbstractFile::set_file(const std::filesystem::path&p)

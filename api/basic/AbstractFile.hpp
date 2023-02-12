@@ -26,30 +26,30 @@ namespace yq {
 
         void            clear();
 
-        bool            load(const std::filesystem::path&);
-        bool            load(std::istream&, const std::filesystem::path& fp=std::filesystem::path());
+        std::error_code load(const std::filesystem::path&);
+        std::error_code load(std::istream&, const std::filesystem::path& fp=std::filesystem::path());
         //bool            load(u8_istream&, const std::filesystem::path& fp=std::filesystem::path());
         /*! \brief Loads the data
         
             \note   This may/will be DESTRUCTIVE to the buffer, if important, make a copy.
         */
-        bool            load(ByteArray&& buffer, const std::filesystem::path& fp=std::filesystem::path());
+        std::error_code load(ByteArray&& buffer, const std::filesystem::path& fp=std::filesystem::path());
         
         /*! \brief Reloads
         
             \note this can do a *CLEAR* so a false may leave the structure in a bad state!
         */
-        bool            reload();
+        std::error_code reload();
 
-        bool            save();
+        std::error_code save();
         
         //  Saves to the specified file and changes the filename (if different)
-        bool            save_as(const std::filesystem::path&);
+        std::error_code save_as(const std::filesystem::path&);
         
         //  Saves to the specified file WITHOUT changing the file
-        bool            save_to(const std::filesystem::path&) const;
+        std::error_code save_to(const std::filesystem::path&) const;
 
-        bool            save_to(yq::Stream&) const;
+        std::error_code save_to(yq::Stream&) const;
         //bool            save_to(Vector<char>&);
         
         void            set_file(const std::filesystem::path&);
@@ -64,8 +64,8 @@ namespace yq {
             \param[in]  buffer  The file data, this will be null-terminated (always).  However, if you're binary, this
                         could easily have MULTIPLE null values.
         */
-        virtual bool    read(ByteArray&&, std::string_view fname) = 0;
-        virtual bool    write(yq::Stream&) const = 0;
+        virtual std::error_code read(ByteArray&&, std::string_view fname) = 0;
+        virtual std::error_code write(yq::Stream&) const = 0;
         virtual bool    is_binary() const { return false; }
 
         virtual bool    read_enabled() const { return true; }

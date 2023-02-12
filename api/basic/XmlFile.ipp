@@ -31,7 +31,7 @@ namespace yq {
         {
         }
 
-        bool    XmlFile::read(ByteArray&&buffer, std::string_view fname )
+        std::error_code    XmlFile::read(ByteArray&&buffer, std::string_view fname )
         {
             ByteArray   chars   = std::move(buffer);
 
@@ -42,22 +42,24 @@ namespace yq {
             } catch(const rapidxml::parse_error& pe){
                 size_t  pt  = pe.where<char>() - buffer.data();
                 yError() << "Xml parse error: " << pe.what() << " (at byte " << pt << ") : " << fname;
-                return false;
+                return errors::xml_bad_syntax();
             }
             
             return read(doc,fname);
         }
 
-        bool    XmlFile::write(yq::Stream & str) const
+        std::error_code    XmlFile::write(yq::Stream & str) const
         {
             Vector<char>    s;
             XmlDocument     doc;
             XmlNode*        x   = doc.allocate_node(rapidxml::node_pi, "xml", "version=\"1.0\" encoding=\"UTF-8\"");
             doc.append_node(x);
-            write(doc);
+            std::error_code ec = write(doc);
+            if(ec != std::error_code())
+                return ec;
             rapidxml::print(std::back_inserter(s), doc, 0);
             str.write(s.data(), s.size());
-            return true;
+            return std::error_code();
         }
 
 }

@@ -16,16 +16,17 @@ namespace yq {
         //! REGISTERS a new reason
         //! \note Mutex is involved!
         int                         reason(const char*);
-    }
 
-    template <string_literal WHY>
-    struct error_code : public std::error_code {
-        static int      value() 
-        {
-            static int  c   = error_db::reason(WHY.value);
-            return c;
-        }
-        
-        error_code() : std::error_code(value(), error_db::category()) {}
-    };
+        template <string_literal WHY>
+        struct entry : public std::error_code {
+            static int      value() 
+            {
+                static int  c   = error_db::reason(WHY.value);
+                return c;
+            }
+            
+            entry() : std::error_code(value(), error_db::category()) {}
+        };
+
+    }
 }
