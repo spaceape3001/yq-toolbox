@@ -38,6 +38,7 @@ namespace yq {
         consteval Size4(nan_t) : Size4(ALL, nan_v<T>) {}
         consteval Size4(zero_t) : Size4(ALL, zero_v<T>) {}
 
+
         //! Defaulted comparison operator
         constexpr bool    operator==(const Size4&) const noexcept = default;
         
@@ -56,31 +57,51 @@ namespace yq {
         {
             return { (U) x, (U) y, (U) z, (U) w };
         }
+        
+        constexpr Size4 operator+() const noexcept;
+        constexpr Size4 operator-() const noexcept;
+        
+        constexpr Size4 operator+(const Size4&) const noexcept;
+        Size4& operator+=(const Size4&) noexcept;
+
+        constexpr Size4 operator-(const Size4&) const noexcept;
+        Size4& operator-=(const Size4&) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Size4<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Size4& operator*=(U) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Size4<quotient_t<T,U>> operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Size4& operator/=(U) noexcept;
+
 
         //! Duration (W-dimension)
-        constexpr T   duration() const { return w; }
+        constexpr T   duration() const;
 
         //! Depth (Z-dimension)
-        constexpr T   depth() const { return z; }
+        constexpr T   depth() const;
         
         //! Detects if this object eclipses the other
-        constexpr bool   eclipses(const Size4<T>& small) const noexcept
-        {
-            return (x >= small.x) && (y >= small.y) && (z >= small.z );
-        }
+        constexpr bool   eclipses(const Size4<T>& small) const noexcept;
 
         //! Height (Y-dimension)
-        constexpr T   height() const { return y; }
+        constexpr T   height() const;
 
         //! Volume of this size
-        constexpr fourth_t<T> hypervolume() const noexcept
-        {
-            return x*y*z*w;
-        }
+        constexpr fourth_t<T> hypervolume() const noexcept;
 
 
         //! Width (X-dimension)
-        constexpr T   width() const { return x; }
+        constexpr T   width() const;
     };
 
     YQ_IEEE754_1(Size4)
@@ -94,28 +115,16 @@ namespace yq {
     
     //! Computes volume of the size
     template <typename T>
-    constexpr auto    hypervolume(const Size4<T>& size) noexcept
-    {
-        return size.hypervolume();
-    }
+    constexpr auto    hypervolume(const Size4<T>& size) noexcept;
 
     template <typename S, typename T>
-    S&  as_stream(S& s, const Size4<T>& v)
-    {
-        return s << "[" << v.x << "x" << v.y << "x" << v.z << "x" << v.w << "]";
-    }
+    S&  as_stream(S& s, const Size4<T>& v);
     
     template <typename T>
-    Stream& operator<<(Stream&s, const Size4<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    Stream& operator<<(Stream&s, const Size4<T>& v);
 
     template <typename T>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size4<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size4<T>& v);
 }
 
 YQ_TYPE_DECLARE(yq::Size4D)
