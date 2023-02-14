@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "Size2.hpp"
+#include <math/preamble.hpp>
 
 namespace yq {
 
@@ -53,29 +53,48 @@ namespace yq {
         constexpr bool    operator==(const Size3&) const noexcept = default;
         
         
+        constexpr Size3 operator+() const noexcept;
+        constexpr Size3 operator-() const noexcept;
+        
+        constexpr Size3 operator+(const Size3&) const noexcept;
+        Size3& operator+=(const Size3&) noexcept;
+
+        constexpr Size3 operator-(const Size3&) const noexcept;
+        Size3& operator-=(const Size3&) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Size3<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Size3& operator*=(U) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Size3<quotient_t<T,U>> operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Size3& operator/=(U) noexcept;
+                
         //! Depth (Z-dimension)
-        constexpr T   depth() const { return z; }
+        constexpr T   depth() const;
         
         //! Detects if this object eclipses the other
-        constexpr bool   eclipses(const Size3<T>& small) const noexcept
-        {
-            return (x >= small.x) && (y >= small.y) && (z >= small.z );
-        }
+        constexpr bool   eclipses(const Size3<T>& small) const noexcept;
 
         //! Height (Y-dimension)
-        constexpr T   height() const { return y; }
+        constexpr T   height() const;
 
         //! Volume of this size
-        constexpr cube_t<T> volume() const noexcept
-        {
-            return x*y*z;
-        }
+        constexpr cube_t<T> volume() const noexcept;
 
         //! Width (X-dimension)
-        constexpr T   width() const { return x; }
+        constexpr T   width() const;
         
         //! Swizzles the x/y components to a Size2
-        constexpr Size2<T>  xy() const noexcept { return { x, y }; }
+        constexpr Size2<T>  xy() const noexcept;
     };
 
     YQ_IEEE754_1(Size3)
@@ -90,28 +109,16 @@ namespace yq {
     
     //! Computes volume of the size
     template <typename T>
-    constexpr auto    volume(const Size3<T>& size) noexcept
-    {
-        return size.volume();
-    }
+    constexpr auto    volume(const Size3<T>& size) noexcept;
 
     template <typename S, typename T>
-    S&  as_stream(S& s, const Size3<T>& v)
-    {
-        return s << "[" << v.x << "x" << v.y << "x" << v.z << "]";
-    }
+    S&  as_stream(S& s, const Size3<T>& v);
     
     template <typename T>
-    Stream& operator<<(Stream&s, const Size3<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    Stream& operator<<(Stream&s, const Size3<T>& v);
 
     template <typename T>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size3<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size3<T>& v);
 }
 
 YQ_TYPE_DECLARE(yq::Size3D)
