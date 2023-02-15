@@ -119,6 +119,10 @@ namespace yq {
 
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size3<T>& v);
+
+    template <typename T, typename U>
+    requires is_arithmetic_v<T,U>
+    constexpr Size3<product_t<T,U>> operator*(T a, const Size3<U>& b) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Size3D)

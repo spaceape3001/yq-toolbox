@@ -51,24 +51,43 @@ namespace yq {
         //! Defaulted comparsion operator
         constexpr bool    operator==(const Size2&) const noexcept = default;
         
+        
+        constexpr Size2 operator+() const noexcept;
+        constexpr Size2 operator-() const noexcept;
+        
+        constexpr Size2 operator+(const Size2&) const noexcept;
+        Size2& operator+=(const Size2&) noexcept;
+
+        constexpr Size2 operator-(const Size2&) const noexcept;
+        Size2& operator-=(const Size2&) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Size2<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Size2& operator*=(U) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Size2<quotient_t<T,U>> operator/(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Size2& operator/=(U) noexcept;
       
         //! Returns the area
-        constexpr square_t<T> area() const noexcept
-        {
-            return x*y;
-        }
+        constexpr square_t<T> area() const noexcept;
 
         //! Tests to see if the left fully encloses the right
-        bool                eclipses(const Size2& b) const noexcept
-        {
-            return (x >= b.x) && (y >= b.y);
-        }
+        bool                eclipses(const Size2& b) const noexcept;
         
         //! Height (Y-dimension)
-        constexpr T         height() const { return y; }
+        constexpr T         height() const noexcept;
 
         //! Width (X-dimension)
-        constexpr T         width() const { return x; }
+        constexpr T         width() const noexcept;
 
         /*! \brief Shrinks to fit the given frame
 
@@ -76,47 +95,7 @@ namespace yq {
 
             \param[in]  frame   Desired frame
         */
-        Size2               shrink_to_fit(const Size2& frame) const
-        {
-            using sq_t  = decltype(T()*T());
-            
-            //  --------------------------------------
-            //  Check for reasons to not do the math...
-        
-            if(frame.eclipses(*this))           // we already fit
-                return *this;
-            if(frame.area() == zero_v<sq_t>)     // frame is bogus
-                return *this;
-            if(area() == zero_v<sq_t>)    // dims is bogus
-                return *this;
-
-            /*
-                The relative "shrink" factor in each dimension
-                
-                fx = dims.x / frame.x
-                fy = dims.y / frame.y
-                
-                And the greater one dictates which axis is held constant 
-                while the other is shrunk by the same amount.  However
-                the above would decimate precision with integer numbers,
-                therefore we need to rewrite the conditional to avoid.
-                
-                dims.y      dims.x
-                -------  > --------
-                frame.y     frame.x
-                
-                dims.y * frame.x > dim.x * frame.y
-                
-                Still have the issue of integer overflow... 
-                address that later if that becomes a concern.
-            */
-            
-            if(y*frame.x > x*frame.y){
-                return Size2<T>{ (x * frame.y)/y , frame.y };
-            } else {
-                return Size2<T>{ frame.x, (y*frame.x)/x };
-            }
-        }
+        Size2               shrink_to_fit(const Size2& frame) const;
     };
 
     YQ_IEEE754_1(Size2)
@@ -133,10 +112,7 @@ namespace yq {
     /*! \brief Computes the area of this size
     */
     template <typename T>
-    constexpr auto    area(const Size2<T>& sz) noexcept
-    {
-        return sz.x*sz.y;
-    }
+    constexpr auto    area(const Size2<T>& sz) noexcept;
     
     /*! \brief Shrinks a size to fit the frame
         
@@ -146,34 +122,25 @@ namespace yq {
         \param[in]  frame   Desired frame
     */
     template <typename T>
-    Size2<T>  shrink_to_fit_within(const Size2<T>& dims, const Size2<T>& frame)
-    {
-        return dims.shrink_to_fit(frame);
-        
-    }
+    Size2<T>  shrink_to_fit_within(const Size2<T>& dims, const Size2<T>& frame);
     
     /*! \brief Streams the size to a stream-like object */
     template <typename S, typename T>
-    S&  as_stream(S& s, const Size2<T>& v)
-    {
-        return s << "[" << v.x << "x" << v.y << "]";
-    }
+    S&  as_stream(S& s, const Size2<T>& v);
     
     /*! \brief Streams to a stream
     */
     template <typename T>
-    Stream& operator<<(Stream&s, const Size2<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    Stream& operator<<(Stream&s, const Size2<T>& v);
 
     /*! \brief Streams to to a logging stream
     */
     template <typename T>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size2<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size2<T>& v);
+
+    template <typename T, typename U>
+    requires is_arithmetic_v<T,U>
+    constexpr Size2<product_t<T,U>> operator*(T a, const Size2<U>& b) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Size2D)
