@@ -13,6 +13,10 @@
     template instantiation.  
 */
 
+#include <math/Size2.hpp>
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
 namespace yq {
 
     template <typename T>
