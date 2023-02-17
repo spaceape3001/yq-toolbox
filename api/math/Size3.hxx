@@ -14,10 +14,16 @@
 
 #include <math/Size2.hpp>
 #include <math/Size3.hpp>
+#include <math/Vector3.hpp>
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
 namespace yq {
+    template <typename T>
+    constexpr Size3<T>::Size3(const Vector3<T>&v) noexcept : Size3(v.x, v.y, v.z)
+    {
+    }
+
     template <typename T>
     constexpr Size3<T> Size3<T>::operator+() const noexcept
     {
@@ -100,17 +106,91 @@ namespace yq {
 
 
     template <typename T>
+    constexpr Size3<T> Size3<T>::all_add(T b) const noexcept
+    {
+        return Size3( x+b, y+b, z+b );
+    }
+    
+    template <typename T>
+    constexpr Size3<T> Size3<T>::all_subtract(T b) const noexcept
+    {
+        return Size3( x-b, y-b, z-b );
+    }
+
+    template <typename T>
+    constexpr T     Size3<T>::cmax() const noexcept
+    {
+        return std::max({x, y, z});
+    }
+
+    template <typename T>
+    constexpr T     Size3<T>::cmin() const noexcept
+    {
+        return std::min({x, y, z});
+    }
+
+    template <typename T>
+    constexpr bool   Size3<T>::contains(const Size3<T>& small) const noexcept
+    {
+        return all(*this) >= small;
+    }
+
+    template <typename T>
+    constexpr cube_t<T>   Size3<T>::cproduct() const noexcept
+    {
+        return x*y*z;
+    }
+
+    template <typename T>
+    constexpr T             Size3<T>::csum() const noexcept
+    {
+        return x + y + z;
+    }
+
+    template <typename T>
     constexpr T   Size3<T>::depth() const 
     { 
         return z; 
     }
-    
+
+    template <typename T>
+    constexpr Size3<T>   Size3<T>::eabs() const noexcept
+    {
+        return Size3( abs(x), abs(y), abs(z) );
+    }
+
     template <typename T>
     constexpr bool   Size3<T>::eclipses(const Size3<T>& small) const noexcept
     {
-        return (x >= small.x) && (y >= small.y) && (z >= small.z );
+        return all(*this) >= small;
     }
 
+    template <typename T>
+        template <typename U>
+    constexpr Size3<quotient_t<T,U>>  Size3<T>::ediv(const Size3<U>&b) const noexcept
+    {
+        return Size3<quotient_t<T,U>>(x/b.x, y/b.y, z/b.z );
+    }
+
+    template <typename T>
+    constexpr Size3<T>   Size3<T>::emax(const Size3&b) const noexcept
+    {
+        return Size3(max(x, b.x), max(y, b.y), max(z, b.z));
+    }
+    
+    template <typename T>
+    constexpr Size3<T>   Size3<T>::emin(const Size3&b) const noexcept
+    {
+        return Size3(min(x, b.x), min(y, b.y), min(z, b.z));
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Size3<product_t<T,U>>   Size3<T>::emul(const Size3<U>&b) const noexcept
+    {
+        return {x*b.x, y*b.y, z*b.z};
+    }
+    
     template <typename T>
     constexpr T   Size3<T>::height() const 
     { 

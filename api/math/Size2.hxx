@@ -14,10 +14,17 @@
 */
 
 #include <math/Size2.hpp>
+#include <math/Rectangle2.hpp>
+#include <math/Vector2.hpp>
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
 namespace yq {
+
+    template <typename T>
+    constexpr Size2<T>::Size2(const Vector2<T>&v) noexcept : Size2(v.x, v.y)
+    {
+    }
 
     template <typename T>
     constexpr Size2<T> Size2<T>::operator+() const noexcept
@@ -32,6 +39,12 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr Rectangle2<T> Size2<T>::operator+(const Rectangle2<T>&b) const noexcept
+    {
+        Rectangle2<T>(b.position, *this + b.size);
+    }
+
+    template <typename T>
     constexpr Size2<T> Size2<T>::operator+(const Size2&b) const noexcept
     {
         return Size2(x+b.x, y+b.y);
@@ -43,6 +56,18 @@ namespace yq {
         x += b.x;
         y += b.y;
         return *this;
+    }
+
+    template <typename T>
+    constexpr Rectangle2<T> Size2<T>::operator+(const Vector2<T>&b) const noexcept
+    {
+        return Rectangle2<T>(b, *this);
+    }
+
+    template <typename T>
+    constexpr Rectangle2<T> Size2<T>::operator-(const Rectangle2<T>&b) const noexcept
+    {
+        return Rectangle2<T>(-b.position, *this - b.size);
     }
 
     template <typename T>
@@ -59,6 +84,12 @@ namespace yq {
         return *this;
     }
     
+    template <typename T>
+    constexpr Rectangle2<T> Size2<T>::operator-(const Vector2<T>&b) const noexcept
+    {
+        return Rectangle2<T>(-b, *this);
+    }
+
     template <typename T>
     template <typename U>
     requires is_arithmetic_v<U>
@@ -96,15 +127,90 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Size2<T> Size2<T>::all_add(T b) const noexcept
+    {
+        return Size2( x+b, y+b );
+    }
+    
+    template <typename T>
+    constexpr Size2<T> Size2<T>::all_subtract(T b) const noexcept
+    {
+        return Size2( x-b, y-b );
+    }
+
+
+    template <typename T>
     constexpr square_t<T> Size2<T>::area() const noexcept
     {
         return x*y;
     }
 
     template <typename T>
-    bool                Size2<T>::eclipses(const Size2& b) const noexcept
+    constexpr T     Size2<T>::cmax() const noexcept
     {
-        return (x >= b.x) && (y >= b.y);
+        return std::max({x, y});
+    }
+
+    template <typename T>
+    constexpr T     Size2<T>::cmin() const noexcept
+    {
+        return std::min({x, y});
+    }
+
+    template <typename T>
+    bool                Size2<T>::contains(const Size2& small) const noexcept
+    {
+        return all(*this) >= small;
+    }
+    
+    template <typename T>
+    constexpr square_t<T>   Size2<T>::cproduct() const noexcept
+    {
+        return x*y;
+    }
+
+    template <typename T>
+    constexpr T             Size2<T>::csum() const noexcept
+    {
+        return x + y;
+    }
+
+    template <typename T>
+    constexpr Size2<T>   Size2<T>::eabs() const noexcept
+    {
+        return Size2( abs(x), abs(y) );
+    }
+
+    template <typename T>
+    bool                Size2<T>::eclipses(const Size2& small) const noexcept
+    {
+        return all(*this) >= small;
+    }
+    
+    template <typename T>
+        template <typename U>
+    constexpr Size2<quotient_t<T,U>>  Size2<T>::ediv(const Size2<U>&b) const noexcept
+    {
+        return Size2<quotient_t<T,U>>(x/b.x, y/b.y );
+    }
+
+    template <typename T>
+    constexpr Size2<T>   Size2<T>::emax(const Size2&b) const noexcept
+    {
+        return Size2(max(x, b.x), max(y, b.y));
+    }
+    
+    template <typename T>
+    constexpr Size2<T>   Size2<T>::emin(const Size2&b) const noexcept
+    {
+        return Size2(min(x, b.x), min(y, b.y));
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Size2<product_t<T,U>>   Size2<T>::emul(const Size2<U>&b) const noexcept
+    {
+        return {x*b.x, y*b.y};
     }
     
     template <typename T>

@@ -218,6 +218,7 @@ namespace yq {
 
         constexpr Vector2<T>    hh() const noexcept;
         constexpr Vector2<T>    hh(T adjust) const noexcept;
+        constexpr Vector2<T>    hh(guard_t) const noexcept;
         constexpr Vector2<T>    hl() const noexcept;
         constexpr Vector2<T>    hl(T adjust) const noexcept;
 
@@ -245,12 +246,16 @@ namespace yq {
 
         //! Low x/High y corner
         constexpr Vector2<T>    lh() const noexcept;
+        
+        
         //! Low x/High y corner, adjusted outward
         constexpr Vector2<T>    lh(T adjust) const noexcept;
         //! Low x/Low y corner
         constexpr Vector2<T>    ll() const noexcept;
         //! Low x/Low y corner, adjusted outward
         constexpr Vector2<T>    ll(T adjust) const noexcept;
+
+        constexpr Vector2<T>    ll(guard_t) const noexcept;
 
         //! Minimum inflation number on a valid box to keep it from going invalid
         constexpr T min_inflate() const noexcept;
@@ -282,6 +287,7 @@ namespace yq {
         /*! \brief Returns the size of the box
         */
         constexpr Size2<T> size() const noexcept;
+        constexpr Size2<T> size(guard_t) const noexcept;
 
 
         //! Returns the southeast corner of the box

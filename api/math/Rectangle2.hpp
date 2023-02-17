@@ -31,6 +31,8 @@ namespace yq {
         consteval Rectangle2(nan_t) noexcept : Rectangle2(ALL, nan_v<T>) {}
         consteval Rectangle2(zero_t) noexcept : Rectangle2(ALL, zero_v<T>) {}
         
+        explicit constexpr Rectangle2(const AxBox2<T>&) noexcept;
+        
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Rectangle2<U>() const noexcept
@@ -47,6 +49,42 @@ namespace yq {
 
         //! Defaulted comparison operator
         constexpr bool    operator==(const Rectangle2&) const noexcept = default;
+
+        constexpr Rectangle2    operator+() const noexcept;
+        constexpr Rectangle2    operator-() const noexcept;
+
+        constexpr Rectangle2    operator+(const Rectangle2&) const noexcept;
+        Rectangle2&             operator+=(const Rectangle2&) noexcept;
+
+        constexpr Rectangle2    operator+(const Size2<T>&) const noexcept;
+        Rectangle2&             operator+=(const Size2<T>&) noexcept;
+
+        constexpr Rectangle2    operator+(const Vector2<T>&) const noexcept;
+        Rectangle2&             operator+=(const Vector2<T>&) noexcept;
+
+        constexpr Rectangle2    operator-(const Rectangle2&) const noexcept;
+        Rectangle2&             operator-=(const Rectangle2&) noexcept;
+
+        constexpr Rectangle2    operator-(const Size2<T>&) const noexcept;
+        Rectangle2&             operator-=(const Size2<T>&) noexcept;
+
+        constexpr Rectangle2    operator-(const Vector2<T>&) const noexcept;
+        Rectangle2&             operator-=(const Vector2<T>&) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Rectangle2<product_t<T,U>>  operator*(U) const noexcept;
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Rectangle2&  operator*=(U) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Rectangle2<quotient_t<T,U>>  operator/(U) const noexcept;
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Rectangle2&  operator/=(U) noexcept;
+
 
         //! Our bounding box
         constexpr AxBox2<T>   bounds() const noexcept;
@@ -65,6 +103,8 @@ namespace yq {
 
         //! Computes the south west corner, returns it
         constexpr Vector2<T>  southwest() const noexcept;
+        
+        constexpr bool          valid() const noexcept;
     };
 
     YQ_INTEGER_1(Rectangle2)
@@ -87,6 +127,10 @@ namespace yq {
     */
     template <typename T>
     constexpr AxCorners2<Vector2<T>>  corners(const Rectangle2<T>& rect) noexcept;
+    
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    constexpr Rectangle2<product_t<T,U>> operator*(T, const Rectangle2<T>&) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Rectangle2D)

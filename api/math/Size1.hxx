@@ -13,12 +13,18 @@
 */
 
 #include <math/Size1.hpp>
+#include <math/Vector1.hpp>
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
 
 namespace yq {
 
+    template <typename T>
+    constexpr Size1<T>::Size1(const Vector1<T>&v) noexcept : Size1(v.x) 
+    {
+    }
+    
     template <typename T>
     constexpr Size1<T> Size1<T>::operator+() const noexcept
     {
@@ -91,12 +97,87 @@ namespace yq {
         return *this;
     }
 
+
     template <typename T>
-    constexpr bool  Size1<T>::contains(const Size1& b) const noexcept
+    constexpr Size1<T> Size1<T>::all_add(T b) const noexcept
     {
-        return (x >= b.x);
+        return Size1( x+b );
     }
     
+    template <typename T>
+    constexpr Size1<T> Size1<T>::all_subtract(T b) const noexcept
+    {
+        return Size1( x-b );
+    }
+
+    template <typename T>
+    constexpr T     Size1<T>::cmax() const noexcept
+    {
+        return x;
+    }
+
+    template <typename T>
+    constexpr T     Size1<T>::cmin() const noexcept
+    {
+        return x;
+    }
+
+    template <typename T>
+    constexpr bool  Size1<T>::contains(const Size1& small) const noexcept
+    {
+        return all(*this) >= small;
+    }
+    
+    template <typename T>
+    constexpr T   Size1<T>::cproduct() const noexcept
+    {
+        return x;
+    }
+
+    template <typename T>
+    constexpr T             Size1<T>::csum() const noexcept
+    {
+        return x;
+    }
+
+    template <typename T>
+    constexpr Size1<T>   Size1<T>::eabs() const noexcept
+    {
+        return Size1( abs(x)  );
+    }
+
+    template <typename T>
+    constexpr bool  Size1<T>::eclipses(const Size1& small) const noexcept
+    {
+        return all(*this) >= small;
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Size1<quotient_t<T,U>>  Size1<T>::ediv(const Size1<U>&b) const noexcept
+    {
+        return Size1<quotient_t<T,U>>(x/b.x );
+    }
+
+    template <typename T>
+    constexpr Size1<T>   Size1<T>::emax(const Size1&b) const noexcept
+    {
+        return Size1(max(x, b.x));
+    }
+    
+    template <typename T>
+    constexpr Size1<T>   Size1<T>::emin(const Size1&b) const noexcept
+    {
+        return Size1(min(x, b.x));
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Size1<product_t<T,U>>   Size1<T>::emul(const Size1<U>&b) const noexcept
+    {
+        return {x*b.x};
+    }
+
     template <typename T>
     constexpr T         Size1<T>::length() const noexcept 
     { 

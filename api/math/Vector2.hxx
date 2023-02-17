@@ -19,7 +19,9 @@
 #include <math/Polygon2.hpp>
 #include <math/Polyline2.hpp>
 #include <math/Quadrilateral2.hpp>
+#include <math/Rectangle2.hpp>
 #include <math/Segment2.hpp>
+#include <math/Size2.hpp>
 #include <math/Triangle2.hpp>
 
 #include <math/Tensor21.hpp>
@@ -38,6 +40,11 @@
 
 
 namespace yq {
+    template <typename T>
+    constexpr Vector2<T>::Vector2(const Size2<T>&v) noexcept : Vector2(v.x, v.y)
+    {
+    }
+
     template <typename T>
     constexpr Vector2<T>::operator glm::vec<2, T, glm::defaultp>() const noexcept
     {
@@ -125,9 +132,21 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Rectangle2<T> Vector2<T>::operator+(const Rectangle2<T>&b) const noexcept
+    {
+        return Rectangle2<T>(*this+b.pos, b.size);
+    }
+
+    template <typename T>
     constexpr Segment2<T> Vector2<T>::operator+(const Segment2<T>&rhs) const noexcept
     {
         return Segment2<T>( *this + rhs.a, *this + rhs.b );
+    }
+
+    template <typename T>
+    constexpr Rectangle2<T> Vector2<T>::operator+(const Size2<T>&b) const noexcept
+    {
+        return Rectangle2<T>(*this, b);
     }
 
     template <typename T>

@@ -18,6 +18,7 @@
 #include <math/Polygon3.hpp>
 #include <math/Polyline3.hpp>
 #include <math/Segment3.hpp>
+#include <math/Size3.hpp>
 #include <math/Trivector3.hpp>
 
 #include <math/Tensor31.hpp>
@@ -35,6 +36,11 @@
 #include <math/utility.hpp>
 
 namespace yq {
+    template <typename T>
+    constexpr Vector3<T>::Vector3(const Size3<T>&v) noexcept : Vector3(v.x, v.y, v.z)
+    {
+    }
+
     template <typename T>
     constexpr Vector3<T>::operator glm::vec<3, T, glm::defaultp>() const noexcept
     {

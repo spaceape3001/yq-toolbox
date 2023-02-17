@@ -7,6 +7,8 @@
 #pragma once
 
 #include <math/preamble.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
 
 namespace yq {
 
@@ -34,6 +36,8 @@ namespace yq {
         template <typename=void> requires has_nan_v<T>
         consteval Size3(nan_t) : Size3(ALL, nan_v<T>) {}
         consteval Size3(zero_t) : Size3(ALL, zero_v<T>) {}
+
+        explicit constexpr Size3(const Vector3<T>&) noexcept;
 
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
@@ -78,11 +82,45 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Size3& operator/=(U) noexcept;
                 
+
+        //! Returns the most positive of the components
+        constexpr T             cmax() const noexcept;
+
+        //! Returns the most negative of the components
+        constexpr T             cmin() const noexcept;
+
+        //! Detects if this object eclipses the other
+        constexpr bool   contains(const Size3<T>& small) const noexcept;
+
+        //! Returns the product of all components
+        constexpr cube_t<T>    cproduct() const noexcept;
+
+        //! Returns the sum of all components
+        constexpr T             csum() const noexcept;
+
         //! Depth (Z-dimension)
         constexpr T   depth() const;
-        
+
+        //! Absolute value of each component
+        constexpr Size3       eabs() const noexcept;
+
         //! Detects if this object eclipses the other
         constexpr bool   eclipses(const Size3<T>& small) const noexcept;
+
+        //! Element by element division
+        template <typename U>
+        constexpr Size3<quotient_t<T,U>>  ediv(const Size3<U>&b) const noexcept;
+
+        //! Maximum applied to each component
+        constexpr Size3   emax(const Size3&b) const noexcept;
+        
+        //! Minimum applied to each component
+        constexpr Size3   emin(const Size3&b) const noexcept;
+
+        //! Element by element multiplication
+        template <typename U>
+        constexpr Size3<product_t<T,U>>   emul(const Size3<U>&b) const noexcept;
+        
 
         //! Height (Y-dimension)
         constexpr T   height() const;
@@ -95,6 +133,119 @@ namespace yq {
         
         //! Swizzles the x/y components to a Size2
         constexpr Size2<T>  xy() const noexcept;
+
+
+            //  ===================================================================================================
+            //  AllComponents Adapters
+            //  ===================================================================================================
+
+        /*! Adds a value to all the elements
+        */
+        constexpr Size3 all_add(T b) const noexcept;
+        
+        /*! \brief Subtracts value from all elements
+        */
+        constexpr Size3 all_subtract(T b) const noexcept;
+
+        /*! Tests every element
+            
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y, z component tests may be skipped if the x-component test fails.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(Pred pred) const noexcept
+        {
+            return pred(x) && pred(y) && pred(z);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y, z component tests may be skipped if the x-component test fails.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(const Size3& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+        }
+
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if all tests are true.
+            \note y, z component tests may be skipped if the x-component test fails.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool all_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b) && pred(y, b) && pred(z, b);
+        }
+
+            //  ===================================================================================================
+            //  AnyComponents Adapters
+            //  
+            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  returning true if all elements are successful
+            //  ===================================================================================================
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y, z component tests may be skipped if the x-component test passes.
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(Pred pred) const noexcept
+        {
+            return pred(x) || pred(y) || pred(z);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y, z component tests may be skipped if the x-component test passes.
+            \param[in] b The other vector
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(const Size3& b, Pred pred) const noexcept
+        {
+            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
+        }
+        
+        /*! Tests every element
+            This applies the given test to every component, 
+            returns TRUE if any test is true.
+            \note y, z component tests may be skipped if the x-component test passes.
+            \param[in] b The other value
+            \param[in] pred The predicate (your test)
+        */
+        template <typename Pred>
+        constexpr bool any_test(T b, Pred pred) const noexcept
+        {
+            return pred(x, b) || pred(y, b) || pred(z, b);
+        }
+
+        static bool less_x( const Size3& a, const Size3& b) 
+        {
+            return a.x < b.x;
+        }
+
+        static bool less_y( const Size3& a, const Size3& b) 
+        {
+            return a.y < b.y;
+        }
+
+        static bool less_z( const Size3& a, const Size3& b) 
+        {
+            return a.z < b.z;
+        }
+
     };
 
     YQ_IEEE754_1(Size3)
@@ -123,6 +274,24 @@ namespace yq {
     template <typename T, typename U>
     requires is_arithmetic_v<T,U>
     constexpr Size3<product_t<T,U>> operator*(T a, const Size3<U>& b) noexcept;
+
+    template <typename T>
+    AllComponents<Size3<T>>   all(const Size3<T>& val)
+    {
+        return AllComponents<Size3<T>>(val);
+    }
+    
+    template <typename T>
+    AllComponents<Size3<T>>   elem(const Size3<T>& val)
+    {
+        return AllComponents<Size3<T>>(val);
+    }
+
+    template <typename T>
+    AnyComponents<Size3<T>>   any(const Size3<T>& val)
+    {
+        return AnyComponents<Size3<T>>(val);
+    }
 }
 
 YQ_TYPE_DECLARE(yq::Size3D)

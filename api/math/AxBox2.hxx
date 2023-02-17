@@ -397,6 +397,11 @@ namespace yq {
         return Vector2<T>(hi.x+adjust, hi.adjust);
     }
     
+    template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::hh(guard_t) const noexcept
+    {
+        return hi.emax(lo);
+    }
 
     template <typename T>
     constexpr Vector2<T>    AxBox2<T>::hl() const noexcept
@@ -463,6 +468,12 @@ namespace yq {
     }
         
     template <typename T>
+    constexpr Vector2<T>    AxBox2<T>::ll(guard_t) const noexcept
+    {
+        return lo.emin(hi);
+    }
+
+    template <typename T>
     constexpr T AxBox2<T>::min_inflate() const noexcept
     {
         return -midspan(span().cmin());
@@ -503,8 +514,13 @@ namespace yq {
     template <typename T>
     constexpr Size2<T> AxBox2<T>::size() const noexcept 
     {
-        auto s = span();
-        return Size2<T>{ s.x, s.y, s.z }; 
+        return Size2<T>(span());
+    }
+
+    template <typename T>
+    constexpr Size2<T> AxBox2<T>::size(guard_t) const noexcept
+    {   
+        return Size2<T>(span(GUARD));
     }
 
     template <typename T>

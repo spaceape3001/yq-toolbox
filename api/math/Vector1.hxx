@@ -17,6 +17,7 @@
 #include <math/Multivector1.hpp>
 
 #include <math/Segment1.hpp>
+#include <math/Size1.hpp>
 
 #include <math/Tensor11.hpp>
 #include <math/Tensor12.hpp>
@@ -32,6 +33,11 @@
 
 
 namespace yq {
+    template <typename T>
+    constexpr Vector1<T>::Vector1(const Size1<T>&v) noexcept : Vector1(v.x)
+    {
+    }
+
     template <typename T>
     constexpr Vector1<T>::operator glm::vec<1, T, glm::defaultp>() const noexcept
     {

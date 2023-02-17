@@ -39,6 +39,8 @@ namespace yq {
         template <glm::qualifier Q>
         explicit constexpr Vector1(const glm::vec<1, T, Q>& v) : x(v.x) {}
 
+        explicit constexpr Vector1(const Size1<T>&) noexcept;
+
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Vector1<U>() const noexcept

@@ -40,6 +40,8 @@ namespace yq {
         constexpr Vector2(y_t, T v) noexcept : x(zero_v<T>), y(v) {}
         consteval Vector2(zero_t) noexcept : Vector2(ALL, zero_v<T>) {}
         
+        explicit constexpr Vector2(const Size2<T>&) noexcept;
+
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Vector2<U>() const noexcept
@@ -117,8 +119,12 @@ namespace yq {
         Polyline2<T> operator+(const Polyline2<T>&) const;
 
         constexpr Quadrilateral2<T>   operator+(const Quadrilateral2<T>&) const noexcept;
+        
+        constexpr Rectangle2<T> operator+(const Rectangle2<T>&) const noexcept;
 
         constexpr Segment2<T> operator+(const Segment2<T>&) const noexcept;
+        
+        constexpr Rectangle2<T> operator+(const Size2<T>&) const noexcept;
         
         constexpr Triangle2<T> operator+(const Triangle2<T>&) const noexcept;
 

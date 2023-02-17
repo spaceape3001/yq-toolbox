@@ -19,6 +19,7 @@
 #include <math/Polygon4.hpp>
 #include <math/Polyline4.hpp>
 #include <math/Segment4.hpp>
+#include <math/Size4.hpp>
 #include <math/Trivector4.hpp>
 
 #include <math/Tensor41.hpp>
@@ -36,6 +37,11 @@
 #include <math/utility.hpp>
 
 namespace yq {
+    template <typename T>
+    constexpr Vector4<T>::Vector4(const Size4<T>&v) noexcept : Vector4(v.x, v.y, v.z, v.w)
+    {
+    }
+    
     template <typename T>
     constexpr Vector4<T>::operator glm::vec<4, T, glm::defaultp>() const noexcept
     {

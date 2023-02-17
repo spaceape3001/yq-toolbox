@@ -45,6 +45,8 @@ namespace yq {
         constexpr Vector4(w_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
         consteval Vector4(zero_t) noexcept : Vector4(ALL, zero_v<T>) {}
 
+        explicit constexpr Vector4(const Size4<T>&) noexcept;
+
         template <glm::qualifier Q>
         explicit constexpr Vector4(const glm::vec<4, T, Q>& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
         

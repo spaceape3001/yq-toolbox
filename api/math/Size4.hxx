@@ -13,10 +13,16 @@
 */
 
 #include <math/Size4.hpp>
+#include <math/Vector4.hpp>
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
 namespace yq {
+    template <typename T>
+    constexpr Size4<T>::Size4(const Vector4<T>&v) noexcept : Size4(v.x, v.y, v.z, v.w)
+    {
+    }
+
     template <typename T>
     constexpr Size4<T> Size4<T>::operator+() const noexcept
     {
@@ -102,9 +108,45 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr T   Size4<T>::duration() const 
-    { 
-        return w; 
+    constexpr Size4<T> Size4<T>::all_add(T b) const noexcept
+    {
+        return Size4( x+b, y+b, z+b, w+b );
+    }
+    
+    template <typename T>
+    constexpr Size4<T> Size4<T>::all_subtract(T b) const noexcept
+    {
+        return Size4( x-b, y-b, z-b, w-b );
+    }
+
+    template <typename T>
+    constexpr T     Size4<T>::cmax() const noexcept
+    {
+        return std::max({x, y, z, w});
+    }
+
+    template <typename T>
+    constexpr T     Size4<T>::cmin() const noexcept
+    {
+        return std::min({x, y, z, w});
+    }
+
+    template <typename T>
+    constexpr bool   Size4<T>::contains(const Size4<T>& small) const noexcept
+    {
+        return all(*this) >= small;
+    }
+
+    template <typename T>
+    constexpr fourth_t<T>   Size4<T>::cproduct() const noexcept
+    {
+        return x*y*z*w;
+    }
+
+    template <typename T>
+    constexpr T             Size4<T>::csum() const noexcept
+    {
+        return x + y + z + w;
     }
 
     template <typename T>
@@ -114,10 +156,49 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr T   Size4<T>::duration() const 
+    { 
+        return w; 
+    }
+
+    template <typename T>
+    constexpr Size4<T>   Size4<T>::eabs() const noexcept
+    {
+        return Size4( abs(x), abs(y), abs(z), abs(w) );
+    }
+
+    template <typename T>
     constexpr bool   Size4<T>::eclipses(const Size4<T>& small) const noexcept
     {
-        return (x >= small.x) && (y >= small.y) && (z >= small.z );
+        return all(*this) >= small;
     }
+
+    template <typename T>
+        template <typename U>
+    constexpr Size4<quotient_t<T,U>>  Size4<T>::ediv(const Size4<U>&b) const noexcept
+    {
+        return Size4<quotient_t<T,U>>(x/b.x, y/b.y, z/b.z, w/b.w);
+    }
+
+    template <typename T>
+    constexpr Size4<T>   Size4<T>::emax(const Size4&b) const noexcept
+    {
+        return Size4(max(x, b.x), max(y, b.y), max(z, b.z), max(w, b.w));
+    }
+    
+    template <typename T>
+    constexpr Size4<T>   Size4<T>::emin(const Size4&b) const noexcept
+    {
+        return Size4(min(x, b.x), min(y, b.y), min(z, b.z), min(w, b.w));
+    }
+
+    template <typename T>
+        template <typename U>
+    constexpr Size4<product_t<T,U>>   Size4<T>::emul(const Size4<U>&b) const noexcept
+    {
+        return {x*b.x, y*b.y, z*b.z, w*b.w};
+    }
+    
 
     template <typename T>
     constexpr T   Size4<T>::height() const 
