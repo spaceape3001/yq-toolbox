@@ -158,6 +158,14 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr std::pair<unity_t<T>, bool>   Segment1<T>::fraction_x(T x, T ep) const noexcept
+    {
+        if(abs(a.x-b.x) <= ep)
+            return {zero_v<unity_t<T>>, false};
+        return {(x-a.x)/(b.x-a.x), true};
+    }
+
+    template <typename T>
     T   Segment1<T>::length() const 
     { 
         return delta().length(); 

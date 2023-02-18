@@ -157,6 +157,78 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr std::pair<unity_t<T>, bool>   Segment3<T>::fraction_x(T x, T ep) const noexcept
+    {
+        if(abs(a.x-b.x) <= ep)
+            return {zero_v<unity_t<T>>, false};
+        return {(x-a.x)/(b.x-a.x), true};
+    }
+    
+    template <typename T>
+    constexpr std::pair<unity_t<T>, bool>   Segment3<T>::fraction_y(T y, T ep) const noexcept
+    {
+        if(abs(a.y-b.y) <= ep)
+            return {zero_v<unity_t<T>>, false};
+        return {(y-a.y)/(b.y-a.y), true};
+    }
+
+    template <typename T>
+    constexpr std::pair<unity_t<T>, bool>   Segment3<T>::fraction_z(T z, T ep) const noexcept
+    {
+        if(abs(a.z-b.z) <= ep)
+            return {zero_v<unity_t<T>>, false};
+        return {(z-a.z)/(b.z-a.z), true};
+    }
+    
+    template <typename T>
+    constexpr std::pair<Vector3<T>, bool> Segment3<T>::intercept_x(T x, T ep) const noexcept
+    {
+        auto [ f, b ] = fraction_x(x, ep);
+        if(!b)
+            return {Vector3<T>(ZERO), false};
+            
+        unity_t<T>  g = one_v<T> - f;
+        
+        return Vector3<T>(
+            x,
+            g*a.y + f*b.y,
+            g*a.z + f*b.z
+        );
+    }
+
+    template <typename T>
+    constexpr std::pair<Vector3<T>, bool> Segment3<T>::intercept_y(T y, T ep) const noexcept
+    {
+        auto [ f, b ] = fraction_y(y, ep);
+        if(!b)
+            return {Vector3<T>(ZERO), false};
+            
+        unity_t<T>  g = one_v<T> - f;
+        
+        return Vector3<T>(
+            g*a.x + f*b.x,
+            y,
+            g*a.z + f*b.z
+        );
+    }
+
+    template <typename T>
+    constexpr std::pair<Vector3<T>, bool> Segment3<T>::intercept_z(T z, T ep) const noexcept
+    {
+        auto [ f, b ] = fraction_z(z, ep);
+        if(!b)
+            return {Vector3<T>(ZERO), false};
+            
+        unity_t<T>  g = one_v<T> - f;
+        
+        return Vector3<T>(
+            g*a.x + f*b.x,
+            g*a.y + f*b.y,
+            z
+        );
+    }
+
+    template <typename T>
     T   Segment3<T>::length() const 
     { 
         return delta().length(); 

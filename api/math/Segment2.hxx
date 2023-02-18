@@ -161,6 +161,52 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr std::pair<unity_t<T>, bool>   Segment2<T>::fraction_x(T x, T ep) const noexcept
+    {
+        if(abs(a.x-b.x) <= ep)
+            return {zero_v<unity_t<T>>, false};
+        return {(x-a.x)/(b.x-a.x), true};
+    }
+    
+    template <typename T>
+    constexpr std::pair<unity_t<T>, bool>   Segment2<T>::fraction_y(T y, T ep) const noexcept
+    {
+        if(abs(a.y-b.y) <= ep)
+            return {zero_v<unity_t<T>>, false};
+        return {(y-a.y)/(b.y-a.y), true};
+    }
+
+    template <typename T>
+    constexpr std::pair<Vector2<T>, bool> Segment2<T>::intercept_x(T x, T ep) const noexcept
+    {
+        auto [ f, b ] = fraction_x(x, ep);
+        if(!b)
+            return {Vector2<T>(ZERO), false};
+            
+        unity_t<T>  g = one_v<T> - f;
+        
+        return Vector2<T>(
+            x,
+            g*a.y + f*b.y
+        );
+    }
+
+    template <typename T>
+    constexpr std::pair<Vector2<T>, bool> Segment2<T>::intercept_y(T y, T ep) const noexcept
+    {
+        auto [ f, b ] = fraction_y(y, ep);
+        if(!b)
+            return {Vector2<T>(ZERO), false};
+            
+        unity_t<T>  g = one_v<T> - f;
+        
+        return Vector2<T>(
+            g*a.x + f*b.x,
+            y
+        );
+    }
+
+    template <typename T>
     T   Segment2<T>::length() const 
     { 
         return delta().length(); 

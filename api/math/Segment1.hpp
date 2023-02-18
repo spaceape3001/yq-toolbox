@@ -94,6 +94,9 @@ namespace yq {
         //! Net displacement
         constexpr Vector1<T>  delta() const noexcept;
 
+        //! Computes the fraction along the segment for given X value
+        constexpr std::pair<unity_t<T>, bool>   fraction_x(T, T ep=zero_v<T>) const noexcept;
+
         //! Length of the segment
         T   length() const;
 
