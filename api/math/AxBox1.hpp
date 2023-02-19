@@ -196,6 +196,8 @@ namespace yq {
         constexpr Vector1<T>    l() const noexcept;
         constexpr Vector1<T>    l(T adjust) const noexcept;
         
+        constexpr T             length() const noexcept;
+        
         //! Minimum inflation number on a valid box to keep it from going invalid
         constexpr T min_inflate() const noexcept;
 
@@ -290,6 +292,10 @@ namespace yq {
     /*! \brief Tests for a valid box */
     template <typename T>
     constexpr bool    is_valid(const AxBox1<T>& box) noexcept;
+
+    //! Length of the given box
+    template <typename T>
+    constexpr T         length(const AxBox1<T>&) noexcept;
 
     //! Computes the span for a given box
     template <typename T>

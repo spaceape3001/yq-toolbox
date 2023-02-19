@@ -18,6 +18,7 @@ toolbox_test(refs)
 toolbox_test(strings)
 toolbox_test(variants)
 
+toolbox_test(axbox1)
 toolbox_test(axbox2)
 toolbox_test(axbox3)
 toolbox_test(axbox4)

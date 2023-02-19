@@ -311,7 +311,7 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T>   AxBox1<T>::h() const noexcept
     {
-        return h;
+        return hi;
     }
 
     template <typename T>
@@ -342,13 +342,19 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T>   AxBox1<T>::l() const noexcept
     {
-        return h;
+        return lo;
     }
 
     template <typename T>
     constexpr Vector1<T>    AxBox1<T>::l(T adjust) const noexcept
     {
         return Vector1<T>(lo.x-adjust);
+    }
+
+    template <typename T>
+    constexpr T AxBox1<T>::length() const noexcept
+    {
+        return hi.x - lo.x;
     }
 
     template <typename T>
@@ -468,6 +474,12 @@ namespace yq {
     constexpr bool    is_valid(const AxBox1<T>& box) noexcept
     {
         return box.is_valid();
+    }
+
+    template <typename T>
+    constexpr T         length(const AxBox1<T>&box) noexcept
+    {
+        return box.length();
     }
 
     template <typename T>
