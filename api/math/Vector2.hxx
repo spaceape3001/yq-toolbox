@@ -468,7 +468,7 @@ namespace yq {
     template <typename T>
     constexpr Vector2<T> Vector2<T>::all_subtract(T b) const noexcept
     {
-        return Vector2( x-b, x-b );
+        return Vector2( x-b, y-b );
     }
 
     template <typename T>

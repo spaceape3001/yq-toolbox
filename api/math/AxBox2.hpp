@@ -270,7 +270,7 @@ namespace yq {
         
             This returns TRUE if *ANY* part of the boxes overlap (or touch)
         */
-        constexpr bool          overlaps(const AxBox2<T>& b) noexcept;
+        constexpr bool          overlaps(const AxBox2<T>& b) const noexcept;
 
         /*! \brief Computes the perimeter of the box */
         constexpr T             perimeter() const noexcept;

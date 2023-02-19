@@ -495,7 +495,7 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr bool          AxBox2<T>::overlaps(const AxBox2<T>& b) noexcept
+    constexpr bool          AxBox2<T>::overlaps(const AxBox2<T>& b) const noexcept
     {
         return (all(lo) <= b.hi) && (all(b.lo) <= hi);
     }    
