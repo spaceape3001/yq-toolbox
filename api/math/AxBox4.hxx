@@ -814,4 +814,25 @@ namespace yq {
     {
         return box.span();
     }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const AxBox4<T>& v)
+    {
+        return s << "[(" << v.lo.x << ":" << v.hi.x << ")x(" 
+                         << v.lo.y << ":" << v.hi.y << ")x(" 
+                         << v.lo.z << ":" << v.hi.z << ")x(" 
+                         << v.lo.w << ":" << v.hi.w << ")]";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const AxBox4<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox4<T>& v)
+    {
+        return as_stream(s, v);
+    }
 }

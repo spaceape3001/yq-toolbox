@@ -18,6 +18,7 @@ toolbox_test(refs)
 toolbox_test(strings)
 toolbox_test(variants)
 
+toolbox_test(axbox4)
 toolbox_test(fraction)
 toolbox_test(units)
 toolbox_test(vector1)

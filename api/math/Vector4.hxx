@@ -849,6 +849,23 @@ namespace yq {
         return a.emul(b);
     }
 
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Vector4<T>& v)
+    {
+        return s << "(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Vector4<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector4<T>& v)
+    {
+        return as_stream(s, v);
+    }
 
 }
 

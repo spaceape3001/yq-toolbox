@@ -45,6 +45,12 @@ namespace yq {
 
         consteval Side() noexcept : bits(0) {}
         constexpr Side(uint8_t b) noexcept : bits(b) {}
+        constexpr Side(uint8_t a, uint8_t b) noexcept : bits(a|b) {}
+        constexpr Side(std::initializer_list<uint8_t> bs) noexcept : bits(0)
+        {
+            for(uint8_t u : bs)
+                bits |= bs;
+        }
         constexpr bool    is_fail() const { return bits & FAIL; }
         
         constexpr bool operator==(const Side&) const noexcept = default;

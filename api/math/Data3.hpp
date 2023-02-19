@@ -15,5 +15,6 @@ namespace yq {
     template <typename T>
     struct Data3 {
         T   x, y, z;
+        constexpr bool operator==(const Data3&) const noexcept = default;
     };
 }
