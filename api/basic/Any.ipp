@@ -119,6 +119,26 @@ namespace yq {
         set<std::string>(to_string(z));
     }
     
+    Any::Any(parse_t, const TypeInfo&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
+    {
+    }
+    
+    Any::Any(parse_t, const TypeInfo&ti, std::string_view txt, no_throw_t) : Any()
+    {
+        parse(ti, txt);
+    }
+
+    Any::Any(parse_t, const TypeInfo&ti, std::string_view txt, throw_t) : Any()
+    {
+        std::error_code ec  = parse(ti, txt);
+        if(ec != std::error_code())
+            throw ec;
+    }
+
+    Any::Any(parse_t, const TypeInfo& ti, std::string_view txt, std::error_code&ec) : Any()
+    {
+        ec  = parse(ti, txt);
+    }
 
     //  Any(const meta::Type*);
 

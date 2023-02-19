@@ -46,8 +46,10 @@ namespace yq {
         explicit Any(const QString&);
     #endif
     
-        //Any(parse_t, const TypeInfo&, std::string_view);
-        //Any(parse_t, const TypeInfo&, std::string_view, std::error_code&);
+        Any(parse_t, const TypeInfo&, std::string_view);
+        Any(parse_t, const TypeInfo&, std::string_view, throw_t);
+        Any(parse_t, const TypeInfo&, std::string_view, no_throw_t);
+        Any(parse_t, const TypeInfo&, std::string_view, std::error_code&);
 
         /*! \brief Direct construction constructor
         

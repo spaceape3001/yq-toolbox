@@ -55,9 +55,14 @@ namespace yq {
     class RefCount;
     class Stream;
     
-        //  keyword
+        //  keywords
+    struct no_throw_t {};
     struct parse_t {};
-    static constexpr const parse_t PARSE;
+    struct throw_t {};
+
+    static constexpr const no_throw_t   NO_THROW;
+    static constexpr const parse_t      PARSE;
+    static constexpr const throw_t      THROW;
 
 
         // TEMPLATE CLASS (BY CLASS)
