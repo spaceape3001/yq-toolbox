@@ -736,6 +736,15 @@ namespace yq {
     {
         return AnyComponents<Vector3<T>>(val);
     }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Vector3<T>& v);
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Vector3<T>& v);
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector3<T>& v);
 }
 
 YQ_TYPE_DECLARE(yq::Vector3D)

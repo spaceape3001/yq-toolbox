@@ -35,6 +35,10 @@
 #include <math/trig.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
+
 namespace yq {
     template <typename T>
     constexpr Vector3<T>::Vector3(const Size3<T>&v) noexcept : Vector3(v.x, v.y, v.z)
@@ -851,5 +855,23 @@ namespace yq {
     constexpr Vector3<product_t<T,U>>    mul_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
         return a.emul(b);
+    }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Vector3<T>& v)
+    {
+        return s << "(" << v.x << "," << v.y << "," << v.z << ")";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Vector3<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector3<T>& v)
+    {
+        return as_stream(s, v);
     }
 }

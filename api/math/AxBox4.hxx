@@ -21,6 +21,9 @@
 #include <math/Segment4.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
 namespace yq {
     template <typename T>
     constexpr AxBox4<T>::AxBox4(intersect_t, std::initializer_list<Vector4<T>> ls, std::initializer_list<Vector4<T>> hs) noexcept:

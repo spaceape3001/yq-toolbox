@@ -49,7 +49,7 @@ namespace yq {
         constexpr Side(std::initializer_list<uint8_t> bs) noexcept : bits(0)
         {
             for(uint8_t u : bs)
-                bits |= bs;
+                bits |= u;
         }
         constexpr bool    is_fail() const { return bits & FAIL; }
         

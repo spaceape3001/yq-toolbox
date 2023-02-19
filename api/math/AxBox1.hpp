@@ -294,6 +294,15 @@ namespace yq {
     //! Computes the span for a given box
     template <typename T>
     constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept;
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const AxBox1<T>& v);
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const AxBox1<T>& v);
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox1<T>& v);
 }
 
 YQ_TYPE_DECLARE(yq::AxBox1D)

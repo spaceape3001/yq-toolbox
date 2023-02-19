@@ -21,6 +21,9 @@
 #include <math/Size1.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
 namespace yq {
     template <typename T>
     constexpr AxBox1<T>::AxBox1(intersect_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept:
@@ -471,5 +474,23 @@ namespace yq {
     constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept
     {
         return box.span();
+    }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const AxBox1<T>& v)
+    {
+        return s << "[(" << v.lo.x << ":" << v.hi.x << ")]";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const AxBox1<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox1<T>& v)
+    {
+        return as_stream(s, v);
     }
 }

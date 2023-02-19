@@ -25,6 +25,9 @@
 #include <math/Triangle2.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
 
 namespace yq {
     template <typename T>
@@ -674,5 +677,24 @@ namespace yq {
     constexpr Vector2<T>    span(const AxBox2<T>&a) noexcept
     {
         return a.span();
+    }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const AxBox2<T>& v)
+    {
+        return s << "[(" << v.lo.x << ":" << v.hi.x << ")x(" 
+                         << v.lo.y << ":" << v.hi.y << ")]";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const AxBox2<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox2<T>& v)
+    {
+        return as_stream(s, v);
     }
 }

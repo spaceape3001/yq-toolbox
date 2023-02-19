@@ -674,7 +674,14 @@ namespace yq {
         return { val };
     }
     
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Vector2<T>& v);
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Vector2<T>& v);
 
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector2<T>& v);
 }
 
 YQ_TYPE_DECLARE(yq::Vector2D)

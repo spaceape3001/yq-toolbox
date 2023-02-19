@@ -126,7 +126,7 @@ ut::suite tests = []{
 };
 
 int main(){
-    log_to_std_output();
+    //log_to_std_output();
     return ut::cfg<>.run();
 };
 

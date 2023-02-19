@@ -36,6 +36,9 @@
 #include <math/Units.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
 namespace yq {
     template <typename T>
     constexpr Vector4<T>::Vector4(const Size4<T>&v) noexcept : Vector4(v.x, v.y, v.z, v.w)

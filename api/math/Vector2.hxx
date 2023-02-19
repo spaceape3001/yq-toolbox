@@ -38,6 +38,8 @@
 #include <math/Units.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
 
 namespace yq {
     template <typename T>
@@ -901,5 +903,23 @@ namespace yq {
     constexpr Vector2<product_t<T,U>>    mul_elem(const Vector2<T>&a, const Vector2<U>&b) noexcept
     {
         return a.emul(b);
+    }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Vector2<T>& v)
+    {
+        return s << "(" << v.x << "," << v.y << ")";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Vector2<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector2<T>& v)
+    {
+        return as_stream(s, v);
     }
 }

@@ -20,6 +20,9 @@
 #include <math/Size3.hpp>
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
+
 namespace yq {
     template <typename T>
     constexpr AxBox3<T>::AxBox3(intersect_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept:
@@ -729,4 +732,24 @@ namespace yq {
     {
         return box.volume();
     }    
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const AxBox3<T>& v)
+    {
+        return s << "[(" << v.lo.x << ":" << v.hi.x << ")x(" 
+                         << v.lo.y << ":" << v.hi.y << ")x(" 
+                         << v.lo.z << ":" << v.hi.z << ")]";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const AxBox3<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox3<T>& v)
+    {
+        return as_stream(s, v);
+    }
 }

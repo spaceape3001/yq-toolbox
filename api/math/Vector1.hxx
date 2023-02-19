@@ -31,6 +31,8 @@
 
 #include <math/utility.hpp>
 
+#include <basic/Stream.hpp>
+#include <basic/Logging.hpp>
 
 namespace yq {
     template <typename T>
@@ -662,4 +664,21 @@ namespace yq {
         return a.emul(b);
     }
 
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Vector1<T>& v)
+    {
+        return s << "(" << v.x << ")";
+    }
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Vector1<T>& v)
+    {
+        return as_stream(s, v);
+    }
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector1<T>& v)
+    {
+        return as_stream(s, v);
+    }
 }
