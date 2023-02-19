@@ -7,7 +7,7 @@
 #pragma once
 
 /*
-    This file is about making new keywords that can be used in the constructors.
+    This file is about making new keywords that can be used in the constructors and function overloads.
 */
 
 namespace yq {

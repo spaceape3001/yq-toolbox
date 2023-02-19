@@ -20,12 +20,16 @@ bool    string_test(const char* z)
 
 int    parse_int(int n)
 {
-    std::string     z   = to_string(n);
-    auto [ v, ec ]   = Any::parse_me(meta<int>(), z);
-    //if(ec != std::error_code()){
-        yInfo() << "Parse int " << n << ": " << ec.message() << " to type " << v.type().name();
-    //}
-    return v.value<int>();
+    try {
+        std::string     z   = to_string(n);
+        Any     v(PARSE, meta<int>(), z, THROW);
+        return v.value<int>();
+    } 
+    catch(std::error_code ec)
+    {
+        yInfo() << "Failed to parse int " << n << ": " << ec.message();
+        return 0;
+    }
 }
 
 suite tests = []{

@@ -20,6 +20,7 @@
 #include <basic/RevIgCase.hpp>
 
 #include <nlohmann/json_fwd.hpp>
+#include <basic/keywords.hpp>
 
 using namespace std::literals::chrono_literals;
 using namespace std::literals::string_literals;
@@ -55,15 +56,6 @@ namespace yq {
     class RefCount;
     class Stream;
     
-        //  keywords
-    struct no_throw_t {};
-    struct parse_t {};
-    struct throw_t {};
-
-    static constexpr const no_throw_t   NO_THROW;
-    static constexpr const parse_t      PARSE;
-    static constexpr const throw_t      THROW;
-
 
         // TEMPLATE CLASS (BY CLASS)
     template <class> class EnumImpl;
