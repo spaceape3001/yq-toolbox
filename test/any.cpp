@@ -7,6 +7,7 @@
 #include <boost/ut.hpp>
 #include <basic/TextUtils.hpp>
 #include <basic/Any.hpp>
+#include <basic/Logging.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -21,6 +22,9 @@ int    parse_int(int n)
 {
     std::string     z   = to_string(n);
     auto [ v, ec ]   = Any::parse_me(meta<int>(), z);
+    //if(ec != std::error_code()){
+        yInfo() << "Parse int " << n << ": " << ec.message() << " to type " << v.type().name();
+    //}
     return v.value<int>();
 }
 
@@ -46,6 +50,7 @@ suite tests = []{
 
 
 int main(){
+    log_to_std_output();
     Meta::freeze();
     return ut::cfg<>.run();
 }

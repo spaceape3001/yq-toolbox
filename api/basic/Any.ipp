@@ -28,7 +28,7 @@ namespace yq {
         std::error_code ec   = ret.parse(ti, txt);
         if( ec != std::error_code())
             ret = Any();
-        return { ret, ec };
+        return { std::move(ret), ec };
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -45,6 +45,9 @@ namespace yq {
     #ifdef ENABLE_QT
         explicit Any(const QString&);
     #endif
+    
+        //Any(parse_t, const TypeInfo&, std::string_view);
+        //Any(parse_t, const TypeInfo&, std::string_view, std::error_code&);
 
         /*! \brief Direct construction constructor
         
@@ -90,14 +93,14 @@ namespace yq {
         
         /*! \brief Parses into the variant, overwriting
         */
-        std::error_code parse(const TypeInfo&, const std::string_view&);
+        std::error_code     parse(const TypeInfo&, const std::string_view&);
         
         
         /*! \brief Parses into the variant, overwriting
         
             Type info is assumed to be STRING if variant is invalid.
         */
-        std::error_code parse(const std::string_view&);
+        std::error_code     parse(const std::string_view&);
         
         
         
@@ -106,7 +109,7 @@ namespace yq {
             This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
             therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
         */
-        std::error_code print(Stream&) const;
+        std::error_code     print(Stream&) const;
         
         
         /*! \brief "Printable" version for debugging/general-output

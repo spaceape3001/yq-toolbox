@@ -16,7 +16,7 @@ toolbox_test(globals)
 toolbox_test(http)
 toolbox_test(refs)
 toolbox_test(strings)
-toolbox_test(variants)
+toolbox_test(any)
 
 toolbox_test(axbox1)
 toolbox_test(axbox2)

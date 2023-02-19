@@ -54,6 +54,10 @@ namespace yq {
     struct Parsed;
     class RefCount;
     class Stream;
+    
+        //  keyword
+    struct parse_t {};
+    static constexpr const parse_t PARSE;
 
 
         // TEMPLATE CLASS (BY CLASS)
