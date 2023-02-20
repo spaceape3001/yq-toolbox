@@ -32,6 +32,9 @@
 #include <math/Units.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 namespace yq {
     template <typename T>
     template <typename>
@@ -379,6 +382,113 @@ namespace yq {
         return *this;
     }
 
+
+
+    template <typename T>
+    constexpr Tensor33<T> Tensor33<T>::all_add(T b) const noexcept
+    {
+        return Tensor33( 
+            xx+b, xy+b, xz+b,
+            yx+b, yy+b, yz+b,
+            zx+b, zy+b, zz+b
+         );
+    }
+
+    template <typename T>
+    Tensor33<T>&    Tensor33<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b; xz-=b;
+        yx-=b; yy-=b; yz-=b;
+        zx-=b; zy-=b; zz-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor33<T>&    Tensor33<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b; xz+=b;
+        yx+=b; yy+=b; yz+=b;
+        zx+=b; zy+=b; zz+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor33<T> Tensor33<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor33( 
+            xx-b, xy-b, xz-b,
+            yx-b, yy-b, yz-b,
+            zx-b, zy-b, zz-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor33<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && pred(xz) && 
+            pred(yx) && pred(yy) && pred(yz) && 
+            pred(zx) && pred(zy) && pred(zz) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor33<T>::all_test(const Tensor33& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) && pred(xz, b.xz) && 
+            pred(yx, b.yx) && pred(yy, b.yy) && pred(yz, b.yz) && 
+            pred(zx, b.zx) && pred(zy, b.zy) && pred(zz, b.zz)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor33<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && pred(xz, b) && 
+            pred(yx, b) && pred(yy, b) && pred(yz, b) && 
+            pred(zx, b) && pred(zy, b) && pred(zz, b)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor33<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || pred(xz) || 
+            pred(yx) || pred(yy) || pred(yz) || 
+            pred(zx) || pred(zy) || pred(zz)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor33<T>::any_test(const Tensor33& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || pred(xz, b.xz) ||
+            pred(yx, b.yx) || pred(yy, b.yy) || pred(yz, b.yz) ||
+            pred(zx, b.zx) || pred(zy, b.zy) || pred(zz, b.zz)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor33<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || pred(xz, b) || 
+            pred(yx, b) || pred(yy, b) || pred(yz, b) || 
+            pred(zx, b) || pred(zy, b) || pred(zz, b)
+        ;
+    }
+    
+    
     template <typename T>
     constexpr cube_t<T> Tensor33<T>::determinant() const noexcept
     {
@@ -604,6 +714,30 @@ namespace yq {
     }
 
     template <typename T>
+    AllComponents<Tensor33<T>>   all(Tensor33<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor33<T>>   all(const Tensor33<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor33<T>>   any(Tensor33<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor33<T>>   any(const Tensor33<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
     cube_t<T> determinant(const Tensor33<T>& ten)
     {
         return ten.determinant();
@@ -614,6 +748,20 @@ namespace yq {
     {
         return ten.diagonal();
     }
+
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor33<T>>   elem(Tensor33<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor33<T>>   elem(const Tensor33<T>& val)
+    {
+        return { val };
+    }
+    #endif
 
     template <typename T>
     Tensor33<T> hpr33(MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
