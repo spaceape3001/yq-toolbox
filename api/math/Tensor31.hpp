@@ -176,6 +176,97 @@ namespace yq {
 
             //! Sets the z-row
             Tensor31& z_row(T _zx);
+
+
+        //  --------------------------------------------------------
+        //  AllComponents Adapters
+
+            /*! Adds a value to all the elements
+            */
+            constexpr Tensor31 all_add(T b) const noexcept;
+            
+            //! Decrements all elements
+            Tensor31&   all_decrement(T) noexcept;
+
+            //! Increments all elements
+            Tensor31&   all_increment(T) noexcept;
+
+            /*! \brief Subtracts value from all elements
+            */
+            constexpr Tensor31 all_subtract(T b) const noexcept;
+            
+
+            /*! Tests every element
+                
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(const Tensor31& b, Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  AnyComponents Adapters
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(const Tensor31& b, Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  COMPARISONS
+
+            static bool less_xx( const Tensor31& a, const Tensor31& b) { return a.xx < b.xx; }
+
+            static bool less_yx( const Tensor31& a, const Tensor31& b) { return a.yx < b.yx; }
+
+            static bool less_zx( const Tensor31& a, const Tensor31& b) { return a.zx < b.zx; }
+
     };
 
     YQ_IEEE754_1(Tensor31)
@@ -220,6 +311,31 @@ namespace yq {
         is_nan(v.yx) ||
         is_nan(v.zx)
     )
+    
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in tensor31
+    template <typename T>
+    AllComponents<Tensor31<T>>   all(Tensor31<T>& val);
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in tensor31
+    template <typename T>
+    AllComponents<const Tensor31<T>>   all(const Tensor31<T>& val);
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor31<T>>   elem(Tensor31<T>& val);
+
+    template <typename T>
+    ElemComponents<const Tensor31<T>>   elem(const Tensor31<T>& val);
+    #endif
+
+    template <typename T>
+    AnyComponents<Tensor31<T>>   any(Tensor31<T>& val);
+
+    template <typename T>
+    AnyComponents<const Tensor31<T>>   any(const Tensor31<T>& val);
     
     template <typename T>
     constexpr Tensor13<T>  transpose(const Tensor31<T>&v);
