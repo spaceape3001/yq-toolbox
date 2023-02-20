@@ -431,7 +431,7 @@ namespace yq {
     
     #if 0
     template <typename T>
-    ElemComponents<Tensor44<T>>   elem2(Tensor44<T>& val);
+    ElemComponents<Tensor44<T>>   elem(Tensor44<T>& val);
 
     template <typename T>
     ElemComponents<const Tensor44<T>>   elem(const Tensor44<T>& val);

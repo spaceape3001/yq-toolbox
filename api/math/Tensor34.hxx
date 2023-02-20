@@ -36,6 +36,9 @@
 #include <math/Vector4.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 namespace yq {
     template <typename T>
         template <glm::qualifier Q>
@@ -285,6 +288,111 @@ namespace yq {
         zx/=b; zy/=b; zz/=b; zw/=b;        
         return *this;
     }
+
+
+    template <typename T>
+    constexpr Tensor34<T> Tensor34<T>::all_add(T b) const noexcept
+    {
+        return Tensor34( 
+            xx+b, xy+b, xz+b, xw+b,
+            yx+b, yy+b, yz+b, yw+b,
+            zx+b, zy+b, zz+b, zw+b
+         );
+    }
+
+    template <typename T>
+    Tensor34<T>&    Tensor34<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b; xz-=b; xw-=b;
+        yx-=b; yy-=b; yz-=b; yw-=b;
+        zx-=b; zy-=b; zz-=b; zw-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor34<T>&    Tensor34<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b; xz+=b; xw+=b;
+        yx+=b; yy+=b; yz+=b; yw+=b;
+        zx+=b; zy+=b; zz+=b; zw+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor34<T> Tensor34<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor34( 
+            xx-b, xy-b, xz-b, xw-b,
+            yx-b, yy-b, yz-b, yw-b,
+            zx-b, zy-b, zz-b, zw-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor34<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && pred(xz) && pred(xw) &&
+            pred(yx) && pred(yy) && pred(yz) && pred(yw) &&
+            pred(zx) && pred(zy) && pred(zz) && pred(zw)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor34<T>::all_test(const Tensor34& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) && pred(xz, b.xz) && pred(xw, b.xw) &&
+            pred(yx, b.yx) && pred(yy, b.yy) && pred(yz, b.yz) && pred(yw, b.yw) &&
+            pred(zx, b.zx) && pred(zy, b.zy) && pred(zz, b.zz) && pred(zw, b.zw)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor34<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && pred(xz, b) && pred(xw, b) &&
+            pred(yx, b) && pred(yy, b) && pred(yz, b) && pred(yw, b) &&
+            pred(zx, b) && pred(zy, b) && pred(zz, b) && pred(zw, b) 
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor34<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || pred(xz) || pred(xw) ||
+            pred(yx) || pred(yy) || pred(yz) || pred(yw) ||
+            pred(zx) || pred(zy) || pred(zz) || pred(zw)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor34<T>::any_test(const Tensor34& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || pred(xz, b.xz) || pred(xw, b.xw) ||
+            pred(yx, b.yx) || pred(yy, b.yy) || pred(yz, b.yz) || pred(yw, b.yw) ||
+            pred(zx, b.zx) || pred(zy, b.zy) || pred(zz, b.zz) || pred(zw, b.zw)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor34<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || pred(xz, b) || pred(xw, b) ||
+            pred(yx, b) || pred(yy, b) || pred(yz, b) || pred(yw, b) ||
+            pred(zx, b) || pred(zy, b) || pred(zz, b) || pred(zw, b) 
+        ;
+    }
     
     template <typename T>
     constexpr Tensor43<T>   Tensor34<T>::transpose() const noexcept
@@ -487,6 +595,44 @@ namespace yq {
             a*b.zx, a*b.zy, a*b.zz, a*b.zw
         );
     }
+
+    template <typename T>
+    AllComponents<Tensor34<T>>   all(Tensor34<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor34<T>>   all(const Tensor34<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor34<T>>   any(Tensor34<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor34<T>>   any(const Tensor34<T>& val)
+    {
+        return { val };
+    }
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor34<T>>   elem(Tensor34<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor34<T>>   elem(const Tensor34<T>& val)
+    {
+        return { val };
+    }
+    #endif
 
     template <typename T>
     constexpr Tensor43<T>  transpose(const Tensor34<T>&v)
