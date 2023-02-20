@@ -30,6 +30,9 @@
 #include <math/Vector4.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 /* 
     This is the template IMPLEMENTATION of the tensor42 code.  Include this
     *IF* you need the operator and it's not yet available as explicit 
@@ -313,7 +316,119 @@ namespace yq {
     }
 
 
+    template <typename T>
+    constexpr Tensor42<T> Tensor42<T>::all_add(T b) const noexcept
+    {
+        return Tensor42( 
+            xx+b, xy+b,
+            yx+b, yy+b,
+            zx+b, zy+b,
+            wx+b, wy+b
+         );
+    }
 
+    template <typename T>
+    Tensor42<T>&    Tensor42<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b;
+        yx-=b; yy-=b;
+        zx-=b; zy-=b;
+        wx-=b; wy-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor42<T>&    Tensor42<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b;
+        yx+=b; yy+=b;
+        zx+=b; zy+=b;
+        wx+=b; wy+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor42<T> Tensor42<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor42( 
+            xx-b, xy-b,
+            yx-b, yy-b,
+            zx-b, zy-b,
+            wx-b, wy-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor42<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && 
+            pred(yx) && pred(yy) && 
+            pred(zx) && pred(zy) && 
+            pred(wx) && pred(wy)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor42<T>::all_test(const Tensor42& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) &&
+            pred(yx, b.yx) && pred(yy, b.yy) &&
+            pred(zx, b.zx) && pred(zy, b.zy) &&
+            pred(wx, b.wx) && pred(wy, b.wy)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor42<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && 
+            pred(yx, b) && pred(yy, b) && 
+            pred(zx, b) && pred(zy, b) && 
+            pred(wx, b) && pred(wy, b)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor42<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || 
+            pred(yx) || pred(yy) || 
+            pred(zx) || pred(zy) || 
+            pred(wx) || pred(wy)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor42<T>::any_test(const Tensor42& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || 
+            pred(yx, b.yx) || pred(yy, b.yy) || 
+            pred(zx, b.zx) || pred(zy, b.zy) || 
+            pred(wx, b.wx) || pred(wy, b.wy) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor42<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || 
+            pred(yx, b) || pred(yy, b) || 
+            pred(zx, b) || pred(zy, b) || 
+            pred(wx, b) || pred(wy, b) 
+        ;
+    }
 
     template <typename T>
     constexpr Tensor24<T>   Tensor42<T>::transpose() const noexcept
@@ -480,8 +595,46 @@ namespace yq {
             a*b.wx, a*b.wy
         };
     }
+
+    template <typename T>
+    AllComponents<Tensor42<T>>   all(Tensor42<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor42<T>>   all(const Tensor42<T>& val)
+    {
+        return { val };
+    }
     
-        template <typename T>
+    template <typename T>
+    AnyComponents<Tensor42<T>>   any(Tensor42<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor42<T>>   any(const Tensor42<T>& val)
+    {
+        return { val };
+    }
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor42<T>>   elem(Tensor42<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor42<T>>   elem(const Tensor42<T>& val)
+    {
+        return { val };
+    }
+    #endif
+    
+    template <typename T>
     constexpr Tensor24<T>  transpose(const Tensor42<T>&v)
     {
         return v.transpose();

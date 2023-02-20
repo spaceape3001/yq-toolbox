@@ -264,112 +264,108 @@ namespace yq {
             //! Sets the W-row
             Tensor44& w_row(T _wx, T _wy, T _wz, T _ww) noexcept;
     
+        //  --------------------------------------------------------
+        //  AllComponents Adapters
 
-            //  ===================================================================================================
-            //  AllComponents Adapters
-            //  ===================================================================================================
-
-        /*! Adds a value to all the elements
-        */
-        constexpr Tensor44 all_add(T b) const noexcept;
-        
-        //! Decrements all elements
-        Tensor44&   all_decrement(T) noexcept;
-
-        //! Increments all elements
-        Tensor44&   all_increment(T) noexcept;
-
-        /*! \brief Subtracts value from all elements
-        */
-        constexpr Tensor44 all_subtract(T b) const noexcept;
-        
-
-        /*! Tests every element
+            /*! Adds a value to all the elements
+            */
+            constexpr Tensor44 all_add(T b) const noexcept;
             
-            This applies the given test to every component, 
-            returns TRUE if all tests are true.
-            \note y, z, w component tests may be skipped if the x-component test fails.
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept;
+            //! Decrements all elements
+            Tensor44&   all_decrement(T) noexcept;
 
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if all tests are true.
-            \note y, z, w component tests may be skipped if the x-component test fails.
-            \param[in] b The other vector
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool all_test(const Tensor44& b, Pred pred) const noexcept;
+            //! Increments all elements
+            Tensor44&   all_increment(T) noexcept;
 
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if all tests are true.
-            \note y, z, w component tests may be skipped if the x-component test fails.
-            \param[in] b The other value
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept;
+            /*! \brief Subtracts value from all elements
+            */
+            constexpr Tensor44 all_subtract(T b) const noexcept;
+            
 
-            //  ===================================================================================================
-            //  AnyComponents Adapters
-            //  
-            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
-            //  returning true if all elements are successful
-            //  ===================================================================================================
+            /*! Tests every element
+                
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(const Tensor44& b, Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  AnyComponents Adapters
         
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if any test is true.
-            \note y, z, w component tests may be skipped if the x-component test passes.
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept;
-        
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if any test is true.
-            \note y, z, w component tests may be skipped if the x-component test passes.
-            \param[in] b The other vector
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool any_test(const Tensor44& b, Pred pred) const noexcept;
-        
-        /*! Tests every element
-            This applies the given test to every component, 
-            returns TRUE if any test is true.
-            \note y, z, w component tests may be skipped if the x-component test passes.
-            \param[in] b The other value
-            \param[in] pred The predicate (your test)
-        */
-        template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept;
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(const Tensor44& b, Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(T b, Pred pred) const noexcept;
 
-        static bool less_xx( const Tensor44& a, const Tensor44& b) { return a.xx < b.xx; }
-        static bool less_xy( const Tensor44& a, const Tensor44& b) { return a.xy < b.xy; }
-        static bool less_xz( const Tensor44& a, const Tensor44& b) { return a.xz < b.xz; }
-        static bool less_xw( const Tensor44& a, const Tensor44& b) { return a.xw < b.xw; }
+        //  --------------------------------------------------------
+        //  COMPARISONS
 
-        static bool less_yx( const Tensor44& a, const Tensor44& b) { return a.yx < b.yx; }
-        static bool less_yy( const Tensor44& a, const Tensor44& b) { return a.yy < b.yy; }
-        static bool less_yz( const Tensor44& a, const Tensor44& b) { return a.yz < b.yz; }
-        static bool less_yw( const Tensor44& a, const Tensor44& b) { return a.yw < b.yw; }
+            static bool less_xx( const Tensor44& a, const Tensor44& b) { return a.xx < b.xx; }
+            static bool less_xy( const Tensor44& a, const Tensor44& b) { return a.xy < b.xy; }
+            static bool less_xz( const Tensor44& a, const Tensor44& b) { return a.xz < b.xz; }
+            static bool less_xw( const Tensor44& a, const Tensor44& b) { return a.xw < b.xw; }
 
-        static bool less_zx( const Tensor44& a, const Tensor44& b) { return a.zx < b.zx; }
-        static bool less_zy( const Tensor44& a, const Tensor44& b) { return a.zy < b.zy; }
-        static bool less_zz( const Tensor44& a, const Tensor44& b) { return a.zz < b.zz; }
-        static bool less_zw( const Tensor44& a, const Tensor44& b) { return a.zw < b.zw; }
+            static bool less_yx( const Tensor44& a, const Tensor44& b) { return a.yx < b.yx; }
+            static bool less_yy( const Tensor44& a, const Tensor44& b) { return a.yy < b.yy; }
+            static bool less_yz( const Tensor44& a, const Tensor44& b) { return a.yz < b.yz; }
+            static bool less_yw( const Tensor44& a, const Tensor44& b) { return a.yw < b.yw; }
 
-        static bool less_wx( const Tensor44& a, const Tensor44& b) { return a.x < b.x; }
-        static bool less_wy( const Tensor44& a, const Tensor44& b) { return a.y < b.y; }
-        static bool less_wz( const Tensor44& a, const Tensor44& b) { return a.z < b.z; }
-        static bool less_ww( const Tensor44& a, const Tensor44& b) { return a.w < b.w; }
+            static bool less_zx( const Tensor44& a, const Tensor44& b) { return a.zx < b.zx; }
+            static bool less_zy( const Tensor44& a, const Tensor44& b) { return a.zy < b.zy; }
+            static bool less_zz( const Tensor44& a, const Tensor44& b) { return a.zz < b.zz; }
+            static bool less_zw( const Tensor44& a, const Tensor44& b) { return a.zw < b.zw; }
 
+            static bool less_wx( const Tensor44& a, const Tensor44& b) { return a.x < b.x; }
+            static bool less_wy( const Tensor44& a, const Tensor44& b) { return a.y < b.y; }
+            static bool less_wz( const Tensor44& a, const Tensor44& b) { return a.z < b.z; }
+            static bool less_ww( const Tensor44& a, const Tensor44& b) { return a.w < b.w; }
     };
         
     YQ_IEEE754_1(Tensor44)
