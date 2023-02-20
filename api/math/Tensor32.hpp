@@ -195,6 +195,98 @@ namespace yq {
             Tensor32& z_row(T _zx, T _zy);
 
 
+        //  --------------------------------------------------------
+        //  AllComponents Adapters
+
+            /*! Adds a value to all the elements
+            */
+            constexpr Tensor32 all_add(T b) const noexcept;
+            
+            //! Decrements all elements
+            Tensor32&   all_decrement(T) noexcept;
+
+            //! Increments all elements
+            Tensor32&   all_increment(T) noexcept;
+
+            /*! \brief Subtracts value from all elements
+            */
+            constexpr Tensor32 all_subtract(T b) const noexcept;
+            
+
+            /*! Tests every element
+                
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(const Tensor32& b, Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  AnyComponents Adapters
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(const Tensor32& b, Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  COMPARISONS
+
+            static bool less_xx( const Tensor32& a, const Tensor32& b) { return a.xx < b.xx; }
+            static bool less_xy( const Tensor32& a, const Tensor32& b) { return a.xy < b.xy; }
+
+            static bool less_yx( const Tensor32& a, const Tensor32& b) { return a.yx < b.yx; }
+            static bool less_yy( const Tensor32& a, const Tensor32& b) { return a.yy < b.yy; }
+
+            static bool less_zx( const Tensor32& a, const Tensor32& b) { return a.zx < b.zx; }
+            static bool less_zy( const Tensor32& a, const Tensor32& b) { return a.zy < b.zy; }
+
     };
 
     YQ_IEEE754_1(Tensor32)
@@ -222,6 +314,31 @@ namespace yq {
     YQ_NAN_1(Tensor32, Tensor32<T>(NAN))
     YQ_ZERO_1(Tensor32, Tensor32<T>(ZERO))
     
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in tensor32
+    template <typename T>
+    AllComponents<Tensor32<T>>   all(Tensor32<T>& val);
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in tensor32
+    template <typename T>
+    AllComponents<const Tensor32<T>>   all(const Tensor32<T>& val);
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor32<T>>   elem2(Tensor32<T>& val);
+
+    template <typename T>
+    ElemComponents<const Tensor32<T>>   elem(const Tensor32<T>& val);
+    #endif
+
+    template <typename T>
+    AnyComponents<Tensor32<T>>   any(Tensor32<T>& val);
+
+    template <typename T>
+    AnyComponents<const Tensor32<T>>   any(const Tensor32<T>& val);
+
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 

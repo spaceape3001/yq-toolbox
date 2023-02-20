@@ -36,6 +36,9 @@
 #include <math/Vector3.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 namespace yq {
     template <typename T>
         template <glm::qualifier Q>
@@ -284,6 +287,111 @@ namespace yq {
         return *this;
     }
 
+
+    template <typename T>
+    constexpr Tensor32<T> Tensor32<T>::all_add(T b) const noexcept
+    {
+        return Tensor32( 
+            xx+b, xy+b,
+            yx+b, yy+b,
+            zx+b, zy+b
+         );
+    }
+
+    template <typename T>
+    Tensor32<T>&    Tensor32<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b;
+        yx-=b; yy-=b;
+        zx-=b; zy-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor32<T>&    Tensor32<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b;
+        yx+=b; yy+=b;
+        zx+=b; zy+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor32<T> Tensor32<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor32( 
+            xx-b, xy-b,
+            yx-b, yy-b,
+            zx-b, zy-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor32<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && 
+            pred(yx) && pred(yy) && 
+            pred(zx) && pred(zy)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor32<T>::all_test(const Tensor32& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) &&
+            pred(yx, b.yx) && pred(yy, b.yy) &&
+            pred(zx, b.zx) && pred(zy, b.zy)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor32<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && 
+            pred(yx, b) && pred(yy, b) && 
+            pred(zx, b) && pred(zy, b)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor32<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || 
+            pred(yx) || pred(yy) || 
+            pred(zx) || pred(zy)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor32<T>::any_test(const Tensor32& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || 
+            pred(yx, b.yx) || pred(yy, b.yy) || 
+            pred(zx, b.zx) || pred(zy, b.zy) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor32<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || 
+            pred(yx, b) || pred(yy, b) || 
+            pred(zx, b) || pred(zy, b) 
+        ;
+    }
+
     template <typename T>
     constexpr Tensor23<T> Tensor32<T>::transpose() const noexcept
     {
@@ -421,6 +529,44 @@ namespace yq {
         );
     }
 
+    template <typename T>
+    AllComponents<Tensor32<T>>   all(Tensor32<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor32<T>>   all(const Tensor32<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor32<T>>   any(Tensor32<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor32<T>>   any(const Tensor32<T>& val)
+    {
+        return { val };
+    }
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor32<T>>   elem(Tensor32<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor32<T>>   elem(const Tensor32<T>& val)
+    {
+        return { val };
+    }
+    #endif
+    
     template <typename T>
     constexpr Tensor23<T>  transpose(const Tensor32<T>&v)
     {
