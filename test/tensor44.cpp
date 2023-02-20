@@ -265,7 +265,7 @@ ut::suite tests = []{
             )
         );
 
-        //  WZ
+        //  WW
         expect(
             Tensor44I(
                 1,1,1,1,
