@@ -32,6 +32,9 @@
 #include <math/Vector3.hpp>
 #include <math/Vector4.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <math/trig.hpp>
 #include <math/Units.hpp>
 #include <math/utility.hpp>
@@ -512,6 +515,26 @@ namespace yq {
     {
         return Vector4( x+b, y+b, z+b, w+b );
     }
+
+    template <typename T>
+    Vector4<T>&    Vector4<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        y -= b;
+        z -= b;
+        w -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Vector4<T>&    Vector4<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        y += b;
+        z += b;
+        w += b;
+        return *this;
+    }
     
     template <typename T>
     constexpr Vector4<T> Vector4<T>::all_subtract(T b) const noexcept
@@ -520,15 +543,71 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename Pred>
+    constexpr bool Vector4<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x) && pred(y) && pred(z) && pred(w);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector4<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) && pred(y, b) && pred(z, b) && pred(w, b);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector4<T>::all_test(const Vector4& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) && pred(y, b.y) && pred(z, b.z) && pred(w, b.w);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector4<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x) || pred(y) || pred(z) || pred(w);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector4<T>::any_test(const Vector4& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector4<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) || pred(y, b) || pred(z, b) || pred(w, b);
+    }
+        
+    template <typename T>
+        template <typename R>
+    bool Vector4<T>::close(const Vector4& expected, const R& compare) const
+    {
+        return compare((*this-expected).length(), expected.length());
+    }
+
+    template <typename T>
+        template <typename R>
+    bool Vector4<T>::close²(const Vector4& expected, const R& compare) const
+    {
+        return compare((*this-expected).length²(), expected.length²());
+    }
+
+    template <typename T>
     constexpr T     Vector4<T>::cmax() const noexcept
     {
-        return max(max(x, y), max(z, w));
+        return std::max({x,y,z,w});
     }
 
     template <typename T>
     constexpr T     Vector4<T>::cmin() const noexcept
     {
-        return min(min(x, y), min(z, w));
+        return std::min({x,y,z,w});
     }
 
     template <typename T>
@@ -714,12 +793,37 @@ namespace yq {
 
 
     template <typename T>
+    AllComponents<Vector4<T>>   all(Vector4<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Vector4<T>>   all(const Vector4<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
     requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian       angle(const Vector4<T>&a, const Vector4<T>& b)
     {
         return acos( std::clamp<T>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
     }
-    
+
+
+    template <typename T>
+    AnyComponents<Vector4<T>>   any(Vector4<T>& val)
+    {
+        return { val };
+    }
+     
+    template <typename T>
+    AnyComponents<const Vector4<T>>   any(const Vector4<T>& val)
+    {
+        return { val };
+    }
+     
     template <typename T, typename DIM1, typename DIM2>
     requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian       angle(const Vector4<MKS<T,DIM1>>&a, const Vector4<MKS<T,DIM2>>& b)
@@ -758,6 +862,20 @@ namespace yq {
         return a.ediv(b);
     }
 
+    #if 0
+    template <typename T>
+    ElemComponents<Vector4<T>>   elem(Vector4<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    ElemComponents<const Vector4<T>>   elem(const Vector4<T>& val)
+    {
+        return { val };
+    }
+    #endif
+   
 
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector4<T>& actual, const Vector4<T>& expected)

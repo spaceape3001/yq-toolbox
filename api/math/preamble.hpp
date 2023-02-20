@@ -147,6 +147,9 @@ namespace yq {
     template <typename> struct TetrahedronData;
     template <typename> struct TriangleData;
 
+    template <typename> struct Absolute;
+    template <typename> struct AllComponents;
+    template <typename> struct AnyComponents;
     template <typename> struct AxBox1;
     template <typename> struct AxBox2;
     template <typename> struct AxBox3;
@@ -163,6 +166,7 @@ namespace yq {
     template <typename> struct Data2;
     template <typename> struct Data3;
     template <typename> struct Data4;
+    template <typename> struct ElemComponents;
     template <typename> struct Fraction;
     template <typename> struct Multivector1;
     template <typename> struct Multivector2;

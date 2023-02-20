@@ -14,6 +14,10 @@
 
 #include <math/Size1.hpp>
 #include <math/Vector1.hpp>
+
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
@@ -97,17 +101,72 @@ namespace yq {
         return *this;
     }
 
-
     template <typename T>
     constexpr Size1<T> Size1<T>::all_add(T b) const noexcept
     {
         return Size1( x+b );
+    }
+
+    template <typename T>
+    Size1<T>&    Size1<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Size1<T>&    Size1<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        return *this;
     }
     
     template <typename T>
     constexpr Size1<T> Size1<T>::all_subtract(T b) const noexcept
     {
         return Size1( x-b );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size1<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size1<T>::all_test(const Size1& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size1<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size1<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size1<T>::any_test(const Size1& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size1<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b);
     }
 
     template <typename T>
@@ -192,6 +251,51 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    template <typename T>
+    AllComponents<Size1<T>>   all(const Size1<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AllComponents<const Size1<T>>   all(const Size1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<Size1<T>>   any(Size1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Size1<T>>   any(const Size1<T>& val)
+    {
+        return { val };
+    }
+
+    #if 0
+    template <typename T>
+    ElemComponents<Size1<T>>   elem(Size1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Size1<T>>   elem(const Size1<T>& val)
+    {
+        return { val };
+    }
+    #endif
+
+    
+    template <typename T>
+    constexpr T       length(const Size1<T>&sz) noexcept
+    {
+        return sz.length();
+    }
 
     template <typename S, typename T>
     S&  as_stream(S& s, const Size1<T>& v)

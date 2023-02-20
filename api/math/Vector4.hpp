@@ -8,8 +8,6 @@
 
 #define YQ__API__MATH__VECTOR_4__HPP 1
 #include <math/preamble.hpp>
-#include <math/AllComponents.hpp>
-#include <math/AnyComponents.hpp>
 
 namespace yq {
     
@@ -273,11 +271,12 @@ namespace yq {
         constexpr AxBox4<T> operator|(const Vector4&b) const noexcept;
 
         //! Tests to see if this vector is "close" to the other
-        template <typename R>
-        bool close(const Vector4& expected, const R& compare)
-        {
-            return compare((*this-expected).length(), expected.length());
-        }
+        template <typename R=Absolute<T>>
+        bool close(const Vector4& expected, const R& compare) const;
+
+        //! Tests to see if this vector is "close" to the other (using length²)
+        template <typename R=Absolute<square_t<T>>>
+        bool close²(const Vector4& expected, const R& compare) const;
 
         //! Returns the most positive of the components
         constexpr T             cmax() const noexcept;
@@ -329,6 +328,12 @@ namespace yq {
         */
         constexpr Vector4 all_add(T b) const noexcept;
         
+        //! Decrement all elements
+        Vector4&    all_decrement(T b) noexcept;
+
+        //! Increment all elements
+        Vector4&    all_increment(T b) noexcept;
+
         /*! \brief Subtracts value from all elements
         */
         constexpr Vector4 all_subtract(T b) const noexcept;
@@ -341,10 +346,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept
-        {
-            return pred(x) && pred(y) && pred(z) && pred(w);
-        }
+        constexpr bool all_test(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -354,10 +356,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Vector4& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z) && pred(w, b.w);
-        }
+        constexpr bool all_test(const Vector4& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -367,10 +366,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) && pred(y, b) && pred(z, b) && pred(w, b);
-        }
+        constexpr bool all_test(T b, Pred pred) const noexcept;
 
             //  ===================================================================================================
             //  AnyComponents Adapters
@@ -386,10 +382,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept
-        {
-            return pred(x) || pred(y) || pred(z) || pred(w);
-        }
+        constexpr bool any_test(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -399,10 +392,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Vector4& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
-        }
+        constexpr bool any_test(const Vector4& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -412,30 +402,12 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) || pred(y, b) || pred(z, b) || pred(w, b);
-        }
+        constexpr bool any_test(T b, Pred pred) const noexcept;
 
-        static bool less_x( const Vector4& a, const Vector4& b) 
-        {
-            return a.x < b.x;
-        }
-
-        static bool less_y( const Vector4& a, const Vector4& b) 
-        {
-            return a.y < b.y;
-        }
-
-        static bool less_z( const Vector4& a, const Vector4& b) 
-        {
-            return a.z < b.z;
-        }
-
-        static bool less_w( const Vector4& a, const Vector4& b) 
-        {
-            return a.w < b.w;
-        }
+        static bool less_x( const Vector4& a, const Vector4& b) { return a.x < b.x; }
+        static bool less_y( const Vector4& a, const Vector4& b) { return a.y < b.y; }
+        static bool less_z( const Vector4& a, const Vector4& b) { return a.z < b.z; }
+        static bool less_w( const Vector4& a, const Vector4& b) { return a.w < b.w; }
     };
     
     YQ_IEEE754_1(Vector4)
@@ -643,23 +615,29 @@ namespace yq {
     template <typename T>
     constexpr Vector4<T>   min_elem(std::span<const Vector4<T>>) noexcept;
 
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in vector4
     template <typename T>
-    AllComponents<Vector4<T>>   all(const Vector4<T>& val)
-    {
-        return { val };
-    }
+    AllComponents<Vector4<T>>   all(Vector4<T>& val);
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in vector4
+    template <typename T>
+    AllComponents<const Vector4<T>>   all(const Vector4<T>& val);
     
+    #if 0
     template <typename T>
-    AllComponents<Vector4<T>>   elem(const Vector4<T>& val)
-    {
-        return { val };
-    }
+    ElemComponents<Vector4<T>>   elem(Vector4<T>& val);
 
     template <typename T>
-    AnyComponents<Vector4<T>>   any(const Vector4<T>& val)
-    {
-        return { val };
-    }
+    ElemComponents<const Vector4<T>>   elem(const Vector4<T>& val);
+    #endif
+
+    template <typename T>
+    AnyComponents<Vector4<T>>   any(Vector4<T>& val);
+
+    template <typename T>
+    AnyComponents<const Vector4<T>>   any(const Vector4<T>& val);
 
     template <typename S, typename T>
     S&  as_stream(S& s, const Vector4<T>& v);

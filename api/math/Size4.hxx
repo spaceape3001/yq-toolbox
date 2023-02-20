@@ -14,6 +14,10 @@
 
 #include <math/Size4.hpp>
 #include <math/Vector4.hpp>
+
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
@@ -114,11 +118,73 @@ namespace yq {
     }
     
     template <typename T>
+    Size4<T>&    Size4<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        y -= b;
+        z -= b;
+        w -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Size4<T>&    Size4<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        y += b;
+        z += b;
+        w += b;
+        return *this;
+    }
+
+    template <typename T>
     constexpr Size4<T> Size4<T>::all_subtract(T b) const noexcept
     {
         return Size4( x-b, y-b, z-b, w-b );
     }
 
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size4<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x) && pred(y) && pred(z) && pred(w);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size4<T>::all_test(const Size4& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) && pred(y, b.y) && pred(z, b.z) && pred(w, b.w);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size4<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) && pred(y, b) && pred(z, b) && pred(w, b);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size4<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x) || pred(y) || pred(z) || pred(w);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size4<T>::any_test(const Size4& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size4<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) || pred(y, b) || pred(z, b) || pred(w, b);
+    }
+        
     template <typename T>
     constexpr T     Size4<T>::cmax() const noexcept
     {
@@ -226,6 +292,44 @@ namespace yq {
     constexpr Size4<product_t<T,U>> operator*(T a, const Size4<U>& b) noexcept
     {
         return Size4<product_t<T,U>>(a*b.x, a*b.y, a*b.z, a*b.w );
+    }
+
+    template <typename T>
+    AllComponents<Size4<T>>   all(Size4<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AllComponents<const Size4<T>>   all(const Size4<T>& val)
+    {
+        return { val };
+    }
+
+    #if 0
+    template <typename T>
+    ElemComponents<Size4<T>>   elem(Size4<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Size4<T>>   elem(const Size4<T>& val)
+    {
+        return { val };
+    }
+    #endif
+
+    template <typename T>
+    AnyComponents<Size4<T>>   any(Size4<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Size4<T>>   any(const Size4<T>& val)
+    {
+        return { val };
     }
 
     //! Computes volume of the size

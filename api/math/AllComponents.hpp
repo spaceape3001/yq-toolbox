@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <type_traits>
+
 namespace yq {
 
     /*! \brief Holder for "ALL" component
@@ -21,13 +23,13 @@ namespace yq {
     struct AllComponents {
     
         //! Captures the template parameter
-        using value_type        = V;
+        using value_type        = std::remove_cv_t<V>;
     
         //! Capture the value type's component type
-        using component_type    = typename V::component_type;
+        using component_type    = typename value_type::component_type;
 
         //! Data itself, a reference
-        const V& value;
+        V& value;
         
         //  --------------------------------------------------------------------------------------------------------
         //  LESS THAN
@@ -216,5 +218,7 @@ namespace yq {
         {
             return value.all_subtract(rhs);
         }
+        
+        //  TODO need to add the increment/decrement too
     };
 }

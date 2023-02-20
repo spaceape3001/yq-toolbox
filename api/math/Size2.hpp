@@ -7,8 +7,6 @@
 #pragma once
 
 #include <math/preamble.hpp>
-#include <math/AllComponents.hpp>
-#include <math/AnyComponents.hpp>
 
 namespace yq {
 
@@ -150,6 +148,12 @@ namespace yq {
         */
         constexpr Size2 all_add(T b) const noexcept;
         
+        //! Decrement all elements
+        Size2&    all_decrement(T b) noexcept;
+
+        //! Increment all elements
+        Size2&    all_increment(T b) noexcept;
+
         /*! \brief Subtracts value from all elements
         */
         constexpr Size2 all_subtract(T b) const noexcept;
@@ -162,10 +166,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept
-        {
-            return pred(x) && pred(y);
-        }
+        constexpr bool all_test(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -175,10 +176,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Size2& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) && pred(y, b.y);
-        }
+        constexpr bool all_test(const Size2& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -188,10 +186,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) && pred(y, b);
-        }
+        constexpr bool all_test(T b, Pred pred) const noexcept;
 
             //  ===================================================================================================
             //  AnyComponents Adapters
@@ -207,10 +202,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept
-        {
-            return pred(x) || pred(y);
-        }
+        constexpr bool any_test(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -220,10 +212,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Size2& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) || pred(y, b.y);
-        }
+        constexpr bool any_test(const Size2& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -233,10 +222,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) || pred(y, b);
-        }
+        constexpr bool any_test(T b, Pred pred) const noexcept;
 
         static bool less_x( const Size2& a, const Size2& b) 
         {
@@ -295,22 +281,24 @@ namespace yq {
     constexpr Size2<product_t<T,U>> operator*(T a, const Size2<U>& b) noexcept;
 
     template <typename T>
-    AllComponents<Size2<T>>   all(const Size2<T>& val)
-    {
-        return AllComponents<Size2<T>>(val);
-    }
-    
-    template <typename T>
-    AllComponents<Size2<T>>   elem(const Size2<T>& val)
-    {
-        return AllComponents<Size2<T>>(val);
-    }
+    AllComponents<Size2<T>>   all(Size2<T>& val);
 
     template <typename T>
-    AnyComponents<Size2<T>>   any(const Size2<T>& val)
-    {
-        return AnyComponents<Size2<T>>(val);
-    }
+    AllComponents<const Size2<T>>   all(const Size2<T>& val);
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Size2<T>>   elem(Size2<T>& val);
+
+    template <typename T>
+    ElemComponents<const Size2<T>>   elem(const Size2<T>& val);
+    #endif
+
+    template <typename T>
+    AnyComponents<Size2<T>>   any(Size2<T>& val);
+
+    template <typename T>
+    AnyComponents<const Size2<T>>   any(const Size2<T>& val);
 }
 
 YQ_TYPE_DECLARE(yq::Size2D)

@@ -15,16 +15,17 @@ namespace yq {
     
         This becomes true when the error drops beneath the threshhold.
     */
+    template <typename T=double>
     struct Absolute {
     
         //! Threshold for detection (pass/failure)
-        double      threshhold;
+        T      threshhold;
         
         //! Does the actual compoutation, passing if the error doesn't exceed the threshhold.
-        bool operator()(double error, double) const
+        constexpr bool operator()(T error, T) const noexcept
         {
-            return fabs(error) <= threshhold;
+            return abs(error) <= threshhold;
         }
     };
-    YQ_IS_FINITE(Absolute, is_finite(v.threshhold) )
+    YQ_IS_FINITE_1(Absolute, is_finite(v.threshhold) )
 }

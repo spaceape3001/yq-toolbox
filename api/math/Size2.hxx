@@ -16,6 +16,10 @@
 #include <math/Size2.hpp>
 #include <math/Rectangle2.hpp>
 #include <math/Vector2.hpp>
+
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
@@ -133,11 +137,68 @@ namespace yq {
     }
     
     template <typename T>
+    Size2<T>&    Size2<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        y -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Size2<T>&    Size2<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        y += b;
+        return *this;
+    }
+
+    template <typename T>
     constexpr Size2<T> Size2<T>::all_subtract(T b) const noexcept
     {
         return Size2( x-b, y-b );
     }
 
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size2<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x) && pred(y);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size2<T>::all_test(const Size2& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) && pred(y, b.y);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size2<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) && pred(y, b);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size2<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x) || pred(y);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size2<T>::any_test(const Size2& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) || pred(y, b.y);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size2<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) || pred(y, b);
+    }
 
     template <typename T>
     constexpr square_t<T> Size2<T>::area() const noexcept
@@ -279,11 +340,49 @@ namespace yq {
     }
 
     template <typename T>
+    AllComponents<Size2<T>>   all(Size2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Size2<T>>   all(const Size2<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Size2<T>>   any(Size2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Size2<T>>   any(const Size2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
     constexpr auto    area(const Size2<T>& sz) noexcept
     {
         return sz.x*sz.y;
     }
     
+    #if 0
+    template <typename T>
+    ElemComponents<Size2<T>>   elem(Size2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Size2<T>>   elem(const Size2<T>& val)
+    {
+        return { val };
+    }
+    #endif
+
     template <typename T>
     Size2<T>  shrink_to_fit_within(const Size2<T>& dims, const Size2<T>& frame)
     {

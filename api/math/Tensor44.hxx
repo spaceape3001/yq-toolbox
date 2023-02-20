@@ -28,6 +28,9 @@
 #include <math/Vector4.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 namespace yq {
     template <typename T>
         template <glm::qualifier Q>
@@ -305,6 +308,120 @@ namespace yq {
     }
 
 
+    template <typename T>
+    constexpr Tensor44<T> Tensor44<T>::all_add(T b) const noexcept
+    {
+        return Tensor44( 
+            xx+b, xy+b, xz+b, xw+b,
+            yx+b, yy+b, yz+b, yw+b,
+            zx+b, zy+b, zz+b, zw+b,
+            wx+b, wy+b, wz+b, ww+b
+         );
+    }
+
+    template <typename T>
+    Tensor44<T>&    Tensor44<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b; xz-=b; xw-=b;
+        yx-=b; yy-=b; yz-=b; yw-=b;
+        zx-=b; zy-=b; zz-=b; zw-=b;
+        wx-=b; wy-=b; wz-=b; ww-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor44<T>&    Tensor44<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b; xz+=b; xw+=b;
+        yx+=b; yy+=b; yz+=b; yw+=b;
+        zx+=b; zy+=b; zz+=b; zw+=b;
+        wx+=b; wy+=b; wz+=b; ww+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor44<T> Tensor44<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor44( 
+            xx-b, xy-b, xz-b, xw-b,
+            yx-b, yy-b, yz-b, yw-b,
+            zx-b, zy-b, zz-b, zw-b,
+            wx-b, wy-b, wz-b, ww-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor44<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && pred(xz) && pred(xw) &&
+            pred(yx) && pred(yy) && pred(yz) && pred(yw) &&
+            pred(zx) && pred(zy) && pred(zz) && pred(zw) &&
+            pred(wx) && pred(wy) && pred(wz) && pred(ww)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor44<T>::all_test(const Tensor44& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) && pred(xz, b.xz) && pred(xw, b.xw) &&
+            pred(yx, b.yx) && pred(yy, b.yy) && pred(yz, b.yz) && pred(yw, b.yw) &&
+            pred(zx, b.zx) && pred(zy, b.zy) && pred(zz, b.zz) && pred(zw, b.zw) &&
+            pred(wx, b.wx) && pred(wy, b.wy) && pred(wz, b.wz) && pred(ww, b.ww)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor44<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && pred(xz, b) && pred(xw, b) &&
+            pred(yx, b) && pred(yy, b) && pred(yz, b) && pred(yw, b) &&
+            pred(zx, b) && pred(zy, b) && pred(zz, b) && pred(zw, b) &&
+            pred(wx, b) && pred(wy, b) && pred(wz, b) && pred(ww, b) 
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor44<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || pred(xz) || pred(xw) ||
+            pred(yx) || pred(yy) || pred(yz) || pred(yw) ||
+            pred(zx) || pred(zy) || pred(zz) || pred(zw) ||
+            pred(wx) || pred(wy) || pred(wz) || pred(ww)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor44<T>::any_test(const Tensor44& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || pred(xz, b.xz) || pred(xw, b.xw) ||
+            pred(yx, b.yx) || pred(yy, b.yy) || pred(yz, b.yz) || pred(yw, b.yw) ||
+            pred(zx, b.zx) || pred(zy, b.zy) || pred(zz, b.zz) || pred(zw, b.zw) ||
+            pred(wx, b.wx) || pred(wy, b.wy) || pred(wz, b.wz) || pred(ww, b.ww)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor44<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || pred(xz, b) || pred(xw, b) ||
+            pred(yx, b) || pred(yy, b) || pred(yz, b) || pred(yw, b) ||
+            pred(zx, b) || pred(zy, b) || pred(zz, b) || pred(zw, b) ||
+            pred(wx, b) || pred(wy, b) || pred(wz, b) || pred(ww, b) 
+        ;
+    }
+            
     //  TODO: 4x4 determinant 
 
     template <typename T>
@@ -580,6 +697,30 @@ namespace yq {
         );
     }
 
+    template <typename T>
+    AllComponents<Tensor44<T>>   all(Tensor44<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor44<T>>   all(const Tensor44<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor44<T>>   any(Tensor44<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor44<T>>   any(const Tensor44<T>& val)
+    {
+        return { val };
+    }
+
     //! Diagonal of given tensor
     template <typename T>
     constexpr Vector4<T>  diagonal(const Tensor44<T>&ten) noexcept
@@ -587,6 +728,19 @@ namespace yq {
         return ten.diagonal();
     }
     
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor44<T>>   elem(Tensor44<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor44<T>>   elem(const Tensor44<T>& val)
+    {
+        return { val };
+    }
+    #endif
 
     //  TODO: 4x4 determinant 
     //  TODO: 4x4 inverse 

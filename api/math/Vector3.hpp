@@ -8,11 +8,6 @@
 
 #define YQ__API__MATH__VECTOR_3__HPP 1
 #include <math/preamble.hpp>
-#include <math/Absolute.hpp>
-#include <math/Units.hpp>
-#include <math/trig.hpp>
-#include <math/AllComponents.hpp>
-#include <math/AnyComponents.hpp>
 
 namespace yq {
 
@@ -254,11 +249,8 @@ namespace yq {
         //! Create a box as a union of two vectors
         constexpr AxBox3<T> operator|(const Vector3&b) const noexcept;
 
-        template <typename R>
-        bool close(const Vector3& expected, const R& compare) const
-        {
-            return compare(length(*this-expected), length(expected));
-        }
+        template <typename R=Absolute<T>>
+        bool close(const Vector3& expected, const R& compare) const;
 
         //! Most positive component of the vector
         constexpr T cmax() const noexcept;
@@ -313,6 +305,12 @@ namespace yq {
         */
         constexpr Vector3 all_add(T b) const noexcept;
         
+        //! Decrement all elements
+        Vector3&    all_decrement(T b) noexcept;
+
+        //! Increment all elements
+        Vector3&    all_increment(T b) noexcept;
+
         /*! \brief Subtracts value from all elements
         */
         constexpr Vector3 all_subtract(T b) const noexcept;
@@ -325,10 +323,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept
-        {
-            return pred(x) && pred(y) && pred(z);
-        }
+        constexpr bool all_test(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -338,10 +333,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Vector3& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
-        }
+        constexpr bool all_test(const Vector3& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -351,10 +343,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) && pred(y, b) && pred(z, b);
-        }
+        constexpr bool all_test(T b, Pred pred) const noexcept;
 
 
             //  ===================================================================================================
@@ -371,10 +360,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept
-        {
-            return pred(x) || pred(y) || pred(z);
-        }
+        constexpr bool any_test(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -384,10 +370,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Vector3& b, Pred pred) const noexcept
-        {
-            return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
-        }
+        constexpr bool any_test(const Vector3& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -397,17 +380,14 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept
-        {
-            return pred(x, b) || pred(y, b) || pred(z, b);
+        constexpr bool any_test(T b, Pred pred) const noexcept;
+        
+        static bool less_x( const Vector3& a, const Vector3& b)
+        { 
+            return a.x < b.x; 
         }
 
-        static bool less_x( const Vector3& a, const Vector3& b) 
-        {
-            return a.x < b.x;
-        }
-
-        static bool less_y( const Vector3& a, const Vector3& b) 
+        static bool less_y( const Vector3& a, const Vector3& b)
         {
             return a.y < b.y;
         }
@@ -479,34 +459,20 @@ namespace yq {
     //!
     //! \param az   Counter-clockwise angle from +x
     //! \param el   Elevation (up) angle from x-y plane
-    inline  Vector3D    ccw(Radian az, Radian el)
-    {
-        double  c  = cos(el);
-        return Vector3D( c*cos(az), c*sin(az), sin(el) );
-    }
+    Vector3D    ccw(Radian az, Radian el);
 
 
     //! Creates a three dimension unit vector
     //!
     //! \param az   Clockwise angle from +x
     //! \param el   Elevation (up) angle from x-y plane
-    inline Vector3D     clockwise(Radian az, Radian el)
-    {
-        double  c  = cos(el);
-        return Vector3D(  c*sin(az), c*cos(az), sin(el) );
-    }
+    Vector3D     clockwise(Radian az, Radian el);
 
     template <typename T>
-    constexpr Vector2<T> xy( const Vector3<T>& a) noexcept
-    {
-        return Vector2<T>( a.x, a.y );
-    }
+    constexpr Vector2<T> xy( const Vector3<T>& a) noexcept;
 
     template <typename T>
-    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept
-    {
-        return Vector3<T>( a.x, a.y, z );
-    }
+    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept;
     
     YQ_NAN_1(Vector3, Vector3<T>(NAN))
     YQ_ONE_1(Vector3, Vector3<T>(ONE))
@@ -523,20 +489,14 @@ namespace yq {
         This returns the SQUARE of the given vector's length.
     */
     template <typename T>
-    constexpr square_t<T> length²(const Vector3<T>& a) noexcept
-    {
-        return a.length²();
-    }    
+    constexpr square_t<T> length²(const Vector3<T>& a) noexcept;
     
     /*! \brief Length of the vector
         
         This returns the length of the given vector.
     */
     template <typename T>
-    T       length(const Vector3<T>& a)
-    {
-        return a.length();
-    }
+    T       length(const Vector3<T>& a);
         
 //  --------------------------------------------------------
 //  POSITIVE
@@ -720,22 +680,23 @@ namespace yq {
 
 
     template <typename T>
-    AllComponents<Vector3<T>>   all(const Vector3<T>& val)
-    {
-        return AllComponents<Vector3<T>>(val);
-    }
+    AllComponents<Vector3<T>>   all(Vector3<T>& val);
     
     template <typename T>
-    AllComponents<Vector3<T>>   elem(const Vector3<T>& val)
-    {
-        return AllComponents<Vector3<T>>(val);
-    }
+    AllComponents<const Vector3<T>>   all(const Vector3<T>& val);
+
+    #if 0
+    template <typename T>
+    ElemComponents<Vector3<T>>   elem(Vector3<T>& val);
+    template <typename T>
+    ElemComponents<const Vector3<T>>   elem(const Vector3<T>& val);
+    #endif
 
     template <typename T>
-    AnyComponents<Vector3<T>>   any(const Vector3<T>& val)
-    {
-        return AnyComponents<Vector3<T>>(val);
-    }
+    AnyComponents<Vector3<T>>   any(Vector3<T>& val);
+
+    template <typename T>
+    AnyComponents<const Vector3<T>>   any(const Vector3<T>& val);
 
     template <typename S, typename T>
     S&  as_stream(S& s, const Vector3<T>& v);

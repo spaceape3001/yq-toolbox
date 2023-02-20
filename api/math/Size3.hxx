@@ -15,6 +15,10 @@
 #include <math/Size2.hpp>
 #include <math/Size3.hpp>
 #include <math/Vector3.hpp>
+
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
@@ -112,11 +116,71 @@ namespace yq {
     }
     
     template <typename T>
+    Size3<T>&    Size3<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        y -= b;
+        z -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Size3<T>&    Size3<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        y += b;
+        z += b;
+        return *this;
+    }
+
+    template <typename T>
     constexpr Size3<T> Size3<T>::all_subtract(T b) const noexcept
     {
         return Size3( x-b, y-b, z-b );
     }
 
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size3<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x) && pred(y) && pred(z);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size3<T>::all_test(const Size3& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size3<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) && pred(y, b) && pred(z, b);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size3<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x) || pred(y) || pred(z);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size3<T>::any_test(const Size3& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Size3<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) || pred(y, b) || pred(z, b);
+    }
+    
     template <typename T>
     constexpr T     Size3<T>::cmax() const noexcept
     {
@@ -223,6 +287,44 @@ namespace yq {
     constexpr Size3<product_t<T,U>> operator*(T a, const Size3<U>& b) noexcept
     {
         return Size3<product_t<T,U>>(a*b.x, a*b.y, a*b.z);
+    }
+
+    template <typename T>
+    AllComponents<Size3<T>>   all(Size3<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AllComponents<const Size3<T>>   all(const Size3<T>& val)
+    {
+        return { val };
+    }
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Size3<T>>   elem(Size3<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Size3<T>>   elem(const Size3<T>& val)
+    {
+        return { val };
+    }
+    #endif
+
+    template <typename T>
+    AnyComponents<Size3<T>>   any(Size3<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Size3<T>>   any(const Size3<T>& val)
+    {
+        return { val };
     }
 
     //! Computes volume of the size

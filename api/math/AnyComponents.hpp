@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <type_traits>
+
 namespace yq {
 
     /*! \brief Holder for "ANY" component
@@ -18,13 +20,13 @@ namespace yq {
     struct AnyComponents {
     
         //! Captures the template parameter
-        using value_type        = V;
+        using value_type        = std::remove_cv_t<V>;
     
         //! Capture the value type's component type
-        using component_type    = typename V::component_type;
+        using component_type    = typename value_type::component_type;
 
         //! Data itself, a reference
-        const V& value;
+        V& value;
         
         //  --------------------------------------------------------------------------------------------------------
         //  LESS THAN

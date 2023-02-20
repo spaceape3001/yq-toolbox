@@ -38,6 +38,9 @@
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 
 namespace yq {
     template <typename T>
@@ -478,13 +481,80 @@ namespace yq {
     {
         return { x+b, y+b, z+b };
     }
+
+    template <typename T>
+    Vector3<T>&    Vector3<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        y -= b;
+        z -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Vector3<T>&    Vector3<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        y += b;
+        z += b;
+        return *this;
+    }
     
     template <typename T>
     constexpr Vector3<T> Vector3<T>::all_subtract(T b) const noexcept
     {
         return { x-b, y-b, z-b };
     }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector3<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x) && pred(y) && pred(z);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector3<T>::all_test(const Vector3& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector3<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) && pred(y, b) && pred(z, b);
+    }
     
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector3<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x) || pred(y) || pred(z);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector3<T>::any_test(const Vector3& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector3<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) || pred(y, b) || pred(z, b);
+    }
+    
+    template <typename T>
+        template <typename R>
+    bool Vector3<T>::close(const Vector3& expected, const R& compare) const
+    {
+        return compare(length(*this-expected), length(expected));
+    }
+
     template <typename T>
     constexpr T Vector3<T>::cmax() const noexcept
     {
@@ -695,6 +765,19 @@ namespace yq {
         return a.eabs();
     }
 
+
+    template <typename T>
+    AllComponents<Vector3<T>>   all(Vector3<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AllComponents<const Vector3<T>>   all(const Vector3<T>& val)
+    {
+        return { val };
+    }
+
     template <typename T>
     requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian              angle(const Vector3<T>&a, const Vector3<T>& b)
@@ -710,10 +793,24 @@ namespace yq {
         return acos( std::clamp<one_t>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
     }
 
-    /*! \brief Counter clockwise (euler) angle
+    template <typename T>
+    AnyComponents<Vector3<T>>   any(Vector3<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Vector3<T>>   any(const Vector3<T>& val)
+    {
+        return { val };
+    }
+
+    inline  Vector3D    ccw(Radian az, Radian el)
+    {
+        double  c  = cos(el);
+        return Vector3D( c*cos(az), c*sin(az), sin(el) );
+    }
     
-        Computes the euler angle of the vector, ie, counter-clockwise from the +X axis.
-    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Radian   ccw(const Vector3<T>& a)
@@ -721,10 +818,6 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    /*! \brief Counter clockwise (euler) angle
-    
-        Computes the euler angle of the vector, ie, counter-clockwise from the +X axis.
-    */
     template <typename T, typename DIM>
     requires std::is_floating_point_v<T>
     Radian   ccw(const Vector3<MKS<T,DIM>>& a)
@@ -732,10 +825,13 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    /*! \brief Clockwise angle
+    inline Vector3D     clockwise(Radian az, Radian el)
+    {
+        double  c  = cos(el);
+        return Vector3D(  c*sin(az), c*cos(az), sin(el) );
+    }
     
-        Computes the angle of the vector from the +Y axis.
-    */
+
     template <typename T>
     requires std::is_floating_point_v<T>
     MKS<T,dim::Angle>   clockwise(const Vector3<T>& a)
@@ -743,10 +839,6 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    /*! \brief Clockwise angle
-    
-        Computes the angle of the vector from the +Y axis.
-    */
     template <typename T, typename DIM>
     requires std::is_floating_point_v<T>
     MKS<T,dim::Angle>   clockwise(const Vector3<MKS<T,DIM>>& a)
@@ -778,6 +870,20 @@ namespace yq {
         return a.csum();
     }
 
+    #if 0
+    template <typename T>
+    ElemComponents<Vector3<T>>   elem(Vector3<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Vector3<T>>   elem(const Vector3<T>& val)
+    {
+        return { val };
+    }
+    #endif
+
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected)
     {
@@ -790,6 +896,18 @@ namespace yq {
         return is_close(compare, actual, Vector3<T>(x, y, z) );
     }
 
+    template <typename T>
+    constexpr square_t<T> length²(const Vector3<T>& a) noexcept
+    {
+        return a.length²();
+    }    
+    
+    template <typename T>
+    T       length(const Vector3<T>& a)
+    {
+        return a.length();
+    }
+    
     template <typename T>
     constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept
     {
@@ -856,6 +974,19 @@ namespace yq {
     {
         return a.emul(b);
     }
+
+    template <typename T>
+    constexpr Vector2<T> xy( const Vector3<T>& a) noexcept
+    {
+        return Vector2<T>( a.x, a.y );
+    }
+
+    template <typename T>
+    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept
+    {
+        return Vector3<T>( a.x, a.y, z );
+    }
+
 
     template <typename S, typename T>
     S&  as_stream(S& s, const Vector3<T>& v)

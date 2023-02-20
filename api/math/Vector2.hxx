@@ -34,6 +34,10 @@
 #include <math/Vector3.hpp>
 #include <math/Vector4.hpp>
 
+#include <math/Absolute.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <math/trig.hpp>
 #include <math/Units.hpp>
 #include <math/utility.hpp>
@@ -466,9 +470,74 @@ namespace yq {
     }
     
     template <typename T>
+    Vector2<T>&    Vector2<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        y -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Vector2<T>&    Vector2<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        y += b;
+        return *this;
+    }
+
+    template <typename T>
     constexpr Vector2<T> Vector2<T>::all_subtract(T b) const noexcept
     {
         return Vector2( x-b, y-b );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector2<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x) && pred(y);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector2<T>::all_test(const Vector2& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) && pred(y, b.y);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector2<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) && pred(y, b);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector2<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x) || pred(y);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector2<T>::any_test(const Vector2& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x) || pred(y, b.y);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector2<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b) || pred(y, b);
+    }
+        
+    template <typename T>
+        template <typename R>
+    bool Vector2<T>::close(const Vector2&b, R compare) const 
+    {
+        return compare((*this-b).length(), b.length());
     }
 
     template <typename T>
@@ -680,6 +749,18 @@ namespace yq {
     }
 
     template <typename T>
+    AllComponents<Vector2<T>>   all(Vector2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Vector2<T>>   all(const Vector2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
     requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian       angle(const Vector2<T>&a, const Vector2<T>& b)
     {
@@ -695,18 +776,23 @@ namespace yq {
         return acos( std::clamp<one_t>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
     }
 
-    //! Creates a two dimension unit vector
-    //!
-    //! \param az   Counter-clockwise angle from +x
+    template <typename T>
+    AnyComponents<Vector2<T>>   any(Vector2<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<const Vector2<T>>   any(const Vector2<T>& val)
+    {
+        return { val };
+    }
+
     inline Vector2D     ccw(Radian az)
     {
         return Vector2D(cos(az), sin(az) );
     }
 
-    /*! \brief Counter clockwise (euler) angle
-    
-        Computes the euler angle of the vector, ie, counter-clockwise from the +X axis.
-    */
     template <typename T>
     requires std::is_floating_point_v<T>
     Radian   ccw(const Vector2<T>& a)
@@ -714,10 +800,6 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    /*! \brief Counter clockwise (euler) angle
-    
-        Computes the euler angle of the vector, ie, counter-clockwise from the +X axis.
-    */
     template <typename T, typename DIM>
     requires std::is_floating_point_v<T>
     Radian   ccw(const Vector2<MKS<T,DIM>>& a)
@@ -725,10 +807,6 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    /*! \brief Clockwise angle
-    
-        Computes the angle of the vector from the +Y axis.
-    */
     template <typename T>
     requires std::is_floating_point_v<T>
     MKS<T,dim::Angle>   clockwise(const Vector2<T>& a)
@@ -736,10 +814,6 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    /*! \brief Clockwise angle
-    
-        Computes the angle of the vector from the +Y axis.
-    */
     template <typename T, typename DIM>
     requires std::is_floating_point_v<T>
     MKS<T,dim::Angle>   clockwise(const Vector2<MKS<T,DIM>>& a)
@@ -747,9 +821,6 @@ namespace yq {
         return atan(a.y, a.x);
     }
 
-    //! Creates a two dimension unit vector
-    //!
-    //! \param az    Clockwise angle from +y
     inline Vector2D     clockwise(Radian az)
     {
         return Vector2D( sin(az), cos(az) );
@@ -804,6 +875,20 @@ namespace yq {
     {
         return a.ediv(b);
     }
+
+    #if 0
+    template <typename T>
+    ElemComponents<Vector2<T>>   elem(Vector2<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Vector2<T>>   elem(const Vector2<T>& val)
+    {
+        return { val };
+    }
+    #endif
 
 
     template <typename T, typename R>

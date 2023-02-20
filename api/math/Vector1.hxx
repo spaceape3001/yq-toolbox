@@ -29,7 +29,12 @@
 #include <math/Vector3.hpp>
 #include <math/Vector4.hpp>
 
+#include <math/Absolute.hpp>
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 #include <math/utility.hpp>
+
 
 #include <basic/Stream.hpp>
 #include <basic/Logging.hpp>
@@ -350,6 +355,20 @@ namespace yq {
     {
         return Vector1( x + b );
     }
+
+    template <typename T>
+    Vector1<T>&    Vector1<T>::all_decrement(T b) noexcept
+    {
+        x -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Vector1<T>&    Vector1<T>::all_increment(T b) noexcept
+    {
+        x += b;
+        return *this;
+    }
     
     template <typename T>
     constexpr Vector1<T> Vector1<T>::all_subtract(T b) const noexcept
@@ -357,6 +376,55 @@ namespace yq {
         return Vector1( x - b );
     }
 
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector1<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(x);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector1<T>::all_test(const Vector1& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector1<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b.x);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector1<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(x);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector1<T>::any_test(const Vector1& b, Pred pred) const noexcept
+    {
+        return pred(x, b.x);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Vector1<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(x, b.x);
+    }
+
+    template <typename T>
+        template <typename R>
+    bool Vector1<T>::close(const Vector1&b, R compare) const 
+    {
+        return compare((*this-b).length(), b.length());
+    }
+    
     template <typename T>
     constexpr T Vector1<T>::cmax() const noexcept
     {
@@ -558,6 +626,30 @@ namespace yq {
     }
 
     template <typename T>
+    AllComponents<Vector1<T>>   all(Vector1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Vector1<T>>   all(const Vector1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<Vector1<T>>   any(Vector1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Vector1<T>>   any(const Vector1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
     constexpr T             component_max(const Vector1<T>&a) noexcept
     {
         return a.x;
@@ -586,6 +678,20 @@ namespace yq {
     {
         return a.ediv(b);
     }
+
+    #if 0
+    template <typename T>
+    ElemComponents<Vector1<T>>   elem(Vector1<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Vector1<T>>   elem(const Vector1<T>& val)
+    {
+        return { val };
+    }
+    #endif
 
     template <typename T>
     constexpr square_t<T> length²(const Vector1<T>& vec) noexcept
