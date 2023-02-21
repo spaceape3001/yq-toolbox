@@ -115,32 +115,6 @@ ut::suite tests = []{
                 3,4
             )
         );
-
-        //  WX
-        expect(
-            Tensor32I(
-                1,1,
-                1,1,
-                1,1
-            ) + Tensor32I(ALL,2) ==  Tensor32I(
-                3,3,
-                3,3,
-                3,3
-            )
-        );
-
-        //  WY
-        expect(
-            Tensor32I(
-                1,1,
-                1,1,
-                1,1
-            ) + Tensor32I(ALL,2) ==  Tensor32I(
-                3,3,
-                3,3,
-                3,3
-            )
-        );
     };
 
     "subtraction"_test = []{

@@ -30,6 +30,9 @@
 #include <math/trig.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 namespace yq {
     template <typename T>
     template <typename>
@@ -282,6 +285,100 @@ namespace yq {
 
 
     template <typename T>
+    constexpr Tensor22<T> Tensor22<T>::all_add(T b) const noexcept
+    {
+        return Tensor22( 
+            xx+b, xy+b,
+            yx+b, yy+b
+         );
+    }
+
+    template <typename T>
+    Tensor22<T>&    Tensor22<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b;
+        yx-=b; yy-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor22<T>&    Tensor22<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b;
+        yx+=b; yy+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor22<T> Tensor22<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor22( 
+            xx-b, xy-b,
+            yx-b, yy-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor22<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && 
+            pred(yx) && pred(yy)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor22<T>::all_test(const Tensor22& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) &&
+            pred(yx, b.yx) && pred(yy, b.yy)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor22<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && 
+            pred(yx, b) && pred(yy, b)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor22<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || 
+            pred(yx) || pred(yy)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor22<T>::any_test(const Tensor22& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || 
+            pred(yx, b.yx) || pred(yy, b.yy) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor22<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || 
+            pred(yx, b) || pred(yy, b) 
+        ;
+    }
+
+    template <typename T>
     constexpr square_t<T> Tensor22<T>::determinant() const noexcept
     {
         return xx*yy-xy*yx;
@@ -440,6 +537,30 @@ namespace yq {
     }
 
     template <typename T>
+    AllComponents<Tensor22<T>>   all(Tensor22<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor22<T>>   all(const Tensor22<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor22<T>>   any(Tensor22<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor22<T>>   any(const Tensor22<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
     square_t<T> determinant(const Tensor22<T>& ten)
     {
         return ten.determinant();
@@ -451,6 +572,20 @@ namespace yq {
         return ten.diagonal();
     }
 
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor22<T>>   elem(Tensor22<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor22<T>>   elem(const Tensor22<T>& val)
+    {
+        return { val };
+    }
+    #endif
+    
     template <typename T>
     Tensor22<inverse_t<T>> inverse(const Tensor22<T>&ten)
     {
