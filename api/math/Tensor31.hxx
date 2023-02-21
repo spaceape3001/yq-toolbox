@@ -13,6 +13,7 @@
 */
 
 #include <math/Segment1.hpp>
+#include <math/Segment3.hpp>
 
 #include <math/Tensor11.hpp>
 #include <math/Tensor12.hpp>

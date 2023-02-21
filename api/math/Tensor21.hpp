@@ -149,6 +149,93 @@ namespace yq {
 
             Tensor21& y_row(T _yx);
 
+
+        //  --------------------------------------------------------
+        //  AllComponents Adapters
+
+            /*! Adds a value to all the elements
+            */
+            constexpr Tensor21 all_add(T b) const noexcept;
+            
+            //! Decrements all elements
+            Tensor21&   all_decrement(T) noexcept;
+
+            //! Increments all elements
+            Tensor21&   all_increment(T) noexcept;
+
+            /*! \brief Subtracts value from all elements
+            */
+            constexpr Tensor21 all_subtract(T b) const noexcept;
+            
+
+            /*! Tests every element
+                
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(const Tensor21& b, Pred pred) const noexcept;
+
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if all tests are true.
+                \note y, z, w component tests may be skipped if the x-component test fails.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool all_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  AnyComponents Adapters
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other vector
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(const Tensor21& b, Pred pred) const noexcept;
+            
+            /*! Tests every element
+                This applies the given test to every component, 
+                returns TRUE if any test is true.
+                \note y, z, w component tests may be skipped if the x-component test passes.
+                \param[in] b The other value
+                \param[in] pred The predicate (your test)
+            */
+            template <typename Pred>
+            constexpr bool any_test(T b, Pred pred) const noexcept;
+
+        //  --------------------------------------------------------
+        //  COMPARISONS
+
+            static bool less_xx( const Tensor21& a, const Tensor21& b) { return a.xx < b.xx; }
+
+            static bool less_yx( const Tensor21& a, const Tensor21& b) { return a.yx < b.yx; }
     };
 
     YQ_IEEE754_1(Tensor21)
@@ -189,6 +276,30 @@ namespace yq {
         is_nan(v.xx) ||
         is_nan(v.yx)
     )
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in tensor21
+    template <typename T>
+    AllComponents<Tensor21<T>>   all(Tensor21<T>& val);
+
+    //! All components adapter
+    //! Use this to activate the "all" component adapters in tensor21
+    template <typename T>
+    AllComponents<const Tensor21<T>>   all(const Tensor21<T>& val);
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor21<T>>   elem(Tensor21<T>& val);
+
+    template <typename T>
+    ElemComponents<const Tensor21<T>>   elem(const Tensor21<T>& val);
+    #endif
+
+    template <typename T>
+    AnyComponents<Tensor21<T>>   any(Tensor21<T>& val);
+
+    template <typename T>
+    AnyComponents<const Tensor21<T>>   any(const Tensor21<T>& val);
 
     template <typename T>
     constexpr Tensor12<T>  transpose(const Tensor21<T>&v);
