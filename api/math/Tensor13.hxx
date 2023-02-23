@@ -12,6 +12,7 @@
     template instantiation.  
 */
 
+#include <math/Segment1.hpp>
 #include <math/Segment3.hpp>
 
 #include <math/Tensor11.hpp>
@@ -27,6 +28,10 @@
 #include <math/Vector1.hpp>
 #include <math/Vector3.hpp>
 #include <math/utility.hpp>
+
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 
 namespace yq {
     template <typename T>
@@ -208,7 +213,92 @@ namespace yq {
         xx/=b; xy/=b; xz/=b;        
         return *this;
     }
+
+
+    template <typename T>
+    constexpr Tensor13<T> Tensor13<T>::all_add(T b) const noexcept
+    {
+        return Tensor13( 
+            xx+b, xy+b, xz+b
+         );
+    }
+
+    template <typename T>
+    Tensor13<T>&    Tensor13<T>::all_decrement(T b) noexcept
+    {
+        xx-=b; xy-=b; xz-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor13<T>&    Tensor13<T>::all_increment(T b) noexcept
+    {
+        xx+=b; xy+=b; xz+=b;
+        return *this;
+    }
     
+    template <typename T>
+    constexpr Tensor13<T> Tensor13<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor13( 
+            xx-b, xy-b, xz-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor13<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) && pred(xy) && pred(xz)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor13<T>::all_test(const Tensor13& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) && pred(xy, b.xy) && pred(xz, b.xz)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor13<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) && pred(xy, b) && pred(xz, b)
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor13<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) || pred(xy) || pred(xz)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor13<T>::any_test(const Tensor13& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) || pred(xy, b.xy) || pred(xz, b.xz)
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor13<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) || pred(xy, b) || pred(xz, b)
+        ;
+    }
+        
     template <typename T>
     constexpr Tensor31<T> Tensor13<T>::transpose() const noexcept
     {
@@ -317,6 +407,45 @@ namespace yq {
         };
     }
 
+
+    template <typename T>
+    AllComponents<Tensor13<T>>   all(Tensor13<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor13<T>>   all(const Tensor13<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor13<T>>   any(Tensor13<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor13<T>>   any(const Tensor13<T>& val)
+    {
+        return { val };
+    }
+    
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor13<T>>   elem(Tensor13<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor13<T>>   elem(const Tensor13<T>& val)
+    {
+        return { val };
+    }
+    #endif
+    
     template <typename T>
     constexpr Tensor31<T>  transpose(const Tensor13<T>&v)
     {
