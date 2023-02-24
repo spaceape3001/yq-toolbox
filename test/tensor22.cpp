@@ -139,28 +139,6 @@ ut::suite tests = []{
                 -1,-3
             )
         );
-
-        // ZX
-        expect(
-            Tensor22I(
-                +1,+1,
-                +1,+1
-            ) - Tensor22I(ALL,2) ==  Tensor22I(
-                -1,-1,
-                -1,-1
-            )
-        );
-
-        // ZY
-        expect(
-            Tensor22I(
-                +1,+1,
-                +1,+1
-            ) - Tensor22I(ALL,2) ==  Tensor22I(
-                -1,-1,
-                -1,-1
-            )
-        );
     };
     
     "Multiply-int"_test = []{
