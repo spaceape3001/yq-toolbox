@@ -22,6 +22,9 @@
 #include <math/Vector1.hpp>
 #include <math/utility.hpp>
 
+#include <math/AllComponents.hpp>
+#include <math/AnyComponents.hpp>
+
 namespace yq {
     template <typename T>
         template <glm::qualifier Q>
@@ -177,6 +180,91 @@ namespace yq {
         });
     }
 
+
+    template <typename T>
+    constexpr Tensor11<T> Tensor11<T>::all_add(T b) const noexcept
+    {
+        return Tensor11( 
+            xx+b
+         );
+    }
+
+    template <typename T>
+    Tensor11<T>&    Tensor11<T>::all_decrement(T b) noexcept
+    {
+        xx-=b;
+        return *this;
+    }
+
+    template <typename T>
+    Tensor11<T>&    Tensor11<T>::all_increment(T b) noexcept
+    {
+        xx+=b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Tensor11<T> Tensor11<T>::all_subtract(T b) const noexcept
+    {
+        return Tensor11( 
+            xx-b
+         );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor11<T>::all_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor11<T>::all_test(const Tensor11& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) 
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor11<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b) 
+        ;
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor11<T>::any_test(Pred pred) const noexcept
+    {
+        return 
+            pred(xx) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor11<T>::any_test(const Tensor11& b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b.xx) 
+        ;
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Tensor11<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return 
+            pred(xx, b)
+        ;
+    }
+
         //! Returns the determinant
     template <typename T>
     constexpr T Tensor11<T>::determinant() const noexcept
@@ -279,11 +367,49 @@ namespace yq {
     }
     
     template <typename T>
+    AllComponents<Tensor11<T>>   all(Tensor11<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Tensor11<T>>   all(const Tensor11<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Tensor11<T>>   any(Tensor11<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AnyComponents<const Tensor11<T>>   any(const Tensor11<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
     constexpr Vector1<T>  diagonal(const Tensor11<T>& v)
     {
         return v.diagonal();
     }
 
+    #if 0
+    template <typename T>
+    ElemComponents<Tensor11<T>>   elem(Tensor11<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    ElemComponents<const Tensor11<T>>   elem(const Tensor11<T>& val)
+    {
+        return { val };
+    }
+    #endif
+    
     template <typename T>
     constexpr Tensor11<T>  transpose(const Tensor11<T>&v)
     {
