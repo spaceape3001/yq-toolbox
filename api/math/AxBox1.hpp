@@ -29,24 +29,103 @@ namespace yq {
         //! Our high corner
         Vector1<T>  hi;
         
+        //! Default constructor
         constexpr AxBox1() noexcept = default;
-        explicit constexpr AxBox1(const Vector1<T>& a) noexcept : lo(a), hi(a) {}
-        constexpr AxBox1(const Vector1<T>& _lo, const Vector1<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
-        constexpr AxBox1(intersect_t, std::initializer_list<Vector1<T>>, std::initializer_list<Vector1<T>>) noexcept;
-        constexpr AxBox1(intersect_t, std::span<const Vector1<T>>, std::span<const Vector1<T>>) noexcept;
-        constexpr AxBox1(sort_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
-        constexpr AxBox1(union_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
-        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>) noexcept;
-        constexpr AxBox1(union_t, std::span<const Vector1<T>>) noexcept;
-        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>, std::initializer_list<Vector1<T>>) noexcept;
-        constexpr AxBox1(union_t, std::span<const Vector1<T>>, std::span<const Vector1<T>>) noexcept;
         
+        /*! \brief Initializing constructor with ONE value
+        
+            This constructor initializes BOTH lo and hi with the same value.  
+            This will technically be a valid axbox with zero span.
+        */
+        explicit constexpr AxBox1(const Vector1<T>& a) noexcept : lo(a), hi(a) {}
+        
+        /*! \brief Initializing constructor with TWO values
+        
+            This constructor initializes the box as specified.  
+            
+            \note This result may be an invalid box with negative spans.
+        */
+        constexpr AxBox1(const Vector1<T>& _lo, const Vector1<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
+        
+        /*! \brief Construct as an intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
+        constexpr AxBox1(intersect_t, std::initializer_list<Vector1<T>> low, std::initializer_list<Vector1<T>> high) noexcept;
+
+        /*! \brief Construct as an intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
+        constexpr AxBox1(intersect_t, std::span<const Vector1<T>> low, std::span<const Vector1<T>> high) noexcept;
+        
+        /*! \brief Construct a box using the two points
+        
+            This ensures lo <= hi (unless infinite/nan)
+        */
+        constexpr AxBox1(sort_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
+
+        /*! \brief Construct a box as a union of two points
+        
+            This ensures lo <= hi (unless infinite/nan)
+        */
+        constexpr AxBox1(union_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
+        
+        /*! \brief Construct a box as a union of multiple points
+        
+            This returns the bounding box of *ALL* the given points
+        */
+        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This returns the bounding box of *ALL* the given points
+        */
+        constexpr AxBox1(union_t, std::span<const Vector1<T>>) noexcept;
+        
+        /*! \brief Construct a box as a union of multiple points
+        
+            This constructor segregates the set of low and high points.
+            
+            \note It's possible to construct an invalid box if all the low points are above the high points.
+            
+            \param[in] low Low values
+            \param[in] high High values
+        */
+        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>> low, std::initializer_list<Vector1<T>> high) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This constructor segregates the set of low and high points.
+            
+            \note It's possible to construct an invalid box if all the low points are above the high points.
+            
+            \param[in] low Low values
+            \param[in] high High values
+        */
+        constexpr AxBox1(union_t, std::span<const Vector1<T>> low, std::span<const Vector1<T>> high) noexcept;
+        
+        //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
         consteval AxBox1(nan_t) : AxBox1(Vector1<T>(NAN)) {}
+        
+        //! Zero box
         consteval AxBox1(zero_t) : AxBox1(Vector1<T>(ZERO)) {}
         
+        //! Constructs from a segment
         explicit constexpr AxBox1(const Segment1<T>&) noexcept;
 
+        //! Converts to another compatible AxBox type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator AxBox1<U>() const noexcept
@@ -193,9 +272,16 @@ namespace yq {
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept;
         
+        //! Lower "corner" of the box
         constexpr Vector1<T>    l() const noexcept;
-        constexpr Vector1<T>    l(T adjust) const noexcept;
         
+        /*! \brief Lower adjusted corner of the box
+        
+            This adjusts the corner outward by the specified amount, assuming it's a valid box
+        */
+        constexpr Vector1<T>    l(T adjust) const noexcept;
+
+        //! Length of this box
         constexpr T             length() const noexcept;
         
         //! Minimum inflation number on a valid box to keep it from going invalid
@@ -220,6 +306,7 @@ namespace yq {
         */
         constexpr AxBox1<T> shrink(T amt) const noexcept;
         
+        //! Size (dimensions) of this box
         constexpr Size1<T> size() const noexcept ;
 
         /*! \brief Span (dimensions) of this box
@@ -301,12 +388,15 @@ namespace yq {
     template <typename T>
     constexpr Vector1<T>    span(const AxBox1<T>&box) noexcept;
 
+    //! Streaming helper (assuming debug-like output)
     template <typename S, typename T>
     S&  as_stream(S& s, const AxBox1<T>& v);
     
+    //! Streams box to a text-like stream
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox1<T>& v);
 
+    //! Streams to a log stream
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox1<T>& v);
 }
