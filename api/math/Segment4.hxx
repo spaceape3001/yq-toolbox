@@ -160,6 +160,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_w(T w, T ep) const noexcept
     {
         if(abs(a.w-b.w) <= ep)
@@ -168,6 +170,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_x(T x, T ep) const noexcept
     {
         if(abs(a.x-b.x) <= ep)
@@ -176,6 +180,8 @@ namespace yq {
     }
     
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_y(T y, T ep) const noexcept
     {
         if(abs(a.y-b.y) <= ep)
@@ -184,6 +190,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_z(T z, T ep) const noexcept
     {
         if(abs(a.z-b.z) <= ep)
@@ -192,6 +200,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_w(T w, T ep) const noexcept
     {
         auto [ f, b ] = fraction_w(w, ep);
@@ -209,6 +219,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_x(T x, T ep) const noexcept
     {
         auto [ f, b ] = fraction_x(x, ep);
@@ -226,6 +238,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_y(T y, T ep) const noexcept
     {
         auto [ f, b ] = fraction_y(y, ep);
@@ -243,6 +257,8 @@ namespace yq {
     }
 
     template <typename T>
+        template <typename>
+    requires is_floating_point_v<T>
     constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_z(T z, T ep) const noexcept
     {
         auto [ f, b ] = fraction_z(z, ep);

@@ -91,15 +91,23 @@ namespace yq {
         constexpr Vector4<T>  delta() const noexcept;
         
         //! Computes the fraction along the segment for given X value
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<unity_t<T>, bool>   fraction_x(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the fraction along the segment for given Y value
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<unity_t<T>, bool>   fraction_y(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the fraction along the segment for given Z value
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<unity_t<T>, bool>   fraction_z(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the fraction along the segment for given W value
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<unity_t<T>, bool>   fraction_w(T, T ep=zero_v<T>) const noexcept;
         
         //! Length of the segment
@@ -112,21 +120,29 @@ namespace yq {
         //! Computes the intercept point for specified X
         //! \param[in]  ep  Delta to consider this segment to have no x-variation (and thus, unsolveable)
         //! \return Returns std pair, the vector & true if successful, zero & false if not
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<Vector4<T>, bool> intercept_x(T, T ep=zero_v<T>) const noexcept;
         
         //! Computes the intercept point for specified Y
         //! \param[in]  ep  Delta to consider this segment to have no y-variation (and thus, unsolveable)
         //! \return Returns std pair, the vector & true if successful, zero & false if not
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<Vector4<T>, bool> intercept_y(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the intercept point for specified Z
         //! \param[in]  ep  Delta to consider this segment to have no z-variation (and thus, unsolveable)
         //! \return Returns std pair, the vector & true if successful, zero & false if not
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<Vector4<T>, bool> intercept_z(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the intercept point for specified W
         //! \param[in]  ep  Delta to consider this segment to have no w-variation (and thus, unsolveable)
         //! \return Returns std pair, the vector & true if successful, zero & false if not
+        template <typename=void>
+        requires is_floating_point_v<T>
         constexpr std::pair<Vector4<T>, bool> intercept_w(T, T ep=zero_v<T>) const noexcept;
         
         //! Segment mid-point

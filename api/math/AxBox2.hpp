@@ -26,27 +26,112 @@ namespace yq {
         Vector2<T>  lo; //!< Lower bounds
         Vector2<T>  hi; //!< Upper bounds
         
+        //! Default constructor
         constexpr AxBox2() noexcept = default;
+
+        /*! \brief Initializing constructor with ONE value
+        
+            This constructor initializes BOTH lo and hi with the same value.  
+            This will technically be a valid axbox with zero span.
+        */
         explicit constexpr AxBox2(const Vector2<T>& a) noexcept : lo(a), hi(a) {}
+
+        /*! \brief Initializing constructor with TWO values
+        
+            This constructor initializes the box as specified.  
+            
+            \note This result may be an invalid box with negative spans.
+        */
         constexpr AxBox2(const Vector2<T>& _lo, const Vector2<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
+
+        /*! \brief Construct as an intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox2(intersect_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
+
+        /*! \brief Construct as an intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox2(intersect_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
+
+        /*! \brief Construct a box using the two points
+        
+            This ensures lo <= hi (unless infinite/nan)
+        */
         constexpr AxBox2(sort_t, const Vector2<T>&a, const Vector2<T>& b) noexcept;
+
+        /*! \brief Construct a box as a union of two points
+        
+            This ensures lo <= hi (unless infinite/nan)
+        */
         constexpr AxBox2(union_t, const Vector2<T>&a, const Vector2<T>& b) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This returns the bounding box of *ALL* the given points
+        */
         constexpr AxBox2(union_t, std::initializer_list<Vector2<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This returns the bounding box of *ALL* the given points
+        */
         constexpr AxBox2(union_t, std::span<const Vector2<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This constructor segregates the set of low and high points.
+            
+            \note It's possible to construct an invalid box if all the low points are above the high points.
+            
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox2(union_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This constructor segregates the set of low and high points.
+            
+            \note It's possible to construct an invalid box if all the low points are above the high points.
+            
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox2(union_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
         
+        //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
         consteval AxBox2(nan_t) : AxBox2(Vector2<T>(NAN)) {}
 
+        //! Zero box
         consteval AxBox2(zero_t) : AxBox2(Vector2<T>(ZERO)) {}
 
+        //! Constructs using the bounding box of the given circle
         explicit constexpr AxBox2(const Circle2<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given polygon
         explicit constexpr AxBox2(const Polygon2<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given polyline
         explicit constexpr AxBox2(const Polyline2<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given segment
         explicit constexpr AxBox2(const Segment2<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given triangel
         explicit constexpr AxBox2(const Triangle2<T>&) noexcept;
 
         template <typename U>
@@ -94,6 +179,7 @@ namespace yq {
         //! Union
         constexpr AxBox2 operator|(const AxBox2<T>&b) const noexcept;
 
+        //! Union with vector
         constexpr AxBox2 operator|(const Vector2<T>&b) const noexcept;
 
         //! Union in a box
@@ -113,6 +199,7 @@ namespace yq {
         */
         constexpr square_t<T>               area() const noexcept;
 
+        //! Area of the box (ensuring it's positive)
         constexpr square_t<T>               area(guard_t) const noexcept;
 
         /*! \brief Computes the center
@@ -124,12 +211,19 @@ namespace yq {
         */
         Circle2<T>  circumcircle() const;
 
+        //! Classifies the point with respect to the box
         constexpr Data2<Side>       classify(const Vector2<T>&) const noexcept;
 
+        //! Classifies the given X coordinate with respect to the box
         constexpr Side              classify_x(T) const noexcept;
+
+        //! Classifies the vector's X coordinate with respect to the box
         constexpr Side              classify_x(const Vector2<T>&) const noexcept;
 
+        //! Classifies the given Y coordinate with respect to the box
         constexpr Side              classify_y(T) const noexcept;
+
+        //! Classifies the vector's Y coordinate with respect to the box
         constexpr Side              classify_y(const Vector2<T>&) const noexcept;
 
         /*! \brief Checks if the point is inside (or touching) the box
@@ -139,6 +233,8 @@ namespace yq {
         /*! \brief Our corners
         */
         constexpr AxCorners2<Vector2<T>>    corners() const noexcept;
+        
+        //! Corners adjusted outward by the given value
         constexpr AxCorners2<Vector2<T>>    corners(T adjust) const noexcept;
 
         //! Distance to box (zero if inside)
@@ -216,10 +312,19 @@ namespace yq {
         requires is_floating_point_v<T>
         constexpr std::pair<unity_t<T>,bool>    fraction_y(T y, T ep) const noexcept;
 
+        //! Hi-hi corner of this box
         constexpr Vector2<T>    hh() const noexcept;
+
+        //! Hi-hi corner of this box adjusted outward by the given amount
         constexpr Vector2<T>    hh(T adjust) const noexcept;
+        
+        //! Hi-hi corner of this box GUARDED against invalid boxes
         constexpr Vector2<T>    hh(guard_t) const noexcept;
+        
+        //! Hi-Lo corner of this box
         constexpr Vector2<T>    hl() const noexcept;
+
+        //! Hi-Lo corner of this box adjusted outward by the given amount
         constexpr Vector2<T>    hl(T adjust) const noexcept;
 
         /*! \brief Computes largest circle that's inside the box
@@ -255,6 +360,7 @@ namespace yq {
         //! Low x/Low y corner, adjusted outward
         constexpr Vector2<T>    ll(T adjust) const noexcept;
 
+        //! Low/low corner, guarded against invalid boxes
         constexpr Vector2<T>    ll(guard_t) const noexcept;
 
         //! Minimum inflation number on a valid box to keep it from going invalid
@@ -287,6 +393,8 @@ namespace yq {
         /*! \brief Returns the size of the box
         */
         constexpr Size2<T> size() const noexcept;
+        
+        //! Size of this box, guarded against invalid boxes
         constexpr Size2<T> size(guard_t) const noexcept;
 
 
@@ -405,12 +513,15 @@ namespace yq {
     template <typename T>
     constexpr Vector2<T>    span(const AxBox2<T>&a) noexcept;
 
+    //! Streaming assistant to text/debugging style output streams
     template <typename S, typename T>
     S&  as_stream(S& s, const AxBox2<T>& v);
     
+    //! Streams to the internal text-based stream
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox2<T>& v);
 
+    //! Streams to a logging stream
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox2<T>& v);
 }
