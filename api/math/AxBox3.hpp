@@ -29,24 +29,106 @@ namespace yq {
         //! High corner
         Vector3<T>  hi;
         
+        //! Default constructor
         constexpr AxBox3() noexcept = default;
+
+        /*! \brief Initializing constructor with ONE value
+        
+            This constructor initializes BOTH lo and hi with the same value.  
+            This will technically be a valid axbox with zero span.
+        */
         explicit constexpr AxBox3(const Vector3<T>& a) noexcept : lo(a), hi(a) {}
+
+        /*! \brief Initializing constructor with TWO values
+        
+            This constructor initializes the box as specified.  
+            
+            \note This result may be an invalid box with negative spans.
+        */
         constexpr AxBox3(const Vector3<T>& _lo, const Vector3<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
+
+        /*! \brief Construct as an intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox3(intersect_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
+
+        /*! \brief Construct as an intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox3(intersect_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
+
+        /*! \brief Construct a box using the two points
+        
+            This ensures lo <= hi (unless infinite/nan)
+        */
         constexpr AxBox3(sort_t, const Vector3<T>&a, const Vector3<T>& b) noexcept;
+
+        /*! \brief Construct a box as a union of two points
+        
+            This ensures lo <= hi (unless infinite/nan)
+        */
         constexpr AxBox3(union_t, const Vector3<T>&a, const Vector3<T>& b) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This returns the bounding box of *ALL* the given points
+        */
         constexpr AxBox3(union_t, std::initializer_list<Vector3<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This returns the bounding box of *ALL* the given points
+        */
         constexpr AxBox3(union_t, std::span<const Vector3<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This constructor segregates the set of low and high points.
+            
+            \note It's possible to construct an invalid box if all the low points are above the high points.
+            
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox3(union_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
+
+        /*! \brief Construct a box as a union of multiple points
+        
+            This constructor segregates the set of low and high points.
+            
+            \note It's possible to construct an invalid box if all the low points are above the high points.
+            
+            \param[in] low Low values
+            \param[in] high High values
+        */
         constexpr AxBox3(union_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
 
+        //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
         consteval AxBox3(nan_t) : AxBox3(Vector3<T>(NAN)) {}
+
+        //! Zero box
         consteval AxBox3(zero_t) : AxBox3(Vector3<T>(ZERO)) {}
 
+        //! Constructs using the bounding box of the given segment
         explicit constexpr AxBox3(const Segment3<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given circle
         explicit constexpr AxBox3(const Sphere3<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given triangel
         explicit constexpr AxBox3(const Triangle3<T>&) noexcept;
 
         template <typename U>
@@ -114,15 +196,25 @@ namespace yq {
         */
         constexpr Vector3<T>      center() const noexcept;
 
+        //! Classifies the point with respect to the box
         constexpr Data3<Side>       classify(const Vector3<T>&) const noexcept;
 
+        //! Classifies the given X coordinate with respect to the box
         constexpr Side              classify_x(T) const noexcept;
+
+        //! Classifies the vector's X coordinate with respect to the box
         constexpr Side              classify_x(const Vector3<T>&) const noexcept;
 
+        //! Classifies the given Y coordinate with respect to the box
         constexpr Side              classify_y(T) const noexcept;
+
+        //! Classifies the vector's Y coordinate with respect to the box
         constexpr Side              classify_y(const Vector3<T>&) const noexcept;
 
+        //! Classifies the given Z coordinate with respect to the box
         constexpr Side              classify_z(T) const noexcept;
+
+        //! Classifies the vector's Z coordinate with respect to the box
         constexpr Side              classify_z(const Vector3<T>&) const noexcept;
 
 
@@ -134,6 +226,7 @@ namespace yq {
         */
         constexpr AxCorners3<Vector3<T>>  corners() const noexcept;
 
+        //! Corners adjusted outward by the given value
         constexpr AxCorners3<Vector3<T>>  corners(T adjust) const noexcept;
 
         //! Distance to box (zero if inside)
@@ -231,13 +324,28 @@ namespace yq {
         requires is_floating_point_v<T>
         constexpr std::pair<unity_t<T>,bool>    fraction_z(T z, T ep) const noexcept;
 
+        //! Hi-hi-hi corner of this box
         constexpr Vector3<T>    hhh() const noexcept;
+
+        //! Hi-hi-hi corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    hhh(T adjust) const noexcept;
+
+        //! Hi-hi-lo corner of this box
         constexpr Vector3<T>    hhl() const noexcept;
+
+        //! Hi-hi-lo corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    hhl(T adjust) const noexcept;
+
+        //! Hi-lo-hi corner of this box
         constexpr Vector3<T>    hlh() const noexcept;
+
+        //! Hi-lo-hi corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    hlh(T adjust) const noexcept;
+
+        //! Hi-lo-li corner of this box
         constexpr Vector3<T>    hll() const noexcept;
+
+        //! Hi-lo-lo corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    hll(T adjust) const noexcept;
 
         /*! \brief Inflates the box
@@ -257,13 +365,28 @@ namespace yq {
         //! Check for validity
         constexpr bool    is_valid() const noexcept;
 
+        //! Lo-hi-hi corner of this box
         constexpr Vector3<T>    lhh() const noexcept;
+
+        //! Lo-hi-hi corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    lhh(T adjust) const noexcept;
+
+        //! Lo-hi-lo corner of this box
         constexpr Vector3<T>    lhl() const noexcept;
+
+        //! Lo-hi-lo corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    lhl(T adjust) const noexcept;
+
+        //! Lo-lo-hi corner of this box
         constexpr Vector3<T>    llh() const noexcept;
+
+        //! Lo-lo-hi corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    llh(T adjust) const noexcept;
+
+        //! Lo-lo-lo corner of this box
         constexpr Vector3<T>    lll() const noexcept;
+
+        //! Lo-lo-lo corner of this box, adjusted outward by the given amount
         constexpr Vector3<T>    lll(T adjust) const noexcept;
 
         //! Minimum inflation number on a valid box to keep it from going invalid
@@ -425,12 +548,15 @@ namespace yq {
     template <typename T>
     constexpr cube_t<T>       volume(const AxBox3<T>& box) noexcept;
 
+    //! Streaming assistant to text/debugging style output streams
     template <typename S, typename T>
     S&  as_stream(S& s, const AxBox3<T>& v);
     
+    //! Streams to the internal text-based stream
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox3<T>& v);
 
+    //! Streams to a logging stream
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox3<T>& v);
 }
