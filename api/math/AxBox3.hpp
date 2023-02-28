@@ -125,7 +125,7 @@ namespace yq {
         //! Constructs using the bounding box of the given segment
         explicit constexpr AxBox3(const Segment3<T>&) noexcept;
 
-        //! Constructs using the bounding box of the given circle
+        //! Constructs using the bounding box of the given sphere
         explicit constexpr AxBox3(const Sphere3<T>&) noexcept;
 
         //! Constructs using the bounding box of the given triangel
@@ -423,6 +423,8 @@ namespace yq {
         requires std::is_floating_point_v<T>
         constexpr Vector3<T>   project(const Vector3<T>& v) const noexcept;
 
+        /*! \brief Returns the size of the box
+        */
         constexpr Size3<T> size() const noexcept ;
 
         /*! \brief Returns the south east bottom corner
