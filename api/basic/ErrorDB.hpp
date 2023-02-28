@@ -7,7 +7,7 @@
 #pragma once
 
 #include <system_error>
-#include <basic/trait/string_literal.hpp>
+#include <basic/StringLiteral.hpp>
 
 namespace yq {
 
@@ -17,7 +17,7 @@ namespace yq {
         //! \note Mutex is involved!
         int                         reason(const char*);
 
-        template <string_literal WHY>
+        template <StringLiteral WHY>
         struct entry : public std::error_code {
             static int      value() 
             {
