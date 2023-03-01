@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_TRIANGLE3_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Vector3.hpp>
 

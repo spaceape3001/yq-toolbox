@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_TRIVECTOR3_HPP 1
+
 #include <math/preamble.hpp>
 
 namespace yq {

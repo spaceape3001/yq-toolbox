@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_QUATERNION3_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Tensor33.hpp>
 

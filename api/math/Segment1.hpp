@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#define YQ_MATH_SEGMENT1_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Vector1.hpp>
 

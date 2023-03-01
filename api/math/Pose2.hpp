@@ -6,6 +6,9 @@
 
 #pragma once
 
+#define YQ_MATH_POSE2_HPP 1
+
+
 #include <math/Vector2.hpp>
 #include <math/Tensor22.hpp>
 #include <math/MKS.hpp>

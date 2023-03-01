@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#define YQ_MATH_AXBOX2_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Range.hpp>
 #include <math/Size2.hpp>

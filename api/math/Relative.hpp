@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_RELATIVE_HPP 1
+
 #include <cmath>
 
 namespace yq {

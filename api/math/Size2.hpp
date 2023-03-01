@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_SIZE2_HPP 1
+
 #include <math/preamble.hpp>
 
 namespace yq {

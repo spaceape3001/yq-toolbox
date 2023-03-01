@@ -6,6 +6,7 @@
 
 #pragma once
 
+#define YQ_MATH_CIRCLE2_HPP 1
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
 

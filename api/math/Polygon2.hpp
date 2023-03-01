@@ -6,6 +6,9 @@
 
 #pragma once
 
+#define YQ_MATH_POLYGON2_HPP 1
+
+
 #include <math/preamble.hpp>
 #include <math/Vector2.hpp>
 

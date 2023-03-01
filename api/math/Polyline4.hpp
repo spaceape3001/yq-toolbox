@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_POLYLINE4_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Vector4.hpp>
 

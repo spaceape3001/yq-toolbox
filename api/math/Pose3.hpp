@@ -6,6 +6,9 @@
 
 #pragma once
 
+#define YQ_MATH_POSE3_HPP 1
+
+
 #include <math/Quaternion3.hpp>
 #include <math/Vector3.hpp>
 #include <math/Tensor33.hpp>

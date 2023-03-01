@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_POLYGON3_HPP 1
+
 #include "PolygonData.hpp"
 #include <math/preamble.hpp>
 #include <math/AxBox3.hpp>

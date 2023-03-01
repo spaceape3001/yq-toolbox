@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_PLANE3_HPP 1
+
 #include "Normal3.hpp"
 
 namespace yq {

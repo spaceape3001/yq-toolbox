@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_MULTIVECTOR4_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Vector4.hpp>
 #include <math/Bivector4.hpp>
