@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_DATA1_HPP 1
+
 namespace yq {
 
     /*! \brief Simple structure for 1-dimensional data

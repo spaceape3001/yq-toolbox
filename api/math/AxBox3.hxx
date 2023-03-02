@@ -13,15 +13,7 @@
 */
 
 #include <math/AxBox3.hpp>
-#include <math/AxCorners3.hpp>
-#include <math/Data3.hpp>
-#include <math/Range.hpp>
-#include <math/Side.hpp>
-#include <math/Size3.hpp>
 #include <math/utility.hpp>
-
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
 
 namespace yq {
     template <typename T>
@@ -108,14 +100,20 @@ namespace yq {
         }
     }
 
+    #ifdef YQ_MATH_SEGMENT3_HPP
     template <typename T>
     constexpr AxBox3<T>::AxBox3(const Segment3<T>&seg) noexcept : AxBox3(seg.bounds()) {}
+    #endif
 
+    #ifdef YQ_MATH_SPHERE3_HPP
     template <typename T>
     constexpr AxBox3<T>::AxBox3(const Sphere3<T>& sph) noexcept : AxBox3(sph.bounds()) {}
+    #endif
 
+    #ifdef YQ_MATH_TRIANGLE3_HPP
     template <typename T>
     constexpr AxBox3<T>::AxBox3(const Triangle3<T>&tri) noexcept : AxBox3(tri.bounds()) {}
+    #endif
 
     template <typename T>
     AxBox3<T>  AxBox3<T>::operator+() const noexcept
@@ -248,47 +246,69 @@ namespace yq {
         return {};
     }
 
+    #ifdef YQ_MATH_SPHERE3_HPP
+    template <typename T>
+    constexpr Sphere3<T>        AxBox3<T>::circumsphere() const noexcept
+    {
+        return Sphere3<T>( center(), half_v<T>*span().length() );
+    }
+    #endif
+
+    #if defined(YQ_MATH_DATA3_HPP) && defined(YQ_MATH_SIDE_HPP)
     template <typename T>
     constexpr Data3<Side>       AxBox3<T>::classify(const Vector3<T>&v) const noexcept
     {
         return Data3<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox3<T>::classify_x(T v) const noexcept
     {
         return _classify(v, lo.x, hi.x);
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox3<T>::classify_x(const Vector3<T>&v) const noexcept
     {
         return classify_x(v.x);
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox3<T>::classify_y(T v) const noexcept
     {
         return _classify(v, lo.y, hi.y);
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox3<T>::classify_y(const Vector3<T>&v) const noexcept
     {
         return classify_y(v.y);
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox3<T>::classify_z(T v) const noexcept
     {
         return _classify(v, lo.z, hi.z);
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox3<T>::classify_z(const Vector3<T>&v) const noexcept
     {
         return classify_z(v.z);
     }
+    #endif
 
     template <typename T>
     constexpr bool AxBox3<T>::contains(const Vector3<T>& pt) const noexcept
@@ -296,6 +316,7 @@ namespace yq {
         return (all(lo) <= pt) && (all(pt) <= hi);
     }
 
+    #ifdef YQ_MATH_AXCORNERS3_HPP
     template <typename T>
     constexpr AxCorners3<Vector3<T>>  AxBox3<T>::corners() const noexcept
     {
@@ -310,12 +331,15 @@ namespace yq {
             hhh()
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_AXCORNERS3_HPP
     template <typename T>
     constexpr AxCorners3<Vector3<T>>    AxBox3<T>::corners(T adjust) const noexcept
     {
         return inflate(adjust).corners();
     }
+    #endif
 
     template <typename T>
     T                       AxBox3<T>::distance(const Vector3<T>&v) const
@@ -443,11 +467,6 @@ namespace yq {
         return Vector3(hi.x+adjust,lo.y-adjust,lo.z-adjust);
     }
 
-    template <typename T>
-    constexpr T AxBox3<T>::min_inflate() const noexcept
-    {
-        return -midspan(span().cmin());
-    }
 
     template <typename T>
     constexpr AxBox3<T>    AxBox3<T>::inflate(T d) const noexcept
@@ -461,6 +480,14 @@ namespace yq {
         AxBox3  bx  = fixed();
         return bx.inflate(std::max(d, bx.min_inflate()));
     }
+
+    #ifdef YQ_MATH_SPHERE3_HPP
+    template <typename T>
+    constexpr Sphere3<T>    AxBox3<T>::insphere() const noexcept
+    {
+        return Sphere3<T>(center(), middivide(span().cmin()));
+    }
+    #endif
 
     template <typename T>
     constexpr bool    AxBox3<T>::is_valid() const noexcept
@@ -518,6 +545,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr T AxBox3<T>::min_inflate() const noexcept
+    {
+        return -midspan(span().cmin());
+    }
+
+    template <typename T>
     constexpr Vector3<T>  AxBox3<T>::northeast_bottom() const noexcept
     {
         return hhl();
@@ -555,12 +588,14 @@ namespace yq {
         return (one_v<Vector3<T>>-v).emul(lo) + v.emul(hi);
     }
 
+    #ifdef YQ_MATH_SIZE3_HPP
     template <typename T>
     constexpr Size3<T> AxBox3<T>::size() const noexcept 
     {
         auto s = span();
         return Size3<T>{ s.x, s.y, s.z }; 
     }
+    #endif
 
     template <typename T>
     constexpr Vector3<T>  AxBox3<T>::southeast_bottom() const noexcept
@@ -633,6 +668,7 @@ namespace yq {
         return abs(volume());
     }
 
+    #ifdef YQ_MATH_RANGE_HPP
     template <typename T>
     constexpr Range<T>  AxBox3<T>::x_range() const noexcept
     {
@@ -650,6 +686,7 @@ namespace yq {
     {
         return range(lo.z, hi.z);
     }
+    #endif
         
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -741,15 +778,19 @@ namespace yq {
                          << v.lo.z << ":" << v.hi.z << ")]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox3<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox3<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }

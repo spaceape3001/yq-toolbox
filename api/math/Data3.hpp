@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_DATA3_HPP 1
+
 namespace yq {
 
     /*! \brief Simple structure for 3-dimensional data

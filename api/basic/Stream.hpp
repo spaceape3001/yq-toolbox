@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_BASIC_STREAM_HPP_
+
 #include <cstddef>
 
 namespace yq {

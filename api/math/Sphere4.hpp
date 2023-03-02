@@ -6,9 +6,10 @@
 
 #pragma once
 
+#define YQ_MATH_SPHERE4_HPP 1
+
 #include <math/preamble.hpp>
 #include <math/Vector4.hpp>
-#include <math/AxBox4.hpp>
 
 namespace yq {
 

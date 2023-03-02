@@ -13,21 +13,7 @@
 */
 
 #include <math/AxBox2.hpp>
-#include <math/AxCorners2.hpp>
-#include <math/Circle2.hpp>
-#include <math/Data2.hpp>
-#include <math/Range.hpp>
-#include <math/Polygon2.hpp>
-#include <math/Polyline2.hpp>
-#include <math/Segment2.hpp>
-#include <math/Side.hpp>
-#include <math/Size2.hpp>
-#include <math/Triangle2.hpp>
 #include <math/utility.hpp>
-
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
-
 
 namespace yq {
     template <typename T>
@@ -103,22 +89,32 @@ namespace yq {
         }
     }
 
+    #ifdef YQ_MATH_CIRCLE2_HPP
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Circle2<T>& cir) noexcept : AxBox2(cir.bounds())
     {
     }
+    #endif
 
+    #ifdef YQ_MATH_POLYGON2_HPP
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Polygon2<T>&p) noexcept : AxBox2(p.bounds()) {}
+    #endif
 
+    #ifdef YQ_MATH_POLYLINE2_HPP
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Polyline2<T>&p) noexcept : AxBox2(p.bounds()) {}
-
+    #endif
+    
+    #ifdef YQ_MATH_SEGMENT2_HPP
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Segment2<T>&seg) noexcept : AxBox2<T>(seg.bounds()) {}
+    #endif
 
+    #ifdef YQ_MATH_TRIANGLE2_HPP
     template <typename T>
     constexpr AxBox2<T>::AxBox2(const Triangle2<T>&tri) noexcept : AxBox2<T>(tri.bounds()) {}
+    #endif
 
     template <typename T>
     AxBox2<T>  AxBox2<T>::operator+() const noexcept
@@ -262,18 +258,23 @@ namespace yq {
         return {};
     }
 
+    #ifdef YQ_MATH_CIRCLE2_HPP
     template <typename T>
     Circle2<T>          AxBox2<T>::circumcircle() const
     {
         return Circle2<T>( center(), half_v<T>*span().length() );
     }
+    #endif
     
+    #if defined(YQ_MATH_DATA2_HPP) && defined(YQ_MATH_SIDE_HPP)
     template <typename T>
     constexpr Data2<Side>       AxBox2<T>::classify(const Vector2<T>&v) const noexcept
     {
         return Data2<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox2<T>::classify_x(T v) const noexcept
     {
@@ -297,6 +298,7 @@ namespace yq {
     {
         return classify_y(v.y);
     }
+    #endif
 
     template <typename T>
     constexpr bool          AxBox2<T>::contains(const Vector2<T>& pt) const noexcept
@@ -304,6 +306,7 @@ namespace yq {
         return (all(lo) <= pt) && (all(pt) <= hi);
     }
 
+    #ifdef YQ_MATH_AXCORNERS2_HPP
     template <typename T>
     constexpr AxCorners2<Vector2<T>>    AxBox2<T>::corners() const noexcept 
     {
@@ -314,12 +317,15 @@ namespace yq {
             hh()
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_AXCORNERS2_HPP
     template <typename T>
     constexpr AxCorners2<Vector2<T>>    AxBox2<T>::corners(T adjust) const noexcept
     {
         return inflate(adjust).corners();
     }
+    #endif
 
     template <typename T>
     T                       AxBox2<T>::distance(const Vector2<T>&v) const
@@ -419,11 +425,13 @@ namespace yq {
         return Vector2<T>(hi.x+adjust, lo.y-adjust);
     }
 
+    #ifdef YQ_MATH_CIRCLE2_HPP
     template <typename T>
     constexpr Circle2<T>  AxBox2<T>::incircle() const noexcept
     {
         return Circle2<T>(center(), middivide(span().cmin()));
     }
+    #endif
 
     template <typename T>
     constexpr AxBox2<T>    AxBox2<T>::inflate(T d) const noexcept
@@ -514,6 +522,7 @@ namespace yq {
         return (Vector2<T>(ONE)-v).emul(lo) + v.emul(hi);
     }
 
+    #ifdef YQ_MATH_SIZE2_HPP
     template <typename T>
     constexpr Size2<T> AxBox2<T>::size() const noexcept 
     {
@@ -525,6 +534,7 @@ namespace yq {
     {   
         return Size2<T>(span(GUARD));
     }
+    #endif
 
     template <typename T>
     constexpr Vector2<T>    AxBox2<T>::southeast() const noexcept 
@@ -577,6 +587,7 @@ namespace yq {
         return hi.x - lo.x; 
     }
     
+    #ifdef YQ_MATH_RANGE_HPP
     template <typename T>
     constexpr Range<T>      AxBox2<T>::y_range() const noexcept 
     { 
@@ -588,6 +599,7 @@ namespace yq {
     { 
         return hi.y - lo.y; 
     }
+    #endif
         
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -649,17 +661,22 @@ namespace yq {
         return box.center();
     }
 
+    #ifdef YQ_MATH_CIRCLE2_HPP
     template <typename T>
     Circle2<T>    circumcircle(const AxBox2<T>& box) 
     {
         return box.circumcircle();
     }
-
+    #endif
+    
+    
+    #ifdef YQ_MATH_CIRCLE2_HPP
     template <typename T>
     constexpr Circle2<T>    incircle(const AxBox2<T>& box) noexcept
     {
         return box.incircle();
     }
+    #endif
 
     template <typename T>
     constexpr bool          is_valid(const AxBox2<T>& a) noexcept
@@ -686,15 +703,19 @@ namespace yq {
                          << v.lo.y << ":" << v.hi.y << ")]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox2<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox2<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }

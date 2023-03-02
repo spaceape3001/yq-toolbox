@@ -13,16 +13,7 @@
 */
 
 #include <math/AxBox1.hpp>
-#include <math/AxCorners1.hpp>
-#include <math/Data1.hpp>
-#include <math/Range.hpp>
-#include <math/Segment1.hpp>
-#include <math/Side.hpp>
-#include <math/Size1.hpp>
 #include <math/utility.hpp>
-
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
 
 namespace yq {
     template <typename T>
@@ -90,8 +81,10 @@ namespace yq {
         }
     }
 
+    #ifdef YQ_MATH_SEGMENT1_HPP
     template <typename T>
     constexpr AxBox1<T>::AxBox1(const Segment1<T>&seg) noexcept : AxBox1<T>(seg.bounds()) {}
+    #endif
 
     template <typename T>
     AxBox1<T>  AxBox1<T>::operator+() const noexcept
@@ -223,23 +216,30 @@ namespace yq {
         return {};
     }
 
+    #if defined(YQ_MATH_DATA1_HPP) && defined(YQ_MATH_SIDE_HPP)
     template <typename T>
     constexpr Data1<Side>       AxBox1<T>::classify(const Vector1<T>&v) const noexcept
     {
         return Data1<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
     }
-
+    #endif
+    
+    
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox1<T>::classify_x(T v) const noexcept
     {
         return _classify(v, lo.x, hi.x);
     }
+    #endif
 
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox1<T>::classify_x(const Vector1<T>&v) const noexcept
     {
         return classify_x(v.x);
     }
+    #endif
 
     template <typename T>
     constexpr bool AxBox1<T>::contains(const Vector1<T>& pt) const noexcept
@@ -247,6 +247,7 @@ namespace yq {
         return (all(lo) <= pt) && (all(pt) <= hi);
     }
 
+    #ifdef YQ_MATH_AXCORNERS1_HPP
     template <typename T>
     constexpr AxCorners1<Vector1<T>>  AxBox1<T>::corners() const noexcept
     {
@@ -255,12 +256,15 @@ namespace yq {
             h()
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_AXCORNERS1_HPP
     template <typename T>
     constexpr AxCorners1<Vector1<T>>    AxBox1<T>::corners(T adjust) const noexcept
     {
         return inflate(adjust).corners();
     }
+    #endif
 
     template <typename T>
     T                       AxBox1<T>::distance(const Vector1<T>&v) const
@@ -377,12 +381,14 @@ namespace yq {
         return (one_v<Vector1<T>>-v).emul(lo) + v.emul(hi);
     }
     
+    #ifdef YQ_MATH_SIZE1_HPP
     template <typename T>
     constexpr Size1<T> AxBox1<T>::size() const noexcept 
     {
         auto s = span();
         return Size1<T>{ s.x }; 
     }
+    #endif
 
     template <typename T>
     constexpr Vector1<T>    AxBox1<T>::span() const noexcept
@@ -410,11 +416,13 @@ namespace yq {
         return all(lo) <= hi;
     }
 
+    #ifdef YQ_MATH_RANGE_HPP
     template <typename T>
     constexpr Range<T>  AxBox1<T>::x_range() const noexcept
     {
         return range(lo.x, hi.x);
     }
+    #endif
     
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -494,15 +502,19 @@ namespace yq {
         return s << "[(" << v.lo.x << ":" << v.hi.x << ")]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox1<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox1<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }

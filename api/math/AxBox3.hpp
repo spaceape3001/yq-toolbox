@@ -198,6 +198,9 @@ namespace yq {
         */
         constexpr Vector3<T>      center() const noexcept;
 
+        //! Minimum sphere needed to contain the box
+        constexpr Sphere3<T>        circumsphere() const noexcept;
+
         //! Classifies the point with respect to the box
         constexpr Data3<Side>       classify(const Vector3<T>&) const noexcept;
 
@@ -363,6 +366,9 @@ namespace yq {
             half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
         */
         constexpr AxBox3    inflate(guard_t, T) const noexcept;
+        
+        //! Largest sphere contained by this box (won't touch all sides)
+        constexpr Sphere3<T>    insphere() const noexcept;
 
         //! Check for validity
         constexpr bool    is_valid() const noexcept;

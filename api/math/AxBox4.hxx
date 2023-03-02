@@ -13,16 +13,7 @@
 */
 
 #include <math/AxBox4.hpp>
-#include <math/AxCorners4.hpp>
-#include <math/Data4.hpp>
-#include <math/Range.hpp>
-#include <math/Side.hpp>
-#include <math/Size4.hpp>
-#include <math/Segment4.hpp>
 #include <math/utility.hpp>
-
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
 
 namespace yq {
     template <typename T>
@@ -118,15 +109,20 @@ namespace yq {
         }
     }
 
+    #ifdef YQ_MATH_SEGMENT4_HPP
     template <typename T>
     constexpr AxBox4<T>::AxBox4(const Segment4<T>&seg) noexcept : AxBox4<T>(seg.bounds()) {}
+    #endif
 
-
+    #ifdef YQ_MATH_SPHERE4_HPP
     template <typename T>
     constexpr AxBox4<T>::AxBox4(const Sphere4<T>& sph) noexcept : AxBox4(sph.bounds()) {}
-
+    #endif
+    
+    #ifdef YQ_MATH_TRIANGLE4_HPP
     template <typename T>
     constexpr AxBox4<T>::AxBox4(const Triangle4<T>&tri) noexcept : AxBox4<T>(tri.bounds()) {}
+    #endif
 
     template <typename T>
     AxBox4<T>  AxBox4<T>::operator+() const noexcept
@@ -258,12 +254,23 @@ namespace yq {
         return {};
     }
 
+    #ifdef YQ_MATH_SPHERE4_HPP
+    template <typename T>
+    constexpr Sphere4<T>        AxBox4<T>::circumsphere() const noexcept
+    {
+        return Sphere4<T>( center(), half_v<T>*span().length() );
+    }
+    #endif
+
+    #if defined(YQ_MATH_DATA4_HPP) && defined(YQ_MATH_SIDE_HPP)
     template <typename T>
     constexpr Data4<Side>       AxBox4<T>::classify(const Vector4<T>&v) const noexcept
     {
         return Data4<Side>( classify_x(v.x), classify_y(v.y), classify_z(v.z), classify_w(v.w) );
     }
+    #endif
     
+    #ifdef YQ_MATH_SIDE_HPP
     template <typename T>
     constexpr Side              AxBox4<T>::classify_w(T v) const noexcept
     {
@@ -311,7 +318,7 @@ namespace yq {
     {
         return classify_z(v.z);
     }
-
+    #endif
 
     template <typename T>
     constexpr bool AxBox4<T>::contains (const Vector4<T>& pt) const noexcept
@@ -319,6 +326,7 @@ namespace yq {
         return (all(lo) <= pt) && (all(pt) <= hi);
     }
 
+    #ifdef YQ_MATH_AXCORNERS4_HPP
     template <typename T>
     constexpr AxCorners4<Vector4<T>>  AxBox4<T>::corners() const noexcept
     {
@@ -348,6 +356,7 @@ namespace yq {
     {
         return inflate(adjust).corners();
     }
+    #endif
 
     template <typename T>
     T                       AxBox4<T>::distance(const Vector4<T>&v) const
@@ -565,6 +574,14 @@ namespace yq {
         return bx.inflate(std::max(d, bx.min_inflate()));
     }
 
+    #ifdef YQ_MATH_SPHERE4_HPP
+    template <typename T>
+    constexpr Sphere4<T>    AxBox4<T>::insphere() const noexcept
+    {
+        return Sphere4<T>(center(), middivide(span().cmin()));
+    }
+    #endif
+
     template <typename T>
     constexpr bool    AxBox4<T>::is_valid() const noexcept
     {
@@ -687,12 +704,14 @@ namespace yq {
         return (one_v<Vector4<T>>-v).emul(lo) + v.emul(hi);
     }
 
+    #ifdef YQ_MATH_SIZE4_HPP
     template <typename T>
     constexpr Size4<T> AxBox4<T>::size() const noexcept 
     {
         auto s = span();
         return Size4<T>{ s.x, s.y, s.z, s.w  }; 
     }
+    #endif
 
     template <typename T>
     constexpr Vector4<T>    AxBox4<T>::span() const noexcept
@@ -721,6 +740,7 @@ namespace yq {
         return all(lo) <= hi;
     }
 
+    #ifdef YQ_MATH_RANGE_HPP
     template <typename T>
     constexpr Range<T>  AxBox4<T>::x_range() const noexcept
     {
@@ -744,6 +764,7 @@ namespace yq {
     {
         return range(lo.w, hi.w);
     }
+    #endif
     
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -827,15 +848,19 @@ namespace yq {
                          << v.lo.w << ":" << v.hi.w << ")]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const AxBox4<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const AxBox4<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }
