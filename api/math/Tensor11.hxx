@@ -12,14 +12,8 @@
     template instantiation.  
 */
 
-#include <math/Segment1.hpp>
 
 #include <math/Tensor11.hpp>
-#include <math/Tensor12.hpp>
-#include <math/Tensor13.hpp>
-#include <math/Tensor14.hpp>
-
-#include <math/Vector1.hpp>
 #include <math/utility.hpp>
 
 #include <math/AllComponents.hpp>
@@ -104,12 +98,14 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_SEGMENT1_HPP
     template <typename T>
         template <typename U>
     constexpr Segment1<product_t<T,U>>  Tensor11<T>::operator*(const Segment1<U>&rhs) const noexcept
     {
         return Segment1<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -129,6 +125,7 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ__API__MATH__TENSOR_1_2__HPP
     template <typename T>
         template <typename U>
     constexpr Tensor12<product_t<T,U>> Tensor11<T>::operator*(const Tensor12<U>& b) const noexcept
@@ -138,7 +135,9 @@ namespace yq {
             xx*b.xy
         );
     }
+    #endif
     
+    #ifdef YQ__API__MATH__TENSOR_1_3__HPP
     template <typename T>
         template <typename U>
     constexpr Tensor13<product_t<T,U>> Tensor11<T>::operator*(const Tensor13<U>& b) const noexcept
@@ -149,7 +148,9 @@ namespace yq {
             xx*b.xz
         );
     }
+    #endif
     
+    #ifdef YQ__API__MATH__TENSOR_1_4__HPP
     template <typename T>
         template <typename U>
     constexpr Tensor14<product_t<T,U>> Tensor11<T>::operator*(const Tensor14<U>& b) const noexcept
@@ -161,6 +162,7 @@ namespace yq {
             xx*b.xw
         );
     }
+    #endif
         
     template <typename T>
         template <typename U>

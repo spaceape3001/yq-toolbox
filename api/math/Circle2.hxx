@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <math/AxBox2.hpp>
 #include <math/Circle2.hpp>
 
 /* 
@@ -108,12 +107,14 @@ namespace yq {
             return {};
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr AxBox2<T>   Circle2<T>::bounds() const noexcept 
     {
         T       r   = abs(radius);
         return AxBox2<T>(all(point) - r, all(point) + r);
     }
+    #endif
     
     template <typename T>
     constexpr T     Circle2<T>::circumference() const noexcept
@@ -152,11 +153,13 @@ namespace yq {
         return Circle2<product_t<T,U>>(a*b.point, positive(a)*b.radius);
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr AxBox2<T>   aabb(const Circle2<T>& cir) noexcept
     {   
         return cir.bounds();
     }
+    #endif
     
     template <typename T>
     constexpr square_t<T> area(const Circle2<T>& cir) noexcept
