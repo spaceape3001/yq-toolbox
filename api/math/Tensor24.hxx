@@ -133,7 +133,7 @@ namespace yq {
     }
     #endif
 
-    #if defined(YQ_MATH_SEGMENT2_HPP) && defined(YQ_MATH_SEGMENT3_HPP)
+    #if defined(YQ_MATH_SEGMENT2_HPP) && defined(YQ_MATH_SEGMENT4_HPP)
     template <typename T>
         template <typename U>
     constexpr Segment2<product_t<T,U>>  Tensor24<T>::operator*(const Segment4<U>&rhs) const noexcept
