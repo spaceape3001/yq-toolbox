@@ -386,7 +386,7 @@ namespace yq {
         template <typename U>
     constexpr Multivector2<product_t<T,U>> Vector2<T>::operator*(const Vector2<U>&b) const noexcept
     {
-        return Multivector2<product_t<T,U>>( x*b.x+y*b.y, zero_v<T>, zero_v<T>, x*b.y-y*b.x );
+        return Multivector2<product_t<T,U>>( x*b.x+y*b.y, zero_v<product_t<T,U>>, zero_v<product_t<T,U>>, x*b.y-y*b.x );
     }
     #endif
 
