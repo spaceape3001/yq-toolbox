@@ -12,10 +12,7 @@
     template instantiation.  
 */
 
-#include <math/Bivector3.hpp>
-#include <math/Multivector3.hpp>
 #include <math/Trivector3.hpp>
-#include <math/Vector3.hpp>
 
 namespace yq {
     template <typename T>
@@ -30,6 +27,7 @@ namespace yq {
         return Trivector3<T>(-xyz);
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR3_HPP
     template <typename T>
     constexpr Multivector3<T> Trivector3<T>::operator+(T b) const noexcept
     {
@@ -40,6 +38,33 @@ namespace yq {
             xyz 
         );
     }    
+    #endif
+
+    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_BIVECTOR3_HPP
+    template <typename T>
+    constexpr Multivector3<T> Trivector3<T>::operator+(const Bivector3<T>& b) const noexcept
+    {
+        return Multivector3<T>(
+            zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>,
+            b.xy, b.yz, b.zx,
+            xyz 
+        );
+    }
+    #endif
+    
+    #ifdef YQ_MATH_MULTIVECTOR3_HPP
+    template <typename T>
+    constexpr Multivector3<T> Trivector3<T>::operator+(const Multivector3<T>& b) const noexcept
+    {
+        return Multivector3<T>(
+            b.a, 
+            b.x, b.y, b.z,
+            b.xy, b.yz, b.zx,
+            xyz + b.xyz
+        );
+    }
+    #endif
 
     template <typename T>
     constexpr Trivector3<T> Trivector3<T>::operator+(const Trivector3<T>& b) const noexcept
@@ -54,28 +79,7 @@ namespace yq {
         return *this;
     }
 
-    template <typename T>
-    constexpr Multivector3<T> Trivector3<T>::operator+(const Bivector3<T>& b) const noexcept
-    {
-        return Multivector3<T>(
-            zero_v<T>, 
-            zero_v<T>, zero_v<T>, zero_v<T>,
-            b.xy, b.yz, b.zx,
-            xyz 
-        );
-    }
-    
-    template <typename T>
-    constexpr Multivector3<T> Trivector3<T>::operator+(const Multivector3<T>& b) const noexcept
-    {
-        return Multivector3<T>(
-            b.a, 
-            b.x, b.y, b.z,
-            b.xy, b.yz, b.zx,
-            xyz + b.xyz
-        );
-    }
-    
+    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_VECTOR_3_HPP)
     template <typename T>
     constexpr Multivector3<T> Trivector3<T>::operator+(const Vector3<T>& b) const noexcept
     {
@@ -86,7 +90,9 @@ namespace yq {
             xyz 
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_MULTIVECTOR3_HPP
     template <typename T>
     constexpr Multivector3<T> Trivector3<T>::operator-(T b) const noexcept
     {
@@ -97,7 +103,34 @@ namespace yq {
             xyz 
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_BIVECTOR3_HPP
+    template <typename T>
+    constexpr Multivector3<T> Trivector3<T>::operator-(const Bivector3<T>& b) const noexcept
+    {
+        return Multivector3<T>(
+            zero_v<T>, 
+            zero_v<T>, zero_v<T>, zero_v<T>,
+            -b.xy, -b.yz, -b.zx,
+            xyz 
+        );
+    }
+    #endif
+    
+    #ifdef YQ_MATH_MULTIVECTOR3_HPP
+    template <typename T>
+    constexpr Multivector3<T> Trivector3<T>::operator-(const Multivector3<T>& b) const noexcept
+    {
+        return Multivector3<T>(
+            -b.a, 
+            -b.x, -b.y, -b.z,
+            -b.xy, -b.yz, -b.zx,
+            xyz - b.xyz
+        );
+    }
+    #endif
+    
     template <typename T>
     constexpr Trivector3<T> Trivector3<T>::operator-(const Trivector3<T>& b) const noexcept
     {
@@ -112,30 +145,7 @@ namespace yq {
     }
 
 
-    template <typename T>
-    constexpr Multivector3<T> Trivector3<T>::operator-(const Bivector3<T>& b) const noexcept
-    {
-        return Multivector3<T>(
-            zero_v<T>, 
-            zero_v<T>, zero_v<T>, zero_v<T>,
-            -b.xy, -b.yz, -b.zx,
-            xyz 
-        );
-    }
-    
-    template <typename T>
-    constexpr Multivector3<T> Trivector3<T>::operator-(const Multivector3<T>& b) const noexcept
-    {
-        return Multivector3<T>(
-            -b.a, 
-            -b.x, -b.y, -b.z,
-            -b.xy, -b.yz, -b.zx,
-            xyz - b.xyz
-        );
-    }
-    
-
-
+    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_VECTOR_3_HPP)
     template <typename T>
     constexpr Multivector3<T> Trivector3<T>::operator-(const Vector3<T>& b) const noexcept
     {
@@ -146,6 +156,7 @@ namespace yq {
             xyz 
         );
     }
+    #endif
     
     template <typename T>
         template <typename U>
@@ -186,6 +197,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+    #ifdef YQ_MATH_MULTIVECTOR3_HPP
     template <typename T>
     constexpr Multivector3<T> operator+(T a, const Trivector3<T>& b) noexcept
     {
@@ -196,7 +208,9 @@ namespace yq {
             b.xyz
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR3_HPP
     template <typename T>
     constexpr Multivector3<T> operator-(T a, const Trivector3<T>& b) noexcept
     {
@@ -207,6 +221,7 @@ namespace yq {
             -b.xyz
         );
     }
+    #endif
 
     template <typename T, typename U>
     requires is_arithmetic_v<T>
