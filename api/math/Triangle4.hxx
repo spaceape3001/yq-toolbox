@@ -12,19 +12,15 @@
     template instantiation.  
 */
 
-#include <math/AxBox4.hpp>
-#include <math/Tensor42.hpp>
-#include <math/Tensor43.hpp>
-#include <math/Tensor44.hpp>
-#include <math/Triangle2.hpp>
-#include <math/Triangle3.hpp>
 #include <math/Triangle4.hpp>
 #include <math/TriangleData.hpp>
 
 
 namespace yq {
+    #ifdef YQ_MATH_SEGMENT4_HPP
     template <typename T>
     constexpr Triangle4<T>::Triangle4(const Segment4<T>&seg, const Vector4<T>& c) noexcept : Triangle4(seg.a, seg.b, c) {}
+    #endif
 
     template <typename T>
     constexpr Triangle4<T>::operator TriangleData<Vector4<T>> () const noexcept 
@@ -95,27 +91,34 @@ namespace yq {
         return *this;
     }
 
+    #if defined(YQ_MATH_TENSOR_4_2_HPP) && defined(YQ_MATH_TRIANGLE2_HPP) 
     template <typename T>
         template <typename U>
     Triangle2<product_t<T,U>>   Triangle4<T>::operator*(const Tensor42<U>&rhs) const noexcept
     {
         return Triangle2<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_4_3_HPP) && defined(YQ_MATH_TRIANGLE3_HPP) 
     template <typename T>
         template <typename U>
     Triangle3<product_t<T,U>>   Triangle4<T>::operator*(const Tensor43<U>&rhs) const noexcept
     {
         return Triangle3<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     Triangle4<product_t<T,U>>   Triangle4<T>::operator*(const Tensor44<U>&rhs) const noexcept
     {
         return Triangle4<product_t<T,U>>(a*rhs, b*rhs, c*rhs);
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -126,6 +129,7 @@ namespace yq {
         c *= rhs;
         return *this;
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -162,17 +166,21 @@ namespace yq {
         }
     }
     
+    #ifdef YQ_MATH_AXBOX4_HPP
     template <typename T>
     constexpr AxBox4<T>   Triangle4<T>::bounds() const noexcept
     {
         return AxBox4<T>(UNION, { a, b, c });
     }
+    #endif
     
+    #ifdef YQ_MATH_SEGMENT4_HPP
     template <typename T>
     constexpr Segment4<T>   Triangle4<T>::edge_a() const noexcept
     {
         return Segment4<T>(b, c);
     }
+    #endif
 
     template <typename T>
     constexpr T             Triangle4<T>::edge_a_length() const noexcept
@@ -186,11 +194,13 @@ namespace yq {
         return (c-b).length²();
     }
         
+    #ifdef YQ_MATH_SEGMENT4_HPP
     template <typename T>
     constexpr Segment4<T>   Triangle4<T>::edge_b() const noexcept
     {
         return Segment4<T>(c, a);
     }
+    #endif
 
     template <typename T>
     constexpr T             Triangle4<T>::edge_b_length() const noexcept
@@ -204,11 +214,13 @@ namespace yq {
         return (a-c).length²();
     }
 
+    #ifdef YQ_MATH_SEGMENT4_HPP
     template <typename T>
     constexpr Segment4<T>   Triangle4<T>::edge_c() const noexcept
     {
         return Segment4<T>(a, b);
     }
+    #endif
 
     template <typename T>
     constexpr T             Triangle4<T>::edge_c_length() const noexcept
@@ -239,11 +251,13 @@ namespace yq {
         return Triangle4<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b, lhs*rhs.c);
     }
 
+    #ifdef YQ_MATH_AXBOX4_HPP
     template <typename T>
     constexpr AxBox4<T>   aabb(const Triangle4<T>& tri) noexcept
     {
         return tri.bounds();
     }
+    #endif
 
     template <typename T>
     T       perimeter(const Triangle4<T>& tri)
