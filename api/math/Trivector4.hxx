@@ -12,9 +12,6 @@
     template instantiation.  
 */
 
-#include <math/Bivector4.hpp>
-#include <math/Multivector4.hpp>
-#include <math/Quadvector4.hpp>
 #include <math/Trivector4.hpp>
 
 
@@ -31,6 +28,7 @@ namespace yq {
         return Trivector4(-xyz, -yzw, -zwx, -wxy);
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator+(T b) const noexcept
     {
@@ -42,8 +40,9 @@ namespace yq {
             zero_v<T> 
         );
     }
-        
+    #endif
 
+    #if defined(YQ_MATH_BIVECTOR4_HPP) && defined(YQ_MATH_MULTIVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator+(const Bivector4<T>& b) const noexcept
     {
@@ -55,7 +54,9 @@ namespace yq {
             zero_v<T> 
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator+(const Multivector4<T>& b) const noexcept
     {
@@ -67,7 +68,9 @@ namespace yq {
             b.xyzw
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_QUADVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator+(const Quadvector4<T>& b) const noexcept
     {
@@ -79,7 +82,7 @@ namespace yq {
             b.xyzw 
         );
     }
-
+    #endif
     
     template <typename T>
     constexpr Trivector4<T> Trivector4<T>::operator+(const Trivector4<T>& b) const noexcept
@@ -94,6 +97,7 @@ namespace yq {
         return *this;
     }
 
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator+(const Vector4<T>& b) const noexcept
     {
@@ -105,7 +109,9 @@ namespace yq {
             zero_v<T> 
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator-(T b) const noexcept
     {
@@ -117,9 +123,9 @@ namespace yq {
             zero_v<T> 
         );
     }
+    #endif
 
-
-
+    #if defined(YQ_MATH_BIVECTOR4_HPP) && defined(YQ_MATH_MULTIVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator-(const Bivector4<T>& b) const noexcept
     {
@@ -131,7 +137,9 @@ namespace yq {
             zero_v<T> 
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator-(const Multivector4<T>& b) const noexcept
     {
@@ -143,7 +151,9 @@ namespace yq {
             -b.xyzw
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_QUADVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator-(const Quadvector4<T>& b) const noexcept
     {
@@ -155,6 +165,7 @@ namespace yq {
             -b.xyzw 
         );
     }
+    #endif
     
     template <typename T>
     constexpr Trivector4<T> Trivector4<T>::operator-(const Trivector4<T>& b) const noexcept
@@ -163,6 +174,7 @@ namespace yq {
     }
 
         
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T>
     constexpr Multivector4<T> Trivector4<T>::operator-(const Vector4<T>& b) const noexcept
     {
@@ -174,7 +186,7 @@ namespace yq {
             zero_v<T> 
         );
     }
-
+    #endif
 
     template <typename T>
     Trivector4<T>& Trivector4<T>::operator-=(const Trivector4<T>& b) noexcept
@@ -222,6 +234,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> operator+(T a, const Trivector4<T>& b) noexcept
     {
@@ -233,9 +246,9 @@ namespace yq {
             zero_v<T> 
         );
     }
+    #endif
 
-    /*! Scalar/trivector subtraction
-    */
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> operator-(T a, const Trivector4<T>& b) noexcept
     {
@@ -247,6 +260,7 @@ namespace yq {
             zero_v<T> 
         );
     }
+    #endif
 
     template <typename T, typename U>
     requires is_arithmetic_v<T>

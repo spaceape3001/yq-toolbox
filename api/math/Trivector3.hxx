@@ -40,7 +40,7 @@ namespace yq {
     }    
     #endif
 
-    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_BIVECTOR3_HPP
+    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_BIVECTOR3_HPP)
     template <typename T>
     constexpr Multivector3<T> Trivector3<T>::operator+(const Bivector3<T>& b) const noexcept
     {
@@ -105,7 +105,7 @@ namespace yq {
     }
     #endif
 
-    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_BIVECTOR3_HPP
+    #if defined(YQ_MATH_MULTIVECTOR3_HPP) && defined(YQ_MATH_BIVECTOR3_HPP)
     template <typename T>
     constexpr Multivector3<T> Trivector3<T>::operator-(const Bivector3<T>& b) const noexcept
     {
