@@ -12,28 +12,7 @@
     template instantiation.  
 */
 
-#include <math/Polygon2.hpp>
-#include <math/Polygon3.hpp>
-#include <math/Polyline2.hpp>
-#include <math/Polyline3.hpp>
-
-#include <math/Segment3.hpp>
-
-#include <math/Tensor21.hpp>
-#include <math/Tensor22.hpp>
 #include <math/Tensor23.hpp>
-#include <math/Tensor24.hpp>
-
-#include <math/Tensor31.hpp>
-#include <math/Tensor32.hpp>
-#include <math/Tensor33.hpp>
-#include <math/Tensor34.hpp>
-
-#include <math/Triangle2.hpp>
-#include <math/Triangle3.hpp>
-
-#include <math/Vector2.hpp>
-#include <math/Vector3.hpp>
 #include <math/utility.hpp>
 
 #include <math/AllComponents.hpp>
@@ -136,28 +115,34 @@ namespace yq {
         return *this;
     }
 
+    #if defined(YQ_MATH_POLYGON2_HPP) && defined(YQ_MATH_POLYGON3_HPP)
     template <typename T>
         template <typename U>
     Polygon2<product_t<T,U>>  Tensor23<T>::operator*(const Polygon3<U>&b) const
     {
         return Polygon2<product_t<T,U>>( *this * b.vertex );
     }
+    #endif
     
+    #if defined(YQ_MATH_POLYLINE2_HPP) && defined(YQ_MATH_POLYLINE3_HPP)
     template <typename T>
         template <typename U>
     Polyline2<product_t<T,U>>  Tensor23<T>::operator*(const Polyline3<U>&b) const
     {
         return Polyline2<product_t<T,U>>( *this * b.vertex );
-        
     }
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT2_HPP) && defined(YQ_MATH_SEGMENT3_HPP)
     template <typename T>
         template <typename U>
     constexpr Segment2<product_t<T,U>>  Tensor23<T>::operator*(const Segment3<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_2_1_HPP) && defined(YQ_MATH_TENSOR_3_1_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor21<product_t<T,U>> Tensor23<T>::operator*(const Tensor31<U>& b) const noexcept
@@ -168,7 +153,9 @@ namespace yq {
             yx*b.xx + yy*b.yx + yz*b.zx
         );
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_2_2_HPP) && defined(YQ_MATH_TENSOR_3_2_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor22<product_t<T,U>> Tensor23<T>::operator*(const Tensor32<U>& b) const noexcept
@@ -181,7 +168,9 @@ namespace yq {
             yx*b.xy + yy*b.yy + yz*b.zy
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor23<product_t<T,U>> Tensor23<T>::operator*(const Tensor33<U>& b) const noexcept
@@ -196,7 +185,9 @@ namespace yq {
             yx*b.xz + yy*b.yz + yz*b.zz
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -205,7 +196,9 @@ namespace yq {
         *this = *this * b;
         return *this;
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_2_4_HPP) && defined(YQ_MATH_TENSOR_3_4_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor24<product_t<T,U>> Tensor23<T>::operator*(const Tensor34<U>& b) const noexcept
@@ -222,13 +215,16 @@ namespace yq {
             yx*b.xw + yy*b.yw + yz*b.zw
         );
     }
+    #endif
         
+    #if defined(YQ_MATH_TRIANGLE2_HPP) && defined(YQ_MATH_TRIANGLE3_HPP)
     template <typename T>
         template <typename U>
     Triangle2<product_t<T,U>> Tensor23<T>::operator*(const Triangle3<U>&rhs) const noexcept
     {
         return Triangle2<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -365,6 +361,7 @@ namespace yq {
         ;
     }
             
+    #ifdef YQ_MATH_TENSOR_3_2_HPP
     template <typename T>
     constexpr Tensor32<T> Tensor23<T>::transpose() const noexcept
     {
@@ -374,6 +371,7 @@ namespace yq {
             xz, yz
         );
     }
+    #endif
 
 
     template <typename T>
@@ -543,11 +541,13 @@ namespace yq {
     }
     #endif
     
+    #ifdef YQ_MATH_TENSOR_3_2_HPP
     template <typename T>
     constexpr Tensor32<T>  transpose(const Tensor23<T>&v)
     {
         return v.transpose();
     }
+    #endif
 
     //! Gets the X-column of the provided tensor
     template <typename T>
