@@ -108,7 +108,7 @@ namespace yq {
     }
     #endif
 
-    #if defined(YQ__API__MATH__TENSOR_1_1__HPP) && defined(YQ__API__MATH__TENSOR_2_1__HPP)
+    #if defined(YQ_MATH_TENSOR_1_1_HPP) && defined(YQ_MATH_TENSOR_2_1_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor11<product_t<T,U>> Tensor12<T>::operator*(const Tensor21<U>& b) const noexcept
@@ -119,7 +119,7 @@ namespace yq {
     }
     #endif
     
-    #ifdef YQ__API__MATH__TENSOR_2_2__HPP
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor12<product_t<T,U>> Tensor12<T>::operator*(const Tensor22<U>& b) const noexcept
@@ -131,7 +131,7 @@ namespace yq {
     }
     #endif
     
-    #ifdef YQ__API__MATH__TENSOR_2_2__HPP
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -142,7 +142,7 @@ namespace yq {
     }
     #endif
 
-    #if defined(YQ__API__MATH__TENSOR_1_3__HPP) && defined(YQ__API__MATH__TENSOR_2_3__HPP)
+    #if defined(YQ_MATH_TENSOR_1_3_HPP) && defined(YQ_MATH_TENSOR_2_3_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor13<product_t<T,U>> Tensor12<T>::operator*(const Tensor23<U>& b) const noexcept
@@ -155,7 +155,7 @@ namespace yq {
     }
     #endif
     
-    #if defined(YQ__API__MATH__TENSOR_1_4__HPP) && defined(YQ__API__MATH__TENSOR_2_4__HPP)
+    #if defined(YQ_MATH_TENSOR_1_4_HPP) && defined(YQ_MATH_TENSOR_2_4_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor14<product_t<T,U>> Tensor12<T>::operator*(const Tensor24<U>& b) const noexcept
@@ -291,7 +291,7 @@ namespace yq {
     }
 
 
-    #ifdef YQ__API__MATH__TENSOR_2_1__HPP
+    #ifdef YQ_MATH_TENSOR_2_1_HPP
     template <typename T>
     constexpr Tensor21<T> Tensor12<T>::transpose() const noexcept
     {
@@ -415,7 +415,7 @@ namespace yq {
     }
     #endif
 
-    #ifdef YQ__API__MATH__TENSOR_2_1__HPP
+    #ifdef YQ_MATH_TENSOR_2_1_HPP
     template <typename T>
     constexpr Tensor21<T>  transpose(const Tensor12<T>&v) noexcept
     {

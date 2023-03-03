@@ -6,7 +6,7 @@
 
 #pragma once
 
-#define YQ__API__MATH__VECTOR_4__HPP 1
+#define YQ_MATH_VECTOR_4_HPP 1
 #include <math/preamble.hpp>
 
 namespace yq {

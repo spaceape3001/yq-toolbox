@@ -6,7 +6,7 @@
 
 #pragma once
 
-#define YQ__API__MATH__TENSOR_3_4__HPP 1
+#define YQ_MATH_TENSOR_3_4_HPP 1
 #include <math/preamble.hpp>
 #include <math/Vector3.hpp>
 #include <math/Vector4.hpp>

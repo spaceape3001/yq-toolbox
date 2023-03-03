@@ -13,20 +13,7 @@
     template instantiation.  
 */
 
-#include <math/Polygon2.hpp>
-#include <math/Polyline2.hpp>
-#include <math/Quadrilateral2.hpp>
-
-#include <math/Segment2.hpp>
-
-#include <math/Tensor21.hpp>
 #include <math/Tensor22.hpp>
-#include <math/Tensor23.hpp>
-#include <math/Tensor24.hpp>
-#include <math/Triangle2.hpp>
-
-#include <math/Vector2.hpp>
-
 #include <math/trig.hpp>
 #include <math/utility.hpp>
 
@@ -142,35 +129,43 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_POLYGON2_HPP
     template <typename T>
         template <typename U>
     Polygon2<product_t<T,U>>  Tensor22<T>::operator*(const Polygon2<U>&b) const
     {
         return Polygon2<product_t<T,U>>( *this * b.vertex );
     }
+    #endif
     
+    #ifdef YQ_MATH_POLYLINE2_HPP
     template <typename T>
         template <typename U>
     Polyline2<product_t<T,U>>  Tensor22<T>::operator*(const Polyline2<U>&b) const
     {
         return Polyline2<product_t<T,U>>( *this * b.vertex );
-        
     }
+    #endif
 
+    #ifdef YQ_MATH_QUADRILATERAL2_HPP
     template <typename T>
         template <typename U>
     Quadrilateral2<product_t<T,U>> Tensor22<T>::operator*(const Quadrilateral2<U>&rhs) const
     {
         return Quadrilateral2<product_t<T,U>>(*this * rhs.a, *this * rhs.b, *this * rhs.c, *this * rhs.d);
     }
+    #endif
 
+    #ifdef YQ_MATH_SEGMENT2_HPP
     template <typename T>
         template <typename U>
     constexpr Segment2<product_t<T,U>>  Tensor22<T>::operator*(const Segment2<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_2_1_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor21<product_t<T,U>> Tensor22<T>::operator*(const Tensor21<U>& b) const noexcept
@@ -181,6 +176,7 @@ namespace yq {
             yx*b.xx + yy*b.yx
         };
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -204,6 +200,7 @@ namespace yq {
         return *this;
     }
    
+    #ifdef YQ_MATH_TENSOR_2_3_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor23<product_t<T,U>> Tensor22<T>::operator*(const Tensor23<U>& b) const noexcept
@@ -218,7 +215,9 @@ namespace yq {
             yx*b.xz + yy*b.yz
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_2_4_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor24<product_t<T,U>> Tensor22<T>::operator*(const Tensor24<U>& b) const noexcept
@@ -235,13 +234,16 @@ namespace yq {
             yx*b.xw + yy*b.yw
         );
     }
-
+    #endif
+    
+    #ifdef YQ_MATH_TRIANGLE2_HPP
     template <typename T>
         template <typename U>
     Triangle2<product_t<T,U>> Tensor22<T>::operator*(const Triangle2<U>&rhs) const noexcept
     {
         return Triangle2<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
     }
+    #endif
         
     template <typename T>
         template <typename U>

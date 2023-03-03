@@ -125,7 +125,7 @@ namespace yq {
         return *this;
     }
 
-    #ifdef YQ__API__MATH__TENSOR_1_2__HPP
+    #ifdef YQ_MATH_TENSOR_1_2_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor12<product_t<T,U>> Tensor11<T>::operator*(const Tensor12<U>& b) const noexcept
@@ -137,7 +137,7 @@ namespace yq {
     }
     #endif
     
-    #ifdef YQ__API__MATH__TENSOR_1_3__HPP
+    #ifdef YQ_MATH_TENSOR_1_3_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor13<product_t<T,U>> Tensor11<T>::operator*(const Tensor13<U>& b) const noexcept
@@ -150,7 +150,7 @@ namespace yq {
     }
     #endif
     
-    #ifdef YQ__API__MATH__TENSOR_1_4__HPP
+    #ifdef YQ_MATH_TENSOR_1_4_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor14<product_t<T,U>> Tensor11<T>::operator*(const Tensor14<U>& b) const noexcept
