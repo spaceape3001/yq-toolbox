@@ -12,19 +12,8 @@
     template instantiation.  
 */
 
-#include <math/AxBox2.hpp>
-
-#include <math/Segment1.hpp>
 #include <math/Segment2.hpp>
-#include <math/Segment3.hpp>
-#include <math/Segment4.hpp>
 #include <math/SegmentData.hpp>
-
-#include <math/Tensor21.hpp>
-#include <math/Tensor22.hpp>
-#include <math/Tensor23.hpp>
-#include <math/Tensor24.hpp>
-
 
 namespace yq {
 
@@ -91,35 +80,43 @@ namespace yq {
         return *this;
     }
         
+    #if defined(YQ_MATH_SEGMENT1_HPP) && defined(YQ_MATH_TENSOR_2_1_HPP)
     template <typename T>
         template <typename U>
     Segment1<product_t<T,U>> Segment2<T>::operator*(const Tensor21<U>&rhs) const noexcept
     {
         return Segment1<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
     
-
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     Segment2<product_t<T,U>> Segment2<T>::operator*(const Tensor22<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT3_HPP) && defined(YQ_MATH_TENSOR_2_3_HPP)
     template <typename T>
         template <typename U>
     Segment3<product_t<T,U>> Segment2<T>::operator*(const Tensor23<U>&rhs) const noexcept
     {
         return Segment3<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT4_HPP) && defined(YQ_MATH_TENSOR_2_4_HPP)
     template <typename T>
         template <typename U>
     Segment4<product_t<T,U>> Segment2<T>::operator*(const Tensor24<U>&rhs) const noexcept
     {
         return Segment4<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -129,6 +126,7 @@ namespace yq {
         b *= rhs;
         return *this;
     }
+    #endif
     
     template <typename T>
         template <typename U> requires is_arithmetic_v<U>
@@ -136,7 +134,6 @@ namespace yq {
     {
         return Segment2<quotient_t<T,U>>(a/rhs, b/rhs);
     }
-    
     
     template <typename T>
         template <typename U> requires (is_arithmetic_v<U> && self_div_v<T,U>)
@@ -147,12 +144,13 @@ namespace yq {
         return *this;
     }
     
-
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr AxBox2<T>     Segment2<T>::bounds() const noexcept
     {
         return AxBox2<T>(UNION, a, b);
     }
+    #endif
 
     template <typename T>
     constexpr Vector2<T>  Segment2<T>::delta() const noexcept
@@ -242,11 +240,13 @@ namespace yq {
         return Segment2<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr AxBox2<T>   aabb(const Segment2<T>& seg) noexcept
     {
         return seg.bounds();
     }
+    #endif
     
     template <typename T>
     T       length(const Segment2<T>& seg)

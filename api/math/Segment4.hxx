@@ -12,19 +12,8 @@
     template instantiation.  
 */
 
-#include <math/AxBox4.hpp>
-
-#include <math/Segment1.hpp>
-#include <math/Segment2.hpp>
-#include <math/Segment3.hpp>
 #include <math/Segment4.hpp>
 #include <math/SegmentData.hpp>
-
-#include <math/Tensor41.hpp>
-#include <math/Tensor42.hpp>
-#include <math/Tensor43.hpp>
-#include <math/Tensor44.hpp>
-
 
 namespace yq {
 
@@ -90,35 +79,43 @@ namespace yq {
         return *this;
     }
         
+    #if defined(YQ_MATH_SEGMENT1_HPP) && defined(YQ_MATH_TENSOR_4_1_HPP)
     template <typename T>
         template <typename U>
     Segment1<product_t<T,U>> Segment4<T>::operator*(const Tensor41<U>&rhs) const noexcept
     {
         return Segment1<product_t<T,U>>( a*rhs, b*rhs );
     }
-    
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT2_HPP) && defined(YQ_MATH_TENSOR_4_2_HPP)
     template <typename T>
         template <typename U>
     Segment2<product_t<T,U>> Segment4<T>::operator*(const Tensor42<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT3_HPP) && defined(YQ_MATH_TENSOR_4_3_HPP)
     template <typename T>
         template <typename U>
     Segment3<product_t<T,U>> Segment4<T>::operator*(const Tensor43<U>&rhs) const noexcept
     {
         return Segment3<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     Segment4<product_t<T,U>> Segment4<T>::operator*(const Tensor44<U>&rhs) const noexcept
     {
         return Segment4<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -128,6 +125,7 @@ namespace yq {
         b *= rhs;
         return *this;
     }
+    #endif
 
     template <typename T>
         template <typename U> requires is_arithmetic_v<U>
@@ -146,12 +144,13 @@ namespace yq {
         return *this;
     }
     
-
+    #ifdef YQ_MATH_AXBOX4_HPP
     template <typename T>
     constexpr AxBox4<T>     Segment4<T>::bounds() const noexcept
     {
         return AxBox4<T>(UNION, a, b);
     }
+    #endif
 
     template <typename T>
     constexpr Vector4<T>  Segment4<T>::delta() const noexcept
@@ -311,11 +310,13 @@ namespace yq {
         return Segment4<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
     }
 
+    #ifdef YQ_MATH_AXBOX4_HPP
     template <typename T>
     constexpr AxBox4<T>   aabb(const Segment4<T>& seg) noexcept
     {
         return seg.bounds();
     }
+    #endif
 
     template <typename T>
     T       length(const Segment4<T>& seg)

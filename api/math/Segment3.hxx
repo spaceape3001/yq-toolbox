@@ -12,18 +12,8 @@
     template instantiation.  
 */
 
-#include <math/AxBox3.hpp>
-
-#include <math/Segment1.hpp>
-#include <math/Segment2.hpp>
 #include <math/Segment3.hpp>
-#include <math/Segment4.hpp>
 #include <math/SegmentData.hpp>
-
-#include <math/Tensor31.hpp>
-#include <math/Tensor32.hpp>
-#include <math/Tensor33.hpp>
-#include <math/Tensor34.hpp>
 
 namespace yq {
     template <typename T>
@@ -88,35 +78,43 @@ namespace yq {
         return *this;
     }
         
+    #if defined(YQ_MATH_SEGMENT1_HPP) && defined(YQ_MATH_TENSOR_3_1_HPP)
     template <typename T>
         template <typename U>
     Segment1<product_t<T,U>> Segment3<T>::operator*(const Tensor31<U>&rhs) const noexcept
     {
         return Segment1<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
     
-
+    #if defined(YQ_MATH_SEGMENT2_HPP) && defined(YQ_MATH_TENSOR_3_2_HPP)
     template <typename T>
         template <typename U>
     Segment2<product_t<T,U>> Segment3<T>::operator*(const Tensor32<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename U>
     Segment3<product_t<T,U>> Segment3<T>::operator*(const Tensor33<U>&rhs) const noexcept
     {
         return Segment3<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT4_HPP) && defined(YQ_MATH_TENSOR_3_4_HPP)
     template <typename T>
         template <typename U>
     Segment4<product_t<T,U>> Segment3<T>::operator*(const Tensor34<U>&rhs) const noexcept
     {
         return Segment4<product_t<T,U>>( a*rhs, b*rhs );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -126,6 +124,7 @@ namespace yq {
         b *= rhs;
         return *this;
     }
+    #endif
 
     template <typename T>
         template <typename U> requires is_arithmetic_v<U>
@@ -144,11 +143,13 @@ namespace yq {
         return *this;
     }
     
+    #ifdef YQ_MATH_AXBOX3_HPP
     template <typename T>
     constexpr AxBox3<T>     Segment3<T>::bounds() const noexcept
     {
         return AxBox3<T>(UNION, a, b);
     }
+    #endif
 
     template <typename T>
     constexpr Vector3<T>  Segment3<T>::delta() const noexcept
@@ -265,13 +266,13 @@ namespace yq {
         return Segment3<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
     }
 
-    /*! \brief Creates axially aligned bounding box from the segment
-    */
+    #ifdef YQ_MATH_AXBOX3_HPP
     template <typename T>
     constexpr AxBox3<T>   aabb(const Segment3<T>& seg) noexcept
     {
         return seg.bounds();
     }
+    #endif
 
 
     /*! \brief Computes the length of the segmetn
