@@ -13,6 +13,7 @@
 */
 
 #include <math/Polygon4.hpp>
+#include <math/PolygonData.hpp>
 
 namespace yq {
     template <typename T> Polygon4<T>::Polygon4(const std::vector<Vector4<T>>&pts) : vertex(pts) {}
@@ -20,7 +21,9 @@ namespace yq {
     template <typename T> Polygon4<T>::Polygon4(std::initializer_list<Vector4<T>> pts) : vertex(pts) {}
     template <typename T> Polygon4<T>::Polygon4(std::span<const Vector4<T>> pts) : vertex(pts) {}
 
+    #ifdef YQ_MATH_TRIANGLE4_HPP
     template <typename T> Polygon4<T>::Polygon4(const Triangle4<T>& t) : Polygon4({t.a, t.b, t.c}) {}
+    #endif
     
     template <typename T>
     template <typename U>
@@ -106,27 +109,34 @@ namespace yq {
         return *this;
     }
 
+    #if defined(YQ_MATH_POLYGON2_HPP) && defined(YQ_MATH_TENSOR_4_2_HPP)
     template <typename T>
         template <typename U>
     Polygon2<product_t<T,U>>   Polygon4<T>::operator*(const Tensor42<U>& b) const
     {
         return Polygon2<product_t<T,U>>(vertex * b);
     }
+    #endif
 
+    #if defined(YQ_MATH_POLYGON3_HPP) && defined(YQ_MATH_TENSOR_4_3_HPP)
     template <typename T>
         template <typename U>
     Polygon3<product_t<T,U>>   Polygon4<T>::operator*(const Tensor43<U>&b) const
     {
         return Polygon3<product_t<T,U>>(vertex * b);
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     Polygon4<product_t<T,U>>   Polygon4<T>::operator*(const Tensor44<U>&b) const
     {
         return Polygon4<product_t<T,U>>(vertex * b);
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -136,6 +146,7 @@ namespace yq {
             v *= b;
         return *this;
     }
+    #endif
     
     template <typename T>
         template <typename U>
@@ -155,11 +166,13 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_AXBOX4_HPP
     template <typename T>
     constexpr AxBox4<T>   Polygon4<T>::bounds() const noexcept
     {
         return AxBox4<T>(UNION, vertex);
     }
+    #endif
 
     template <typename T>
     constexpr Vector4<T>    Polygon4<T>::centroid() const noexcept
@@ -190,22 +203,32 @@ namespace yq {
         if(vertex.empty())
             return ;
             
+        #ifdef YQ_MATH_SEGMENT4_HPP
         if constexpr (std::is_invocable_v<Pred, Segment4<T>>){
             pred(Segment4<T>(vertex.back(), vertex.front));
-        } else if constexpr (std::is_invocable_v<Pred, Vector4<T>, Vector4<T>>){
+        } else 
+        #endif
+        
+        if constexpr (std::is_invocable_v<Pred, Vector4<T>, Vector4<T>>){
             pred(vertex.back(), vertex.front);
         }
 
         size_t n = vertex.size() - 1;
         for(size_t i=0;i<n;++i){
+        
+            #ifdef YQ_MATH_SEGMENT4_HPP
             if constexpr (std::is_invocable_v<Pred, Segment4<T>>){
                 pred(Segment4<T>(vertex[i], vertex[i+1]));
-            } else if constexpr (std::is_invocable_v<Pred, Vector4<T>, Vector4<T>>){
+            } else 
+            #endif
+            
+            if constexpr (std::is_invocable_v<Pred, Vector4<T>, Vector4<T>>){
                 pred(vertex[i], vertex[i+1]);
             }
         }
     }
 
+    #ifdef YQ_MATH_SEGMENT4_HPP
     template <typename T>
     std::vector<Segment4<T>>    Polygon4<T>::segments() const
     {
@@ -216,6 +239,7 @@ namespace yq {
         });
         return ret;
     }
+    #endif
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -227,11 +251,13 @@ namespace yq {
         return Polygon4<product_t<T,U>>( a*b.vertex );
     }
 
+    #ifdef YQ_MATH_AXBOX4_HPP
     template <typename T>
     AxBox4<T>   aabb(const Polygon4<T>&poly)
     {
         return poly.bounds();
     }
+    #endif
 
     template <typename T>
     Vector4<T>  centroid(const Polygon4<T>& poly)
@@ -245,12 +271,13 @@ namespace yq {
         return poly.perimeter();
     }
 
-
+    #ifdef YQ_MATH_TRIANGLE4_HPP
     template <typename T>
     Polygon4<T> polygon(const Triangle4<T>& tri)
     {
         return Polygon4<T>(tri);
     }
+    #endif
 
     template <typename T>
     Polygon4<T> polygon(std::span<const Vector4<T>> pts)
