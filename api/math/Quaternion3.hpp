@@ -9,7 +9,6 @@
 #define YQ_MATH_QUATERNION3_HPP 1
 
 #include <math/preamble.hpp>
-#include <math/Tensor33.hpp>
 
 namespace yq {
 
@@ -66,6 +65,13 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3(clockwise_t, z_t, MKS<T,dim::Angle>v);
         
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Quaternion3(ccw_t, const Vector3<T>&, MKS<T,dim::Angle>);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Quaternion3(clockwise_t, const Vector3<T>&, MKS<T,dim::Angle>);
         
         
         template <typename=void>

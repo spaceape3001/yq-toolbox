@@ -13,13 +13,12 @@
 */
 
 #include <math/Quaternion3.hpp>
-#include <math/Tensor33.hpp>
-#include <math/Vector3.hpp>
 #include <math/Units.hpp>
 #include <math/trig.hpp>
 
 namespace yq {
 
+    #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename>
     requires std::is_floating_point_v<T>
@@ -34,6 +33,7 @@ namespace yq {
         y	= copysign(y, t.xz-t.zx);
         z	= copysign(z, t.yx-t.xy);
     }
+    #endif
 
     template <typename T>
     template <typename>
@@ -89,6 +89,36 @@ namespace yq {
     Quaternion3<T>::Quaternion3(clockwise_t, z_t, MKS<T,dim::Angle>v) : Quaternion3(CCW,Z,-v)
     {
     }
+
+    #ifdef YQ_MATH_VECTOR_3_HPP
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Quaternion3<T>::Quaternion3(ccw_t, const Vector3<T>&a, MKS<T,dim::Angle>v)
+    {
+        if(a.length²() == (T) 0.){
+            w   = (T) 1.;
+            x   = (T) 0.;
+            y   = (T) 0.;
+            z   = (T) 0.;
+        } else {
+            w   = cos(T(0.5)*v);
+            auto b = T(0.5) * ~a;
+            x   = b.x;
+            y   = b.y;
+            z   = b.z;
+        }
+    }
+    #endif
+
+    #ifdef YQ_MATH_VECTOR_3_HPP
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Quaternion3<T>::Quaternion3(clockwise_t, const Vector3<T>&a, MKS<T,dim::Angle>v) : Quaternion3(CCW, a, -v) 
+    {
+    }
+    #endif
 
     template <typename T>
     template <typename>
@@ -211,6 +241,7 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_VECTOR_3_HPP
     template <typename T>
         template <typename U>
     requires (std::is_floating_point_v<T> && std::is_floating_point_v<U>)
@@ -237,6 +268,7 @@ namespace yq {
             w*q.z + z*q.w + x*q.y - y*q.x 
         );
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -258,6 +290,7 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_VECTOR_3_HPP
     template <typename T>
     Vector3<unity_t<T>>  Quaternion3<T>::axis() const
     {
@@ -267,6 +300,7 @@ namespace yq {
             return Vector3<unity_t<T>>(Z);
         return ret / sqrt(l2);
     }
+    #endif
 
     template <typename T>
     constexpr Quaternion3<T>    Quaternion3<T>::conj() const noexcept
@@ -366,12 +400,14 @@ namespace yq {
         a.w = W;
     }
 
+    #if YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
     requires std::is_floating_point_v<T>
     Quaternion3<T>  quaternion(const Tensor33<T>& t)
     {
         return Quaternion3<T>(t);
     }
+    #endif
     
     template <typename T>
     Quaternion3<T>  rotor_x(MKS<T,dim::Angle> v)
