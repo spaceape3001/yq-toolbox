@@ -14,21 +14,18 @@
 */
 
 #include <math/Size2.hpp>
-#include <math/Rectangle2.hpp>
-#include <math/Vector2.hpp>
 
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
-
 namespace yq {
 
+    #ifdef YQ_MATH_VECTOR_2_HPP
     template <typename T>
     constexpr Size2<T>::Size2(const Vector2<T>&v) noexcept : Size2(v.x, v.y)
     {
     }
+    #endif
 
     template <typename T>
     constexpr Size2<T> Size2<T>::operator+() const noexcept
@@ -42,11 +39,13 @@ namespace yq {
         return Size2(-x, -y);
     }
     
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T>
     constexpr Rectangle2<T> Size2<T>::operator+(const Rectangle2<T>&b) const noexcept
     {
         Rectangle2<T>(b.position, *this + b.size);
     }
+    #endif
 
     template <typename T>
     constexpr Size2<T> Size2<T>::operator+(const Size2&b) const noexcept
@@ -62,17 +61,21 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T>
     constexpr Rectangle2<T> Size2<T>::operator+(const Vector2<T>&b) const noexcept
     {
         return Rectangle2<T>(b, *this);
     }
+    #endif
 
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T>
     constexpr Rectangle2<T> Size2<T>::operator-(const Rectangle2<T>&b) const noexcept
     {
         return Rectangle2<T>(-b.position, *this - b.size);
     }
+    #endif
 
     template <typename T>
     constexpr Size2<T> Size2<T>::operator-(const Size2&b) const noexcept
@@ -88,11 +91,13 @@ namespace yq {
         return *this;
     }
     
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T>
     constexpr Rectangle2<T> Size2<T>::operator-(const Vector2<T>&b) const noexcept
     {
         return Rectangle2<T>(-b, *this);
     }
+    #endif
 
     template <typename T>
     template <typename U>
@@ -387,7 +392,6 @@ namespace yq {
     Size2<T>  shrink_to_fit_within(const Size2<T>& dims, const Size2<T>& frame)
     {
         return dims.shrink_to_fit(frame);
-        
     }
     
     template <typename S, typename T>
@@ -396,17 +400,19 @@ namespace yq {
         return s << "[" << v.x << "x" << v.y << "]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const Size2<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
-    /*! \brief Streams to to a logging stream
-    */
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size2<T>& v)
     {
         return as_stream(s, v);
     }
-    }
+    #endif
+}

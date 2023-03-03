@@ -12,21 +12,18 @@
     template instantiation.  
 */
 
-#include <math/Size2.hpp>
 #include <math/Size3.hpp>
-#include <math/Vector3.hpp>
 
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
-
 namespace yq {
+    #ifdef YQ_MATH_VECTOR_3_HPP
     template <typename T>
     constexpr Size3<T>::Size3(const Vector3<T>&v) noexcept : Size3(v.x, v.y, v.z)
     {
     }
+    #endif
 
     template <typename T>
     constexpr Size3<T> Size3<T>::operator+() const noexcept
@@ -273,11 +270,13 @@ namespace yq {
         return x; 
     }
     
+    #ifdef YQ_MATH_SIZE2_HPP
     template <typename T>
     constexpr Size2<T>  Size3<T>::xy() const noexcept 
     { 
         return { x, y }; 
     }
+    #endif
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -340,15 +339,19 @@ namespace yq {
         return s << "[" << v.x << "x" << v.y << "x" << v.z << "]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const Size3<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size3<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }

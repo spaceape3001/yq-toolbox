@@ -13,19 +13,17 @@
 */
 
 #include <math/Size4.hpp>
-#include <math/Vector4.hpp>
 
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
-
 namespace yq {
+    #ifdef YQ_MATH_VECTOR_4_HPP
     template <typename T>
     constexpr Size4<T>::Size4(const Vector4<T>&v) noexcept : Size4(v.x, v.y, v.z, v.w)
     {
     }
+    #endif
 
     template <typename T>
     constexpr Size4<T> Size4<T>::operator+() const noexcept
@@ -345,15 +343,19 @@ namespace yq {
         return s << "[" << v.x << "x" << v.y << "x" << v.z << "x" << v.w << "]";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const Size4<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size4<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }

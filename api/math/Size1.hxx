@@ -13,21 +13,19 @@
 */
 
 #include <math/Size1.hpp>
-#include <math/Vector1.hpp>
 
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
-
 
 namespace yq {
 
+    #ifdef YQ_MATH_VECTOR_1_HPP
     template <typename T>
     constexpr Size1<T>::Size1(const Vector1<T>&v) noexcept : Size1(v.x) 
     {
     }
+    #endif
     
     template <typename T>
     constexpr Size1<T> Size1<T>::operator+() const noexcept
@@ -303,19 +301,19 @@ namespace yq {
         return s << "[" << v.x << "]";
     }
     
-    /*! \brief Streams to a stream
-    */
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const Size1<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
-    /*! \brief Streams to to a logging stream
-    */
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Size1<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }
