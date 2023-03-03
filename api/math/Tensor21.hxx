@@ -12,20 +12,7 @@
     template instantiation.  
 */
 
-#include <math/Segment1.hpp>
-
-#include <math/Tensor11.hpp>
-#include <math/Tensor12.hpp>
-#include <math/Tensor13.hpp>
-#include <math/Tensor14.hpp>
-
 #include <math/Tensor21.hpp>
-#include <math/Tensor22.hpp>
-#include <math/Tensor23.hpp>
-#include <math/Tensor24.hpp>
-
-#include <math/Vector1.hpp>
-#include <math/Vector2.hpp>
 #include <math/utility.hpp>
 
 #include <math/AllComponents.hpp>
@@ -120,14 +107,17 @@ namespace yq {
         yx*=b;        
         return *this;
     }
-
+    
+    #if defined(YQ_MATH_SEGMENT1_HPP) && defined(YQ_MATH_SEGMENT2_HPP)
     template <typename T>
         template <typename U>
     constexpr Segment2<product_t<T,U>>  Tensor21<T>::operator*(const Segment1<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
+    #endif
 
+    #ifdef YQ__API__MATH__TENSOR_1_1__HPP
     template <typename T>
         template <typename U>
     constexpr Tensor21<product_t<T,U>> Tensor21<T>::operator*(const Tensor11<U>& b) const noexcept
@@ -138,7 +128,9 @@ namespace yq {
             yx*b.xx
         );
     }
+    #endif
     
+    #ifdef YQ__API__MATH__TENSOR_1_1__HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -147,7 +139,9 @@ namespace yq {
         *this = *this * b;
         return *this;
     }
+    #endif
 
+    #if defined(YQ__API__MATH__TENSOR_1_2__HPP) && defined(YQ__API__MATH__TENSOR_2_2__HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor22<product_t<T,U>> Tensor21<T>::operator*(const Tensor12<U>& b) const noexcept
@@ -160,7 +154,9 @@ namespace yq {
             yx*b.xy
         );
     }
+    #endif
     
+    #if defined(YQ__API__MATH__TENSOR_1_3__HPP) && defined(YQ__API__MATH__TENSOR_2_3__HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor23<product_t<T,U>> Tensor21<T>::operator*(const Tensor13<U>& b) const noexcept
@@ -175,7 +171,9 @@ namespace yq {
             yx*b.xz
         );
     }
+    #endif
     
+    #if defined(YQ__API__MATH__TENSOR_1_4__HPP) && defined(YQ__API__MATH__TENSOR_2_4__HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor24<product_t<T,U>> Tensor21<T>::operator*(const Tensor14<U>& b) const noexcept
@@ -192,6 +190,7 @@ namespace yq {
             yx*b.xw
         );
     }
+    #endif
             
     template <typename T>
         template <typename U>
@@ -328,7 +327,8 @@ namespace yq {
             pred(yx, b)
         ;
     }
-        
+     
+    #ifdef YQ__API__MATH__TENSOR_1_2__HPP
     template <typename T>
     constexpr Tensor12<T> Tensor21<T>::transpose() const noexcept
     {
@@ -336,6 +336,7 @@ namespace yq {
             xx, yx
         );
     }
+    #endif
 
     template <typename T>
     constexpr Vector2<T>  Tensor21<T>::x_column() const noexcept
@@ -450,11 +451,13 @@ namespace yq {
     }
     #endif
 
+    #ifdef YQ__API__MATH__TENSOR_1_2__HPP
     template <typename T>
     constexpr Tensor12<T>  transpose(const Tensor21<T>&v)
     {
         return v.transpose();
     }
+    #endif
 
 
     template <typename T>
