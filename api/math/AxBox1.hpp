@@ -9,10 +9,7 @@
 
 
 #include <math/preamble.hpp>
-#include <math/Range.hpp>
 #include <math/Vector1.hpp>
-#include <math/Size1.hpp>
-#include <math/AxCorners1.hpp>
 
 namespace yq {
 

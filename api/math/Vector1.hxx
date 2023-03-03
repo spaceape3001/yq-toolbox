@@ -64,13 +64,15 @@ namespace yq {
         );
     }
 
-
+    #ifdef YQ_MATH_AXBOX1_HPP
     template <typename T>
     constexpr AxBox1<T> Vector1<T>::operator+(const AxBox1<T>&b) const noexcept
     {
         return AxBox1<T>(*this + b.lo, *this + b.hi);
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
     constexpr Multivector1<T> Vector1<T>::operator+(const Multivector1<T>& b) const noexcept
     {
@@ -79,12 +81,15 @@ namespace yq {
             x+b.x
         );
     }
-
+    #endif
+    
+    #ifdef YQ_MATH_SEGMENT1_HPP
     template <typename T>
     constexpr Segment1<T> Vector1<T>::operator+(const Segment1<T>&rhs) const noexcept
     {
         return Segment1<T>( *this + rhs.a, *this + rhs.b );
     }
+    #endif
     
     template <typename T>
     constexpr Vector1<T> Vector1<T>::operator+(const Vector1& b) const noexcept
@@ -116,12 +121,15 @@ namespace yq {
         };
     }
 
+    #ifdef YQ_MATH_AXBOX1_HPP
     template <typename T>
     constexpr AxBox1<T> Vector1<T>::operator-(const AxBox1<T>&b) const noexcept
     {
         return AxBox1<T>(*this - b.hi, *this - b.lo);
     }
-
+    #endif
+    
+    #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
     constexpr Multivector1<T> Vector1<T>::operator-(const Multivector1<T>& b) const noexcept
     {
@@ -130,12 +138,15 @@ namespace yq {
             x-b.x
         };
     }
+    #endif
 
+    #ifdef YQ_MATH_SEGMENT1_HPP
     template <typename T>
     constexpr Segment1<T> Vector1<T>::operator-(const Segment1<T>&rhs) const noexcept
     {
         return Segment1<T>( *this - rhs.a, *this - rhs.b );
     }
+    #endif
 
     template <typename T>
     constexpr Vector1<T> Vector1<T>::operator-(const Vector1& b) const noexcept
@@ -176,14 +187,16 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
         template <typename U>
     constexpr Multivector1<product_t<T,U>> Vector1<T>::operator*(const Multivector1<U>& b) const noexcept
     {
         return Multivector1<T>( x * b.x, x * b.a);
     }
+    #endif
 
-
+    #ifdef YQ_MATH_TENSOR_1_1_HPP
     template <typename T>
         template <typename U>
     constexpr Vector1<product_t<T,U>> Vector1<T>::operator*(const Tensor11<U>&b) const noexcept
@@ -192,7 +205,9 @@ namespace yq {
             x*b.xx
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_1_2_HPP) && defined(YQ_MATH_VECTOR_2_HPP)
     template <typename T>
         template <typename U>
     constexpr Vector2<product_t<T,U>> Vector1<T>::operator*(const Tensor12<U>&b) const noexcept
@@ -202,7 +217,9 @@ namespace yq {
             x*b.xy
         );
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_1_3_HPP) && defined(YQ_MATH_VECTOR_3_HPP)
     template <typename T>
         template <typename U>
     constexpr Vector3<product_t<T,U>> Vector1<T>::operator*(const Tensor13<U>&b) const noexcept
@@ -213,7 +230,9 @@ namespace yq {
             x*b.xz
         );
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_1_4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T>
         template <typename U>
     constexpr Vector4<product_t<T,U>> Vector1<T>::operator*(const Tensor14<U>&b) const noexcept
@@ -225,7 +244,9 @@ namespace yq {
             x*b.xw
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_1_1_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -234,6 +255,7 @@ namespace yq {
         *this = *this * b;
         return *this;
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -249,12 +271,14 @@ namespace yq {
         return x*b.x;
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
         template <typename U>
     constexpr product_t<T,U>   Vector1<T>::operator INNER(const Multivector1<T>&b) const noexcept
     {
         return x * b.x;
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -263,6 +287,7 @@ namespace yq {
         return x*b.x;
     }
 
+    #ifdef YQ_MATH_TENSOR_1_1_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor11<product_t<T,U>> Vector1<T>::operator OTIMES(const Vector1<U>&b) const noexcept
@@ -271,7 +296,9 @@ namespace yq {
             x+b.x
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_1_2_HPP) && defined(YQ_MATH_VECTOR_2_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor12<product_t<T,U>> Vector1<T>::operator OTIMES(const Vector2<U>&b) const noexcept
@@ -280,7 +307,9 @@ namespace yq {
             x+b.x, x+b.y
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_1_3_HPP) && defined(YQ_MATH_VECTOR_3_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor13<product_t<T,U>> Vector1<T>::operator OTIMES(const Vector3<U>&b) const noexcept
@@ -289,7 +318,9 @@ namespace yq {
             x+b.x, x+b.y, x+b.z
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_1_4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor14<product_t<T,U>> Vector1<T>::operator OTIMES(const Vector4<U>&b) const noexcept
@@ -298,6 +329,7 @@ namespace yq {
             x+b.x, x+b.y, x+b.z, x+b.w
         );
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -323,17 +355,22 @@ namespace yq {
         return (*this * b)/b.length²();
     }
 
+    #ifdef YQ_MATH_AXBOX1_HPP
     template <typename T>
     constexpr AxBox1<T> Vector1<T>::operator|(const AxBox1<T>&b) const noexcept
     {
         return AxBox1<T>(UNION, {*this, b.lo, b.hi});
     }
+    #endif
+    
 
+    #ifdef YQ_MATH_AXBOX1_HPP
     template <typename T>
     constexpr AxBox1<T> Vector1<T>::operator|(const Vector1&b) const noexcept
     {
         return AxBox1<T>(UNION, *this, b);
     }
+    #endif
 
     template <typename T>
     constexpr Vector1<T> Vector1<T>::all_add(T b) const noexcept
@@ -497,6 +534,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
     constexpr Multivector1<T> operator+(T a, const Vector1<T>& b) noexcept
     {
@@ -505,6 +543,7 @@ namespace yq {
             b.x 
         };
     }
+    #endif
 
     template <typename T>
     std::vector<Vector1<T>>   operator+(std::span<Vector1<T>>as, Vector1<T>b)
@@ -514,6 +553,7 @@ namespace yq {
         });
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
     constexpr Multivector1<T> operator-(T a, const Vector1<T>& b) noexcept
     {
@@ -522,6 +562,7 @@ namespace yq {
             -b.x 
         };
     }
+    #endif
 
     template <typename T>
     std::vector<Vector1<T>>   operator-(std::span<Vector1<T>>as, Vector1<T>b)
@@ -761,15 +802,19 @@ namespace yq {
         return s << "(" << v.x << ")";
     }
     
+    #ifdef YQ_BASIC_STREAM_HPP_
     template <typename T>
     Stream& operator<<(Stream&s, const Vector1<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector1<T>& v)
     {
         return as_stream(s, v);
     }
+    #endif
 }
