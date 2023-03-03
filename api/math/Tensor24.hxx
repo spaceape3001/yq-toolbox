@@ -12,29 +12,7 @@
     template instantiation.  
 */
 
-#include <math/Polygon2.hpp>
-#include <math/Polygon4.hpp>
-#include <math/Polyline2.hpp>
-#include <math/Polyline4.hpp>
-
-#include <math/Segment4.hpp>
-
-
-#include <math/Tensor21.hpp>
-#include <math/Tensor22.hpp>
-#include <math/Tensor23.hpp>
 #include <math/Tensor24.hpp>
-
-#include <math/Tensor41.hpp>
-#include <math/Tensor42.hpp>
-#include <math/Tensor43.hpp>
-#include <math/Tensor44.hpp>
-
-#include <math/Triangle2.hpp>
-#include <math/Triangle4.hpp>
-
-#include <math/Vector2.hpp>
-#include <math/Vector4.hpp>
 #include <math/utility.hpp>
 
 #include <math/AllComponents.hpp>
@@ -136,13 +114,16 @@ namespace yq {
         return *this;
     }
 
+    #if defined(YQ_MATH_POLYGON2_HPP) && defined(YQ_MATH_POLYGON4_HPP)
     template <typename T>
         template <typename U>
     Polygon2<product_t<T,U>>  Tensor24<T>::operator*(const Polygon4<U>&b) const
     {
         return Polygon2<product_t<T,U>>( *this * b.vertex );
     }
+    #endif
     
+    #if defined(YQ_MATH_POLYLINE2_HPP) && defined(YQ_MATH_POLYLINE4_HPP)
     template <typename T>
         template <typename U>
     Polyline2<product_t<T,U>>  Tensor24<T>::operator*(const Polyline4<U>&b) const
@@ -150,14 +131,18 @@ namespace yq {
         return Polyline2<product_t<T,U>>( *this * b.vertex );
         
     }
+    #endif
 
+    #if defined(YQ_MATH_SEGMENT2_HPP) && defined(YQ_MATH_SEGMENT3_HPP)
     template <typename T>
         template <typename U>
     constexpr Segment2<product_t<T,U>>  Tensor24<T>::operator*(const Segment4<U>&rhs) const noexcept
     {
         return Segment2<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
+    #endif
 
+    #if defined(YQ_MATH_TENSOR_2_1_HPP) && defined(YQ_MATH_TENSOR_4_1_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor21<product_t<T,U>> Tensor24<T>::operator*(const Tensor41<U>& b) const noexcept
@@ -168,7 +153,9 @@ namespace yq {
             yx*b.xx + yy*b.yx + yz*b.zx + yw*b.wx
         );
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_2_2_HPP) && defined(YQ_MATH_TENSOR_4_2_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor22<product_t<T,U>> Tensor24<T>::operator*(const Tensor42<U>& b) const noexcept
@@ -181,7 +168,9 @@ namespace yq {
             yx*b.xy + yy*b.yy + yz*b.zy + yw*b.wy
         );
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_2_3_HPP) && defined(YQ_MATH_TENSOR_4_3_HPP)
     template <typename T>
         template <typename U>
     constexpr Tensor23<product_t<T,U>> Tensor24<T>::operator*(const Tensor43<U>& b) const noexcept
@@ -196,7 +185,9 @@ namespace yq {
             yx*b.xz + yy*b.yz + yz*b.zz + yw*b.wz
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor24<product_t<T,U>> Tensor24<T>::operator*(const Tensor44<U>& b) const noexcept
@@ -213,7 +204,9 @@ namespace yq {
             yx*b.xw + yy*b.yw + yz*b.zw + yw*b.ww
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_4_4_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -222,13 +215,16 @@ namespace yq {
         *this = *this * b;
         return *this;
     }
+    #endif
     
+    #if defined(YQ_MATH_TRIANGLE2_HPP) && defined(YQ_MATH_TRIANGLE4_HPP)
     template <typename T>
         template <typename U>
     Triangle2<product_t<T,U>> Tensor24<T>::operator*(const Triangle4<U>&rhs) const noexcept
     {
         return Triangle2<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -364,7 +360,8 @@ namespace yq {
             pred(yx, b) || pred(yy, b) || pred(yz, b) || pred(yw, b) 
         ;
     }
-        
+     
+    #ifdef YQ_MATH_TENSOR_4_2_HPP
     template <typename T>
     constexpr Tensor42<T> Tensor24<T>::transpose() const noexcept
     {
@@ -375,6 +372,7 @@ namespace yq {
             xw, yw
         );
     }
+    #endif
 
     template <typename T>
     constexpr Vector2<T>  Tensor24<T>::w_column() const noexcept 
@@ -572,11 +570,13 @@ namespace yq {
     }
     #endif
     
+    #ifdef YQ_MATH_TENSOR_4_2_HPP
     template <typename T>
     constexpr Tensor42<T>  transpose(const Tensor24<T>&v)
     {
         return v.transpose();
     }
+    #endif
 
     template <typename T>
     constexpr Vector2<T>  w_column(const Tensor24<T>&ten) 
