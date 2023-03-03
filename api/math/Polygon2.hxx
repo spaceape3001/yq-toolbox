@@ -12,12 +12,8 @@
     template instantiation.  
 */
 
-#include <math/AxBox2.hpp>
 #include <math/PolygonData.hpp>
 #include <math/Polygon2.hpp>
-#include <math/Quadrilateral2.hpp>
-#include <math/Rectangle2.hpp>
-#include <math/Triangle2.hpp>
 
 namespace yq {
     template <typename T> Polygon2<T>::Polygon2(const std::vector<Vector2<T>>&pts) : vertex(pts) {}
@@ -25,11 +21,22 @@ namespace yq {
     template <typename T> Polygon2<T>::Polygon2(std::initializer_list<Vector2<T>> pts) : vertex(pts) {}
     template <typename T> Polygon2<T>::Polygon2(std::span<const Vector2<T>> pts) : vertex(pts) {}
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T> Polygon2<T>::Polygon2(const AxBox2<T>&bx) : Polygon2({bx.ll(), bx.hl(), bx.hh(), bx.lh()}) {}
+    #endif
+    
+    #ifdef YQ_MATH_QUADRILATERAL2_HPP
     template <typename T> Polygon2<T>::Polygon2(const Quadrilateral2<T>&q) : Polygon2({q.a, q.b, q.c, q.d }) {}
+    #endif
+    
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T> Polygon2<T>::Polygon2(const Rectangle2<T>&r) : 
         Polygon2({r.southwest(), r.southeast(), r.northeast(), r.northwest()}) {}
+    #endif
+    
+    #ifdef YQ_MATH_TRIANGLE2_HPP
     template <typename T> Polygon2<T>::Polygon2(const Triangle2<T>& t) : Polygon2({t.a, t.b, t.c}) {}
+    #endif
     
     template <typename T>
     template <typename U>
@@ -115,28 +122,34 @@ namespace yq {
         return *this;
     }
 
-    
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     Polygon2<product_t<T,U>>   Polygon2<T>::operator*(const Tensor22<U>& b) const
     {
         return Polygon2<product_t<T,U>>(vertex * b);
     }
-
+    #endif
+    
+    #if defined(YQ_MATH_POLYGON3_HPP) && defined(YQ_MATH_TENSOR_2_3_HPP)
     template <typename T>
         template <typename U>
     Polygon3<product_t<T,U>>   Polygon2<T>::operator*(const Tensor23<U>&b) const
     {
         return Polygon3<product_t<T,U>>(vertex * b);
     }
+    #endif
 
+    #if defined(YQ_MATH_POLYGON4_HPP) && defined(YQ_MATH_TENSOR_2_4_HPP)
     template <typename T>
         template <typename U>
     Polygon4<product_t<T,U>>   Polygon2<T>::operator*(const Tensor24<U>&b) const
     {
         return Polygon4<product_t<T,U>>(vertex * b);
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -146,6 +159,7 @@ namespace yq {
             v *= b;
         return *this;
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -172,11 +186,13 @@ namespace yq {
         return 0.5*abs(point_area());
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr AxBox2<T>   Polygon2<T>::bounds() const noexcept
     {
         return AxBox2<T>(UNION, vertex);
     }
+    #endif
 
     template <typename T>
     constexpr Vector2<T>    Polygon2<T>::centroid() const noexcept
@@ -226,23 +242,32 @@ namespace yq {
         if(vertex.empty())
             return ;
             
+        #ifdef YQ_MATH_SEGMENT2_HPP
         if constexpr (std::is_invocable_v<Pred, Segment2<T>>){
             pred(Segment2<T>(vertex.back(), vertex.front));
-        } else if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
+        } else 
+        #endif
+        
+        if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
             pred(vertex.back(), vertex.front);
         }
 
         size_t n = vertex.size() - 1;
         for(size_t i=0;i<n;++i){
+        
+            #ifdef YQ_MATH_SEGMENT2_HPP
             if constexpr (std::is_invocable_v<Pred, Segment2<T>>){
                 pred(Segment2<T>(vertex[i], vertex[i+1]));
-            } else if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
+            } else 
+            #endif
+            
+            if constexpr (std::is_invocable_v<Pred, Vector2<T>, Vector2<T>>){
                 pred(vertex[i], vertex[i+1]);
             }
         }
     }
 
-    //! Converts the polygon to segments
+    #ifdef YQ_MATH_SEGMENT2_HPP
     template <typename T>
     std::vector<Segment2<T>>    Polygon2<T>::segments() const
     {
@@ -253,6 +278,7 @@ namespace yq {
         });
         return ret;
     }
+    #endif
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -264,12 +290,13 @@ namespace yq {
         return Polygon2<product_t<T,U>>( a*b.vertex );
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     AxBox2<T>   aabb(const Polygon2<T>&poly)
     {
         return poly.bounds();
     }
-
+    #endif
 
     template <typename T>
     square_t<T>    area(const Polygon2<T>& poly)
@@ -301,18 +328,22 @@ namespace yq {
         return poly.perimeter();
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     Polygon2<T> polygon(const AxBox2<T>& ax)
     {
         return Polygon2<T>(ax);
     }
+    #endif
 
+    #ifdef YQ_MATH_TRIANGLE2_HPP
     template <typename T>
     Polygon2<T> polygon(const Triangle2<T>& tri)
     {
         return Polygon2<T>(tri);
     }
-
+    #endif
+    
     template <typename T>
     Polygon2<T> polygon(std::span<const Vector2<T>> pts)
     {
