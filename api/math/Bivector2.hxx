@@ -13,8 +13,6 @@
 */
 
 #include <math/Bivector2.hpp>
-#include <math/Multivector2.hpp>
-#include <math/Vector2.hpp>
 
 namespace yq {
     template <typename T>
@@ -29,6 +27,7 @@ namespace yq {
         return Bivector2(-xy);
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
     constexpr Multivector2<T> Bivector2<T>::operator+(T b) const noexcept
     {
@@ -38,6 +37,7 @@ namespace yq {
             xy
         );
     }
+    #endif
 
     template <typename T>
     constexpr Bivector2<T> Bivector2<T>::operator+(const Bivector2<T>& b) const noexcept
@@ -54,6 +54,7 @@ namespace yq {
         return *this;
     }
     
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
     constexpr Multivector2<T> Bivector2<T>::operator+(const Multivector2<T>& b) const noexcept
     {
@@ -63,7 +64,9 @@ namespace yq {
             xy+b.xy
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_MULTIVECTOR2_HPP) && defined(YQ_MATH_VECTOR_2_HPP)
     template <typename T>
     constexpr Multivector2<T> Bivector2<T>::operator+(const Vector2<T>& b) const noexcept
     {
@@ -73,7 +76,9 @@ namespace yq {
             xy 
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
     constexpr Multivector2<T> Bivector2<T>::operator-(T b) const noexcept
     {
@@ -83,6 +88,7 @@ namespace yq {
             xy
         );
     }
+    #endif
 
     template <typename T>
     constexpr Bivector2<T> Bivector2<T>::operator-( const Bivector2<T>& b) const noexcept
@@ -99,6 +105,7 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
     constexpr Multivector2<T> Bivector2<T>::operator-(const Multivector2<T>& b) const noexcept
     {
@@ -108,7 +115,9 @@ namespace yq {
             xy-b.xy
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_MULTIVECTOR2_HPP) && defined(YQ_MATH_VECTOR_2_HPP)
     template <typename T>
     constexpr Multivector2<T> Bivector2<T>::operator-(const Vector2<T>& b) const noexcept
     {
@@ -118,6 +127,7 @@ namespace yq {
             xy 
         );
     }
+    #endif
 
 
     template <typename T>
@@ -158,7 +168,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    //! Adds scalar with bivector
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
     constexpr Multivector2<T> operator+(T a, const Bivector2<T>& b) noexcept
     {
@@ -168,7 +178,9 @@ namespace yq {
             b.xy
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
     constexpr Multivector2<T> operator-(T a, const Bivector2<T>& b) noexcept
     {
@@ -178,6 +190,7 @@ namespace yq {
             -b.xy 
         };
     }    
+    #endif
 
     /*! \brief Scaling multiplication operator
     
