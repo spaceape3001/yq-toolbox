@@ -7,11 +7,13 @@
 #pragma once
 
 #include <chrono>
+#include <expected>
 #include <filesystem>
 #include <initializer_list>
 #include <span>
 #include <string>
 #include <string_view>
+#include <system_error>
 #include <vector>
 
 #include <basic/128-bit.hpp>
@@ -170,6 +172,8 @@ namespace yq {
     template <typename S> class SqlQueryImpl;
     using SqlQuery = SqlQueryImpl<SqlStatement>;
     
+        // the "new" results
+    template <typename T> using Expect  = std::expected<T,std::error_code>;
 
         // RESULTS
     

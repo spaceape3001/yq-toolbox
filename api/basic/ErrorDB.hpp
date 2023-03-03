@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <system_error>
+#include <basic/preamble.hpp>
 #include <basic/StringLiteral.hpp>
 
 namespace yq {
@@ -26,6 +26,17 @@ namespace yq {
             }
             
             entry() : std::error_code(value(), error_db::category()) {}
+
+            operator std::unexpected<std::error_code>() const
+            {
+                return std::unexpected<std::error_code>(*this);
+            }
+
+            template <typename T>
+            operator std::expected<T, std::error_code>() const
+            {
+                return std::expected<T, std::error_code>(std::unexpect_t(), *this);
+            }
         };
 
     }
