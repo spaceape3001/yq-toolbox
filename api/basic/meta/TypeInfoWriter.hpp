@@ -12,6 +12,7 @@
 #include <basic/trait/has_less.hpp>
 #include <basic/trait/is_template.hpp>
 #include <basic/StreamOps.hpp>
+#include <expected>
 #include <list>
 #include <map>
 #include <set>
@@ -427,6 +428,22 @@ namespace yq {
                     auto [ data, ec ] = FN(src);
                     *(T) dst = std::move(data);
                     return ec;
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
+        template <Expect<T> (*FN)(const std::string_view&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    auto data = FN(src);
+                    if(!data)
+                        return data.error();
+                    *(T) dst = std::move(*data);
+                    return std::error_code();
                 };
             }
         }
