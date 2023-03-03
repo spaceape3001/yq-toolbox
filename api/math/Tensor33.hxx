@@ -12,22 +12,7 @@
     template instantiation.  
 */
 
-#include <math/Polygon3.hpp>
-#include <math/Polyline3.hpp>
-
-#include <math/Segment3.hpp>
-
-#include <math/Tensor31.hpp>
-#include <math/Tensor32.hpp>
 #include <math/Tensor33.hpp>
-#include <math/Tensor34.hpp>
-
-#include <math/Triangle3.hpp>
-
-#include <math/Vector3.hpp>
-
-#include <math/Quaternion3.hpp>
-
 #include <math/trig.hpp>
 #include <math/Units.hpp>
 #include <math/utility.hpp>
@@ -36,13 +21,16 @@
 #include <math/AnyComponents.hpp>
 
 namespace yq {
+    
+    #ifdef YQ_MATH_QUATERNION3_HPP
     template <typename T>
-    template <typename>
+        template <typename>
     requires std::is_floating_point_v<T>
     Tensor33<T>::Tensor33(const Quaternion3<T>&q) : 
         Tensor33(COLUMNS,  q * Vector3<T>(X), q * Vector3<T>(Y), q * Vector3<T>(Z) )
     {
     }
+    #endif
 
     template <typename T>
     template <typename>
@@ -236,27 +224,34 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_POLYGON3_HPP
     template <typename T>
         template <typename U>
     Polygon3<product_t<T,U>>  Tensor33<T>::operator*(const Polygon3<U>&b) const
     {
         return Polygon3<product_t<T,U>>( *this * b.vertex );
     }
+    #endif
     
+    #ifdef YQ_MATH_POLYLINE3_HPP
     template <typename T>
         template <typename U>
     Polyline3<product_t<T,U>>  Tensor33<T>::operator*(const Polyline3<U>&b) const
     {
         return Polyline3<product_t<T,U>>( *this * b.vertex );
     }
+    #endif
 
+    #ifdef YQ_MATH_SEGMENT3_HPP
     template <typename T>
         template <typename U>
     constexpr Segment3<product_t<T,U>>  Tensor33<T>::operator*(const Segment3<U>&rhs) const noexcept
     {
         return Segment3<product_t<T,U>>( *this * rhs.a, *this * rhs.b );
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_3_1_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor31<product_t<T,U>> Tensor33<T>::operator*(const Tensor31<U>& b) const noexcept
@@ -269,7 +264,9 @@ namespace yq {
             zx*b.xx + zy*b.yx + zz*b.zx
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_TENSOR_3_2_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor32<product_t<T,U>> Tensor33<T>::operator*(const Tensor32<U>& b) const noexcept
@@ -285,6 +282,7 @@ namespace yq {
             zx*b.xy + zy*b.yy + zz*b.zy
         );
     }
+    #endif
 
     template <typename T>
         template <typename U>
@@ -314,6 +312,7 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_TENSOR_3_4_HPP
     template <typename T>
         template <typename U>
     constexpr Tensor34<product_t<T,U>> Tensor33<T>::operator*(const Tensor34<U>& b) const noexcept
@@ -335,13 +334,16 @@ namespace yq {
             zx*b.xw + zy*b.yw + zz*b.zw
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_TRIANGLE3_HPP
     template <typename T>
         template <typename U>
     Triangle3<product_t<T,U>> Tensor33<T>::operator*(const Triangle3<U>&rhs) const noexcept
     {
         return Triangle3<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c );
     }
+    #endif
         
     template <typename T>
         template <typename U>
@@ -797,12 +799,14 @@ namespace yq {
         return Tensor33<T>(CCW, Z, r);
     }
 
+    #ifdef YQ_MATH_QUATERNION3_HPP
     template <typename T>
     requires std::is_floating_point_v<T>
     Tensor33<T>     tensor(const Quaternion3<T>& q)
     {
         return Tensor33<T>(q);
     }
+    #endif
 
     #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
