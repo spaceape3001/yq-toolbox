@@ -14,6 +14,7 @@
 
 #include <math/Segment2.hpp>
 #include <math/SegmentData.hpp>
+#include <math/errors.hpp>
 
 namespace yq {
 
@@ -159,28 +160,29 @@ namespace yq {
     }
     
     template <typename T>
-    constexpr std::pair<unity_t<T>, bool>   Segment2<T>::fraction_x(T x, T ep) const noexcept
+    Expect<unity_t<T>>   Segment2<T>::fraction_x(T x, T ep) const noexcept
     {
         if(abs(a.x-b.x) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(x-a.x)/(b.x-a.x), true};
+            return errors::degenerate_dimension();
+        return (x-a.x)/(b.x-a.x);
     }
     
     template <typename T>
-    constexpr std::pair<unity_t<T>, bool>   Segment2<T>::fraction_y(T y, T ep) const noexcept
+    Expect<unity_t<T>>   Segment2<T>::fraction_y(T y, T ep) const noexcept
     {
         if(abs(a.y-b.y) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(y-a.y)/(b.y-a.y), true};
+            return errors::degenerate_dimension();
+        return (y-a.y)/(b.y-a.y);
     }
 
     template <typename T>
-    constexpr std::pair<Vector2<T>, bool> Segment2<T>::intercept_x(T x, T ep) const noexcept
+    Expect<Vector2<T>> Segment2<T>::intercept_x(T x, T ep) const noexcept
     {
-        auto [ f, b ] = fraction_x(x, ep);
-        if(!b)
-            return {Vector2<T>(ZERO), false};
+        auto ic = fraction_x(x, ep);
+        if(!ic)
+            return ic;
             
+        unity_t<T>  f = *ic;
         unity_t<T>  g = one_v<T> - f;
         
         return Vector2<T>(
@@ -190,12 +192,13 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr std::pair<Vector2<T>, bool> Segment2<T>::intercept_y(T y, T ep) const noexcept
+    Expect<Vector2<T>> Segment2<T>::intercept_y(T y, T ep) const noexcept
     {
-        auto [ f, b ] = fraction_y(y, ep);
-        if(!b)
-            return {Vector2<T>(ZERO), false};
+        auto ic = fraction_y(y, ep);
+        if(!ic)
+            return ic;
             
+        unity_t<T>  f = *ic;
         unity_t<T>  g = one_v<T> - f;
         
         return Vector2<T>(

@@ -93,28 +93,28 @@ namespace yq {
         constexpr Vector3<T>  delta() const noexcept;
         
         //! Computes the fraction along the segment for given X value
-        constexpr std::pair<unity_t<T>, bool>   fraction_x(T, T ep=zero_v<T>) const noexcept;
+        Expect<unity_t<T>>   fraction_x(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the fraction along the segment for given Y value
-        constexpr std::pair<unity_t<T>, bool>   fraction_y(T, T ep=zero_v<T>) const noexcept;
+        Expect<unity_t<T>>   fraction_y(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the fraction along the segment for given Z value
-        constexpr std::pair<unity_t<T>, bool>   fraction_z(T, T ep=zero_v<T>) const noexcept;
+        Expect<unity_t<T>>   fraction_z(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the intercept point for specified X
         //! \param[in]  ep  Delta to consider this segment to have no x-variation (and thus, unsolveable)
-        //! \return Returns std pair, the vector & true if successful, zero & false if not
-        constexpr std::pair<Vector3<T>, bool> intercept_x(T, T ep=zero_v<T>) const noexcept;
+        //! \return Returns Point of intercept on the segment
+        Expect<Vector3<T>> intercept_x(T, T ep=zero_v<T>) const noexcept;
         
         //! Computes the intercept point for specified Y
         //! \param[in]  ep  Delta to consider this segment to have no y-variation (and thus, unsolveable)
-        //! \return Returns std pair, the vector & true if successful, zero & false if not
-        constexpr std::pair<Vector3<T>, bool> intercept_y(T, T ep=zero_v<T>) const noexcept;
+        //! \return Returns Point of intercept on the segment
+        Expect<Vector3<T>> intercept_y(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the intercept point for specified Z
         //! \param[in]  ep  Delta to consider this segment to have no z-variation (and thus, unsolveable)
-        //! \return Returns std pair, the vector & true if successful, zero & false if not
-        constexpr std::pair<Vector3<T>, bool> intercept_z(T, T ep=zero_v<T>) const noexcept;
+        //! \return Returns Point of intercept on the segment
+        Expect<Vector3<T>> intercept_z(T, T ep=zero_v<T>) const noexcept;
 
 
         //! Length of the segment

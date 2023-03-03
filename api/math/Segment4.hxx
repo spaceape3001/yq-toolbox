@@ -14,6 +14,7 @@
 
 #include <math/Segment4.hpp>
 #include <math/SegmentData.hpp>
+#include <math/errors.hpp>
 
 namespace yq {
 
@@ -161,52 +162,53 @@ namespace yq {
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_w(T w, T ep) const noexcept
+    Expect<unity_t<T>>  Segment4<T>::fraction_w(T w, T ep) const noexcept
     {
         if(abs(a.w-b.w) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(w-a.w)/(b.w-a.w), true};
+            return errors::degenerate_dimension();
+        return (w-a.w)/(b.w-a.w);
     }
 
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_x(T x, T ep) const noexcept
+    Expect<unity_t<T>>  Segment4<T>::fraction_x(T x, T ep) const noexcept
     {
         if(abs(a.x-b.x) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(x-a.x)/(b.x-a.x), true};
+            return errors::degenerate_dimension();
+        return (x-a.x)/(b.x-a.x);
     }
     
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_y(T y, T ep) const noexcept
+    Expect<unity_t<T>>  Segment4<T>::fraction_y(T y, T ep) const noexcept
     {
         if(abs(a.y-b.y) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(y-a.y)/(b.y-a.y), true};
+            return errors::degenerate_dimension();
+        return (y-a.y)/(b.y-a.y);
     }
 
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>, bool>   Segment4<T>::fraction_z(T z, T ep) const noexcept
+    Expect<unity_t<T>>  Segment4<T>::fraction_z(T z, T ep) const noexcept
     {
         if(abs(a.z-b.z) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(z-a.z)/(b.z-a.z), true};
+            return errors::degenerate_dimension();
+        return (z-a.z)/(b.z-a.z);
     }
 
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_w(T w, T ep) const noexcept
+    Expect<Vector4<T>>  Segment4<T>::intercept_w(T w, T ep) const noexcept
     {
-        auto [ f, b ] = fraction_w(w, ep);
-        if(!b)
-            return {Vector4<T>(ZERO), false};
+        auto ic = fraction_w(w, ep);
+        if(!ic)
+            return ic;
             
+        unity_t<T>  f = *ic;
         unity_t<T>  g = one_v<T> - f;
         
         return Vector4<T>(
@@ -220,12 +222,13 @@ namespace yq {
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_x(T x, T ep) const noexcept
+    Expect<Vector4<T>>  Segment4<T>::intercept_x(T x, T ep) const noexcept
     {
-        auto [ f, b ] = fraction_x(x, ep);
-        if(!b)
-            return {Vector4<T>(ZERO), false};
+        auto ic = fraction_x(x, ep);
+        if(!ic)
+            return ic;
             
+        unity_t<T>  f = *ic;
         unity_t<T>  g = one_v<T> - f;
         
         return Vector4<T>(
@@ -239,12 +242,13 @@ namespace yq {
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_y(T y, T ep) const noexcept
+    Expect<Vector4<T>>  Segment4<T>::intercept_y(T y, T ep) const noexcept
     {
-        auto [ f, b ] = fraction_y(y, ep);
-        if(!b)
-            return {Vector4<T>(ZERO), false};
+        auto ic = fraction_y(y, ep);
+        if(!ic)
+            return ic;
             
+        unity_t<T>  f = *ic;
         unity_t<T>  g = one_v<T> - f;
         
         return Vector4<T>(
@@ -258,12 +262,13 @@ namespace yq {
     template <typename T>
         template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<Vector4<T>, bool> Segment4<T>::intercept_z(T z, T ep) const noexcept
+    Expect<Vector4<T>>  Segment4<T>::intercept_z(T z, T ep) const noexcept
     {
-        auto [ f, b ] = fraction_z(z, ep);
-        if(!b)
-            return {Vector4<T>(ZERO), false};
+        auto ic = fraction_z(z, ep);
+        if(!ic)
+            return ic;
             
+        unity_t<T>  f = *ic;
         unity_t<T>  g = one_v<T> - f;
         
         return Vector4<T>(

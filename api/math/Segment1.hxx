@@ -15,6 +15,7 @@
 
 #include <math/Segment1.hpp>
 #include <math/SegmentData.hpp>
+#include <math/errors.hpp>
 
 namespace yq {
     template <typename T>
@@ -159,11 +160,11 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr std::pair<unity_t<T>, bool>   Segment1<T>::fraction_x(T x, T ep) const noexcept
+    Expect<unity_t<T>>   Segment1<T>::fraction_x(T x, T ep) const noexcept
     {
         if(abs(a.x-b.x) <= ep)
-            return {zero_v<unity_t<T>>, false};
-        return {(x-a.x)/(b.x-a.x), true};
+            return errors::degenerate_dimension();
+        return (x-a.x)/(b.x-a.x);
     }
 
     template <typename T>

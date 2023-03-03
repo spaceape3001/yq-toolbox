@@ -94,20 +94,20 @@ namespace yq {
         constexpr Vector2<T>  delta() const noexcept;
         
         //! Computes the fraction along the segment for given X value
-        constexpr std::pair<unity_t<T>, bool>   fraction_x(T, T ep=zero_v<T>) const noexcept;
+        Expect<unity_t<T>>   fraction_x(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the fraction along the segment for given Y value
-        constexpr std::pair<unity_t<T>, bool>   fraction_y(T, T ep=zero_v<T>) const noexcept;
+        Expect<unity_t<T>>   fraction_y(T, T ep=zero_v<T>) const noexcept;
 
         //! Computes the intercept point for specified X
         //! \param[in]  ep  Delta to consider this segment to have no x-variation (and thus, unsolveable)
-        //! \return Returns std pair, the vector & true if successful, zero & false if not
-        constexpr std::pair<Vector2<T>, bool> intercept_x(T, T ep=zero_v<T>) const noexcept;
+        //! \return Returns Point of intercept on the segment
+        Expect<Vector2<T>> intercept_x(T, T ep=zero_v<T>) const noexcept;
         
         //! Computes the intercept point for specified Y
         //! \param[in]  ep  Delta to consider this segment to have no y-variation (and thus, unsolveable)
-        //! \return Returns std pair, the vector & true if successful, zero & false if not
-        constexpr std::pair<Vector2<T>, bool> intercept_y(T, T ep=zero_v<T>) const noexcept;
+        //! \return Returns Point of intercept on the segment
+        Expect<Vector2<T>> intercept_y(T, T ep=zero_v<T>) const noexcept;
 
         //! Length of the segment
         T   length() const;
