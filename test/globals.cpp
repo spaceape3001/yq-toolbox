@@ -27,11 +27,11 @@ void    list_global_variables()
     std::cout << "There are (" << res.size() << ") global variables:\n";
     for(auto& s : res){
         std::cout << "> " << s << "=";
-        auto [v,ec] = global::variable::get(s);
-        if(ec != std::error_code()){
-            std::cout << "(error-fetching) " << ec.message() << "\n";
+        auto v      = global::variable::get(s);
+        if(!v){
+            std::cout << "(error-fetching) " << v.error().message() << "\n";
         } else {
-            std::cout << v.printable() << " [type: " << v.type().name() << "]\n";
+            std::cout << v->printable() << " [type: " << v->type().name() << "]\n";
         }
     }
 }
@@ -59,8 +59,8 @@ int main(){
     list_global_methods();
     //return ut::cfg<>.run();
     
-    auto [ v2, ec ]  = global::function::invoke("print", { Any("Hello World!") } );
-    if(ec != std::error_code())
-        std::cerr << "Unable to print ... " << ec.message() << "\n";
+    auto v2  = global::function::invoke("print", { Any("Hello World!") } );
+    if(!v2)
+        std::cerr << "Unable to print ... " << v2.error().message() << "\n";
     return 0;
 }

@@ -8,7 +8,7 @@
 
 #include <basic/Global.hpp>
 #include <basic/meta/GlobalInfo.hpp>
-#include <basic/Errors.hpp>
+#include <basic/errors.hpp>
 
 namespace yq {
     namespace global {
@@ -31,28 +31,28 @@ namespace yq {
             }
             
             //! Invokes the specified name
-            any_error_t invoke(std::string_view k)
+            Expect<Any> invoke(std::string_view k)
             {
                 const MethodInfo*   mi  = info(k);
                 if(!mi)
-                    return { Any{}, errors::name_lookup_failed() };
+                    return errors::name_lookup_failed();
             
                 return mi->invoke(const_any_span_t());
             }
             
-            any_error_t invoke(std::string_view k, const std::vector<Any>& args)
+            Expect<Any> invoke(std::string_view k, const std::vector<Any>& args)
             {
                 const MethodInfo*   mi  = info(k);
                 if(!mi)
-                    return { Any{}, errors::name_lookup_failed() };
+                    return errors::name_lookup_failed();
                 return mi->invoke(args);
             }
             
-            any_error_t invoke(std::string_view k, std::initializer_list<Any> args)
+            Expect<Any> invoke(std::string_view k, std::initializer_list<Any> args)
             {
                 const MethodInfo*   mi  = info(k);
                 if(!mi)
-                    return { Any{}, errors::name_lookup_failed() };
+                    return errors::name_lookup_failed();
 
                 return mi->invoke(args);
             }
@@ -66,11 +66,11 @@ namespace yq {
 
         namespace variable {
 
-            any_error_t get(std::string_view k)
+            Expect<Any> get(std::string_view k)
             {
                 const PropertyInfo* pi  = info(k);
                 if(!pi)
-                    return { Any(), errors::name_lookup_failed() };
+                    return errors::name_lookup_failed();
                 return pi -> get(nullptr);
             }
         

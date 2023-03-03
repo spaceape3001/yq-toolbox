@@ -25,11 +25,11 @@ namespace yq {
         const ArgInfo*          result() const { return m_result; }
     
         //! Invoke with flexibility if the any can convert to the appropriate type
-        any_error_t             invoke(void* obj, std::span<const Any> args) const;
-        any_error_t             invoke(const void* obj, std::span<const Any> args) const;
+        Expect<Any>             invoke(void* obj, std::span<const Any> args) const;
+        Expect<Any>             invoke(const void* obj, std::span<const Any> args) const;
         
         //! Invokes for a static function (will error if not)
-        any_error_t             invoke(std::span<const Any> args) const;
+        Expect<Any>             invoke(std::span<const Any> args) const;
     
         //! TRUE if this is a const method
         bool                    is_const() const { return flags() & CONST; }
@@ -43,7 +43,7 @@ namespace yq {
         std::vector<const ArgInfo*> m_args;
         MethodInfo(std::string_view zName, const std::source_location& sl, Meta*, options_t opts=0);
 
-        any_error_t             invoke(void* obj, std::span<const Any> args, bool constPtr) const;
+        Expect<Any>            invoke(void* obj, std::span<const Any> args, bool constPtr) const;
 
         /*! Invoke with the exact types
         

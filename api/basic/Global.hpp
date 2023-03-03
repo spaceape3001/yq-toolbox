@@ -22,9 +22,9 @@ namespace yq {
             std::vector<const MethodInfo*>          infos(std::string_view);
             
             //! Invokes the specified name
-            any_error_t invoke(std::string_view);
-            any_error_t invoke(std::string_view, const std::vector<Any>&);
-            any_error_t invoke(std::string_view, std::initializer_list<Any>);
+            Expect<Any> invoke(std::string_view);
+            Expect<Any> invoke(std::string_view, const std::vector<Any>&);
+            Expect<Any> invoke(std::string_view, std::initializer_list<Any>);
     
             //! ALL function names
             const string_view_set_t&        names();
@@ -33,7 +33,7 @@ namespace yq {
         namespace variable {
 
             //! Gets the variable (as Any)
-            any_error_t                     get(std::string_view);
+            Expect<Any>                     get(std::string_view);
         
             //! ALL variable names
             const string_view_set_t&        names();

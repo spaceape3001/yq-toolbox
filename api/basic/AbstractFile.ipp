@@ -10,7 +10,7 @@
 #include <basic/FileUtils.hpp>
 #include <basic/stream/Bytes.hpp>
 #include <basic/ByteArray.hpp>
-#include <basic/Errors.hpp>
+#include <basic/errors.hpp>
 #include <fstream>
 
 namespace yq {

@@ -9,7 +9,7 @@
 #include <basic/meta/MethodInfo.hpp>
 #include <basic/meta/TypedArgInfo.hpp>
 #include <basic/trait/indices.hpp>
-#include <basic/Errors.hpp>
+#include <basic/errors.hpp>
 #include <type_traits>
 
 namespace yq {

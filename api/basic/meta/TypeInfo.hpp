@@ -7,7 +7,7 @@
 #pragma once
 #include <basic/meta/InfoBinder.hpp>
 #include <basic/meta/CompoundInfo.hpp>
-#include <basic/Errors.hpp>
+#include <basic/errors.hpp>
 #include <basic/preamble.hpp>
 #include <unordered_map>
 

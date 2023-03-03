@@ -219,28 +219,30 @@ namespace yq {
     }
     
 
-    any_error_t     Any::convert(const TypeInfo& newType) const
+    Expect<Any>     Any::convert(const TypeInfo& newType) const
     {
         assert(m_type);
         if(!m_type)
-            return { Any(), errors::null_any_type() };
+            return errors::null_any_type() ;
             
         if(&newType == m_type)
-            return { *this, {} };
+            return *this;
         if(&newType == &invalid())
-            return { Any(), {} };
+            return *this;
         if(&newType == &any())
-            return { *this, {} };
+            return *this;
         if(m_type == &invalid())
-            return { Any(), errors::invalid_conversion() };;
+            return errors::invalid_conversion();
             
         auto fn = m_type -> m_convert.get(&newType, nullptr);
         if(!fn)
-            return { Any(), errors::no_conversion_handler() };
+            return errors::no_conversion_handler();
         
         Any ret(newType);
         std::error_code ec = fn(ret.raw_ptr(), raw_ptr());
-        return { ret, ec };
+        if(ec != std::error_code()) // at least until we update the function
+            return std::unexpected(ec);
+        return ret;
     }
 
 

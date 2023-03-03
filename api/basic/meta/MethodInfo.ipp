@@ -12,7 +12,7 @@
 #include <basic/meta/ObjectInfo.hpp>
 #include <basic/meta/TypeInfo.hpp>
 #include <basic/Any.hpp>
-#include <basic/Errors.hpp>
+#include <basic/errors.hpp>
 
 #include <basic/Logging.hpp>
 
@@ -61,32 +61,32 @@ namespace yq {
     }
 
     //  INVOKATION
-    any_error_t      MethodInfo::invoke(std::span<const Any> args) const
+    Expect<Any>      MethodInfo::invoke(std::span<const Any> args) const
     {
         return invoke(nullptr, args, false);
     }
 
-    any_error_t      MethodInfo::invoke(void* obj, std::span<const Any> args) const
+    Expect<Any>      MethodInfo::invoke(void* obj, std::span<const Any> args) const
     {
         return invoke(obj, args, false);
     }
     
-    any_error_t      MethodInfo::invoke(const void* obj, std::span<const Any> args) const
+    Expect<Any>      MethodInfo::invoke(const void* obj, std::span<const Any> args) const
     {
         return invoke(const_cast<void*>(obj), args, true);
     }
 
-    any_error_t      MethodInfo::invoke(void* obj, std::span<const Any> args, bool constPtr) const 
+    Expect<Any>      MethodInfo::invoke(void* obj, std::span<const Any> args, bool constPtr) const 
     {
         size_t  ac  = arg_count();
         if(args.size() < ac)
-            return { Any(), errors::insufficient_arguments() };
+            return errors::insufficient_arguments();
         if(!obj && !is_static())
-            return { Any(), errors::null_object() };
+            return errors::null_object();
         if(obj && constPtr && !is_const())
-            return { Any(), errors::const_object_violation() };
+            return errors::const_object_violation();
         if(m_args.size() < ac)
-            return { Any(), errors::internal_error() };
+            return errors::internal_error();
         
         Any                         result;
         void*                       rptr        = nullptr;
@@ -95,14 +95,14 @@ namespace yq {
 
             //  guard against results that aren't types
         if(m_result && !m_result->type().is_type())
-            return { Any(), errors::internal_error() };
+            return errors::internal_error();
         
         if(ac){
         
             //  quick sanity check to guard against arguments that aren't types
             for(size_t n = 0; n<ac; ++n){
                 if(!m_args[n]->type().is_type())
-                    return { Any(), errors::internal_error() };
+                    return errors::internal_error();
             }
         
             ptrs.resize(ac, nullptr);
@@ -115,12 +115,11 @@ namespace yq {
                     continue;
                 }
                 
-                auto [v,ec] = arg.convert(static_cast<const TypeInfo&>(m_args[n]->type()));
-                if(ec != std::error_code()){
-                    return { Any(), errors::bad_argument() };
-                }
+                auto v      = arg.convert(static_cast<const TypeInfo&>(m_args[n]->type()));
+                if(!v)
+                    return errors::bad_argument();
                 
-                data[n] = std::move(v);
+                data[n] = std::move(*v);
                 ptrs[n] = data[n].raw_ptr();
             }
         }
@@ -132,11 +131,11 @@ namespace yq {
         
         std::error_code ec  = _invoke(rptr, obj, ptrs.data());
         if(ec != std::error_code())
-            return { Any(), ec };
+            return std::unexpected(ec);
         if(m_result)
-            return { std::move(result), std::error_code() };
+            return  std::move(result);
         else
-            return {};
+            return Any();
     }
 }
 

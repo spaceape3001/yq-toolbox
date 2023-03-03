@@ -83,10 +83,10 @@ namespace yq {
         bool            can_convert() const;
 
         //! Returns a variant that's been converted
-        any_error_t     convert(const TypeInfo&) const;
+        Expect<Any>     convert(const TypeInfo&) const;
 
         template <typename T>
-        any_error_t     convert() const;
+        Expect<Any>     convert() const;
 
 
         bool            is_valid() const;

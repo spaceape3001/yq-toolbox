@@ -42,7 +42,7 @@ namespace yq {
         
         //! Gets the property/variable
         //! \param[in]  pointer Pointer to the object (can be null for statics)
-        any_error_t         get(const void* obj) const;
+        Expect<Any>         get(const void* obj) const;
         
         //! Write for saving
         //!

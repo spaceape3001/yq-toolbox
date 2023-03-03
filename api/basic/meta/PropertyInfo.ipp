@@ -14,7 +14,7 @@
 #include <basic/meta/PropSetter.hpp>
 
 #include <basic/Any.hpp>
-#include <basic/Errors.hpp>
+#include <basic/errors.hpp>
 #include <basic/Logging.hpp>
 #include <cassert>
 
@@ -46,15 +46,15 @@ namespace yq {
         }
     }
 
-    any_error_t     PropertyInfo::get(const void* obj) const
+    Expect<Any>     PropertyInfo::get(const void* obj) const
     {
         if(!m_getter)
-            return { Any(), errors::no_getter() };
+            return errors::no_getter();
         Any ret(m_type);
         std::error_code     ec  = m_getter -> get(ret.raw_ptr(), obj);
         if(ec != std::error_code())
-            return { Any(), ec };
-        return { std::move(ret), ec };
+            return std::unexpected(ec);
+        return ret;
     }
 
     bool        PropertyInfo::is_state() const
@@ -80,12 +80,12 @@ namespace yq {
             return errors::no_setter();
         if(var.type().id() == m_type.id())
             return m_setter -> set(obj, var.raw_ptr());
-        auto [v2, ec]  = var.convert(m_type);
-        if(!v2.is_valid())
+        auto v2  = var.convert(m_type);
+        if(!v2)
             return errors::incompatible_types();
-        if( ec != std::error_code())
-            return ec;
-        return m_setter -> set(obj, v2.raw_ptr());
+        if(!v2->is_valid())
+            return errors::incompatible_types();
+        return m_setter -> set(obj, v2->raw_ptr());
     }
 
     std::error_code PropertyInfo::set(void* obj, std::string_view var) const

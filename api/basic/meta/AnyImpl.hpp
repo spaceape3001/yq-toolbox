@@ -6,6 +6,7 @@
 
 #pragma once
 #include <cassert>
+#include <basic/errors.hpp>
 
     //  SKIPPING INCLUDES... done in order by others
 
@@ -64,7 +65,7 @@ namespace yq {
     }
 
     template <typename T>
-    any_error_t     Any::convert() const
+    Expect<Any>     Any::convert() const
     {
         static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
         return convert_to(meta<T>());

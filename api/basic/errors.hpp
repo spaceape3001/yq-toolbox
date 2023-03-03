@@ -11,6 +11,7 @@
 namespace yq {
     namespace errors {
         using bad_argument              = error_db::entry<"Bad argument provided">;
+        using bad_conversion            = error_db::entry<"Bad conversion">;
         using cant_open_read            = error_db::entry<"Unable to open file for reading">;
         using cant_open_write           = error_db::entry<"Unable to open file for writing">;
         using const_object_violation    = error_db::entry<"Constant object violated">;
@@ -20,7 +21,6 @@ namespace yq {
         using incompatible_types        = error_db::entry<"Incompatible types">;
         using insufficient_arguments    = error_db::entry<"Not enough arguments for method call">;
         using internal_error            = error_db::entry<"Internal consistency error">;
-        using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
         using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
         using name_lookup_failed        = error_db::entry<"Name Lookup Failed" >;
         using no_getter                 = error_db::entry<"No getter exists" >;
