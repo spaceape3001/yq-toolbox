@@ -392,65 +392,93 @@ namespace yq {
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_w(T w) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_w(T w) const noexcept
     {
-        return { (w-lo.w) / (hi.w-lo.w), hi.w != lo.w};
+        if(hi.w == lo.w)
+            return errors::degenerate_dimension();
+        return (w-lo.w) / (hi.w-lo.w);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_w(T w, T ep) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_w(T w, T ep) const noexcept
     {
-        return { (w-lo.w) / (hi.w-lo.w), hi.w - lo.w >= ep};
+        if(hi.w - lo.w < ep){
+            if(hi.w < lo.w)
+                return errors::invalid_box();
+            return errors::degenerate_dimension();
+        }
+        return (w-lo.w) / (hi.w-lo.w);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_x(T x) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_x(T x) const noexcept
     {
-        return { (x-lo.x) / (hi.x-lo.x), hi.x != lo.x};
+        if(hi.x == lo.x)
+            return errors::degenerate_dimension();
+        return (x-lo.x) / (hi.x-lo.x);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_x(T x, T ep) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_x(T x, T ep) const noexcept
     {
-        return { (x-lo.x) / (hi.x-lo.x), hi.x - lo.x >= ep};
+        if(hi.x - lo.x < ep){
+            if(hi.x < lo.x)
+                return errors::invalid_box();
+            return errors::degenerate_dimension();
+        }
+        return (x-lo.x) / (hi.x-lo.x);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_y(T y) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_y(T y) const noexcept
     {
-        return { (y-lo.y) / (hi.y-lo.y), hi.y != lo.y};
+        if(hi.y == lo.y)
+            return errors::degenerate_dimension();
+        return (y-lo.y) / (hi.y-lo.y);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_y(T y, T ep) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_y(T y, T ep) const noexcept
     {
-        return { (y-lo.y) / (hi.y-lo.y), hi.y - lo.y >= ep};
+        if(hi.y - lo.y < ep){
+            if(hi.y < lo.y)
+                return errors::invalid_box();
+            return errors::degenerate_dimension();
+        }
+        return (y-lo.y) / (hi.y-lo.y);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_z(T z) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_z(T z) const noexcept
     {
-        return { (z-lo.z) / (hi.z-lo.z), hi.z != lo.z};
+        if(hi.z == lo.z)
+            return errors::degenerate_dimension();
+        return (z-lo.z) / (hi.z-lo.z);
     }
 
     template <typename T>
     template <typename>
     requires is_floating_point_v<T>
-    constexpr std::pair<unity_t<T>,bool> AxBox4<T>::fraction_z(T z, T ep) const noexcept
+    Expect<unity_t<T>>    AxBox4<T>::fraction_z(T z, T ep) const noexcept
     {
-        return { (z-lo.z) / (hi.z-lo.z), hi.z - lo.z >= ep};
+        if(hi.z - lo.z < ep){
+            if(hi.z < lo.z)
+                return errors::invalid_box();
+            return errors::degenerate_dimension();
+        }
+        return (z-lo.z) / (hi.z-lo.z);
     }
 
     template <typename T>

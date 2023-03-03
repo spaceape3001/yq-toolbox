@@ -261,12 +261,12 @@ namespace yq {
             This gives the fractional "w" that the w-value is positioned across the box (lo -> hi)
             
             \param[in] w    W-coordinate to check
-            \return pair, first value is the fraction, second is true if if first is valid
+            \return the fraction along the box's w-dimension
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_w(T w) const noexcept;
+        Expect<unity_t<T>>    fraction_w(T w) const noexcept;
 
         /*! \brief Fraction of the box the given w is positioned
         
@@ -274,25 +274,25 @@ namespace yq {
             
             \param[in] w    W-coordinate to check
             \param[in] ep   Epsilon to check the dimensional size
-            \return pair, first value is the fraction, second is true if first is valid
+            \return the fraction along the box's w-dimension
             \note The epsilon check will be buggy on invalid boxes!
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_w(T w, T ep) const noexcept;
+        Expect<unity_t<T>>    fraction_w(T w, T ep) const noexcept;
 
         /*! \brief Fraction of the box the given x is positioned
         
             This gives the fractional "x" that the x-value is positioned across the box (lo -> hi)
             
             \param[in] x    x-coordinate to check
-            \return pair, first value is the fraction, second is true if first is valid
+            \return the fraction along the box's x-dimension
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_x(T x) const noexcept;
+        Expect<unity_t<T>>    fraction_x(T x) const noexcept;
 
         /*! \brief Fraction of the box the given x is positioned
         
@@ -300,25 +300,25 @@ namespace yq {
             
             \param[in] x    X-coordinate to check
             \param[in] ep   Epsilon to check the dimensional size
-            \return pair, first value is the fraction, second is true if first is valid
+            \return the fraction along the box's x-dimension
             \note The epsilon check will be buggy on invalid boxes!
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_x(T x, T ep) const noexcept;
+        Expect<unity_t<T>>    fraction_x(T x, T ep) const noexcept;
 
         /*! \brief Fraction of the box the given y is positioned
         
             This gives the fractional "y" that the y-value is positioned across the box (lo -> hi)
             
             \param[in] y    Y-coordinate to check
-            \return pair, first value is the fraction, second is true if first is valid
+            \return the fraction along the box's y-dimension
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_y(T y) const noexcept;
+        Expect<unity_t<T>>    fraction_y(T y) const noexcept;
 
         /*! \brief Fraction of the box the given y is positioned
         
@@ -326,25 +326,25 @@ namespace yq {
             
             \param[in] y    Y-coordinate to check
             \param[in] ep   Epsilon to check the dimensional size
-            \return pair, first value is the fraction, second is true if first is valid
+            \return the fraction along the box's y-dimension
             \note The epsilon check will be buggy on invalid boxes!
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_y(T y, T ep) const noexcept;
+        Expect<unity_t<T>>    fraction_y(T y, T ep) const noexcept;
 
         /*! \brief Fraction of the box the given z is positioned
         
             This gives the fractional "z" that the z-value is positioned across the box (lo -> hi)
             
             \param[in] z    Z-coordinate to check
-            \return pair, first value is the fraction, second is true if if first is valid
+            \return the fraction along the box's z-dimension
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_z(T z) const noexcept;
+        Expect<unity_t<T>>    fraction_z(T z) const noexcept;
 
         /*! \brief Fraction of the box the given z is positioned
         
@@ -352,13 +352,13 @@ namespace yq {
             
             \param[in] z    Z-coordinate to check
             \param[in] ep   Epsilon to check the dimensional size
-            \return pair, first value is the fraction, second is true if first is valid
+            \return the fraction along the box's z-dimension
             \note The epsilon check will be buggy on invalid boxes!
         */
         //  TODO accommodate integer based T
         template <typename=void>
         requires is_floating_point_v<T>
-        constexpr std::pair<unity_t<T>,bool>    fraction_z(T z, T ep) const noexcept;
+        Expect<unity_t<T>>    fraction_z(T z, T ep) const noexcept;
 
         //! Hi-hi-hi-hi corner of this box
         constexpr Vector4<T>    hhhh() const noexcept;
