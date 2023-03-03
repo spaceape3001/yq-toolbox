@@ -764,6 +764,7 @@ namespace yq {
         });
     }
 
+    #if defined(YQ_MATH_TENSOR_3_1_HPP) && defined(YQ_MATH_VECTOR_1_HPP)
     template <typename T, typename U>
     std::vector<Vector1<product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor31<U>&b)
     {
@@ -771,7 +772,9 @@ namespace yq {
             return v * b;
         });
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_3_2_HPP) && defined(YQ_MATH_VECTOR_2_HPP)
     template <typename T, typename U>
     std::vector<Vector2<product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor32<U>&b)
     {
@@ -779,7 +782,9 @@ namespace yq {
             return v * b;
         });
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T, typename U>
     std::vector<Vector3<product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor33<U>&b)
     {
@@ -787,7 +792,9 @@ namespace yq {
             return v * b;
         });
     }
+    #endif
     
+    #if defined(YQ_MATH_TENSOR_3_4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T, typename U>
     std::vector<Vector4<product_t<T,U>>> operator*(std::span<const Vector3<T>>as, const Tensor34<U>&b)
     {
@@ -795,6 +802,7 @@ namespace yq {
             return v * b;
         });
     }
+    #endif
 
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
