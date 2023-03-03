@@ -14,17 +14,20 @@
 */
 
 #include <math/Quadrilateral2.hpp>
-#include <math/AxBox2.hpp>
-#include "QuadrilateralData.hpp"
+#include <math/QuadrilateralData.hpp>
 
 namespace yq {
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr Quadrilateral2<T>::Quadrilateral2(const AxBox2<T>&box) noexcept :
         Quadrilateral2(box.ll(), box.hl(), box.hh(), box.lh()) {}
+    #endif
     
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T>
     constexpr Quadrilateral2<T>::Quadrilateral2(const Rectangle2<T>&rect) noexcept :
         Quadrilateral2(rect.southwest(), rect.southeast(), rect.northeast(), rect.northwest()) {}
+    #endif
 
     template <typename T>
     constexpr Quadrilateral2<T>::operator QuadrilateralData<Vector2<T>>() const noexcept
@@ -96,13 +99,16 @@ namespace yq {
         return *this;
     }
 
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     constexpr Quadrilateral2<product_t<T,U>>  Quadrilateral2<T>::operator*(const Tensor22<U>&rhs) const noexcept
     {
         return Quadrilateral2<product_t<T,U>>( a*rhs, b*rhs, c*rhs, d*rhs );
     }
+    #endif
 
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
     requires self_mul_v<T,U>
@@ -114,6 +120,7 @@ namespace yq {
         d *= rhs;
         return *this;
     }
+    #endif
 
 
     template <typename T>
@@ -148,11 +155,13 @@ namespace yq {
         return middivide(abs(_area()));
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     constexpr AxBox2<T>   Quadrilateral2<T>::bounds() const noexcept 
     {
         return AxBox2<T>(UNION, { a, b, c, d });
     }
+    #endif
 
     template <typename T>
     constexpr bool      Quadrilateral2<T>::is_ccw() const noexcept
@@ -175,17 +184,21 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     Quadrilateral2<T> quadrilateral(const AxBox2<T>& ax)
     {
         return Quadrilateral2<T>(ax);
     }
+    #endif
 
+    #ifdef YQ_MATH_RECTANGLE2_HPP
     template <typename T>
     Quadrilateral2<T> quadrilateral(const Rectangle2<T>& rect)
     {
         return Quadrilateral2<T>(rect);
     }
+    #endif
 
     template <typename T, typename U>
     constexpr Quadrilateral2<product_t<T,U>> operator*(T lhs, const Quadrilateral2<U>&rhs) noexcept
@@ -193,11 +206,13 @@ namespace yq {
         return Quadrilateral2<product_t<T,U>>(lhs * rhs.a, lhs * rhs.b, lhs * rhs.c, lhs * rhs.d);
     }
 
+    #ifdef YQ_MATH_AXBOX2_HPP
     template <typename T>
     AxBox2<T>   aabb(const Quadrilateral2<T>& quad)
     {
         return quad.bounds();
     }
+    #endif
 
     template <typename T>
     square_t<T>    area(const Quadrilateral2<T>& quad)
