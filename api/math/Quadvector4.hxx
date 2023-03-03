@@ -12,10 +12,7 @@
     template instantiation.  
 */
 
-#include <math/Bivector4.hpp>
-#include <math/Multivector4.hpp>
 #include <math/Quadvector4.hpp>
-#include <math/Trivector4.hpp>
 
 namespace yq {
 
@@ -32,6 +29,7 @@ namespace yq {
         return Quadvector4(-xyzw);
     }
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator+(T b) const noexcept
     {
@@ -43,7 +41,9 @@ namespace yq {
             xyzw 
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_BIVECTOR4_HPP) && defined(YQ_MATH_MULTIVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator+(const Bivector4<T>& b) const noexcept
     {
@@ -55,7 +55,9 @@ namespace yq {
             xyzw 
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator+(const Multivector4<T>& b) const noexcept
     {
@@ -67,6 +69,7 @@ namespace yq {
             xyzw + b.xyzw
         );
     }
+    #endif
 
     template <typename T>
     constexpr Quadvector4<T> Quadvector4<T>::operator+(const Quadvector4<T>& b) const noexcept
@@ -81,6 +84,7 @@ namespace yq {
         return *this;
     }
 
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_TRIVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator+(const Trivector4<T>& b) const noexcept
     {
@@ -92,8 +96,9 @@ namespace yq {
             xyzw 
         );
     }
-
+    #endif
     
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator+(const Vector4<T>& b) const noexcept
     {
@@ -105,7 +110,9 @@ namespace yq {
             xyzw 
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator-(T b) const noexcept
     {
@@ -117,7 +124,9 @@ namespace yq {
             xyzw
         );
     }
+    #endif
 
+    #if defined(YQ_MATH_BIVECTOR4_HPP) && defined(YQ_MATH_MULTIVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator-(const Bivector4<T>& b) const noexcept
     {
@@ -129,7 +138,9 @@ namespace yq {
             xyzw
         );
     }
+    #endif
     
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator-(const Multivector4<T>& b) const noexcept
     {
@@ -141,6 +152,7 @@ namespace yq {
             xyzw -b.xyzw
         );
     }
+    #endif
 
     template <typename T>
     constexpr Quadvector4<T> Quadvector4<T>::operator-(const Quadvector4<T>& b) const noexcept
@@ -155,6 +167,7 @@ namespace yq {
         return *this;
     }
     
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_TRIVECTOR4_HPP)
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator-(const Trivector4<T>& b) const noexcept
     {
@@ -166,8 +179,9 @@ namespace yq {
             xyzw
         );
     }
+    #endif
 
-
+    #if defined(YQ_MATH_MULTIVECTOR4_HPP) && defined(YQ_MATH_VECTOR_4_HPP)
     template <typename T>
     constexpr Multivector4<T> Quadvector4<T>::operator-(const Vector4<T>& b) const noexcept
     {
@@ -179,6 +193,7 @@ namespace yq {
             xyzw
         );
     }
+    #endif
 
 
     template <typename T>
@@ -220,6 +235,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> operator+(T a, const Quadvector4<T>& b) noexcept
     {
@@ -231,7 +247,9 @@ namespace yq {
             b.xyzw 
         );
     }
+    #endif
 
+    #ifdef YQ_MATH_MULTIVECTOR4_HPP
     template <typename T>
     constexpr Multivector4<T> operator-(T a, const Quadvector4<T>& b) noexcept
     {
@@ -243,6 +261,7 @@ namespace yq {
             -b.xyzw 
         );
     }
+    #endif
 
 
     template <typename T, typename U>
