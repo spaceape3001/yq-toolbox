@@ -39,8 +39,10 @@ namespace yq {
         constexpr Vector3(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Vector3(zero_t) noexcept : Vector3(ALL, zero_v<T>) {}
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Vector3(const glm::vec<3, T, Q>& v) : x(v.x), y(v.y), z(v.z) {}
+        #endif
 
         explicit constexpr Vector3(const Size3<T>&) noexcept;
 
@@ -83,7 +85,9 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector3&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         constexpr operator glm::vec<3, T, glm::defaultp>() const noexcept;
+        #endif
 
         //! Explicit conversion operator
         template <typename U>
@@ -417,11 +421,13 @@ namespace yq {
         return Vector3<T>( x,y,z );
     }
     
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Vector3<T> vector(const glm::vec<3,T,Q>& v) noexcept
     {
-        return Vector3<T>( v.x, v.y, v.z );
+        return Vector3<T>( v );
     }
+    #endif
 
     constexpr Vector3D operator "" _x3(unsigned long long int v) noexcept
     {

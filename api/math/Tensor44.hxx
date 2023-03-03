@@ -17,6 +17,8 @@
 
 #include <math/Segment4.hpp>
 
+#include <math/Tensor33.hpp>
+
 #include <math/Tensor41.hpp>
 #include <math/Tensor42.hpp>
 #include <math/Tensor43.hpp>
@@ -33,6 +35,16 @@
 
 namespace yq {
     template <typename T>
+    constexpr Tensor44<T>::Tensor44(const Tensor33<T>& t33, const Vector3<T>& wcol, const Vector3<T>& wrow, T _ww) noexcept :
+        xx(t33.xx), xy(t33.yx), xz(t33.zx), xw(wcol.x),
+        yx(t33.xy), yy(t33.yy), yz(t33.zy), yw(wcol.y),
+        zx(t33.xz), zy(t33.yz), zz(t33.zz), zw(wcol.z),
+        wx(wrow.x), wy(wrow.y), wz(wrow.z), ww(_ww)
+    {
+    }
+    
+    #ifdef YQ_USE_GLM
+    template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor44<T>::Tensor44(const glm::mat<4,4,T,Q>& t) noexcept :
         xx(t.x.x), xy(t.y.x), xz(t.z.x), xw(t.w.x),
@@ -41,7 +53,9 @@ namespace yq {
         wx(t.x.w), wy(t.y.w), wz(t.z.w), ww(t.w.w)
     {
     }
+    #endif
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Tensor44<T>::operator glm::mat<4,4,T,glm::defaultp>() const noexcept 
     {
@@ -52,6 +66,7 @@ namespace yq {
             xw, yw, zw, ww
         );
     }
+    #endif
 
 
     template <typename T>
@@ -746,11 +761,13 @@ namespace yq {
     //  TODO: 4x4 inverse 
     //  TODO: 4x4 eigenvalues, eigenvectors, & eigensystem
 
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t) noexcept
     {
         return Tensor44<T>(t);
     }
+    #endif
 
     template <typename T>
     constexpr T     trace(const Tensor44<T>& ten) noexcept

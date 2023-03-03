@@ -67,14 +67,18 @@ namespace yq {
 
         consteval Tensor21(zero_t) : Tensor21(ALL, zero_v<T>) {} 
         
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor21(const glm::mat<2,1,T,Q>& t) noexcept;
+        #endif
         
         
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor21&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         constexpr operator glm::mat<2,1,T,glm::defaultp>() const noexcept ;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr Tensor21  operator+() const noexcept;

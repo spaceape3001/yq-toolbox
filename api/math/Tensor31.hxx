@@ -33,6 +33,7 @@
 #include <math/AnyComponents.hpp>
 
 namespace yq {
+    #ifdef YQ_USE_GLM
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor31<T>::Tensor31(const glm::mat<3,1,T,Q>& t) noexcept :
@@ -41,7 +42,9 @@ namespace yq {
         zx(t.x.z)
     {
     }
+    #endif
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Tensor31<T>::operator glm::mat<3,1,T,glm::defaultp>() const noexcept 
     {
@@ -49,6 +52,7 @@ namespace yq {
             xx, yx, zx
         );
     }
+    #endif
 
     template <typename T>
     constexpr const Tensor31<T>&  Tensor31<T>::operator+() const noexcept

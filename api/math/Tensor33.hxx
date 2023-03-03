@@ -132,6 +132,7 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Tensor33<T>::Tensor33(clockwise_t, z_t, MKS<T,dim::Angle>v) : Tensor33(CCW, Z, -v) {}
 
+    #ifdef YQ_USE_GLM
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor33<T>::Tensor33(const glm::mat<3,3,T,Q>& t) noexcept :
@@ -140,7 +141,9 @@ namespace yq {
         zx(t.x.z), zy(t.y.z), zz(t.z.z)
     {
     }
+    #endif
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Tensor33<T>::operator glm::mat<3,3,T,glm::defaultp>() const noexcept 
     {
@@ -150,6 +153,7 @@ namespace yq {
             xz, yz, zz
         );
     }
+    #endif
 
     template <typename T>
     constexpr Tensor33<T>  Tensor33<T>::operator+() const noexcept
@@ -800,11 +804,13 @@ namespace yq {
         return Tensor33<T>(q);
     }
 
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t)
     {
         return Tensor33<T>(t);
     }
+    #endif
     
     template <typename T>
     constexpr T     trace(const Tensor33<T>& ten)

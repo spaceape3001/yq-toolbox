@@ -4,12 +4,18 @@
 ##
 ################################################################################
 
+project(yqtoolbox)
+
+option(Feature_GLM "Add GLM Bindings" ON)
+
 find_package(CURL REQUIRED)
 find_package(Log4cpp REQUIRED)
 find_package(TBB REQUIRED)
-find_package(glm REQUIRED)
+if(Feature_GLM)
+    find_package(glm REQUIRED)
+endif()
 find_package(SQLite3 REQUIRED)
-find_package(Python REQUIRED)
+
 
 #   This is a testing file, excluded from GIT, used for quick test compilation 
 #   of code before sliding it into the appropriate spot of the build.
@@ -18,7 +24,7 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
     set(core_test_source ./test.cpp)
 endif()
 
-add_library(yqtoolbox SHARED 
+add_library(${PROJECT_NAME} SHARED 
     #${core_test_source}
     ./basic/basic.cpp
     ./chemistry/chemistry.cpp
@@ -27,19 +33,26 @@ add_library(yqtoolbox SHARED
     ./physics/physics.cpp
 )
 
-target_compile_definitions(yqtoolbox
+if(Feature_GLM)
+    target_compile_definitions(${PROJECT_NAME}
+        PUBLIC
+            YQ_FEATURE_GLM=1
+    )
+endif()
+
+target_compile_definitions(${PROJECT_NAME}
     PRIVATE 
         YQ__CORE__OVERRIDE 
 )
 
 IF(GCC)
-    target_link_libraries(yqtoolbox
+    target_link_libraries(${PROJECT_NAME}
         PUBLIC
             stdc++fs
     )
 ENDIF()
 
-target_link_libraries(yqtoolbox
+target_link_libraries(${PROJECT_NAME}
     PUBLIC
         ${LOG4CPP_LIBRARIES} 
         ${TBB_LIBRARIES}
@@ -51,15 +64,16 @@ target_link_libraries(yqtoolbox
         pstreams
 )
 
-target_include_directories(yqtoolbox
+target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
         ${TBB_INCLUDE_DIR}
         ${LOG4CPP_INCLUDE_DIR}
         ${SQLite3_INCLUDE_DIRS}
+        ${glm_INCLUDE_DIR}
 )
 
-LinkTest(yqtoolbox)
+LinkTest(${PROJECT_NAME})
 
 

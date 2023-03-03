@@ -27,10 +27,12 @@ namespace yq {
         
         constexpr bool    operator==(const RGBA&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         constexpr operator glm::vec<4, T, glm::defaultp>() const noexcept
         {
             return { red, green, blue, alpha };
         }
+        #endif
 
         template <typename U>
         requires (std::is_floating_point_v<T> && std::is_integral_v<U>)

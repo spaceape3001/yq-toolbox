@@ -54,8 +54,10 @@ namespace yq {
         }
         
         
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Vector2(const glm::vec<2, T, Q>& v) : x(v.x), y(v.y) {}
+        #endif
 
         /*! \brief Creates a unit-vector in the x-dimension.
         */
@@ -74,7 +76,9 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector2&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         constexpr operator glm::vec<2, T, glm::defaultp>() const noexcept;
+        #endif
 
         //! Explicit conversion operator
         template <typename U>
@@ -409,11 +413,13 @@ namespace yq {
         return Vector2<T>(x,y);
     }
     
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Vector2<T> vector(const glm::vec<2,T,Q>& v) noexcept
     {
         return Vector2<T>( v.x, v.y );
     }
+    #endif
 
     constexpr Vector2D operator "" _x2(unsigned long long int v) noexcept
     {

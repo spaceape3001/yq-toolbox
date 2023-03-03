@@ -75,14 +75,18 @@ namespace yq {
 
         consteval Tensor31(zero_t) : Tensor31(ALL, zero_v<T>) {} 
         
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor31(const glm::mat<3,1,T,Q>& t) noexcept;
+        #endif
         
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor31&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         //! Conversion to GLM
         constexpr operator glm::mat<3,1,T,glm::defaultp>() const noexcept;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr const Tensor31&  operator+() const noexcept;

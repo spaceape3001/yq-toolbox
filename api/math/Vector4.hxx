@@ -48,11 +48,13 @@ namespace yq {
     {
     }
     
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Vector4<T>::operator glm::vec<4, T, glm::defaultp>() const noexcept
     {
         return glm::vec<4, T, glm::defaultp>( x, y, z, w );
     }
+    #endif
 
     template <typename T>
     constexpr Vector4<T> Vector4<T>::operator-() const noexcept

@@ -42,6 +42,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  PROJECTIONS
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     requires std::is_floating_point_v<T>
     auto    view_matrix(const Pose3<T>& pose)
@@ -55,7 +56,7 @@ namespace yq {
             0., 0., 0., 1.
         };
     }
-    
+    #endif
 
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS

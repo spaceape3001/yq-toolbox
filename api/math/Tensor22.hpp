@@ -87,14 +87,18 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Tensor22(clockwise_t, MKS<T,dim::Angle>);
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;
+        #endif
         
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor22&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         //! Implicit conversion to GLM
         explicit operator glm::mat<2,2,T,glm::defaultp>() const noexcept;
+        #endif
 
 
         //! Positive (affirmation) operator
@@ -362,8 +366,10 @@ namespace yq {
     template <typename T>
     constexpr Tensor22<T>   rotation2(MKS<T,dim::Angle> r);
 
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t);
+    #endif
 
     YQ_IDENTITY_1(Tensor22, Tensor22<T>(IDENTITY))
     YQ_NAN_1(Tensor22, Tensor22<T>(NAN))

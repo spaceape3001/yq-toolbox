@@ -37,6 +37,11 @@ namespace yq {
         constexpr Quaternion3(z_t, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Quaternion3(zero_t) : Quaternion3(ALL, zero_v<T>) {}
         
+        #ifdef YQ_USE_GLM
+        template <glm::qualifier Q>
+        explicit constexpr Quaternion3(const glm::qua<T, Q>& q) : w(q.w), x(q.x), y(q.y), z(q.z) {}
+        #endif
+
         template <typename=void>
         requires std::is_floating_point_v<T>
         Quaternion3(ccw_t, x_t, MKS<T,dim::Angle>v);
@@ -76,6 +81,10 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Quaternion3&) const noexcept = default;
         
+        #ifdef YQ_USE_GLM
+        constexpr operator glm::qua<T,glm::defaultp>() const noexcept ;
+        #endif
+
         Quaternion3             operator+() const;
         Quaternion3             operator-() const;
 

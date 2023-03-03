@@ -51,11 +51,13 @@ namespace yq {
     {
     }
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Vector2<T>::operator glm::vec<2, T, glm::defaultp>() const noexcept
     {
         return glm::vec<2, T, glm::defaultp>( x, y );
     }
+    #endif
 
     //! Negation (negative) operator
     template <typename T>

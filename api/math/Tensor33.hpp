@@ -121,14 +121,18 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Tensor33(clockwise_t, z_t, MKS<T,dim::Angle>v);
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor33(const glm::mat<3,3,T,Q>& t) noexcept;
+        #endif
 
                 //! Default equality operator
         constexpr bool operator==(const Tensor33&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         //! Creates a GLM matrix
         constexpr operator glm::mat<3,3,T,glm::defaultp>() const noexcept;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr Tensor33      operator+() const noexcept;
@@ -447,10 +451,12 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Tensor33<T>     tensor(const Quaternion3<T>& q);
 
+    #ifdef YQ_USE_GLM
     /*! \brief Create 3x3 tensor from GLM
     */
     template <typename T, glm::qualifier Q>
     constexpr Tensor33<T> tensor(const glm::mat<3,3,T,Q>& t);
+    #endif
     
     
     YQ_IDENTITY_1(Tensor33, Tensor33<T>(IDENTITY))

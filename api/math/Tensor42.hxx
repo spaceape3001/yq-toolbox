@@ -40,6 +40,7 @@
 */
 
 namespace yq {
+    #ifdef YQ_USE_GLM
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor42<T>::Tensor42(const glm::mat<4,2,T,Q>& t) noexcept :
@@ -49,7 +50,9 @@ namespace yq {
         wx(t.x.w), wy(t.y.w)
     {
     }
+    #endif
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Tensor42<T>::operator glm::mat<4,2,T,glm::defaultp>() const noexcept 
     {
@@ -58,6 +61,7 @@ namespace yq {
             xy, yy, zy, wy
         );
     }
+    #endif
 
     template <typename T>
     constexpr Tensor42<T>  Tensor42<T>::operator+() const noexcept

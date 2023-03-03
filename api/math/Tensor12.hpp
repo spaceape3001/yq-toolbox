@@ -41,13 +41,17 @@ namespace yq {
         constexpr Tensor12(rows_t, Vector2<T>& v) noexcept : xx(v.x), xy(v.y) {}
         consteval Tensor12(zero_t) noexcept : Tensor12(ALL, zero_v<T>) {}
         
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor12(const glm::mat<1,2,T,Q>& t) noexcept;
+        #endif
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor12&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         constexpr operator glm::mat<1,2,T,glm::defaultp>() const noexcept;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr Tensor12  operator+() const noexcept;

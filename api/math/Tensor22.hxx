@@ -38,6 +38,7 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Tensor22<T>::Tensor22(clockwise_t, MKS<T,dim::Angle>v) : Tensor22(CCW, -v) {}
 
+    #ifdef YQ_USE_GLM
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor22<T>::Tensor22(const glm::mat<2,2,T,Q>& t) noexcept :
@@ -45,7 +46,9 @@ namespace yq {
         yx(t.x.y), yy(t.y.y)
     {
     }
+    #endif
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     Tensor22<T>::operator glm::mat<2,2,T,glm::defaultp>() const noexcept 
     {
@@ -54,6 +57,7 @@ namespace yq {
             xy, yy
         );
     }
+    #endif
 
 
     template <typename T>
@@ -600,11 +604,13 @@ namespace yq {
         return Tensor22<T>(CCW, r);
     }
 
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t)
     {
         return Tensor22<T>(t);
     }
+    #endif
 
     template <typename T>
     constexpr T     trace(const Tensor22<T>& ten)

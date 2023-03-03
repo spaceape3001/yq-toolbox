@@ -12,44 +12,28 @@
     template instantiation.  
 */
 
-#include <math/AxBox1.hpp>
-
-#include <math/Multivector1.hpp>
-
-#include <math/Segment1.hpp>
-#include <math/Size1.hpp>
-
-#include <math/Tensor11.hpp>
-#include <math/Tensor12.hpp>
-#include <math/Tensor13.hpp>
-#include <math/Tensor14.hpp>
-
 #include <math/Vector1.hpp>
-#include <math/Vector2.hpp>
-#include <math/Vector3.hpp>
-#include <math/Vector4.hpp>
-
 #include <math/Absolute.hpp>
 #include <math/AllComponents.hpp>
 #include <math/AnyComponents.hpp>
 
 #include <math/utility.hpp>
 
-
-#include <basic/Stream.hpp>
-#include <basic/Logging.hpp>
-
 namespace yq {
+    #ifdef YQ_MATH_SIZE1_HPP
     template <typename T>
     constexpr Vector1<T>::Vector1(const Size1<T>&v) noexcept : Vector1(v.x)
     {
     }
+    #endif
 
+    #ifdef YQ_FEATURE_GLM
     template <typename T>
     constexpr Vector1<T>::operator glm::vec<1, T, glm::defaultp>() const noexcept
     {
         return glm::vec<1, T, glm::defaultp>(x);
     }
+    #endif
 
     template <typename T>
     constexpr Vector1<T> Vector1<T>::operator-() const noexcept
@@ -79,6 +63,7 @@ namespace yq {
             x 
         );
     }
+
 
     template <typename T>
     constexpr AxBox1<T> Vector1<T>::operator+(const AxBox1<T>&b) const noexcept

@@ -20,13 +20,16 @@
 #include <math/AnyComponents.hpp>
 
 namespace yq {
+    #ifdef YQ_USE_GLM
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor11<T>::Tensor11(const glm::mat<1,1,T,Q>& t) noexcept :
         xx(t.x.x)
     {
     }
+    #endif
 
+    #ifdef YQ_USE_GLM
     template <typename T>
     constexpr Tensor11<T>::operator glm::mat<1,1,T,glm::defaultp>() const noexcept 
     {
@@ -34,6 +37,7 @@ namespace yq {
             xx
         );
     }
+    #endif
 
     template <typename T>
     constexpr Tensor11<T>  Tensor11<T>::operator+() const noexcept

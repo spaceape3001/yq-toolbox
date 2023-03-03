@@ -45,8 +45,10 @@ namespace yq {
 
         explicit constexpr Vector4(const Size4<T>&) noexcept;
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Vector4(const glm::vec<4, T, Q>& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
+        #endif
         
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
@@ -110,8 +112,10 @@ namespace yq {
         //! Power (of two)
         constexpr square_t<T> operator^(two_t) const noexcept;
 
+        #ifdef YQ_USE_GLM
         //! Conversion to GLM library
         constexpr operator glm::vec<4, T, glm::defaultp>() const noexcept;
+        #endif
 
         //! Explicit conversion operator
         template <typename U>
@@ -429,11 +433,13 @@ namespace yq {
         return Vector4<T>(x,y,z,w);
     }
     
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Vector4<T> vector(const glm::vec<4,T,Q>& v) noexcept
     {
-        return Vector4<T>( v.x, v.y, v.z, v.w );
+        return Vector4<T>( v );
     }
+    #endif
 
     constexpr Vector4D operator "" _x4(unsigned long long int v) noexcept
     {

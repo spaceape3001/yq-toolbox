@@ -98,6 +98,13 @@ namespace yq {
     {
     }
     
+    #ifdef YQ_USE_GLM
+    template <typename T>
+    constexpr Quaternion3<T>::operator glm::qua<T,glm::defaultp>() const noexcept 
+    {
+        return glm::qua<T,glm::defaultp>(w,x,y,z);
+    }
+    #endif
 
     template <typename T>
     Quaternion3<T>      Quaternion3<T>::operator+() const

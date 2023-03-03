@@ -38,9 +38,21 @@
 #include <numbers>
 #include <utility>
 
-#include <log4cpp/CategoryStream.hh>
+    /*
+        GLM can be a heavy-weight library, so make it OPTIONAL, enabled via 
+        cmake configuration *OR* by a consumer that needs it.  Note, if 
+        it's being used, make sure the GLM library's include path is part
+        of your target's include directories.
+    */
+#ifndef YQ_USE_GLM
+    #ifdef YQ_FEATURE_GLM
+        #define YQ_USE_GLM 1
+    #endif
+#endif
 
-#include <glm/glm.hpp>
+#ifdef YQ_USE_GLM
+    #include <glm/glm.hpp>
+#endif
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //      MACROS

@@ -61,13 +61,17 @@ namespace yq {
 
         consteval Tensor13(zero_t) : Tensor13(ALL, zero_v<T>) {}
         
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor13(const glm::mat<1,3,T,Q>& t) noexcept;
+        #endif
         
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor13&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         constexpr operator glm::mat<1,3,T,glm::defaultp>() const noexcept;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr Tensor13  operator+() const noexcept;

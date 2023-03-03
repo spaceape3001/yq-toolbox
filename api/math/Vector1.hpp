@@ -33,8 +33,10 @@ namespace yq {
         consteval Vector1(x_t) noexcept : x(one_v<T>) {}
         consteval Vector1(zero_t) noexcept : Vector1(ALL, zero_v<T>) {}
 
+        #ifdef YQ_FEATURE_GLM
         template <glm::qualifier Q>
         explicit constexpr Vector1(const glm::vec<1, T, Q>& v) : x(v.x) {}
+        #endif
 
         explicit constexpr Vector1(const Size1<T>&) noexcept;
 
@@ -64,8 +66,10 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector1&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         //! Implicit conversion to GLM vector
         constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept;
+        #endif
         
         //! Explicit conversion operator
         template <typename U>
@@ -364,11 +368,13 @@ namespace yq {
         return Vector1<T>(x);
     }
     
+    #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Vector1<T> vector(const glm::vec<1,T,Q>& v) noexcept
     {
         return Vector1( v.x);
     }
+    #endif
 
     constexpr Vector1D operator "" _x1(unsigned long long int v) noexcept
     {

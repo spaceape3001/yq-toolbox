@@ -82,14 +82,18 @@ namespace yq {
 
         consteval Tensor42(zero_t) : Tensor42(ALL, zero_v<T>) {}
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor42(const glm::mat<4,2,T,Q>& t) noexcept;;
+        #endif
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor42&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         //! Conversion to GLM
         constexpr operator glm::mat<4,2,T,glm::defaultp>() const noexcept ;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr Tensor42<T>  operator+() const noexcept;

@@ -75,14 +75,18 @@ namespace yq {
 
         consteval Tensor32(zero_t) : Tensor32(ALL, zero_v<T>) {}
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor32(const glm::mat<3,2,T,Q>& t) noexcept;
+        #endif
 
         //! Default equality operator
         constexpr bool operator==(const Tensor32&) const noexcept = default;
 
+        #ifdef YQ_USE_GLM
         //! Conversion to GLM
         constexpr operator glm::mat<3,2,T,glm::defaultp>() const noexcept;
+        #endif
 
         //! Positive (affirmation) operator
         constexpr Tensor32  operator+() const noexcept;

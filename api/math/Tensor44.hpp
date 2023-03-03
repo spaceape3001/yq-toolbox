@@ -36,7 +36,7 @@ namespace yq {
             T _yx, T _yy, T _yz, T _yw,
             T _zx, T _zy, T _zz, T _zw,
             T _wx, T _wy, T _wz, T _ww
-        ) : 
+        ) noexcept : 
             xx(_xx), xy(_xy), xz(_xz), xw(_xw),
             yx(_yx), yy(_yy), yz(_yz), yw(_yw),
             zx(_zx), zy(_zy), zz(_zz), zw(_zw),
@@ -51,8 +51,15 @@ namespace yq {
             wx(v), wy(v), wz(v), ww(v)
         {
         }
+        
+        /*! \brief Constructing a view style matrix
+        
+            This is a utility for constructing a view-style matrix.  
+            It allows the 3x3 to be defined, setting the w-column (right), w-row (below) and the ww-component
+        */
+        explicit constexpr Tensor44(const Tensor33<T>& t33, const Vector3<T>& wCol=ZERO, const Vector3<T>& wRow=ZERO, T ww=one_v<T>) noexcept;
 
-        constexpr Tensor44(columns_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+        constexpr Tensor44(columns_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) noexcept :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),
             yx(x.y), yy(y.y), yz(z.y), yw(w.y),
             zx(x.z), zy(y.z), zz(z.z), zw(w.z),
@@ -60,7 +67,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor44(diagonal_t, T _xx, T _yy, T _zz, T _ww) : 
+        constexpr Tensor44(diagonal_t, T _xx, T _yy, T _zz, T _ww) noexcept : 
             xx(_xx),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(_yy),  yz(zero_v<T>), yw(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(_zz),  zw(zero_v<T>),
@@ -68,7 +75,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor44(diagonal_t, const Vector4<T>& v) : 
+        constexpr Tensor44(diagonal_t, const Vector4<T>& v) noexcept : 
             xx(v.x),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(v.y),  yz(zero_v<T>), yw(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(v.z),  zw(zero_v<T>),
@@ -76,7 +83,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor44(identity_t) : 
+        consteval Tensor44(identity_t) noexcept : 
             xx(one_v<T>),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(one_v<T>),  yz(zero_v<T>), yw(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(one_v<T>),  zw(zero_v<T>),
@@ -85,9 +92,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor44(nan_t) : Tensor44(ALL, nan_v<T>){}
+        consteval Tensor44(nan_t) noexcept : Tensor44(ALL, nan_v<T>){}
 
-        constexpr Tensor44(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+        constexpr Tensor44(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) noexcept :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
             yx(y.x), yy(y.y), yz(y.z), yw(y.w),
             zx(z.x), zy(z.y), zz(z.z), zw(z.w),
@@ -95,16 +102,20 @@ namespace yq {
         {
         }
 
-        consteval Tensor44(zero_t) :Tensor44(ALL, zero_v<T>){} 
+        consteval Tensor44(zero_t) noexcept :Tensor44(ALL, zero_v<T>){} 
 
+        #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Tensor44(const glm::mat<4,4,T,Q>& t) noexcept;
+        #endif
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor44&) const noexcept = default;
         
+        #ifdef YQ_USE_GLM
         //! Conversion to GLM
         constexpr operator glm::mat<4,4,T,glm::defaultp>() const noexcept ;
+        #endif
 
 
         //! Positive (affirmation) operator
@@ -409,10 +420,12 @@ namespace yq {
         return Tensor44<T>(ROWS, x, y, z, w);
     }
 
+    #ifdef YQ_USE_GLM
     /*! \brief Creates 4x4 tensor from the GLM equivalent
     */
     template <typename T, glm::qualifier Q>
     constexpr Tensor44<T> tensor(const glm::mat<4,4,T,Q>& t) noexcept;
+    #endif
     
     YQ_IDENTITY_1(Tensor44, Tensor44<T>(IDENTITY))
     YQ_NAN_1(Tensor44, Tensor44<T>(NAN))
