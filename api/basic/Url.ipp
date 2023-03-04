@@ -86,8 +86,12 @@ namespace yq {
         case Port:
             {
                 auto    r   = to_integer(sstring());
-                ret.port    = r.value;
-                good        = good && r.good;
+                if(r){
+                    ret.port    = *r;
+                } else {
+                    ret.port    = 0;
+                    good        = false;
+                }
             }
             break;
         default:
@@ -256,7 +260,13 @@ namespace yq {
                 } else if(*z == '/'){
                     // it was a host:port
                     ret.host    = userhost;
-                    ret.port    = to_integer(sstring()).value;
+                    
+                    auto p      = to_integer(sstring());
+                    if(!p){
+                        mode    = Error;
+                        break;
+                    } 
+                    ret.port    = *p;
                     mode        = Path;
                     str         = z;
                 }
@@ -305,7 +315,13 @@ namespace yq {
                 break;
             case Port:
                 if(*z == '/'){
-                    ret.port    = to_integer(sstring()).value;
+                    auto p = to_integer(sstring());
+                    if(!p){
+                        mode    = Error;
+                        break;
+                    }
+                        
+                    ret.port    = *p;
                     mode        = Path;
                     str         = z;
                 } else if(!is_digit(*z)){
@@ -349,8 +365,15 @@ namespace yq {
             ret.host    = sstring();
             break;
         case PwdOrPort:
-            ret.host    = userhost;
-            ret.port    = to_integer(sstring()).value;
+            {
+                ret.host    = userhost;
+                auto p      = to_integer(sstring());
+                if(!p){
+                    mode    = Error;
+                    break;
+                }
+                ret.port    = *p;
+            }
             break;
         case Path:
             ret.path    = sstring();

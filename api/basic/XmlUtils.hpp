@@ -22,167 +22,167 @@ namespace yq {
         This parses the text contained by the XML node/attribute,
         returns it as a boolean.
     */
-    boolean_r  to_boolean(const XmlBase*);
+    Expect<bool>            to_boolean(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to double
     
         This parses the text contained by the XML node/attribute,
         returns it as a double.
     */
-    double_r   to_double(const XmlBase*);
+    Expect<double>          to_double(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to float
     
         This parses the text contained by the XML node/attribute,
         returns it as a float.
     */
-    float_r    to_float(const XmlBase*);
+    Expect<float>           to_float(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal integer
     */
-    unsigned_r to_hex(const XmlBase*);
+    Expect<unsigned>        to_hex(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 8-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 8-bit integer
     */
-    uint8_r    to_hex8(const XmlBase*);
+    Expect<uint8_t>         to_hex8(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 16-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 16-bit integer
     */
-    uint16_r   to_hex16(const XmlBase*);
+    Expect<uint16_t>        to_hex16(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 32-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 32-bit integer
     */
-    uint32_r   to_hex32(const XmlBase*);
+    Expect<uint32_t>        to_hex32(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 64-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 64-bit integer
     */
-    uint64_r   to_hex64(const XmlBase*);
+    Expect<uint64_t>        to_hex64(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed integer
     */
-    int_r      to_int(const XmlBase*);
+    Expect<int>             to_int(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed integer
     */
-    int_r      to_integer(const XmlBase*);
+    Expect<int>             to_integer(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed 8-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 8-bit integer
     */
-    int8_r     to_int8(const XmlBase*);
+    Expect<int8_t>          to_int8(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed 16-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 16-bit integer
     */
-    int16_r    to_int16(const XmlBase*);
+    Expect<int16_t>         to_int16(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed 32-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 32-bit integer
     */
-    int32_r    to_int32(const XmlBase*);
+    Expect<int32_t>         to_int32(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed 64-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 64-bit integer
     */
-    int64_r    to_int64(const XmlBase*);
+    Expect<int64_t>         to_int64(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to signed short integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed short integer
     */
-    short_r    to_short(const XmlBase*);
+    Expect<short>           to_short(const XmlBase*);
     
     /*! \brief Converts to string view
     
         \note Return value is a REFERENCE to the given data, therefore, copy off if the XML is being altered/destroyed.
     */
-    std::string_view    to_string_view(const XmlBase*);
+    std::string_view        to_string_view(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned integer
     */
-    unsigned_r          to_uint(const XmlBase*);
+    Expect<unsigned>        to_uint(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 8-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 8-bit integer
     */
-    uint8_r             to_uint8(const XmlBase*);
+    Expect<uint8_t>         to_uint8(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 16-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 16-bit integer
     */
-    uint16_r            to_uint16(const XmlBase*);
+    Expect<uint16_t>        to_uint16(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 32-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 32-bit integer
     */
-    uint32_r            to_uint32(const XmlBase*);
+    Expect<uint32_t>        to_uint32(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned 64-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 64-bit integer
     */
-    uint64_r            to_uint64(const XmlBase*);
+    Expect<uint64_t>        to_uint64(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned integer
     */
-    unsigned_r          to_uinteger(const XmlBase*);
+    Expect<unsigned>        to_uinteger(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned integer
     */
-    unsigned_r          to_unsigned(const XmlBase*);
+    Expect<unsigned>        to_unsigned(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned short integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned short integer
     */
-    ushort_r            to_ushort(const XmlBase*);
+    Expect<unsigned short>  to_ushort(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to enumerated value
     
@@ -192,14 +192,14 @@ namespace yq {
         \typename E enumeration type to parse for
     */
     template <typename E>
-    Result<E>           to_enum(const XmlBase*xb)
+    Expect<E>           to_enum(const XmlBase*xb)
     {
         if(xb -> value_size() == 0)
-            return Result<E>(E::default_value());
+            return E::default_value();
         auto   v    = E::value_for(to_string_view(xb));
-        if(v.good)
-            return Result<E>(v.value);
-        return Result<E>();
+        if(v)
+            return *v;
+        return v;
     }
 
     /*! \brief Parses to bool
@@ -208,7 +208,7 @@ namespace yq {
         
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    boolean_r  x_boolean(const XmlBase*);
+    Expect<bool>            x_boolean(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to double
     
@@ -217,7 +217,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    double_r   x_double(const XmlBase*);
+    Expect<double>          x_double(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to float
     
@@ -226,7 +226,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    float_r    x_float(const XmlBase*);
+    Expect<float>           x_float(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal integer
     
@@ -235,7 +235,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_r x_hex(const XmlBase*);
+    Expect<unsigned>        x_hex(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 8-bit integer
     
@@ -244,7 +244,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint8_r    x_hex8(const XmlBase*);
+    Expect<uint8_t>         x_hex8(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 16-bit integer
     
@@ -253,7 +253,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint16_r   x_hex16(const XmlBase*);
+    Expect<uint16_t>        x_hex16(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 32-bit integer
     
@@ -262,7 +262,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint32_r   x_hex32(const XmlBase*);
+    Expect<uint32_t>        x_hex32(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 64-bit integer
     
@@ -271,7 +271,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint64_r   x_hex64(const XmlBase*);
+    Expect<uint64_t>        x_hex64(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to integer
     
@@ -280,7 +280,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int_r      x_int(const XmlBase*);
+    Expect<int>             x_int(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to integer
     
@@ -289,7 +289,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int_r      x_integer(const XmlBase*);
+    Expect<int>             x_integer(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to 8-bit integer
     
@@ -298,7 +298,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int8_r     x_int8(const XmlBase*);
+    Expect<int8_t>          x_int8(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to 16-bit integer
     
@@ -306,7 +306,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int16_r    x_int16(const XmlBase*);
+    Expect<int16_t>         x_int16(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to 32-bit integer
     
@@ -314,7 +314,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int32_r    x_int32(const XmlBase*);
+    Expect<int32_t>         x_int32(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to 64-bit integer
     
@@ -322,7 +322,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int64_r    x_int64(const XmlBase*);
+    Expect<int64_t>         x_int64(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to a short integer
     
@@ -330,14 +330,14 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    short_r    x_short(const XmlBase*);
+    Expect<short>           x_short(const XmlBase*);
     
     /*! \brief Converts to string 
     
         This returns the string to the FIRST bit of data for the node/attribute, which is normally 
         sufficient for to_(whatever).
     */
-    std::string         x_string(const XmlBase*);
+    std::string             x_string(const XmlBase*);
     
     /*! \brief Converts to string view
     
@@ -346,7 +346,7 @@ namespace yq {
     
         \note Return value is a REFERENCE to the given data, therefore, copy off if the XML is being altered/destroyed.
     */
-    std::string_view    x_string_view(const XmlBase*);
+    std::string_view        x_string_view(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned integer
     
@@ -354,7 +354,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_r          x_uint(const XmlBase*);
+    Expect<unsigned>        x_uint(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned 8-bit integer
     
@@ -362,7 +362,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint8_r             x_uint8(const XmlBase*);
+    Expect<uint8_t>         x_uint8(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned 16-bit integer
     
@@ -370,7 +370,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint16_r            x_uint16(const XmlBase*);
+    Expect<uint16_t>        x_uint16(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned 32-bit integer
     
@@ -378,7 +378,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint32_r            x_uint32(const XmlBase*);
+    Expect<uint32_t>        x_uint32(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned 64-bit integer
     
@@ -386,7 +386,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint64_r            x_uint64(const XmlBase*);
+    Expect<uint64_t>        x_uint64(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned integer
     
@@ -394,7 +394,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_r          x_uinteger(const XmlBase*);
+    Expect<unsigned>        x_uinteger(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned integer
     
@@ -402,7 +402,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_r          x_unsigned(const XmlBase*);
+    Expect<unsigned>        x_unsigned(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to an unsigned short integer
     
@@ -410,7 +410,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    ushort_r            x_ushort(const XmlBase*);
+    Expect<unsigned short>  x_ushort(const XmlBase*);
 
     /*! \brief Converts xml node/attribute to enumerated value
     
@@ -420,14 +420,14 @@ namespace yq {
         \typename E enumeration type to parse for
     */
     template <typename E>
-    Result<E>           x_enum(const XmlBase*xb)
+    Expect<E>           x_enum(const XmlBase*xb)
     {
         if(xb -> value_size() == 0)
-            return Result<E>(E::default_value());
-        auto   v    = E::value_for(x_string_view(xb));
-        if(v.good)
-            return Result<E>(v.value);
-        return Result<E>();
+            return E::default_value();
+        auto v = E::value_for(x_string_view(xb));
+        if(v)
+            return E(*v);
+        return v;
     }
     
     /*! \brief Converts xml node/attribute to flag-set of enumerated value
@@ -443,8 +443,8 @@ namespace yq {
         Flag<E> ret;
         vsplit(x_string(xb), ',', [&](std::string_view k){
             auto    v   = E::value_for(k);
-            if(v.good)
-                ret.set(v.value);
+            if(v)
+                ret.set(*v);
         });
         return ret;
     }

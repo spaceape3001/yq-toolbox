@@ -8,7 +8,7 @@
 #define YQUILL__API__CORE__TYPE__MAP__H__
 
 #include <basic/preamble.hpp>
-#include <basic/Result.hpp>
+#include <basic/errors.hpp>
 #include <map>
 
 namespace yq {
@@ -36,7 +36,7 @@ namespace yq {
         
         Map&        operator|=(const base_map&);
         
-        Result<V>   operator()(const K&) const;
+        Expect<V>   operator()(const K&) const;
         
         bool        add(const K& key, const V&);
         
@@ -44,7 +44,7 @@ namespace yq {
         K           first_key(const K& def={}) const;
         V           get(const K& key, const V& def={}) const;
         const V*    get_ptr(const K&) const;
-        Result<V>   get_r(const K& key) const;
+        Expect<V>   get_r(const K& key) const;
         bool        has(const K& key) const;
         
         using base_map::insert;
@@ -128,12 +128,12 @@ namespace yq {
     }
 
     template <typename K, typename V, typename C>
-    Result<V>   Map<K,V,C>:: operator()(const K& key) const
+    Expect<V>   Map<K,V,C>:: operator()(const K& key) const
     {
         auto itr=base_map::find(key);
-        if(itr != base_map::end())
-            return { itr->second, true };
-        return {{}, false };
+        if(itr == base_map::end())
+            return errors::key_not_found();
+        return itr->second;
     }
 
 
@@ -180,12 +180,12 @@ namespace yq {
     }
 
     template <typename K, typename V, typename C>
-    Result<V>   Map<K,V,C>:: get_r(const K& key) const
+    Expect<V>   Map<K,V,C>:: get_r(const K& key) const
     {
         auto itr=base_map::find(key);
-        if(itr != base_map::end())
-            return { itr->second, true };
-        return { {}, false };
+        if(itr == base_map::end())
+            return errors::key_not_found();
+        return itr->second;
     }
 
     template <typename K, typename V, typename C>

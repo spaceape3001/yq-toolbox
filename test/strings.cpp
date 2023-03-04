@@ -51,30 +51,30 @@ ut::suite tests = []{
     };
 
     "bad booleans"_test = [](){
-        expect(false == to_boolean("bad").good);
-        expect(false == to_boolean("falsey").good);
-        expect(false == to_boolean("truy").good);
-        expect(false == to_boolean("truey").good);
+        expect(false == to_boolean("bad").has_value());
+        expect(false == to_boolean("falsey").has_value());
+        expect(false == to_boolean("truy").has_value());
+        expect(false == to_boolean("truey").has_value());
     };
     
     "false booleans"_test = [](){
-        expect(to_boolean("0") == boolean_r{ false, true });
-        expect(to_boolean("False") == boolean_r{ false, true });
-        expect(to_boolean("false") == boolean_r{ false, true });
-        expect(to_boolean("fAlSe") == boolean_r{ false, true });
-        expect(to_boolean("NO") == boolean_r{ false, true });
-        expect(to_boolean("No") == boolean_r{ false, true });
-        expect(to_boolean("no") == boolean_r{ false, true });
-        expect(to_boolean("nO") == boolean_r{ false, true });
+        expect(to_boolean("0").value() == false);
+        expect(to_boolean("False").value() == false);
+        expect(to_boolean("false").value() == false);
+        expect(to_boolean("fAlSe").value() == false);
+        expect(to_boolean("NO").value() == false);
+        expect(to_boolean("No").value() == false);
+        expect(to_boolean("no").value() == false);
+        expect(to_boolean("nO").value() == false);
     };
     
     "true booleans"_test = [](){
-        expect(to_boolean("1") == boolean_r{ true, true });
-        expect(to_boolean("True") == boolean_r{ true, true });
-        expect(to_boolean("true") == boolean_r{ true, true });
-        expect(to_boolean("truE") == boolean_r{ true, true });
-        expect(to_boolean("YES") == boolean_r{ true, true });
-        expect(to_boolean("yes") == boolean_r{ true, true });
+        expect(to_boolean("1").value() == true);
+        expect(to_boolean("True").value() == true);
+        expect(to_boolean("true").value() == true);
+        expect(to_boolean("truE").value() == true);
+        expect(to_boolean("YES").value() == true);
+        expect(to_boolean("yes").value() == true);
     };
     
     "is_similar"_test = [](){

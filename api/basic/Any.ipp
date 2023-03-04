@@ -334,128 +334,158 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    boolean_r   to_boolean(const Any&v)
+    Expect<bool>   to_boolean(const Any&v)
     {
         switch(v.type().id()){
         case MT_String:
             return to_boolean(v.data().reference<std::string>());
         case MT_Boolean:
-            return boolean_r{ v.data().reference<bool>(), true };
+            return v.data().reference<bool>();
         case MT_Int8:
-            return boolean_r{ static_cast<bool>( v.data().reference<int8_t>()), true };
+            return static_cast<bool>( v.data().reference<int8_t>());
         case MT_Int16:
-            return boolean_r{ static_cast<bool>( v.data().reference<int16_t>()), true };
+            return static_cast<bool>( v.data().reference<int16_t>());
         case MT_Int32:
-            return boolean_r{ static_cast<bool>( v.data().reference<int32_t>()), true };
+            return static_cast<bool>( v.data().reference<int32_t>());
         case MT_Int64:
-            return boolean_r{ static_cast<bool>( v.data().reference<int64_t>()), true };
+            return static_cast<bool>( v.data().reference<int64_t>());
         case MT_UInt8:
-            return boolean_r{ static_cast<bool>( v.data().reference<uint8_t>()), true };
+            return static_cast<bool>( v.data().reference<uint8_t>());
         case MT_UInt16:
-            return boolean_r{ static_cast<bool>( v.data().reference<uint16_t>()), true };
+            return static_cast<bool>( v.data().reference<uint16_t>());
         case MT_UInt32:
-            return boolean_r{ static_cast<bool>( v.data().reference<uint32_t>()), true };
+            return static_cast<bool>( v.data().reference<uint32_t>());
         case MT_UInt64:
-            return boolean_r{ static_cast<bool>( v.data().reference<uint64_t>()), true };
+            return static_cast<bool>( v.data().reference<uint64_t>());
         default:
-            return {};
+            break;
         }
+
+        auto v2   = v.value<bool>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
     }
     
-    double_r    to_double(const Any&v)
+    Expect<double>    to_double(const Any&v)
     {
         switch(v.type().id()){
         case MT_String:
             return to_double(v.data().reference<std::string>());
         case MT_Boolean:
-            return double_r{ (v.data().reference<bool>()?1.0:0.0), true };
+            return v.data().reference<bool>()?1.0:0.0;
         case MT_Double:
-            return double_r{ v.data().reference<double>(), true };
+            return v.data().reference<double>();
         case MT_Float:
-            return double_r{ v.data().reference<float>(), true };
+            return v.data().reference<float>();
         case MT_Int8:
-            return double_r{ static_cast<double>( v.data().reference<int8_t>()), true };
+            return static_cast<double>( v.data().reference<int8_t>());
         case MT_Int16:
-            return double_r{ static_cast<double>( v.data().reference<int16_t>()), true };
+            return static_cast<double>( v.data().reference<int16_t>());
         case MT_Int32:
-            return double_r{ static_cast<double>( v.data().reference<int32_t>()), true };
+            return static_cast<double>( v.data().reference<int32_t>());
         case MT_Int64:
-            return double_r{ static_cast<double>( v.data().reference<int64_t>()), true };
+            return static_cast<double>( v.data().reference<int64_t>());
         case MT_UInt8:
-            return double_r{ static_cast<double>( v.data().reference<uint8_t>()), true };
+            return static_cast<double>( v.data().reference<uint8_t>());
         case MT_UInt16:
-            return double_r{ static_cast<double>( v.data().reference<uint16_t>()), true };
+            return static_cast<double>( v.data().reference<uint16_t>());
         case MT_UInt32:
-            return double_r{ static_cast<double>( v.data().reference<uint32_t>()), true };
+            return static_cast<double>( v.data().reference<uint32_t>());
         case MT_UInt64:
-            return double_r{ static_cast<double>( v.data().reference<uint64_t>()), true };
+            return static_cast<double>( v.data().reference<uint64_t>());
         default:
-            return {};
+            break;
         }
+
+        auto v2     = v.value<double>();
+        if(v2.good)
+            return v2.value;
+            
+        auto v3     = v.value<float>();
+        if(v3.good)
+            return v3.value;
+
+        return errors::bad_conversion();
     }
     
-    float_r     to_float(const Any&v)
+    Expect<float>   to_float(const Any&v)
     {
         switch(v.type().id()){
         case MT_String:
             return to_float(v.data().reference<std::string>());
         case MT_Boolean:
-            return float_r{ v.data().reference<bool>()?1.0f:0.0f, true };
+            return v.data().reference<bool>()?1.0f:0.0f;
         case MT_Double:
-            return float_r{ (float) v.data().reference<float>(), true };
+            return (float) v.data().reference<double>();
         case MT_Float:
-            return float_r{ v.data().reference<float>(), true };
+            return v.data().reference<float>();
         case MT_Int8:
-            return float_r{ static_cast<float>( v.data().reference<int8_t>()), true };
+            return static_cast<float>( v.data().reference<int8_t>());
         case MT_Int16:
-            return float_r{ static_cast<float>( v.data().reference<int16_t>()), true };
+            return static_cast<float>( v.data().reference<int16_t>());
         case MT_Int32:
-            return float_r{ static_cast<float>( v.data().reference<int32_t>()), true };
+            return static_cast<float>( v.data().reference<int32_t>());
         case MT_Int64:
-            return float_r{ static_cast<float>( v.data().reference<int64_t>()), true };
+            return static_cast<float>( v.data().reference<int64_t>());
         case MT_UInt8:
-            return float_r{ static_cast<float>( v.data().reference<uint8_t>()), true };
+            return static_cast<float>( v.data().reference<uint8_t>());
         case MT_UInt16:
-            return float_r{ static_cast<float>( v.data().reference<uint16_t>()), true };
+            return static_cast<float>( v.data().reference<uint16_t>());
         case MT_UInt32:
-            return float_r{ static_cast<float>( v.data().reference<uint32_t>()), true };
+            return static_cast<float>( v.data().reference<uint32_t>());
         case MT_UInt64:
-            return float_r{ static_cast<float>( v.data().reference<uint64_t>()), true };
+            return static_cast<float>( v.data().reference<uint64_t>());
         default:
-            return {};
+            break;
         }
+
+        auto v3     = v.value<float>();
+        if(v3.good)
+            return v3.value;
+
+        auto v2     = v.value<double>();
+        if(v2.good)
+            return (float) v2.value;
+
+        return errors::bad_conversion();
     }
     
-    int_r       to_int(const Any&v)
+    Expect<int>     to_int(const Any&v)
     {
         switch(v.type().id()){
         case MT_String:
             return to_int(v.data().reference<std::string>());
         case MT_Boolean:
-            return int_r{ static_cast<int>(v.data().reference<bool>()), true };
+            return static_cast<int>(v.data().reference<bool>());
         case MT_Float:
-            return int_r{ static_cast<int>(v.data().reference<float>()), true };
+            return static_cast<int>(v.data().reference<float>());
         case MT_Double:
-            return int_r{ static_cast<int>(v.data().reference<double>()), true };
+            return static_cast<int>(v.data().reference<double>());
         case MT_Int8:
-            return int_r{ static_cast<int>( v.data().reference<int8_t>()), true };
+            return static_cast<int>( v.data().reference<int8_t>());
         case MT_Int16:
-            return int_r{ static_cast<int>( v.data().reference<int16_t>()), true };
+            return static_cast<int>( v.data().reference<int16_t>());
         case MT_Int32:
-            return int_r{ static_cast<int>( v.data().reference<int32_t>()), true };
+            return static_cast<int>( v.data().reference<int32_t>());
         case MT_Int64:
-            return int_r{ static_cast<int>( v.data().reference<int64_t>()), true };
+            return static_cast<int>( v.data().reference<int64_t>());
         case MT_UInt8:
-            return int_r{ static_cast<int>( v.data().reference<uint8_t>()), true };
+            return static_cast<int>( v.data().reference<uint8_t>());
         case MT_UInt16:
-            return int_r{ static_cast<int>( v.data().reference<uint16_t>()), true };
+            return static_cast<int>( v.data().reference<uint16_t>());
         case MT_UInt32:
-            return int_r{ static_cast<int>( v.data().reference<uint32_t>()), true };
+            return static_cast<int>( v.data().reference<uint32_t>());
         case MT_UInt64:
-            return int_r{ static_cast<int>( v.data().reference<uint64_t>()), true };
+            return static_cast<int>( v.data().reference<uint64_t>());
         default:
-            return {};
+            break;
         }
+        
+        auto v2   = v.value<int>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
     }
     
     #if 0

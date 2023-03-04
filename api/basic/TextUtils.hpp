@@ -722,7 +722,7 @@ namespace yq {
         \param[in] n        length of the string
         \param[in] number   Number of entries
     */
-    Vector<std::string_view>  split(const char* s, size_t n, size_t number); 
+    std::vector<std::string_view>  split(const char* s, size_t n, size_t number); 
 
     /*! \brief Splits the string up into the specified equal number of chunks
     
@@ -735,7 +735,7 @@ namespace yq {
         \param[in] s        String view
         \param[in] number   Number of entries
     */
-    Vector<std::string_view>  split(std::string_view s, size_t number); 
+    std::vector<std::string_view>  split(std::string_view s, size_t number); 
 
     /*! \brief Splits the string
     
@@ -749,7 +749,7 @@ namespace yq {
         \param[in] n        length of the string
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split(const char*s, size_t n, char ch); 
+    std::vector<std::string_view>  split(const char*s, size_t n, char ch); 
 
     /*! \brief Splits the string
     
@@ -762,7 +762,7 @@ namespace yq {
         \param[in] s        String view
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split(std::string_view s, char ch); 
+    std::vector<std::string_view>  split(std::string_view s, char ch); 
 
     /*! \brief Splits the string, up to number entries
     
@@ -777,7 +777,7 @@ namespace yq {
         \param[in] ch       Character being split on
         \param[in] number   MAXIMUM Number of entries, more are treated as part of the last entry
     */
-    Vector<std::string_view>  split(const char* s, size_t n, char ch, size_t number); 
+    std::vector<std::string_view>  split(const char* s, size_t n, char ch, size_t number); 
 
     /*! \brief Splits the string, up to number entries
     
@@ -791,7 +791,7 @@ namespace yq {
         \param[in] ch       Character being split on
         \param[in] number   MAXIMUM Number of entries, more are treated as part of the last entry
     */
-    Vector<std::string_view>  split(std::string_view s, char ch, size_t number); 
+    std::vector<std::string_view>  split(std::string_view s, char ch, size_t number); 
 
     /*! \brief Splits the string
     
@@ -805,7 +805,7 @@ namespace yq {
         \param[in] n        length of the string
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split(const char*s , size_t n, char32_t ch); 
+    std::vector<std::string_view>  split(const char*s , size_t n, char32_t ch); 
 
     /*! \brief Splits the string
     
@@ -818,7 +818,7 @@ namespace yq {
         \param[in] s        String view
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split(std::string_view s, char32_t ch); 
+    std::vector<std::string_view>  split(std::string_view s, char32_t ch); 
     
     /*! \brief Splits the string
     
@@ -833,7 +833,7 @@ namespace yq {
         \param[in] ch       Character being split on
         \param[in] number   MAXIMUM Number of entries, more are treated as part of the last entry
     */
-    Vector<std::string_view>  split(const char* s, size_t n, char32_t cn, size_t number); 
+    std::vector<std::string_view>  split(const char* s, size_t n, char32_t cn, size_t number); 
 
     /*! \brief Splits the string
     
@@ -847,7 +847,7 @@ namespace yq {
         \param[in] ch       Character being split on
         \param[in] number   MAXIMUM Number of entries, more are treated as part of the last entry
     */
-    Vector<std::string_view>  split(std::string_view s, char32_t ch, size_t number); 
+    std::vector<std::string_view>  split(std::string_view s, char32_t ch, size_t number); 
 
     /*! \brief Splits the string
     
@@ -862,7 +862,7 @@ namespace yq {
         \param[in] p        pointer to pattern string
         \param[in] pn       length of the pattern string
     */
-    Vector<std::string_view>  split(const char* s, size_t n, const char* p, size_t pn);
+    std::vector<std::string_view>  split(const char* s, size_t n, const char* p, size_t pn);
 
     /*! \brief Splits the string
     
@@ -875,7 +875,7 @@ namespace yq {
         \param[in] s        String view
         \param[in] p        pattern string
     */
-    Vector<std::string_view>  split(std::string_view s, std::string_view p);
+    std::vector<std::string_view>  split(std::string_view s, std::string_view p);
 
     /*! \brief Splits the string ignoring case
     
@@ -889,7 +889,7 @@ namespace yq {
         \param[in] n        length of the string
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split_igCase(const char*s , size_t n, char ch); 
+    std::vector<std::string_view>  split_igCase(const char*s , size_t n, char ch); 
 
     /*! \brief Splits the string ignoring case
     
@@ -902,7 +902,7 @@ namespace yq {
         \param[in] s        string
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split_igCase(std::string_view s, char ch); 
+    std::vector<std::string_view>  split_igCase(std::string_view s, char ch); 
 
     /*! \brief Splits the string ignoring case
     
@@ -916,7 +916,7 @@ namespace yq {
         \param[in] n        length of the string
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split_igCase(const char* s, size_t n, char32_t ch); 
+    std::vector<std::string_view>  split_igCase(const char* s, size_t n, char32_t ch); 
 
     /*! \brief Splits the string ignoring case
     
@@ -929,7 +929,7 @@ namespace yq {
         \param[in] s        string
         \param[in] ch       Character being split on
     */
-    Vector<std::string_view>  split_igCase(std::string_view s, char32_t ch); 
+    std::vector<std::string_view>  split_igCase(std::string_view s, char32_t ch); 
     
     /*! \brief Splits the string ignoring case
     
@@ -944,7 +944,7 @@ namespace yq {
         \param[in] p        pointer to pattern string
         \param[in] pn       length of the pattern string
     */
-    Vector<std::string_view>  split_igCase(const char*s, size_t n, const char* p, size_t pn);
+    std::vector<std::string_view>  split_igCase(const char*s, size_t n, const char* p, size_t pn);
 
     /*! \brief Splits the string ignoring case
     
@@ -957,7 +957,7 @@ namespace yq {
         \param[in] s        String view
         \param[in] p        pattern string
     */
-    Vector<std::string_view>  split_igCase(std::string_view s, std::string_view p);
+    std::vector<std::string_view>  split_igCase(std::string_view s, std::string_view p);
 
     /*! \brief Checks the start of string
     
@@ -1092,7 +1092,7 @@ namespace yq {
         
         \return The result
     */
-    boolean_r  to_boolean(const char*s, size_t n);
+    Expect<bool>  to_boolean(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a boolean
     
@@ -1104,7 +1104,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    boolean_r  to_boolean(std::string_view s);
+    Expect<bool>  to_boolean(std::string_view s);
 
     /*! \brief Decodes the given string into a dobule
     
@@ -1114,7 +1114,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    double_r  to_double(const char*s, size_t n);
+    Expect<double>  to_double(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a dobule
     
@@ -1123,7 +1123,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    double_r  to_double(std::string_view s);
+    Expect<double>  to_double(std::string_view s);
 
     /*! \brief Decodes the given string into a float
     
@@ -1133,7 +1133,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    float_r   to_float(const char*s, size_t n);
+    Expect<float>   to_float(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a float
     
@@ -1143,7 +1143,7 @@ namespace yq {
         
         \return The result
     */
-    float_r   to_float(std::string_view);
+    Expect<float>   to_float(std::string_view);
 
 
     /*! \brief Decodes the given hex string into an unsigned
@@ -1154,7 +1154,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    unsigned_r to_hex(const char*s, size_t n);
+    Expect<unsigned> to_hex(const char*s, size_t n);
 
     /*! \brief Decodes the given hex string into an unsigned
     
@@ -1163,7 +1163,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    unsigned_r to_hex(std::string_view s);
+    Expect<unsigned> to_hex(std::string_view s);
 
     /*! \brief Decodes the given hex string into an unsigned 8-bit intetger
     
@@ -1173,7 +1173,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    uint8_r  to_hex8(const char*s, size_t n);
+    Expect<uint8_t>  to_hex8(const char*s, size_t n);
 
     /*! \brief Decodes the given hex string into an unsigned 8-bit intetger
     
@@ -1182,7 +1182,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    uint8_r  to_hex8(std::string_view s);
+    Expect<uint8_t>  to_hex8(std::string_view s);
 
     /*! \brief Decodes the given hex string into an unsigned 16-bit intetger
     
@@ -1192,7 +1192,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    uint16_r  to_hex16(const char*s, size_t n);
+    Expect<uint16_t>  to_hex16(const char*s, size_t n);
 
     /*! \brief Decodes the given hex string into an unsigned 16-bit intetger
     
@@ -1201,7 +1201,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    uint16_r  to_hex16(std::string_view s);
+    Expect<uint16_t>  to_hex16(std::string_view s);
 
     /*! \brief Decodes the given hex string into an unsigned 32-bit intetger
     
@@ -1211,7 +1211,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    uint32_r  to_hex32(const char*s, size_t n);
+    Expect<uint32_t>  to_hex32(const char*s, size_t n);
 
     /*! \brief Decodes the given hex string into an unsigned 32-bit intetger
     
@@ -1220,7 +1220,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    uint32_r  to_hex32(std::string_view s);
+    Expect<uint32_t>  to_hex32(std::string_view s);
 
     /*! \brief Decodes the given hex string into an unsigned 64-bit intetger
     
@@ -1230,7 +1230,7 @@ namespace yq {
         \param[in] n    number of characters
         \return The result
     */
-    uint64_r  to_hex64(const char*s, size_t n);
+    Expect<uint64_t>  to_hex64(const char*s, size_t n);
 
     /*! \brief Decodes the given hex string into an unsigned 64-bit intetger
     
@@ -1239,7 +1239,7 @@ namespace yq {
         \param[in] s    String view (which is auto-gen from std::string if need be.
         \return The result
     */
-    uint64_r  to_hex64(std::string_view s);
+    Expect<uint64_t>  to_hex64(std::string_view s);
     
         /*! \brief Decodes the given string into an integer
     
@@ -1250,7 +1250,7 @@ namespace yq {
         
         \return The result
     */
-    integer_r  to_int(const char*s, size_t n);
+    Expect<int>   to_int(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an integer
     
@@ -1260,7 +1260,7 @@ namespace yq {
         
         \return The result
     */
-    integer_r  to_int(std::string_view s);
+    Expect<int>  to_int(std::string_view s);
 
     /*! \brief Decodes the given string into an 8-bit integer
     
@@ -1271,7 +1271,7 @@ namespace yq {
         
         \return The result
     */
-    int8_r  to_int8(const char*s, size_t n);
+    Expect<int8_t>  to_int8(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an 8-bit integer
     
@@ -1281,7 +1281,7 @@ namespace yq {
         
         \return The result
     */
-    int8_r  to_int8(std::string_view s);
+    Expect<int8_t> to_int8(std::string_view s);
 
     /*! \brief Decodes the given string into a 16-bit integer
     
@@ -1292,7 +1292,7 @@ namespace yq {
         
         \return The result
     */
-    int16_r  to_int16(const char*s, size_t n);
+    Expect<int16_t>  to_int16(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a 16-bit integer
     
@@ -1302,7 +1302,7 @@ namespace yq {
         
         \return The result
     */
-    int16_r  to_int16(std::string_view s);
+    Expect<int16_t>  to_int16(std::string_view s);
 
     /*! \brief Decodes the given string into a 32-bit integer
     
@@ -1313,7 +1313,7 @@ namespace yq {
         
         \return The result
     */
-    int32_r  to_int32(const char*s, size_t n);
+    Expect<int32_t>  to_int32(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a 32-bit integer
     
@@ -1323,7 +1323,7 @@ namespace yq {
         
         \return The result
     */
-    int32_r  to_int32(std::string_view s);
+    Expect<int32_t>  to_int32(std::string_view s);
 
     /*! \brief Decodes the given string into a 64-bit integer
     
@@ -1334,7 +1334,7 @@ namespace yq {
         
         \return The result
     */
-    int64_r  to_int64(const char*s, size_t n);
+    Expect<int64_t>  to_int64(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a 64-bit integer
     
@@ -1344,7 +1344,7 @@ namespace yq {
         
         \return The result
     */
-    int64_r  to_int64(std::string_view s);
+    Expect<int64_t>  to_int64(std::string_view s);
 
     /*! \brief Decodes the given string into an integer
     
@@ -1355,7 +1355,7 @@ namespace yq {
         
         \return The result
     */
-    integer_r  to_integer(const char*s, size_t n);
+    Expect<int>  to_integer(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an integer
     
@@ -1365,7 +1365,7 @@ namespace yq {
         
         \return The result
     */
-    integer_r  to_integer(std::string_view s);
+    Expect<int>  to_integer(std::string_view s);
 
     /*! \brief Converts to lower case
     
@@ -1407,7 +1407,7 @@ namespace yq {
         
         \return The result
     */
-    short_r  to_short(const char*s, size_t n);
+    Expect<short>  to_short(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a short integer
     
@@ -1417,7 +1417,7 @@ namespace yq {
         
         \return The result
     */
-    short_r  to_short(std::string_view s);
+    Expect<short>  to_short(std::string_view s);
 
 
     
@@ -1596,7 +1596,7 @@ namespace yq {
         
         \return The result
     */
-    unsigned_r  to_uint(const char*s, size_t n);
+    Expect<unsigned>  to_uint(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an unsigned integer
     
@@ -1606,7 +1606,7 @@ namespace yq {
         
         \return The result
     */
-    unsigned_r  to_uint(std::string_view s);
+    Expect<unsigned>  to_uint(std::string_view s);
 
     /*! \brief Decodes the given string into an 8-bit unsigned integer
     
@@ -1617,7 +1617,7 @@ namespace yq {
         
         \return The result
     */
-    uint8_r  to_uint8(const char*s, size_t n);
+    Expect<uint8_t>  to_uint8(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an 8-bit unsigned integer
     
@@ -1627,7 +1627,7 @@ namespace yq {
         
         \return The result
     */
-    uint8_r  to_uint8(std::string_view s);
+    Expect<uint8_t>  to_uint8(std::string_view s);
 
     /*! \brief Decodes the given string into a 16-bit unsigned integer
     
@@ -1638,7 +1638,7 @@ namespace yq {
         
         \return The result
     */
-    uint16_r  to_uint16(const char*s, size_t n);
+    Expect<uint16_t>  to_uint16(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a 16-bit unsigned integer
     
@@ -1648,7 +1648,7 @@ namespace yq {
         
         \return The result
     */
-    uint16_r  to_uint16(std::string_view s); 
+    Expect<uint16_t>  to_uint16(std::string_view s); 
 
     /*! \brief Decodes the given string into a 32-bit unsigned integer
     
@@ -1659,7 +1659,7 @@ namespace yq {
         
         \return The result
     */
-    uint32_r  to_uint32(const char*s, size_t n);
+    Expect<uint32_t>  to_uint32(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a 32-bit unsigned integer
     
@@ -1669,7 +1669,7 @@ namespace yq {
         
         \return The result
     */
-    uint32_r  to_uint32(std::string_view s);
+    Expect<uint32_t>  to_uint32(std::string_view s);
 
     /*! \brief Decodes the given string into a 64-bit unsigned integer
     
@@ -1680,7 +1680,7 @@ namespace yq {
         
         \return The result
     */
-    uint64_r  to_uint64(const char*s, size_t n);
+    Expect<uint64_t>  to_uint64(const char*s, size_t n);
 
     /*! \brief Decodes the given string into a 64-bit unsigned integer
     
@@ -1690,7 +1690,7 @@ namespace yq {
         
         \return The result
     */
-    uint64_r  to_uint64(std::string_view s);
+    Expect<uint64_t>  to_uint64(std::string_view s);
 
     /*! \brief Decodes the given string into an unsigned integer
     
@@ -1701,7 +1701,7 @@ namespace yq {
         
         \return The result
     */
-    unsigned_r  to_uinteger(const char*s, size_t n);
+    Expect<unsigned>  to_uinteger(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an unsigned integer
     
@@ -1711,7 +1711,7 @@ namespace yq {
         
         \return The result
     */
-    unsigned_r  to_uinteger(std::string_view s);
+    Expect<unsigned>  to_uinteger(std::string_view s);
 
     /*! \brief Decodes the given string into an unsigned integer
     
@@ -1722,7 +1722,7 @@ namespace yq {
         
         \return The result
     */
-    unsigned_r  to_unsigned(const char*s, size_t n);
+    Expect<unsigned>  to_unsigned(const char*s, size_t n);
 
     /*! \brief Decodes the given string into an unsigned integer
     
@@ -1732,7 +1732,7 @@ namespace yq {
         
         \return The result
     */
-    unsigned_r  to_unsigned(std::string_view s);
+    Expect<unsigned>  to_unsigned(std::string_view s);
 
     /*! \brief Converts to upper case
     
@@ -1773,7 +1773,7 @@ namespace yq {
         
         \return The result
     */
-    ushort_r  to_ushort(const char*s, size_t n);
+    Expect<unsigned short>  to_ushort(const char*s, size_t n);
     
     /*! \brief Decodes the given string into an unsigned short integer
     
@@ -1783,7 +1783,7 @@ namespace yq {
         
         \return The result
     */
-    ushort_r  to_ushort(std::string_view s);
+    Expect<unsigned short>  to_ushort(std::string_view s);
 
 
     /*! \brief String not starting/ending with spaces

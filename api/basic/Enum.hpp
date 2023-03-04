@@ -130,25 +130,25 @@ namespace yq {
         std::string_view  name() const { return m_name; }
 
         //! Default value for the enumeration
-        int                     default_value() const { return m_defValue; }
+        int                         default_value() const { return m_defValue; }
         
         //! Minimum value for the enumerfation
-        int                     minimum_value() const;
+        int                         minimum_value() const;
         
         //! Maximum value for the enumeration
-        int                     maximum_value() const;
+        int                         maximum_value() const;
 
         //! Value for the specified key
-        int_r                   value_of(std::string_view  key) const;
+        Expect<int>                 value_of(std::string_view  key) const;
 
         //! Key for the specified value
-        string_view_r           key_of(int value) const;
+        Expect<std::string_view>    key_of(int value) const;
         
         //! Tests to see if value is present
-        bool                    has_value(int value) const;
+        bool                        has_value(int value) const;
         
         //! Tests to see if key is present
-        bool                    has_key(std::string_view ) const;
+        bool                        has_key(std::string_view ) const;
 
         //! Vector of all defined keys
         const Vector<std::string_view>&   all_keys() const { return m_keys; }
@@ -240,7 +240,7 @@ namespace yq {
         static const Vector<std::string_view>&    sorted_keys();
         
         //! Value for key
-        static Result<typename E::enum_t>   value_for(std::string_view txt);
+        static Expect<typename E::enum_t>   value_for(std::string_view txt);
         
         //! Max value defined
         static int                          max_value();
@@ -460,10 +460,12 @@ namespace yq {
     }
 
     template <typename E>
-    Result<typename E::enum_t>   EnumImpl<E>::value_for(std::string_view  txt)
+    Expect<typename E::enum_t>   EnumImpl<E>::value_for(std::string_view  txt)
     {
-        int_r   vi  =  E::staticEnumInfo()->value_of(txt);
-        return vi.cast_to<typename E::enum_t>();
+        Expect<int>   vi  =  E::staticEnumInfo()->value_of(txt);
+        if(vi)
+            return (typename E::enum_t) *vi;
+        return vi;
     }
 
     template <typename E>

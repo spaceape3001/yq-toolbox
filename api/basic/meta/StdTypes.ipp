@@ -36,83 +36,59 @@ namespace yq {
             return true;
         }
     
-        bool    parse_boolean(const std::string_view&txt, bool&v)
+        Expect<bool>    parse_boolean(std::string_view txt)
         {
-            auto r  = to_boolean(txt);
-            v   = r.value;
-            return r.good;
+            return to_boolean(txt);
         }
         
-        bool    parse_double(const std::string_view&txt, double&v)
+        Expect<double>    parse_double(std::string_view txt)
         {
-            auto r  = to_double(txt);
-            v   = r.value;
-            return r.good;
-        }
-        
-        bool    parse_float(const std::string_view&txt, float&v)
-        {
-            auto r  = to_float(txt);
-            v   = r.value;
-            return r.good;
-        }
-        
-        
-        bool    parse_int8(const std::string_view&txt, int8_t&v)
-        {
-            auto r  = to_int8(txt);
-            v   = r.value;
-            return r.good;
-        }
-        
-        bool    parse_int16(const std::string_view&txt, int16_t&v)
-        {
-            auto r  = to_int16(txt);
-            v   = r.value;
-            return r.good;
-        }
-        
-        bool    parse_int32(const std::string_view&txt, int32_t&v)
-        {
-            auto r  = to_int32(txt);
-            v   = r.value;
-            return r.good;
-        }
-        
-        bool    parse_int64(const std::string_view&txt, int64_t&v)
-        {
-            auto r  = to_int64(txt);
-            v   = r.value;
-            return r.good;
+            return to_double(txt);
         }
 
-        bool    parse_uint8(const std::string_view&txt, uint8_t&v)
+        Expect<float>    parse_float(std::string_view txt)
         {
-            auto r  = to_uint8(txt);
-            v   = r.value;
-            return r.good;
+            return to_float(txt);
         }
         
-        bool    parse_uint16(const std::string_view&txt, uint16_t&v)
+        Expect<int8_t>    parse_int8(std::string_view txt)
         {
-            auto r  = to_uint16(txt);
-            v   = r.value;
-            return r.good;
+            return to_int8(txt);
         }
         
-        bool    parse_uint32(const std::string_view&txt, uint32_t&v)
+        Expect<int16_t> parse_int16(std::string_view txt)
         {
-            auto r  = to_uint32(txt);
-            v   = r.value;
-            return r.good;
+            return to_int16(txt);
+        }
+        
+        Expect<int32_t> parse_int32(std::string_view txt)
+        {
+            return to_int32(txt);
         }
 
-
-        bool    parse_uint64(const std::string_view&txt, uint64_t&v)
+        Expect<int64_t> parse_int64(std::string_view txt)
         {
-            auto r  = to_uint64(txt);
-            v   = r.value;
-            return r.good;
+            return to_int64(txt);
+        }
+
+        Expect<uint8_t>    parse_uint8(std::string_view txt)
+        {
+            return to_uint8(txt);
+        }
+        
+        Expect<uint16_t> parse_uint16(std::string_view txt)
+        {
+            return to_uint16(txt);
+        }
+        
+        Expect<uint32_t> parse_uint32(std::string_view txt)
+        {
+            return to_uint32(txt);
+        }
+
+        Expect<uint64_t> parse_uint64(std::string_view txt)
+        {
+            return to_uint64(txt);
         }
         
         //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////

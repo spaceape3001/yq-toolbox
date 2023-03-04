@@ -8,10 +8,13 @@
 
 #include "Enum.hpp"
 #include <basic/TextUtils.hpp>
+#include <basic/errors.hpp>
 #include <cassert>
 #include <optional>
 
 namespace yq {
+    
+
     //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  ENUMERATION
     //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,8 +76,8 @@ namespace yq {
                         val = itr -> second;
                 } else {
                     auto ir = to_integer(v);
-                    assert(ir.good);                    // shouldn't ever trigger, as it was compilable code
-                    val  = ir.value;
+                    assert(ir);                    // shouldn't ever trigger, as it was compilable code
+                    val  = *ir;
                 }
             }
 
@@ -208,16 +211,16 @@ namespace yq {
 
     bool    EnumDef::has_key(std::string_view key) const
     {
-        return m_name2value.has(std::string(key));
+        return m_name2value.contains(std::string(key));
     }
 
     bool    EnumDef::has_value(int v) const
     {
-        return m_value2name.has(v);
+        return m_value2name.contains(v);
     }
 
 
-    string_view_r EnumDef::key_of(int v) const
+    Expect<std::string_view> EnumDef::key_of(int v) const
     {
         return m_value2name(v);
     }
@@ -275,7 +278,7 @@ namespace yq {
     }
 
 
-    int_r     EnumDef::value_of(std::string_view  key) const
+    Expect<int>     EnumDef::value_of(std::string_view  key) const
     {
         return m_name2value(key);
     }
@@ -303,7 +306,10 @@ namespace yq {
     std::string_view Enum::key() const
     {
         if(m_def){
-            return m_def->key_of(m_value);
+            auto v = m_def->key_of(m_value);
+            if(v)
+                return *v;
+            return std::string_view();
         } else {
             return std::string_view();
         }

@@ -44,9 +44,9 @@ namespace yq {
         vsplit(keys, sep, [&](std::string_view k){
             k   = trimmed(k);
             auto r = def->value_of(k);
-            if(!r.good)
+            if(!r)
                 return ;
-            ret |= (1ULL << r.value);
+            ret |= (1ULL << *r);
         });
         return ret;
     }

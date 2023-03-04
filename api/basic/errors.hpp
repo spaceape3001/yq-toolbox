@@ -10,11 +10,13 @@
 
 namespace yq {
     namespace errors {
+        using bad_access                = error_db::entry<"Bad access">;
         using bad_argument              = error_db::entry<"Bad argument provided">;
         using bad_conversion            = error_db::entry<"Bad conversion">;
         using cant_open_read            = error_db::entry<"Unable to open file for reading">;
         using cant_open_write           = error_db::entry<"Unable to open file for writing">;
         using const_object_violation    = error_db::entry<"Constant object violated">;
+        using empty_string              = error_db::entry<"Empty string">;
         using failed_to_write_file      = error_db::entry<"Failed to write to the file">;
         using filepath_empty            = error_db::entry<"Filepath is empty">;
         using getter_failed             = error_db::entry<"Getter function returned false">;
@@ -22,6 +24,7 @@ namespace yq {
         using insufficient_arguments    = error_db::entry<"Not enough arguments for method call">;
         using internal_error            = error_db::entry<"Internal consistency error">;
         using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
+        using key_not_found             = error_db::entry<"Key not found">;
         using name_lookup_failed        = error_db::entry<"Name Lookup Failed" >;
         using no_getter                 = error_db::entry<"No getter exists" >;
         using no_setter                 = error_db::entry<"No setter exists" >;

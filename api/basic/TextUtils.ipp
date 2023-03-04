@@ -17,6 +17,7 @@
 #include <basic/MultiMap.hpp>
 #include <basic/Set.hpp>
 #include <basic/Logging.hpp>
+#include <basic/errors.hpp>
 
 #include <bitset>
 
@@ -76,11 +77,13 @@ namespace yq {
         
 
         template <typename T>
-        Result<T>   int_from_chars(const char*s, size_t n, int base=10)
+        Expect<T>   int_from_chars(const char*s, size_t n, int base=10)
         {
             T    res = 0;
             auto [p,ec] = std::from_chars(s, s+n, res, base);
-            return Result<T>{res, ec == std::errc()};
+            if(ec != std::errc())
+                return std::unexpected( std::make_error_code(ec));
+            return res;
         }
         
         std::string     cvt_u32string(const char32_t *z, size_t n)
@@ -876,9 +879,9 @@ namespace yq {
         return simplify(sv.data(), sv.size(), sp);
     }
 
-    Vector<std::string_view>  split(const char* s, size_t n, size_t num)
+    std::vector<std::string_view>  split(const char* s, size_t n, size_t num)
     {
-        Vector<std::string_view>    ret;
+        std::vector<std::string_view>    ret;
         if(s && n){
             if(!num)
                 ++num;
@@ -889,55 +892,55 @@ namespace yq {
             
             for(size_t i = 0; i<num; j0=j1, ++i){
                 j1  = std::min(((i+1)*n)/num, n);
-                ret << std::string_view(s+j0, j1-j0);
+                ret.push_back(std::string_view(s+j0, j1-j0));
             }
         }
         return ret;
     }
 
-    Vector<std::string_view>  split(std::string_view s, size_t number)
+    std::vector<std::string_view>  split(std::string_view s, size_t number)
     {
         return split(s.data(), s.size(), number);
     }
 
-    Vector<std::string_view>  split(const char*s, size_t n, char ch)
+    std::vector<std::string_view>  split(const char*s, size_t n, char ch)
     {
-        Vector<std::string_view>  ret;
+        std::vector<std::string_view>  ret;
         vsplit(s, n, ch, [&](std::string_view token){
-            ret << token;
+            ret.push_back(token);
         });
         return ret;
     }
 
-    Vector<std::string_view>  split(std::string_view s, char ch)
+    std::vector<std::string_view>  split(std::string_view s, char ch)
     {
         return split(s.data(), s.size(), ch);
     }
 
-    Vector<std::string_view>  split(const char* s, size_t n, char ch, size_t number)
+    std::vector<std::string_view>  split(const char* s, size_t n, char ch, size_t number)
     {
-        Vector<std::string_view>  ret;
+        std::vector<std::string_view>  ret;
         if(s && n){
             const char* end = s + n;
             const char* i   = nullptr;
             const char* j   = nullptr;
             if(number){
                 for(i = s; (j = strnchr(i, end-i, ch)) && --number; i = j)
-                    ret << std::string_view(i, j-i);
+                    ret.push_back(std::string_view(i, j-i));
             }
-            ret << std::string_view(i, end-i);
+            ret.push_back(std::string_view(i, end-i));
         }
         return ret;
     }
 
-    Vector<std::string_view>  split(std::string_view s, char ch, size_t number)
+    std::vector<std::string_view>  split(std::string_view s, char ch, size_t number)
     {
         return split(s.data(), s.size(), ch, number);
     }
 
-    Vector<std::string_view>  split(const char* s, size_t n, char32_t ch)
+    std::vector<std::string_view>  split(const char* s, size_t n, char32_t ch)
     {
-        Vector<std::string_view>    ret;
+        std::vector<std::string_view>    ret;
         if(s && n){
             const char*     z0  = s;
             iter_utf8(s, n, [&](const char*z, char32_t wc){
@@ -951,12 +954,12 @@ namespace yq {
         return ret;
     }
 
-    Vector<std::string_view>  split(std::string_view s, char32_t ch)
+    std::vector<std::string_view>  split(std::string_view s, char32_t ch)
     {
         return split(s.data(), s.size(), ch);
     }
     
-    Vector<std::string_view>  split(const char* s, size_t n, char32_t ch, size_t number)
+    std::vector<std::string_view>  split(const char* s, size_t n, char32_t ch, size_t number)
     {
         Vector<std::string_view>    ret;
         if(s && n){
@@ -976,42 +979,42 @@ namespace yq {
         return ret;
     }
     
-    Vector<std::string_view>  split(std::string_view s, char32_t ch, size_t number)
+    std::vector<std::string_view>  split(std::string_view s, char32_t ch, size_t number)
     {
         return split(s.data(), s.size(), ch, number);
     }
 
-    Vector<std::string_view>  split(const char* s, size_t n, const char* p, size_t pn)
+    std::vector<std::string_view>  split(const char* s, size_t n, const char* p, size_t pn)
     {
-        Vector<std::string_view>  ret;
+        std::vector<std::string_view>  ret;
         vsplit(s, n, p, pn, [&](std::string_view token){
-            ret << token;
+            ret.push_back(token);
         });
         return ret;
     }
     
-    Vector<std::string_view>  split(std::string_view s, std::string_view p)
+    std::vector<std::string_view>  split(std::string_view s, std::string_view p)
     {
         return split(s.data(), s.size(), p.data(), p.size());
     }
 
-    Vector<std::string_view>  split_igCase(const char* s , size_t n, char ch)
+    std::vector<std::string_view>  split_igCase(const char* s , size_t n, char ch)
     {
-        Vector<std::string_view>  ret;
+        std::vector<std::string_view>  ret;
         vsplit_igCase(s, n, ch, [&](std::string_view token){
-            ret << token;
+            ret.push_back(token);
         });
         return ret;
     }
     
-    Vector<std::string_view>  split_igCase(std::string_view s, char ch)
+    std::vector<std::string_view>  split_igCase(std::string_view s, char ch)
     {
         return split_igCase(s.data(), s.size(), ch);
     }
 
-    Vector<std::string_view>  split_igCase(const char* s, size_t n, char32_t ch)
+    std::vector<std::string_view>  split_igCase(const char* s, size_t n, char32_t ch)
     {
-        Vector<std::string_view>    ret;
+        std::vector<std::string_view>    ret;
         if(s && n){
             ch = to_lower(ch);
             const char*     z0  = s;
@@ -1026,21 +1029,21 @@ namespace yq {
         return ret;
     }
     
-    Vector<std::string_view>  split_igCase(std::string_view s, char32_t ch)
+    std::vector<std::string_view>  split_igCase(std::string_view s, char32_t ch)
     {
         return split_igCase(s.data(), s.size(), ch);
     }
     
-    Vector<std::string_view>  split_igCase(const char* s, size_t n, const char*p, size_t pn)
+    std::vector<std::string_view>  split_igCase(const char* s, size_t n, const char*p, size_t pn)
     {
-        Vector<std::string_view>  ret;
+        std::vector<std::string_view>  ret;
         vsplit_igCase(s, n, p, pn, [&](std::string_view token){
-            ret << token;
+            ret.push_back(token);
         });
         return ret;
     }
     
-    Vector<std::string_view>  split_igCase(std::string_view s, std::string_view p)
+    std::vector<std::string_view>  split_igCase(std::string_view s, std::string_view p)
     {
         return split_igCase(s.data(), s.size(), p.data(), p.size());
     }
@@ -1263,78 +1266,76 @@ namespace yq {
         return nullptr;
     }
     
-    boolean_r  to_boolean(const char*s, size_t n)
+    Expect<bool>  to_boolean(const char*s, size_t n)
     {
-        static constexpr const auto bTRUE     = boolean_r( true, true );
-        static constexpr const auto bFALSE    = boolean_r( false, true );
-
         if(!s)
-            return {};
-        
+            return errors::null_pointer();
         trim_ws(s, n);
+        if(!n)
+            return errors::empty_string();
         switch(*s){
         case '0':
             if(is_same(s,n,"0"))
-                return bFALSE;
+                return false;
             break;
         case '1':
             if(is_same(s, n, "1"))
-                return bTRUE;
+                return true;
             break;
         case 'y':
         case 'Y':
             if(n == 1)
-                return bTRUE;
+                return true;
             if(is_same(s, n, "yes"))
-                return bTRUE;
+                return true;
             break;
         case 'n':
         case 'N':
             if(n == 1)
-                return bFALSE;
+                return false;
             if(is_same(s, n, "no"))
-                return bFALSE;
+                return false;
             break;
         case 't':
         case 'T':
             if(n == 1)
-                return bTRUE;
+                return true;
             if(is_same(s, n, "true"))
-                return bTRUE;
+                return true;
             break;
         case 'f':
         case 'F':
             if(n==1)
-                return bFALSE;
+                return false;
             if(is_same(s, n, "false"))
-                return bFALSE;
+                return false;
             break;
         default:
             break;
         }
         
-        return {};
+        return errors::bad_argument();
     }
 
-    boolean_r to_boolean(std::string_view s)
+    Expect<bool> to_boolean(std::string_view s)
     {
         return to_boolean(s.data(), s.size());
     }
 
-    double_r  to_double(const char*s, size_t n)
+    Expect<double>  to_double(const char*s, size_t n)
     {
         if(!s)
-            return double_r{NaN, false};
+            return errors::null_pointer();
 
         trim_ws(s, n);
         switch(n){
         case 0:
-            return double_r{ 0., true };
+            return 0.;
         case 3:
             if(strncasecmp(s, "nan", 3) == 0)
-                return double_r{ NaN, true };
+                return NaN;
             if(strncasecmp(s, "inf", 3) == 0)
-                return double_r{ INF, true };
+                return INF;
             break;
         }
         
@@ -1342,222 +1343,226 @@ namespace yq {
         #if FP_CHARCONV
             double  result = NaN;
             auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
-            return double_r{ result, ec == std::errc()};
+            if(ec != std::errc())
+                return std::unexpected(std::make_error_code(ec));
+            return result;
         #else
             char*   z       = nullptr;
             double  res     = std::strtod(s, &z);
             if((const char*) s != z)
-                return double_r{ res, true };
-            return {};
+                return res;
+            return errors::bad_argument();
         #endif
     }
 
-    double_r  to_double(std::string_view s)
+    Expect<double>  to_double(std::string_view s)
     {
         return to_double(s.data(), s.size());
     }
 
-    float_r  to_float(const char*s, size_t n)
+    Expect<float>  to_float(const char*s, size_t n)
     {
         if(!s)
-            return float_r{NaNf, false};
+            return errors::null_pointer();
 
         trim_ws(s, n);
 
         switch(n){
         case 0:
-            return float_r{ 0.f, true};
+            return 0.f;
         case 3:
             if(strncasecmp(s, "nan", 3) == 0)
-                return float_r{ NaNf, true };
+                return NaNf;
             if(strncasecmp(s, "inf", 3) == 0)
-                return float_r{ INFf, true };
+                return INFf;
             break;
         }
         
         #if FP_CHARCONV
             float  result = NaNf;
             auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
-            return float_r{result, ec == std::errc()};
+            if(ec != std::errc())
+                return std::unexpected(std::make_error_code(ec));
+            return result;
         #else
             char*   z       = nullptr;
             float  res     = std::strtof(s, &z);
             if((const char*) s != z)
-                return {res, true};
-            return {};
+                return res;
+            return errors::bad_argument();
         #endif
     }
 
-    float_r  to_float(std::string_view s)
+    Expect<float>  to_float(std::string_view s)
     {
         return to_float(s.data(), s.size());
     }
 
 
-    unsigned_r  to_hex(const char*s, size_t n)
+    Expect<unsigned>  to_hex(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<unsigned int>(s, n, 16);
     }
 
 
-    unsigned_r  to_hex(std::string_view s)
+    Expect<unsigned>  to_hex(std::string_view s)
     {
         return to_hex(s.data(), s.size());
     }
 
-    uint8_r  to_hex8(const char*s, size_t n)
+    Expect<uint8_t>  to_hex8(const char*s, size_t n)
     {
         if(!s)  
-            return { 0, false};
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<uint8_t>(s, n, 16);
     }
 
-    uint8_r  to_hex8(std::string_view s)
+    Expect<uint8_t>  to_hex8(std::string_view s)
     {
         return to_hex8(s.data(), s.size());
     }
 
-    uint16_r  to_hex16(const char*s, size_t n)
+    Expect<uint16_t>  to_hex16(const char*s, size_t n)
     {
         if(!s)  
-            return {};
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<uint16_t>(s, n, 16);
     }
 
-    uint16_r  to_hex16(std::string_view s)
+    Expect<uint16_t>  to_hex16(std::string_view s)
     {
         return to_hex16(s.data(), s.size());
     }
 
-    uint32_r  to_hex32(const char*s, size_t n)
+    Expect<uint32_t>  to_hex32(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<uint32_t>(s, n, 16);
     }
 
-    uint32_r  to_hex32(std::string_view s)
+    Expect<uint32_t>  to_hex32(std::string_view s)
     {
         return to_hex32(s.data(), s.size());
     }
 
-    uint64_r  to_hex64(const char*s, size_t n)
+    Expect<uint64_t>  to_hex64(const char*s, size_t n)
     {
         if(!s)
-            return { 0ULL, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0ULL, true };
+            return errors::empty_string();
         return int_from_chars<uint64_t>(s, n, 16);
     }
 
-    uint64_r  to_hex64(std::string_view s)
+    Expect<uint64_t>  to_hex64(std::string_view s)
     {
         return to_hex64(s.data(), s.size());
     }
     
-    integer_r  to_int(const char*s, size_t n)
+    Expect<int>  to_int(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<int>(s,n);
     }
 
-    integer_r   to_int(std::string_view s)
+    Expect<int>   to_int(std::string_view s)
     {
         return to_int(s.data(), s.size());
     }
 
-    int8_r  to_int8(const char*s, size_t n)
+    Expect<int8_t>  to_int8(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<int8_t>(s,n);
     }
 
-    int8_r  to_int8(std::string_view s)
+    Expect<int8_t>  to_int8(std::string_view s)
     {
         return to_int8(s.data(), s.size());
     }
 
 
-    int16_r  to_int16(const char*s, size_t n)
+    Expect<int16_t>  to_int16(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<int16_t>(s,n);
     }
 
-    int16_r  to_int16(std::string_view s)
+    Expect<int16_t>  to_int16(std::string_view s)
     {
         return to_int16(s.data(), s.size());
     }
 
-    int32_r  to_int32(const char*s, size_t n)
+    Expect<int32_t>  to_int32(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<int32_t>(s,n);
     }
 
-    int32_r  to_int32(std::string_view s)
+    Expect<int32_t>  to_int32(std::string_view s)
     {
         return to_int32(s.data(), s.size());
     }
 
 
-    int64_r  to_int64(const char*s, size_t n)
+    Expect<int64_t>  to_int64(const char*s, size_t n)
     {
         if(!s)
-            return { 0LL, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0LL, true };
+            return errors::empty_string();
         return int_from_chars<int64_t>(s,n);
     }
 
-    int64_r  to_int64(std::string_view s)
+    Expect<int64_t>  to_int64(std::string_view s)
     {
         return to_int64(s.data(), s.size());
     }
 
-    integer_r  to_integer(const char*s, size_t n)
+    Expect<int>  to_integer(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<int>(s,n);
     }
 
-    integer_r  to_integer(std::string_view s)
+    Expect<int>  to_integer(std::string_view s)
     {
         return to_integer(s.data(), s.size());
     }
@@ -1581,17 +1586,17 @@ namespace yq {
         return ret;
     }
 
-    short_r  to_short(const char*s, size_t n)
+    Expect<short>  to_short(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false};
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<short>(s,n);
     }
 
-    short_r  to_short(std::string_view s)
+    Expect<short>  to_short(std::string_view s)
     {
         return to_short(s.data(), s.size());
     }
@@ -1753,123 +1758,123 @@ namespace yq {
         return std::string(buffer);
     }
 
-    unsigned_r  to_uint(const char*s, size_t n)
+    Expect<unsigned>  to_uint(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<unsigned>(s,n);
     }
 
-    unsigned_r  to_uint(std::string_view s)
+    Expect<unsigned>  to_uint(std::string_view s)
     {
         return to_uint(s.data(), s.size());
     }
 
-    uint8_r     to_uint8(const char*s, size_t n)
+    Expect<uint8_t>     to_uint8(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<uint8_t>(s,n);
     }
 
-    uint8_r     to_uint8(std::string_view s)
+    Expect<uint8_t>     to_uint8(std::string_view s)
     {
         return to_uint8(s.data(), s.size());
     }
 
-    uint16_r    to_uint16(const char*s, size_t n)
+    Expect<uint16_t>    to_uint16(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<uint16_t>(s,n);
     }
 
-    uint16_r    to_uint16(std::string_view s)
+    Expect<uint16_t>    to_uint16(std::string_view s)
     {
         return to_uint16(s.data(), s.size());
     }
 
-    uint32_r    to_uint32(const char*s, size_t n)
+    Expect<uint32_t>    to_uint32(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<uint32_t>(s,n);
     }
 
-    uint32_r    to_uint32(std::string_view s)
+    Expect<uint32_t>    to_uint32(std::string_view s)
     {
         return to_uint32(s.data(), s.size());
     }
 
-    uint64_r    to_uint64(const char*s, size_t n)
+    Expect<uint64_t>    to_uint64(const char*s, size_t n)
     {
         if(!s)
-            return { 0ULL, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0ULL, true };
+            return errors::empty_string();
         return int_from_chars<uint64_t>(s,n);
     }
 
-    uint64_r    to_uint64(std::string_view s)
+    Expect<uint64_t>    to_uint64(std::string_view s)
     {
         return to_uint64(s.data(), s.size());
     }
 
-    unsigned_r  to_uinteger(const char*s, size_t n)
+    Expect<unsigned>  to_uinteger(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<unsigned int>(s,n);
     }
 
-    unsigned_r  to_uinteger(std::string_view s)
+    Expect<unsigned>  to_uinteger(std::string_view s)
     {
         return to_uinteger(s.data(), s.size());
     }
 
-    unsigned_r  to_unsigned(const char*s, size_t n)
+    Expect<unsigned>  to_unsigned(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<unsigned int>(s,n);
     }
 
-    unsigned_r  to_unsigned(std::string_view s)
+    Expect<unsigned>  to_unsigned(std::string_view s)
     {
         return to_unsigned(s.data(), s.size());
     }
 
-    ushort_r    to_ushort(const char*s, size_t n)
+    Expect<unsigned short>    to_ushort(const char*s, size_t n)
     {
         if(!s)
-            return { 0, false };
+            return errors::null_pointer();
         trim_ws(s,n);
         if(!n)
-            return { 0, true };
+            return errors::empty_string();
         return int_from_chars<unsigned short>(s,n);
     }
 
 
-    ushort_r    to_ushort(std::string_view s)
+    Expect<unsigned short>    to_ushort(std::string_view s)
     {
         return to_ushort(s.data(), s.size());
     }
@@ -1991,10 +1996,13 @@ namespace yq {
                 continue;
             }
 
-                    // accept it
-            if((c+2<end) && is_xdigit(c[1]) && is_xdigit(c[2]))
-                ret += (char) to_hex(c+1,2).value;
-
+                    // tentatively accept it
+            if((c+2<end) && is_xdigit(c[1]) && is_xdigit(c[2])){
+                auto ch = to_hex(c+1,2);
+                if(ch)
+                    ret += (char) *ch;
+            }
+            
             // else assumed malformed, march  on
             c += 2;
         }
