@@ -268,12 +268,12 @@ namespace yq {
         
         //! Assignment constructor, by key or default value is used
         //! \param[out] ok  pointer to bool, set to TRUE if key was understood
-        EnumImpl(std::string_view key, bool *ok=nullptr) : E(value_for(key))
+        EnumImpl(std::string_view key, bool *ok=nullptr)  : E({})
         {
             auto e = value_for(key);
-            E::m_value = e.good ? e.value : default_value();
+            E::m_value = e ? *e : default_value();
             if(ok)
-                *ok  = e.good;
+                *ok  = e.has_value();
         }
         
         //! Copy constructor
@@ -465,7 +465,7 @@ namespace yq {
         Expect<int>   vi  =  E::staticEnumInfo()->value_of(txt);
         if(vi)
             return (typename E::enum_t) *vi;
-        return vi;
+        return std::unexpected(vi.error());
     }
 
     template <typename E>
