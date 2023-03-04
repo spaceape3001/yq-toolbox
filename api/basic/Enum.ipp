@@ -220,9 +220,12 @@ namespace yq {
     }
 
 
-    Expect<std::string_view> EnumDef::key_of(int v) const
+    std::string_view EnumDef::key_of(int v) const
     {
-        return m_value2name(v);
+        auto r =  m_value2name(v);
+        if(r)
+            return *r;
+        return std::string_view();
     }
 
 
@@ -306,10 +309,7 @@ namespace yq {
     std::string_view Enum::key() const
     {
         if(m_def){
-            auto v = m_def->key_of(m_value);
-            if(v)
-                return *v;
-            return std::string_view();
+            return m_def->key_of(m_value);
         } else {
             return std::string_view();
         }

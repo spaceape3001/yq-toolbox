@@ -142,7 +142,7 @@ namespace yq {
         Expect<int>                 value_of(std::string_view  key) const;
 
         //! Key for the specified value
-        Expect<std::string_view>    key_of(int value) const;
+        std::string_view            key_of(int value) const;
         
         //! Tests to see if value is present
         bool                        has_value(int value) const;
