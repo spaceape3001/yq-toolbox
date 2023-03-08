@@ -109,6 +109,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr bool  Sphere3<T>::contains(const Vector3<T>& pt) const noexcept
+    {
+        return (pt-point) <= radius * radius;
+    }
+
+    template <typename T>
     constexpr T         Sphere3<T>::diameter() const noexcept
     {
         return radius + radius;

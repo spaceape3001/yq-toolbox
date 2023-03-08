@@ -87,6 +87,10 @@ namespace yq {
         */
         constexpr T     circumference() const noexcept;
 
+        /*! \brief Checks if the point is inside (or touching) the circle
+        */
+        constexpr bool          contains(const Vector2<T>& pt) const noexcept;
+        
         /*! \brief Computes the diameter
         */
         constexpr T     diameter() const noexcept;

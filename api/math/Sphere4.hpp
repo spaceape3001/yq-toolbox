@@ -79,6 +79,10 @@ namespace yq {
                 //! Returns the bounding box for this sphere
         constexpr AxBox4<T>   bounds() const noexcept;
 
+        /*! \brief Checks if the point is inside (or touching) the sphere
+        */
+        constexpr bool          contains(const Vector4<T>& pt) const noexcept;
+
         /*! \brief Computes the diameter of a hyper sphere
         */
         constexpr T     diameter() const noexcept;

@@ -82,6 +82,10 @@ namespace yq {
 
         constexpr AxBox3<T> bounds() const noexcept;
 
+        /*! \brief Checks if the point is inside (or touching) the sphere
+        */
+        constexpr bool          contains(const Vector3<T>& pt) const noexcept;
+
         /*! \brief Computes the diameter of a sphere
         */
         constexpr T           diameter() const noexcept;
