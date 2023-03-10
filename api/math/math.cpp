@@ -745,6 +745,7 @@ static constexpr const std::string_view     szBlue                      = "blue"
 static constexpr const std::string_view     szBlue_Color                = "Blue channel of the color";
 static constexpr const std::string_view     szBox                       = "box";
 static constexpr const std::string_view     szBox_Circle                = "Bounding box of the circle";
+static constexpr const std::string_view     szC                         = "c";
 static constexpr const std::string_view     szCenter                    = "center";
 static constexpr const std::string_view     szCenter_Box                = "Center of the box";
 static constexpr const std::string_view     szCenter_Circle             = "Center of the circle";
@@ -779,8 +780,18 @@ static constexpr const std::string_view     szHigh_Range                = "High-
 static constexpr const std::string_view     szHypervolume               = "hypervolume";
 static constexpr const std::string_view     szHypervolume_Box4          = "Hypervolume of the box";
 static constexpr const std::string_view     szHVol                      = "hvol";
+static constexpr const std::string_view     szI                         = "i";
+static constexpr const std::string_view     szI_Coord                   = "I-component of the coordinate";
+static constexpr const std::string_view     szIm                        = "im";
+static constexpr const std::string_view     szIm_Complex                = "Imaginary component of the complex number";
+static constexpr const std::string_view     szImag                      = "imag";
+static constexpr const std::string_view     szImag_Complex              = "Imaginary component of the complex number";
 static constexpr const std::string_view     szIncircle                  = "incircle";
 static constexpr const std::string_view     szIncircle_Box              = "Incircle of the box";
+static constexpr const std::string_view     szJ                         = "j";
+static constexpr const std::string_view     szJ_Coord                   = "J-component of the coordinate";
+static constexpr const std::string_view     szK                         = "k";
+static constexpr const std::string_view     szL                         = "l";
 static constexpr const std::string_view     szLen                       = "len";
 static constexpr const std::string_view     szLen²                      = "len2";
 static constexpr const std::string_view     szLength                    = "length";
@@ -790,6 +801,10 @@ static constexpr const std::string_view     szLength²_Vector            = "Leng
 static constexpr const std::string_view     szLow                       = "lo";
 static constexpr const std::string_view     szLow_Box                   = "Low-corner of the box";
 static constexpr const std::string_view     szLow_Range                 = "Low-value of the range";
+static constexpr const std::string_view     szM                         = "m";
+static constexpr const std::string_view     szMag                       = "mag";
+static constexpr const std::string_view     szMag_Complex               = "Magnitude of the complex number";
+static constexpr const std::string_view     szN                         = "n";
 static constexpr const std::string_view     szNE                        = "ne";
 static constexpr const std::string_view     szNortheast                 = "northeast";
 static constexpr const std::string_view     szNortheast_Box             = "North-east corner of the box";
@@ -808,6 +823,10 @@ static constexpr const std::string_view     szProject_Box               = "Proje
 static constexpr const std::string_view     szR                         = "r";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
+static constexpr const std::string_view     szRe                        = "re";
+static constexpr const std::string_view     szRe_Complex                = "Real component of the complex number";
+static constexpr const std::string_view     szReal                      = "real";
+static constexpr const std::string_view     szReal_Complex              = "Real component of the comolex number";
 static constexpr const std::string_view     szRed                       = "red";
 static constexpr const std::string_view     szRed_Color                 = "Red channel of the color";
 static constexpr const std::string_view     szSE                        = "se";
@@ -868,14 +887,32 @@ static constexpr const std::string_view     szZ_Box                     = "Z ran
 static constexpr const std::string_view     szZ_Vector                  = "Z component of the vector";
 static constexpr const std::string_view     szZ_Vector2                 = "Promotes to Vector3 with a z-value";
 static constexpr const std::string_view     szZW                        = "zw";
-static constexpr const std::string_view     szZW                        = "ZW component of the tensor";
+static constexpr const std::string_view     szZW_Tensor                 = "ZW component of the tensor";
 static constexpr const std::string_view     szZX                        = "zx";
-static constexpr const std::string_view     szZX                        = "ZX component of the tensor";
+static constexpr const std::string_view     szZX_Tensor                 = "ZX component of the tensor";
 static constexpr const std::string_view     szZY                        = "zy";
-static constexpr const std::string_view     szZY                        = "ZY component of the tensor";
+static constexpr const std::string_view     szZY_Tensor                 = "ZY component of the tensor";
 static constexpr const std::string_view     szZZ                        = "zz";
-static constexpr const std::string_view     szZZ                        = "ZZ component of the tensor";
+static constexpr const std::string_view     szZZ_Tensor                 = "ZZ component of the tensor";
 
+//  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//  OTHER HELPERS FOR MATH
+
+namespace yq {
+    namespace {
+        double  magnitude_complexD(const ComplexD& v)
+        {
+            return std::abs(v);
+        }
+
+        double  magnitude_complexF(const ComplexF& v)
+        {
+            return std::abs(v);
+        }
+    }
+}    
+    
+//  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 static void reg_math () {
 
@@ -1288,99 +1325,99 @@ static void reg_math () {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     {
-        auto complexD = writer<ComplexD>();
-        complexD.property("re", &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real);
-        complexD.property("im", &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag);
-        //complexD.property("mag", [](const ComplexD&v) -> double { return std::abs(v); });
+        auto w = writer<ComplexD>();
+        w.property(szRe, &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real).description(szRe_Complex);
+        w.property(szIm, &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag).description(szIm_Complex);
+        w.property(szMag, magnitude_complexD).description(szMag_Complex);
     }
 
     {
-        auto complexF = writer<ComplexF>();
-        complexF.property("re", (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real);
-        complexF.property("im", (float (ComplexF::*)() const) &ComplexF::imag).setter((void(ComplexF::*)(float)) &ComplexF::imag);
-        //complexD.property("mag", [](const ComplexF&v) -> float { return std::abs(v); });
+        auto w = writer<ComplexF>();
+        w.property(szRe, (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real).description(szRe_Complex);
+        w.property(szIm, (float (ComplexF::*)() const) &ComplexF::imag).setter((void(ComplexF::*)(float)) &ComplexF::imag).description(szIm_Complex);
+        w.property(szMag, magnitude_complexF).description(szMag_Complex);
     }
 
     {
-        auto complexI = writer<ComplexI>();
-        complexI.property("re", (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real);
-        complexI.property("im", (int (ComplexI::*)() const) &ComplexI::imag).setter((void(ComplexI::*)(int)) &ComplexI::imag);
+        auto w = writer<ComplexI>();
+        w.property(szRe, (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real).description(szRe_Complex);
+        w.property(szIm, (int (ComplexI::*)() const) &ComplexI::imag).setter((void(ComplexI::*)(int)) &ComplexI::imag).description(szIm_Complex);
     }
 
     {
-        auto complexU = writer<ComplexU>();
-        complexU.property("re", (unsigned (ComplexU::*)() const) &ComplexU::real).setter((void(ComplexU::*)(unsigned)) &ComplexU::real);
-        complexU.property("im", (unsigned (ComplexU::*)() const) &ComplexU::imag).setter((void(ComplexU::*)(unsigned)) &ComplexU::imag);
+        auto w = writer<ComplexU>();
+        w.property(szRe, (unsigned (ComplexU::*)() const) &ComplexU::real).setter((void(ComplexU::*)(unsigned)) &ComplexU::real).description(szRe_Complex);
+        w.property(szIm, (unsigned (ComplexU::*)() const) &ComplexU::imag).setter((void(ComplexU::*)(unsigned)) &ComplexU::imag).description(szIm_Complex);
     }
 
     {
-        auto coord2d = writer<Coord2D>();
-        coord2d.property("i", &Coord2D::i);
-        coord2d.property("j", &Coord2D::j);
+        auto w = writer<Coord2D>();
+        w.property(szI, &Coord2D::i).description(szI_Coord);
+        w.property(szJ, &Coord2D::j).description(szJ_Coord);
     }
 
     {
-        auto coord2f = writer<Coord2F>();
-        coord2f.property("i", &Coord2F::i);
-        coord2f.property("j", &Coord2F::j);
+        auto w = writer<Coord2F>();
+        w.property(szI, &Coord2F::i).description(szI_Coord);
+        w.property(szJ, &Coord2F::j).description(szJ_Coord);
     }
 
     {
-        auto coord2i = writer<Coord2I>();
-        coord2i.property("i", &Coord2I::i);
-        coord2i.property("j", &Coord2I::j);
+        auto w = writer<Coord2I>();
+        w.property(szI, &Coord2I::i).description(szI_Coord);
+        w.property(szJ, &Coord2I::j).description(szJ_Coord);
     }
 
     {
-        auto coord2u = writer<Coord2U>();
-        coord2u.property("i", &Coord2U::i);
-        coord2u.property("j", &Coord2U::j);
+        auto w = writer<Coord2U>();
+        w.property(szI, &Coord2U::i).description(szI_Coord);
+        w.property(szJ, &Coord2U::j).description(szJ_Coord);
     }
 
     {
-        auto countI8   = writer<CountI8>();
-        countI8.property("cnt", &CountI8::cnt);
+        auto w   = writer<CountI8>();
+        w.property("cnt", &CountI8::cnt);
     }
 
     {
-        auto countI16   = writer<CountI16>();
-        countI16.property("cnt", &CountI16::cnt);
+        auto w   = writer<CountI16>();
+        w.property("cnt", &CountI16::cnt);
     }
 
     {
-        auto countI32   = writer<CountI32>();
-        countI32.property("cnt", &CountI32::cnt);
+        auto w   = writer<CountI32>();
+        w.property("cnt", &CountI32::cnt);
     }
 
     {
-        auto countI64   = writer<CountI64>();
-        countI64.property("cnt", &CountI64::cnt);
+        auto w   = writer<CountI64>();
+        w.property("cnt", &CountI64::cnt);
     }
 
     {
-        auto countU8   = writer<CountU8>();
-        countU8.property("cnt", &CountU8::cnt);
+        auto w   = writer<CountU8>();
+        w.property("cnt", &CountU8::cnt);
     }
 
     {
-        auto countU16   = writer<CountU16>();
-        countU16.property("cnt", &CountU16::cnt);
+        auto w   = writer<CountU16>();
+        w.property("cnt", &CountU16::cnt);
     }
 
     {
-        auto countU32   = writer<CountU32>();
-        countU32.property("cnt", &CountU32::cnt);
+        auto w   = writer<CountU32>();
+        w.property("cnt", &CountU32::cnt);
     }
 
     {
-        auto countU64   = writer<CountU64>();
-        countU64.property("cnt", &CountU64::cnt);
+        auto w   = writer<CountU64>();
+        w.property("cnt", &CountU64::cnt);
     }
 
     {
-        auto fraci  = writer<FractionI>();
-        fraci.property("n", &FractionI::num);
-        fraci.property("d", &FractionI::den);
+        auto w  = writer<FractionI>();
+        w.property("n", &FractionI::num);
+        w.property("d", &FractionI::den);
     }
     
     /*
@@ -1398,63 +1435,63 @@ static void reg_math () {
     */
 
     {
-        auto hcountI8   = writer<HCountI8>();
-        hcountI8.property("cnt", &HCountI8::cnt);
+        auto w   = writer<HCountI8>();
+        w.property("cnt", &HCountI8::cnt);
     }
 
     {
-        auto hcountI16   = writer<HCountI16>();
-        hcountI16.property("cnt", &HCountI16::cnt);
+        auto w   = writer<HCountI16>();
+        w.property("cnt", &HCountI16::cnt);
     }
 
     {
-        auto hcountI32   = writer<HCountI32>();
-        hcountI32.property("cnt", &HCountI32::cnt);
+        auto w   = writer<HCountI32>();
+        w.property("cnt", &HCountI32::cnt);
     }
 
     {
-        auto hcountI64   = writer<HCountI64>();
-        hcountI64.property("cnt", &HCountI64::cnt);
+        auto w   = writer<HCountI64>();
+        w.property("cnt", &HCountI64::cnt);
     }
 
     {
-        auto hcountU8   = writer<HCountU8>();
-        hcountU8.property("cnt", &HCountU8::cnt);
+        auto w   = writer<HCountU8>();
+        w.property("cnt", &HCountU8::cnt);
     }
 
     {
-        auto hcountU16   = writer<HCountU16>();
-        hcountU16.property("cnt", &HCountU16::cnt);
+        auto w   = writer<HCountU16>();
+        w.property("cnt", &HCountU16::cnt);
     }
 
     {
-        auto hcountU32   = writer<HCountU32>();
-        hcountU32.property("cnt", &HCountU32::cnt);
+        auto w   = writer<HCountU32>();
+        w.property("cnt", &HCountU32::cnt);
     }
 
     {
-        auto hcountU64   = writer<HCountU64>();
-        hcountU64.property("cnt", &HCountU64::cnt);
+        auto w   = writer<HCountU64>();
+        w.property("cnt", &HCountU64::cnt);
     }
 
     {
-        auto lcountI8   = writer<LCountI8>();
-        lcountI8.property("cnt", &LCountI8::cnt);
+        auto w   = writer<LCountI8>();
+        w.property("cnt", &LCountI8::cnt);
     }
 
     {
-        auto lcountI16   = writer<LCountI16>();
-        lcountI16.property("cnt", &LCountI16::cnt);
+        auto w   = writer<LCountI16>();
+        w.property("cnt", &LCountI16::cnt);
     }
 
     {
-        auto lcountI32   = writer<LCountI32>();
-        lcountI32.property("cnt", &LCountI32::cnt);
+        auto w   = writer<LCountI32>();
+        w.property("cnt", &LCountI32::cnt);
     }
 
     {
-        auto lcountI64   = writer<LCountI64>();
-        lcountI64.property("cnt", &LCountI64::cnt);
+        auto w   = writer<LCountI64>();
+        w.property("cnt", &LCountI64::cnt);
     }
 
     {
@@ -1550,93 +1587,93 @@ static void reg_math () {
     }
 
     {
-        auto norm2d = writer<Normal2D>();
-        norm2d.property("dir", &Normal2D::direction);
+        auto w = writer<Normal2D>();
+        w.property("dir", &Normal2D::direction);
     }
 
     {
-        auto norm2f = writer<Normal2F>();
-        norm2f.property("dir", &Normal2F::direction);
+        auto w = writer<Normal2F>();
+        w.property("dir", &Normal2F::direction);
     }
 
     {
-        auto norm3d = writer<Normal3D>();
-        norm3d.property("dir", &Normal3D::direction);
+        auto w = writer<Normal3D>();
+        w.property("dir", &Normal3D::direction);
     }
 
     {
-        auto norm3f = writer<Normal3F>();
-        norm3f.property("dir", &Normal3F::direction);
+        auto w = writer<Normal3F>();
+        w.property("dir", &Normal3F::direction);
     }
 
     {
-        auto pose3d = writer<Pose3D>();
-        pose3d.property("ori", &Pose3D::orientation);
-        pose3d.property("pos", &Pose3D::position);
+        auto w = writer<Pose3D>();
+        w.property("ori", &Pose3D::orientation);
+        w.property("pos", &Pose3D::position);
     }
 
     {
-        auto pose3f = writer<Pose3F>();
-        pose3f.property("ori", &Pose3F::orientation);
-        pose3f.property("pos", &Pose3F::position);
+        auto w = writer<Pose3F>();
+        w.property("ori", &Pose3F::orientation);
+        w.property("pos", &Pose3F::position);
     }
 
     {
-        auto quad2d = writer<Quadrilateral2D>();
-        quad2d.property("a", &Quadrilateral2D::a);
-        quad2d.property("b", &Quadrilateral2D::b);
-        quad2d.property("c", &Quadrilateral2D::c);
-        quad2d.property("d", &Quadrilateral2D::d);
+        auto w = writer<Quadrilateral2D>();
+        w.property("a", &Quadrilateral2D::a);
+        w.property("b", &Quadrilateral2D::b);
+        w.property("c", &Quadrilateral2D::c);
+        w.property("d", &Quadrilateral2D::d);
     }
 
     {
-        auto quad2f = writer<Quadrilateral2F>();
-        quad2f.property("a", &Quadrilateral2F::a);
-        quad2f.property("b", &Quadrilateral2F::b);
-        quad2f.property("c", &Quadrilateral2F::c);
-        quad2f.property("d", &Quadrilateral2F::d);
+        auto w = writer<Quadrilateral2F>();
+        w.property("a", &Quadrilateral2F::a);
+        w.property("b", &Quadrilateral2F::b);
+        w.property("c", &Quadrilateral2F::c);
+        w.property("d", &Quadrilateral2F::d);
     }
 
     {
-        auto quad2i = writer<Quadrilateral2I>();
-        quad2i.property("a", &Quadrilateral2I::a);
-        quad2i.property("b", &Quadrilateral2I::b);
-        quad2i.property("c", &Quadrilateral2I::c);
-        quad2i.property("d", &Quadrilateral2I::d);
+        auto w = writer<Quadrilateral2I>();
+        w.property("a", &Quadrilateral2I::a);
+        w.property("b", &Quadrilateral2I::b);
+        w.property("c", &Quadrilateral2I::c);
+        w.property("d", &Quadrilateral2I::d);
     }
 
     {
-        auto quad2u = writer<Quadrilateral2U>();
-        quad2u.property("a", &Quadrilateral2U::a);
-        quad2u.property("b", &Quadrilateral2U::b);
-        quad2u.property("c", &Quadrilateral2U::c);
-        quad2u.property("d", &Quadrilateral2U::d);
+        auto w = writer<Quadrilateral2U>();
+        w.property("a", &Quadrilateral2U::a);
+        w.property("b", &Quadrilateral2U::b);
+        w.property("c", &Quadrilateral2U::c);
+        w.property("d", &Quadrilateral2U::d);
     }
 
     {
-        auto quadvec4d = writer<Quadvector4D>();
-        quadvec4d.property("xyzw", &Quadvector4D::xyzw);
+        auto w = writer<Quadvector4D>();
+        w.property("xyzw", &Quadvector4D::xyzw);
     }
 
     {
-        auto quadvec4f = writer<Quadvector4F>();
-        quadvec4f.property("xyzw", &Quadvector4F::xyzw);
+        auto w = writer<Quadvector4F>();
+        w.property("xyzw", &Quadvector4F::xyzw);
     }
 
     {
-        auto quat3d = writer<Quaternion3D>();
-        quat3d.property(szW, &Quaternion3D::w);
-        quat3d.property(szX, &Quaternion3D::x);
-        quat3d.property(szY, &Quaternion3D::y);
-        quat3d.property(szZ, &Quaternion3D::z);
+        auto w = writer<Quaternion3D>();
+        w.property(szW, &Quaternion3D::w);
+        w.property(szX, &Quaternion3D::x);
+        w.property(szY, &Quaternion3D::y);
+        w.property(szZ, &Quaternion3D::z);
     }
 
     {
-        auto quat3f = writer<Quaternion3F>();
-        quat3f.property(szW, &Quaternion3F::w);
-        quat3f.property(szX, &Quaternion3F::x);
-        quat3f.property(szY, &Quaternion3F::y);
-        quat3f.property(szZ, &Quaternion3F::z);
+        auto w = writer<Quaternion3F>();
+        w.property(szW, &Quaternion3F::w);
+        w.property(szX, &Quaternion3F::x);
+        w.property(szY, &Quaternion3F::y);
+        w.property(szZ, &Quaternion3F::z);
     }
         
     {
@@ -1664,39 +1701,39 @@ static void reg_math () {
     }
 
     {
-        auto ray2d = writer<Ray2D>();
-        ray2d.property("pt", &Ray2D::point);
-        ray2d.property("dir", &Ray2D::direction);
+        auto w = writer<Ray2D>();
+        w.property("pt", &Ray2D::point);
+        w.property("dir", &Ray2D::direction);
     }
 
     {
-        auto ray2f = writer<Ray2F>();
-        ray2f.property("pt", &Ray2F::point);
-        ray2f.property("dir", &Ray2F::direction);
+        auto w = writer<Ray2F>();
+        w.property("pt", &Ray2F::point);
+        w.property("dir", &Ray2F::direction);
     }
 
     {
-        auto ray3d = writer<Ray3D>();
-        ray3d.property("pt", &Ray3D::point);
-        ray3d.property("dir", &Ray3D::direction);
+        auto w = writer<Ray3D>();
+        w.property("pt", &Ray3D::point);
+        w.property("dir", &Ray3D::direction);
     }
 
     {
-        auto ray3f = writer<Ray3F>();
-        ray3f.property("pt", &Ray3F::point);
-        ray3f.property("dir", &Ray3F::direction);
+        auto w = writer<Ray3F>();
+        w.property("pt", &Ray3F::point);
+        w.property("dir", &Ray3F::direction);
     }
 
     {
-        auto ray4d = writer<Ray4D>();
-        ray4d.property("pt", &Ray4D::point);
-        ray4d.property("dir", &Ray4D::direction);
+        auto w = writer<Ray4D>();
+        w.property("pt", &Ray4D::point);
+        w.property("dir", &Ray4D::direction);
     }
 
     {
-        auto ray4f = writer<Ray4F>();
-        ray4f.property("pt", &Ray4F::point);
-        ray4f.property("dir", &Ray4F::direction);
+        auto w = writer<Ray4F>();
+        w.property("pt", &Ray4F::point);
+        w.property("dir", &Ray4F::direction);
     }
 
     {
@@ -1760,165 +1797,165 @@ static void reg_math () {
     }
 
     {
-        auto rect2d = writer<Rectangle2D>();
-        rect2d.property("pos", &Rectangle2D::position);
-        rect2d.property("size", &Rectangle2D::size);
+        auto w = writer<Rectangle2D>();
+        w.property("pos", &Rectangle2D::position);
+        w.property("size", &Rectangle2D::size);
     }
 
     {
-        auto rect2f = writer<Rectangle2F>();
-        rect2f.property("pos", &Rectangle2F::position);
-        rect2f.property("size", &Rectangle2F::size);
+        auto w = writer<Rectangle2F>();
+        w.property("pos", &Rectangle2F::position);
+        w.property("size", &Rectangle2F::size);
     }
 
     {
-        auto rect2i = writer<Rectangle2I>();
-        rect2i.property("pos", &Rectangle2I::position);
-        rect2i.property("size", &Rectangle2I::size);
+        auto w = writer<Rectangle2I>();
+        w.property("pos", &Rectangle2I::position);
+        w.property("size", &Rectangle2I::size);
     }
 
     {
-        auto rect2u = writer<Rectangle2U>();
-        rect2u.property("pos", &Rectangle2U::position);
-        rect2u.property("size", &Rectangle2U::size);
+        auto w = writer<Rectangle2U>();
+        w.property("pos", &Rectangle2U::position);
+        w.property("size", &Rectangle2U::size);
     }
 
     {
-        auto seg1d = writer<Segment1D>();
-        seg1d.property("a", &Segment1D::a);
-        seg1d.property("b", &Segment1D::b);
+        auto w = writer<Segment1D>();
+        w.property("a", &Segment1D::a);
+        w.property("b", &Segment1D::b);
     }
 
     {
-        auto seg1f = writer<Segment1F>();
-        seg1f.property("a", &Segment1F::a);
-        seg1f.property("b", &Segment1F::b);
+        auto w = writer<Segment1F>();
+        w.property("a", &Segment1F::a);
+        w.property("b", &Segment1F::b);
     }
 
     {
-        auto seg1i = writer<Segment1I>();
-        seg1i.property("a", &Segment1I::a);
-        seg1i.property("b", &Segment1I::b);
+        auto w = writer<Segment1I>();
+        w.property("a", &Segment1I::a);
+        w.property("b", &Segment1I::b);
     }
 
     {
-        auto seg1u = writer<Segment1U>();
-        seg1u.property("a", &Segment1U::a);
-        seg1u.property("b", &Segment1U::b);
+        auto w = writer<Segment1U>();
+        w.property("a", &Segment1U::a);
+        w.property("b", &Segment1U::b);
     }
 
     {
-        auto seg2d = writer<Segment2D>();
-        seg2d.property("a", &Segment2D::a);
-        seg2d.property("b", &Segment2D::b);
+        auto w = writer<Segment2D>();
+        w.property("a", &Segment2D::a);
+        w.property("b", &Segment2D::b);
     }
 
     {
-        auto seg2f = writer<Segment2F>();
-        seg2f.property("a", &Segment2F::a);
-        seg2f.property("b", &Segment2F::b);
+        auto w = writer<Segment2F>();
+        w.property("a", &Segment2F::a);
+        w.property("b", &Segment2F::b);
     }
 
     {
-        auto seg2i = writer<Segment2I>();
-        seg2i.property("a", &Segment2I::a);
-        seg2i.property("b", &Segment2I::b);
+        auto w = writer<Segment2I>();
+        w.property("a", &Segment2I::a);
+        w.property("b", &Segment2I::b);
     }
 
     {
-        auto seg2u = writer<Segment2U>();
-        seg2u.property("a", &Segment2U::a);
-        seg2u.property("b", &Segment2U::b);
+        auto w = writer<Segment2U>();
+        w.property("a", &Segment2U::a);
+        w.property("b", &Segment2U::b);
     }
 
     {
-        auto seg3d = writer<Segment3D>();
-        seg3d.property("a", &Segment3D::a);
-        seg3d.property("b", &Segment3D::b);
+        auto w = writer<Segment3D>();
+        w.property("a", &Segment3D::a);
+        w.property("b", &Segment3D::b);
     }
 
     {
-        auto seg3f = writer<Segment3F>();
-        seg3f.property("a", &Segment3F::a);
-        seg3f.property("b", &Segment3F::b);
+        auto w = writer<Segment3F>();
+        w.property("a", &Segment3F::a);
+        w.property("b", &Segment3F::b);
     }
 
     {
-        auto seg3i = writer<Segment3I>();
-        seg3i.property("a", &Segment3I::a);
-        seg3i.property("b", &Segment3I::b);
+        auto w = writer<Segment3I>();
+        w.property("a", &Segment3I::a);
+        w.property("b", &Segment3I::b);
     }
 
     {
-        auto seg3u = writer<Segment3U>();
-        seg3u.property("a", &Segment3U::a);
-        seg3u.property("b", &Segment3U::b);
+        auto w = writer<Segment3U>();
+        w.property("a", &Segment3U::a);
+        w.property("b", &Segment3U::b);
     }
 
     {
-        auto seg4d = writer<Segment4D>();
-        seg4d.property("a", &Segment4D::a);
-        seg4d.property("b", &Segment4D::b);
+        auto w = writer<Segment4D>();
+        w.property("a", &Segment4D::a);
+        w.property("b", &Segment4D::b);
     }
 
     {
-        auto seg4f = writer<Segment4F>();
-        seg4f.property("a", &Segment4F::a);
-        seg4f.property("b", &Segment4F::b);
+        auto w = writer<Segment4F>();
+        w.property("a", &Segment4F::a);
+        w.property("b", &Segment4F::b);
     }
 
     {
-        auto seg4i = writer<Segment4I>();
-        seg4i.property("a", &Segment4I::a);
-        seg4i.property("b", &Segment4I::b);
+        auto w = writer<Segment4I>();
+        w.property("a", &Segment4I::a);
+        w.property("b", &Segment4I::b);
     }
 
     {
-        auto seg4u = writer<Segment4U>();
-        seg4u.property("a", &Segment4U::a);
-        seg4u.property("b", &Segment4U::b);
+        auto w = writer<Segment4U>();
+        w.property("a", &Segment4U::a);
+        w.property("b", &Segment4U::b);
     }
 
     {
-        auto size2d = writer<Size2D>();
-        size2d.property(szX, &Size2D::x);
-        size2d.property(szY, &Size2D::y);
-        size2d.property(szW, &Size2D::width);
-        size2d.property("h", &Size2D::height);
+        auto w = writer<Size2D>();
+        w.property(szX, &Size2D::x);
+        w.property(szY, &Size2D::y);
+        w.property(szW, &Size2D::width);
+        w.property("h", &Size2D::height);
     }
 
     {
-        auto size2f = writer<Size2F>();
-        size2f.property(szX, &Size2F::x);
-        size2f.property(szY, &Size2F::y);
-        size2f.property(szW, &Size2F::width);
-        size2f.property("h", &Size2F::height);
+        auto w = writer<Size2F>();
+        w.property(szX, &Size2F::x);
+        w.property(szY, &Size2F::y);
+        w.property(szW, &Size2F::width);
+        w.property("h", &Size2F::height);
     }
 
     {
-        auto size2i = writer<Size2I>();
-        size2i.property(szX, &Size2I::x);
-        size2i.property(szY, &Size2I::y);
-        size2i.property(szW, &Size2I::width);
-        size2i.property("h", &Size2I::height);
+        auto w = writer<Size2I>();
+        w.property(szX, &Size2I::x);
+        w.property(szY, &Size2I::y);
+        w.property(szW, &Size2I::width);
+        w.property("h", &Size2I::height);
     }
 
     {
-        auto size2u = writer<Size2U>();
-        size2u.property(szX, &Size2U::x);
-        size2u.property(szY, &Size2U::y);
-        size2u.property(szW, &Size2U::width);
-        size2u.property("h", &Size2U::height);
+        auto w = writer<Size2U>();
+        w.property(szX, &Size2U::x);
+        w.property(szY, &Size2U::y);
+        w.property(szW, &Size2U::width);
+        w.property("h", &Size2U::height);
     }
 
     {
-        auto size3d = writer<Size3D>();
-        size3d.property(szX, &Size3D::x);
-        size3d.property(szY, &Size3D::y);
-        size3d.property(szZ, &Size3D::z);
-        size3d.property(szW, &Size3D::width);
-        size3d.property("h", &Size3D::height);
-        size3d.property("d", &Size3D::depth);
+        auto w = writer<Size3D>();
+        w.property(szX, &Size3D::x);
+        w.property(szY, &Size3D::y);
+        w.property(szZ, &Size3D::z);
+        w.property(szW, &Size3D::width);
+        w.property("h", &Size3D::height);
+        w.property("d", &Size3D::depth);
     }
 
     {
