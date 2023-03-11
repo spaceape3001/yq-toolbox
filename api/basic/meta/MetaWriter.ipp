@@ -21,10 +21,19 @@ namespace yq {
     Meta::Writer&     Meta::Writer::alias(std::string_view zAlias)
     {
         if(m_meta)
-            m_meta -> m_aliases << std::string_view(zAlias);
+            m_meta -> m_aliases << zAlias;
         return *this;
     }
     
+    Meta::Writer&     Meta::Writer::alias(std::initializer_list<std::string_view> zAlias)
+    {
+        if(m_meta){
+            for(std::string_view z : zAlias)
+                m_meta -> m_aliases << z;
+        }
+        return *this;
+    }
+
     Meta::Writer&     Meta::Writer::description(std::string_view zDescription)
     {
         if(m_meta)

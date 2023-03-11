@@ -28,6 +28,8 @@ namespace yq {
         */
         Writer&     alias(std::string_view zAlias);
 
+        Writer&     alias(std::initializer_list<std::string_view> zAlias);
+
         /*! \brief Sets a description
         
             This defines a description for the meta.  
