@@ -735,12 +735,21 @@ YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond²3D)
 //  Grammaer to below
 
 static constexpr const std::string_view     szA                         = "a";
+static constexpr const std::string_view     szA_Multivector             = "Scalar 'alpha' of the multivector";
+static constexpr const std::string_view     szA_Quadrilateral           = "First point 'A' of the quadrilateral";
+static constexpr const std::string_view     szA_Segment                 = "First point 'A' of the segment";
+static constexpr const std::string_view     szA_Tetrahedron             = "First point 'A' of the tetrahedron";
+static constexpr const std::string_view     szA_Triangle                = "First point 'A' of the triangle";
 static constexpr const std::string_view     szAlpha                     = "alpha";
 static constexpr const std::string_view     szAlpha_Color               = "Alpha channel of the color";
 static constexpr const std::string_view     szArea                      = "area";
 static constexpr const std::string_view     szArea_Box                  = "Area of the box";
 static constexpr const std::string_view     szArea_Circle               = "Area of the box";
 static constexpr const std::string_view     szB                         = "b";
+static constexpr const std::string_view     szB_Quadrilateral           = "Second point 'B' of the quadrilateral";
+static constexpr const std::string_view     szB_Segment                 = "Second point 'B' of the segment";
+static constexpr const std::string_view     szB_Tetrahedron             = "Second point 'B' of the tetrahedron";
+static constexpr const std::string_view     szB_Triangle                = "Second point 'B' of the triangle";
 static constexpr const std::string_view     szBlue                      = "blue";
 static constexpr const std::string_view     szBlue_Color                = "Blue channel of the color";
 static constexpr const std::string_view     szBox                       = "box";
@@ -753,6 +762,9 @@ static constexpr const std::string_view     szCircumcircle              = "circu
 static constexpr const std::string_view     szCircumcircle_Box          = "Circumcircle of the box";
 static constexpr const std::string_view     szCircumference             = "circumference";
 static constexpr const std::string_view     szCircumference_Circle      = "Circumference of the circle";
+static constexpr const std::string_view     szCnt                       = "cnt";
+static constexpr const std::string_view     szCount                     = "count";
+static constexpr const std::string_view     szCount_Count               = "Count of the counter";
 static constexpr const std::string_view     szContains                  = "contains";
 static constexpr const std::string_view     szContains_Box_Box          = "Tests if other box is inside/touching this box";
 static constexpr const std::string_view     szContains_Box_Pt           = "Tests if point is inside/touching the box";
@@ -774,6 +786,7 @@ static constexpr const std::string_view     szEclipses_Box_Pt           = "Tests
 static constexpr const std::string_view     szG                         = "g";
 static constexpr const std::string_view     szGreen                     = "green";
 static constexpr const std::string_view     szGreen_Color               = "Green channel of the color";
+static constexpr const std::string_view     szH                         = "h";
 static constexpr const std::string_view     szHigh                      = "hi";
 static constexpr const std::string_view     szHigh_Box                  = "High-corner of the box";
 static constexpr const std::string_view     szHigh_Range                = "High-value of the range";
@@ -783,9 +796,9 @@ static constexpr const std::string_view     szHVol                      = "hvol"
 static constexpr const std::string_view     szI                         = "i";
 static constexpr const std::string_view     szI_Coord                   = "I-component of the coordinate";
 static constexpr const std::string_view     szIm                        = "im";
-static constexpr const std::string_view     szIm_Complex                = "Imaginary component of the complex number";
 static constexpr const std::string_view     szImag                      = "imag";
-static constexpr const std::string_view     szImag_Complex              = "Imaginary component of the complex number";
+static constexpr const std::string_view     szImaginary                 = "imaginary";
+static constexpr const std::string_view     szImaginary_Complex         = "Imaginary component of the complex number";
 static constexpr const std::string_view     szIncircle                  = "incircle";
 static constexpr const std::string_view     szIncircle_Box              = "Incircle of the box";
 static constexpr const std::string_view     szJ                         = "j";
@@ -803,7 +816,8 @@ static constexpr const std::string_view     szLow_Box                   = "Low-c
 static constexpr const std::string_view     szLow_Range                 = "Low-value of the range";
 static constexpr const std::string_view     szM                         = "m";
 static constexpr const std::string_view     szMag                       = "mag";
-static constexpr const std::string_view     szMag_Complex               = "Magnitude of the complex number";
+static constexpr const std::string_view     szMagnitude                 = "magnitude";
+static constexpr const std::string_view     szMagnitude_Complex         = "Magnitude of the complex number";
 static constexpr const std::string_view     szN                         = "n";
 static constexpr const std::string_view     szNE                        = "ne";
 static constexpr const std::string_view     szNortheast                 = "northeast";
@@ -824,7 +838,6 @@ static constexpr const std::string_view     szR                         = "r";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
 static constexpr const std::string_view     szRe                        = "re";
-static constexpr const std::string_view     szRe_Complex                = "Real component of the complex number";
 static constexpr const std::string_view     szReal                      = "real";
 static constexpr const std::string_view     szReal_Complex              = "Real component of the comolex number";
 static constexpr const std::string_view     szRed                       = "red";
@@ -854,6 +867,7 @@ static constexpr const std::string_view     szW_Vector                  = "W com
 static constexpr const std::string_view     szWW                        = "ww";
 static constexpr const std::string_view     szWW_Tensor                 = "WW component of the tensor";
 static constexpr const std::string_view     szWX                        = "wx";
+static constexpr const std::string_view     szWX_Bivector               = "WX component of the bivector";
 static constexpr const std::string_view     szWX_Tensor                 = "WX component of the tensor";
 static constexpr const std::string_view     szWY                        = "wy";
 static constexpr const std::string_view     szWY_Tensor                 = "WY component of the tensor";
@@ -861,6 +875,7 @@ static constexpr const std::string_view     szWZ                        = "wz";
 static constexpr const std::string_view     szWZ_Tensor                 = "WZ component of the tensor";
 static constexpr const std::string_view     szX                         = "x";
 static constexpr const std::string_view     szX_Box                     = "X range of the box";
+static constexpr const std::string_view     szX_Multivector             = "X component of the multivector";
 static constexpr const std::string_view     szX_Vector                  = "X component of the vector";
 static constexpr const std::string_view     szXW                        = "xw";
 static constexpr const std::string_view     szXW_Tensor                 = "XW component of the tensor";
@@ -870,25 +885,31 @@ static constexpr const std::string_view     szXY                        = "xy";
 static constexpr const std::string_view     szXY_Bivector               = "XY component of the bivector";
 static constexpr const std::string_view     szXY_Tensor                 = "XY component of the tensor";
 static constexpr const std::string_view     szXZ                        = "xz";
+static constexpr const std::string_view     szXZ_Bivector               = "XZ component of the bivector";
 static constexpr const std::string_view     szXZ_Tensor                 = "XZ component of the tensor";
 static constexpr const std::string_view     szY                         = "y";
 static constexpr const std::string_view     szY_Box                     = "Y range of the box";
 static constexpr const std::string_view     szY_Vector                  = "Y component of the vector";
 static constexpr const std::string_view     szYW                        = "yw";
+static constexpr const std::string_view     szYW_Bivector               = "YW component of the bivector";
 static constexpr const std::string_view     szYW_Tensor                 = "YW component of the tensor";
 static constexpr const std::string_view     szYX                        = "yx";
+static constexpr const std::string_view     szYX_Bivector               = "YX component of the bivector";
 static constexpr const std::string_view     szYX_Tensor                 = "YX component of the tensor";
 static constexpr const std::string_view     szYY                        = "yy";
 static constexpr const std::string_view     szYY_Tensor                 = "YY component of the tensor";
 static constexpr const std::string_view     szYZ                        = "yz";
+static constexpr const std::string_view     szYZ_Bivector               = "YZ component of the bivector";
 static constexpr const std::string_view     szYZ_Tensor                 = "YZ component of the tensor";
 static constexpr const std::string_view     szZ                         = "z";
 static constexpr const std::string_view     szZ_Box                     = "Z range of the box";
 static constexpr const std::string_view     szZ_Vector                  = "Z component of the vector";
 static constexpr const std::string_view     szZ_Vector2                 = "Promotes to Vector3 with a z-value";
 static constexpr const std::string_view     szZW                        = "zw";
+static constexpr const std::string_view     szZW_Bivector               = "ZW component of the bivector";
 static constexpr const std::string_view     szZW_Tensor                 = "ZW component of the tensor";
 static constexpr const std::string_view     szZX                        = "zx";
+static constexpr const std::string_view     szZX_Bivector               = "ZX component of the bivectory";
 static constexpr const std::string_view     szZX_Tensor                 = "ZX component of the tensor";
 static constexpr const std::string_view     szZY                        = "zy";
 static constexpr const std::string_view     szZY_Tensor                 = "ZY component of the tensor";
@@ -1243,35 +1264,35 @@ static void reg_math () {
     {
         auto bivec3d = writer<Bivector3D>();
         bivec3d.property(szXY, &Bivector3D::xy).description(szXY_Bivector);
-        bivec3d.property(szYZ, &Bivector3D::yz);
-        bivec3d.property(szZX, &Bivector3D::zx);
+        bivec3d.property(szYZ, &Bivector3D::yz).description(szYZ_Bivector);
+        bivec3d.property(szZX, &Bivector3D::zx).description(szZX_Bivector);
     }
 
     {
         auto bivec3f = writer<Bivector3F>();
         bivec3f.property(szXY, &Bivector3F::xy).description(szXY_Bivector);
-        bivec3f.property(szYZ, &Bivector3F::yz);
-        bivec3f.property(szZX, &Bivector3F::zx);
+        bivec3f.property(szYZ, &Bivector3F::yz).description(szYZ_Bivector);
+        bivec3f.property(szZX, &Bivector3F::zx).description(szZX_Bivector);
     }
 
     {
         auto bivec4d = writer<Bivector4D>();
         bivec4d.property(szXY, &Bivector4D::xy).description(szXY_Bivector);
-        bivec4d.property(szYZ, &Bivector4D::yz);
-        bivec4d.property(szZW, &Bivector4D::zw);
-        bivec4d.property(szWX, &Bivector4D::wx);
-        bivec4d.property(szXZ, &Bivector4D::xz);
-        bivec4d.property(szYW, &Bivector4D::yw);
+        bivec4d.property(szYZ, &Bivector4D::yz).description(szYZ_Bivector);
+        bivec4d.property(szZW, &Bivector4D::zw).description(szZW_Bivector);
+        bivec4d.property(szWX, &Bivector4D::wx).description(szWX_Bivector);
+        bivec4d.property(szXZ, &Bivector4D::xz).description(szXZ_Bivector);
+        bivec4d.property(szYW, &Bivector4D::yw).description(szYW_Bivector);
     }
 
     {
         auto bivec4f = writer<Bivector4F>();
         bivec4f.property(szXY, &Bivector4F::xy).description(szXY_Bivector);
-        bivec4f.property(szYZ, &Bivector4F::yz);
-        bivec4f.property(szZW, &Bivector4F::zw);
-        bivec4f.property(szWX, &Bivector4F::wx);
-        bivec4f.property(szXZ, &Bivector4F::xz);
-        bivec4f.property(szYW, &Bivector4F::yw);
+        bivec4f.property(szYZ, &Bivector4F::yz).description(szYZ_Bivector);
+        bivec4f.property(szZW, &Bivector4F::zw).description(szZW_Bivector);
+        bivec4f.property(szWX, &Bivector4F::wx).description(szWX_Bivector);
+        bivec4f.property(szXZ, &Bivector4F::xz).description(szXZ_Bivector);
+        bivec4f.property(szYW, &Bivector4F::yw).description(szYW_Bivector);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1320,35 +1341,54 @@ static void reg_math () {
         w.property(szRadius, &Circle2U::radius).description(szRadius_Circle).alias(szR);
         w.property(szValid, &Circle2U::valid).description(szValid_Circle);
     }
-    
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Complex Numbers
+    
     {
         auto w = writer<ComplexD>();
-        w.property(szRe, &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real).description(szRe_Complex);
-        w.property(szIm, &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag).description(szIm_Complex);
-        w.property(szMag, magnitude_complexD).description(szMag_Complex);
+        w.property(szReal, &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real)
+            .description(szReal_Complex)
+            .alias({szRe, szR});
+        w.property(szImaginary, &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag)
+            .description(szImaginary_Complex)
+            .alias({szImag, szIm, szI});
+        w.property(szMagnitude, magnitude_complexD).description(szMagnitude_Complex).alias(szMag);
     }
 
     {
         auto w = writer<ComplexF>();
-        w.property(szRe, (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real).description(szRe_Complex);
-        w.property(szIm, (float (ComplexF::*)() const) &ComplexF::imag).setter((void(ComplexF::*)(float)) &ComplexF::imag).description(szIm_Complex);
-        w.property(szMag, magnitude_complexF).description(szMag_Complex);
+        w.property(szReal, (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real)
+            .description(szReal_Complex)
+            .alias({ szRe, szR });
+        w.property(szImaginary, (float (ComplexF::*)() const) &ComplexF::imag).setter((void(ComplexF::*)(float)) &ComplexF::imag)
+            .description(szImaginary_Complex)
+            .alias({szImag, szIm, szI});
+        w.property(szMagnitude, magnitude_complexF).description(szMagnitude_Complex).alias(szMag);
     }
 
     {
         auto w = writer<ComplexI>();
-        w.property(szRe, (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real).description(szRe_Complex);
-        w.property(szIm, (int (ComplexI::*)() const) &ComplexI::imag).setter((void(ComplexI::*)(int)) &ComplexI::imag).description(szIm_Complex);
+        w.property(szReal, (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real)
+            .description(szReal_Complex)
+            .alias({szRe, szR});
+        w.property(szImaginary, (int (ComplexI::*)() const) &ComplexI::imag).setter((void(ComplexI::*)(int)) &ComplexI::imag)
+            .description(szImaginary_Complex)
+            .alias({szImag, szIm, szI});
     }
 
     {
         auto w = writer<ComplexU>();
-        w.property(szRe, (unsigned (ComplexU::*)() const) &ComplexU::real).setter((void(ComplexU::*)(unsigned)) &ComplexU::real).description(szRe_Complex);
-        w.property(szIm, (unsigned (ComplexU::*)() const) &ComplexU::imag).setter((void(ComplexU::*)(unsigned)) &ComplexU::imag).description(szIm_Complex);
+        w.property(szReal, (unsigned (ComplexU::*)() const) &ComplexU::real).setter((void(ComplexU::*)(unsigned)) &ComplexU::real)
+            .description(szReal_Complex)
+            .alias({szRe, szR});
+        w.property(szImaginary, (unsigned (ComplexU::*)() const) &ComplexU::imag).setter((void(ComplexU::*)(unsigned)) &ComplexU::imag)
+            .description(szImaginary_Complex)
+            .alias({szImag, szIm, szI});
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Coordinates
 
     {
         auto w = writer<Coord2D>();
@@ -1374,44 +1414,47 @@ static void reg_math () {
         w.property(szJ, &Coord2U::j).description(szJ_Coord);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     {
         auto w   = writer<CountI8>();
-        w.property("cnt", &CountI8::cnt);
+        w.property(szCount, &CountI8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountI16>();
-        w.property("cnt", &CountI16::cnt);
+        w.property(szCount, &CountI16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountI32>();
-        w.property("cnt", &CountI32::cnt);
+        w.property(szCount, &CountI32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountI64>();
-        w.property("cnt", &CountI64::cnt);
+        w.property(szCount, &CountI64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU8>();
-        w.property("cnt", &CountU8::cnt);
+        w.property(szCount, &CountU8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU16>();
-        w.property("cnt", &CountU16::cnt);
+        w.property(szCount, &CountU16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU32>();
-        w.property("cnt", &CountU32::cnt);
+        w.property(szCount, &CountU32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU64>();
-        w.property("cnt", &CountU64::cnt);
+        w.property(szCount, &CountU64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
@@ -1436,96 +1479,101 @@ static void reg_math () {
 
     {
         auto w   = writer<HCountI8>();
-        w.property("cnt", &HCountI8::cnt);
+        w.property(szCount, &HCountI8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountI16>();
-        w.property("cnt", &HCountI16::cnt);
+        w.property(szCount, &HCountI16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountI32>();
-        w.property("cnt", &HCountI32::cnt);
+        w.property(szCount, &HCountI32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountI64>();
-        w.property("cnt", &HCountI64::cnt);
+        w.property(szCount, &HCountI64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU8>();
-        w.property("cnt", &HCountU8::cnt);
+        w.property(szCount, &HCountU8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU16>();
-        w.property("cnt", &HCountU16::cnt);
+        w.property(szCount, &HCountU16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU32>();
-        w.property("cnt", &HCountU32::cnt);
+        w.property(szCount, &HCountU32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU64>();
-        w.property("cnt", &HCountU64::cnt);
+        w.property(szCount, &HCountU64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI8>();
-        w.property("cnt", &LCountI8::cnt);
+        w.property(szCount, &LCountI8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI16>();
-        w.property("cnt", &LCountI16::cnt);
+        w.property(szCount, &LCountI16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI32>();
-        w.property("cnt", &LCountI32::cnt);
+        w.property(szCount, &LCountI32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI64>();
-        w.property("cnt", &LCountI64::cnt);
+        w.property(szCount, &LCountI64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w  = writer<Multivector1D>();
-        w.property("a", &Multivector1D::a);
-        w.property(szX, &Multivector1D::x);
+        w.description("1D Multivector in double");
+        w.property(szA, &Multivector1D::a).description(szA_Multivector);
+        w.property(szX, &Multivector1D::x).description(szX_Multivector);
     }
 
     {
         auto w  = writer<Multivector1F>();
-        w.property("a", &Multivector1F::a);
-        w.property(szX, &Multivector1F::x);
+        w.description("1D Multivector in float");
+        w.property(szA, &Multivector1F::a).description(szA_Multivector);
+        w.property(szX, &Multivector1F::x).description(szX_Multivector);
     }
 
     {
         auto w  = writer<Multivector2D>();
-        w.property("a", &Multivector2D::a);
-        w.property(szX, &Multivector2D::x);
+        w.description("2D Multivector in double");
+        w.property(szA, &Multivector2D::a).description(szA_Multivector);
+        w.property(szX, &Multivector2D::x).description(szX_Multivector);
         w.property(szY, &Multivector2D::y);
         w.property(szXY, &Multivector2D::xy);
     }
 
     {
         auto w  = writer<Multivector2F>();
-        w.property("a", &Multivector2F::a);
-        w.property(szX, &Multivector2F::x);
+        w.description("2D Multivector in float");
+        w.property(szA, &Multivector2F::a).description(szA_Multivector);
+        w.property(szX, &Multivector2F::x).description(szX_Multivector);
         w.property(szY, &Multivector2F::y);
         w.property(szXY, &Multivector2F::xy);
     }
 
     {
         auto w  = writer<Multivector3D>();
-        w.property("a", &Multivector3D::a);
-        w.property(szX, &Multivector3D::x);
+        w.description("3D Multivector in double");
+        w.property(szA, &Multivector3D::a).description(szA_Multivector);
+        w.property(szX, &Multivector3D::x).description(szX_Multivector);
         w.property(szY, &Multivector3D::y);
         w.property(szZ, &Multivector3D::z);
         w.property(szXY, &Multivector3D::xy);
@@ -1536,8 +1584,9 @@ static void reg_math () {
 
     {
         auto w  = writer<Multivector3F>();
-        w.property("a", &Multivector3F::a);
-        w.property(szX, &Multivector3F::x);
+        w.description("3D Multivector in float");
+        w.property(szA, &Multivector3F::a).description(szA_Multivector);
+        w.property(szX, &Multivector3F::x).description(szX_Multivector);
         w.property(szY, &Multivector3F::y);
         w.property(szZ, &Multivector3F::z);
         w.property(szXY, &Multivector3F::xy);
@@ -1548,8 +1597,9 @@ static void reg_math () {
 
     {
         auto w  = writer<Multivector4D>();
-        w.property("a", &Multivector4D::a);
-        w.property(szX, &Multivector4D::x);
+        w.description("4D Multivector in double");
+        w.property(szA, &Multivector4D::a).description(szA_Multivector);
+        w.property(szX, &Multivector4D::x).description(szX_Multivector);
         w.property(szY, &Multivector4D::y);
         w.property(szZ, &Multivector4D::z);
         w.property(szW, &Multivector4D::w);
@@ -1568,8 +1618,9 @@ static void reg_math () {
 
     {
         auto w  = writer<Multivector4F>();
-        w.property("a", &Multivector4F::a);
-        w.property(szX, &Multivector4F::x);
+        w.description("4D Multivector in float");
+        w.property(szA, &Multivector4F::a).description(szA_Multivector);
+        w.property(szX, &Multivector4F::x).description(szX_Multivector);
         w.property(szY, &Multivector4F::y);
         w.property(szZ, &Multivector4F::z);
         w.property(szW, &Multivector4F::w);
@@ -1620,34 +1671,34 @@ static void reg_math () {
 
     {
         auto w = writer<Quadrilateral2D>();
-        w.property("a", &Quadrilateral2D::a);
-        w.property("b", &Quadrilateral2D::b);
-        w.property("c", &Quadrilateral2D::c);
-        w.property("d", &Quadrilateral2D::d);
+        w.property(szA, &Quadrilateral2D::a).description(szA_Quadrilateral);
+        w.property(szB, &Quadrilateral2D::b).description(szB_Quadrilateral);
+        w.property(szC, &Quadrilateral2D::c);
+        w.property(szD, &Quadrilateral2D::d);
     }
 
     {
         auto w = writer<Quadrilateral2F>();
-        w.property("a", &Quadrilateral2F::a);
-        w.property("b", &Quadrilateral2F::b);
-        w.property("c", &Quadrilateral2F::c);
-        w.property("d", &Quadrilateral2F::d);
+        w.property(szA, &Quadrilateral2F::a).description(szA_Quadrilateral);
+        w.property(szB, &Quadrilateral2F::b).description(szB_Quadrilateral);
+        w.property(szC, &Quadrilateral2F::c);
+        w.property(szD, &Quadrilateral2F::d);
     }
 
     {
         auto w = writer<Quadrilateral2I>();
-        w.property("a", &Quadrilateral2I::a);
-        w.property("b", &Quadrilateral2I::b);
-        w.property("c", &Quadrilateral2I::c);
-        w.property("d", &Quadrilateral2I::d);
+        w.property(szA, &Quadrilateral2I::a).description(szA_Quadrilateral);
+        w.property(szB, &Quadrilateral2I::b).description(szB_Quadrilateral);
+        w.property(szC, &Quadrilateral2I::c);
+        w.property(szD, &Quadrilateral2I::d);
     }
 
     {
         auto w = writer<Quadrilateral2U>();
-        w.property("a", &Quadrilateral2U::a);
-        w.property("b", &Quadrilateral2U::b);
-        w.property("c", &Quadrilateral2U::c);
-        w.property("d", &Quadrilateral2U::d);
+        w.property(szA, &Quadrilateral2U::a).description(szA_Quadrilateral);
+        w.property(szB, &Quadrilateral2U::b).description(szB_Quadrilateral);
+        w.property(szC, &Quadrilateral2U::c);
+        w.property(szD, &Quadrilateral2U::d);
     }
 
     {
@@ -1822,98 +1873,98 @@ static void reg_math () {
 
     {
         auto w = writer<Segment1D>();
-        w.property("a", &Segment1D::a);
-        w.property("b", &Segment1D::b);
+        w.property(szA, &Segment1D::a).description(szA_Segment);
+        w.property(szB, &Segment1D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment1F>();
-        w.property("a", &Segment1F::a);
-        w.property("b", &Segment1F::b);
+        w.property(szA, &Segment1F::a).description(szA_Segment);
+        w.property(szB, &Segment1F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment1I>();
-        w.property("a", &Segment1I::a);
-        w.property("b", &Segment1I::b);
+        w.property(szA, &Segment1I::a).description(szA_Segment);
+        w.property(szB, &Segment1I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment1U>();
-        w.property("a", &Segment1U::a);
-        w.property("b", &Segment1U::b);
+        w.property(szA, &Segment1U::a).description(szA_Segment);
+        w.property(szB, &Segment1U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2D>();
-        w.property("a", &Segment2D::a);
-        w.property("b", &Segment2D::b);
+        w.property(szA, &Segment2D::a).description(szA_Segment);
+        w.property(szB, &Segment2D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2F>();
-        w.property("a", &Segment2F::a);
-        w.property("b", &Segment2F::b);
+        w.property(szA, &Segment2F::a).description(szA_Segment);
+        w.property(szB, &Segment2F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2I>();
-        w.property("a", &Segment2I::a);
-        w.property("b", &Segment2I::b);
+        w.property(szA, &Segment2I::a).description(szA_Segment);
+        w.property(szB, &Segment2I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2U>();
-        w.property("a", &Segment2U::a);
-        w.property("b", &Segment2U::b);
+        w.property(szA, &Segment2U::a).description(szA_Segment);
+        w.property(szB, &Segment2U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3D>();
-        w.property("a", &Segment3D::a);
-        w.property("b", &Segment3D::b);
+        w.property(szA, &Segment3D::a).description(szA_Segment);
+        w.property(szB, &Segment3D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3F>();
-        w.property("a", &Segment3F::a);
-        w.property("b", &Segment3F::b);
+        w.property(szA, &Segment3F::a).description(szA_Segment);
+        w.property(szB, &Segment3F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3I>();
-        w.property("a", &Segment3I::a);
-        w.property("b", &Segment3I::b);
+        w.property(szA, &Segment3I::a).description(szA_Segment);
+        w.property(szB, &Segment3I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3U>();
-        w.property("a", &Segment3U::a);
-        w.property("b", &Segment3U::b);
+        w.property(szA, &Segment3U::a).description(szA_Segment);
+        w.property(szB, &Segment3U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4D>();
-        w.property("a", &Segment4D::a);
-        w.property("b", &Segment4D::b);
+        w.property(szA, &Segment4D::a).description(szA_Segment);
+        w.property(szB, &Segment4D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4F>();
-        w.property("a", &Segment4F::a);
-        w.property("b", &Segment4F::b);
+        w.property(szA, &Segment4F::a).description(szA_Segment);
+        w.property(szB, &Segment4F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4I>();
-        w.property("a", &Segment4I::a);
-        w.property("b", &Segment4I::b);
+        w.property(szA, &Segment4I::a).description(szA_Segment);
+        w.property(szB, &Segment4I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4U>();
-        w.property("a", &Segment4U::a);
-        w.property("b", &Segment4U::b);
+        w.property(szA, &Segment4U::a).description(szA_Segment);
+        w.property(szB, &Segment4U::b).description(szB_Segment);
     }
 
     {
@@ -2694,116 +2745,116 @@ static void reg_math () {
 
     {
         auto tetrahedron3d = writer<Tetrahedron3D>();
-        tetrahedron3d.property("a", &Tetrahedron3D::a);
-        tetrahedron3d.property("b", &Tetrahedron3D::b);
-        tetrahedron3d.property("c", &Tetrahedron3D::c);
-        tetrahedron3d.property("d", &Tetrahedron3D::d);
+        tetrahedron3d.property(szA, &Tetrahedron3D::a).description(szA_Tetrahedron);
+        tetrahedron3d.property(szB, &Tetrahedron3D::b).description(szB_Tetrahedron);
+        tetrahedron3d.property(szC, &Tetrahedron3D::c);
+        tetrahedron3d.property(szD, &Tetrahedron3D::d);
     }
 
     {
         auto tetrahedron3f = writer<Tetrahedron3F>();
-        tetrahedron3f.property("a", &Tetrahedron3F::a);
-        tetrahedron3f.property("b", &Tetrahedron3F::b);
-        tetrahedron3f.property("c", &Tetrahedron3F::c);
-        tetrahedron3f.property("d", &Tetrahedron3F::d);
+        tetrahedron3f.property(szA, &Tetrahedron3F::a).description(szA_Tetrahedron);
+        tetrahedron3f.property(szB, &Tetrahedron3F::b).description(szB_Tetrahedron);
+        tetrahedron3f.property(szC, &Tetrahedron3F::c);
+        tetrahedron3f.property(szD, &Tetrahedron3F::d);
     }
 
     {
         auto tetrahedron3i = writer<Tetrahedron3I>();
-        tetrahedron3i.property("a", &Tetrahedron3I::a);
-        tetrahedron3i.property("b", &Tetrahedron3I::b);
-        tetrahedron3i.property("c", &Tetrahedron3I::c);
-        tetrahedron3i.property("d", &Tetrahedron3I::d);
+        tetrahedron3i.property(szA, &Tetrahedron3I::a).description(szA_Tetrahedron);
+        tetrahedron3i.property(szB, &Tetrahedron3I::b).description(szB_Tetrahedron);
+        tetrahedron3i.property(szC, &Tetrahedron3I::c);
+        tetrahedron3i.property(szD, &Tetrahedron3I::d);
 
         auto tetrahedron3u = writer<Tetrahedron3U>();
-        tetrahedron3u.property("a", &Tetrahedron3U::a);
-        tetrahedron3u.property("b", &Tetrahedron3U::b);
-        tetrahedron3u.property("c", &Tetrahedron3U::c);
-        tetrahedron3u.property("d", &Tetrahedron3U::d);
+        tetrahedron3u.property(szA, &Tetrahedron3U::a).description(szA_Tetrahedron);
+        tetrahedron3u.property(szB, &Tetrahedron3U::b).description(szB_Tetrahedron);
+        tetrahedron3u.property(szC, &Tetrahedron3U::c);
+        tetrahedron3u.property(szD, &Tetrahedron3U::d);
     }
 
     {
         auto triangle2d = writer<Triangle2D>();
-        triangle2d.property("a", &Triangle2D::a);
-        triangle2d.property("b", &Triangle2D::b);
-        triangle2d.property("c", &Triangle2D::c);
+        triangle2d.property(szA, &Triangle2D::a).description(szA_Triangle);
+        triangle2d.property(szB, &Triangle2D::b).description(szB_Triangle);
+        triangle2d.property(szC, &Triangle2D::c);
     }
 
     {
         auto triangle2f = writer<Triangle2F>();
-        triangle2f.property("a", &Triangle2F::a);
-        triangle2f.property("b", &Triangle2F::b);
-        triangle2f.property("c", &Triangle2F::c);
+        triangle2f.property(szA, &Triangle2F::a).description(szA_Triangle);
+        triangle2f.property(szB, &Triangle2F::b).description(szB_Triangle);
+        triangle2f.property(szC, &Triangle2F::c);
     }
 
     {
         auto triangle2i = writer<Triangle2I>();
-        triangle2i.property("a", &Triangle2I::a);
-        triangle2i.property("b", &Triangle2I::b);
-        triangle2i.property("c", &Triangle2I::c);
+        triangle2i.property(szA, &Triangle2I::a).description(szA_Triangle);
+        triangle2i.property(szB, &Triangle2I::b).description(szB_Triangle);
+        triangle2i.property(szC, &Triangle2I::c);
     }
 
     {
         auto triangle2u = writer<Triangle2U>();
-        triangle2u.property("a", &Triangle2U::a);
-        triangle2u.property("b", &Triangle2U::b);
-        triangle2u.property("c", &Triangle2U::c);
+        triangle2u.property(szA, &Triangle2U::a).description(szA_Triangle);
+        triangle2u.property(szB, &Triangle2U::b).description(szB_Triangle);
+        triangle2u.property(szC, &Triangle2U::c);
     }
 
     {
         auto triangle3d = writer<Triangle3D>();
-        triangle3d.property("a", &Triangle3D::a);
-        triangle3d.property("b", &Triangle3D::b);
-        triangle3d.property("c", &Triangle3D::c);
+        triangle3d.property(szA, &Triangle3D::a).description(szA_Triangle);
+        triangle3d.property(szB, &Triangle3D::b).description(szB_Triangle);
+        triangle3d.property(szC, &Triangle3D::c);
     }
 
     {
         auto triangle3f = writer<Triangle3F>();
-        triangle3f.property("a", &Triangle3F::a);
-        triangle3f.property("b", &Triangle3F::b);
-        triangle3f.property("c", &Triangle3F::c);
+        triangle3f.property(szA, &Triangle3F::a).description(szA_Triangle);
+        triangle3f.property(szB, &Triangle3F::b).description(szB_Triangle);
+        triangle3f.property(szC, &Triangle3F::c);
     }
 
     {
         auto triangle3i = writer<Triangle3I>();
-        triangle3i.property("a", &Triangle3I::a);
-        triangle3i.property("b", &Triangle3I::b);
-        triangle3i.property("c", &Triangle3I::c);
+        triangle3i.property(szA, &Triangle3I::a).description(szA_Triangle);
+        triangle3i.property(szB, &Triangle3I::b).description(szB_Triangle);
+        triangle3i.property(szC, &Triangle3I::c);
     }
 
     {
         auto triangle3u = writer<Triangle3U>();
-        triangle3u.property("a", &Triangle3U::a);
-        triangle3u.property("b", &Triangle3U::b);
-        triangle3u.property("c", &Triangle3U::c);
+        triangle3u.property(szA, &Triangle3U::a).description(szA_Triangle);
+        triangle3u.property(szB, &Triangle3U::b).description(szB_Triangle);
+        triangle3u.property(szC, &Triangle3U::c);
     }
 
     {
         auto triangle4d = writer<Triangle4D>();
-        triangle4d.property("a", &Triangle4D::a);
-        triangle4d.property("b", &Triangle4D::b);
-        triangle4d.property("c", &Triangle4D::c);
+        triangle4d.property(szA, &Triangle4D::a).description(szA_Triangle);
+        triangle4d.property(szB, &Triangle4D::b).description(szB_Triangle);
+        triangle4d.property(szC, &Triangle4D::c);
     }
 
     {
         auto triangle4f = writer<Triangle4F>();
-        triangle4f.property("a", &Triangle4F::a);
-        triangle4f.property("b", &Triangle4F::b);
-        triangle4f.property("c", &Triangle4F::c);
+        triangle4f.property(szA, &Triangle4F::a).description(szA_Triangle);
+        triangle4f.property(szB, &Triangle4F::b).description(szB_Triangle);
+        triangle4f.property(szC, &Triangle4F::c);
     }
 
     {
         auto triangle4i = writer<Triangle4I>();
-        triangle4i.property("a", &Triangle4I::a);
-        triangle4i.property("b", &Triangle4I::b);
-        triangle4i.property("c", &Triangle4I::c);
+        triangle4i.property(szA, &Triangle4I::a).description(szA_Triangle);
+        triangle4i.property(szB, &Triangle4I::b).description(szB_Triangle);
+        triangle4i.property(szC, &Triangle4I::c);
     }
 
     {
         auto triangle4u = writer<Triangle4U>();
-        triangle4u.property("a", &Triangle4U::a);
-        triangle4u.property("b", &Triangle4U::b);
-        triangle4u.property("c", &Triangle4U::c);
+        triangle4u.property(szA, &Triangle4U::a).description(szA_Triangle);
+        triangle4u.property(szB, &Triangle4U::b).description(szB_Triangle);
+        triangle4u.property(szC, &Triangle4U::c);
     }
 
     {
