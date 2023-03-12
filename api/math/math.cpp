@@ -770,6 +770,9 @@ static constexpr const std::string_view     szContains_Box_Box          = "Tests
 static constexpr const std::string_view     szContains_Box_Pt           = "Tests if point is inside/touching the box";
 static constexpr const std::string_view     szCtr                       = "ctr";
 static constexpr const std::string_view     szD                         = "d";
+static constexpr const std::string_view     szDen                       = "den";
+static constexpr const std::string_view     szDenominator               = "denominator";
+static constexpr const std::string_view     szDenominator_Fraction      = "Denominator of the fraction";
 static constexpr const std::string_view     szDia                       = "dia";
 static constexpr const std::string_view     szDiameter                  = "diameter";
 static constexpr const std::string_view     szDiameter_Circle           = "Diameter of the circle";
@@ -824,6 +827,9 @@ static constexpr const std::string_view     szNortheast                 = "north
 static constexpr const std::string_view     szNortheast_Box             = "North-east corner of the box";
 static constexpr const std::string_view     szNorthwest                 = "northwest";
 static constexpr const std::string_view     szNorthwest_Box             = "North-west corner of the box";
+static constexpr const std::string_view     szNum                       = "num";
+static constexpr const std::string_view     szNumerator                 = "numerator";
+static constexpr const std::string_view     szNumerator_Fraction        = "Numerator of the fraction";
 static constexpr const std::string_view     szNW                        = "nw";
 static constexpr const std::string_view     szOverlaps                  = "overlaps";
 static constexpr const std::string_view     szOverlaps_Box_Box          = "Tests if other box overlaps this box";
@@ -949,6 +955,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1D>();
+        w.description("1D Axially Aligned Bounding Box in double");
         w.property(szCenter, &AxBox1D::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox1D::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox1D::hi).description(szHigh_Box);
@@ -964,6 +971,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1F>();
+        w.description("1D Axially Aligned Bounding Box in float");
         w.property(szCenter, &AxBox1F::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox1F::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox1F::hi).description(szHigh_Box);
@@ -979,6 +987,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1I>();
+        w.description("1D Axially Aligned Bounding Box in integer");
         w.property(szCenter, &AxBox1I::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox1I::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox1I::hi).description(szHigh_Box);
@@ -992,6 +1001,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox1U>();
+        w.description("1D Axially Aligned Bounding Box in unsigned integers");
         w.property(szCenter, &AxBox1U::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox1U::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox1U::lo).description(szLow_Box);
@@ -1008,6 +1018,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox2D>();
+        w.description("2D Axially Aligned Bounding Box in double");
         w.property(szArea, &AxBox2D::area).description(szArea_Box);
         w.property(szCenter, &AxBox2D::center).description(szCenter_Box).alias(szCtr);
         w.property(szCircumcircle, &AxBox2D::circumcircle).description(szCircumcircle);
@@ -1033,6 +1044,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox2F>();
+        w.description("2D Axially Aligned Bounding Box in float");
         w.property(szArea, &AxBox2F::area).description(szArea_Box);
         w.property(szCenter, &AxBox2F::center).description(szCenter_Box).alias(szCtr);
         w.property(szCircumcircle, &AxBox2F::circumcircle).description(szCircumcircle);
@@ -1058,6 +1070,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox2I>();
+        w.description("2D Axially Aligned Bounding Box in integer");
         w.property(szArea, &AxBox2I::area).description(szArea_Box);
         w.property(szCenter, &AxBox2I::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox2I::span).description(szDimension_Box).alias(szDim);
@@ -1079,6 +1092,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox2U>();
+        w.description("2D Axially Aligned Bounding Box in unsigned integers");
         w.property(szArea, &AxBox2U::area).description(szArea_Box);
         w.property(szCenter, &AxBox2U::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox2U::span).description(szDimension_Box).alias(szDim);
@@ -1103,6 +1117,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox3D>();
+        w.description("3D Axially Aligned Bounding Box in double");
         w.property(szCenter, &AxBox3D::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox3D::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox3D::hi).description(szHigh_Box);
@@ -1122,6 +1137,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox3F>();
+        w.description("3D Axially Aligned Bounding Box in float");
         w.property(szCenter, &AxBox3F::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox3F::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox3F::lo).description(szLow_Box);
@@ -1141,6 +1157,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox3I>();
+        w.description("3D Axially Aligned Bounding Box in integer");
         w.property(szCenter, &AxBox3I::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox3I::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox3I::lo).description(szLow_Box);
@@ -1158,6 +1175,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox3U>();
+        w.description("3D Axially Aligned Bounding Box in unsigned integers");
         w.property(szCenter, &AxBox3U::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox3U::span).description(szDimension_Box).alias(szDim);
         w.property(szLow, &AxBox3U::lo).description(szLow_Box);
@@ -1178,6 +1196,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox4D>();
+        w.description("4D Axially Aligned Bounding Box in double");
         w.property(szCenter, &AxBox4D::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox4D::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4D::hi).description(szHigh_Box);
@@ -1197,6 +1216,7 @@ static void reg_math () {
 
     {
         auto w = writer<AxBox4F>();
+        w.description("4D Axially Aligned Bounding Box in float");
         w.property(szCenter, &AxBox4F::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox4F::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4F::hi).description(szHigh_Box);
@@ -1216,6 +1236,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox4I>();
+        w.description("4D Axially Aligned Bounding Box in integer");
         w.property(szCenter, &AxBox4I::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox4I::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4I::hi).description(szHigh_Box);
@@ -1233,6 +1254,7 @@ static void reg_math () {
     
     {
         auto w = writer<AxBox4U>();
+        w.description("4D Axially Aligned Bounding Box in unsigned integers");
         w.property(szCenter, &AxBox4U::center).description(szCenter_Box).alias(szCtr);
         w.property(szDimension, &AxBox4U::span).description(szDimension_Box).alias(szDim);
         w.property(szHigh, &AxBox4U::hi).description(szHigh_Box);
@@ -1253,46 +1275,52 @@ static void reg_math () {
     
     {
         auto w = writer<Bivector2D>();
+        w.description("2D Bivector in double");
         w.property(szXY, &Bivector2D::xy).description(szXY_Bivector);
     }
 
     {
-        auto bivec2f = writer<Bivector2F>();
-        bivec2f.property(szXY, &Bivector2F::xy).description(szXY_Bivector);
+        auto w = writer<Bivector2F>();
+        w.description("2D Bivector in float");
+        w.property(szXY, &Bivector2F::xy).description(szXY_Bivector);
     }
 
     {
-        auto bivec3d = writer<Bivector3D>();
-        bivec3d.property(szXY, &Bivector3D::xy).description(szXY_Bivector);
-        bivec3d.property(szYZ, &Bivector3D::yz).description(szYZ_Bivector);
-        bivec3d.property(szZX, &Bivector3D::zx).description(szZX_Bivector);
+        auto w = writer<Bivector3D>();
+        w.description("3D Bivector in double");
+        w.property(szXY, &Bivector3D::xy).description(szXY_Bivector);
+        w.property(szYZ, &Bivector3D::yz).description(szYZ_Bivector);
+        w.property(szZX, &Bivector3D::zx).description(szZX_Bivector);
     }
 
     {
-        auto bivec3f = writer<Bivector3F>();
-        bivec3f.property(szXY, &Bivector3F::xy).description(szXY_Bivector);
-        bivec3f.property(szYZ, &Bivector3F::yz).description(szYZ_Bivector);
-        bivec3f.property(szZX, &Bivector3F::zx).description(szZX_Bivector);
+        auto w = writer<Bivector3F>();
+        w.description("3D Bivector in float");
+        w.property(szXY, &Bivector3F::xy).description(szXY_Bivector);
+        w.property(szYZ, &Bivector3F::yz).description(szYZ_Bivector);
+        w.property(szZX, &Bivector3F::zx).description(szZX_Bivector);
     }
 
     {
-        auto bivec4d = writer<Bivector4D>();
-        bivec4d.property(szXY, &Bivector4D::xy).description(szXY_Bivector);
-        bivec4d.property(szYZ, &Bivector4D::yz).description(szYZ_Bivector);
-        bivec4d.property(szZW, &Bivector4D::zw).description(szZW_Bivector);
-        bivec4d.property(szWX, &Bivector4D::wx).description(szWX_Bivector);
-        bivec4d.property(szXZ, &Bivector4D::xz).description(szXZ_Bivector);
-        bivec4d.property(szYW, &Bivector4D::yw).description(szYW_Bivector);
+        auto w = writer<Bivector4D>();
+        w.description("4D Bivector in double");
+        w.property(szXY, &Bivector4D::xy).description(szXY_Bivector);
+        w.property(szYZ, &Bivector4D::yz).description(szYZ_Bivector);
+        w.property(szZW, &Bivector4D::zw).description(szZW_Bivector);
+        w.property(szWX, &Bivector4D::wx).description(szWX_Bivector);
+        w.property(szXZ, &Bivector4D::xz).description(szXZ_Bivector);
+        w.property(szYW, &Bivector4D::yw).description(szYW_Bivector);
     }
 
     {
-        auto bivec4f = writer<Bivector4F>();
-        bivec4f.property(szXY, &Bivector4F::xy).description(szXY_Bivector);
-        bivec4f.property(szYZ, &Bivector4F::yz).description(szYZ_Bivector);
-        bivec4f.property(szZW, &Bivector4F::zw).description(szZW_Bivector);
-        bivec4f.property(szWX, &Bivector4F::wx).description(szWX_Bivector);
-        bivec4f.property(szXZ, &Bivector4F::xz).description(szXZ_Bivector);
-        bivec4f.property(szYW, &Bivector4F::yw).description(szYW_Bivector);
+        auto w = writer<Bivector4F>();
+        w.description("4D Bivector in float");
+        w.property(szXY, &Bivector4F::xy).description(szXY_Bivector);
+        w.property(szYZ, &Bivector4F::yz).description(szYZ_Bivector);
+        w.property(szZW, &Bivector4F::zw).description(szZW_Bivector);
+        w.property(szWX, &Bivector4F::wx).description(szWX_Bivector);
+        w.property(szXZ, &Bivector4F::xz).description(szXZ_Bivector);
+        w.property(szYW, &Bivector4F::yw).description(szYW_Bivector);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1300,6 +1328,7 @@ static void reg_math () {
     
     {
         auto w = writer<Circle2D>();
+        w.description("2D circle in double");
         w.property(szArea, &Circle2D::area).description(szArea_Circle);
         w.property(szBox, &Circle2D::bounds).description(szBox_Circle);
         w.property(szCenter, &Circle2D::point).description(szCenter_Circle);
@@ -1312,6 +1341,7 @@ static void reg_math () {
     
     {
         auto w = writer<Circle2F>();
+        w.description("2D circle in float");
         w.property(szArea, &Circle2F::area).description(szArea_Circle);
         w.property(szBox, &Circle2F::bounds).description(szBox_Circle);
         w.property(szCenter, &Circle2F::point).description(szCenter_Circle);
@@ -1324,6 +1354,7 @@ static void reg_math () {
     
     {
         auto w = writer<Circle2I>();
+        w.description("2D circle in integer");
         w.property(szBox, &Circle2I::bounds).description(szBox_Circle);
         w.property(szCenter, &Circle2I::point).description(szCenter_Circle);
         w.property(szDiameter, &Circle2I::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
@@ -1334,6 +1365,7 @@ static void reg_math () {
     
     {
         auto w = writer<Circle2U>();
+        w.description("2D circle in unsigned int");
         w.property(szBox, &Circle2U::bounds).description(szBox_Circle);
         w.property(szCenter, &Circle2U::point).description(szCenter_Circle);
         w.property(szDiameter, &Circle2U::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
@@ -1347,6 +1379,7 @@ static void reg_math () {
     
     {
         auto w = writer<ComplexD>();
+        w.description("Complex number in double");
         w.property(szReal, &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real)
             .description(szReal_Complex)
             .alias({szRe, szR});
@@ -1358,6 +1391,7 @@ static void reg_math () {
 
     {
         auto w = writer<ComplexF>();
+        w.description("Complex number in float");
         w.property(szReal, (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real)
             .description(szReal_Complex)
             .alias({ szRe, szR });
@@ -1369,6 +1403,7 @@ static void reg_math () {
 
     {
         auto w = writer<ComplexI>();
+        w.description("Complex number in integer");
         w.property(szReal, (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real)
             .description(szReal_Complex)
             .alias({szRe, szR});
@@ -1379,6 +1414,7 @@ static void reg_math () {
 
     {
         auto w = writer<ComplexU>();
+        w.description("Complex number in unsigned integer");
         w.property(szReal, (unsigned (ComplexU::*)() const) &ComplexU::real).setter((void(ComplexU::*)(unsigned)) &ComplexU::real)
             .description(szReal_Complex)
             .alias({szRe, szR});
@@ -1392,75 +1428,91 @@ static void reg_math () {
 
     {
         auto w = writer<Coord2D>();
+        w.description("2D coordinate in double");
         w.property(szI, &Coord2D::i).description(szI_Coord);
         w.property(szJ, &Coord2D::j).description(szJ_Coord);
     }
 
     {
         auto w = writer<Coord2F>();
+        w.description("2D coordinate in float");
         w.property(szI, &Coord2F::i).description(szI_Coord);
         w.property(szJ, &Coord2F::j).description(szJ_Coord);
     }
 
     {
         auto w = writer<Coord2I>();
+        w.description("2D coordinate in integer");
         w.property(szI, &Coord2I::i).description(szI_Coord);
         w.property(szJ, &Coord2I::j).description(szJ_Coord);
     }
 
     {
         auto w = writer<Coord2U>();
+        w.description("2D coordinate in unsigned integer");
         w.property(szI, &Coord2U::i).description(szI_Coord);
         w.property(szJ, &Coord2U::j).description(szJ_Coord);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Counters
 
     {
         auto w   = writer<CountI8>();
+        w.description("Counter with 8-bit integer");
         w.property(szCount, &CountI8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountI16>();
+        w.description("Counter with 16-bit integer");
         w.property(szCount, &CountI16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountI32>();
+        w.description("Counter with 32-bit integer");
         w.property(szCount, &CountI32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountI64>();
+        w.description("Counter with 64-bit integer");
         w.property(szCount, &CountI64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU8>();
+        w.description("Counter with 8-bit unsigned integer");
         w.property(szCount, &CountU8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU16>();
+        w.description("Counter with 16-bit unsigned integer");
         w.property(szCount, &CountU16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU32>();
+        w.description("Counter with 32-bit unsigned integer");
         w.property(szCount, &CountU32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<CountU64>();
+        w.description("Counter with 64-bit unsigned integer");
         w.property(szCount, &CountU64::cnt).description(szCount_Count).alias(szCnt);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Fractions
+
     {
         auto w  = writer<FractionI>();
-        w.property("n", &FractionI::num);
-        w.property("d", &FractionI::den);
+        w.description("Fraction using integers");
+        w.property(szNumerator, &FractionI::num).description(szNumerator_Fraction).alias({szNum, szN});
+        w.property(szDenominator, &FractionI::den).description(szDenominator_Fraction).alias({szDen, szD});
     }
     
     /*
@@ -1477,65 +1529,85 @@ static void reg_math () {
         frac64.property("d", &Frac64::den);
     */
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Hi-counters (start at max-value)
     {
         auto w   = writer<HCountI8>();
+        w.description("8-bit signed integer counter that starts at max value");
         w.property(szCount, &HCountI8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountI16>();
+        w.description("16-bit signed integer counter that starts at max value");
         w.property(szCount, &HCountI16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountI32>();
+        w.description("32-bit signed integer counter that starts at max value");
         w.property(szCount, &HCountI32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountI64>();
+        w.description("64-bit signed integer counter that starts at max value");
         w.property(szCount, &HCountI64::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU8>();
+        w.description("8-bit unsigned integer counter that starts at max value");
         w.property(szCount, &HCountU8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU16>();
+        w.description("16-bit unsigned integer counter that starts at max value");
         w.property(szCount, &HCountU16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU32>();
+        w.description("32-bit unsigned integer counter that starts at max value");
         w.property(szCount, &HCountU32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<HCountU64>();
+        w.description("64-bit unsigned integer counter that starts at max value");
         w.property(szCount, &HCountU64::cnt).description(szCount_Count).alias(szCnt);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Lo-counters (start at min-value)
+    
     {
         auto w   = writer<LCountI8>();
+        w.description("8-bit integer counter that starts at minimum value");
         w.property(szCount, &LCountI8::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI16>();
+        w.description("16-bit integer counter that starts at minimum value");
         w.property(szCount, &LCountI16::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI32>();
+        w.description("32-bit integer counter that starts at minimum value");
         w.property(szCount, &LCountI32::cnt).description(szCount_Count).alias(szCnt);
     }
 
     {
         auto w   = writer<LCountI64>();
+        w.description("64-bit integer counter that starts at minimum value");
         w.property(szCount, &LCountI64::cnt).description(szCount_Count).alias(szCnt);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     {
         auto w  = writer<Multivector1D>();
@@ -1636,6 +1708,9 @@ static void reg_math () {
         w.property("wxy", &Multivector4F::wxy);
         w.property("xyzw", &Multivector4F::xyzw);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     {
         auto w = writer<Normal2D>();
