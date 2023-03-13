@@ -2085,877 +2085,879 @@ static void reg_math () {
     }
 
     {
-        auto size3f = writer<Size3F>();
-        size3f.property(szX, &Size3F::x);
-        size3f.property(szY, &Size3F::y);
-        size3f.property(szZ, &Size3F::z);
-        size3f.property(szW, &Size3F::width);
-        size3f.property("h", &Size3F::height);
-        size3f.property("d", &Size3F::depth);
+        auto w = writer<Size3F>();
+        w.property(szX, &Size3F::x);
+        w.property(szY, &Size3F::y);
+        w.property(szZ, &Size3F::z);
+        w.property(szW, &Size3F::width);
+        w.property("h", &Size3F::height);
+        w.property("d", &Size3F::depth);
     }
 
     {
-        auto size3i = writer<Size3I>();
-        size3i.property(szX, &Size3I::x);
-        size3i.property(szY, &Size3I::y);
-        size3i.property(szZ, &Size3I::z);
-        size3i.property(szW, &Size3I::width);
-        size3i.property("h", &Size3I::height);
-        size3i.property("d", &Size3I::depth);
+        auto w = writer<Size3I>();
+        w.property(szX, &Size3I::x);
+        w.property(szY, &Size3I::y);
+        w.property(szZ, &Size3I::z);
+        w.property(szW, &Size3I::width);
+        w.property("h", &Size3I::height);
+        w.property("d", &Size3I::depth);
     }
 
     {
-        auto size3u = writer<Size3U>();
-        size3u.property(szX, &Size3U::x);
-        size3u.property(szY, &Size3U::y);
-        size3u.property(szZ, &Size3U::z);
-        size3u.property(szW, &Size3U::width);
-        size3u.property("h", &Size3U::height);
-        size3u.property("d", &Size3U::depth);
+        auto w = writer<Size3U>();
+        w.property(szX, &Size3U::x);
+        w.property(szY, &Size3U::y);
+        w.property(szZ, &Size3U::z);
+        w.property(szW, &Size3U::width);
+        w.property("h", &Size3U::height);
+        w.property("d", &Size3U::depth);
     }
 
     {
-        auto sphere3d = writer<Sphere3D>();
-        sphere3d.property("pt", &Sphere3D::point);
-        sphere3d.property("r", &Sphere3D::radius);
+        auto w = writer<Sphere3D>();
+        w.property("pt", &Sphere3D::point);
+        w.property("r", &Sphere3D::radius);
     }
 
     {
-        auto sphere3f = writer<Sphere3F>();
-        sphere3f.property("pt", &Sphere3F::point);
-        sphere3f.property("r", &Sphere3F::radius);
+        auto w = writer<Sphere3F>();
+        w.property("pt", &Sphere3F::point);
+        w.property("r", &Sphere3F::radius);
     }
 
     {
-        auto sphere3i = writer<Sphere3I>();
-        sphere3i.property("pt", &Sphere3I::point);
-        sphere3i.property("r", &Sphere3I::radius);
+        auto w = writer<Sphere3I>();
+        w.property("pt", &Sphere3I::point);
+        w.property("r", &Sphere3I::radius);
     }
 
     {
-        auto sphere3u = writer<Sphere3U>();
-        sphere3u.property("pt", &Sphere3U::point);
-        sphere3u.property("r", &Sphere3U::radius);
+        auto w = writer<Sphere3U>();
+        w.property("pt", &Sphere3U::point);
+        w.property("r", &Sphere3U::radius);
     }
 
     {
-        auto sphere4d = writer<Sphere4D>();
-        sphere4d.property("pt", &Sphere4D::point);
-        sphere4d.property("r", &Sphere4D::radius);
+        auto w = writer<Sphere4D>();
+        w.property("pt", &Sphere4D::point);
+        w.property("r", &Sphere4D::radius);
     }
 
     {
-        auto sphere4f = writer<Sphere4F>();
-        sphere4f.property("pt", &Sphere4F::point);
-        sphere4f.property("r", &Sphere4F::radius);
+        auto w = writer<Sphere4F>();
+        w.property("pt", &Sphere4F::point);
+        w.property("r", &Sphere4F::radius);
     }
 
     {
-        auto sphere4i = writer<Sphere4I>();
-        sphere4i.property("pt", &Sphere4I::point);
-        sphere4i.property("r", &Sphere4I::radius);
+        auto w = writer<Sphere4I>();
+        w.property("pt", &Sphere4I::point);
+        w.property("r", &Sphere4I::radius);
     }
 
     {
-        auto sphere4u = writer<Sphere4U>();
-        sphere4u.property("pt", &Sphere4U::point);
-        sphere4u.property("r", &Sphere4U::radius);
+        auto w = writer<Sphere4U>();
+        w.property("pt", &Sphere4U::point);
+        w.property("r", &Sphere4U::radius);
     }
 
     {
-        auto ten11d = writer<Tensor11D>();
-        ten11d.property(szXX, &Tensor11D::xx);
+        auto w = writer<Tensor11D>();
+        w.property(szXX, &Tensor11D::xx);
     }
 
     {
-        auto ten11f = writer<Tensor11F>();
-        ten11f.property(szXX, &Tensor11F::xx);
+        auto w = writer<Tensor11F>();
+        w.property(szXX, &Tensor11F::xx);
     }
 
     {
-        auto ten11i = writer<Tensor11I>();
-        ten11i.property(szXX, &Tensor11I::xx).description(szXX_Tensor);
+        auto w = writer<Tensor11I>();
+        w.property(szXX, &Tensor11I::xx).description(szXX_Tensor);
     }
 
     {
-        auto ten11u = writer<Tensor11U>();
-        ten11u.property(szXX, &Tensor11U::xx).description(szXX_Tensor);
+        auto w = writer<Tensor11U>();
+        w.property(szXX, &Tensor11U::xx).description(szXX_Tensor);
     }
 
     {
-        auto ten12d = writer<Tensor12D>();
-        ten12d.property(szXX, &Tensor12D::xx).description(szXX_Tensor);
-        ten12d.property(szXY, &Tensor12D::xy);
+        auto w = writer<Tensor12D>();
+        w.property(szXX, &Tensor12D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor12D::xy);
     }
 
     {
-        auto ten12f = writer<Tensor12F>();
-        ten12f.property(szXX, &Tensor12F::xx).description(szXX_Tensor);
-        ten12f.property(szXY, &Tensor12F::xy);
+        auto w = writer<Tensor12F>();
+        w.property(szXX, &Tensor12F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor12F::xy);
     }
 
     {
-        auto ten12i = writer<Tensor12I>();
-        ten12i.property(szXX, &Tensor12I::xx).description(szXX_Tensor);
-        ten12i.property(szXY, &Tensor12I::xy);
+        auto w = writer<Tensor12I>();
+        w.property(szXX, &Tensor12I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor12I::xy);
     }
 
     {
-        auto ten12u = writer<Tensor12U>();
-        ten12u.property(szXX, &Tensor12U::xx).description(szXX_Tensor);
-        ten12u.property(szXY, &Tensor12U::xy);
+        auto w = writer<Tensor12U>();
+        w.property(szXX, &Tensor12U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor12U::xy);
     }
 
     {
-        auto ten13d = writer<Tensor13D>();
-        ten13d.property(szXX, &Tensor13D::xx).description(szXX_Tensor);
-        ten13d.property(szXY, &Tensor13D::xy);
-        ten13d.property(szXZ, &Tensor13D::xz);
+        auto w = writer<Tensor13D>();
+        w.property(szXX, &Tensor13D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor13D::xy);
+        w.property(szXZ, &Tensor13D::xz);
     }
 
     {
-        auto ten13f = writer<Tensor13F>();
-        ten13f.property(szXX, &Tensor13F::xx).description(szXX_Tensor);
-        ten13f.property(szXY, &Tensor13F::xy);
-        ten13f.property(szXZ, &Tensor13F::xz);
+        auto w = writer<Tensor13F>();
+        w.property(szXX, &Tensor13F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor13F::xy);
+        w.property(szXZ, &Tensor13F::xz);
     }
 
     {
-        auto ten13i = writer<Tensor13I>();
-        ten13i.property(szXX, &Tensor13I::xx).description(szXX_Tensor);
-        ten13i.property(szXY, &Tensor13I::xy);
-        ten13i.property(szXZ, &Tensor13I::xz);
+        auto w = writer<Tensor13I>();
+        w.property(szXX, &Tensor13I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor13I::xy);
+        w.property(szXZ, &Tensor13I::xz);
     }
 
     {
-        auto ten13u = writer<Tensor13U>();
-        ten13u.property(szXX, &Tensor13U::xx).description(szXX_Tensor);
-        ten13u.property(szXY, &Tensor13U::xy);
-        ten13u.property(szXZ, &Tensor13U::xz);
+        auto w = writer<Tensor13U>();
+        w.property(szXX, &Tensor13U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor13U::xy);
+        w.property(szXZ, &Tensor13U::xz);
     }
 
     {
-        auto ten14d = writer<Tensor14D>();
-        ten14d.property(szXX, &Tensor14D::xx).description(szXX_Tensor);
-        ten14d.property(szXY, &Tensor14D::xy);
-        ten14d.property(szXZ, &Tensor14D::xz);
-        ten14d.property(szXW, &Tensor14D::xw);
+        auto w = writer<Tensor14D>();
+        w.property(szXX, &Tensor14D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor14D::xy);
+        w.property(szXZ, &Tensor14D::xz);
+        w.property(szXW, &Tensor14D::xw);
     }
 
     {
-        auto ten14f = writer<Tensor14F>();
-        ten14f.property(szXX, &Tensor14F::xx).description(szXX_Tensor);
-        ten14f.property(szXY, &Tensor14F::xy);
-        ten14f.property(szXZ, &Tensor14F::xz);
-        ten14f.property(szXW, &Tensor14F::xw);
+        auto w = writer<Tensor14F>();
+        w.property(szXX, &Tensor14F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor14F::xy);
+        w.property(szXZ, &Tensor14F::xz);
+        w.property(szXW, &Tensor14F::xw);
     }
 
     {
-        auto ten14i = writer<Tensor14I>();
-        ten14i.property(szXX, &Tensor14I::xx).description(szXX_Tensor);
-        ten14i.property(szXY, &Tensor14I::xy);
-        ten14i.property(szXZ, &Tensor14I::xz);
-        ten14i.property(szXW, &Tensor14I::xw);
+        auto w = writer<Tensor14I>();
+        w.property(szXX, &Tensor14I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor14I::xy);
+        w.property(szXZ, &Tensor14I::xz);
+        w.property(szXW, &Tensor14I::xw);
     }
 
     {
-        auto ten14u = writer<Tensor14U>();
-        ten14u.property(szXX, &Tensor14U::xx).description(szXX_Tensor);
-        ten14u.property(szXY, &Tensor14U::xy);
-        ten14u.property(szXZ, &Tensor14U::xz);
-        ten14u.property(szXW, &Tensor14U::xw);
+        auto w = writer<Tensor14U>();
+        w.property(szXX, &Tensor14U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor14U::xy);
+        w.property(szXZ, &Tensor14U::xz);
+        w.property(szXW, &Tensor14U::xw);
     }
 
     {
-        auto ten21d = writer<Tensor21D>();
-        ten21d.property(szXX, &Tensor21D::xx).description(szXX_Tensor);
-        ten21d.property(szYX, &Tensor21D::yx);
+        auto w = writer<Tensor21D>();
+        w.property(szXX, &Tensor21D::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor21D::yx);
     }
 
     {
-        auto ten21f = writer<Tensor21F>();
-        ten21f.property(szXX, &Tensor21F::xx).description(szXX_Tensor);
-        ten21f.property(szYX, &Tensor21F::yx);
+        auto w = writer<Tensor21F>();
+        w.property(szXX, &Tensor21F::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor21F::yx);
     }
 
     {
-        auto ten21i = writer<Tensor21I>();
-        ten21i.property(szXX, &Tensor21I::xx).description(szXX_Tensor);
-        ten21i.property(szYX, &Tensor21I::yx);
+        auto w = writer<Tensor21I>();
+        w.property(szXX, &Tensor21I::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor21I::yx);
     }
 
     {
-        auto ten21u = writer<Tensor21U>();
-        ten21u.property(szXX, &Tensor21U::xx).description(szXX_Tensor);
-        ten21u.property(szYX, &Tensor21U::yx);
+        auto w = writer<Tensor21U>();
+        w.property(szXX, &Tensor21U::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor21U::yx);
     }
 
     {
-        auto ten22d = writer<Tensor22D>();
-        ten22d.property(szXX, &Tensor22D::xx).description(szXX_Tensor);
-        ten22d.property(szXY, &Tensor22D::xy);
-        ten22d.property(szYX, &Tensor22D::yx);
-        ten22d.property(szYY, &Tensor22D::yy);
+        auto w = writer<Tensor22D>();
+        w.property(szXX, &Tensor22D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor22D::xy);
+        w.property(szYX, &Tensor22D::yx);
+        w.property(szYY, &Tensor22D::yy);
     }
 
     {
-        auto ten22f = writer<Tensor22F>();
-        ten22f.property(szXX, &Tensor22F::xx).description(szXX_Tensor);
-        ten22f.property(szXY, &Tensor22F::xy);
-        ten22f.property(szYX, &Tensor22F::yx);
-        ten22f.property(szYY, &Tensor22F::yy);
+        auto w = writer<Tensor22F>();
+        w.property(szXX, &Tensor22F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor22F::xy);
+        w.property(szYX, &Tensor22F::yx);
+        w.property(szYY, &Tensor22F::yy);
     }
 
     {
-        auto ten22i = writer<Tensor22I>();
-        ten22i.property(szXX, &Tensor22I::xx).description(szXX_Tensor);
-        ten22i.property(szXY, &Tensor22I::xy);
-        ten22i.property(szYX, &Tensor22I::yx);
-        ten22i.property(szYY, &Tensor22I::yy);
+        auto w = writer<Tensor22I>();
+        w.property(szXX, &Tensor22I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor22I::xy);
+        w.property(szYX, &Tensor22I::yx);
+        w.property(szYY, &Tensor22I::yy);
     }
 
     {
-        auto ten22u = writer<Tensor22U>();
-        ten22u.property(szXX, &Tensor22U::xx).description(szXX_Tensor);
-        ten22u.property(szXY, &Tensor22U::xy);
-        ten22u.property(szYX, &Tensor22U::yx);
-        ten22u.property(szYY, &Tensor22U::yy);
+        auto w = writer<Tensor22U>();
+        w.property(szXX, &Tensor22U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor22U::xy);
+        w.property(szYX, &Tensor22U::yx);
+        w.property(szYY, &Tensor22U::yy);
     }
 
     {
-        auto ten23d = writer<Tensor23D>();
-        ten23d.property(szXX, &Tensor23D::xx).description(szXX_Tensor);
-        ten23d.property(szXY, &Tensor23D::xy);
-        ten23d.property(szXZ, &Tensor23D::xz);
-        ten23d.property(szYX, &Tensor23D::yx);
-        ten23d.property(szYY, &Tensor23D::yy);
-        ten23d.property(szYZ, &Tensor23D::yz);
+        auto w = writer<Tensor23D>();
+        w.property(szXX, &Tensor23D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor23D::xy);
+        w.property(szXZ, &Tensor23D::xz);
+        w.property(szYX, &Tensor23D::yx);
+        w.property(szYY, &Tensor23D::yy);
+        w.property(szYZ, &Tensor23D::yz);
     }
 
     {
-        auto ten23f = writer<Tensor23F>();
-        ten23f.property(szXX, &Tensor23F::xx).description(szXX_Tensor);
-        ten23f.property(szXY, &Tensor23F::xy);
-        ten23f.property(szXZ, &Tensor23F::xz);
-        ten23f.property(szYX, &Tensor23F::yx);
-        ten23f.property(szYY, &Tensor23F::yy);
-        ten23f.property(szYZ, &Tensor23F::yz);
+        auto w = writer<Tensor23F>();
+        w.property(szXX, &Tensor23F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor23F::xy);
+        w.property(szXZ, &Tensor23F::xz);
+        w.property(szYX, &Tensor23F::yx);
+        w.property(szYY, &Tensor23F::yy);
+        w.property(szYZ, &Tensor23F::yz);
     }
 
     {
-        auto ten23i = writer<Tensor23I>();
-        ten23i.property(szXX, &Tensor23I::xx).description(szXX_Tensor);
-        ten23i.property(szXY, &Tensor23I::xy);
-        ten23i.property(szXZ, &Tensor23I::xz);
-        ten23i.property(szYX, &Tensor23I::yx);
-        ten23i.property(szYY, &Tensor23I::yy);
-        ten23i.property(szYZ, &Tensor23I::yz);
+        auto w = writer<Tensor23I>();
+        w.property(szXX, &Tensor23I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor23I::xy);
+        w.property(szXZ, &Tensor23I::xz);
+        w.property(szYX, &Tensor23I::yx);
+        w.property(szYY, &Tensor23I::yy);
+        w.property(szYZ, &Tensor23I::yz);
     }
 
     {
-        auto ten23u = writer<Tensor23U>();
-        ten23u.property(szXX, &Tensor23U::xx).description(szXX_Tensor);
-        ten23u.property(szXY, &Tensor23U::xy);
-        ten23u.property(szXZ, &Tensor23U::xz);
-        ten23u.property(szYX, &Tensor23U::yx);
-        ten23u.property(szYY, &Tensor23U::yy);
-        ten23u.property(szYZ, &Tensor23U::yz);
+        auto w = writer<Tensor23U>();
+        w.property(szXX, &Tensor23U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor23U::xy);
+        w.property(szXZ, &Tensor23U::xz);
+        w.property(szYX, &Tensor23U::yx);
+        w.property(szYY, &Tensor23U::yy);
+        w.property(szYZ, &Tensor23U::yz);
     }
 
     {
-        auto ten24d = writer<Tensor24D>();
-        ten24d.property(szXX, &Tensor24D::xx).description(szXX_Tensor);
-        ten24d.property(szXY, &Tensor24D::xy);
-        ten24d.property(szXZ, &Tensor24D::xz);
-        ten24d.property(szXW, &Tensor24D::xw);
-        ten24d.property(szYX, &Tensor24D::yx);
-        ten24d.property(szYY, &Tensor24D::yy);
-        ten24d.property(szYZ, &Tensor24D::yz);
-        ten24d.property(szYW, &Tensor24D::yw);
+        auto w = writer<Tensor24D>();
+        w.property(szXX, &Tensor24D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor24D::xy);
+        w.property(szXZ, &Tensor24D::xz);
+        w.property(szXW, &Tensor24D::xw);
+        w.property(szYX, &Tensor24D::yx);
+        w.property(szYY, &Tensor24D::yy);
+        w.property(szYZ, &Tensor24D::yz);
+        w.property(szYW, &Tensor24D::yw);
     }
 
     {
-        auto ten24f = writer<Tensor24F>();
-        ten24f.property(szXX, &Tensor24F::xx).description(szXX_Tensor);
-        ten24f.property(szXY, &Tensor24F::xy);
-        ten24f.property(szXZ, &Tensor24F::xz);
-        ten24f.property(szXW, &Tensor24F::xw);
-        ten24f.property(szYX, &Tensor24F::yx);
-        ten24f.property(szYY, &Tensor24F::yy);
-        ten24f.property(szYZ, &Tensor24F::yz);
-        ten24f.property(szYW, &Tensor24F::yw);
+        auto w = writer<Tensor24F>();
+        w.property(szXX, &Tensor24F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor24F::xy);
+        w.property(szXZ, &Tensor24F::xz);
+        w.property(szXW, &Tensor24F::xw);
+        w.property(szYX, &Tensor24F::yx);
+        w.property(szYY, &Tensor24F::yy);
+        w.property(szYZ, &Tensor24F::yz);
+        w.property(szYW, &Tensor24F::yw);
     }
 
     {
-        auto ten24i = writer<Tensor24I>();
-        ten24i.property(szXX, &Tensor24I::xx).description(szXX_Tensor);
-        ten24i.property(szXY, &Tensor24I::xy);
-        ten24i.property(szXZ, &Tensor24I::xz);
-        ten24i.property(szXW, &Tensor24I::xw);
-        ten24i.property(szYX, &Tensor24I::yx);
-        ten24i.property(szYY, &Tensor24I::yy);
-        ten24i.property(szYZ, &Tensor24I::yz);
-        ten24i.property(szYW, &Tensor24I::yw);
+        auto w = writer<Tensor24I>();
+        w.property(szXX, &Tensor24I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor24I::xy);
+        w.property(szXZ, &Tensor24I::xz);
+        w.property(szXW, &Tensor24I::xw);
+        w.property(szYX, &Tensor24I::yx);
+        w.property(szYY, &Tensor24I::yy);
+        w.property(szYZ, &Tensor24I::yz);
+        w.property(szYW, &Tensor24I::yw);
     }
 
     {
-        auto ten24u = writer<Tensor24U>();
-        ten24u.property(szXX, &Tensor24U::xx).description(szXX_Tensor);
-        ten24u.property(szXY, &Tensor24U::xy);
-        ten24u.property(szXZ, &Tensor24U::xz);
-        ten24u.property(szXW, &Tensor24U::xw);
-        ten24u.property(szYX, &Tensor24U::yx);
-        ten24u.property(szYY, &Tensor24U::yy);
-        ten24u.property(szYZ, &Tensor24U::yz);
-        ten24u.property(szYW, &Tensor24U::yw);
+        auto w = writer<Tensor24U>();
+        w.property(szXX, &Tensor24U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor24U::xy);
+        w.property(szXZ, &Tensor24U::xz);
+        w.property(szXW, &Tensor24U::xw);
+        w.property(szYX, &Tensor24U::yx);
+        w.property(szYY, &Tensor24U::yy);
+        w.property(szYZ, &Tensor24U::yz);
+        w.property(szYW, &Tensor24U::yw);
     }
 
     {
-        auto ten31d = writer<Tensor31D>();
-        ten31d.property(szXX, &Tensor31D::xx).description(szXX_Tensor);
-        ten31d.property(szYX, &Tensor31D::yx);
-        ten31d.property(szZX, &Tensor31D::zx);
+        auto w = writer<Tensor31D>();
+        w.property(szXX, &Tensor31D::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor31D::yx);
+        w.property(szZX, &Tensor31D::zx);
     }
 
     {
-        auto ten31f = writer<Tensor31F>();
-        ten31f.property(szXX, &Tensor31F::xx).description(szXX_Tensor);
-        ten31f.property(szYX, &Tensor31F::yx);
-        ten31f.property(szZX, &Tensor31F::zx);
+        auto w = writer<Tensor31F>();
+        w.property(szXX, &Tensor31F::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor31F::yx);
+        w.property(szZX, &Tensor31F::zx);
     }
 
     {
-        auto ten31i = writer<Tensor31I>();
-        ten31i.property(szXX, &Tensor31I::xx).description(szXX_Tensor);
-        ten31i.property(szYX, &Tensor31I::yx);
-        ten31i.property(szZX, &Tensor31I::zx);
+        auto w = writer<Tensor31I>();
+        w.property(szXX, &Tensor31I::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor31I::yx);
+        w.property(szZX, &Tensor31I::zx);
     }
 
     {
-        auto ten31u = writer<Tensor31U>();
-        ten31u.property(szXX, &Tensor31U::xx).description(szXX_Tensor);
-        ten31u.property(szYX, &Tensor31U::yx);
-        ten31u.property(szZX, &Tensor31U::zx);
+        auto w = writer<Tensor31U>();
+        w.property(szXX, &Tensor31U::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor31U::yx);
+        w.property(szZX, &Tensor31U::zx);
     }
 
     {
-        auto ten32d = writer<Tensor32D>();
-        ten32d.property(szXX, &Tensor32D::xx).description(szXX_Tensor);
-        ten32d.property(szXY, &Tensor32D::xy);
-        ten32d.property(szYX, &Tensor32D::yx);
-        ten32d.property(szYY, &Tensor32D::yy);
-        ten32d.property(szZX, &Tensor32D::zx);
-        ten32d.property(szZY, &Tensor32D::zy);
+        auto w = writer<Tensor32D>();
+        w.property(szXX, &Tensor32D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor32D::xy);
+        w.property(szYX, &Tensor32D::yx);
+        w.property(szYY, &Tensor32D::yy);
+        w.property(szZX, &Tensor32D::zx);
+        w.property(szZY, &Tensor32D::zy);
     }
 
     {
-        auto ten32f = writer<Tensor32F>();
-        ten32f.property(szXX, &Tensor32F::xx).description(szXX_Tensor);
-        ten32f.property(szXY, &Tensor32F::xy);
-        ten32f.property(szYX, &Tensor32F::yx);
-        ten32f.property(szYY, &Tensor32F::yy);
-        ten32f.property(szZX, &Tensor32F::zx);
-        ten32f.property(szZY, &Tensor32F::zy);
+        auto w = writer<Tensor32F>();
+        w.property(szXX, &Tensor32F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor32F::xy);
+        w.property(szYX, &Tensor32F::yx);
+        w.property(szYY, &Tensor32F::yy);
+        w.property(szZX, &Tensor32F::zx);
+        w.property(szZY, &Tensor32F::zy);
     }
 
     {
-        auto ten32i = writer<Tensor32I>();
-        ten32i.property(szXX, &Tensor32I::xx).description(szXX_Tensor);
-        ten32i.property(szXY, &Tensor32I::xy);
-        ten32i.property(szYX, &Tensor32I::yx);
-        ten32i.property(szYY, &Tensor32I::yy);
-        ten32i.property(szZX, &Tensor32I::zx);
-        ten32i.property(szZY, &Tensor32I::zy);
+        auto w = writer<Tensor32I>();
+        w.property(szXX, &Tensor32I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor32I::xy);
+        w.property(szYX, &Tensor32I::yx);
+        w.property(szYY, &Tensor32I::yy);
+        w.property(szZX, &Tensor32I::zx);
+        w.property(szZY, &Tensor32I::zy);
     }
 
     {
-        auto ten32u = writer<Tensor32U>();
-        ten32u.property(szXX, &Tensor32U::xx).description(szXX_Tensor);
-        ten32u.property(szXY, &Tensor32U::xy);
-        ten32u.property(szYX, &Tensor32U::yx);
-        ten32u.property(szYY, &Tensor32U::yy);
-        ten32u.property(szZX, &Tensor32U::zx);
-        ten32u.property(szZY, &Tensor32U::zy);
+        auto w = writer<Tensor32U>();
+        w.property(szXX, &Tensor32U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor32U::xy);
+        w.property(szYX, &Tensor32U::yx);
+        w.property(szYY, &Tensor32U::yy);
+        w.property(szZX, &Tensor32U::zx);
+        w.property(szZY, &Tensor32U::zy);
     }
 
     {
-        auto ten33d = writer<Tensor33D>();
-        ten33d.property(szXX, &Tensor33D::xx).description(szXX_Tensor);
-        ten33d.property(szXY, &Tensor33D::xy);
-        ten33d.property(szXZ, &Tensor33D::xz);
-        ten33d.property(szYX, &Tensor33D::yx);
-        ten33d.property(szYY, &Tensor33D::yy);
-        ten33d.property(szYZ, &Tensor33D::yz);
-        ten33d.property(szZX, &Tensor33D::zx);
-        ten33d.property(szZY, &Tensor33D::zy);
-        ten33d.property(szZZ, &Tensor33D::zz);
+        auto w = writer<Tensor33D>();
+        w.property(szXX, &Tensor33D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor33D::xy);
+        w.property(szXZ, &Tensor33D::xz);
+        w.property(szYX, &Tensor33D::yx);
+        w.property(szYY, &Tensor33D::yy);
+        w.property(szYZ, &Tensor33D::yz);
+        w.property(szZX, &Tensor33D::zx);
+        w.property(szZY, &Tensor33D::zy);
+        w.property(szZZ, &Tensor33D::zz);
     }
 
     {
-        auto ten33f = writer<Tensor33F>();
-        ten33f.property(szXX, &Tensor33F::xx).description(szXX_Tensor);
-        ten33f.property(szXY, &Tensor33F::xy);
-        ten33f.property(szXZ, &Tensor33F::xz);
-        ten33f.property(szYX, &Tensor33F::yx);
-        ten33f.property(szYY, &Tensor33F::yy);
-        ten33f.property(szYZ, &Tensor33F::yz);
-        ten33f.property(szZX, &Tensor33F::zx);
-        ten33f.property(szZY, &Tensor33F::zy);
-        ten33f.property(szZZ, &Tensor33F::zz);
+        auto w = writer<Tensor33F>();
+        w.property(szXX, &Tensor33F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor33F::xy);
+        w.property(szXZ, &Tensor33F::xz);
+        w.property(szYX, &Tensor33F::yx);
+        w.property(szYY, &Tensor33F::yy);
+        w.property(szYZ, &Tensor33F::yz);
+        w.property(szZX, &Tensor33F::zx);
+        w.property(szZY, &Tensor33F::zy);
+        w.property(szZZ, &Tensor33F::zz);
     }
 
     {
-        auto ten33i = writer<Tensor33I>();
-        ten33i.property(szXX, &Tensor33I::xx).description(szXX_Tensor);
-        ten33i.property(szXY, &Tensor33I::xy);
-        ten33i.property(szXZ, &Tensor33I::xz);
-        ten33i.property(szYX, &Tensor33I::yx);
-        ten33i.property(szYY, &Tensor33I::yy);
-        ten33i.property(szYZ, &Tensor33I::yz);
-        ten33i.property(szZX, &Tensor33I::zx);
-        ten33i.property(szZY, &Tensor33I::zy);
-        ten33i.property(szZZ, &Tensor33I::zz);
+        auto w = writer<Tensor33I>();
+        w.property(szXX, &Tensor33I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor33I::xy);
+        w.property(szXZ, &Tensor33I::xz);
+        w.property(szYX, &Tensor33I::yx);
+        w.property(szYY, &Tensor33I::yy);
+        w.property(szYZ, &Tensor33I::yz);
+        w.property(szZX, &Tensor33I::zx);
+        w.property(szZY, &Tensor33I::zy);
+        w.property(szZZ, &Tensor33I::zz);
     }
 
     {
-        auto ten33u = writer<Tensor33U>();
-        ten33u.property(szXX, &Tensor33U::xx).description(szXX_Tensor);
-        ten33u.property(szXY, &Tensor33U::xy);
-        ten33u.property(szXZ, &Tensor33U::xz);
-        ten33u.property(szYX, &Tensor33U::yx);
-        ten33u.property(szYY, &Tensor33U::yy);
-        ten33u.property(szYZ, &Tensor33U::yz);
-        ten33u.property(szZX, &Tensor33U::zx);
-        ten33u.property(szZY, &Tensor33U::zy);
-        ten33u.property(szZZ, &Tensor33U::zz);
+        auto w = writer<Tensor33U>();
+        w.property(szXX, &Tensor33U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor33U::xy);
+        w.property(szXZ, &Tensor33U::xz);
+        w.property(szYX, &Tensor33U::yx);
+        w.property(szYY, &Tensor33U::yy);
+        w.property(szYZ, &Tensor33U::yz);
+        w.property(szZX, &Tensor33U::zx);
+        w.property(szZY, &Tensor33U::zy);
+        w.property(szZZ, &Tensor33U::zz);
     }
 
     {
-        auto ten34d = writer<Tensor34D>();
-        ten34d.property(szXX, &Tensor34D::xx).description(szXX_Tensor);
-        ten34d.property(szXY, &Tensor34D::xy);
-        ten34d.property(szXZ, &Tensor34D::xz);
-        ten34d.property(szXW, &Tensor34D::xw);
-        ten34d.property(szYX, &Tensor34D::yx);
-        ten34d.property(szYY, &Tensor34D::yy);
-        ten34d.property(szYZ, &Tensor34D::yz);
-        ten34d.property(szYW, &Tensor34D::yw);
-        ten34d.property(szZX, &Tensor34D::zx);
-        ten34d.property(szZY, &Tensor34D::zy);
-        ten34d.property(szZZ, &Tensor34D::zz);
-        ten34d.property(szZW, &Tensor34D::zw);
+        auto w = writer<Tensor34D>();
+        w.property(szXX, &Tensor34D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor34D::xy);
+        w.property(szXZ, &Tensor34D::xz);
+        w.property(szXW, &Tensor34D::xw);
+        w.property(szYX, &Tensor34D::yx);
+        w.property(szYY, &Tensor34D::yy);
+        w.property(szYZ, &Tensor34D::yz);
+        w.property(szYW, &Tensor34D::yw);
+        w.property(szZX, &Tensor34D::zx);
+        w.property(szZY, &Tensor34D::zy);
+        w.property(szZZ, &Tensor34D::zz);
+        w.property(szZW, &Tensor34D::zw);
     }
 
     {
-        auto ten34f = writer<Tensor34F>();
-        ten34f.property(szXX, &Tensor34F::xx).description(szXX_Tensor);
-        ten34f.property(szXY, &Tensor34F::xy);
-        ten34f.property(szXZ, &Tensor34F::xz);
-        ten34f.property(szXW, &Tensor34F::xw);
-        ten34f.property(szYX, &Tensor34F::yx);
-        ten34f.property(szYY, &Tensor34F::yy);
-        ten34f.property(szYZ, &Tensor34F::yz);
-        ten34f.property(szYW, &Tensor34F::yw);
-        ten34f.property(szZX, &Tensor34F::zx);
-        ten34f.property(szZY, &Tensor34F::zy);
-        ten34f.property(szZZ, &Tensor34F::zz);
-        ten34f.property(szZW, &Tensor34F::zw);
+        auto w = writer<Tensor34F>();
+        w.property(szXX, &Tensor34F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor34F::xy);
+        w.property(szXZ, &Tensor34F::xz);
+        w.property(szXW, &Tensor34F::xw);
+        w.property(szYX, &Tensor34F::yx);
+        w.property(szYY, &Tensor34F::yy);
+        w.property(szYZ, &Tensor34F::yz);
+        w.property(szYW, &Tensor34F::yw);
+        w.property(szZX, &Tensor34F::zx);
+        w.property(szZY, &Tensor34F::zy);
+        w.property(szZZ, &Tensor34F::zz);
+        w.property(szZW, &Tensor34F::zw);
     }
 
     {
-        auto ten34i = writer<Tensor34I>();
-        ten34i.property(szXX, &Tensor34I::xx).description(szXX_Tensor);
-        ten34i.property(szXY, &Tensor34I::xy);
-        ten34i.property(szXZ, &Tensor34I::xz);
-        ten34i.property(szXW, &Tensor34I::xw);
-        ten34i.property(szYX, &Tensor34I::yx);
-        ten34i.property(szYY, &Tensor34I::yy);
-        ten34i.property(szYZ, &Tensor34I::yz);
-        ten34i.property(szYW, &Tensor34I::yw);
-        ten34i.property(szZX, &Tensor34I::zx);
-        ten34i.property(szZY, &Tensor34I::zy);
-        ten34i.property(szZZ, &Tensor34I::zz);
-        ten34i.property(szZW, &Tensor34I::zw);
+        auto w = writer<Tensor34I>();
+        w.property(szXX, &Tensor34I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor34I::xy);
+        w.property(szXZ, &Tensor34I::xz);
+        w.property(szXW, &Tensor34I::xw);
+        w.property(szYX, &Tensor34I::yx);
+        w.property(szYY, &Tensor34I::yy);
+        w.property(szYZ, &Tensor34I::yz);
+        w.property(szYW, &Tensor34I::yw);
+        w.property(szZX, &Tensor34I::zx);
+        w.property(szZY, &Tensor34I::zy);
+        w.property(szZZ, &Tensor34I::zz);
+        w.property(szZW, &Tensor34I::zw);
     }
 
     {
-        auto ten34u = writer<Tensor34U>();
-        ten34u.property(szXX, &Tensor34U::xx).description(szXX_Tensor);
-        ten34u.property(szXY, &Tensor34U::xy);
-        ten34u.property(szXZ, &Tensor34U::xz);
-        ten34u.property(szXW, &Tensor34U::xw);
-        ten34u.property(szYX, &Tensor34U::yx);
-        ten34u.property(szYY, &Tensor34U::yy);
-        ten34u.property(szYZ, &Tensor34U::yz);
-        ten34u.property(szYW, &Tensor34U::yw);
-        ten34u.property(szZX, &Tensor34U::zx);
-        ten34u.property(szZY, &Tensor34U::zy);
-        ten34u.property(szZZ, &Tensor34U::zz);
-        ten34u.property(szZW, &Tensor34U::zw);
+        auto w = writer<Tensor34U>();
+        w.property(szXX, &Tensor34U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor34U::xy);
+        w.property(szXZ, &Tensor34U::xz);
+        w.property(szXW, &Tensor34U::xw);
+        w.property(szYX, &Tensor34U::yx);
+        w.property(szYY, &Tensor34U::yy);
+        w.property(szYZ, &Tensor34U::yz);
+        w.property(szYW, &Tensor34U::yw);
+        w.property(szZX, &Tensor34U::zx);
+        w.property(szZY, &Tensor34U::zy);
+        w.property(szZZ, &Tensor34U::zz);
+        w.property(szZW, &Tensor34U::zw);
     }
 
     {
-        auto ten41d = writer<Tensor41D>();
-        ten41d.property(szXX, &Tensor41D::xx).description(szXX_Tensor);
-        ten41d.property(szYX, &Tensor41D::yx);
-        ten41d.property(szZX, &Tensor41D::zx);
-        ten41d.property(szWX, &Tensor41D::wx);
+        auto w = writer<Tensor41D>();
+        w.property(szXX, &Tensor41D::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor41D::yx);
+        w.property(szZX, &Tensor41D::zx);
+        w.property(szWX, &Tensor41D::wx);
     }
 
     {
-        auto ten41f = writer<Tensor41F>();
-        ten41f.property(szXX, &Tensor41F::xx).description(szXX_Tensor);
-        ten41f.property(szYX, &Tensor41F::yx);
-        ten41f.property(szZX, &Tensor41F::zx);
-        ten41f.property(szWX, &Tensor41F::wx);
+        auto w = writer<Tensor41F>();
+        w.property(szXX, &Tensor41F::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor41F::yx);
+        w.property(szZX, &Tensor41F::zx);
+        w.property(szWX, &Tensor41F::wx);
     }
 
     {
-        auto ten41i = writer<Tensor41I>();
-        ten41i.property(szXX, &Tensor41I::xx).description(szXX_Tensor);
-        ten41i.property(szYX, &Tensor41I::yx);
-        ten41i.property(szZX, &Tensor41I::zx);
-        ten41i.property(szWX, &Tensor41I::wx);
+        auto w = writer<Tensor41I>();
+        w.property(szXX, &Tensor41I::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor41I::yx);
+        w.property(szZX, &Tensor41I::zx);
+        w.property(szWX, &Tensor41I::wx);
     }
 
     {
-        auto ten41u = writer<Tensor41U>();
-        ten41u.property(szXX, &Tensor41U::xx).description(szXX_Tensor);
-        ten41u.property(szYX, &Tensor41U::yx);
-        ten41u.property(szZX, &Tensor41U::zx);
-        ten41u.property(szWX, &Tensor41U::wx);
+        auto w = writer<Tensor41U>();
+        w.property(szXX, &Tensor41U::xx).description(szXX_Tensor);
+        w.property(szYX, &Tensor41U::yx);
+        w.property(szZX, &Tensor41U::zx);
+        w.property(szWX, &Tensor41U::wx);
     }
 
     {
-        auto ten42d = writer<Tensor42D>();
-        ten42d.property(szXX, &Tensor42D::xx).description(szXX_Tensor);
-        ten42d.property(szXY, &Tensor42D::xy);
-        ten42d.property(szYX, &Tensor42D::yx);
-        ten42d.property(szYY, &Tensor42D::yy);
-        ten42d.property(szZX, &Tensor42D::zx);
-        ten42d.property(szZY, &Tensor42D::zy);
-        ten42d.property(szWX, &Tensor42D::wx);
-        ten42d.property(szWY, &Tensor42D::wy);
+        auto w = writer<Tensor42D>();
+        w.property(szXX, &Tensor42D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor42D::xy);
+        w.property(szYX, &Tensor42D::yx);
+        w.property(szYY, &Tensor42D::yy);
+        w.property(szZX, &Tensor42D::zx);
+        w.property(szZY, &Tensor42D::zy);
+        w.property(szWX, &Tensor42D::wx);
+        w.property(szWY, &Tensor42D::wy);
     }
 
     {
-        auto ten42f = writer<Tensor42F>();
-        ten42f.property(szXX, &Tensor42F::xx).description(szXX_Tensor);
-        ten42f.property(szXY, &Tensor42F::xy);
-        ten42f.property(szYX, &Tensor42F::yx);
-        ten42f.property(szYY, &Tensor42F::yy);
-        ten42f.property(szZX, &Tensor42F::zx);
-        ten42f.property(szZY, &Tensor42F::zy);
-        ten42f.property(szWX, &Tensor42F::wx);
-        ten42f.property(szWY, &Tensor42F::wy);
+        auto w = writer<Tensor42F>();
+        w.property(szXX, &Tensor42F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor42F::xy);
+        w.property(szYX, &Tensor42F::yx);
+        w.property(szYY, &Tensor42F::yy);
+        w.property(szZX, &Tensor42F::zx);
+        w.property(szZY, &Tensor42F::zy);
+        w.property(szWX, &Tensor42F::wx);
+        w.property(szWY, &Tensor42F::wy);
     }
 
     {
-        auto ten42i = writer<Tensor42I>();
-        ten42i.property(szXX, &Tensor42I::xx).description(szXX_Tensor);
-        ten42i.property(szXY, &Tensor42I::xy);
-        ten42i.property(szYX, &Tensor42I::yx);
-        ten42i.property(szYY, &Tensor42I::yy);
-        ten42i.property(szZX, &Tensor42I::zx);
-        ten42i.property(szZY, &Tensor42I::zy);
-        ten42i.property(szWX, &Tensor42I::wx);
-        ten42i.property(szWY, &Tensor42I::wy);
+        auto w = writer<Tensor42I>();
+        w.property(szXX, &Tensor42I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor42I::xy);
+        w.property(szYX, &Tensor42I::yx);
+        w.property(szYY, &Tensor42I::yy);
+        w.property(szZX, &Tensor42I::zx);
+        w.property(szZY, &Tensor42I::zy);
+        w.property(szWX, &Tensor42I::wx);
+        w.property(szWY, &Tensor42I::wy);
     }
 
     {
-        auto ten42u = writer<Tensor42U>();
-        ten42u.property(szXX, &Tensor42U::xx).description(szXX_Tensor);
-        ten42u.property(szXY, &Tensor42U::xy);
-        ten42u.property(szYX, &Tensor42U::yx);
-        ten42u.property(szYY, &Tensor42U::yy);
-        ten42u.property(szZX, &Tensor42U::zx);
-        ten42u.property(szZY, &Tensor42U::zy);
-        ten42u.property(szWX, &Tensor42U::wx);
-        ten42u.property(szWY, &Tensor42U::wy);
+        auto w = writer<Tensor42U>();
+        w.property(szXX, &Tensor42U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor42U::xy);
+        w.property(szYX, &Tensor42U::yx);
+        w.property(szYY, &Tensor42U::yy);
+        w.property(szZX, &Tensor42U::zx);
+        w.property(szZY, &Tensor42U::zy);
+        w.property(szWX, &Tensor42U::wx);
+        w.property(szWY, &Tensor42U::wy);
     }
 
     {
-        auto ten43d = writer<Tensor43D>();
-        ten43d.property(szXX, &Tensor43D::xx).description(szXX_Tensor);
-        ten43d.property(szXY, &Tensor43D::xy);
-        ten43d.property(szXZ, &Tensor43D::xz);
-        ten43d.property(szYX, &Tensor43D::yx);
-        ten43d.property(szYY, &Tensor43D::yy);
-        ten43d.property(szYZ, &Tensor43D::yz);
-        ten43d.property(szZX, &Tensor43D::zx);
-        ten43d.property(szZY, &Tensor43D::zy);
-        ten43d.property(szZZ, &Tensor43D::zz);
-        ten43d.property(szWX, &Tensor43D::wx);
-        ten43d.property(szWY, &Tensor43D::wy);
-        ten43d.property(szWZ, &Tensor43D::wz);
+        auto w = writer<Tensor43D>();
+        w.property(szXX, &Tensor43D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor43D::xy);
+        w.property(szXZ, &Tensor43D::xz);
+        w.property(szYX, &Tensor43D::yx);
+        w.property(szYY, &Tensor43D::yy);
+        w.property(szYZ, &Tensor43D::yz);
+        w.property(szZX, &Tensor43D::zx);
+        w.property(szZY, &Tensor43D::zy);
+        w.property(szZZ, &Tensor43D::zz);
+        w.property(szWX, &Tensor43D::wx);
+        w.property(szWY, &Tensor43D::wy);
+        w.property(szWZ, &Tensor43D::wz);
     }
 
     {
-        auto ten43f = writer<Tensor43F>();
-        ten43f.property(szXX, &Tensor43F::xx).description(szXX_Tensor);
-        ten43f.property(szXY, &Tensor43F::xy);
-        ten43f.property(szXZ, &Tensor43F::xz);
-        ten43f.property(szYX, &Tensor43F::yx);
-        ten43f.property(szYY, &Tensor43F::yy);
-        ten43f.property(szYZ, &Tensor43F::yz);
-        ten43f.property(szZX, &Tensor43F::zx);
-        ten43f.property(szZY, &Tensor43F::zy);
-        ten43f.property(szZZ, &Tensor43F::zz);
-        ten43f.property(szWX, &Tensor43F::wx);
-        ten43f.property(szWY, &Tensor43F::wy);
-        ten43f.property(szWZ, &Tensor43F::wz);
+        auto w = writer<Tensor43F>();
+        w.property(szXX, &Tensor43F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor43F::xy);
+        w.property(szXZ, &Tensor43F::xz);
+        w.property(szYX, &Tensor43F::yx);
+        w.property(szYY, &Tensor43F::yy);
+        w.property(szYZ, &Tensor43F::yz);
+        w.property(szZX, &Tensor43F::zx);
+        w.property(szZY, &Tensor43F::zy);
+        w.property(szZZ, &Tensor43F::zz);
+        w.property(szWX, &Tensor43F::wx);
+        w.property(szWY, &Tensor43F::wy);
+        w.property(szWZ, &Tensor43F::wz);
     }
 
     {
-        auto ten43i = writer<Tensor43I>();
-        ten43i.property(szXX, &Tensor43I::xx).description(szXX_Tensor);
-        ten43i.property(szXY, &Tensor43I::xy);
-        ten43i.property(szXZ, &Tensor43I::xz);
-        ten43i.property(szYX, &Tensor43I::yx);
-        ten43i.property(szYY, &Tensor43I::yy);
-        ten43i.property(szYZ, &Tensor43I::yz);
-        ten43i.property(szZX, &Tensor43I::zx);
-        ten43i.property(szZY, &Tensor43I::zy);
-        ten43i.property(szZZ, &Tensor43I::zz);
-        ten43i.property(szWX, &Tensor43I::wx);
-        ten43i.property(szWY, &Tensor43I::wy);
-        ten43i.property(szWZ, &Tensor43I::wz);
+        auto w = writer<Tensor43I>();
+        w.property(szXX, &Tensor43I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor43I::xy);
+        w.property(szXZ, &Tensor43I::xz);
+        w.property(szYX, &Tensor43I::yx);
+        w.property(szYY, &Tensor43I::yy);
+        w.property(szYZ, &Tensor43I::yz);
+        w.property(szZX, &Tensor43I::zx);
+        w.property(szZY, &Tensor43I::zy);
+        w.property(szZZ, &Tensor43I::zz);
+        w.property(szWX, &Tensor43I::wx);
+        w.property(szWY, &Tensor43I::wy);
+        w.property(szWZ, &Tensor43I::wz);
     }
 
     {
-        auto ten43u = writer<Tensor43U>();
-        ten43u.property(szXX, &Tensor43U::xx).description(szXX_Tensor);
-        ten43u.property(szXY, &Tensor43U::xy);
-        ten43u.property(szXZ, &Tensor43U::xz);
-        ten43u.property(szYX, &Tensor43U::yx);
-        ten43u.property(szYY, &Tensor43U::yy);
-        ten43u.property(szYZ, &Tensor43U::yz);
-        ten43u.property(szZX, &Tensor43U::zx);
-        ten43u.property(szZY, &Tensor43U::zy);
-        ten43u.property(szZZ, &Tensor43U::zz);
-        ten43u.property(szWX, &Tensor43U::wx);
-        ten43u.property(szWY, &Tensor43U::wy);
-        ten43u.property(szWZ, &Tensor43U::wz);
+        auto w = writer<Tensor43U>();
+        w.property(szXX, &Tensor43U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor43U::xy);
+        w.property(szXZ, &Tensor43U::xz);
+        w.property(szYX, &Tensor43U::yx);
+        w.property(szYY, &Tensor43U::yy);
+        w.property(szYZ, &Tensor43U::yz);
+        w.property(szZX, &Tensor43U::zx);
+        w.property(szZY, &Tensor43U::zy);
+        w.property(szZZ, &Tensor43U::zz);
+        w.property(szWX, &Tensor43U::wx);
+        w.property(szWY, &Tensor43U::wy);
+        w.property(szWZ, &Tensor43U::wz);
     }
 
     {
-        auto ten44d = writer<Tensor44D>();
-        ten44d.property(szXX, &Tensor44D::xx).description(szXX_Tensor);
-        ten44d.property(szXY, &Tensor44D::xy);
-        ten44d.property(szXZ, &Tensor44D::xz);
-        ten44d.property(szXW, &Tensor44D::xw);
-        ten44d.property(szYX, &Tensor44D::yx);
-        ten44d.property(szYY, &Tensor44D::yy);
-        ten44d.property(szYZ, &Tensor44D::yz);
-        ten44d.property(szYW, &Tensor44D::yw);
-        ten44d.property(szZX, &Tensor44D::zx);
-        ten44d.property(szZY, &Tensor44D::zy);
-        ten44d.property(szZZ, &Tensor44D::zz);
-        ten44d.property(szZW, &Tensor44D::zw);
-        ten44d.property(szWX, &Tensor44D::wx);
-        ten44d.property(szWY, &Tensor44D::wy);
-        ten44d.property(szWZ, &Tensor44D::wz);
-        ten44d.property(szWW, &Tensor44D::ww);
+        auto w = writer<Tensor44D>();
+        w.property(szXX, &Tensor44D::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor44D::xy);
+        w.property(szXZ, &Tensor44D::xz);
+        w.property(szXW, &Tensor44D::xw);
+        w.property(szYX, &Tensor44D::yx);
+        w.property(szYY, &Tensor44D::yy);
+        w.property(szYZ, &Tensor44D::yz);
+        w.property(szYW, &Tensor44D::yw);
+        w.property(szZX, &Tensor44D::zx);
+        w.property(szZY, &Tensor44D::zy);
+        w.property(szZZ, &Tensor44D::zz);
+        w.property(szZW, &Tensor44D::zw);
+        w.property(szWX, &Tensor44D::wx);
+        w.property(szWY, &Tensor44D::wy);
+        w.property(szWZ, &Tensor44D::wz);
+        w.property(szWW, &Tensor44D::ww);
     }
 
     {
-        auto ten44f = writer<Tensor44F>();
-        ten44f.property(szXX, &Tensor44F::xx).description(szXX_Tensor);
-        ten44f.property(szXY, &Tensor44F::xy);
-        ten44f.property(szXZ, &Tensor44F::xz);
-        ten44f.property(szXW, &Tensor44F::xw);
-        ten44f.property(szYX, &Tensor44F::yx);
-        ten44f.property(szYY, &Tensor44F::yy);
-        ten44f.property(szYZ, &Tensor44F::yz);
-        ten44f.property(szYW, &Tensor44F::yw);
-        ten44f.property(szZX, &Tensor44F::zx);
-        ten44f.property(szZY, &Tensor44F::zy);
-        ten44f.property(szZZ, &Tensor44F::zz);
-        ten44f.property(szZW, &Tensor44F::zw);
-        ten44f.property(szWX, &Tensor44F::wx);
-        ten44f.property(szWY, &Tensor44F::wy);
-        ten44f.property(szWZ, &Tensor44F::wz);
-        ten44f.property(szWW, &Tensor44F::ww);
+        auto w = writer<Tensor44F>();
+        w.property(szXX, &Tensor44F::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor44F::xy);
+        w.property(szXZ, &Tensor44F::xz);
+        w.property(szXW, &Tensor44F::xw);
+        w.property(szYX, &Tensor44F::yx);
+        w.property(szYY, &Tensor44F::yy);
+        w.property(szYZ, &Tensor44F::yz);
+        w.property(szYW, &Tensor44F::yw);
+        w.property(szZX, &Tensor44F::zx);
+        w.property(szZY, &Tensor44F::zy);
+        w.property(szZZ, &Tensor44F::zz);
+        w.property(szZW, &Tensor44F::zw);
+        w.property(szWX, &Tensor44F::wx);
+        w.property(szWY, &Tensor44F::wy);
+        w.property(szWZ, &Tensor44F::wz);
+        w.property(szWW, &Tensor44F::ww);
     }
 
     {
-        auto ten44i = writer<Tensor44I>();
-        ten44i.property(szXX, &Tensor44I::xx).description(szXX_Tensor);
-        ten44i.property(szXY, &Tensor44I::xy);
-        ten44i.property(szXZ, &Tensor44I::xz);
-        ten44i.property(szXW, &Tensor44I::xw);
-        ten44i.property(szYX, &Tensor44I::yx);
-        ten44i.property(szYY, &Tensor44I::yy);
-        ten44i.property(szYZ, &Tensor44I::yz);
-        ten44i.property(szYW, &Tensor44I::yw);
-        ten44i.property(szZX, &Tensor44I::zx);
-        ten44i.property(szZY, &Tensor44I::zy);
-        ten44i.property(szZZ, &Tensor44I::zz);
-        ten44i.property(szZW, &Tensor44I::zw);
-        ten44i.property(szWX, &Tensor44I::wx);
-        ten44i.property(szWY, &Tensor44I::wy);
-        ten44i.property(szWZ, &Tensor44I::wz);
-        ten44i.property(szWW, &Tensor44I::ww);
+        auto w = writer<Tensor44I>();
+        w.property(szXX, &Tensor44I::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor44I::xy);
+        w.property(szXZ, &Tensor44I::xz);
+        w.property(szXW, &Tensor44I::xw);
+        w.property(szYX, &Tensor44I::yx);
+        w.property(szYY, &Tensor44I::yy);
+        w.property(szYZ, &Tensor44I::yz);
+        w.property(szYW, &Tensor44I::yw);
+        w.property(szZX, &Tensor44I::zx);
+        w.property(szZY, &Tensor44I::zy);
+        w.property(szZZ, &Tensor44I::zz);
+        w.property(szZW, &Tensor44I::zw);
+        w.property(szWX, &Tensor44I::wx);
+        w.property(szWY, &Tensor44I::wy);
+        w.property(szWZ, &Tensor44I::wz);
+        w.property(szWW, &Tensor44I::ww);
     }
 
     {
-        auto ten44u = writer<Tensor44U>();
-        ten44u.property(szXX, &Tensor44U::xx).description(szXX_Tensor);
-        ten44u.property(szXY, &Tensor44U::xy);
-        ten44u.property(szXZ, &Tensor44U::xz);
-        ten44u.property(szXW, &Tensor44U::xw);
-        ten44u.property(szYX, &Tensor44U::yx);
-        ten44u.property(szYY, &Tensor44U::yy);
-        ten44u.property(szYZ, &Tensor44U::yz);
-        ten44u.property(szYW, &Tensor44U::yw);
-        ten44u.property(szZX, &Tensor44U::zx);
-        ten44u.property(szZY, &Tensor44U::zy);
-        ten44u.property(szZZ, &Tensor44U::zz);
-        ten44u.property(szZW, &Tensor44U::zw);
-        ten44u.property(szWX, &Tensor44U::wx);
-        ten44u.property(szWY, &Tensor44U::wy);
-        ten44u.property(szWZ, &Tensor44U::wz);
-        ten44u.property(szWW, &Tensor44U::ww);
+        auto w = writer<Tensor44U>();
+        w.property(szXX, &Tensor44U::xx).description(szXX_Tensor);
+        w.property(szXY, &Tensor44U::xy);
+        w.property(szXZ, &Tensor44U::xz);
+        w.property(szXW, &Tensor44U::xw);
+        w.property(szYX, &Tensor44U::yx);
+        w.property(szYY, &Tensor44U::yy);
+        w.property(szYZ, &Tensor44U::yz);
+        w.property(szYW, &Tensor44U::yw);
+        w.property(szZX, &Tensor44U::zx);
+        w.property(szZY, &Tensor44U::zy);
+        w.property(szZZ, &Tensor44U::zz);
+        w.property(szZW, &Tensor44U::zw);
+        w.property(szWX, &Tensor44U::wx);
+        w.property(szWY, &Tensor44U::wy);
+        w.property(szWZ, &Tensor44U::wz);
+        w.property(szWW, &Tensor44U::ww);
     }
 
     {
-        auto tetrahedron3d = writer<Tetrahedron3D>();
-        tetrahedron3d.property(szA, &Tetrahedron3D::a).description(szA_Tetrahedron);
-        tetrahedron3d.property(szB, &Tetrahedron3D::b).description(szB_Tetrahedron);
-        tetrahedron3d.property(szC, &Tetrahedron3D::c);
-        tetrahedron3d.property(szD, &Tetrahedron3D::d);
+        auto w = writer<Tetrahedron3D>();
+        w.property(szA, &Tetrahedron3D::a).description(szA_Tetrahedron);
+        w.property(szB, &Tetrahedron3D::b).description(szB_Tetrahedron);
+        w.property(szC, &Tetrahedron3D::c);
+        w.property(szD, &Tetrahedron3D::d);
     }
 
     {
-        auto tetrahedron3f = writer<Tetrahedron3F>();
-        tetrahedron3f.property(szA, &Tetrahedron3F::a).description(szA_Tetrahedron);
-        tetrahedron3f.property(szB, &Tetrahedron3F::b).description(szB_Tetrahedron);
-        tetrahedron3f.property(szC, &Tetrahedron3F::c);
-        tetrahedron3f.property(szD, &Tetrahedron3F::d);
+        auto w = writer<Tetrahedron3F>();
+        w.property(szA, &Tetrahedron3F::a).description(szA_Tetrahedron);
+        w.property(szB, &Tetrahedron3F::b).description(szB_Tetrahedron);
+        w.property(szC, &Tetrahedron3F::c);
+        w.property(szD, &Tetrahedron3F::d);
     }
 
     {
-        auto tetrahedron3i = writer<Tetrahedron3I>();
-        tetrahedron3i.property(szA, &Tetrahedron3I::a).description(szA_Tetrahedron);
-        tetrahedron3i.property(szB, &Tetrahedron3I::b).description(szB_Tetrahedron);
-        tetrahedron3i.property(szC, &Tetrahedron3I::c);
-        tetrahedron3i.property(szD, &Tetrahedron3I::d);
-
-        auto tetrahedron3u = writer<Tetrahedron3U>();
-        tetrahedron3u.property(szA, &Tetrahedron3U::a).description(szA_Tetrahedron);
-        tetrahedron3u.property(szB, &Tetrahedron3U::b).description(szB_Tetrahedron);
-        tetrahedron3u.property(szC, &Tetrahedron3U::c);
-        tetrahedron3u.property(szD, &Tetrahedron3U::d);
+        auto w = writer<Tetrahedron3I>();
+        w.property(szA, &Tetrahedron3I::a).description(szA_Tetrahedron);
+        w.property(szB, &Tetrahedron3I::b).description(szB_Tetrahedron);
+        w.property(szC, &Tetrahedron3I::c);
+        w.property(szD, &Tetrahedron3I::d);
+    }
+    
+    {
+        auto w = writer<Tetrahedron3U>();
+        w.property(szA, &Tetrahedron3U::a).description(szA_Tetrahedron);
+        w.property(szB, &Tetrahedron3U::b).description(szB_Tetrahedron);
+        w.property(szC, &Tetrahedron3U::c);
+        w.property(szD, &Tetrahedron3U::d);
     }
 
     {
-        auto triangle2d = writer<Triangle2D>();
-        triangle2d.property(szA, &Triangle2D::a).description(szA_Triangle);
-        triangle2d.property(szB, &Triangle2D::b).description(szB_Triangle);
-        triangle2d.property(szC, &Triangle2D::c);
+        auto w = writer<Triangle2D>();
+        w.property(szA, &Triangle2D::a).description(szA_Triangle);
+        w.property(szB, &Triangle2D::b).description(szB_Triangle);
+        w.property(szC, &Triangle2D::c);
     }
 
     {
-        auto triangle2f = writer<Triangle2F>();
-        triangle2f.property(szA, &Triangle2F::a).description(szA_Triangle);
-        triangle2f.property(szB, &Triangle2F::b).description(szB_Triangle);
-        triangle2f.property(szC, &Triangle2F::c);
+        auto w = writer<Triangle2F>();
+        w.property(szA, &Triangle2F::a).description(szA_Triangle);
+        w.property(szB, &Triangle2F::b).description(szB_Triangle);
+        w.property(szC, &Triangle2F::c);
     }
 
     {
-        auto triangle2i = writer<Triangle2I>();
-        triangle2i.property(szA, &Triangle2I::a).description(szA_Triangle);
-        triangle2i.property(szB, &Triangle2I::b).description(szB_Triangle);
-        triangle2i.property(szC, &Triangle2I::c);
+        auto w = writer<Triangle2I>();
+        w.property(szA, &Triangle2I::a).description(szA_Triangle);
+        w.property(szB, &Triangle2I::b).description(szB_Triangle);
+        w.property(szC, &Triangle2I::c);
     }
 
     {
-        auto triangle2u = writer<Triangle2U>();
-        triangle2u.property(szA, &Triangle2U::a).description(szA_Triangle);
-        triangle2u.property(szB, &Triangle2U::b).description(szB_Triangle);
-        triangle2u.property(szC, &Triangle2U::c);
+        auto w = writer<Triangle2U>();
+        w.property(szA, &Triangle2U::a).description(szA_Triangle);
+        w.property(szB, &Triangle2U::b).description(szB_Triangle);
+        w.property(szC, &Triangle2U::c);
     }
 
     {
-        auto triangle3d = writer<Triangle3D>();
-        triangle3d.property(szA, &Triangle3D::a).description(szA_Triangle);
-        triangle3d.property(szB, &Triangle3D::b).description(szB_Triangle);
-        triangle3d.property(szC, &Triangle3D::c);
+        auto w = writer<Triangle3D>();
+        w.property(szA, &Triangle3D::a).description(szA_Triangle);
+        w.property(szB, &Triangle3D::b).description(szB_Triangle);
+        w.property(szC, &Triangle3D::c);
     }
 
     {
-        auto triangle3f = writer<Triangle3F>();
-        triangle3f.property(szA, &Triangle3F::a).description(szA_Triangle);
-        triangle3f.property(szB, &Triangle3F::b).description(szB_Triangle);
-        triangle3f.property(szC, &Triangle3F::c);
+        auto w = writer<Triangle3F>();
+        w.property(szA, &Triangle3F::a).description(szA_Triangle);
+        w.property(szB, &Triangle3F::b).description(szB_Triangle);
+        w.property(szC, &Triangle3F::c);
     }
 
     {
-        auto triangle3i = writer<Triangle3I>();
-        triangle3i.property(szA, &Triangle3I::a).description(szA_Triangle);
-        triangle3i.property(szB, &Triangle3I::b).description(szB_Triangle);
-        triangle3i.property(szC, &Triangle3I::c);
+        auto w = writer<Triangle3I>();
+        w.property(szA, &Triangle3I::a).description(szA_Triangle);
+        w.property(szB, &Triangle3I::b).description(szB_Triangle);
+        w.property(szC, &Triangle3I::c);
     }
 
     {
-        auto triangle3u = writer<Triangle3U>();
-        triangle3u.property(szA, &Triangle3U::a).description(szA_Triangle);
-        triangle3u.property(szB, &Triangle3U::b).description(szB_Triangle);
-        triangle3u.property(szC, &Triangle3U::c);
+        auto w = writer<Triangle3U>();
+        w.property(szA, &Triangle3U::a).description(szA_Triangle);
+        w.property(szB, &Triangle3U::b).description(szB_Triangle);
+        w.property(szC, &Triangle3U::c);
     }
 
     {
-        auto triangle4d = writer<Triangle4D>();
-        triangle4d.property(szA, &Triangle4D::a).description(szA_Triangle);
-        triangle4d.property(szB, &Triangle4D::b).description(szB_Triangle);
-        triangle4d.property(szC, &Triangle4D::c);
+        auto w = writer<Triangle4D>();
+        w.property(szA, &Triangle4D::a).description(szA_Triangle);
+        w.property(szB, &Triangle4D::b).description(szB_Triangle);
+        w.property(szC, &Triangle4D::c);
     }
 
     {
-        auto triangle4f = writer<Triangle4F>();
-        triangle4f.property(szA, &Triangle4F::a).description(szA_Triangle);
-        triangle4f.property(szB, &Triangle4F::b).description(szB_Triangle);
-        triangle4f.property(szC, &Triangle4F::c);
+        auto w = writer<Triangle4F>();
+        w.property(szA, &Triangle4F::a).description(szA_Triangle);
+        w.property(szB, &Triangle4F::b).description(szB_Triangle);
+        w.property(szC, &Triangle4F::c);
     }
 
     {
-        auto triangle4i = writer<Triangle4I>();
-        triangle4i.property(szA, &Triangle4I::a).description(szA_Triangle);
-        triangle4i.property(szB, &Triangle4I::b).description(szB_Triangle);
-        triangle4i.property(szC, &Triangle4I::c);
+        auto w = writer<Triangle4I>();
+        w.property(szA, &Triangle4I::a).description(szA_Triangle);
+        w.property(szB, &Triangle4I::b).description(szB_Triangle);
+        w.property(szC, &Triangle4I::c);
     }
 
     {
-        auto triangle4u = writer<Triangle4U>();
-        triangle4u.property(szA, &Triangle4U::a).description(szA_Triangle);
-        triangle4u.property(szB, &Triangle4U::b).description(szB_Triangle);
-        triangle4u.property(szC, &Triangle4U::c);
+        auto w = writer<Triangle4U>();
+        w.property(szA, &Triangle4U::a).description(szA_Triangle);
+        w.property(szB, &Triangle4U::b).description(szB_Triangle);
+        w.property(szC, &Triangle4U::c);
     }
 
     {
-        auto trivec3d = writer<Trivector3D>();
-        trivec3d.property("xyz", &Trivector3D::xyz);
+        auto w = writer<Trivector3D>();
+        w.property("xyz", &Trivector3D::xyz);
     }
 
     {
-        auto trivec3f = writer<Trivector3F>();
-        trivec3f.property("xyz", &Trivector3F::xyz);
+        auto w = writer<Trivector3F>();
+        w.property("xyz", &Trivector3F::xyz);
     }
 
     {
-        auto trivec4d = writer<Trivector4D>();
-        trivec4d.property("xyz", &Trivector4D::xyz);
-        trivec4d.property("yzw", &Trivector4D::yzw);
-        trivec4d.property("zwx", &Trivector4D::zwx);
-        trivec4d.property("wxy", &Trivector4D::wxy);
+        auto w = writer<Trivector4D>();
+        w.property("xyz", &Trivector4D::xyz);
+        w.property("yzw", &Trivector4D::yzw);
+        w.property("zwx", &Trivector4D::zwx);
+        w.property("wxy", &Trivector4D::wxy);
     }
 
     {
-        auto trivec4f = writer<Trivector4F>();
-        trivec4f.property("xyz", &Trivector4F::xyz);
-        trivec4f.property("yzw", &Trivector4F::yzw);
-        trivec4f.property("zwx", &Trivector4F::zwx);
-        trivec4f.property("wxy", &Trivector4F::wxy);
+        auto w = writer<Trivector4F>();
+        w.property("xyz", &Trivector4F::xyz);
+        w.property("yzw", &Trivector4F::yzw);
+        w.property("zwx", &Trivector4F::zwx);
+        w.property("wxy", &Trivector4F::wxy);
     }
 
     {
