@@ -2164,50 +2164,59 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor11D>();
+        w.description("1x1 tensor in double");
         w.property(szXX, &Tensor11D::xx);
     }
 
     {
         auto w = writer<Tensor11F>();
+        w.description("1x1 tensor in float");
         w.property(szXX, &Tensor11F::xx);
     }
 
     {
         auto w = writer<Tensor11I>();
+        w.description("1x1 tensor in integer");
         w.property(szXX, &Tensor11I::xx).description(szXX_Tensor);
     }
 
     {
         auto w = writer<Tensor11U>();
+        w.description("1x1 tensor in unsigned integer");
         w.property(szXX, &Tensor11U::xx).description(szXX_Tensor);
     }
 
     {
         auto w = writer<Tensor12D>();
+        w.description("1x2 tensor in double");
         w.property(szXX, &Tensor12D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor12D::xy).description(szXY_Tensor);
     }
 
     {
         auto w = writer<Tensor12F>();
+        w.description("1x2 tensor in float");
         w.property(szXX, &Tensor12F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor12F::xy).description(szXY_Tensor);
     }
 
     {
         auto w = writer<Tensor12I>();
+        w.description("1x2 tensor in integer");
         w.property(szXX, &Tensor12I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor12I::xy).description(szXY_Tensor);
     }
 
     {
         auto w = writer<Tensor12U>();
+        w.description("1x2 tensor in unsigned integer");
         w.property(szXX, &Tensor12U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor12U::xy).description(szXY_Tensor);
     }
 
     {
         auto w = writer<Tensor13D>();
+        w.description("1x3 tensor in double");
         w.property(szXX, &Tensor13D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor13D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor13D::xz).description(szXZ_Tensor);
@@ -2215,6 +2224,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor13F>();
+        w.description("1x3 tensor in float");
         w.property(szXX, &Tensor13F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor13F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor13F::xz).description(szXZ_Tensor);
@@ -2222,6 +2232,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor13I>();
+        w.description("1x3 tensor in integer");
         w.property(szXX, &Tensor13I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor13I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor13I::xz).description(szXZ_Tensor);
@@ -2229,6 +2240,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor13U>();
+        w.description("1x3 tensor in unsigned integer");
         w.property(szXX, &Tensor13U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor13U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor13U::xz).description(szXZ_Tensor);
@@ -2236,6 +2248,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor14D>();
+        w.description("1x4 tensor in double");
         w.property(szXX, &Tensor14D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor14D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor14D::xz).description(szXZ_Tensor);
@@ -2244,6 +2257,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor14F>();
+        w.description("1x4 tensor in float");
         w.property(szXX, &Tensor14F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor14F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor14F::xz).description(szXZ_Tensor);
@@ -2252,6 +2266,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor14I>();
+        w.description("1x4 tensor in integer");
         w.property(szXX, &Tensor14I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor14I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor14I::xz).description(szXZ_Tensor);
@@ -2260,6 +2275,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor14U>();
+        w.description("1x4 tensor in unsigned integer");
         w.property(szXX, &Tensor14U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor14U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor14U::xz).description(szXZ_Tensor);
@@ -2268,30 +2284,35 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor21D>();
+        w.description("2x1 tensor in double");
         w.property(szXX, &Tensor21D::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor21D::yx).description(szYX_Tensor);
     }
 
     {
         auto w = writer<Tensor21F>();
+        w.description("2x1 tensor in float");
         w.property(szXX, &Tensor21F::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor21F::yx).description(szYX_Tensor);
     }
 
     {
         auto w = writer<Tensor21I>();
+        w.description("2x1 tensor in integer");
         w.property(szXX, &Tensor21I::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor21I::yx).description(szYX_Tensor);
     }
 
     {
         auto w = writer<Tensor21U>();
+        w.description("2x1 tensor in unsigned integer");
         w.property(szXX, &Tensor21U::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor21U::yx).description(szYX_Tensor);
     }
 
     {
         auto w = writer<Tensor22D>();
+        w.description("2x2 tensor in double");
         w.property(szXX, &Tensor22D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor22D::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22D::yx).description(szYX_Tensor);
@@ -2300,6 +2321,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor22F>();
+        w.description("2x2 tensor in float");
         w.property(szXX, &Tensor22F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor22F::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22F::yx).description(szYX_Tensor);
@@ -2308,6 +2330,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor22I>();
+        w.description("2x2 tensor in integer");
         w.property(szXX, &Tensor22I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor22I::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22I::yx).description(szYX_Tensor);
@@ -2316,6 +2339,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor22U>();
+        w.description("2x2 tensor in unsigned integer");
         w.property(szXX, &Tensor22U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor22U::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22U::yx).description(szYX_Tensor);
@@ -2324,6 +2348,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor23D>();
+        w.description("2x3 tensor in double");
         w.property(szXX, &Tensor23D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor23D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor23D::xz).description(szXZ_Tensor);
@@ -2334,6 +2359,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor23F>();
+        w.description("2x3 tensor in float");
         w.property(szXX, &Tensor23F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor23F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor23F::xz).description(szXZ_Tensor);
@@ -2344,6 +2370,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor23I>();
+        w.description("2x3 tensor in integer");
         w.property(szXX, &Tensor23I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor23I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor23I::xz).description(szXZ_Tensor);
@@ -2354,6 +2381,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor23U>();
+        w.description("2x3 tensor in unsigned integer");
         w.property(szXX, &Tensor23U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor23U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor23U::xz).description(szXZ_Tensor);
@@ -2364,6 +2392,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor24D>();
+        w.description("2x4 tensor in double");
         w.property(szXX, &Tensor24D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor24D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor24D::xz).description(szXZ_Tensor);
@@ -2376,6 +2405,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor24F>();
+        w.description("2x4 tensor in float");
         w.property(szXX, &Tensor24F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor24F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor24F::xz).description(szXZ_Tensor);
@@ -2388,6 +2418,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor24I>();
+        w.description("2x4 tensor in integer");
         w.property(szXX, &Tensor24I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor24I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor24I::xz).description(szXZ_Tensor);
@@ -2400,6 +2431,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor24U>();
+        w.description("2x4 tensor in unsigned integer");
         w.property(szXX, &Tensor24U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor24U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor24U::xz).description(szXZ_Tensor);
@@ -2412,6 +2444,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor31D>();
+        w.description("3x1 tensor in double");
         w.property(szXX, &Tensor31D::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor31D::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor31D::zx).description(szZX_Tensor);
@@ -2419,6 +2452,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor31F>();
+        w.description("3x1 tensor in float");
         w.property(szXX, &Tensor31F::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor31F::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor31F::zx).description(szZX_Tensor);
@@ -2426,6 +2460,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor31I>();
+        w.description("3x1 tensor in integer");
         w.property(szXX, &Tensor31I::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor31I::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor31I::zx).description(szZX_Tensor);
@@ -2433,6 +2468,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor31U>();
+        w.description("3x1 tensor in unsigned integer");
         w.property(szXX, &Tensor31U::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor31U::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor31U::zx).description(szZX_Tensor);
@@ -2440,6 +2476,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor32D>();
+        w.description("3x2 tensor in double");
         w.property(szXX, &Tensor32D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor32D::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor32D::yx).description(szYX_Tensor);
@@ -2450,6 +2487,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor32F>();
+        w.description("3x2 tensor in float");
         w.property(szXX, &Tensor32F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor32F::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor32F::yx).description(szYX_Tensor);
@@ -2460,6 +2498,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor32I>();
+        w.description("3x2 tensor in integer");
         w.property(szXX, &Tensor32I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor32I::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor32I::yx).description(szYX_Tensor);
@@ -2470,6 +2509,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor32U>();
+        w.description("3x2 tensor in unsigned integer");
         w.property(szXX, &Tensor32U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor32U::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor32U::yx).description(szYX_Tensor);
@@ -2480,6 +2520,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor33D>();
+        w.description("3x3 tensor in double");
         w.property(szXX, &Tensor33D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor33D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor33D::xz).description(szXZ_Tensor);
@@ -2493,6 +2534,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor33F>();
+        w.description("3x3 tensor in float");
         w.property(szXX, &Tensor33F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor33F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor33F::xz).description(szXZ_Tensor);
@@ -2506,6 +2548,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor33I>();
+        w.description("3x3 tensor in integer");
         w.property(szXX, &Tensor33I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor33I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor33I::xz).description(szXZ_Tensor);
@@ -2519,6 +2562,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor33U>();
+        w.description("3x3 tensor in unsigned integer");
         w.property(szXX, &Tensor33U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor33U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor33U::xz).description(szXZ_Tensor);
@@ -2532,6 +2576,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor34D>();
+        w.description("3x4 tensor in double");
         w.property(szXX, &Tensor34D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor34D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor34D::xz).description(szXZ_Tensor);
@@ -2548,6 +2593,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor34F>();
+        w.description("3x4 tensor in float");
         w.property(szXX, &Tensor34F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor34F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor34F::xz).description(szXZ_Tensor);
@@ -2564,6 +2610,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor34I>();
+        w.description("3x4 tensor in integer");
         w.property(szXX, &Tensor34I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor34I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor34I::xz).description(szXZ_Tensor);
@@ -2580,6 +2627,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor34U>();
+        w.description("3x4 tensor in unsigned integer");
         w.property(szXX, &Tensor34U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor34U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor34U::xz).description(szXZ_Tensor);
@@ -2596,6 +2644,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor41D>();
+        w.description("4x1 tensor in double");
         w.property(szXX, &Tensor41D::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor41D::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41D::zx).description(szZX_Tensor);
@@ -2604,6 +2653,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor41F>();
+        w.description("4x1 tensor in float");
         w.property(szXX, &Tensor41F::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor41F::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41F::zx).description(szZX_Tensor);
@@ -2612,6 +2662,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor41I>();
+        w.description("4x1 tensor in integer");
         w.property(szXX, &Tensor41I::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor41I::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41I::zx).description(szZX_Tensor);
@@ -2620,6 +2671,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor41U>();
+        w.description("4x1 tensor in unsigned integer");
         w.property(szXX, &Tensor41U::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor41U::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41U::zx).description(szZX_Tensor);
@@ -2628,6 +2680,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor42D>();
+        w.description("4x2 tensor in double");
         w.property(szXX, &Tensor42D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor42D::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor42D::yx).description(szYX_Tensor);
@@ -2640,6 +2693,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor42F>();
+        w.description("4x2 tensor in float");
         w.property(szXX, &Tensor42F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor42F::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor42F::yx).description(szYX_Tensor);
@@ -2652,6 +2706,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor42I>();
+        w.description("4x2 tensor in integer");
         w.property(szXX, &Tensor42I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor42I::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor42I::yx).description(szYX_Tensor);
@@ -2664,6 +2719,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor42U>();
+        w.description("4x2 tensor in unsigned integer");
         w.property(szXX, &Tensor42U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor42U::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor42U::yx).description(szYX_Tensor);
@@ -2676,6 +2732,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor43D>();
+        w.description("4x3 tensor in double");
         w.property(szXX, &Tensor43D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor43D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor43D::xz).description(szXZ_Tensor);
@@ -2692,6 +2749,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor43F>();
+        w.description("4x3 tensor in float");
         w.property(szXX, &Tensor43F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor43F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor43F::xz).description(szXZ_Tensor);
@@ -2708,6 +2766,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor43I>();
+        w.description("4x3 tensor in integer");
         w.property(szXX, &Tensor43I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor43I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor43I::xz).description(szXZ_Tensor);
@@ -2724,6 +2783,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor43U>();
+        w.description("4x3 tensor in unsigned integer");
         w.property(szXX, &Tensor43U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor43U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor43U::xz).description(szXZ_Tensor);
@@ -2740,6 +2800,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor44D>();
+        w.description("4x4 tensor in double");
         w.property(szXX, &Tensor44D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor44D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor44D::xz).description(szXZ_Tensor);
@@ -2760,6 +2821,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor44F>();
+        w.description("4x4 tensor in float");
         w.property(szXX, &Tensor44F::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor44F::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor44F::xz).description(szXZ_Tensor);
@@ -2780,6 +2842,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor44I>();
+        w.description("4x4 tensor in integer");
         w.property(szXX, &Tensor44I::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor44I::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor44I::xz).description(szXZ_Tensor);
@@ -2800,6 +2863,7 @@ static void reg_math () {
 
     {
         auto w = writer<Tensor44U>();
+        w.description("4x4 tensor in unsigned integer");
         w.property(szXX, &Tensor44U::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor44U::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor44U::xz).description(szXZ_Tensor);
