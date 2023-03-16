@@ -755,6 +755,9 @@ static constexpr const std::string_view     szBlue_Color                = "Blue 
 static constexpr const std::string_view     szBox                       = "box";
 static constexpr const std::string_view     szBox_Circle                = "Bounding box of the circle";
 static constexpr const std::string_view     szC                         = "c";
+static constexpr const std::string_view     szC_Quadrilateral           = "Third point 'C' of the quadrilateral";
+static constexpr const std::string_view     szC_Tetrahedron             = "Third point 'C' of the tetrahedron";
+static constexpr const std::string_view     szC_Triangle                = "Third point 'C' of the triangle";
 static constexpr const std::string_view     szCenter                    = "center";
 static constexpr const std::string_view     szCenter_Box                = "Center of the box";
 static constexpr const std::string_view     szCenter_Circle             = "Center of the circle";
@@ -770,6 +773,8 @@ static constexpr const std::string_view     szContains_Box_Box          = "Tests
 static constexpr const std::string_view     szContains_Box_Pt           = "Tests if point is inside/touching the box";
 static constexpr const std::string_view     szCtr                       = "ctr";
 static constexpr const std::string_view     szD                         = "d";
+static constexpr const std::string_view     szD_Quadrilateral           = "Fourth point 'D' of the quadrilateral";
+static constexpr const std::string_view     szD_Tetrahedron             = "Fourth point 'D' of the tetrahedron";
 static constexpr const std::string_view     szDen                       = "den";
 static constexpr const std::string_view     szDenominator               = "denominator";
 static constexpr const std::string_view     szDenominator_Fraction      = "Denominator of the fraction";
@@ -790,6 +795,7 @@ static constexpr const std::string_view     szG                         = "g";
 static constexpr const std::string_view     szGreen                     = "green";
 static constexpr const std::string_view     szGreen_Color               = "Green channel of the color";
 static constexpr const std::string_view     szH                         = "h";
+static constexpr const std::string_view     szHeight                    = "height";
 static constexpr const std::string_view     szHigh                      = "hi";
 static constexpr const std::string_view     szHigh_Box                  = "High-corner of the box";
 static constexpr const std::string_view     szHigh_Range                = "High-value of the range";
@@ -870,6 +876,7 @@ static constexpr const std::string_view     szVolume_Box                = "Volum
 static constexpr const std::string_view     szW                         = "w";
 static constexpr const std::string_view     szW_Box                     = "W range of the box";
 static constexpr const std::string_view     szW_Vector                  = "W component of the vector";
+static constexpr const std::string_view     szWidth                     = "width";
 static constexpr const std::string_view     szWW                        = "ww";
 static constexpr const std::string_view     szWW_Tensor                 = "WW component of the tensor";
 static constexpr const std::string_view     szWX                        = "wx";
@@ -1748,32 +1755,32 @@ static void reg_math () {
         auto w = writer<Quadrilateral2D>();
         w.property(szA, &Quadrilateral2D::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2D::b).description(szB_Quadrilateral);
-        w.property(szC, &Quadrilateral2D::c);
-        w.property(szD, &Quadrilateral2D::d);
+        w.property(szC, &Quadrilateral2D::c).description(szC_Quadrilateral);
+        w.property(szD, &Quadrilateral2D::d).description(szD_Quadrilateral);
     }
 
     {
         auto w = writer<Quadrilateral2F>();
         w.property(szA, &Quadrilateral2F::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2F::b).description(szB_Quadrilateral);
-        w.property(szC, &Quadrilateral2F::c);
-        w.property(szD, &Quadrilateral2F::d);
+        w.property(szC, &Quadrilateral2F::c).description(szC_Quadrilateral);
+        w.property(szD, &Quadrilateral2F::d).description(szD_Quadrilateral);
     }
 
     {
         auto w = writer<Quadrilateral2I>();
         w.property(szA, &Quadrilateral2I::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2I::b).description(szB_Quadrilateral);
-        w.property(szC, &Quadrilateral2I::c);
-        w.property(szD, &Quadrilateral2I::d);
+        w.property(szC, &Quadrilateral2I::c).description(szC_Quadrilateral);
+        w.property(szD, &Quadrilateral2I::d).description(szD_Quadrilateral);
     }
 
     {
         auto w = writer<Quadrilateral2U>();
         w.property(szA, &Quadrilateral2U::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2U::b).description(szB_Quadrilateral);
-        w.property(szC, &Quadrilateral2U::c);
-        w.property(szD, &Quadrilateral2U::d);
+        w.property(szC, &Quadrilateral2U::c).description(szC_Quadrilateral);
+        w.property(szD, &Quadrilateral2U::d).description(szD_Quadrilateral);
     }
 
     {
@@ -1948,106 +1955,120 @@ static void reg_math () {
 
     {
         auto w = writer<Segment1D>();
+        w.description("1D Segment in double");
         w.property(szA, &Segment1D::a).description(szA_Segment);
         w.property(szB, &Segment1D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment1F>();
+        w.description("1D Segment in float");
         w.property(szA, &Segment1F::a).description(szA_Segment);
         w.property(szB, &Segment1F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment1I>();
+        w.description("1D Segment in integer");
         w.property(szA, &Segment1I::a).description(szA_Segment);
         w.property(szB, &Segment1I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment1U>();
+        w.description("1D Segment in unsigned integer");
         w.property(szA, &Segment1U::a).description(szA_Segment);
         w.property(szB, &Segment1U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2D>();
+        w.description("2D Segment in double");
         w.property(szA, &Segment2D::a).description(szA_Segment);
         w.property(szB, &Segment2D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2F>();
+        w.description("2D Segment in float");
         w.property(szA, &Segment2F::a).description(szA_Segment);
         w.property(szB, &Segment2F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2I>();
+        w.description("2D Segment in integer");
         w.property(szA, &Segment2I::a).description(szA_Segment);
         w.property(szB, &Segment2I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment2U>();
+        w.description("2D Segment in unsigned integer");
         w.property(szA, &Segment2U::a).description(szA_Segment);
         w.property(szB, &Segment2U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3D>();
+        w.description("3D Segment in double");
         w.property(szA, &Segment3D::a).description(szA_Segment);
         w.property(szB, &Segment3D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3F>();
+        w.description("3D Segment in float");
         w.property(szA, &Segment3F::a).description(szA_Segment);
         w.property(szB, &Segment3F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3I>();
+        w.description("3D Segment in integer");
         w.property(szA, &Segment3I::a).description(szA_Segment);
         w.property(szB, &Segment3I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment3U>();
+        w.description("3D Segment in unsigned integer");
         w.property(szA, &Segment3U::a).description(szA_Segment);
         w.property(szB, &Segment3U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4D>();
+        w.description("4D Segment in double");
         w.property(szA, &Segment4D::a).description(szA_Segment);
         w.property(szB, &Segment4D::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4F>();
+        w.description("4D Segment in float");
         w.property(szA, &Segment4F::a).description(szA_Segment);
         w.property(szB, &Segment4F::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4I>();
+        w.description("4D Segment in integer");
         w.property(szA, &Segment4I::a).description(szA_Segment);
         w.property(szB, &Segment4I::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Segment4U>();
+        w.description("4D Segment in unsigned integer");
         w.property(szA, &Segment4U::a).description(szA_Segment);
         w.property(szB, &Segment4U::b).description(szB_Segment);
     }
 
     {
         auto w = writer<Size2D>();
-        w.property(szX, &Size2D::x);
-        w.property(szY, &Size2D::y);
-        w.property(szW, &Size2D::width);
-        w.property("h", &Size2D::height);
+        w.property(szX, &Size2D::x).alias({szWidth, szW});
+        w.property(szY, &Size2D::y).alias({szHeight, szH});
     }
 
     {
@@ -2884,118 +2905,134 @@ static void reg_math () {
 
     {
         auto w = writer<Tetrahedron3D>();
+        w.description("3D Tetrahedron in double");
         w.property(szA, &Tetrahedron3D::a).description(szA_Tetrahedron);
         w.property(szB, &Tetrahedron3D::b).description(szB_Tetrahedron);
-        w.property(szC, &Tetrahedron3D::c);
-        w.property(szD, &Tetrahedron3D::d);
+        w.property(szC, &Tetrahedron3D::c).description(szC_Tetrahedron);
+        w.property(szD, &Tetrahedron3D::d).description(szD_Tetrahedron);
     }
 
     {
         auto w = writer<Tetrahedron3F>();
+        w.description("3D Tetrahedron in float");
         w.property(szA, &Tetrahedron3F::a).description(szA_Tetrahedron);
         w.property(szB, &Tetrahedron3F::b).description(szB_Tetrahedron);
-        w.property(szC, &Tetrahedron3F::c);
-        w.property(szD, &Tetrahedron3F::d);
+        w.property(szC, &Tetrahedron3F::c).description(szC_Tetrahedron);
+        w.property(szD, &Tetrahedron3F::d).description(szD_Tetrahedron);
     }
 
     {
         auto w = writer<Tetrahedron3I>();
+        w.description("3D Tetrahedron in integer");
         w.property(szA, &Tetrahedron3I::a).description(szA_Tetrahedron);
         w.property(szB, &Tetrahedron3I::b).description(szB_Tetrahedron);
-        w.property(szC, &Tetrahedron3I::c);
-        w.property(szD, &Tetrahedron3I::d);
+        w.property(szC, &Tetrahedron3I::c).description(szC_Tetrahedron);
+        w.property(szD, &Tetrahedron3I::d).description(szD_Tetrahedron);
     }
     
     {
         auto w = writer<Tetrahedron3U>();
+        w.description("3D Tetrahedron in unsigned integer");
         w.property(szA, &Tetrahedron3U::a).description(szA_Tetrahedron);
         w.property(szB, &Tetrahedron3U::b).description(szB_Tetrahedron);
-        w.property(szC, &Tetrahedron3U::c);
-        w.property(szD, &Tetrahedron3U::d);
+        w.property(szC, &Tetrahedron3U::c).description(szC_Tetrahedron);
+        w.property(szD, &Tetrahedron3U::d).description(szD_Tetrahedron);
     }
 
     {
         auto w = writer<Triangle2D>();
+        w.description("2D Triangle in double");
         w.property(szA, &Triangle2D::a).description(szA_Triangle);
         w.property(szB, &Triangle2D::b).description(szB_Triangle);
-        w.property(szC, &Triangle2D::c);
+        w.property(szC, &Triangle2D::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle2F>();
+        w.description("2D Triangle in float");
         w.property(szA, &Triangle2F::a).description(szA_Triangle);
         w.property(szB, &Triangle2F::b).description(szB_Triangle);
-        w.property(szC, &Triangle2F::c);
+        w.property(szC, &Triangle2F::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle2I>();
+        w.description("2D Triangle in integer");
         w.property(szA, &Triangle2I::a).description(szA_Triangle);
         w.property(szB, &Triangle2I::b).description(szB_Triangle);
-        w.property(szC, &Triangle2I::c);
+        w.property(szC, &Triangle2I::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle2U>();
+        w.description("2D Triangle in unsigned integer");
         w.property(szA, &Triangle2U::a).description(szA_Triangle);
         w.property(szB, &Triangle2U::b).description(szB_Triangle);
-        w.property(szC, &Triangle2U::c);
+        w.property(szC, &Triangle2U::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle3D>();
+        w.description("3D Triangle in double");
         w.property(szA, &Triangle3D::a).description(szA_Triangle);
         w.property(szB, &Triangle3D::b).description(szB_Triangle);
-        w.property(szC, &Triangle3D::c);
+        w.property(szC, &Triangle3D::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle3F>();
+        w.description("3D Triangle in float");
         w.property(szA, &Triangle3F::a).description(szA_Triangle);
         w.property(szB, &Triangle3F::b).description(szB_Triangle);
-        w.property(szC, &Triangle3F::c);
+        w.property(szC, &Triangle3F::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle3I>();
+        w.description("3D Triangle in integer");
         w.property(szA, &Triangle3I::a).description(szA_Triangle);
         w.property(szB, &Triangle3I::b).description(szB_Triangle);
-        w.property(szC, &Triangle3I::c);
+        w.property(szC, &Triangle3I::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle3U>();
+        w.description("3D Triangle in unsigned double");
         w.property(szA, &Triangle3U::a).description(szA_Triangle);
         w.property(szB, &Triangle3U::b).description(szB_Triangle);
-        w.property(szC, &Triangle3U::c);
+        w.property(szC, &Triangle3U::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle4D>();
+        w.description("4D Triangle in double");
         w.property(szA, &Triangle4D::a).description(szA_Triangle);
         w.property(szB, &Triangle4D::b).description(szB_Triangle);
-        w.property(szC, &Triangle4D::c);
+        w.property(szC, &Triangle4D::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle4F>();
+        w.description("4D Triangle in float");
         w.property(szA, &Triangle4F::a).description(szA_Triangle);
         w.property(szB, &Triangle4F::b).description(szB_Triangle);
-        w.property(szC, &Triangle4F::c);
+        w.property(szC, &Triangle4F::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle4I>();
+        w.description("4D Triangle in integer");
         w.property(szA, &Triangle4I::a).description(szA_Triangle);
         w.property(szB, &Triangle4I::b).description(szB_Triangle);
-        w.property(szC, &Triangle4I::c);
+        w.property(szC, &Triangle4I::c).description(szC_Triangle);
     }
 
     {
         auto w = writer<Triangle4U>();
+        w.description("4D Triangle in unsigned integer");
         w.property(szA, &Triangle4U::a).description(szA_Triangle);
         w.property(szB, &Triangle4U::b).description(szB_Triangle);
-        w.property(szC, &Triangle4U::c);
+        w.property(szC, &Triangle4U::c).description(szC_Triangle);
     }
 
     {
