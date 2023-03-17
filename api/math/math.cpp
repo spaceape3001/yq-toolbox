@@ -796,7 +796,8 @@ static constexpr const std::string_view     szGreen                     = "green
 static constexpr const std::string_view     szGreen_Color               = "Green channel of the color";
 static constexpr const std::string_view     szH                         = "h";
 static constexpr const std::string_view     szHeight                    = "height";
-static constexpr const std::string_view     szHigh                      = "hi";
+static constexpr const std::string_view     szHi                        = "hi";
+static constexpr const std::string_view     szHigh                      = "high";
 static constexpr const std::string_view     szHigh_Box                  = "High-corner of the box";
 static constexpr const std::string_view     szHigh_Range                = "High-value of the range";
 static constexpr const std::string_view     szHypervolume               = "hypervolume";
@@ -820,7 +821,8 @@ static constexpr const std::string_view     szLength                    = "lengt
 static constexpr const std::string_view     szLength_Vector             = "Length of the vector";
 static constexpr const std::string_view     szLength²                   = "length2";
 static constexpr const std::string_view     szLength²_Vector            = "Length SQUARED of the vector";
-static constexpr const std::string_view     szLow                       = "lo";
+static constexpr const std::string_view     szLo                        = "lo";
+static constexpr const std::string_view     szLow                       = "low";
 static constexpr const std::string_view     szLow_Box                   = "Low-corner of the box";
 static constexpr const std::string_view     szLow_Range                 = "Low-value of the range";
 static constexpr const std::string_view     szM                         = "m";
@@ -874,6 +876,7 @@ static constexpr const std::string_view     szVol                       = "vol";
 static constexpr const std::string_view     szVolume                    = "volume";
 static constexpr const std::string_view     szVolume_Box                = "Volume of the box";
 static constexpr const std::string_view     szW                         = "w";
+static constexpr const std::string_view     szW_Quaternion              = "W component of the quaternion";
 static constexpr const std::string_view     szW_Box                     = "W range of the box";
 static constexpr const std::string_view     szW_Vector                  = "W component of the vector";
 static constexpr const std::string_view     szWidth                     = "width";
@@ -889,6 +892,7 @@ static constexpr const std::string_view     szWZ_Tensor                 = "WZ co
 static constexpr const std::string_view     szX                         = "x";
 static constexpr const std::string_view     szX_Box                     = "X range of the box";
 static constexpr const std::string_view     szX_Multivector             = "X component of the multivector";
+static constexpr const std::string_view     szX_Quaternion              = "X component of the quaternion";
 static constexpr const std::string_view     szX_Vector                  = "X component of the vector";
 static constexpr const std::string_view     szXW                        = "xw";
 static constexpr const std::string_view     szXW_Tensor                 = "XW component of the tensor";
@@ -902,6 +906,7 @@ static constexpr const std::string_view     szXZ_Bivector               = "XZ co
 static constexpr const std::string_view     szXZ_Tensor                 = "XZ component of the tensor";
 static constexpr const std::string_view     szY                         = "y";
 static constexpr const std::string_view     szY_Box                     = "Y range of the box";
+static constexpr const std::string_view     szY_Quaternion              = "Y component of the quaternion";
 static constexpr const std::string_view     szY_Vector                  = "Y component of the vector";
 static constexpr const std::string_view     szYW                        = "yw";
 static constexpr const std::string_view     szYW_Bivector               = "YW component of the bivector";
@@ -916,6 +921,7 @@ static constexpr const std::string_view     szYZ_Bivector               = "YZ co
 static constexpr const std::string_view     szYZ_Tensor                 = "YZ component of the tensor";
 static constexpr const std::string_view     szZ                         = "z";
 static constexpr const std::string_view     szZ_Box                     = "Z range of the box";
+static constexpr const std::string_view     szZ_Quaternion              = "Z component of the quaternion";
 static constexpr const std::string_view     szZ_Vector                  = "Z component of the vector";
 static constexpr const std::string_view     szZ_Vector2                 = "Promotes to Vector3 with a z-value";
 static constexpr const std::string_view     szZW                        = "zw";
@@ -1753,6 +1759,7 @@ static void reg_math () {
 
     {
         auto w = writer<Quadrilateral2D>();
+        w.description("2D Quadrilateral in double");
         w.property(szA, &Quadrilateral2D::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2D::b).description(szB_Quadrilateral);
         w.property(szC, &Quadrilateral2D::c).description(szC_Quadrilateral);
@@ -1761,6 +1768,7 @@ static void reg_math () {
 
     {
         auto w = writer<Quadrilateral2F>();
+        w.description("2D Quadrilateral in float");
         w.property(szA, &Quadrilateral2F::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2F::b).description(szB_Quadrilateral);
         w.property(szC, &Quadrilateral2F::c).description(szC_Quadrilateral);
@@ -1769,6 +1777,7 @@ static void reg_math () {
 
     {
         auto w = writer<Quadrilateral2I>();
+        w.description("2D Quadrilateral in integer");
         w.property(szA, &Quadrilateral2I::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2I::b).description(szB_Quadrilateral);
         w.property(szC, &Quadrilateral2I::c).description(szC_Quadrilateral);
@@ -1777,6 +1786,7 @@ static void reg_math () {
 
     {
         auto w = writer<Quadrilateral2U>();
+        w.description("2D Quadrilateral in unsigned integer");
         w.property(szA, &Quadrilateral2U::a).description(szA_Quadrilateral);
         w.property(szB, &Quadrilateral2U::b).description(szB_Quadrilateral);
         w.property(szC, &Quadrilateral2U::c).description(szC_Quadrilateral);
@@ -1795,42 +1805,48 @@ static void reg_math () {
 
     {
         auto w = writer<Quaternion3D>();
-        w.property(szW, &Quaternion3D::w);
-        w.property(szX, &Quaternion3D::x);
-        w.property(szY, &Quaternion3D::y);
-        w.property(szZ, &Quaternion3D::z);
+        w.description("3D Quaternion in double");
+        w.property(szW, &Quaternion3D::w).description(szW_Quaternion);
+        w.property(szX, &Quaternion3D::x).description(szX_Quaternion);
+        w.property(szY, &Quaternion3D::y).description(szY_Quaternion);
+        w.property(szZ, &Quaternion3D::z).description(szZ_Quaternion);
     }
 
     {
         auto w = writer<Quaternion3F>();
-        w.property(szW, &Quaternion3F::w);
-        w.property(szX, &Quaternion3F::x);
-        w.property(szY, &Quaternion3F::y);
-        w.property(szZ, &Quaternion3F::z);
+        w.description("3D Quaternion in float");
+        w.property(szW, &Quaternion3F::w).description(szW_Quaternion);
+        w.property(szX, &Quaternion3F::x).description(szX_Quaternion);
+        w.property(szY, &Quaternion3F::y).description(szY_Quaternion);
+        w.property(szZ, &Quaternion3F::z).description(szZ_Quaternion);
     }
         
     {
         auto w  = writer<RangeD>();
-        w.property(szLow, &RangeD::lo).description(szLow_Range);
-        w.property(szHigh, &RangeD::hi).description(szHigh_Range);
+        w.description("Range in double");
+        w.property(szLow, &RangeD::lo).description(szLow_Range).alias({szLo, szL});
+        w.property(szHigh, &RangeD::hi).description(szHigh_Range).alias({szHi, szH});
     }
     
     {
         auto w  = writer<RangeF>();
-        w.property(szLow, &RangeF::lo).description(szLow_Range);
-        w.property(szHigh, &RangeF::hi).description(szHigh_Range);
+        w.description("Range in float");
+        w.property(szLow, &RangeF::lo).description(szLow_Range).alias({szLo, szL});
+        w.property(szHigh, &RangeF::hi).description(szHigh_Range).alias({szHi, szH});
     }
 
     {
         auto w  = writer<RangeI>();
-        w.property(szLow, &RangeI::lo).description(szLow_Range);
-        w.property(szHigh, &RangeI::hi).description(szHigh_Range);
+        w.description("Range in integer");
+        w.property(szLow, &RangeI::lo).description(szLow_Range).alias({szLo, szL});
+        w.property(szHigh, &RangeI::hi).description(szHigh_Range).alias({szHi, szH});
     }
 
     {
         auto w  = writer<RangeU>();
-        w.property(szLow, &RangeU::lo).description(szLow_Range);
-        w.property(szHigh, &RangeU::hi).description(szHigh_Range);
+        w.description("Range in unsigned integer");
+        w.property(szLow, &RangeU::lo).description(szLow_Range).alias({szLo, szL});
+        w.property(szHigh, &RangeU::hi).description(szHigh_Range).alias({szHi, szH});
     }
 
     {
