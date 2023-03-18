@@ -761,6 +761,8 @@ static constexpr const std::string_view     szC_Triangle                = "Third
 static constexpr const std::string_view     szCenter                    = "center";
 static constexpr const std::string_view     szCenter_Box                = "Center of the box";
 static constexpr const std::string_view     szCenter_Circle             = "Center of the circle";
+static constexpr const std::string_view     szCir                       = "cir";
+static constexpr const std::string_view     szCirc                      = "circ";
 static constexpr const std::string_view     szCircumcircle              = "circumcircle";
 static constexpr const std::string_view     szCircumcircle_Box          = "Circumcircle of the box";
 static constexpr const std::string_view     szCircumference             = "circumference";
@@ -841,6 +843,7 @@ static constexpr const std::string_view     szNumerator_Fraction        = "Numer
 static constexpr const std::string_view     szNW                        = "nw";
 static constexpr const std::string_view     szOverlaps                  = "overlaps";
 static constexpr const std::string_view     szOverlaps_Box_Box          = "Tests if other box overlaps this box";
+static constexpr const std::string_view     szPeri                      = "peri";
 static constexpr const std::string_view     szPerimeter                 = "perimeter";
 static constexpr const std::string_view     szPerimeter_Box             = "Perimeter of the box";
 static constexpr const std::string_view     szPerimeter_Circle          = "Perimeter of the circle";
@@ -848,7 +851,9 @@ static constexpr const std::string_view     szPoint                     = "point
 static constexpr const std::string_view     szPoint_Ray                 = "Point of the ray";
 static constexpr const std::string_view     szProject                   = "global";
 static constexpr const std::string_view     szProject_Box               = "Project local point (u/v/w) to real space (x/y/z)";
+static constexpr const std::string_view     szPt                        = "pt";
 static constexpr const std::string_view     szR                         = "r";
+static constexpr const std::string_view     szRad                       = "rad";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
 static constexpr const std::string_view     szRe                        = "re";
@@ -876,6 +881,7 @@ static constexpr const std::string_view     szVol                       = "vol";
 static constexpr const std::string_view     szVolume                    = "volume";
 static constexpr const std::string_view     szVolume_Box                = "Volume of the box";
 static constexpr const std::string_view     szW                         = "w";
+static constexpr const std::string_view     szW_Multivector             = "W component of the multivector";
 static constexpr const std::string_view     szW_Quaternion              = "W component of the quaternion";
 static constexpr const std::string_view     szW_Box                     = "W range of the box";
 static constexpr const std::string_view     szW_Vector                  = "W component of the vector";
@@ -884,7 +890,11 @@ static constexpr const std::string_view     szWW                        = "ww";
 static constexpr const std::string_view     szWW_Tensor                 = "WW component of the tensor";
 static constexpr const std::string_view     szWX                        = "wx";
 static constexpr const std::string_view     szWX_Bivector               = "WX component of the bivector";
+static constexpr const std::string_view     szWX_Multivector            = "WX component of the multivector";
 static constexpr const std::string_view     szWX_Tensor                 = "WX component of the tensor";
+static constexpr const std::string_view     szWXY                       = "wxy";
+static constexpr const std::string_view     szWXY_Multivector           = "WXY component of the multivector";
+static constexpr const std::string_view     szWXY_Trivector             = "WXY component of the trivector";
 static constexpr const std::string_view     szWY                        = "wy";
 static constexpr const std::string_view     szWY_Tensor                 = "WY component of the tensor";
 static constexpr const std::string_view     szWZ                        = "wz";
@@ -900,35 +910,56 @@ static constexpr const std::string_view     szXX                        = "xx";
 static constexpr const std::string_view     szXX_Tensor                 = "XX component of the tensor";
 static constexpr const std::string_view     szXY                        = "xy";
 static constexpr const std::string_view     szXY_Bivector               = "XY component of the bivector";
+static constexpr const std::string_view     szXY_Multivector            = "XY component of the multivector";
 static constexpr const std::string_view     szXY_Tensor                 = "XY component of the tensor";
+static constexpr const std::string_view     szXYZ                       = "xyz";
+static constexpr const std::string_view     szXYZ_Multivector           = "XYZ component of the multivector";
+static constexpr const std::string_view     szXYZ_Trivector             = "XYZ component of the trivector";
+static constexpr const std::string_view     szXYZW                      = "xyzw";
+static constexpr const std::string_view     szXYZW_Multivector          = "XYZW component of the multivector";
+static constexpr const std::string_view     szXYZW_Quadvector           = "XYZW component of the quadvector";
 static constexpr const std::string_view     szXZ                        = "xz";
 static constexpr const std::string_view     szXZ_Bivector               = "XZ component of the bivector";
+static constexpr const std::string_view     szXZ_Multivector            = "XZ component of the multivector";
 static constexpr const std::string_view     szXZ_Tensor                 = "XZ component of the tensor";
 static constexpr const std::string_view     szY                         = "y";
 static constexpr const std::string_view     szY_Box                     = "Y range of the box";
+static constexpr const std::string_view     szY_Multivector             = "Y component of the multivector";
 static constexpr const std::string_view     szY_Quaternion              = "Y component of the quaternion";
 static constexpr const std::string_view     szY_Vector                  = "Y component of the vector";
 static constexpr const std::string_view     szYW                        = "yw";
 static constexpr const std::string_view     szYW_Bivector               = "YW component of the bivector";
+static constexpr const std::string_view     szYW_Multivector            = "YW component of the Multivector";
 static constexpr const std::string_view     szYW_Tensor                 = "YW component of the tensor";
 static constexpr const std::string_view     szYX                        = "yx";
 static constexpr const std::string_view     szYX_Bivector               = "YX component of the bivector";
+static constexpr const std::string_view     szYX_Multivector            = "YX component of the multivector";
 static constexpr const std::string_view     szYX_Tensor                 = "YX component of the tensor";
 static constexpr const std::string_view     szYY                        = "yy";
 static constexpr const std::string_view     szYY_Tensor                 = "YY component of the tensor";
 static constexpr const std::string_view     szYZ                        = "yz";
 static constexpr const std::string_view     szYZ_Bivector               = "YZ component of the bivector";
+static constexpr const std::string_view     szYZ_Multivector            = "YZ component of the multivector";
 static constexpr const std::string_view     szYZ_Tensor                 = "YZ component of the tensor";
+static constexpr const std::string_view     szYZW                       = "yzw";
+static constexpr const std::string_view     szYZW_Multivector           = "YZW component of the multivector";
+static constexpr const std::string_view     szYZW_Trivector             = "YZW component of the trivector";
 static constexpr const std::string_view     szZ                         = "z";
 static constexpr const std::string_view     szZ_Box                     = "Z range of the box";
+static constexpr const std::string_view     szZ_Multivector             = "Z component of the multivector";
 static constexpr const std::string_view     szZ_Quaternion              = "Z component of the quaternion";
 static constexpr const std::string_view     szZ_Vector                  = "Z component of the vector";
 static constexpr const std::string_view     szZ_Vector2                 = "Promotes to Vector3 with a z-value";
 static constexpr const std::string_view     szZW                        = "zw";
 static constexpr const std::string_view     szZW_Bivector               = "ZW component of the bivector";
+static constexpr const std::string_view     szZW_Multivector            = "ZW component of the multivector";
 static constexpr const std::string_view     szZW_Tensor                 = "ZW component of the tensor";
+static constexpr const std::string_view     szZWX                       = "zwx";
+static constexpr const std::string_view     szZWX_Multivector           = "ZWX component of the multivector";
+static constexpr const std::string_view     szZWX_Trivector             = "ZWX component of the trivector";
 static constexpr const std::string_view     szZX                        = "zx";
-static constexpr const std::string_view     szZX_Bivector               = "ZX component of the bivectory";
+static constexpr const std::string_view     szZX_Bivector               = "ZX component of the bivector";
+static constexpr const std::string_view     szZX_Multivector            = "ZX component of the multivector";
 static constexpr const std::string_view     szZX_Tensor                 = "ZX component of the tensor";
 static constexpr const std::string_view     szZY                        = "zy";
 static constexpr const std::string_view     szZY_Tensor                 = "ZY component of the tensor";
@@ -1342,26 +1373,24 @@ static void reg_math () {
     {
         auto w = writer<Circle2D>();
         w.description("2D circle in double");
-        w.property(szArea, &Circle2D::area).description(szArea_Circle);
+        w.property(szArea, &Circle2D::area).description(szArea_Circle).alias(szA);
         w.property(szBox, &Circle2D::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2D::point).description(szCenter_Circle);
-        w.property(szCircumference, &Circle2D::circumference).description(szCircumference);
-        w.property(szDiameter, &Circle2D::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
-        w.property(szPerimeter, &Circle2D::circumference).description(szPerimeter_Circle);
-        w.property(szRadius, &Circle2D::radius).description(szRadius_Circle).alias(szR);
+        w.property(szCenter, &Circle2D::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szCircumference, &Circle2D::circumference).description(szCircumference).alias({szCirc, szPerimeter, szPeri});
+        w.property(szDiameter, &Circle2D::diameter).description(szDiameter_Circle).alias({szDia, szD});
+        w.property(szRadius, &Circle2D::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2D::valid).description(szValid_Circle);
     }
     
     {
         auto w = writer<Circle2F>();
         w.description("2D circle in float");
-        w.property(szArea, &Circle2F::area).description(szArea_Circle);
+        w.property(szArea, &Circle2F::area).description(szArea_Circle).alias(szA);
         w.property(szBox, &Circle2F::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2F::point).description(szCenter_Circle);
-        w.property(szCircumference, &Circle2F::circumference).description(szCircumference);
-        w.property(szDiameter, &Circle2F::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
-        w.property(szPerimeter, &Circle2F::circumference).description(szPerimeter_Circle);
-        w.property(szRadius, &Circle2F::radius).description(szRadius_Circle).alias(szR);
+        w.property(szCenter, &Circle2F::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szCircumference, &Circle2F::circumference).description(szCircumference).alias({szCirc, szPerimeter, szPeri});
+        w.property(szDiameter, &Circle2F::diameter).description(szDiameter_Circle).alias({szDia, szD});
+        w.property(szRadius, &Circle2F::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2F::valid).description(szValid_Circle);
     }
     
@@ -1369,10 +1398,9 @@ static void reg_math () {
         auto w = writer<Circle2I>();
         w.description("2D circle in integer");
         w.property(szBox, &Circle2I::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2I::point).description(szCenter_Circle);
-        w.property(szDiameter, &Circle2I::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
-        w.property(szPerimeter, &Circle2I::circumference).description(szPerimeter_Circle);
-        w.property(szRadius, &Circle2I::radius).description(szRadius_Circle).alias(szR);
+        w.property(szCenter, &Circle2I::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szDiameter, &Circle2I::diameter).description(szDiameter_Circle).alias({szDia, szD});
+        w.property(szRadius, &Circle2I::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2I::valid).description(szValid_Circle);
     }
     
@@ -1380,10 +1408,9 @@ static void reg_math () {
         auto w = writer<Circle2U>();
         w.description("2D circle in unsigned int");
         w.property(szBox, &Circle2U::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2U::point).description(szCenter_Circle);
-        w.property(szDiameter, &Circle2U::diameter).description(szDiameter_Circle).alias(szDia).alias(szD);
-        w.property(szPerimeter, &Circle2U::circumference).description(szPerimeter_Circle);
-        w.property(szRadius, &Circle2U::radius).description(szRadius_Circle).alias(szR);
+        w.property(szCenter, &Circle2U::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szDiameter, &Circle2U::diameter).description(szDiameter_Circle).alias({szDia, szD});
+        w.property(szRadius, &Circle2U::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2U::valid).description(szValid_Circle);
     }
 
@@ -1641,8 +1668,8 @@ static void reg_math () {
         w.description("2D Multivector in double");
         w.property(szA, &Multivector2D::a).description(szA_Multivector);
         w.property(szX, &Multivector2D::x).description(szX_Multivector);
-        w.property(szY, &Multivector2D::y);
-        w.property(szXY, &Multivector2D::xy);
+        w.property(szY, &Multivector2D::y).description(szY_Multivector);
+        w.property(szXY, &Multivector2D::xy).description(szXY_Multivector);
     }
 
     {
@@ -1650,8 +1677,8 @@ static void reg_math () {
         w.description("2D Multivector in float");
         w.property(szA, &Multivector2F::a).description(szA_Multivector);
         w.property(szX, &Multivector2F::x).description(szX_Multivector);
-        w.property(szY, &Multivector2F::y);
-        w.property(szXY, &Multivector2F::xy);
+        w.property(szY, &Multivector2F::y).description(szY_Multivector);
+        w.property(szXY, &Multivector2F::xy).description(szXY_Multivector);
     }
 
     {
@@ -1659,12 +1686,12 @@ static void reg_math () {
         w.description("3D Multivector in double");
         w.property(szA, &Multivector3D::a).description(szA_Multivector);
         w.property(szX, &Multivector3D::x).description(szX_Multivector);
-        w.property(szY, &Multivector3D::y);
-        w.property(szZ, &Multivector3D::z);
-        w.property(szXY, &Multivector3D::xy);
-        w.property(szYZ, &Multivector3D::yz);
-        w.property(szZX, &Multivector3D::zx);
-        w.property("xyz", &Multivector3D::xyz);
+        w.property(szY, &Multivector3D::y).description(szY_Multivector);
+        w.property(szZ, &Multivector3D::z).description(szZ_Multivector);
+        w.property(szXY, &Multivector3D::xy).description(szXY_Multivector);
+        w.property(szYZ, &Multivector3D::yz).description(szYZ_Multivector);
+        w.property(szZX, &Multivector3D::zx).description(szZX_Multivector);
+        w.property(szXYZ, &Multivector3D::xyz).description(szXYZ_Multivector);
     }
 
     {
@@ -1672,12 +1699,12 @@ static void reg_math () {
         w.description("3D Multivector in float");
         w.property(szA, &Multivector3F::a).description(szA_Multivector);
         w.property(szX, &Multivector3F::x).description(szX_Multivector);
-        w.property(szY, &Multivector3F::y);
-        w.property(szZ, &Multivector3F::z);
-        w.property(szXY, &Multivector3F::xy);
-        w.property(szYZ, &Multivector3F::yz);
-        w.property(szZX, &Multivector3F::zx);
-        w.property("xyz", &Multivector3F::xyz);
+        w.property(szY, &Multivector3F::y).description(szY_Multivector);
+        w.property(szZ, &Multivector3F::z).description(szZ_Multivector);
+        w.property(szXY, &Multivector3F::xy).description(szXY_Multivector);
+        w.property(szYZ, &Multivector3F::yz).description(szYZ_Multivector);
+        w.property(szZX, &Multivector3F::zx).description(szZX_Multivector);
+        w.property(szXYZ, &Multivector3F::xyz).description(szXYZ_Multivector);
     }
 
     {
@@ -1685,20 +1712,20 @@ static void reg_math () {
         w.description("4D Multivector in double");
         w.property(szA, &Multivector4D::a).description(szA_Multivector);
         w.property(szX, &Multivector4D::x).description(szX_Multivector);
-        w.property(szY, &Multivector4D::y);
-        w.property(szZ, &Multivector4D::z);
-        w.property(szW, &Multivector4D::w);
-        w.property(szXY, &Multivector4D::xy);
-        w.property(szYZ, &Multivector4D::yz);
-        w.property(szZW, &Multivector4D::zw);
-        w.property(szWX, &Multivector4D::wx);
-        w.property(szXZ, &Multivector4D::xz);
-        w.property(szYW, &Multivector4D::yw);
-        w.property("xyz", &Multivector4D::xyz);
-        w.property("yzw", &Multivector4D::yzw);
-        w.property("zwx", &Multivector4D::zwx);
-        w.property("wxy", &Multivector4D::wxy);
-        w.property("xyzw", &Multivector4D::xyzw);
+        w.property(szY, &Multivector4D::y).description(szY_Multivector);
+        w.property(szZ, &Multivector4D::z).description(szZ_Multivector);
+        w.property(szW, &Multivector4D::w).description(szW_Multivector);
+        w.property(szXY, &Multivector4D::xy).description(szXY_Multivector);
+        w.property(szYZ, &Multivector4D::yz).description(szYZ_Multivector);
+        w.property(szZW, &Multivector4D::zw).description(szZW_Multivector);
+        w.property(szWX, &Multivector4D::wx).description(szWX_Multivector);
+        w.property(szXZ, &Multivector4D::xz).description(szXZ_Multivector);
+        w.property(szYW, &Multivector4D::yw).description(szYW_Multivector);
+        w.property(szXYZ, &Multivector4D::xyz).description(szXYZ_Multivector);
+        w.property(szYZW, &Multivector4D::yzw).description(szYZW_Multivector);
+        w.property(szZWX, &Multivector4D::zwx).description(szZWX_Multivector);
+        w.property(szWXY, &Multivector4D::wxy).description(szWXY_Multivector);
+        w.property(szXYZW, &Multivector4D::xyzw).description(szXYZW_Multivector);
     }
 
     {
@@ -1706,20 +1733,20 @@ static void reg_math () {
         w.description("4D Multivector in float");
         w.property(szA, &Multivector4F::a).description(szA_Multivector);
         w.property(szX, &Multivector4F::x).description(szX_Multivector);
-        w.property(szY, &Multivector4F::y);
-        w.property(szZ, &Multivector4F::z);
-        w.property(szW, &Multivector4F::w);
-        w.property(szXY, &Multivector4F::xy);
-        w.property(szYZ, &Multivector4F::yz);
-        w.property(szZW, &Multivector4F::zw);
-        w.property(szWX, &Multivector4F::wx);
-        w.property(szXZ, &Multivector4F::xz);
-        w.property(szYW, &Multivector4F::yw);
-        w.property("xyz", &Multivector4F::xyz);
-        w.property("yzw", &Multivector4F::yzw);
-        w.property("zwx", &Multivector4F::zwx);
-        w.property("wxy", &Multivector4F::wxy);
-        w.property("xyzw", &Multivector4F::xyzw);
+        w.property(szY, &Multivector4F::y).description(szY_Multivector);
+        w.property(szZ, &Multivector4F::z).description(szZ_Multivector);
+        w.property(szW, &Multivector4F::w).description(szW_Multivector);
+        w.property(szXY, &Multivector4F::xy).description(szXY_Multivector);
+        w.property(szYZ, &Multivector4F::yz).description(szYZ_Multivector);
+        w.property(szZW, &Multivector4F::zw).description(szZW_Multivector);
+        w.property(szWX, &Multivector4F::wx).description(szWX_Multivector);
+        w.property(szXZ, &Multivector4F::xz).description(szXZ_Multivector);
+        w.property(szYW, &Multivector4F::yw).description(szYW_Multivector);
+        w.property(szXYZ, &Multivector4F::xyz).description(szXYZ_Multivector);
+        w.property(szYZW, &Multivector4F::yzw).description(szYZW_Multivector);
+        w.property(szZWX, &Multivector4F::zwx).description(szZWX_Multivector);
+        w.property(szWXY, &Multivector4F::wxy).description(szWXY_Multivector);
+        w.property(szXYZW, &Multivector4F::xyzw).description(szXYZW_Multivector);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1795,12 +1822,14 @@ static void reg_math () {
 
     {
         auto w = writer<Quadvector4D>();
-        w.property("xyzw", &Quadvector4D::xyzw);
+        w.description("4D quadvector in double");
+        w.property(szXYZW, &Quadvector4D::xyzw).description(szXYZW_Quadvector);
     }
 
     {
         auto w = writer<Quadvector4F>();
-        w.property("xyzw", &Quadvector4F::xyzw);
+        w.description("4D quadvector in float");
+        w.property(szXYZW, &Quadvector4F::xyzw).description(szXYZW_Quadvector);
     }
 
     {
@@ -3053,58 +3082,67 @@ static void reg_math () {
 
     {
         auto w = writer<Trivector3D>();
-        w.property("xyz", &Trivector3D::xyz);
+        w.description("3D trivector in double");
+        w.property(szXYZ, &Trivector3D::xyz).description(szXYZ_Trivector);
     }
 
     {
         auto w = writer<Trivector3F>();
-        w.property("xyz", &Trivector3F::xyz);
+        w.description("3D trivector in float");
+        w.property(szXYZ, &Trivector3F::xyz).description(szXYZ_Trivector);
     }
 
     {
         auto w = writer<Trivector4D>();
-        w.property("xyz", &Trivector4D::xyz);
-        w.property("yzw", &Trivector4D::yzw);
-        w.property("zwx", &Trivector4D::zwx);
-        w.property("wxy", &Trivector4D::wxy);
+        w.description("4D trivector in double");
+        w.property(szXYZ, &Trivector4D::xyz).description(szXYZ_Trivector);
+        w.property(szYZW, &Trivector4D::yzw).description(szYZW_Trivector);
+        w.property(szZWX, &Trivector4D::zwx).description(szZWX_Trivector);
+        w.property(szWXY, &Trivector4D::wxy).description(szWXY_Trivector);
     }
 
     {
         auto w = writer<Trivector4F>();
-        w.property("xyz", &Trivector4F::xyz);
-        w.property("yzw", &Trivector4F::yzw);
-        w.property("zwx", &Trivector4F::zwx);
-        w.property("wxy", &Trivector4F::wxy);
+        w.description("4D trivector in float");
+        w.property(szXYZ, &Trivector4F::xyz).description(szXYZ_Trivector);
+        w.property(szYZW, &Trivector4F::yzw).description(szYZW_Trivector);
+        w.property(szZWX, &Trivector4F::zwx).description(szZWX_Trivector);
+        w.property(szWXY, &Trivector4F::wxy).description(szWXY_Trivector);
     }
 
     {
         auto w = writer<Vector1D>();
+        w.description("1D vector in double");
         w.property(szLength, &Vector1D::length).description(szLength_Vector).alias(szLen);
         w.property(szLength², &Vector1D::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1D::x);
+        w.property(szX, &Vector1D::x).description(szX_Vector);
     }
 
     {
         auto w = writer<Vector1F>();
+        w.description("1D vector in float");
         w.property(szLength, &Vector1F::length).description(szLength_Vector).alias(szLen);
         w.property(szLength², &Vector1F::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1F::x);
+        w.property(szX, &Vector1F::x).description(szX_Vector);
     }
 
     {
         auto w = writer<Vector1I>();
+        w.description("1D vector in integer");
         w.property(szLength², &Vector1I::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1I::x).description(szX_Vector);
     }
 
     {
         auto w = writer<Vector1U>();
+        w.description("1D vector in unsigned integer");
         w.property(szLength², &Vector1U::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1U::x).description(szX_Vector);
     }
 
     {
         auto w = writer<Vector2D>();
+        w.description("2D vector in double");
         w.property(szLength², &Vector2D::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector2D::length).description(szLength_Vector).alias(szLen);
         w.property(szX, &Vector2D::x).description(szX_Vector);
@@ -3114,6 +3152,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector2F>();
+        w.description("2D vector in float");
         w.property(szLength², &Vector2F::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector2F::length).description(szLength_Vector).alias(szLen);
         w.property(szX, &Vector2F::x).description(szX_Vector);
@@ -3123,6 +3162,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector2I>();
+        w.description("2D vector in integer");
         w.property(szLength², &Vector2I::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector2I::x).description(szX_Vector);
         w.property(szY, &Vector2I::y).description(szY_Vector);
@@ -3131,6 +3171,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector2U>();
+        w.description("2D vector in unsigned integer");
         w.property(szLength², &Vector2U::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector2U::x).description(szX_Vector);
         w.property(szY, &Vector2U::y).description(szY_Vector);
@@ -3139,6 +3180,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector3D>();
+        w.description("3D vector in double");
         w.property(szLength², &Vector3D::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector3D::length).description(szLength_Vector).alias(szLen);
         w.property(szX, &Vector3D::x).description(szX_Vector);
@@ -3148,6 +3190,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector3F>();
+        w.description("3D vector in float");
         w.property(szLength², &Vector3F::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector3F::length).description(szLength_Vector).alias(szLen);
         w.property(szX, &Vector3F::x).description(szX_Vector);
@@ -3157,6 +3200,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector3I>();
+        w.description("3D vector in integer");
         w.property(szLength², &Vector3I::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector3I::x).description(szX_Vector);
         w.property(szY, &Vector3I::y).description(szY_Vector);
@@ -3165,6 +3209,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector3U>();
+        w.description("3D vector in unsigned integer");
         w.property(szLength², &Vector3U::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector3U::x).description(szX_Vector);
         w.property(szY, &Vector3U::y).description(szY_Vector);
@@ -3173,6 +3218,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector4D>();
+        w.description("4D vector in double");
         w.property(szLength², &Vector4D::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector4D::length).description(szLength_Vector).alias(szLen);
         w.property(szX, &Vector4D::x).description(szX_Vector);
@@ -3183,6 +3229,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector4F>();
+        w.description("4D vector in float");
         w.property(szLength², &Vector4F::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector4F::length).description(szLength_Vector).alias(szLen);
         w.property(szX, &Vector4F::x).description(szX_Vector);
@@ -3193,6 +3240,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector4I>();
+        w.description("4D vector in integer");
         w.property(szLength², &Vector4I::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector4I::x).description(szX_Vector);
         w.property(szY, &Vector4I::y).description(szY_Vector);
@@ -3202,6 +3250,7 @@ static void reg_math () {
 
     {
         auto w = writer<Vector4U>();
+        w.description("4D vector in unsigned integer");
         w.property(szLength², &Vector4U::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector4U::x).description(szX_Vector);
         w.property(szY, &Vector4U::y).description(szY_Vector);
