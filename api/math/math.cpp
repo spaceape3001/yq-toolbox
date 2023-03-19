@@ -788,6 +788,7 @@ static constexpr const std::string_view     szDimension                 = "dimen
 static constexpr const std::string_view     szDimension_Box             = "Dimension(s) of the box";
 static constexpr const std::string_view     szDir                       = "dir";
 static constexpr const std::string_view     szDirection                 = "direction";
+static constexpr const std::string_view     szDirection_Normal          = "Direction of the normal";
 static constexpr const std::string_view     szDirection_Ray             = "Direction of the ray";
 static constexpr const std::string_view     szEclipses                  = "eclipses";
 static constexpr const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
@@ -1647,7 +1648,7 @@ static void reg_math () {
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Multivector
 
     {
         auto w  = writer<Multivector1D>();
@@ -1750,27 +1751,34 @@ static void reg_math () {
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Normal
 
     {
         auto w = writer<Normal2D>();
-        w.property("dir", &Normal2D::direction);
+        w.description("2D normal in double");
+        w.property(szDirection, &Normal2D::direction).description(szDirection_Normal).alias(szDir);
     }
 
     {
         auto w = writer<Normal2F>();
-        w.property("dir", &Normal2F::direction);
+        w.description("2D normal in float");
+        w.property(szDirection, &Normal2F::direction).description(szDirection_Normal).alias(szDir);
     }
 
     {
         auto w = writer<Normal3D>();
-        w.property("dir", &Normal3D::direction);
+        w.description("3D normal in double");
+        w.property(szDirection, &Normal3D::direction).description(szDirection_Normal).alias(szDir);
     }
 
     {
         auto w = writer<Normal3F>();
-        w.property("dir", &Normal3F::direction);
+        w.description("3D normal in float");
+        w.property(szDirection, &Normal3F::direction).description(szDirection_Normal).alias(szDir);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     {
         auto w = writer<Pose3D>();
