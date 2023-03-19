@@ -1888,38 +1888,44 @@ static void reg_math () {
 
     {
         auto w = writer<Ray2D>();
-        w.property("pt", &Ray2D::point);
-        w.property("dir", &Ray2D::direction);
+        w.description("2D ray in double");
+        w.property(szPoint, &Ray2D::point).description(szPoint_Ray).alias(szPt);
+        w.property(szDirection, &Ray2D::direction).description(szDirection_Ray).alias(szDir);
     }
 
     {
         auto w = writer<Ray2F>();
-        w.property("pt", &Ray2F::point);
-        w.property("dir", &Ray2F::direction);
+        w.description("2D ray in float");
+        w.property(szPoint, &Ray2F::point).description(szPoint_Ray).alias(szPt);
+        w.property(szDirection, &Ray2F::direction).description(szDirection_Ray).alias(szDir);
     }
 
     {
         auto w = writer<Ray3D>();
-        w.property("pt", &Ray3D::point);
-        w.property("dir", &Ray3D::direction);
+        w.description("3D ray in double");
+        w.property(szPoint, &Ray3D::point).description(szPoint_Ray).alias(szPt);
+        w.property(szDirection, &Ray3D::direction).description(szDirection_Ray).alias(szDir);
     }
 
     {
         auto w = writer<Ray3F>();
-        w.property("pt", &Ray3F::point);
-        w.property("dir", &Ray3F::direction);
+        w.description("3D ray in float");
+        w.property(szPoint, &Ray3F::point).description(szPoint_Ray).alias(szPt);
+        w.property(szDirection, &Ray3F::direction).description(szDirection_Ray).alias(szDir);
     }
 
     {
         auto w = writer<Ray4D>();
-        w.property("pt", &Ray4D::point);
-        w.property("dir", &Ray4D::direction);
+        w.description("4D ray in double");
+        w.property(szPoint, &Ray4D::point).description(szPoint_Ray).alias(szPt);
+        w.property(szDirection, &Ray4D::direction).description(szDirection_Ray).alias(szDir);
     }
 
     {
         auto w = writer<Ray4F>();
-        w.property("pt", &Ray4F::point);
-        w.property("dir", &Ray4F::direction);
+        w.description("4D ray in float");
+        w.property(szPoint, &Ray4F::point).description(szPoint_Ray).alias(szPt);
+        w.property(szDirection, &Ray4F::direction).description(szDirection_Ray).alias(szDir);
     }
 
     {
