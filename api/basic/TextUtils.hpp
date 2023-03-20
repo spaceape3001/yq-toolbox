@@ -37,7 +37,7 @@ namespace yq {
     bool    any_starts_igCase(const std::vector<std::string_view>&haystack, std::string_view pattern);
     
     //! Checks to see if ANY string in the left starts with the right
-    bool    any_starts_igCase(const std::initializer_list<std::string_view>&haystack, std::string_view pattern);
+    bool    any_starts_igCase(std::initializer_list<std::string_view> haystack, std::string_view pattern);
 
     
     /*! \brief Blanks all C++ comments in the given string 
@@ -2015,6 +2015,12 @@ namespace yq {
     static constexpr const bool     has_to_string_v    = std::is_same_v<std::string, decltype(to_string(T()))>;
     
 
+    //template <typename Ret, typename Sep, template <typename...> class Tmpl, typename ... T>
+    //void     join_generic(Ret& ret, const Tmpl<T...>& collection, Sep sep, size_t nSep, bool is_string)
+    //{
+        
+    //}
+    
 
     /*! Joins a collection into a separator (no separator)
     

@@ -160,7 +160,7 @@ namespace yq {
         return false;
     }
     
-    bool    any_starts_igCase(const std::initializer_list<std::string_view>&haystack, std::string_view pat)
+    bool    any_starts_igCase(std::initializer_list<std::string_view> haystack, std::string_view pat)
     {
         for(auto& s : haystack)
             if(starts_igCase(s, pat))
