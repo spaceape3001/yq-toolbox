@@ -1930,6 +1930,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGB3D>();
+        w.description("RGB color in double");
         w.property(szRed, &RGB3D::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGB3D::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGB3D::blue).description(szBlue_Color).alias(szB);
@@ -1937,6 +1938,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGB3F>();
+        w.description("RGB color in float");
         w.property(szRed, &RGB3F::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGB3F::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGB3F::blue).description(szBlue_Color).alias(szB);
@@ -1944,6 +1946,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGB3U8>();
+        w.description("RGB color in uint8");
         w.property(szRed, &RGB3U8::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGB3U8::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGB3U8::blue).description(szBlue_Color).alias(szB);
@@ -1951,6 +1954,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGB3U16>();
+        w.description("RGB color in uint16");
         w.property(szRed, &RGB3U16::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGB3U16::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGB3U16::blue).description(szBlue_Color).alias(szB);
@@ -1958,6 +1962,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGBA4D>();
+        w.description("RGBA color in double");
         w.property(szRed, &RGBA4D::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGBA4D::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGBA4D::blue).description(szBlue_Color).alias(szB);
@@ -1966,6 +1971,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGBA4F>();
+        w.description("RGBA color in float");
         w.property(szRed, &RGBA4F::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGBA4F::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGBA4F::blue).description(szBlue_Color).alias(szB);
@@ -1974,6 +1980,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGBA4U8>();
+        w.description("RGBA color in uint8");
         w.property(szRed, &RGBA4U8::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGBA4U8::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGBA4U8::blue).description(szBlue_Color).alias(szB);
@@ -1982,6 +1989,7 @@ static void reg_math () {
 
     {
         auto w   = writer<RGBA4U16>();
+        w.description("RGBA color in uint16");
         w.property(szRed, &RGBA4U16::red).description(szRed_Color).alias(szR);
         w.property(szGreen, &RGBA4U16::green).description(szGreen_Color).alias(szG);
         w.property(szBlue, &RGBA4U16::blue).description(szBlue_Color).alias(szB);
