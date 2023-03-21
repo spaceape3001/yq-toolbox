@@ -780,6 +780,7 @@ static constexpr const std::string_view     szD_Tetrahedron             = "Fourt
 static constexpr const std::string_view     szDen                       = "den";
 static constexpr const std::string_view     szDenominator               = "denominator";
 static constexpr const std::string_view     szDenominator_Fraction      = "Denominator of the fraction";
+static constexpr const std::string_view     szDepth                     = "depth";
 static constexpr const std::string_view     szDia                       = "dia";
 static constexpr const std::string_view     szDiameter                  = "diameter";
 static constexpr const std::string_view     szDiameter_Circle           = "Diameter of the circle";
@@ -882,9 +883,10 @@ static constexpr const std::string_view     szVol                       = "vol";
 static constexpr const std::string_view     szVolume                    = "volume";
 static constexpr const std::string_view     szVolume_Box                = "Volume of the box";
 static constexpr const std::string_view     szW                         = "w";
+static constexpr const std::string_view     szW_Box                     = "W range of the box";
 static constexpr const std::string_view     szW_Multivector             = "W component of the multivector";
 static constexpr const std::string_view     szW_Quaternion              = "W component of the quaternion";
-static constexpr const std::string_view     szW_Box                     = "W range of the box";
+static constexpr const std::string_view     szW_Size                    = "W component of the size, commonly referred to as the duration";
 static constexpr const std::string_view     szW_Vector                  = "W component of the vector";
 static constexpr const std::string_view     szWidth                     = "width";
 static constexpr const std::string_view     szWW                        = "ww";
@@ -904,6 +906,7 @@ static constexpr const std::string_view     szX                         = "x";
 static constexpr const std::string_view     szX_Box                     = "X range of the box";
 static constexpr const std::string_view     szX_Multivector             = "X component of the multivector";
 static constexpr const std::string_view     szX_Quaternion              = "X component of the quaternion";
+static constexpr const std::string_view     szX_Size                    = "X component of the size, commonly referred to as the width";
 static constexpr const std::string_view     szX_Vector                  = "X component of the vector";
 static constexpr const std::string_view     szXW                        = "xw";
 static constexpr const std::string_view     szXW_Tensor                 = "XW component of the tensor";
@@ -927,6 +930,7 @@ static constexpr const std::string_view     szY                         = "y";
 static constexpr const std::string_view     szY_Box                     = "Y range of the box";
 static constexpr const std::string_view     szY_Multivector             = "Y component of the multivector";
 static constexpr const std::string_view     szY_Quaternion              = "Y component of the quaternion";
+static constexpr const std::string_view     szY_Size                    = "Y component of the size, commonly referred to as the height";
 static constexpr const std::string_view     szY_Vector                  = "Y component of the vector";
 static constexpr const std::string_view     szYW                        = "yw";
 static constexpr const std::string_view     szYW_Bivector               = "YW component of the bivector";
@@ -949,6 +953,7 @@ static constexpr const std::string_view     szZ                         = "z";
 static constexpr const std::string_view     szZ_Box                     = "Z range of the box";
 static constexpr const std::string_view     szZ_Multivector             = "Z component of the multivector";
 static constexpr const std::string_view     szZ_Quaternion              = "Z component of the quaternion";
+static constexpr const std::string_view     szZ_Size                    = "Z component of the size, commonly referred to as the depth";
 static constexpr const std::string_view     szZ_Vector                  = "Z component of the vector";
 static constexpr const std::string_view     szZ_Vector2                 = "Promotes to Vector3 with a z-value";
 static constexpr const std::string_view     szZW                        = "zw";
@@ -2134,72 +2139,62 @@ static void reg_math () {
 
     {
         auto w = writer<Size2D>();
-        w.property(szX, &Size2D::x).alias({szWidth, szW});
-        w.property(szY, &Size2D::y).alias({szHeight, szH});
+        w.description("2D Size in double");
+        w.property(szX, &Size2D::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size2D::y).description(szY_Size).alias(szHeight);
     }
 
     {
         auto w = writer<Size2F>();
-        w.property(szX, &Size2F::x);
-        w.property(szY, &Size2F::y);
-        w.property(szW, &Size2F::width);
-        w.property("h", &Size2F::height);
+        w.description("2D Size in float");
+        w.property(szX, &Size2F::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size2F::y).description(szY_Size).alias(szHeight);
     }
 
     {
         auto w = writer<Size2I>();
-        w.property(szX, &Size2I::x);
-        w.property(szY, &Size2I::y);
-        w.property(szW, &Size2I::width);
-        w.property("h", &Size2I::height);
+        w.description("2D Size in integer");
+        w.property(szX, &Size2I::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size2I::y).description(szY_Size).alias(szHeight);
     }
 
     {
         auto w = writer<Size2U>();
-        w.property(szX, &Size2U::x);
-        w.property(szY, &Size2U::y);
-        w.property(szW, &Size2U::width);
-        w.property("h", &Size2U::height);
+        w.description("2D Size in unsigned integer");
+        w.property(szX, &Size2U::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size2U::y).description(szY_Size).alias(szHeight);
     }
 
     {
         auto w = writer<Size3D>();
-        w.property(szX, &Size3D::x);
-        w.property(szY, &Size3D::y);
-        w.property(szZ, &Size3D::z);
-        w.property(szW, &Size3D::width);
-        w.property("h", &Size3D::height);
-        w.property("d", &Size3D::depth);
+        w.description("3D Size in double");
+        w.property(szX, &Size3D::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size3D::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size3D::z).description(szZ_Size).alias(szDepth);
     }
 
     {
         auto w = writer<Size3F>();
-        w.property(szX, &Size3F::x);
-        w.property(szY, &Size3F::y);
-        w.property(szZ, &Size3F::z);
-        w.property(szW, &Size3F::width);
-        w.property("h", &Size3F::height);
-        w.property("d", &Size3F::depth);
+        w.description("3D Size in float");
+        w.property(szX, &Size3F::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size3F::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size3F::z).description(szZ_Size).alias(szDepth);
     }
 
     {
         auto w = writer<Size3I>();
-        w.property(szX, &Size3I::x);
-        w.property(szY, &Size3I::y);
-        w.property(szZ, &Size3I::z);
-        w.property(szW, &Size3I::width);
-        w.property("h", &Size3I::height);
-        w.property("d", &Size3I::depth);
+        w.description("3D Size in integer");
+        w.property(szX, &Size3I::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size3I::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size3I::z).description(szZ_Size).alias(szDepth);
     }
 
     {
         auto w = writer<Size3U>();
-        w.property(szX, &Size3U::x);
-        w.property(szY, &Size3U::y);
-        w.property(szZ, &Size3U::z);
-        w.property(szW, &Size3U::width);
-        w.property("h", &Size3U::height);
-        w.property("d", &Size3U::depth);
+        w.description("3D Size in unsigned integer");
+        w.property(szX, &Size3U::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size3U::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size3U::z).description(szZ_Size).alias(szDepth);
     }
 
     {
