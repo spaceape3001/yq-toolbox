@@ -761,6 +761,7 @@ static constexpr const std::string_view     szC_Triangle                = "Third
 static constexpr const std::string_view     szCenter                    = "center";
 static constexpr const std::string_view     szCenter_Box                = "Center of the box";
 static constexpr const std::string_view     szCenter_Circle             = "Center of the circle";
+static constexpr const std::string_view     szCenter_Sphere             = "Center of the sphere";
 static constexpr const std::string_view     szCir                       = "cir";
 static constexpr const std::string_view     szCirc                      = "circ";
 static constexpr const std::string_view     szCircumcircle              = "circumcircle";
@@ -858,6 +859,7 @@ static constexpr const std::string_view     szR                         = "r";
 static constexpr const std::string_view     szRad                       = "rad";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
+static constexpr const std::string_view     szRadius_Sphere             = "Radius of the sphere";
 static constexpr const std::string_view     szRe                        = "re";
 static constexpr const std::string_view     szReal                      = "real";
 static constexpr const std::string_view     szReal_Complex              = "Real component of the comolex number";
@@ -2199,50 +2201,58 @@ static void reg_math () {
 
     {
         auto w = writer<Sphere3D>();
-        w.property("pt", &Sphere3D::point);
-        w.property("r", &Sphere3D::radius);
+        w.description("3D sphere in double");
+        w.property(szCenter, &Sphere3D::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere3D::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere3F>();
-        w.property("pt", &Sphere3F::point);
-        w.property("r", &Sphere3F::radius);
+        w.description("3D sphere in float");
+        w.property(szCenter, &Sphere3F::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere3F::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere3I>();
-        w.property("pt", &Sphere3I::point);
-        w.property("r", &Sphere3I::radius);
+        w.description("3D sphere in integer");
+        w.property(szCenter, &Sphere3I::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere3I::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere3U>();
-        w.property("pt", &Sphere3U::point);
-        w.property("r", &Sphere3U::radius);
+        w.description("3D sphere in unsigned integer");
+        w.property(szCenter, &Sphere3U::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere3U::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4D>();
-        w.property("pt", &Sphere4D::point);
-        w.property("r", &Sphere4D::radius);
+        w.description("4D sphere in double");
+        w.property(szCenter, &Sphere4D::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere4D::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4F>();
-        w.property("pt", &Sphere4F::point);
-        w.property("r", &Sphere4F::radius);
+        w.description("4D sphere in float");
+        w.property(szCenter, &Sphere4F::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere4F::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4I>();
-        w.property("pt", &Sphere4I::point);
-        w.property("r", &Sphere4I::radius);
+        w.description("4D sphere in integer");
+        w.property(szCenter, &Sphere4I::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere4I::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4U>();
-        w.property("pt", &Sphere4U::point);
-        w.property("r", &Sphere4U::radius);
+        w.description("4D sphere in unsigned integer");
+        w.property(szCenter, &Sphere4U::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szRadius, &Sphere4U::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
