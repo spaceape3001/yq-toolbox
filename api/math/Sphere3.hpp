@@ -16,7 +16,7 @@ namespace yq {
 
     /*! \brief Sphere in three dimensions
     
-        This structure represents a sphere with an origin/point and a radius
+        This structure represents a sphere with an origin/center and a radius
     */
     template <typename T>
     struct Sphere3 {
@@ -24,13 +24,13 @@ namespace yq {
         using component_type   = T;
 
         //! Point/origin of the sphere
-        Vector3<T>  point;
+        Vector3<T>  center;
         
         //! Radius of the sphere
         T           radius;
         
         constexpr Sphere3() noexcept = default;
-        constexpr Sphere3(const Vector3<T>& pt, T r) : point(pt), radius(r) {}
+        constexpr Sphere3(const Vector3<T>& pt, T r) : center(pt), radius(r) {}
         constexpr Sphere3(nan_t) : Sphere3(Vector3<T>(NAN), nan_v<T>) {}
         constexpr Sphere3(zero_t) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
 
@@ -42,14 +42,14 @@ namespace yq {
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Sphere3<U>() const noexcept
         {
-            return { (Vector3<U>) point, (U) radius };
+            return { (Vector3<U>) center, (U) radius };
         }
         
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Sphere3<U>() const 
         {
-            return { (Vector3<U>) point, (U) radius };
+            return { (Vector3<U>) center, (U) radius };
         }
 
         //! Defaulted equality operator
@@ -82,7 +82,7 @@ namespace yq {
 
         constexpr AxBox3<T> bounds() const noexcept;
 
-        /*! \brief Checks if the point is inside (or touching) the sphere
+        /*! \brief Checks if the center is inside (or touching) the sphere
         */
         constexpr bool          contains(const Vector3<T>& pt) const noexcept;
 
@@ -115,18 +115,18 @@ namespace yq {
     YQ_NAN_1(Sphere3, Sphere3<T>(NAN))
     YQ_ZERO_1(Sphere3, Sphere3<T>(ZERO))
 
-    //! Creates a sphere from a point and radius
+    //! Creates a sphere from a center and radius
     template <typename T>
-    constexpr Sphere3<T>  sphere(const Vector3<T>& point, std::type_identity_t<T> radius) noexcept
+    constexpr Sphere3<T>  sphere(const Vector3<T>& center, std::type_identity_t<T> radius) noexcept
     {
-        return {point, radius};
+        return {center, radius};
     }
 
 //  --------------------------------------------------------
 //  --------------------------------------------------------
 
-    YQ_IS_FINITE_1(Sphere3, is_finite(v.point) && is_finite(v.radius))
-    YQ_IS_NAN_1(Sphere3, is_nan(v.point) || is_nan(v.radius))
+    YQ_IS_FINITE_1(Sphere3, is_finite(v.center) && is_finite(v.radius))
+    YQ_IS_NAN_1(Sphere3, is_nan(v.center) || is_nan(v.radius))
 
     template <typename T, typename U>
     requires is_arithmetic_v<T>

@@ -27,38 +27,38 @@ namespace yq {
     template <typename T>
     constexpr Sphere3<T> Sphere3<T>::operator+() const noexcept
     {
-        return Sphere3<T>(point, radius);
+        return Sphere3<T>(center, radius);
     }
     
     template <typename T>
     constexpr Sphere3<T> Sphere3<T>::operator-() const noexcept
     {
-        return Sphere3<T>(-point, -radius);
+        return Sphere3<T>(-center, -radius);
     }
 
     template <typename T>
     constexpr Sphere3<T>   Sphere3<T>::operator+(const Vector3<T>&b) const noexcept
     {
-        return Sphere3<T>(point+b, radius);
+        return Sphere3<T>(center+b, radius);
     }
 
     template <typename T>
     Sphere3<T>&            Sphere3<T>::operator+=(const Vector3<T>&b) noexcept
     {
-        point += b;
+        center += b;
         return *this;
     }
 
     template <typename T>
     constexpr Sphere3<T>   Sphere3<T>::operator-(const Vector3<T>&b) const noexcept
     {
-        return Sphere3<T>(point-b,radius);
+        return Sphere3<T>(center-b,radius);
     }
 
     template <typename T>
     Sphere3<T>&            Sphere3<T>::operator-=(const Vector3<T>&b) noexcept
     {
-        point -= b;
+        center -= b;
         return *this;
     }
     
@@ -67,7 +67,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Sphere3<product_t<T,U>> Sphere3<T>::operator*(U b) const noexcept
     {
-        return Sphere3<product_t<T,U>>( point*b, radius*positive(b));
+        return Sphere3<product_t<T,U>>( center*b, radius*positive(b));
     }
     
     template <typename T>
@@ -75,7 +75,7 @@ namespace yq {
     requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Sphere3<T>& Sphere3<T>::operator*=(U b) noexcept
     {
-        point  *= b;
+        center  *= b;
         radius *= positive(b);
         return *this;
     }
@@ -85,7 +85,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Sphere3<quotient_t<T,U>> Sphere3<T>::operator/(U b) const noexcept
     {
-        return Sphere3<quotient_t<T,U>>( point/b, radius/positive(b));
+        return Sphere3<quotient_t<T,U>>( center/b, radius/positive(b));
     }
     
     template <typename T>
@@ -93,7 +93,7 @@ namespace yq {
     requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Sphere3<T>& Sphere3<T>::operator/=(U b) noexcept
     {
-        point  /= b;
+        center  /= b;
         radius /= positive(b);
         return *this;
     }
@@ -103,15 +103,15 @@ namespace yq {
     {
         T       r   = abs(radius);
         return {
-            all(point) - r,
-            all(point) + r
+            all(center) - r,
+            all(center) + r
         };
     }
 
     template <typename T>
     constexpr bool  Sphere3<T>::contains(const Vector3<T>& pt) const noexcept
     {
-        return (pt-point) <= radius * radius;
+        return (pt-center) <= radius * radius;
     }
 
     template <typename T>
@@ -123,7 +123,7 @@ namespace yq {
     template <typename T>
     constexpr Sphere3<T> Sphere3<T>::fixed() const noexcept
     {
-        return Sphere3<T>(point, positive(radius));
+        return Sphere3<T>(center, positive(radius));
     }
 
     template <typename T>
@@ -151,7 +151,7 @@ namespace yq {
     requires is_arithmetic_v<T>
     Sphere3<product_t<T,U>> operator*(T a, const Sphere3<U>& b)
     {
-        return Sphere3<product_t<T,U>>(a*b.point, positive(a)*b.radius);
+        return Sphere3<product_t<T,U>>(a*b.center, positive(a)*b.radius);
     }
 
     template <typename T>

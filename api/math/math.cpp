@@ -1383,7 +1383,7 @@ static void reg_math () {
         w.description("2D circle in double");
         w.property(szArea, &Circle2D::area).description(szArea_Circle).alias(szA);
         w.property(szBox, &Circle2D::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2D::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szCenter, &Circle2D::center).description(szCenter_Circle).alias({szPoint, szPt});
         w.property(szCircumference, &Circle2D::circumference).description(szCircumference).alias({szCirc, szPerimeter, szPeri});
         w.property(szDiameter, &Circle2D::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2D::radius).description(szRadius_Circle).alias({szRad, szR});
@@ -1395,7 +1395,7 @@ static void reg_math () {
         w.description("2D circle in float");
         w.property(szArea, &Circle2F::area).description(szArea_Circle).alias(szA);
         w.property(szBox, &Circle2F::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2F::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szCenter, &Circle2F::center).description(szCenter_Circle).alias({szPoint, szPt});
         w.property(szCircumference, &Circle2F::circumference).description(szCircumference).alias({szCirc, szPerimeter, szPeri});
         w.property(szDiameter, &Circle2F::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2F::radius).description(szRadius_Circle).alias({szRad, szR});
@@ -1406,7 +1406,7 @@ static void reg_math () {
         auto w = writer<Circle2I>();
         w.description("2D circle in integer");
         w.property(szBox, &Circle2I::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2I::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szCenter, &Circle2I::center).description(szCenter_Circle).alias({szPoint, szPt});
         w.property(szDiameter, &Circle2I::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2I::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2I::valid).description(szValid_Circle);
@@ -1416,7 +1416,7 @@ static void reg_math () {
         auto w = writer<Circle2U>();
         w.description("2D circle in unsigned int");
         w.property(szBox, &Circle2U::bounds).description(szBox_Circle);
-        w.property(szCenter, &Circle2U::point).description(szCenter_Circle).alias({szPoint, szPt});
+        w.property(szCenter, &Circle2U::center).description(szCenter_Circle).alias({szPoint, szPt});
         w.property(szDiameter, &Circle2U::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2U::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2U::valid).description(szValid_Circle);
@@ -2202,56 +2202,56 @@ static void reg_math () {
     {
         auto w = writer<Sphere3D>();
         w.description("3D sphere in double");
-        w.property(szCenter, &Sphere3D::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere3D::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3D::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere3F>();
         w.description("3D sphere in float");
-        w.property(szCenter, &Sphere3F::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere3F::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3F::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere3I>();
         w.description("3D sphere in integer");
-        w.property(szCenter, &Sphere3I::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere3I::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3I::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere3U>();
         w.description("3D sphere in unsigned integer");
-        w.property(szCenter, &Sphere3U::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere3U::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3U::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4D>();
         w.description("4D sphere in double");
-        w.property(szCenter, &Sphere4D::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere4D::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4D::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4F>();
         w.description("4D sphere in float");
-        w.property(szCenter, &Sphere4F::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere4F::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4F::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4I>();
         w.description("4D sphere in integer");
-        w.property(szCenter, &Sphere4I::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere4I::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4I::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 
     {
         auto w = writer<Sphere4U>();
         w.description("4D sphere in unsigned integer");
-        w.property(szCenter, &Sphere4U::point).description(szCenter_Sphere).alias({szPoint, szPt});
+        w.property(szCenter, &Sphere4U::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4U::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
 

@@ -20,14 +20,14 @@ namespace yq {
         //! Component type (ie, the template parameter)
         using component_t   = T;
 
-        //! Center point
-        Vector2<T>  point;
+        //! Center center
+        Vector2<T>  center;
         
         //! Radius
         T           radius;
         
         constexpr Circle2() noexcept = default;
-        constexpr Circle2(const Vector2<T>& pt, T r) : point(pt), radius(r) {}
+        constexpr Circle2(const Vector2<T>& pt, T r) : center(pt), radius(r) {}
         constexpr Circle2(nan_t) : Circle2(Vector2<T>(NAN), nan_v<T>) {}
         constexpr Circle2(zero_t) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
         
@@ -39,14 +39,14 @@ namespace yq {
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Circle2<U>() const noexcept
         {
-            return { (Vector2<U>) point, (U) radius };
+            return { (Vector2<U>) center, (U) radius };
         }
         
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Circle2<U>() const 
         {
-            return { (Vector2<U>) point, (U) radius };
+            return { (Vector2<U>) center, (U) radius };
         }
 
         //! Equality operator (defaulted)
@@ -85,21 +85,21 @@ namespace yq {
         
         /*! \brief Computes the circumference
         */
-        constexpr T     circumference() const noexcept;
+        constexpr T         circumference() const noexcept;
 
-        /*! \brief Checks if the point is inside (or touching) the circle
+        /*! \brief Checks if the center is inside (or touching) the circle
         */
-        constexpr bool          contains(const Vector2<T>& pt) const noexcept;
+        constexpr bool      contains(const Vector2<T>& pt) const noexcept;
         
         /*! \brief Computes the diameter
         */
-        constexpr T     diameter() const noexcept;
+        constexpr T         diameter() const noexcept;
         
         //! Returns a fixed copy of the circle (if it's invalid and possible to do)
         constexpr Circle2   fixed() const noexcept;
 
         //! TRUE if the radius is greater than zero!
-        constexpr bool    valid() const noexcept;
+        constexpr bool      valid() const noexcept;
     };
 
     YQ_IEEE754_1(Circle2)
@@ -111,17 +111,17 @@ namespace yq {
     YQ_NAN_1(Circle2, Circle2<T>(NAN))
     YQ_ZERO_1(Circle2, Circle2<T>(ZERO))
 
-    /*! \brief Creates cricle from point and radius
+    /*! \brief Creates cricle from center and radius
     */
     template <typename T>
-    Circle2<T>  circle(const Vector2<T>& point, T radius)
+    Circle2<T>  circle(const Vector2<T>& center, T radius)
     {
-        return {point, radius};
+        return {center, radius};
     }
 
     
-    YQ_IS_FINITE_1(Circle2, is_finite(v.point) && is_finite(v.radius))
-    YQ_IS_NAN_1(Circle2, is_nan(v.point) || is_nan(v.radius))
+    YQ_IS_FINITE_1(Circle2, is_finite(v.center) && is_finite(v.radius))
+    YQ_IS_NAN_1(Circle2, is_nan(v.center) || is_nan(v.radius))
 
     template <typename T, typename U>
     requires is_arithmetic_v<T>

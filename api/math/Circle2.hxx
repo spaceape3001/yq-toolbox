@@ -26,38 +26,38 @@ namespace yq {
     template <typename T>
     constexpr Circle2<T> Circle2<T>::operator+() const noexcept
     {
-        return Circle2<T>(point, radius);
+        return Circle2<T>(center, radius);
     }
     
     template <typename T>
     constexpr Circle2<T> Circle2<T>::operator-() const noexcept
     {
-        return Circle2<T>(-point, -radius);
+        return Circle2<T>(-center, -radius);
     }
 
     template <typename T>
     constexpr Circle2<T>   Circle2<T>::operator+(const Vector2<T>&b) const noexcept
     {
-        return Circle2<T>(point+b, radius);
+        return Circle2<T>(center+b, radius);
     }
 
     template <typename T>
     Circle2<T>&            Circle2<T>::operator+=(const Vector2<T>&b) noexcept
     {
-        point += b;
+        center += b;
         return *this;
     }
 
     template <typename T>
     constexpr Circle2<T>   Circle2<T>::operator-(const Vector2<T>&b) const noexcept
     {
-        return Circle2<T>(point-b,radius);
+        return Circle2<T>(center-b,radius);
     }
 
     template <typename T>
     Circle2<T>&            Circle2<T>::operator-=(const Vector2<T>&b) noexcept
     {
-        point -= b;
+        center -= b;
         return *this;
     }
     
@@ -66,7 +66,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Circle2<product_t<T,U>> Circle2<T>::operator*(U b) const noexcept
     {
-        return Circle2<product_t<T,U>>( point*b, radius*positive(b));
+        return Circle2<product_t<T,U>>( center*b, radius*positive(b));
     }
     
     template <typename T>
@@ -74,7 +74,7 @@ namespace yq {
     requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Circle2<T>& Circle2<T>::operator*=(U b) noexcept
     {
-        point  *= b;
+        center  *= b;
         radius *= positive(b);
         return *this;
     }
@@ -84,7 +84,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Circle2<quotient_t<T,U>> Circle2<T>::operator/(U b) const noexcept
     {
-        return Circle2<quotient_t<T,U>>( point/b, radius/positive(b));
+        return Circle2<quotient_t<T,U>>( center/b, radius/positive(b));
     }
     
     
@@ -93,7 +93,7 @@ namespace yq {
     requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Circle2<T>& Circle2<T>::operator/=(U b) noexcept
     {
-        point  /= b;
+        center  /= b;
         radius /= positive(b);
         return *this;
     }
@@ -112,7 +112,7 @@ namespace yq {
     constexpr AxBox2<T>   Circle2<T>::bounds() const noexcept 
     {
         T       r   = abs(radius);
-        return AxBox2<T>(all(point) - r, all(point) + r);
+        return AxBox2<T>(all(center) - r, all(center) + r);
     }
     #endif
     
@@ -128,7 +128,7 @@ namespace yq {
     template <typename T>
     constexpr bool  Circle2<T>::contains(const Vector2<T>& pt) const noexcept
     {
-        return (pt-point) <= radius * radius;
+        return (pt-center) <= radius * radius;
     }
 
     template <typename T>
@@ -140,7 +140,7 @@ namespace yq {
     template <typename T>
     constexpr Circle2<T> Circle2<T>::fixed() const noexcept
     {
-        return Circle2<T>(point, positive(radius));
+        return Circle2<T>(center, positive(radius));
     }
 
     template <typename T>
@@ -156,7 +156,7 @@ namespace yq {
     requires is_arithmetic_v<T>
     Circle2<product_t<T,U>> operator*(T a, const Circle2<U>& b)
     {
-        return Circle2<product_t<T,U>>(a*b.point, positive(a)*b.radius);
+        return Circle2<product_t<T,U>>(a*b.center, positive(a)*b.radius);
     }
 
     #ifdef YQ_MATH_AXBOX2_HPP

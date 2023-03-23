@@ -27,38 +27,38 @@ namespace yq {
     template <typename T>
     constexpr Sphere4<T> Sphere4<T>::operator+() const noexcept
     {
-        return Sphere4<T>(point, radius);
+        return Sphere4<T>(center, radius);
     }
     
     template <typename T>
     constexpr Sphere4<T> Sphere4<T>::operator-() const noexcept
     {
-        return Sphere4<T>(-point, -radius);
+        return Sphere4<T>(-center, -radius);
     }
 
     template <typename T>
     constexpr Sphere4<T>   Sphere4<T>::operator+(const Vector4<T>&b) const noexcept
     {
-        return Sphere4<T>(point+b, radius);
+        return Sphere4<T>(center+b, radius);
     }
 
     template <typename T>
     Sphere4<T>&            Sphere4<T>::operator+=(const Vector4<T>&b) noexcept
     {
-        point += b;
+        center += b;
         return *this;
     }
 
     template <typename T>
     constexpr Sphere4<T>   Sphere4<T>::operator-(const Vector4<T>&b) const noexcept
     {
-        return Sphere4<T>(point-b,radius);
+        return Sphere4<T>(center-b,radius);
     }
 
     template <typename T>
     Sphere4<T>&            Sphere4<T>::operator-=(const Vector4<T>&b) noexcept
     {
-        point -= b;
+        center -= b;
         return *this;
     }
     
@@ -67,7 +67,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Sphere4<product_t<T,U>> Sphere4<T>::operator*(U b) const noexcept
     {
-        return Sphere4<product_t<T,U>>( point*b, radius*positive(b));
+        return Sphere4<product_t<T,U>>( center*b, radius*positive(b));
     }
     
     template <typename T>
@@ -75,7 +75,7 @@ namespace yq {
     requires (is_arithmetic_v<U> && self_mul_v<T,U>)
     Sphere4<T>& Sphere4<T>::operator*=(U b) noexcept
     {
-        point  *= b;
+        center  *= b;
         radius *= positive(b);
         return *this;
     }
@@ -85,7 +85,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Sphere4<quotient_t<T,U>> Sphere4<T>::operator/(U b) const noexcept
     {
-        return Sphere4<quotient_t<T,U>>( point/b, radius/positive(b));
+        return Sphere4<quotient_t<T,U>>( center/b, radius/positive(b));
     }
     
     template <typename T>
@@ -93,7 +93,7 @@ namespace yq {
     requires (is_arithmetic_v<U> && self_div_v<T,U>)
     Sphere4<T>& Sphere4<T>::operator/=(U b) noexcept
     {
-        point  /= b;
+        center  /= b;
         radius /= positive(b);
         return *this;
     }
@@ -103,13 +103,13 @@ namespace yq {
     constexpr AxBox4<T>   Sphere4<T>::bounds() const noexcept
     {
         T       r   = abs(radius);
-        return { all(point) - r, all(point) + r };
+        return { all(center) - r, all(center) + r };
     }
 
     template <typename T>
     constexpr bool  Sphere4<T>::contains(const Vector4<T>& pt) const noexcept
     {
-        return (pt-point) <= radius * radius;
+        return (pt-center) <= radius * radius;
     }
 
     template <typename T>
@@ -125,7 +125,7 @@ namespace yq {
     requires is_arithmetic_v<T>
     Sphere4<product_t<T,U>> operator*(T a, const Sphere4<U>& b)
     {
-        return Sphere4<product_t<T,U>>(a*b.point, positive(a)*b.radius);
+        return Sphere4<product_t<T,U>>(a*b.center, positive(a)*b.radius);
     }
 
     //! Returns the axially aligned box of a sphere
