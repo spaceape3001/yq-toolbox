@@ -769,6 +769,7 @@ static constexpr const std::string_view     szCircumcircle_Box          = "Circu
 static constexpr const std::string_view     szCircumference             = "circumference";
 static constexpr const std::string_view     szCircumference_Circle      = "Circumference of the circle";
 static constexpr const std::string_view     szCnt                       = "cnt";
+static constexpr const std::string_view     szCorner                    = "corner";
 static constexpr const std::string_view     szCount                     = "count";
 static constexpr const std::string_view     szCount_Count               = "Count of the counter";
 static constexpr const std::string_view     szContains                  = "contains";
@@ -852,6 +853,9 @@ static constexpr const std::string_view     szPerimeter_Box             = "Perim
 static constexpr const std::string_view     szPerimeter_Circle          = "Perimeter of the circle";
 static constexpr const std::string_view     szPoint                     = "point";
 static constexpr const std::string_view     szPoint_Ray                 = "Point of the ray";
+static constexpr const std::string_view     szPos                       = "pos";
+static constexpr const std::string_view     szPosition                  = "position";
+static constexpr const std::string_view     szPosition_Rectangle        = "Corner of the rectangle, it's nominal position";
 static constexpr const std::string_view     szProject                   = "global";
 static constexpr const std::string_view     szProject_Box               = "Project local point (u/v/w) to real space (x/y/z)";
 static constexpr const std::string_view     szPt                        = "pt";
@@ -869,6 +873,7 @@ static constexpr const std::string_view     szSE                        = "se";
 static constexpr const std::string_view     szSArea                     = "sarea";
 static constexpr const std::string_view     szSize                      = "size";
 static constexpr const std::string_view     szSize_Box                  = "Size of the box";
+static constexpr const std::string_view     szSize_Rectangle            = "Size of the rectangle";
 static constexpr const std::string_view     szSoutheast                 = "southeast";
 static constexpr const std::string_view     szSoutheast_Box             = "North-east corner of the box";
 static constexpr const std::string_view     szSouthwest                 = "southwest";
@@ -2005,26 +2010,30 @@ static void reg_math () {
 
     {
         auto w = writer<Rectangle2D>();
-        w.property("pos", &Rectangle2D::position);
-        w.property("size", &Rectangle2D::size);
+        w.description("2D rectangle in double");
+        w.property(szPosition, &Rectangle2D::position).description(szPosition_Rectangle).alias({szPos, szCorner});
+        w.property(szSize, &Rectangle2D::size).description(szSize_Rectangle);
     }
 
     {
         auto w = writer<Rectangle2F>();
-        w.property("pos", &Rectangle2F::position);
-        w.property("size", &Rectangle2F::size);
+        w.description("2D rectangle in float");
+        w.property(szPosition, &Rectangle2F::position).description(szPosition_Rectangle).alias({szPos, szCorner});
+        w.property(szSize, &Rectangle2F::size).description(szSize_Rectangle);
     }
 
     {
         auto w = writer<Rectangle2I>();
-        w.property("pos", &Rectangle2I::position);
-        w.property("size", &Rectangle2I::size);
+        w.description("2D rectangle in integer");
+        w.property(szPosition, &Rectangle2I::position).description(szPosition_Rectangle).alias({szPos, szCorner});
+        w.property(szSize, &Rectangle2I::size).description(szSize_Rectangle);
     }
 
     {
         auto w = writer<Rectangle2U>();
-        w.property("pos", &Rectangle2U::position);
-        w.property("size", &Rectangle2U::size);
+        w.description("2D rectangle in unsigned integer");
+        w.property(szPosition, &Rectangle2U::position).description(szPosition_Rectangle).alias({szPos, szCorner});
+        w.property(szSize, &Rectangle2U::size).description(szSize_Rectangle);
     }
 
     {
