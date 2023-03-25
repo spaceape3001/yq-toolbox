@@ -845,6 +845,9 @@ static constexpr const std::string_view     szNum                       = "num";
 static constexpr const std::string_view     szNumerator                 = "numerator";
 static constexpr const std::string_view     szNumerator_Fraction        = "Numerator of the fraction";
 static constexpr const std::string_view     szNW                        = "nw";
+static constexpr const std::string_view     szOri                       = "ori";
+static constexpr const std::string_view     szOrientation               = "orientation";
+static constexpr const std::string_view     szOrientation_Pose          = "Orientation of the pose";
 static constexpr const std::string_view     szOverlaps                  = "overlaps";
 static constexpr const std::string_view     szOverlaps_Box_Box          = "Tests if other box overlaps this box";
 static constexpr const std::string_view     szPeri                      = "peri";
@@ -855,6 +858,7 @@ static constexpr const std::string_view     szPoint                     = "point
 static constexpr const std::string_view     szPoint_Ray                 = "Point of the ray";
 static constexpr const std::string_view     szPos                       = "pos";
 static constexpr const std::string_view     szPosition                  = "position";
+static constexpr const std::string_view     szPosition_Pose             = "Position of the pose";
 static constexpr const std::string_view     szPosition_Rectangle        = "Corner of the rectangle, it's nominal position";
 static constexpr const std::string_view     szProject                   = "global";
 static constexpr const std::string_view     szProject_Box               = "Project local point (u/v/w) to real space (x/y/z)";
@@ -1790,20 +1794,25 @@ static void reg_math () {
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Pose
 
     {
         auto w = writer<Pose3D>();
-        w.property("ori", &Pose3D::orientation);
-        w.property("pos", &Pose3D::position);
+        w.description("3D pos in double");
+        w.property(szOrientation, &Pose3D::orientation).description(szOrientation_Pose).alias(szOri);
+        w.property(szPosition, &Pose3D::position).description(szPosition_Pose).alias(szPos);
     }
 
     {
         auto w = writer<Pose3F>();
-        w.property("ori", &Pose3F::orientation);
-        w.property("pos", &Pose3F::position);
+        w.description("3D pos in float");
+        w.property(szOrientation, &Pose3F::orientation).description(szOrientation_Pose).alias(szOri);
+        w.property(szPosition, &Pose3F::position).description(szPosition_Pose).alias(szPos);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Quadrilateral
+    
     {
         auto w = writer<Quadrilateral2D>();
         w.description("2D Quadrilateral in double");
@@ -1840,6 +1849,9 @@ static void reg_math () {
         w.property(szD, &Quadrilateral2U::d).description(szD_Quadrilateral);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Quadvector
+    
     {
         auto w = writer<Quadvector4D>();
         w.description("4D quadvector in double");
@@ -1851,6 +1863,9 @@ static void reg_math () {
         w.description("4D quadvector in float");
         w.property(szXYZW, &Quadvector4F::xyzw).description(szXYZW_Quadvector);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Quaternion
 
     {
         auto w = writer<Quaternion3D>();
@@ -1870,6 +1885,9 @@ static void reg_math () {
         w.property(szZ, &Quaternion3F::z).description(szZ_Quaternion);
     }
         
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Range
+
     {
         auto w  = writer<RangeD>();
         w.description("Range in double");
@@ -1897,6 +1915,9 @@ static void reg_math () {
         w.property(szLow, &RangeU::lo).description(szLow_Range).alias({szLo, szL});
         w.property(szHigh, &RangeU::hi).description(szHigh_Range).alias({szHi, szH});
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Rays
 
     {
         auto w = writer<Ray2D>();
@@ -1939,6 +1960,9 @@ static void reg_math () {
         w.property(szPoint, &Ray4F::point).description(szPoint_Ray).alias(szPt);
         w.property(szDirection, &Ray4F::direction).description(szDirection_Ray).alias(szDir);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  RGB Colors
 
     {
         auto w   = writer<RGB3D>();
@@ -2008,6 +2032,9 @@ static void reg_math () {
         w.property(szAlpha, &RGBA4U16::alpha).description(szAlpha_Color).alias(szA);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Rectangle
+
     {
         auto w = writer<Rectangle2D>();
         w.description("2D rectangle in double");
@@ -2035,6 +2062,9 @@ static void reg_math () {
         w.property(szPosition, &Rectangle2U::position).description(szPosition_Rectangle).alias({szPos, szCorner});
         w.property(szSize, &Rectangle2U::size).description(szSize_Rectangle);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Segment
 
     {
         auto w = writer<Segment1D>();
@@ -2148,6 +2178,9 @@ static void reg_math () {
         w.property(szB, &Segment4U::b).description(szB_Segment);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Size
+
     {
         auto w = writer<Size2D>();
         w.description("2D Size in double");
@@ -2208,6 +2241,9 @@ static void reg_math () {
         w.property(szZ, &Size3U::z).description(szZ_Size).alias(szDepth);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Sphere
+
     {
         auto w = writer<Sphere3D>();
         w.description("3D sphere in double");
@@ -2263,6 +2299,9 @@ static void reg_math () {
         w.property(szCenter, &Sphere4U::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4U::radius).description(szRadius_Sphere).alias({szRad, szR});
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Tensor
 
     {
         auto w = writer<Tensor11D>();
@@ -2984,6 +3023,9 @@ static void reg_math () {
         w.property(szWW, &Tensor44U::ww).description(szWW_Tensor);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Tetrahedron
+
     {
         auto w = writer<Tetrahedron3D>();
         w.description("3D Tetrahedron in double");
@@ -3019,6 +3061,9 @@ static void reg_math () {
         w.property(szC, &Tetrahedron3U::c).description(szC_Tetrahedron);
         w.property(szD, &Tetrahedron3U::d).description(szD_Tetrahedron);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Triangle
 
     {
         auto w = writer<Triangle2D>();
@@ -3116,6 +3161,9 @@ static void reg_math () {
         w.property(szC, &Triangle4U::c).description(szC_Triangle);
     }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Trivector
+
     {
         auto w = writer<Trivector3D>();
         w.description("3D trivector in double");
@@ -3145,6 +3193,9 @@ static void reg_math () {
         w.property(szZWX, &Trivector4F::zwx).description(szZWX_Trivector);
         w.property(szWXY, &Trivector4F::wxy).description(szWXY_Trivector);
     }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Vector
 
     {
         auto w = writer<Vector1D>();
