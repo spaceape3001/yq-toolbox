@@ -12,8 +12,13 @@
 #include <math/Fraction.hpp>
 #include <math/Pose3.hpp>
 #include <math/Range.hpp>
-#include <math/RGB.hpp>
-#include <math/RGBA.hpp>
+
+#include <math/color/RGB.hpp>
+#include <math/color/RGBA.hpp>
+
+#include <math/coord/LatLon.hpp>
+#include <math/coord/LatLonAlt.hpp>
+#include <math/coord/Polar2.hpp>
 
 
 #include <math/shape/AxBox1.hpp>
@@ -3357,12 +3362,16 @@ namespace yq {
 
 #include "Fraction.hxx"
 
+#include "coord/LatLon.hxx"
+#include "coord/LatLonAlt.hxx"
+#include "coord/Polar2.hxx"
+
 #include "Pose2.hxx"
 #include "Pose3.hxx"
 #include "Range.hxx"
 
-#include "RGB.hxx"
-#include "RGBA.hxx"
+#include "color/RGB.hxx"
+#include "color/RGBA.hxx"
 
 
 #include "shape/AxBox1.hxx"

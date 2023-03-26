@@ -7,7 +7,7 @@
 #pragma once
 
 #include <math/preamble.hpp>
-#include <math/RGB.hpp>
+#include <math/color/RGB.hpp>
 
 namespace yq {
 

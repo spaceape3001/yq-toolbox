@@ -150,7 +150,9 @@ namespace yq {
     
         //  Some types/constants to work the constructors in magical ways :)
     
-
+    template <typename> struct LatLon;
+    template <typename, typename> struct LatLonAlt;
+    template <typename,typename> struct Polar2;
     
     template <typename> struct PolygonData;
     template <typename> struct PolylineData;
@@ -252,6 +254,15 @@ namespace yq {
     using ComplexU                  = std::complex<unsigned>;
 
     
+    //  ------------------------------------------------
+    //  Coordinates
+    
+    using LL                    = LatLon<Radian>;
+    using LLH                   = LatLonAlt<Radian,double>;
+    using LLM                   = LatLonAlt<Radian,Meter>;
+    
+    using Polar2D               = Polar2<Radian,double>;
+    using Polar2M               = Polar2<Radian,Meter>;
 
     //  ------------------------------------------------
     //  FORWARD DECLARE VECTORS & TENSOR (RELATED)
@@ -377,11 +388,13 @@ namespace yq {
     using Vector2D                  = Vector2<double>;
     using Vector2F                  = Vector2<float>;
     using Vector2I                  = Vector2<int>;
+    using Vector2M                  = Vector2<Meter>;
     using Vector2U                  = Vector2<unsigned>;
 
     using Vector3D                  = Vector3<double>;
     using Vector3F                  = Vector3<float>;
     using Vector3I                  = Vector3<int>;
+    using Vector3M                  = Vector3<Meter>;
     using Vector3U                  = Vector3<unsigned>;
 
     using Vector4D                  = Vector4<double>;
@@ -402,11 +415,13 @@ namespace yq {
     using AxBox2F                   = AxBox2<float>;
     using AxBox2I                   = AxBox2<int>;
     using AxBox2U                   = AxBox2<unsigned>;
+    using AxBox2M                   = AxBox2<Meter>;
 
     using AxBox3D                   = AxBox3<double>;
     using AxBox3F                   = AxBox3<float>;
     using AxBox3I                   = AxBox3<int>;
     using AxBox3U                   = AxBox3<unsigned>;
+    using AxBox3M                   = AxBox3<Meter>;
 
     using AxBox4D                   = AxBox4<double>;
     using AxBox4F                   = AxBox4<float>;
@@ -512,6 +527,7 @@ namespace yq {
     using Size2I16                  = Size2<int16_t>;
     using Size2I32                  = Size2<int32_t>;
     using Size2I64                  = Size2<int64_t>;
+    using Size2M                    = Size2<Meter>;
     using Size2U                    = Size2<unsigned>;
     using Size2U8                   = Size2<int8_t>;
     using Size2U16                  = Size2<int16_t>;
@@ -526,6 +542,7 @@ namespace yq {
     using Size3I16                  = Size3<int16_t>;
     using Size3I33                  = Size3<int32_t>;
     using Size3I64                  = Size3<int64_t>;
+    using Size3M                    = Size3<Meter>;
     using Size3U                    = Size3<unsigned>;
     using Size3U8                   = Size3<int8_t>;
     using Size3U16                  = Size3<int16_t>;
