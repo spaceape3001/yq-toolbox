@@ -7,102 +7,103 @@
 #include <math/preamble.hpp>
 #include <math/Complex.hpp>
 #include <math/Coord2.hpp>
-#include <math/Dimension.hpp>
+#include <math/Counter.hpp>
+#include <math/unit/Dimension.hpp>
 #include <math/Fraction.hpp>
+#include <math/Pose3.hpp>
+#include <math/Range.hpp>
 #include <math/RGB.hpp>
 #include <math/RGBA.hpp>
-#include <math/Pose3.hpp>
 
 
-#include <math/AxBox1.hpp>
-#include <math/AxBox2.hpp>
-#include <math/AxBox3.hpp>
-#include <math/AxBox4.hpp>
+#include <math/shape/AxBox1.hpp>
+#include <math/shape/AxBox2.hpp>
+#include <math/shape/AxBox3.hpp>
+#include <math/shape/AxBox4.hpp>
 
-#include <math/Bivector2.hpp>
-#include <math/Bivector3.hpp>
-#include <math/Bivector4.hpp>
 
-#include <math/Circle2.hpp>
+#include <math/shape/Circle2.hpp>
 
-#include <math/Counter.hpp>
 
-#include <math/Multivector1.hpp>
-#include <math/Multivector2.hpp>
-#include <math/Multivector3.hpp>
-#include <math/Multivector4.hpp>
+#include <math/vector/Bivector2.hpp>
+#include <math/vector/Bivector3.hpp>
+#include <math/vector/Bivector4.hpp>
 
-#include <math/Normal2.hpp>
-#include <math/Normal3.hpp>
+#include <math/vector/Multivector1.hpp>
+#include <math/vector/Multivector2.hpp>
+#include <math/vector/Multivector3.hpp>
+#include <math/vector/Multivector4.hpp>
 
-#include <math/Plane3.hpp>
+#include <math/shape/Normal2.hpp>
+#include <math/shape/Normal3.hpp>
 
-#include <math/Ray2.hpp>
-#include <math/Ray3.hpp>
-#include <math/Ray4.hpp>
+#include <math/shape/Plane3.hpp>
 
-#include <math/Range.hpp>
+#include <math/shape/Ray2.hpp>
+#include <math/shape/Ray3.hpp>
+#include <math/shape/Ray4.hpp>
 
-#include <math/Rectangle2.hpp>
 
-#include <math/Segment1.hpp>
-#include <math/Segment2.hpp>
-#include <math/Segment3.hpp>
-#include <math/Segment4.hpp>
+#include <math/shape/Rectangle2.hpp>
 
-#include <math/Size1.hpp>
-#include <math/Size2.hpp>
-#include <math/Size3.hpp>
-#include <math/Size4.hpp>
+#include <math/shape/Segment1.hpp>
+#include <math/shape/Segment2.hpp>
+#include <math/shape/Segment3.hpp>
+#include <math/shape/Segment4.hpp>
 
-#include <math/Sphere3.hpp>
-#include <math/Sphere4.hpp>
+#include <math/shape/Size1.hpp>
+#include <math/shape/Size2.hpp>
+#include <math/shape/Size3.hpp>
+#include <math/shape/Size4.hpp>
 
-#include <math/Tetrahedron3.hpp>
+#include <math/shape/Sphere3.hpp>
+#include <math/shape/Sphere4.hpp>
 
-#include <math/Triangle2.hpp>
-#include <math/Triangle3.hpp>
-#include <math/Triangle4.hpp>
+#include <math/shape/Tetrahedron3.hpp>
 
-#include <math/Quadrilateral2.hpp>
+#include <math/shape/Triangle2.hpp>
+#include <math/shape/Triangle3.hpp>
+#include <math/shape/Triangle4.hpp>
 
-#include <math/Quadvector4.hpp>
-#include <math/Quaternion3.hpp>
+#include <math/shape/Quadrilateral2.hpp>
 
-#include <math/Tensor11.hpp>
-#include <math/Tensor12.hpp>
-#include <math/Tensor13.hpp>
-#include <math/Tensor14.hpp>
+#include <math/vector/Quadvector4.hpp>
+#include <math/vector/Quaternion3.hpp>
 
-#include <math/Tensor21.hpp>
-#include <math/Tensor22.hpp>
-#include <math/Tensor23.hpp>
-#include <math/Tensor24.hpp>
+#include <math/vector/Tensor11.hpp>
+#include <math/vector/Tensor12.hpp>
+#include <math/vector/Tensor13.hpp>
+#include <math/vector/Tensor14.hpp>
 
-#include <math/Tensor31.hpp>
-#include <math/Tensor32.hpp>
-#include <math/Tensor33.hpp>
-#include <math/Tensor34.hpp>
+#include <math/vector/Tensor21.hpp>
+#include <math/vector/Tensor22.hpp>
+#include <math/vector/Tensor23.hpp>
+#include <math/vector/Tensor24.hpp>
 
-#include <math/Tensor41.hpp>
-#include <math/Tensor42.hpp>
-#include <math/Tensor43.hpp>
-#include <math/Tensor44.hpp>
+#include <math/vector/Tensor31.hpp>
+#include <math/vector/Tensor32.hpp>
+#include <math/vector/Tensor33.hpp>
+#include <math/vector/Tensor34.hpp>
 
-#include <math/Trivector3.hpp>
-#include <math/Trivector4.hpp>
+#include <math/vector/Tensor41.hpp>
+#include <math/vector/Tensor42.hpp>
+#include <math/vector/Tensor43.hpp>
+#include <math/vector/Tensor44.hpp>
 
-#include <math/Vector1.hpp>
-#include <math/Vector2.hpp>
-#include <math/Vector3.hpp>
-#include <math/Vector4.hpp>
+#include <math/vector/Trivector3.hpp>
+#include <math/vector/Trivector4.hpp>
+
+#include <math/vector/Vector1.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/vector/Vector3.hpp>
+#include <math/vector/Vector4.hpp>
 
 #include <basic/DelayInit.hpp>
 #include <basic/meta/Init.hpp>
 
 #include <math/glm_types.hpp>
-#include <math/shape_utils.hpp>
-#include <math/Units.hpp>
+#include <math/shape/shape_utils.hpp>
+#include <math/unit/literals.hpp>
 
 #include <math/SimpleSpace.ipp>
 
@@ -3354,101 +3355,105 @@ namespace yq {
     }
 }
 
-#include "AxBox1.hxx"
-#include "AxBox2.hxx"
-#include "AxBox3.hxx"
-#include "AxBox4.hxx"
-
-#include "Bivector2.hxx"
-#include "Bivector3.hxx"
-#include "Bivector4.hxx"
-
-#include "Circle2.hxx"
-#include "Circle3.hxx"
-
 #include "Fraction.hxx"
-
-#include "MKS.hxx"
-
-#include "Multivector1.hxx"
-#include "Multivector2.hxx"
-#include "Multivector3.hxx"
-#include "Multivector4.hxx"
-
-#include "Normal2.hxx"
-#include "Normal3.hxx"
-
-#include "Plane3.hxx"
-
-#include "Polygon2.hxx"
-#include "Polygon3.hxx"
-#include "Polygon4.hxx"
-
-#include "Polyline2.hxx"
-#include "Polyline3.hxx"
-#include "Polyline4.hxx"
 
 #include "Pose2.hxx"
 #include "Pose3.hxx"
-
-#include "Quadrilateral2.hxx"
-#include "Quadvector4.hxx"
-#include "Quaternion3.hxx"
-
 #include "Range.hxx"
-#include "Ray2.hxx"
-#include "Ray3.hxx"
-#include "Ray4.hxx"
-#include "Rectangle2.hxx"
 
 #include "RGB.hxx"
 #include "RGBA.hxx"
 
-#include "SCALED.hxx"
-#include "Segment1.hxx"
-#include "Segment2.hxx"
-#include "Segment3.hxx"
-#include "Segment4.hxx"
 
-#include "Size1.hxx"
-#include "Size2.hxx"
-#include "Size3.hxx"
-#include "Size4.hxx"
+#include "shape/AxBox1.hxx"
+#include "shape/AxBox2.hxx"
+#include "shape/AxBox3.hxx"
+#include "shape/AxBox4.hxx"
 
-#include "Sphere3.hxx"
-#include "Sphere4.hxx"
+#include "shape/Circle2.hxx"
+#include "shape/Circle3.hxx"
 
-#include "Tensor11.hxx"
-#include "Tensor12.hxx"
-#include "Tensor13.hxx"
-#include "Tensor14.hxx"
+#include "shape/Normal2.hxx"
+#include "shape/Normal3.hxx"
 
-#include "Tensor21.hxx"
-#include "Tensor22.hxx"
-#include "Tensor23.hxx"
-#include "Tensor24.hxx"
+#include "shape/Plane3.hxx"
 
-#include "Tensor31.hxx"
-#include "Tensor32.hxx"
-#include "Tensor33.hxx"
-#include "Tensor34.hxx"
+#include "shape/Polygon2.hxx"
+#include "shape/Polygon3.hxx"
+#include "shape/Polygon4.hxx"
 
-#include "Tensor41.hxx"
-#include "Tensor42.hxx"
-#include "Tensor43.hxx"
-#include "Tensor44.hxx"
+#include "shape/Polyline2.hxx"
+#include "shape/Polyline3.hxx"
+#include "shape/Polyline4.hxx"
 
-#include "Tetrahedron3.hxx"
+#include "shape/Quadrilateral2.hxx"
+#include "shape/Ray2.hxx"
+#include "shape/Ray3.hxx"
+#include "shape/Ray4.hxx"
+#include "shape/Rectangle2.hxx"
 
-#include "Triangle2.hxx"
-#include "Triangle3.hxx"
-#include "Triangle4.hxx"
+#include "shape/Segment1.hxx"
+#include "shape/Segment2.hxx"
+#include "shape/Segment3.hxx"
+#include "shape/Segment4.hxx"
 
-#include "Trivector3.hxx"
-#include "Trivector4.hxx"
+#include "shape/Size1.hxx"
+#include "shape/Size2.hxx"
+#include "shape/Size3.hxx"
+#include "shape/Size4.hxx"
 
-#include "Vector1.hxx"
-#include "Vector2.hxx"
-#include "Vector3.hxx"
-#include "Vector4.hxx"
+#include "shape/Sphere3.hxx"
+#include "shape/Sphere4.hxx"
+
+#include "shape/Tetrahedron3.hxx"
+
+#include "shape/Triangle2.hxx"
+#include "shape/Triangle3.hxx"
+#include "shape/Triangle4.hxx"
+
+
+#include "unit/MKS.hxx"
+#include "unit/SCALED.hxx"
+
+#include "vector/Bivector2.hxx"
+#include "vector/Bivector3.hxx"
+#include "vector/Bivector4.hxx"
+
+#include "vector/Multivector1.hxx"
+#include "vector/Multivector2.hxx"
+#include "vector/Multivector3.hxx"
+#include "vector/Multivector4.hxx"
+
+#include "vector/Quadvector4.hxx"
+#include "vector/Quaternion3.hxx"
+
+
+
+#include "vector/Tensor11.hxx"
+#include "vector/Tensor12.hxx"
+#include "vector/Tensor13.hxx"
+#include "vector/Tensor14.hxx"
+
+#include "vector/Tensor21.hxx"
+#include "vector/Tensor22.hxx"
+#include "vector/Tensor23.hxx"
+#include "vector/Tensor24.hxx"
+
+#include "vector/Tensor31.hxx"
+#include "vector/Tensor32.hxx"
+#include "vector/Tensor33.hxx"
+#include "vector/Tensor34.hxx"
+
+#include "vector/Tensor41.hxx"
+#include "vector/Tensor42.hxx"
+#include "vector/Tensor43.hxx"
+#include "vector/Tensor44.hxx"
+
+#include "vector/Trivector3.hxx"
+#include "vector/Trivector4.hxx"
+
+#include "vector/Vector1.hxx"
+#include "vector/Vector2.hxx"
+#include "vector/Vector3.hxx"
+#include "vector/Vector4.hxx"
 

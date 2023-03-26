@@ -9,10 +9,10 @@
 #define YQ_MATH_POSE2_HPP 1
 
 
-#include <math/Vector2.hpp>
-#include <math/Tensor22.hpp>
-#include <math/MKS.hpp>
-#include <math/SCALED.hpp>
+#include <math/vector/Vector2.hpp>
+#include <math/vector/Tensor22.hpp>
+#include <math/unit/MKS.hpp>
+#include <math/unit/SCALED.hpp>
 
 namespace yq {
 

@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <math/AxBox4.hxx>
-#include <math/Vector4.hxx>
+#include <math/shape/AxBox4.hxx>
+#include <math/vector/Vector4.hxx>
 #include <basic/Logging.hpp>
 
 #include <iostream>

@@ -5,9 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <math/Vector2.hxx>
-#include <math/AllComponents.hpp>
-#include <math/AnyComponents.hpp>
+#include <math/vector/Vector2.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

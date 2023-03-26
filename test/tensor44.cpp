@@ -7,7 +7,7 @@
 #include <boost/ut.hpp>
 #include <math/Absolute.hpp>
 #include <math/utility.hpp>
-#include <math/Tensor44.hxx>
+#include <math/vector/Tensor44.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -27,9 +27,9 @@
 #include <math/trait/is_floating_point.hpp>
 #include <math/trait/is_integral.hpp>
 
-#include <math/dims.hpp>
+#include <math/unit/dims.hpp>
 #include <math/keywords.hpp>
-#include <math/units_declare.hpp>
+#include <math/unit/declare.hpp>
 
 #include <algorithm>
 #include <cmath>
