@@ -5,15 +5,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <earth/Date.hpp>
+#include <gis/EarthDate.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
-using namespace yq::earth;
+using namespace yq;
 
-bool    jday_test(Date d, JulianDay j)
+bool    jday_test(EarthDate d, JulianDay j)
 {
-    Date        d2  = date(j);
+    EarthDate   d2  = date(j);
     JulianDay   j2  = julian_day(d);
     return (d == d2) && (j == j2);
 }

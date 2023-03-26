@@ -28,7 +28,7 @@ add_library(${PROJECT_NAME} SHARED
     #${core_test_source}
     ./basic/basic.cpp
     ./chemistry/chemistry.cpp
-    ./earth/earth.cpp
+    ./gis/gis.cpp
     ./math/math.cpp
     ./physics/physics.cpp
 )
