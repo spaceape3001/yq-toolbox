@@ -6,9 +6,11 @@
 
 #pragma once
 
+#define YQ_MATH_TETRAHEDRON_HPP 1
+
+
 #include <math/preamble.hpp>
 #include <math/vector/Vector3.hpp>
-#include "TetrahedronData.hpp"
 
 namespace yq {
 
@@ -24,57 +26,90 @@ namespace yq {
     
         //!     Corners (call 'em a, b, c, & d)
         Vector3<T>     a, b, c, d;
-
-        //! Defaulted comparson operator
-        constexpr bool operator==(const Tetrahedron3&) const noexcept = default;
         
-        //! Computes the centroid of the tetrahedron
-        constexpr Vector3<T>    centroid() const noexcept
-        {
-            if constexpr (std::is_floating_point_v<T>)
-                return ((a+b)+(c+d)) * T(0.25);
-            if constexpr (std::is_integral_v<T>)
-                return ((a+b)+(c+d)) / T(4);
-            return {};
-        }
+        constexpr Tetrahedron3() noexcept = default;
+        constexpr Tetrahedron3(const Vector3<T>& _a, const Vector3<T>& _b, const Vector3<T>& _c, const Vector3<T>& _d) 
+            : a(_a), b(_b), c(_c), d(_d) {}
+        constexpr Tetrahedron3(all_t, const Vector3<T>& v) noexcept : a(v), b(v), c(v), d(v) {}
+        consteval Tetrahedron3(nan_t) noexcept : Tetrahedron3(ALL, Vector3<T>(NAN)) {}
+        consteval Tetrahedron3(zero_t) noexcept : Tetrahedron3(ALL, Vector3<T>(ZERO)) {}
+        constexpr Tetrahedron3(const Triangle3<T>& _t, const Vector3<T>& d);
         
         /*! \brief Makes a regular tetrahedron 
             
             This makes a regular tetrahedron whose points 
             are on the unit sphere.
+            
+            \note Once sqrt is constexpr, this will be too
         */
         template <typename=void>
-        requires has_sqrt_v<square_t<T>>
-        static Tetrahedron3  make_unit()
+            requires has_sqrt_v<square_t<T>>
+        Tetrahedron3(unit_t);
+        
+        template <typename U>
+        requires std::is_nothrow_convertible_v<T,U>
+        explicit constexpr operator Tetrahedron3<U>() const noexcept
         {
-            //  formula taken from https://en.wikipedia.org/wiki/Tetrahedron
-            const T third    = T(1./3.);
-            const T sq29    = sqrt(square_t<T>(2./9.));
-            const T sq89    = sqrt(square_t<T>(8./9.));
-            const T sq23    = sqrt(square_t<T>(2./2.));
-            
-            return { 
-                { sq89, T(0.), -third },
-                { -sq29, sq23, -third },
-                { -sq29, -sq23, -third },
-                { T(0.), T(0.), T(1.) }
-            };
+            return { (Vector3<U>) a, (Vector3<U>) b, (Vector3<U>) c };
         }
+        
+        template <typename U>
+        requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
+        explicit constexpr operator Tetrahedron3<U>() const 
+        {
+            return { (Vector3<U>) a, (Vector3<U>) b, (Vector3<U>) c };
+        }
+
+        //! Implicit conversion to triangle data
+        constexpr operator TetrahedronData<Vector3<T>> () const noexcept;
+
+        constexpr Tetrahedron3 operator+() const noexcept;
+        constexpr Tetrahedron3 operator-() const noexcept;
+        
+        constexpr Tetrahedron3 operator+(const Vector3<T>&) const noexcept;
+        Tetrahedron3& operator+=(const Vector3<T>&) noexcept;
+        constexpr Tetrahedron3 operator-(const Vector3<T>&) const noexcept;
+        Tetrahedron3& operator-=(const Vector3<T>&) noexcept;
+        
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Tetrahedron3<product_t<T,U>> operator*(U) const noexcept;
+        
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        Tetrahedron3& operator*=(U) noexcept;
+
+        template <typename U>
+        Tetrahedron3<product_t<T,U>>   operator*(const Tensor33<U>&) const noexcept;
+
+        template <typename U>
+        requires self_mul_v<T,U>
+        Tetrahedron3&   operator*=(const Tensor33<U>&) noexcept;
+
+        template <typename U>
+        requires is_arithmetic_v<U>
+        constexpr Tetrahedron3<quotient_t<T,U>> operator/(U) const noexcept;
+
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        Tetrahedron3& operator/=(U) noexcept;
+        
+        
+                //! Defaulted comparson operator
+        constexpr bool operator==(const Tetrahedron3&) const noexcept = default;
+        
+        constexpr AxBox3<T>   bounds() const noexcept;
+        
+        //! Computes the centroid of the tetrahedron
+        constexpr Vector3<T>    centroid() const noexcept;
 
         //! Returns a regular tetrahedron whose points are on the unit sphere */
         template <typename=void>
         requires has_sqrt_v<square_t<T>>
-        static const Tetrahedron3&  unit()
-        {
-            static const Tetrahedron3 ret = make_unit();
-            return ret;
-        }
+        static const Tetrahedron3&  unit();
         
         //! Computes the volume of this tetrahedron
-        constexpr cube_t<T>   volume() const noexcept
-        {
-            return abs((a-d) DOT ((b-d) CROSS (c-d))) / ieee754_t<T>(6.);
-        }
+        constexpr cube_t<T>   volume() const noexcept;
     };
 
     YQ_IEEE754_1(Tetrahedron3)
@@ -93,19 +128,22 @@ namespace yq {
     YQ_IS_FINITE_1(Tetrahedron3, is_finite(v.a) && is_finite(v.b) && is_finite(v.c) && is_finite(v.d))
     YQ_IS_NAN_1(Tetrahedron3, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) || is_nan(v.d))
 
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    constexpr Tetrahedron3<product_t<T,U>> operator*(T lhs, const Tetrahedron3<U>& rhs) noexcept;
+    
+    /*! \brief Creates an axially aligned bounding box from the three triangle vertices */
+    template <typename T>
+    constexpr AxBox3<T>   aabb(const Tetrahedron3<T>& tri) noexcept;
+
+
     //! Computes the centroid of the given tetrahedron
     template <typename T>
-    constexpr Vector3<T>  centroid(const Tetrahedron3<T>& tetra) noexcept
-    {
-        return tetra.centroid();
-    }
+    constexpr Vector3<T>  centroid(const Tetrahedron3<T>& tetra) noexcept;
 
     //! Computes the volume of the given tetrahedron
     template <typename T>
-    constexpr cube_t<T>   volume(const Tetrahedron3<T>& tetra) noexcept
-    {
-        return tetra.volume();
-    }
+    constexpr cube_t<T>   volume(const Tetrahedron3<T>& tetra) noexcept;
 }
 
 YQ_TYPE_DECLARE(yq::Tetrahedron3D)

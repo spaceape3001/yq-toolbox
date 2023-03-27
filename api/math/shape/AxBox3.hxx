@@ -116,6 +116,11 @@ namespace yq {
     constexpr AxBox3<T>::AxBox3(const Triangle3<T>&tri) noexcept : AxBox3(tri.bounds()) {}
     #endif
 
+    #ifdef YQ_MATH_TETRAHEDRON3_HPP
+    template <typename T>
+    constexpr AxBox3<T>::AxBox3(const Tetrahedron3<T>&tetra) noexcept : AxBox3(tetra.bounds()) {}
+    #endif
+
     template <typename T>
     AxBox3<T>  AxBox3<T>::operator+() const noexcept
     {

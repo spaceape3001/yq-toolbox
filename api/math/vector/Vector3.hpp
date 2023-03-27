@@ -130,6 +130,8 @@ namespace yq {
 
         constexpr Sphere3<T> operator+(const Sphere3<T>&) const noexcept;
 
+        constexpr Tetrahedron3<T> operator+(const Tetrahedron3<T>&) const noexcept;
+
         constexpr Triangle3<T> operator+(const Triangle3<T>&) const noexcept;
 
         //! Addition with trivector
@@ -160,6 +162,8 @@ namespace yq {
         constexpr Segment3<T> operator-(const Segment3<T>&) const noexcept;
 
         constexpr Sphere3<T> operator-(const Sphere3<T>&) const noexcept;
+
+        constexpr Tetrahedron3<T> operator-(const Tetrahedron3<T>&) const noexcept;
 
         constexpr Triangle3<T> operator-(const Triangle3<T>&) const noexcept;
 

@@ -39,6 +39,7 @@ namespace yq {
     struct three_t {};
     struct two_t {};
     struct union_t {};
+    struct unit_t {};
     struct up_t {};
     struct w_t {};
     struct ww_t {};
@@ -99,6 +100,7 @@ namespace yq {
     static constexpr const rows_t           ROWS;
     static constexpr const sort_t           SORT;
     static constexpr const union_t          UNION;
+    static constexpr const unit_t           UNIT;
     static constexpr const up_t             UP;
     static constexpr const w_t              W;
     static constexpr const ww_t             WW;

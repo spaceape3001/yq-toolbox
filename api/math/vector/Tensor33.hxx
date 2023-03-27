@@ -345,6 +345,15 @@ namespace yq {
     }
     #endif
         
+    #ifdef YQ_MATH_TETRAHEDRON3_HPP
+    template <typename T>
+        template <typename U>
+    Tetrahedron3<product_t<T,U>> Tensor33<T>::operator*(const Tetrahedron3<U>&rhs) const noexcept
+    {
+        return Tetrahedron3<product_t<T,U>>( *this * rhs.a, *this * rhs.b, *this * rhs.c, *this * rhs.d );
+    }
+    #endif
+
     template <typename T>
         template <typename U>
     constexpr Vector3<product_t<T,U>> Tensor33<T>::operator*(const Vector3<U>&b) const noexcept

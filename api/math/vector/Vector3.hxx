@@ -131,6 +131,14 @@ namespace yq {
         return Sphere3<T>(*this + b.point, b.radius);
     }
     #endif
+
+    #ifdef YQ_MATH_TETRAHEDRON3_HPP
+    template <typename T>
+    constexpr Tetrahedron3<T> Vector3<T>::operator+(const Tetrahedron3<T>&rhs) const noexcept
+    {
+        return Tetrahedron3<T>(*this+rhs.a, *this+rhs.b, *this+rhs.c, *this + rhs.d);
+    }
+    #endif
     
     #ifdef YQ_MATH_TRIANGLE3_HPP
     template <typename T>
@@ -252,6 +260,14 @@ namespace yq {
     constexpr Sphere3<T> Vector3<T>::operator-(const Sphere3<T>&b) const noexcept
     {
         return Sphere3<T>(*this - b.point, b.radius);
+    }
+    #endif
+
+    #ifdef YQ_MATH_TETRAHEDRON3_HPP
+    template <typename T>
+    constexpr Tetrahedron3<T> Vector3<T>::operator-(const Tetrahedron3<T>&rhs) const noexcept
+    {
+        return Tetrahedron3<T>(*this-rhs.a, *this-rhs.b, *this-rhs.c, *this-rhs.d);
     }
     #endif
 

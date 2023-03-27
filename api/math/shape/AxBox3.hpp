@@ -128,8 +128,11 @@ namespace yq {
         //! Constructs using the bounding box of the given sphere
         explicit constexpr AxBox3(const Sphere3<T>&) noexcept;
 
-        //! Constructs using the bounding box of the given triangel
+        //! Constructs using the bounding box of the given triangle
         explicit constexpr AxBox3(const Triangle3<T>&) noexcept;
+
+        //! Constructs using the bounding box of the given tetrahedron
+        explicit constexpr AxBox3(const Tetrahedron3<T>&) noexcept;
 
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
