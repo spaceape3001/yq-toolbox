@@ -31,8 +31,9 @@ namespace yq {
         
         constexpr Sphere3() noexcept = default;
         constexpr Sphere3(const Vector3<T>& pt, T r) : center(pt), radius(r) {}
-        constexpr Sphere3(nan_t) : Sphere3(Vector3<T>(NAN), nan_v<T>) {}
-        constexpr Sphere3(zero_t) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
+        consteval Sphere3(nan_t) : Sphere3(Vector3<T>(NAN), nan_v<T>) {}
+        consteval Sphere3(unit_t) : Sphere3(Vector3<T>(ZERO), one_v<T>) {}
+        consteval Sphere3(zero_t) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
 
         constexpr Sphere3(focus_t, const Vector3<T>& focus, const T dist) noexcept : Sphere3(focus, dist) {}
         Sphere3(focus_t, const Vector3<T>& focus, const Vector3<T>& edge);

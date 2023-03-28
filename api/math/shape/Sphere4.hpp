@@ -28,8 +28,9 @@ namespace yq {
         
         constexpr Sphere4() noexcept = default;
         constexpr Sphere4(const Vector4<T>& pt, T r) : center(pt), radius(r) {}
-        constexpr Sphere4(nan_t) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
-        constexpr Sphere4(zero_t) : Sphere4(Vector4<T>(ZERO), zero_v<T>) {}
+        consteval Sphere4(nan_t) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
+        consteval Sphere4(unit_t) : Sphere4(Vector4<T>(ZERO), one_v<T>) {}
+        consteval Sphere4(zero_t) : Sphere4(Vector4<T>(ZERO), zero_v<T>) {}
 
         constexpr Sphere4(focus_t, const Vector4<T>& focus, const T dist) noexcept : Sphere4(focus, dist) {}
         Sphere4(focus_t, const Vector4<T>& focus, const Vector4<T>& edge);
