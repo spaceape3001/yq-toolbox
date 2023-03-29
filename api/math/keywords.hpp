@@ -18,6 +18,7 @@ namespace yq {
 
     struct all_t {};
     struct ccw_t {};
+    struct clock_arg_t {};
     struct clockwise_t {};
     struct columns_t {};
     struct diagonal_t {};
@@ -81,6 +82,7 @@ namespace yq {
     
     static constexpr const all_t            ALL;
     static constexpr const ccw_t            CCW;
+    static constexpr const clock_arg_t      CLOCK;
     static constexpr const clockwise_t      CLOCKWISE;
     static constexpr const columns_t        COLUMNS;
     static constexpr const diagonal_t       DIAGONAL;
