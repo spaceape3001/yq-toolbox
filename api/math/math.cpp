@@ -19,6 +19,7 @@
 #include <math/coord/LatLon.hpp>
 #include <math/coord/LatLonAlt.hpp>
 #include <math/coord/Polar2.hpp>
+#include <math/coord/Cylindrical3.hpp>
 
 
 #include <math/shape/AxBox1.hpp>
@@ -3365,6 +3366,7 @@ namespace yq {
 #include "coord/LatLon.hxx"
 #include "coord/LatLonAlt.hxx"
 #include "coord/Polar2.hxx"
+#include "coord/Cylindrical3.hxx"
 
 #include "Pose2.hxx"
 #include "Pose3.hxx"
