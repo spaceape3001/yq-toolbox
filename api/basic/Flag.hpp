@@ -304,6 +304,83 @@ namespace yq {
             return *this;
         }
 
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Flag/enum_t
+
+        template <typename=void>
+        requires is_template
+        constexpr Flag        operator+(typename E::enum_t e) const noexcept
+        {
+            return Flag(m_value | mask(e) );
+        }
+    
+        template <typename=void>
+        requires is_template
+        constexpr Flag        operator-(typename E::enum_t e) const noexcept
+        {
+            return Flag(m_value & ~mask(e) );
+        }
+
+        template <typename=void>
+        requires is_template
+        constexpr Flag        operator|(typename E::enum_t e) const noexcept
+        {
+            return Flag(m_value | mask(e) );
+        }
+
+        template <typename=void>
+        requires is_template
+        constexpr Flag        operator&(typename E::enum_t e) const noexcept
+        {
+            return Flag(m_value & mask(e) );
+        }
+
+        template <typename=void>
+        requires is_template
+        constexpr Flag        operator^(typename E::enum_t e) const noexcept
+        {
+            return Flag(m_value ^ mask(e) );
+        }
+
+        template <typename=void>
+        requires is_template
+        Flag&   operator+=(typename E::enum_t e) noexcept
+        {
+            m_value |= mask(e);
+            return *this;
+        }
+        
+        template <typename=void>
+        requires is_template
+        Flag&   operator-=(typename E::enum_t e) noexcept
+        {
+            m_value &= ~mask(e);
+            return *this;
+        }
+        
+        template <typename=void>
+        requires is_template
+        Flag&   operator|=(typename E::enum_t e) noexcept
+        {
+            m_value |= mask(e);
+            return *this;
+        }
+        
+        template <typename=void>
+        requires is_template
+        Flag&   operator&=(typename E::enum_t e) noexcept
+        {
+            m_value &= mask(e);
+            return *this;
+        }
+
+        template <typename=void>
+        requires is_template
+        Flag&   operator^=(typename E::enum_t e) noexcept
+        {
+            m_value ^= mask(e);
+            return *this;
+        }
         
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Enum/Flag
