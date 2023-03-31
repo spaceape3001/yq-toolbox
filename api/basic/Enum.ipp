@@ -170,10 +170,8 @@ namespace yq {
                         }
                     }
                 } else {
-                    if(s && (mode == VALUE)){
-                        if(is_alpha(*c))
-                            alpha   = true;
-                    }
+                    if((mode == VALUE) && is_alpha(*c))
+                        alpha   = true;
                     if(!s && !skip){
                         s   = c;
                         if(mode == LINE)
