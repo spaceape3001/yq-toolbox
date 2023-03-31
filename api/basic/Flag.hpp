@@ -33,46 +33,76 @@ namespace yq {
     template <typename E, typename T=uint64_t>
     class Flag {
     public:
+    
         //! Captures the enumeration parameter
         using DefEnum   = E;
         //! Captures the bit-field type parameter
         using DefType   = T;
+        
+        static const constexpr bool     is_template     = is_template_enum_v<E>;
+        static const constexpr bool     not_template    = !is_template;
+        
         //! Pulls out the actual enumeration type to be more friendly to get
         using enum_t    = typename E::enum_t;
 
-        //! Mask for enum value
-        static T mask(enum_t e)
+        static constexpr T  mask(E e) noexcept
         {
-            #ifdef _DEBUG
-            assert((e>=0) && (e < 8*sizeof(T)) && "Enum value out of range!");
-            #endif
-            
-            return T(1) << e;
+            if constexpr (is_template){
+                return T(1) << T(e.value());
+            } 
+            if constexpr (not_template){
+                return T(1) << T(e);
+            }
         }
+        
+        template <typename=void>
+        requires is_template
+        static constexpr T  mask(typename E::enum_t e) noexcept
+        {
+            return T(1) << T(e);
+        }
+
         
         //! All flags, set
-        static Flag all()
+        static consteval Flag all()
         {
-            return Flag(~T(0));
+            return Flag(ALL,true);
         }
         
-
         //!  Default constructor, all flags clear ....
-        Flag() : m_value(0) {}
+        constexpr Flag() noexcept : m_value(0) {}
+        
+        constexpr Flag(all_t, bool v) noexcept : m_value(v?~T(0):T(0)) {}
+        
+        //! Constructs by bit-field
+        constexpr Flag(T v) noexcept : m_value(v) {}
+
+        //! Constructs with ONE enumerated value
+        constexpr Flag(E e) noexcept : m_value(mask(e)) {}
+        
+        template <typename=void>
+        requires is_template
+        constexpr Flag(typename E::enum_t e) noexcept : m_value(mask(e)) {}
         
         //! Constructs by list of enumerated values
-        Flag(std::initializer_list<enum_t> flags) : m_value(0)
+        constexpr Flag(std::initializer_list<E> flags) noexcept : m_value(0)
         {
-            for(enum_t e : flags)
+            for(E e : flags)
                 m_value |= mask(e);
         }
         
-        //! Constructs with ONE enumerated value
-        Flag(enum_t e) : m_value(mask(e)) {}
-
-        //! Constructs by bit-field
-        Flag(T v) : m_value(v) {}
+        //! Constructs by list of enumerated values
+        template <typename=void>
+        requires is_template
+        constexpr Flag(std::initializer_list<typename E::enum_t> flags) noexcept : m_value(0)
+        {
+            for(E e : flags)
+                m_value |= mask(e);
+        }
         
+        
+        template <typename=void>
+        requires is_template
         //! Constructs by comma separate string
         Flag(std::string_view k, std::string_view sep=",") : 
             m_value(flag_decode<T>(E::staticEnumInfo(), k, sep))
@@ -80,129 +110,68 @@ namespace yq {
         }
         
         //! Our value
-        T       value() const { return m_value; }
+        constexpr T value() const noexcept { return m_value; }
         
-        //! Returns new flag with specified enumeration set
-        Flag        operator+(enum_t e) const
-        {
-            return Flag(m_value | mask(e));
-        }
-
-        //! Returns new flag that has flags of left and flags of right combined
-        Flag        operator+(Flag f) const
-        {
-            return Flag(m_value | f.m_value );
-        }
-        
-        //! Sets specified bit on the left
-        Flag&       operator += (enum_t e)
+        //! Sets specified bit
+        void    set(E e)
         {
             m_value |= mask(e);
-            return *this;
-        }
-
-        //! Returns new flag with specified bit not set
-        Flag        operator-(enum_t e) const
-        {
-            return Flag(m_value & ~mask(e));
         }
         
-        //! Returns new flag with flags of left but excluding ones on right
-        Flag        operator-(Flag f) const
-        {
-            return Flag(m_value & ~f.m_value);
-        }
-
-        //! Unsets specified bit
-        Flag&       operator -= (enum_t e)
+        //! Clears specified bit
+        void    clear(E e)
         {
             m_value &= ~mask(e);
-            return *this;
+        }
+
+        /*! Formats to string
+            
+            \param[in] sep  Separator to use (default comma)
+        */
+        template <typename=void>
+        requires is_template_enum_v<E>
+        std::string as_string(std::string_view sep=",") const
+        {
+            return flag_string(E::staticEnumInfo(), m_value, sep);
+        }
+
+        //! TRUE if bit is set
+        bool is_set(E e) const
+        {
+            return (m_value & mask(e))?true:false;
         }
         
-        //! Returns new flag, flipping set and clear bits
-        //! (ie, bits that were set are now clear, and bits that were clear are now set)
-        Flag        operator~() const
+        //! TRUE if bit is clear
+        bool is_clear(E e) const
         {
+            return (m_value & mask(e))?true:false;
+        }
+
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  OPERATORS
+
+        //! Tests specified bit, returning true
+        bool    operator[](E e) const
+        {
+            return is_set(e);
+        }
+        
+        bool    operator()(E e) const
+        {
+            return is_set(e);
+        }
+        
+
+        constexpr Flag      operator~() const noexcept
+        { 
             return Flag(~m_value);
         }
         
-        //! Union the bits
-        Flag       operator |(enum_t e) const
+        //! TRUE if any bit is set
+        operator bool() const
         {
-            return Flag(m_value | mask(e));
-        }
-        
-        //! Union the bits
-        Flag&      operator |=(enum_t e)
-        {
-            m_value |= mask(e);
-            return *this;
-        }
-
-        //! Union the bits
-        Flag       operator |(Flag f) const
-        {
-            return Flag(m_value | f.m_value);
-        }
-
-        //! Union the bits
-        Flag&      operator |=(Flag f)
-        {
-            m_value |= f.m_value;
-            return *this;
-        }
-
-        //! Intersection of bits
-        Flag        operator&(enum_t e) const
-        {
-            return Flag(m_value & mask(e));
-        }
-        
-        //! Intersection of bits
-        Flag&      operator &=(enum_t e)
-        {
-            m_value &= mask(e);
-            return *this;
-        }
-
-        //! Intersection of bits
-        Flag       operator &(Flag f) const
-        {
-            return Flag(m_value & f.m_value);
-        }
-     
-        //! Intersection of bits
-        Flag&      operator &=(Flag f)
-        {
-            m_value &= f.m_value;
-            return *this;
-        }
-
-        //! XOR the bits
-        Flag        operator^(enum_t e) const
-        {
-            return Flag(m_value ^ mask(e));
-        }
-        
-        //! XOR the bits
-        Flag&      operator ^=(enum_t e)
-        {
-            m_value ^= mask(e);
-            return *this;
-        }
-
-        //! XOR the bits
-        Flag       operator ^(Flag f) const
-        {
-            return Flag(m_value ^ f.m_value);
-        }
-
-        //! XOR the bits
-        Flag&      operator ^=(Flag f)
-        {
-            m_value ^= f.m_value;
-            return *this;
+            return static_cast<bool>(m_value);
         }
         
         //! Equality operator
@@ -217,49 +186,151 @@ namespace yq {
             return m_value != b.m_value;
         }
 
-        //! TRUE if bit is set
-        bool is_set(enum_t e) const
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Flag/Flag
+    
+        constexpr Flag        operator+(Flag f) const noexcept
         {
-            return (m_value & mask(e))?true:false;
-        }
-        
-        //! TRUE if bit is clear
-        bool is_clear(enum_t e) const
-        {
-            return (m_value & mask(e))?true:false;
-        }
-        
-        //! Tests specified bit, returning true
-        bool    operator[](enum_t e) const
-        {
-            return is_set(e);
-        }
-        
-        //! TRUE if any bit is set
-        operator bool() const
-        {
-            return static_cast<bool>(m_value);
-        }
-        
-        //! Sets specified bit
-        void    set(enum_t e)
-        {
-            m_value |= mask(e);
-        }
-        
-        //! Clears specified bit
-        void    clear(enum_t e)
-        {
-            m_value &= ~mask(e);
+            return Flag(m_value | f.m_value );
         }
 
-        /*! Formats to string
-            
-            \param[in] sep  Separator to use (default comma)
-        */
-        std::string as_string(std::string_view sep=",") const
+        constexpr Flag        operator-(Flag f) const noexcept
         {
-            return flag_string(E::staticEnumInfo(), m_value, sep);
+            return Flag(m_value & ~f.m_value );
+        }
+        
+        constexpr Flag        operator|(Flag f) const noexcept
+        {
+            return Flag(m_value | f.m_value );
+        }
+    
+        constexpr Flag        operator&(Flag f) const noexcept
+        {
+            return Flag(m_value & f.m_value );
+        }
+    
+        constexpr Flag        operator^(Flag f) const noexcept
+        {
+            return Flag(m_value ^ f.m_value );
+        }
+
+        
+        Flag&   operator+=(Flag f) noexcept
+        {
+            m_value |= f.m_value;
+            return *this;
+        }
+        
+        Flag&   operator-=(Flag f) noexcept
+        {
+            m_value &= ~f.m_value;
+            return *this;
+        }
+        
+        Flag&   operator|=(Flag f) noexcept
+        {
+            m_value |= f.m_value;
+            return *this;
+        }
+        
+        Flag&   operator&=(Flag f) noexcept
+        {
+            m_value &= f.m_value;
+            return *this;
+        }
+
+        Flag&   operator^=(Flag f) noexcept
+        {
+            m_value ^= f.m_value;
+            return *this;
+        }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Flag/Enum
+    
+        constexpr Flag        operator+(E e) const noexcept
+        {
+            return Flag(m_value | mask(e) );
+        }
+    
+        constexpr Flag        operator-(E e) const noexcept
+        {
+            return Flag(m_value & ~mask(e) );
+        }
+
+        constexpr Flag        operator|(E e) const noexcept
+        {
+            return Flag(m_value | mask(e) );
+        }
+
+        constexpr Flag        operator&(E e) const noexcept
+        {
+            return Flag(m_value & mask(e) );
+        }
+
+        constexpr Flag        operator^(E e) const noexcept
+        {
+            return Flag(m_value ^ mask(e) );
+        }
+
+        Flag&   operator+=(E e) noexcept
+        {
+            m_value |= mask(e);
+            return *this;
+        }
+        
+        Flag&   operator-=(E e) noexcept
+        {
+            m_value &= ~mask(e);
+            return *this;
+        }
+        
+        Flag&   operator|=(E e) noexcept
+        {
+            m_value |= mask(e);
+            return *this;
+        }
+        
+        Flag&   operator&=(E e) noexcept
+        {
+            m_value &= mask(e);
+            return *this;
+        }
+
+        Flag&   operator^=(E e) noexcept
+        {
+            m_value ^= mask(e);
+            return *this;
+        }
+
+        
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Enum/Flag
+
+        friend constexpr Flag        operator+(E e, Flag f) noexcept
+        {
+            return Flag(mask(e) | f.m_value);
+        }
+
+        friend constexpr Flag        operator-(E e, Flag f) noexcept
+        {
+            return Flag(mask(e) &~ f.m_value);
+        }
+
+        friend constexpr Flag        operator|(E e, Flag f) noexcept
+        {
+            return Flag(mask(e) | f.m_value);
+        }
+
+        friend constexpr Flag        operator&(E e, Flag f) noexcept
+        {
+            return Flag(mask(e) & f.m_value);
+        }
+        
+        friend constexpr Flag        operator^(E e, Flag f) noexcept
+        {
+            return Flag(mask(e) ^ f.m_value);
         }
 
     private:

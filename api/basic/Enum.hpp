@@ -355,6 +355,12 @@ namespace yq {
     private:
         static Vector<EnumImpl>         calcAllValues();
     };
+    
+    template <typename>     struct is_template_enum : std::false_type {};
+    template <typename E>   struct is_template_enum<EnumImpl<E>> : std::true_type {};
+    template <typename T>   static constexpr const bool  is_template_enum_v   = is_template_enum<T>::value;
+    
+    
 
             //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             //      IMPLEMENTATION

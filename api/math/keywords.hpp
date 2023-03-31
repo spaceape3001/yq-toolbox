@@ -16,7 +16,6 @@ namespace yq {
     #undef NAN
     #endif
 
-    struct all_t {};
     struct ccw_t {};
     struct clock_arg_t {};
     struct clockwise_t {};
@@ -80,7 +79,6 @@ namespace yq {
     //static constexpr const z_t              z_;
     //static constexpr const zero_t           zero_;
     
-    static constexpr const all_t            ALL;
     static constexpr const ccw_t            CCW;
     static constexpr const clock_arg_t      CLOCK;
     static constexpr const clockwise_t      CLOCKWISE;
