@@ -31,7 +31,7 @@
 
 #define YQ_TYPE_FIXED( ii, ... )                                                                            \
     namespace yq {                                                                                          \
-        TypeInfo&   InfoBinder<__VA_ARGS__>::edit() {                                                       \
+        TypeInfo&   InfoBinder<__VA_ARGS__>::edit() {                                           \
             static auto* s_ret   = new TypeInfo::Final<__VA_ARGS__>(#__VA_ARGS__, ii);                      \
             return *s_ret;                                                                                  \
         }                                                                                                   \

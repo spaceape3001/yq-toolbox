@@ -18,7 +18,8 @@ namespace yq {
     */
     template <typename A, typename L>
     struct Polar2 {
-        static_assert(has_sqrt_v<square_t<L>>, "Basically needs trig too");
+        static_assert(is_floating_point_v<A> && is_floating_point_v<L>);
+        //static_assert(has_sqrt_v<square_t<L>>, "Basically needs trig too");
 
         A       angle;
         L       radius;
@@ -79,5 +80,9 @@ namespace yq {
     
     template <typename A, typename L1, typename L2>
     Polar2<A,product_t<L1,L2>> operator*(L1, const Polar2<A,L2>&);
-    
 }
+
+YQ_TYPE_DECLARE(yq::Polar2D)
+YQ_TYPE_DECLARE(yq::Polar2M)
+
+

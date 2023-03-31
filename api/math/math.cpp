@@ -9,6 +9,7 @@
 #include <math/Coord2.hpp>
 #include <math/Counter.hpp>
 #include <math/unit/Dimension.hpp>
+#include <math/unit/MKS.hpp>
 #include <math/Fraction.hpp>
 #include <math/Pose3.hpp>
 #include <math/Range.hpp>
@@ -232,6 +233,9 @@ YQ_TYPE_IMPLEMENT(yq::Normal3F)
 
 YQ_TYPE_IMPLEMENT(yq::Plane3D)
 YQ_TYPE_IMPLEMENT(yq::Plane3F)
+
+YQ_TYPE_IMPLEMENT(yq::Polar2D)
+YQ_TYPE_IMPLEMENT(yq::Polar2M)
 
 YQ_TYPE_IMPLEMENT(yq::Pose3D)
 YQ_TYPE_IMPLEMENT(yq::Pose3F)
@@ -749,6 +753,9 @@ static constexpr const std::string_view     szA_Tetrahedron             = "First
 static constexpr const std::string_view     szA_Triangle                = "First point 'A' of the triangle";
 static constexpr const std::string_view     szAlpha                     = "alpha";
 static constexpr const std::string_view     szAlpha_Color               = "Alpha channel of the color";
+static constexpr const std::string_view     szAng                       = "ang";
+static constexpr const std::string_view     szAngle                     = "angle";
+static constexpr const std::string_view     szAngle_Polar               = "Angle of the polar vector";
 static constexpr const std::string_view     szArea                      = "area";
 static constexpr const std::string_view     szArea_Box                  = "Area of the box";
 static constexpr const std::string_view     szArea_Circle               = "Area of the box";
@@ -800,6 +807,8 @@ static constexpr const std::string_view     szDir                       = "dir";
 static constexpr const std::string_view     szDirection                 = "direction";
 static constexpr const std::string_view     szDirection_Normal          = "Direction of the normal";
 static constexpr const std::string_view     szDirection_Ray             = "Direction of the ray";
+static constexpr const std::string_view     szDist                      = "dist";
+static constexpr const std::string_view     szDistance                  = "distance";
 static constexpr const std::string_view     szEclipses                  = "eclipses";
 static constexpr const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
 static constexpr const std::string_view     szEclipses_Box_Circle       = "Tests if circle is inside/touching this box";
@@ -874,6 +883,7 @@ static constexpr const std::string_view     szR                         = "r";
 static constexpr const std::string_view     szRad                       = "rad";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
+static constexpr const std::string_view     szRadius_Polar              = "Radius of the polar coordinate";
 static constexpr const std::string_view     szRadius_Sphere             = "Radius of the sphere";
 static constexpr const std::string_view     szRe                        = "re";
 static constexpr const std::string_view     szReal                      = "real";
@@ -1798,6 +1808,23 @@ static void reg_math () {
         auto w = writer<Normal3F>();
         w.description("3D normal in float");
         w.property(szDirection, &Normal3F::direction).description(szDirection_Normal).alias(szDir);
+    }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Polar2
+    
+    {
+        auto w = writer<Polar2D>();
+        w.description("2D Polar coordinate in double");
+        w.property(szAngle, &Polar2D::angle).description(szAngle_Polar).alias({szAng, szA});
+        w.property(szRadius, &Polar2D::radius).description(szRadius_Polar).alias({szRad, szR, szDistance, szDist});
+    }
+    
+    {
+        auto w = writer<Polar2M>();
+        w.description("2D Polar coordinate in meter");
+        w.property(szAngle, &Polar2M::angle).description(szAngle_Polar).alias({szAng, szA});
+        w.property(szRadius, &Polar2M::radius).description(szRadius_Polar).alias({szRad, szR, szDistance, szDist});
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
