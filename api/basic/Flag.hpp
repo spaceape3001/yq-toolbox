@@ -24,6 +24,10 @@ namespace yq {
     template <typename T>
     T               flag_decode(const EnumDef* def, std::string_view keys, std::string_view sep=",");
 
+    template <typename T> concept Enumerable = requires {
+        typename T::enum_t;
+    };
+
 
     /*! \brief A flag object for enums (up to 64-values)
     
@@ -34,30 +38,22 @@ namespace yq {
     class Flag {
     public:
     
+        static_assert( is_template_enum_v<E>, "Use Flags instead for non-yq-Enum enumerations (sorry, it's a C++ syntax issue :( )");
+    
         //! Captures the enumeration parameter
         using DefEnum   = E;
         //! Captures the bit-field type parameter
         using DefType   = T;
-        
-        static const constexpr bool     is_template     = is_template_enum_v<E>;
-        static const constexpr bool     not_template    = !is_template;
         
         //! Pulls out the actual enumeration type to be more friendly to get
         using enum_t    = typename E::enum_t;
 
         static constexpr T  mask(E e) noexcept
         {
-            if constexpr (is_template){
-                return T(1) << T(e.value());
-            } 
-            if constexpr (not_template){
-                return T(1) << T(e);
-            }
+            return T(1) << T(e.value());
         }
         
-        template <typename=void>
-        requires is_template
-        static constexpr T  mask(typename E::enum_t e) noexcept
+        static constexpr T mask(typename E::enum_t e) noexcept 
         {
             return T(1) << T(e);
         }
@@ -92,8 +88,6 @@ namespace yq {
         }
         
         //! Constructs by list of enumerated values
-        template <typename=void>
-        requires is_template
         constexpr Flag(std::initializer_list<typename E::enum_t> flags) noexcept : m_value(0)
         {
             for(E e : flags)
@@ -101,8 +95,6 @@ namespace yq {
         }
         
         
-        template <typename=void>
-        requires is_template
         //! Constructs by comma separate string
         Flag(std::string_view k, std::string_view sep=",") : 
             m_value(flag_decode<T>(E::staticEnumInfo(), k, sep))
@@ -128,8 +120,6 @@ namespace yq {
             
             \param[in] sep  Separator to use (default comma)
         */
-        template <typename=void>
-        requires is_template_enum_v<E>
         std::string as_string(std::string_view sep=",") const
         {
             return flag_string(E::staticEnumInfo(), m_value, sep);
@@ -307,75 +297,55 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Flag/enum_t
 
-        template <typename=void>
-        requires is_template
         constexpr Flag        operator+(typename E::enum_t e) const noexcept
         {
             return Flag(m_value | mask(e) );
         }
     
-        template <typename=void>
-        requires is_template
         constexpr Flag        operator-(typename E::enum_t e) const noexcept
         {
             return Flag(m_value & ~mask(e) );
         }
 
-        template <typename=void>
-        requires is_template
         constexpr Flag        operator|(typename E::enum_t e) const noexcept
         {
             return Flag(m_value | mask(e) );
         }
 
-        template <typename=void>
-        requires is_template
         constexpr Flag        operator&(typename E::enum_t e) const noexcept
         {
             return Flag(m_value & mask(e) );
         }
 
-        template <typename=void>
-        requires is_template
         constexpr Flag        operator^(typename E::enum_t e) const noexcept
         {
             return Flag(m_value ^ mask(e) );
         }
 
-        template <typename=void>
-        requires is_template
         Flag&   operator+=(typename E::enum_t e) noexcept
         {
             m_value |= mask(e);
             return *this;
         }
         
-        template <typename=void>
-        requires is_template
         Flag&   operator-=(typename E::enum_t e) noexcept
         {
             m_value &= ~mask(e);
             return *this;
         }
         
-        template <typename=void>
-        requires is_template
         Flag&   operator|=(typename E::enum_t e) noexcept
         {
             m_value |= mask(e);
             return *this;
         }
         
-        template <typename=void>
-        requires is_template
         Flag&   operator&=(typename E::enum_t e) noexcept
         {
             m_value &= mask(e);
             return *this;
         }
 
-        template <typename=void>
-        requires is_template
         Flag&   operator^=(typename E::enum_t e) noexcept
         {
             m_value ^= mask(e);
