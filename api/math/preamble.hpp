@@ -152,7 +152,8 @@ namespace yq {
     
     template <typename> struct LatLon;
     template <typename, typename> struct LatLonAlt;
-    template <typename,typename> struct Polar2;
+    template <typename, typename> struct Polar2;
+    template <typename, typename> struct Cylindrical3;
     
     template <typename> struct PolygonData;
     template <typename> struct PolylineData;
@@ -263,6 +264,10 @@ namespace yq {
     
     using Polar2D               = Polar2<Radian,double>;
     using Polar2M               = Polar2<Radian,Meter>;
+    
+    using Cylindrical3D         = Cylindrical3<Radian,double>;
+    using Cylindrical3M         = Cylindrical3<Radian,Meter>;
+    
 
     //  ------------------------------------------------
     //  FORWARD DECLARE VECTORS & TENSOR (RELATED)

@@ -18,7 +18,8 @@ namespace yq {
     */
     template <typename A, typename L>
     struct Cylindrical3 {
-        static_assert(has_sqrt_v<square_t<L>>, "Basically needs trig too");
+        static_assert(is_floating_point_v<A> && is_floating_point_v<L>);
+        //static_assert(has_sqrt_v<square_t<L>>, "Basically needs trig too");
 
         A       angle;
         L       radius;
@@ -82,3 +83,7 @@ namespace yq {
     Cylindrical3<A,product_t<L1,L2>> operator*(L1, const Cylindrical3<A,L2>&);
     
 }
+
+YQ_TYPE_DECLARE(yq::Cylindrical3D)
+YQ_TYPE_DECLARE(yq::Cylindrical3M)
+

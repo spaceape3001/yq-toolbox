@@ -190,6 +190,9 @@ YQ_TYPE_IMPLEMENT(yq::CountU16)
 YQ_TYPE_IMPLEMENT(yq::CountU32)
 YQ_TYPE_IMPLEMENT(yq::CountU64)
 
+YQ_TYPE_IMPLEMENT(yq::Cylindrical3D)
+YQ_TYPE_IMPLEMENT(yq::Cylindrical3M)
+
 YQ_TYPE_IMPLEMENT(yq::Dimension)
 
 
@@ -755,7 +758,8 @@ static constexpr const std::string_view     szAlpha                     = "alpha
 static constexpr const std::string_view     szAlpha_Color               = "Alpha channel of the color";
 static constexpr const std::string_view     szAng                       = "ang";
 static constexpr const std::string_view     szAngle                     = "angle";
-static constexpr const std::string_view     szAngle_Polar               = "Angle of the polar vector";
+static constexpr const std::string_view     szAngle_Cylindrical         = "Angle of the cylindrical coordinate";
+static constexpr const std::string_view     szAngle_Polar               = "Angle of the polar coordinate";
 static constexpr const std::string_view     szArea                      = "area";
 static constexpr const std::string_view     szArea_Box                  = "Area of the box";
 static constexpr const std::string_view     szArea_Circle               = "Area of the box";
@@ -883,6 +887,7 @@ static constexpr const std::string_view     szR                         = "r";
 static constexpr const std::string_view     szRad                       = "rad";
 static constexpr const std::string_view     szRadius                    = "radius";
 static constexpr const std::string_view     szRadius_Circle             = "Radius of the circle";
+static constexpr const std::string_view     szRadius_Cylindrical        = "Radius of the cylindrical coordinate";
 static constexpr const std::string_view     szRadius_Polar              = "Radius of the polar coordinate";
 static constexpr const std::string_view     szRadius_Sphere             = "Radius of the sphere";
 static constexpr const std::string_view     szRe                        = "re";
@@ -979,6 +984,7 @@ static constexpr const std::string_view     szYZW_Multivector           = "YZW c
 static constexpr const std::string_view     szYZW_Trivector             = "YZW component of the trivector";
 static constexpr const std::string_view     szZ                         = "z";
 static constexpr const std::string_view     szZ_Box                     = "Z range of the box";
+static constexpr const std::string_view     szZ_Cylindrical             = "Z component of the cylindrical coordinate";
 static constexpr const std::string_view     szZ_Multivector             = "Z component of the multivector";
 static constexpr const std::string_view     szZ_Quaternion              = "Z component of the quaternion";
 static constexpr const std::string_view     szZ_Size                    = "Z component of the size, commonly referred to as the depth";
@@ -1577,6 +1583,25 @@ static void reg_math () {
         auto w   = writer<CountU64>();
         w.description("Counter with 64-bit unsigned integer");
         w.property(szCount, &CountU64::cnt).description(szCount_Count).alias(szCnt);
+    }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    //  Cylindrical3
+    
+    {
+        auto w = writer<Cylindrical3D>();
+        w.description("3D Cylindrical coordinate in double");
+        w.property(szAngle, &Cylindrical3D::angle).description(szAngle_Cylindrical).alias({szAng, szA});
+        w.property(szRadius, &Cylindrical3D::radius).description(szRadius_Cylindrical).alias({szRad, szR, szDistance, szDist});
+        w.property(szZ, &Cylindrical3D::z).description(szZ_Cylindrical);
+    }
+    
+    {
+        auto w = writer<Cylindrical3M>();
+        w.description("3D Cylindrical coordinate in meter");
+        w.property(szAngle, &Cylindrical3M::angle).description(szAngle_Cylindrical).alias({szAng, szA});
+        w.property(szRadius, &Cylindrical3M::radius).description(szRadius_Cylindrical).alias({szRad, szR, szDistance, szDist});
+        w.property(szZ, &Cylindrical3M::z).description(szZ_Cylindrical);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
