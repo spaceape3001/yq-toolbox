@@ -4,11 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AbstractFile.ipp"
 
+#include "AbstractFile.ipp"
 #include "Curl.ipp"
 #include "DirUtils.ipp"
 #include "Execute.ipp"
+#include "FileResolver.ipp"
 #include "FileUtils.ipp"
 #include "PidFile.ipp"
 #include "PluginLoader.ipp"
