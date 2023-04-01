@@ -76,8 +76,7 @@ namespace yq {
         //! Constructs with ONE enumerated value
         constexpr Flag(E e) noexcept : m_value(mask(e)) {}
         
-        template <typename=void>
-        requires is_template
+        //! Constructs with ONE enumerated value
         constexpr Flag(typename E::enum_t e) noexcept : m_value(mask(e)) {}
         
         //! Constructs by list of enumerated values
