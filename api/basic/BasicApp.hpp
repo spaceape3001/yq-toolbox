@@ -5,8 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <basic/trait/not_copyable.hpp>
-#include <basic/trait/not_moveable.hpp>
 
 #include <filesystem>
 #include <span>
@@ -16,7 +14,7 @@
 
 namespace yq {
 
-    class BasicApp : not_copyable, not_moveable {
+    class BasicApp  {
     public:
         
         //! Our application pointer
@@ -60,6 +58,11 @@ namespace yq {
     private:
         
         static BasicApp*            s_app;
+        
+        BasicApp(const BasicApp&) = delete;
+        BasicApp(BasicApp&&) = delete;
+        BasicApp& operator=(const BasicApp&) = delete;
+        BasicApp& operator=(BasicApp&&) = delete;
 
         std::span<const char*>      m_args;
         std::string_view            m_exe;

@@ -29,7 +29,9 @@ add_library(${PROJECT_NAME} SHARED
     ./basic/basic.cpp
     ./chemistry/chemistry.cpp
     ./gis/gis.cpp
+    ./io/io.cpp
     ./math/math.cpp
+    ./sql/sql.cpp
     ./physics/physics.cpp
 )
 

@@ -8,7 +8,7 @@
 
 #include <basic/preamble.hpp>
 
-#include <basic/StreamOps.hpp>
+#include <io/StreamOps.hpp>
 #include <basic/meta/InfoBinder.hpp>
 #include <basic/trait/always_false.hpp>
 

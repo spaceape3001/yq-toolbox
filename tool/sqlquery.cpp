@@ -7,8 +7,8 @@
 #include <iostream>
 #include <basic/Vector.hpp>
 #include <basic/Logging.hpp>
-#include <basic/SqlLite.hpp>
-#include <basic/SqlQuery.hpp>
+#include <sql/SqlLite.hpp>
+#include <sql/SqlQuery.hpp>
 #include <basic/TextUtils.hpp>
 
 using namespace yq;

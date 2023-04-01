@@ -49,6 +49,8 @@ namespace yq {
         
         constexpr Flags(all_t, bool v) noexcept : m_value(v?~T(0):T(0)) {}
         
+        constexpr Flags(all_t) noexcept : Flags(ALL, true) {}
+
         //! Constructs by bit-field
         constexpr Flags(T v) noexcept : m_value(v) {}
 

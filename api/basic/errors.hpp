@@ -13,12 +13,8 @@ namespace yq {
         using bad_access                = error_db::entry<"Bad access">;
         using bad_argument              = error_db::entry<"Bad argument provided">;
         using bad_conversion            = error_db::entry<"Bad conversion">;
-        using cant_open_read            = error_db::entry<"Unable to open file for reading">;
-        using cant_open_write           = error_db::entry<"Unable to open file for writing">;
         using const_object_violation    = error_db::entry<"Constant object violated">;
         using empty_string              = error_db::entry<"Empty string">;
-        using failed_to_write_file      = error_db::entry<"Failed to write to the file">;
-        using filepath_empty            = error_db::entry<"Filepath is empty">;
         using getter_failed             = error_db::entry<"Getter function returned false">;
         using incompatible_types        = error_db::entry<"Incompatible types">;
         using insufficient_arguments    = error_db::entry<"Not enough arguments for method call">;
@@ -44,8 +40,5 @@ namespace yq {
         using parser_failed             = error_db::entry<"Parser failed to parse string">;
         using setter_failed             = error_db::entry<"Setter function returned false">;
         using todo                      = error_db::entry<"Feature is not yet implemented (TODO)">;
-        using xml_bad_syntax            = error_db::entry<"XML syntax failure">;
-        using xml_no_root_element       = error_db::entry<"XML document has no sutable root element">;
-        using xml_wrong_document_node   = error_db::entry<"XML document type does not match expectations">;
     }
 }

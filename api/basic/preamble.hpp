@@ -21,13 +21,11 @@
 #include <basic/LogFwd.hpp>
 #include <basic/RevIgCase.hpp>
 
-#include <nlohmann/json_fwd.hpp>
 #include <basic/keywords.hpp>
 
 using namespace std::literals::chrono_literals;
 using namespace std::literals::string_literals;
 using namespace std::literals::string_view_literals;
-
 
 namespace rapidxml {
     // Forward declarations
@@ -167,11 +165,6 @@ namespace yq {
     template <typename T> class Stack;
     template <typename T> class Vector;
 
-        //  SQL
-    struct SqlStatement;
-    template <typename S> class SqlQueryImpl;
-    using SqlQuery = SqlQueryImpl<SqlStatement>;
-    
         // the "new" results
     template <typename T> using Expect  = std::expected<T,std::error_code>;
 
@@ -263,12 +256,6 @@ namespace yq {
     using std::literals::string_literals::operator""s;
     using std::literals::string_view_literals::operator""sv;
     
-    using XmlBase       = rapidxml::xml_base<char>;
-    using XmlNode       = rapidxml::xml_node<char>;
-    using XmlAttribute  = rapidxml::xml_attribute<char>;
-    using XmlDocument   = rapidxml::xml_document<char>;
-
-    using json = nlohmann::json;
 
     template<class T, typename U>
     size_t member_offset(U T::* member)
@@ -297,6 +284,12 @@ namespace yq {
     {
         return std::span<const T>(data.data(), data.size());
     }
-}
 
+    class Stream;
+
+    using XmlBase       = rapidxml::xml_base<char>;
+    using XmlNode       = rapidxml::xml_node<char>;
+    using XmlAttribute  = rapidxml::xml_attribute<char>;
+    using XmlDocument   = rapidxml::xml_document<char>;
+}
 

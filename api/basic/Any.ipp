@@ -9,7 +9,7 @@
 #include "Any.hpp"
 
 #include <basic/meta/ReservedIDs.hpp>
-#include <basic/stream/Text.hpp>
+#include <io/stream/Text.hpp>
 #include <basic/TextUtils.hpp>
 
 

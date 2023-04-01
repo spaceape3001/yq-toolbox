@@ -8,13 +8,9 @@
 
 #include "Url.hpp"
 
-//#include <basic/DelayInit.hpp>
-//#include <basic/EnumMap.hpp>
-//#include <basic/Logging.hpp>
-#include <basic/StreamOps.hpp>
-#include <basic/stream/Text.hpp>
+#include <io/StreamOps.hpp>
+#include <io/stream/Text.hpp>
 #include <basic/TextUtils.hpp>
-//#include <stdio.h>
 
 namespace yq {
     url_view_r      as_host_port(const char*sz, size_t cb)
