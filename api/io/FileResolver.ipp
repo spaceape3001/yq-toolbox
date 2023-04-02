@@ -11,6 +11,8 @@
 #include <basic/CollectionUtils.hpp>
 #include <basic/Vector.hpp>
 
+#include <basic/Logging.hpp>
+
 namespace yq {
     FileResolver::FileResolver()
     {
@@ -49,11 +51,34 @@ namespace yq {
 
     std::filesystem::path       FileResolver::partial(std::string_view x) const
     {
-        return dir::first_child(m_paths, x);
+        std::error_code ec;
+        for(auto& fp : m_paths){
+            for(auto const& de : std::filesystem::recursive_directory_iterator(fp, ec)){
+                auto dd  = de.path();
+                if(!std::filesystem::is_directory(dd))
+                    continue;
+                auto p  = dd / x;
+                if(std::filesystem::exists(p))
+                    return p;
+            }
+        }
+        return std::filesystem::path();
     }
 
     std::vector<std::filesystem::path>  FileResolver::all_partial(std::string_view x) const
     {
-        return dir::all_children(m_paths, x);
+        std::vector<std::filesystem::path> ret;
+        std::error_code ec;
+        for(auto& fp : m_paths){
+            for(auto const& de : std::filesystem::directory_iterator(fp, ec)){
+                auto dd  = de.path();
+                if(!std::filesystem::is_directory(dd))
+                    continue;
+                auto p  = dd / x;
+                if(std::filesystem::exists(p))
+                    ret.push_back(p);
+            }
+        }
+        return ret;
     }
 }
