@@ -38,6 +38,11 @@ namespace yq {
                 return std::expected<T, std::error_code>(std::unexpect_t(), *this);
             }
         };
-
+    }
+    
+    template <StringLiteral WHY>
+    std::error_code create_error()
+    {
+        return error_db::entry<WHY>();
     }
 }
