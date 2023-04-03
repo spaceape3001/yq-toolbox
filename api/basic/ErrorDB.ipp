@@ -122,5 +122,11 @@ namespace yq {
             return *s_ret;
         }
         
+
+        std::error_code make_error(const char* z)
+        {
+            return std::error_code( reason(z), category());
+        }
     }
+
 }

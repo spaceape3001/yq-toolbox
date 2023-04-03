@@ -38,11 +38,21 @@ namespace yq {
                 return std::expected<T, std::error_code>(std::unexpect_t(), *this);
             }
         };
+        
+        std::error_code     make_error(const char*);
     }
     
+    //! Super more efficient
     template <StringLiteral WHY>
     std::error_code create_error()
     {
         return error_db::entry<WHY>();
+    }
+    
+    //! Okay for one time use... note 
+    template <size_t N>
+    std::error_code create_error(StringLiteral<N> why)
+    {
+        return error_db::make_error(why.value);
     }
 }
