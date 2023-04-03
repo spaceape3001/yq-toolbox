@@ -55,4 +55,16 @@ namespace yq {
     {
         return error_db::make_error(why.value);
     }
+
+    //! Okay for one time use... note 
+    template <StringLiteral WHY>
+    std::unexpected<std::error_code> unexpected()
+    {
+        return error_db::entry<WHY>();
+    }
+    
+    inline std::unexpected<std::error_code> unexpected(std::error_code ec)
+    {
+        return std::unexpected(ec);
+    }
 }
