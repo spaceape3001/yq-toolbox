@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <basic/meta/ObjectInfo.hpp>
+#include <meta/ObjectInfo.hpp>
 #include <basic/DelayInit.hpp>
 
 namespace yq {

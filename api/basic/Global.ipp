@@ -7,7 +7,7 @@
 #pragma once
 
 #include <basic/Global.hpp>
-#include <basic/meta/GlobalInfo.hpp>
+#include <meta/GlobalInfo.hpp>
 #include <basic/errors.hpp>
 
 namespace yq {

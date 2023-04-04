@@ -38,17 +38,3 @@
 #include "VersionSpec.ipp"
 #include "XmlObject.ipp"
 
-#include "meta/ArgInfo.ipp"
-#include "meta/CompoundInfo.ipp"
-#include "meta/GlobalInfo.ipp"
-#include "meta/Meta.ipp"
-#include "meta/MetaRepo.ipp"
-#include "meta/MetaWriter.ipp"
-#include "meta/MethodInfo.ipp"
-#include "meta/ObjectInfo.ipp"
-#include "meta/PropGetter.ipp"
-#include "meta/PropSetter.ipp"
-#include "meta/PropertyInfo.ipp"
-#include "meta/StdTypes.ipp"
-#include "meta/TypeInfo.ipp"
-

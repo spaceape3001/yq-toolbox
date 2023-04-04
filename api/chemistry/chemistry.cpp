@@ -5,6 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "preamble.hpp"
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::chemistry::Phase)

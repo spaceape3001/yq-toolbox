@@ -106,7 +106,7 @@
 #include <math/vector/Vector4.hpp>
 
 #include <basic/DelayInit.hpp>
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 
 #include <math/glm_types.hpp>
 #include <math/shape/shape_utils.hpp>

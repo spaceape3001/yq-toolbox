@@ -11,7 +11,7 @@
 #include "TextUtils.hpp"
 #include "ThreadId.hpp"
 
-#include <basic/meta/Meta.hpp>
+#include <meta/Meta.hpp>
 
 #include <span>
 #include <string_view>

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <basic/meta/Init.hpp>
+#include <meta/Init.hpp>
 #include <basic/Any.hpp>
 #include <basic/Global.hpp>
 #include <iostream>

@@ -7,8 +7,8 @@
 #pragma once
 
 #include <basic/Object.hpp>
-#include <basic/meta/ObjectInfo.hpp>
-#include <basic/meta/ObjectInfoWriter.hpp>
+#include <meta/ObjectInfo.hpp>
+#include <meta/ObjectInfoWriter.hpp>
 #include <basic/Ref.hpp>
 #include <basic/Revision.hpp>
 #include <basic/UniqueID.hpp>

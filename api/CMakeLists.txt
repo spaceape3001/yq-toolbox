@@ -32,6 +32,7 @@ add_library(${PROJECT_NAME} SHARED
     ./gis/gis.cpp
     ./io/io.cpp
     ./math/math.cpp
+    ./meta/meta.cpp
     ./sql/sql.cpp
     ./physics/physics.cpp
 )
