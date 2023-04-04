@@ -12,7 +12,7 @@
 */
 
 #include <math/preamble.hpp>
-#include <basic/trait/can_add.hpp>
+#include <trait/can_add.hpp>
 
 namespace yq {
 

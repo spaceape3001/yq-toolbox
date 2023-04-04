@@ -15,7 +15,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
-#include <basic/trait/has_inequality.hpp>
+#include <trait/has_inequality.hpp>
 
 namespace yq {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/trait/not_copyable.hpp>
+#include <trait/not_copyable.hpp>
 
 namespace yq {
 

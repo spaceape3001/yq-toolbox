@@ -7,7 +7,7 @@
 #pragma once
 
 #include <basic/preamble.hpp>
-#include <basic/trait/always_false.hpp>
+#include <trait/always_false.hpp>
 #include <basic/Result.hpp>
 #include <cstring>
 #include <vector>

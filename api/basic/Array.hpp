@@ -6,8 +6,8 @@
 
 #pragma once
 #include <concepts>
-#include <basic/trait/can_add.hpp>
-#include <basic/trait/can_two_multiply.hpp>
+#include <trait/can_add.hpp>
+#include <trait/can_two_multiply.hpp>
 #include "preamble.hpp"
 #include "Coords.hpp"
 #include "IntRange.hpp"

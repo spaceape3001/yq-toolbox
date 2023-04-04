@@ -6,7 +6,7 @@
 
 #pragma once
 //#include <basic/preamble.hpp>
-#include <basic/trait/always_false.hpp>
+#include <trait/always_false.hpp>
 #include <cassert>
 
 #include <cwchar>

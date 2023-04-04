@@ -10,22 +10,22 @@
 
 #include <io/StreamOps.hpp>
 #include <basic/meta/InfoBinder.hpp>
-#include <basic/trait/always_false.hpp>
+#include <trait/always_false.hpp>
 
-#include <math/trait/has_abs.hpp>
-#include <math/trait/has_copysign.hpp>
-#include <math/trait/has_half.hpp>
-#include <math/trait/has_identity.hpp>
-#include <math/trait/has_is_finite.hpp>
-#include <math/trait/has_nan.hpp>
-#include <math/trait/has_one.hpp>
-#include <math/trait/has_sqrt.hpp>
-#include <math/trait/has_zero.hpp>
-#include <math/trait/ieee754.hpp>
-#include <math/trait/integer.hpp>
-#include <math/trait/is_arithmetic.hpp>
-#include <math/trait/is_floating_point.hpp>
-#include <math/trait/is_integral.hpp>
+#include <trait/has_abs.hpp>
+#include <trait/has_copysign.hpp>
+#include <trait/has_half.hpp>
+#include <trait/has_identity.hpp>
+#include <trait/has_is_finite.hpp>
+#include <trait/has_nan.hpp>
+#include <trait/has_one.hpp>
+#include <trait/has_sqrt.hpp>
+#include <trait/has_zero.hpp>
+#include <trait/ieee754.hpp>
+#include <trait/integer.hpp>
+#include <trait/is_arithmetic.hpp>
+#include <trait/is_floating_point.hpp>
+#include <trait/is_integral.hpp>
 
 #include <math/unit/dims.hpp>
 #include <math/keywords.hpp>
