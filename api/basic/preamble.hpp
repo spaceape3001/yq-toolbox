@@ -14,6 +14,7 @@
 #include <string>
 #include <string_view>
 #include <system_error>
+#include <array>
 #include <vector>
 
 #include <basic/128-bit.hpp>
@@ -283,6 +284,12 @@ namespace yq {
     constexpr std::span<const T> span(const std::initializer_list<T>& data) noexcept
     {
         return std::span<const T>(data.data(), data.size());
+    }
+
+    template <typename T, size_t N>
+    constexpr std::span<const T> span(const std::array<T, N>& data) noexcept
+    {
+        return std::span<const T>(data.data(), N);
     }
 
     class Stream;
