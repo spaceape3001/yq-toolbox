@@ -38,7 +38,7 @@ namespace yq {
         }
         
         //!  Appends to the buffer, up to its capacity
-        void                append(const char*z, size_t cnt)
+        void                append(const void*z, size_t cnt)
         {
             if(!z || !cnt)
                 return ;
@@ -54,6 +54,13 @@ namespace yq {
         void                append(std::string_view sv)
         {
             advance(sv.data(), sv.size());
+        }
+        
+        template <typename T>
+        requires std::is_trivially_copyable_v<T>
+        void    paste(const T& value)
+        {
+            append(&value, sizeof(T));
         }
         
         //! Buffer as a string view

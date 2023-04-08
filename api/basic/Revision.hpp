@@ -27,7 +27,7 @@ namespace yq {
     protected:
         /*! \brief Constructor
         
-            \param[in] m    optioanl master
+            \param[in] m    optional master
         */
         Revision(Revision* m=nullptr);
         
