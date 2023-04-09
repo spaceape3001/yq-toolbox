@@ -95,6 +95,8 @@ namespace yq {
         //! Computes the corners
         constexpr AxCorners2<Vector2<T>>  corners() const noexcept;
 
+        constexpr T   height() const noexcept;
+
         //! Computes the north east corner, returns it
         constexpr Vector2<T>  northeast() const noexcept;
 
@@ -108,6 +110,8 @@ namespace yq {
         constexpr Vector2<T>  southwest() const noexcept;
         
         constexpr bool          valid() const noexcept;
+
+        constexpr T   width() const noexcept;
     };
 
     YQ_INTEGER_1(Rectangle2)

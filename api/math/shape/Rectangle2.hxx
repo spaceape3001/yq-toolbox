@@ -175,6 +175,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr T   Rectangle2<T>::height() const noexcept
+    {
+        return size.height();
+    }
+
+    template <typename T>
     constexpr Vector2<T>  Rectangle2<T>::northeast() const noexcept
     {
         return { position.x+size.x, position.y+size.y };
@@ -198,6 +204,11 @@ namespace yq {
         return { position.x, position.y };
     }
 
+    template <typename T>
+    constexpr T   Rectangle2<T>::width() const noexcept
+    {
+        return size.width();
+    }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
