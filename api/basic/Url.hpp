@@ -56,10 +56,12 @@ namespace yq {
     //! \note empty scheme is treated as valid for this context
     bool            is_valid(const UrlView&);
     
-    class WebHtml;
+    namespace mithril {
+        class WebHtml;
+    }
 
     template <typename S, typename T>
-    requires (!std::is_same_v<S, WebHtml>)
+    requires (!std::is_same_v<S, mithril::WebHtml>)
     S&              operator<<(S& s, const BasicUrl<T>& v)
     {
         if(!v.scheme.empty())
