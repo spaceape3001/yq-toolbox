@@ -31,12 +31,15 @@ namespace yq {
     VersionSpec             to_version_spec(const char*, size_t);
     
     class Stream;
-    class WebHtml;
+    
+    namespace mithril {
+        class WebHtml;
+    }
 
     //Stream& operator<<(Stream&, const VersionSpec&);
     //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const VersionSpec&);
     template <typename S>
-    requires (!std::is_same_v<S, WebHtml>)
+    requires (!std::is_same_v<S, mithril::WebHtml>)
     S&  operator<<(S& s, const VersionSpec&v)
     {
         s << v.protocol << '/' << v.major << '.' << v.minor;
