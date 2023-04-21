@@ -128,7 +128,7 @@ namespace yq {
     template <typename T>
     constexpr bool  Circle2<T>::contains(const Vector2<T>& pt) const noexcept
     {
-        return (pt-center) <= radius * radius;
+        return (pt-center).length²() <= radius * radius;
     }
 
     template <typename T>

@@ -109,7 +109,7 @@ namespace yq {
     template <typename T>
     constexpr bool  Sphere4<T>::contains(const Vector4<T>& pt) const noexcept
     {
-        return (pt-center) <= radius * radius;
+        return (pt-center).length²() <= radius * radius;
     }
 
     template <typename T>
