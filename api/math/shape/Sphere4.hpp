@@ -87,6 +87,13 @@ namespace yq {
         /*! \brief Computes the diameter of a hyper sphere
         */
         constexpr T     diameter() const noexcept;
+
+        //! Returns a fixed copy of the circle (if it's invalid and possible to do)
+        constexpr Sphere4   fixed() const noexcept;
+
+        //! TRUE if the radius is greater than zero!
+        constexpr bool    valid() const noexcept;
+
     };
     
     YQ_IEEE754_1(Sphere4)

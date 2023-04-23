@@ -118,6 +118,18 @@ namespace yq {
         return radius + radius;
     }
 
+    template <typename T>
+    constexpr Sphere4<T> Sphere4<T>::fixed() const noexcept
+    {
+        return Sphere4<T>(center, positive(radius));
+    }
+
+    template <typename T>
+    constexpr bool    Sphere4<T>::valid() const noexcept
+    {
+        return radius >= T{};
+    }
+
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
