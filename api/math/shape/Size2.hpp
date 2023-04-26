@@ -35,6 +35,7 @@ namespace yq {
         template <typename=void> requires has_nan_v<T>
         consteval Size2(nan_t) : Size2(ALL, nan_v<T>) {}
         consteval Size2(zero_t) : Size2(ALL, zero_v<T>) {}
+        consteval Size2(one_t) : Size2(ALL, one_v<T>) {}
         
         explicit constexpr Size2(const Vector2<T>&) noexcept;
 
