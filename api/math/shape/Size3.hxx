@@ -328,7 +328,7 @@ namespace yq {
 
     //! Computes volume of the size
     template <typename T>
-    constexpr auto    volume(const Size3<T>& size) noexcept
+    constexpr cube_t<T>    volume(const Size3<T>& size) noexcept
     {
         return size.volume();
     }
