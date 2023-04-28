@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23.0)
+cmake_minimum_required(VERSION 3.26.0)
 
 if("${PROJECT_NAME}" STREQUAL "")
     project(YourQuill VERSION 0.0.0.3)
