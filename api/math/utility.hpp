@@ -58,7 +58,7 @@ namespace yq {
     }
 
     template <typename T, typename R>
-    requires std::is_floating_point_v<T>
+    requires is_arithmetic_v<T>
     bool is_close(const R& compare, T actual, T expected)
     {
         return compare(actual - expected, expected);
@@ -94,13 +94,6 @@ namespace yq {
     constexpr square_t<T>    operator^(T v, two_t) noexcept
     {
         return v*v;
-    }
-
-    template <typename T, typename R>
-    requires is_arithmetic_v<T>
-    bool    is_close(const R& compare, T actual, T expected)
-    {
-        return compare(actual-expected, expected);
     }
     
     template <typename T>
