@@ -159,7 +159,7 @@ namespace yq {
             T   sb = edge_b_length();
             T   sc = edge_c_length();
             T   s   = middivide(sa+sb+sc);
-            return sqrt(s*(s-a)*(s-b)*(s-c));
+            return sqrt(s*(s-sa)*(s-sb)*(s-sc));
         
         } else {
             return zero_v<square_t<T>>;
