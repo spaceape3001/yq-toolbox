@@ -7,11 +7,11 @@
 #include <boost/ut.hpp>
 #include <math/Absolute.hpp>
 #include <math/utility.hpp>
-#include <math/shape/Triangle3.hpp>
-#include <math/vector/Vector3.hpp>
+#include <math/shape/Triangle2.hpp>
+#include <math/vector/Vector2.hpp>
 
-#include <math/shape/Triangle3.hxx>
-#include <math/vector/Vector3.hxx>
+#include <math/shape/Triangle2.hxx>
+#include <math/vector/Vector2.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -21,21 +21,21 @@ Absolute tol{1e-12};
 
 ut::suite tests = []{
     "zero is zero"_test = []{
-        expect( true == (Triangle3D(ZERO) == Triangle3D(ZERO) ));
+        expect( true == (Triangle2D(ZERO) == Triangle2D(ZERO) ));
     };
 
     "add"_test = []{
-        Triangle3I      a( Vector3I(0, 0, 0), Vector3I(1, 1, 0), Vector3I(ONE));
-        Vector3I        b(X);
-        Triangle3I      c( Vector3I(1, 0, 0), Vector3I(2,1,0), Vector3I(2,1,1));
-        Triangle3I   d   = a + b;
-        Triangle3I   e = b + a;
+        Triangle2I      a( Vector2I(0, 0), Vector2I(1, 1), Vector2I(ONE));
+        Vector2I        b(X);
+        Triangle2I      c( Vector2I(1, 0), Vector2I(2,1), Vector2I(2,1));
+        Triangle2I   d   = a + b;
+        Triangle2I   e = b + a;
         expect(true == (d == c));
         expect(true == (e == c));
     };
     
     "area"_test = []{
-        Triangle3D      a( Vector3D(ZERO), Vector3D(3,4,0), Vector3D(3,4,5));
+        Triangle2D      a( Vector2D(ZERO), Vector2D(0,5), Vector2D(5,5));
         expect(is_close(tol, a.area(), 12.5));
     };
 
