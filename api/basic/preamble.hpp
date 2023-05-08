@@ -286,6 +286,12 @@ namespace yq {
         return std::span<const T>(data.data(), data.size());
     }
 
+    template <typename T, typename Allocator>
+    constexpr std::span<const T> span(const std::vector<T,Allocator>& data) noexcept
+    {
+        return data;
+    }
+
     template <typename T, size_t N>
     constexpr std::span<const T> span(const std::array<T, N>& data) noexcept
     {

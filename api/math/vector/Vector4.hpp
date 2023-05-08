@@ -512,7 +512,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector4<T> operator+(T a, const Vector4<T>& b) noexcept;
     template <typename T>
-    std::vector<Vector4<T>>   operator+(std::span<Vector4<T>>, Vector4<T>);
+    std::vector<Vector4<T>>   operator+(std::span<const Vector4<T>>, const Vector4<T>&);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
@@ -520,7 +520,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector4<T> operator-(T a, const Vector4<T>& b) noexcept;
     template <typename T>
-    std::vector<Vector4<T>>   operator-(std::span<Vector4<T>>, Vector4<T>);
+    std::vector<Vector4<T>>   operator-(std::span<const Vector4<T>>, const Vector4<T>&);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION

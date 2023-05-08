@@ -65,7 +65,7 @@ namespace yq {
     template <typename T>
     Polygon4<T>   Polygon4<T>::operator+(const Vector4<T>&b) const
     {
-        return Polygon4(vertex+b);
+        return Polygon4(span(vertex)+b);
     }
     
     template <typename T>

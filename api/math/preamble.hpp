@@ -460,12 +460,33 @@ namespace yq {
     
     using Polygon2D                 = Polygon2<double>;
     using Polygon2F                 = Polygon2<float>;
+    using Polygon2I                 = Polygon2<int>;
+    using Polygon2U                 = Polygon2<unsigned>;
 
     using Polygon3D                 = Polygon3<double>;
     using Polygon3F                 = Polygon3<float>;
+    using Polygon3I                 = Polygon3<int>;
+    using Polygon3U                 = Polygon3<unsigned>;
     
     using Polygon4D                 = Polygon4<double>;
     using Polygon4F                 = Polygon4<float>;
+    using Polygon4I                 = Polygon4<int>;
+    using Polygon4U                 = Polygon4<unsigned>;
+
+    using Polyline2D                = Polyline2<double>;
+    using Polyline2F                = Polyline2<float>;
+    using Polyline2I                = Polyline2<int>;
+    using Polyline2U                = Polyline2<unsigned>;
+
+    using Polyline3D                = Polyline3<double>;
+    using Polyline3F                = Polyline3<float>;
+    using Polyline3I                = Polyline3<int>;
+    using Polyline3U                = Polyline3<unsigned>;
+    
+    using Polyline4D                = Polyline4<double>;
+    using Polyline4F                = Polyline4<float>;
+    using Polyline4I                = Polyline4<int>;
+    using Polyline4U                = Polyline4<unsigned>;
 
     using Quadrilateral2D           = Quadrilateral2<double>;
     using Quadrilateral2F           = Quadrilateral2<float>;

@@ -107,7 +107,7 @@ namespace yq {
     template <typename T>
     Polygon4<T> Vector4<T>::operator+(const Polygon4<T>&b) const
     {
-        return Polygon4<T>(*this + b.vertex);
+        return Polygon4<T>(*this + span(b.vertex));
     }
     #endif
 
@@ -115,7 +115,7 @@ namespace yq {
     template <typename T>
     Polyline4<T> Vector4<T>::operator+(const Polyline4<T>&b) const
     {
-        return Polygon4<T>(*this - b.vertex);
+        return Polyline4<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -249,7 +249,7 @@ namespace yq {
     template <typename T>
     Polygon4<T> Vector4<T>::operator-(const Polygon4<T>&b) const
     {
-        return Polygon4<T>(*this - b.vertex);
+        return Polygon4<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -257,7 +257,7 @@ namespace yq {
     template <typename T>
     Polyline4<T> Vector4<T>::operator-(const Polyline4<T>&b) const
     {
-        return Polygon4<T>(*this - b.vertex);
+        return Polyline4<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -735,7 +735,7 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector4<T>>   operator+(std::span<Vector4<T>>as, Vector4<T>b)
+    std::vector<Vector4<T>>   operator+(std::span<const Vector4<T>>as, const Vector4<T>& b)
     {
         return transform(as, [&](const Vector4<T>&a) -> Vector4<T> {
             return a + b;
@@ -757,7 +757,7 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector4<T>>   operator-(std::span<Vector4<T>>as, Vector4<T>b)
+    std::vector<Vector4<T>>   operator-(std::span<const Vector4<T>>as, const Vector4<T>& b)
     {
         return transform(as, [&](const Vector4<T>&a) -> Vector4<T> {
             return a - b;
