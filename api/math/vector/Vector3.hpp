@@ -522,7 +522,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector3<T> operator+(T a, const Vector3<T>& b) noexcept;
     template <typename T>
-    std::vector<Vector3<T>>   operator+(std::span<Vector3<T>>, Vector3<T>);
+    std::vector<Vector3<T>>   operator+(std::span<const Vector3<T>>, Vector3<T>);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
@@ -530,7 +530,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector3<T> operator-(T a, const Vector3<T>& b) noexcept;
     template <typename T>
-    std::vector<Vector3<T>>   operator-(std::span<Vector3<T>>, Vector3<T>);
+    std::vector<Vector3<T>>   operator-(std::span<const Vector3<T>>, Vector3<T>);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -541,11 +541,11 @@ namespace yq {
     
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
-    std::vector<Vector3<product_t<T,U>>>   operator*(T a, std::span<Vector3<U>>);
+    std::vector<Vector3<product_t<T,U>>>   operator*(T a, std::span<const Vector3<U>>);
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector3<product_t<T,U>>>   operator*(std::span<Vector3<T>>, U b);
+    std::vector<Vector3<product_t<T,U>>>   operator*(std::span<const Vector3<T>>, U b);
 
     template <typename T, typename U>
     std::vector<Vector1<product_t<T,U>>> operator*(std::span<const Vector3<T>>, const Tensor31<U>&);
@@ -571,7 +571,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector3<quotient_t<T,U>>>   operator/(std::span<Vector3<T>>, U b);
+    std::vector<Vector3<quotient_t<T,U>>>   operator/(std::span<const Vector3<T>>, U b);
 
     template <typename T, typename U>
     constexpr Vector3<quotient_t<T,U>>    div_elem(const Vector3<T>&a, const Vector3<U>&b) noexcept

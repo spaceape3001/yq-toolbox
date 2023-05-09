@@ -112,7 +112,7 @@ namespace yq {
     template <typename T>
     Polyline3<T> Vector3<T>::operator+(const Polyline3<T>&b) const
     {
-        return Polygon3<T>(*this - b.vertex);
+        return Polyline3<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -243,7 +243,7 @@ namespace yq {
     template <typename T>
     Polyline3<T> Vector3<T>::operator-(const Polyline3<T>&b) const
     {
-        return Polygon3<T>(*this - b.vertex);
+        return Polyline3<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -725,7 +725,7 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector3<T>>   operator+(std::span<Vector3<T>>as, Vector3<T>b)
+    std::vector<Vector3<T>>   operator+(std::span<const Vector3<T>>as, Vector3<T>b)
     {
         return transform(as, [&](const Vector3<T>&a) -> Vector3<T> {
             return a + b;
@@ -746,7 +746,7 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector3<T>>   operator-(std::span<Vector3<T>>as, Vector3<T>b)
+    std::vector<Vector3<T>>   operator-(std::span<const Vector3<T>>as, Vector3<T>b)
     {
         return transform(as, [&](const Vector3<T>&a) -> Vector3<T> {
             return a - b;
@@ -763,7 +763,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
-    std::vector<Vector3<product_t<T,U>>>   operator*(T a, std::span<Vector3<U>>bs)
+    std::vector<Vector3<product_t<T,U>>>   operator*(T a, std::span<const Vector3<U>>bs)
     {
         return transform(bs, [&](const Vector3<U>&b) -> Vector3<product_t<T,U>> {
             return a * b;
@@ -772,7 +772,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector3<product_t<T,U>>>   operator*(std::span<Vector3<T>>as, U b)
+    std::vector<Vector3<product_t<T,U>>>   operator*(std::span<const Vector3<T>>as, U b)
     {
         return transform(as, [&](const Vector3<T>&a) -> Vector3<product_t<T,U>> {
             return a * b;
@@ -828,7 +828,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector3<quotient_t<T,U>>>   operator/(std::span<Vector3<T>>as, U b)
+    std::vector<Vector3<quotient_t<T,U>>>   operator/(std::span<const Vector3<T>>as, U b)
     {
         return transform(as, [&](const Vector3<T>&a) -> Vector3<quotient_t<T,U>> {
             return a / b;

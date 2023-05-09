@@ -65,7 +65,7 @@ namespace yq {
     template <typename T>
     Polyline3<T>   Polyline3<T>::operator+(const Vector3<T>&b) const
     {
-        return Polyline3(vertex+b);
+        return Polyline3(span(vertex)+b);
     }
     
     template <typename T>
@@ -80,7 +80,7 @@ namespace yq {
     template <typename T>
     Polyline3<T>   Polyline3<T>::operator-(const Vector3<T>&b) const
     {
-        return Polyline3(vertex-b);
+        return Polyline3(span(vertex)-b);
     }
     
     template <typename T>
