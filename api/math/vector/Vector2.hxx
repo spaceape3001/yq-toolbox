@@ -112,7 +112,7 @@ namespace yq {
     template <typename T>
     Polygon2<T> Vector2<T>::operator+(const Polygon2<T>&b) const
     {
-        return Polygon2<T>(*this + b.vertex);
+        return Polygon2<T>(*this + span(b.vertex));
     }
     #endif
 
@@ -120,7 +120,7 @@ namespace yq {
     template <typename T>
     Polyline2<T> Vector2<T>::operator+(const Polyline2<T>&b) const
     {
-        return Polygon2<T>(*this - b.vertex);
+        return Polyline2<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -242,7 +242,7 @@ namespace yq {
     template <typename T>
     Polygon2<T> Vector2<T>::operator-(const Polygon2<T>&b) const
     {
-        return Polygon2<T>(*this - b.vertex);
+        return Polygon2<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -250,7 +250,7 @@ namespace yq {
     template <typename T>
     Polyline2<T> Vector2<T>::operator-(const Polyline2<T>&b) const
     {
-        return Polygon2<T>(*this - b.vertex);
+        return Polygon2<T>(*this - span(b.vertex));
     }
     #endif
 
@@ -691,7 +691,7 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector2<T>>   operator+(std::span<Vector2<T>>as, Vector2<T>b)
+    std::vector<Vector2<T>>   operator+(std::span<const Vector2<T>>as, Vector2<T>b)
     {
         return transform(as, [&](const Vector2<T>&a) -> Vector2<T> {
             return a + b;
@@ -711,7 +711,7 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector2<T>>   operator-(std::span<Vector2<T>>as, Vector2<T>b)
+    std::vector<Vector2<T>>   operator-(std::span<const Vector2<T>>as, Vector2<T>b)
     {
         return transform(as, [&](const Vector2<T>&a) -> Vector2<T> {
             return a - b;
@@ -727,7 +727,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
-    std::vector<Vector2<product_t<T,U>>>   operator*(T a, std::span<Vector2<U>>bs)
+    std::vector<Vector2<product_t<T,U>>>   operator*(T a, std::span<const Vector2<U>>bs)
     {
         return transform(bs, [&](const Vector2<U>&b) -> Vector2<product_t<T,U>> {
             return a * b;
@@ -736,7 +736,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector2<product_t<T,U>>>   operator*(std::span<Vector2<T>>as, U b)
+    std::vector<Vector2<product_t<T,U>>>   operator*(std::span<const Vector2<T>>as, U b)
     {
         return transform(as, [&](const Vector2<T>&a) -> Vector2<product_t<T,U>> {
             return a * b;
@@ -792,7 +792,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector2<quotient_t<T,U>>>   operator/(std::span<Vector2<T>>as, U b)
+    std::vector<Vector2<quotient_t<T,U>>>   operator/(std::span<const Vector2<T>>as, U b)
     {
         return transform(as, [&](const Vector2<T>&a) -> Vector2<quotient_t<T,U>> {
             return a / b;
