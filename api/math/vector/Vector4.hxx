@@ -115,7 +115,7 @@ namespace yq {
     template <typename T>
     Polyline4<T> Vector4<T>::operator+(const Polyline4<T>&b) const
     {
-        return Polyline4<T>(*this - span(b.vertex));
+        return Polyline4<T>(*this + span(b.vertex));
     }
     #endif
 

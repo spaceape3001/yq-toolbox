@@ -25,13 +25,14 @@ ut::suite tests = []{
     };
 
     "add"_test = []{
-        Polyline2I      a({ Vector2I(0, 0), Vector2I(1,1), Vector2I(ONE) });
+        Polyline2I      a({ Vector2I(0, 0), Vector2I(1,0), Vector2I(ONE) });
         Vector2I        b(X);
-        Polyline2I      c({ Vector2I(1, 0), Vector2I(2,1), Vector2I(2,1) });
-        Polyline2I   d   = a + b;
-        Polyline2I   e = b + a;
+        Polyline2I      c({ Vector2I(1, 0), Vector2I(2,0), Vector2I(2,1) });
+        Polyline2I   d  = a + b;
+        Polyline2I   e  = b + a;
         expect(true == (d == c));
         expect(true == (e == c));
+        expect(true == (e == d));
     };
 };
 

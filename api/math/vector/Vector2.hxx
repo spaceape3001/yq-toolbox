@@ -120,7 +120,7 @@ namespace yq {
     template <typename T>
     Polyline2<T> Vector2<T>::operator+(const Polyline2<T>&b) const
     {
-        return Polyline2<T>(*this - span(b.vertex));
+        return Polyline2<T>(*this + span(b.vertex));
     }
     #endif
 
