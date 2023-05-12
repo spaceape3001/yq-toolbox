@@ -104,7 +104,7 @@ namespace yq {
     template <typename T>
     Polygon3<T> Vector3<T>::operator+(const Polygon3<T>&b) const
     {
-        return Polygon3<T>(*this + b.vertex);
+        return Polygon3<T>(*this + span(b.vertex));
     }
     #endif
 
@@ -235,7 +235,7 @@ namespace yq {
     template <typename T>
     Polygon3<T> Vector3<T>::operator-(const Polygon3<T>&b) const
     {
-        return Polygon3<T>(*this - b.vertex);
+        return Polygon3<T>(*this - span(b.vertex));
     }
     #endif
 

@@ -65,7 +65,7 @@ namespace yq {
     template <typename T>
     Polygon3<T>   Polygon3<T>::operator+(const Vector3<T>&b) const
     {
-        return Polygon3(vertex+b);
+        return Polygon3(span(vertex)+b);
     }
     
     template <typename T>
@@ -80,7 +80,7 @@ namespace yq {
     template <typename T>
     Polygon3<T>   Polygon3<T>::operator-(const Vector3<T>&b) const
     {
-        return Polygon3(vertex-b);
+        return Polygon3(span(vertex)-b);
     }
     
     template <typename T>
@@ -96,7 +96,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Polygon3<product_t<T,U>> Polygon3<T>::operator*(U b) const
     {
-        return Polygon3<product_t<T,U>>(vertex*b);
+        return Polygon3<product_t<T,U>>(span(vertex)*b);
     }
         
     template <typename T>
@@ -114,7 +114,7 @@ namespace yq {
         template <typename U>
     Polygon2<product_t<T,U>>   Polygon3<T>::operator*(const Tensor32<U>& b) const
     {
-        return Polygon2<product_t<T,U>>(vertex * b);
+        return Polygon2<product_t<T,U>>(span(vertex) * b);
     }
     #endif
 
@@ -123,7 +123,7 @@ namespace yq {
         template <typename U>
     Polygon3<product_t<T,U>>   Polygon3<T>::operator*(const Tensor33<U>&b) const
     {
-        return Polygon3<product_t<T,U>>(vertex * b);
+        return Polygon3<product_t<T,U>>(span(vertex) * b);
     }
     #endif
 
@@ -132,7 +132,7 @@ namespace yq {
         template <typename U>
     Polygon4<product_t<T,U>>   Polygon3<T>::operator*(const Tensor34<U>&b) const
     {
-        return Polygon4<product_t<T,U>>(vertex * b);
+        return Polygon4<product_t<T,U>>(span(vertex) * b);
     }
     #endif
     
@@ -153,7 +153,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Polygon3<quotient_t<T,U>> Polygon3<T>::operator/(U b) const
     {
-        return Polygon3<quotient_t<T,U>>(vertex / b);
+        return Polygon3<quotient_t<T,U>>(span(vertex) / b);
     }
     
     template <typename T>
@@ -248,7 +248,7 @@ namespace yq {
     requires is_arithmetic_v<T>
     Polygon3<product_t<T,U>> operator*(T a, const Polygon3<U>&b)
     {   
-        return Polygon3<product_t<T,U>>( a*b.vertex );
+        return Polygon3<product_t<T,U>>( a*span(b.vertex) );
     }
 
     template <typename T>
