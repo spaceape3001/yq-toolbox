@@ -18,6 +18,7 @@ namespace yq {
     struct no_throw_t {};
     struct parse_t {};
     struct ref_t {};
+    struct set_t {};
     struct span_t {};
     struct throw_t {};
 
@@ -27,6 +28,7 @@ namespace yq {
     static constexpr const no_throw_t   NO_THROW;
     static constexpr const parse_t      PARSE;
     static constexpr const ref_t        REF;
+    static constexpr const set_t        SET;
     static constexpr const span_t       SPAN;
     static constexpr const throw_t      THROW;
 }
