@@ -64,6 +64,7 @@ target_link_libraries(${PROJECT_NAME}
         ${SQLite3_LIBRARY}
         RapidXml
         json
+        tbbmalloc_proxy
      PRIVATE
         pstreams
 )
