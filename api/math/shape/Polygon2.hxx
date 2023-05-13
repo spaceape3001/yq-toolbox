@@ -78,7 +78,7 @@ namespace yq {
     template <typename T>
     Polygon2<T>   Polygon2<T>::operator+(const Vector2<T>&b) const
     {
-        return Polygon2(vertex+b);
+        return Polygon2(span(vertex)+b);
     }
     
     template <typename T>
@@ -93,7 +93,7 @@ namespace yq {
     template <typename T>
     Polygon2<T>   Polygon2<T>::operator-(const Vector2<T>&b) const
     {
-        return Polygon2(vertex-b);
+        return Polygon2(span(vertex)-b);
     }
     
     template <typename T>
@@ -127,7 +127,7 @@ namespace yq {
         template <typename U>
     Polygon2<product_t<T,U>>   Polygon2<T>::operator*(const Tensor22<U>& b) const
     {
-        return Polygon2<product_t<T,U>>(vertex * b);
+        return Polygon2<product_t<T,U>>(span(vertex) * b);
     }
     #endif
     
@@ -136,7 +136,7 @@ namespace yq {
         template <typename U>
     Polygon3<product_t<T,U>>   Polygon2<T>::operator*(const Tensor23<U>&b) const
     {
-        return Polygon3<product_t<T,U>>(vertex * b);
+        return Polygon3<product_t<T,U>>(span(vertex) * b);
     }
     #endif
 
@@ -145,7 +145,7 @@ namespace yq {
         template <typename U>
     Polygon4<product_t<T,U>>   Polygon2<T>::operator*(const Tensor24<U>&b) const
     {
-        return Polygon4<product_t<T,U>>(vertex * b);
+        return Polygon4<product_t<T,U>>(span(vertex) * b);
     }
     #endif
     
@@ -166,7 +166,7 @@ namespace yq {
     requires is_arithmetic_v<U>
     Polygon2<quotient_t<T,U>> Polygon2<T>::operator/(U b) const
     {
-        return Polygon2<quotient_t<T,U>>(vertex / b);
+        return Polygon2<quotient_t<T,U>>(span(vertex) / b);
     }
     
     template <typename T>
