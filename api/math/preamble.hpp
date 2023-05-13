@@ -240,6 +240,8 @@ namespace yq {
     template <typename> struct Triangle4;
     template <typename> struct Trivector3;
     template <typename> struct Trivector4;
+    template <typename> struct UV;
+    template <typename> struct UVW;
     template <typename> struct Vector1;
     template <typename> struct Vector2;
     template <typename> struct Vector3;
