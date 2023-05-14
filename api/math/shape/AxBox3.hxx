@@ -19,7 +19,7 @@
 namespace yq {
     template <typename T>
     constexpr AxBox3<T>::AxBox3(intersect_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept:
-        AxBox3(INTERSECT, span(ls), span(hs)) {}
+        AxBox3(INTERSECT, yq::span(ls), yq::span(hs)) {}
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(intersect_t, std::span<const Vector3<T>>ls, std::span<const Vector3<T>>hs) noexcept
@@ -54,7 +54,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(union_t, std::initializer_list<Vector3<T>> list) noexcept : 
-        AxBox3(UNION, span(list)){}
+        AxBox3(UNION, yq::span(list)){}
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(union_t, std::span<const Vector3<T>> data) noexcept
@@ -65,12 +65,12 @@ namespace yq {
             hi.x = hx->x;
 
             auto [ly, hy] = std::minmax_element(data.begin(), data.end(), Vector3<T>::less_y);
-            lo.y = lx->y;
-            hi.y = hx->y;
+            lo.y = ly->y;
+            hi.y = hy->y;
 
             auto [lz, hz] = std::minmax_element(data.begin(), data.end(), Vector3<T>::less_z);
-            lo.z = lx->z;
-            hi.z = hx->z;
+            lo.z = lz->z;
+            hi.z = hz->z;
         } else {
             lo = hi = Vector3<T>(ZERO);
         }
@@ -78,7 +78,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox3<T>::AxBox3(union_t, std::initializer_list<Vector3<T>> ls, std::initializer_list<Vector3<T>> hs) noexcept :
-        AxBox3(UNION, span(ls), span(hs))
+        AxBox3(UNION, yq::span(ls), yq::span(hs))
     {}
 
     template <typename T>

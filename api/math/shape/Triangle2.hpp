@@ -115,7 +115,7 @@ namespace yq {
         //! TRUE if this triangle is wound in clockwise with its points
         constexpr bool      is_clockwise() const noexcept;
         
-        //! Perimeter of this triangel
+        //! Perimeter of this triangle
         //! \note Might not be reliable for non-floating point types
         T       perimeter() const;
 

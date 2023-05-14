@@ -283,7 +283,13 @@ namespace yq {
     template <typename T>
     constexpr std::span<const T> span(const std::initializer_list<T>& data) noexcept
     {
-        return std::span<const T>(data.data(), data.size());
+        return std::span<const T>(data.begin(), data.end());
+    }
+
+    template <typename T>
+    constexpr std::span<const T> span(const std::initializer_list<const T>& data) noexcept
+    {
+        return std::span<const T>(data.begin(), data.end());
     }
 
     template <typename T, typename Allocator>

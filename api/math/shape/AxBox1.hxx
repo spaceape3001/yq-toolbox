@@ -19,7 +19,7 @@
 namespace yq {
     template <typename T>
     constexpr AxBox1<T>::AxBox1(intersect_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept:
-        AxBox1(INTERSECT, span(ls), span(hs)) {}
+        AxBox1(INTERSECT, yq::span(ls), yq::span(hs)) {}
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(intersect_t, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
@@ -48,7 +48,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::initializer_list<Vector1<T>> list) noexcept : 
-        AxBox1(UNION, span(list)){}
+        AxBox1(UNION, yq::span(list)){}
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::span<const Vector1<T>> data) noexcept
@@ -64,7 +64,7 @@ namespace yq {
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept :
-        AxBox1(UNION, span(ls), span(hs)) {}
+        AxBox1(UNION, yq::span(ls), yq::span(hs)) {}
 
     template <typename T>
     constexpr AxBox1<T>::AxBox1(union_t, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
