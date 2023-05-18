@@ -7,6 +7,12 @@
 #include <boost/ut.hpp>
 #include <math/Absolute.hpp>
 #include <math/utility.hpp>
+
+#include <math/shape/AxBox3.hpp>
+#include <math/shape/Sphere3.hpp>
+#include <math/vector/Vector3.hpp>
+
+#include <math/shape/AxBox3.hxx>
 #include <math/shape/Sphere3.hxx>
 #include <math/vector/Vector3.hxx>
 
@@ -40,6 +46,24 @@ ut::suite tests = []{
         expect(true == (d == c));
     };
     
+    
+    "bounds"_test = []{
+        Sphere3I    sphA(Vector3I(5,6,7),2);
+
+        AxBox3I     bndA0(Vector3I(3,4,5),Vector3I(7,8,9));
+        AxBox3I     bndA1   = sphA.bounds();
+
+        Sphere3I    sphB(Vector3I(3,-4, 5), 5);
+        AxBox3I     bndB0(Vector3I(-2,-9,0),Vector3I(8,1,10));
+        AxBox3I     bndB1   = sphB.bounds();
+
+        expect( true == (bndA0 == bndA1));
+        expect( true == (bndB0 == bndB1));
+
+        expect( false == (bndA1 == bndB1));
+        expect( true  == (bndA1 != bndB1));
+    };
+    
     "contains"_test = []{
         Sphere3D    u   = Sphere3D(UNIT);
         Sphere3D    u10 = 10. * u + Vector3D(X, 10.);
@@ -50,6 +74,15 @@ ut::suite tests = []{
         expect(false == u10.contains({ -10., 0., 0. }));
     };
     
+    "surface_area"_test = []{
+        Sphere3D    sph(Vector3D(4,2,3),10.);
+        expect( true == is_close(tol, sph.surface_area(), 1256.637061435917 ));
+    };
+    
+    "volume"_test = []{
+        Sphere3D    sph(Vector3D(4,2,3),10.);
+        expect( true == is_close(tol, sph.volume(), 4188.790204786391));
+    };
 };
 
 int main(){
