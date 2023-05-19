@@ -828,6 +828,7 @@ static constexpr const std::string_view     szHigh_Box                  = "High-
 static constexpr const std::string_view     szHigh_Range                = "High-value of the range";
 static constexpr const std::string_view     szHypervolume               = "hypervolume";
 static constexpr const std::string_view     szHypervolume_Box4          = "Hypervolume of the box";
+static constexpr const std::string_view     szHypervolume_Sphere4       = "Hypervolume of the sphere";
 static constexpr const std::string_view     szHVol                      = "hvol";
 static constexpr const std::string_view     szI                         = "i";
 static constexpr const std::string_view     szI_Coord                   = "I-component of the coordinate";
@@ -915,6 +916,7 @@ static constexpr const std::string_view     szValid_Circle              = "Tests
 static constexpr const std::string_view     szVol                       = "vol";
 static constexpr const std::string_view     szVolume                    = "volume";
 static constexpr const std::string_view     szVolume_Box                = "Volume of the box";
+static constexpr const std::string_view     szVolume_Sphere             = "Volume of the sphere";
 static constexpr const std::string_view     szW                         = "w";
 static constexpr const std::string_view     szW_Box                     = "W range of the box";
 static constexpr const std::string_view     szW_Multivector             = "W component of the multivector";
@@ -2308,6 +2310,7 @@ static void reg_math () {
         w.description("3D sphere in double");
         w.property(szCenter, &Sphere3D::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3D::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.property(szVolume, &Sphere3D::volume).description(szVolume_Sphere).alias({szVol});
     }
 
     {
@@ -2315,6 +2318,7 @@ static void reg_math () {
         w.description("3D sphere in float");
         w.property(szCenter, &Sphere3F::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3F::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.property(szVolume, &Sphere3F::volume).description(szVolume_Sphere).alias({szVol});
     }
 
     {
@@ -2336,6 +2340,7 @@ static void reg_math () {
         w.description("4D sphere in double");
         w.property(szCenter, &Sphere4D::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4D::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.property(szHypervolume, &Sphere4D::hypervolume).description(szHypervolume_Sphere4);
     }
 
     {
@@ -2343,6 +2348,7 @@ static void reg_math () {
         w.description("4D sphere in float");
         w.property(szCenter, &Sphere4F::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4F::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.property(szHypervolume, &Sphere4F::hypervolume).description(szHypervolume_Sphere4);
     }
 
     {

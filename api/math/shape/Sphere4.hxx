@@ -119,6 +119,13 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr fourth_t<T>   Sphere4<T>::hypervolume() const noexcept
+    {
+        auto r2 = radius * radius;
+        return (pi*pi)/ T(2) * (r2*r2);
+    }
+
+    template <typename T>
     constexpr Sphere4<T> Sphere4<T>::fixed() const noexcept
     {
         return Sphere4<T>(center, positive(radius));

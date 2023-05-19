@@ -90,6 +90,8 @@ namespace yq {
 
         //! Returns a fixed copy of the circle (if it's invalid and possible to do)
         constexpr Sphere4   fixed() const noexcept;
+        
+        constexpr fourth_t<T>   hypervolume() const noexcept;
 
         //! TRUE if the radius is greater than zero!
         constexpr bool    valid() const noexcept;
