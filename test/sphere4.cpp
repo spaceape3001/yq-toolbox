@@ -39,6 +39,23 @@ ut::suite tests = []{
         Sphere4I    d   = a + b;
         expect(true == (d == c));
     };
+
+    "bounds"_test = []{
+        Sphere4I    sphA(Vector4I(5,6,7,8),2);
+
+        AxBox4I     bndA0(Vector4I(3,4,5,6),Vector4I(7,8,9,10));
+        AxBox4I     bndA1   = sphA.bounds();
+
+        Sphere4I    sphB(Vector4I(3,-4, 5,-6), 5);
+        AxBox4I     bndB0(Vector4I(-2,-9,0,-11),Vector4I(8,1,10,-1));
+        AxBox4I     bndB1   = sphB.bounds();
+
+        expect( true == (bndA0 == bndA1));
+        expect( true == (bndB0 == bndB1));
+
+        expect( false == (bndA1 == bndB1));
+        expect( true  == (bndA1 != bndB1));
+    };
     
     "contains"_test = []{
         Sphere4D    u   = Sphere4D(UNIT);
@@ -50,6 +67,10 @@ ut::suite tests = []{
         expect(false == u10.contains({ -10., 0., 0., 0. }));
     };
     
+    "hypervolume"_test = []{
+        Sphere4D    sph(Vector4D(4,2,3,5),10.);
+        expect( true == is_close(tol, sph.hypervolume(), 49348.02200544679));
+    };
 };
 
 int main(){
