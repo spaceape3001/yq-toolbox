@@ -21,6 +21,7 @@ namespace yq {
     struct set_t {};
     struct span_t {};
     struct throw_t {};
+    struct zero_t {};
 
     static constexpr const all_t        ALL;
     static constexpr const copy_t       COPY;
@@ -31,4 +32,5 @@ namespace yq {
     static constexpr const set_t        SET;
     static constexpr const span_t       SPAN;
     static constexpr const throw_t      THROW;
+    static constexpr const zero_t       ZERO;
 }

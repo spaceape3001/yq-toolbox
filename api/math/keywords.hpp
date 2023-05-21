@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <basic/keywords.hpp>
+
 /*
     This file is about making new keywords that can be used in the constructors and function overloads.
 */
@@ -66,7 +68,6 @@ namespace yq {
     struct zx_t {};
     struct zy_t {};
     struct zz_t {};
-    struct zero_t {};
 
     //static constexpr const all_t        all_;
     //static constexpr const columns_t    COLUMNS;
@@ -127,7 +128,6 @@ namespace yq {
     static constexpr const zx_t             ZX;
     static constexpr const zy_t             ZY;
     static constexpr const zz_t             ZZ;
-    static constexpr const zero_t           ZERO;
 
     static constexpr const two_t            ²;
     static constexpr const three_t          ³;
