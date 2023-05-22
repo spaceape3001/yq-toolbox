@@ -20,6 +20,11 @@ namespace yq {
         static constexpr const uint8_t  DIMS    = 6;
         T       i, j, k, l, m, n;
         
+        constexpr Coord<T,6>() noexcept = default;
+        constexpr Coord<T,6>(T _i, T _j, T _k, T _l, T _m, T _n) noexcept : 
+            i(_i), j(_j), k(_k), l(_l), m(_m), n(_n) {}
+        constexpr Coord<T,6>(all_t, T _v) noexcept : Coord<T,6>(_v, _v, _v, _v, _v, _v) {}
+        
         //! Defaulted equality  operator
         constexpr bool operator==(const Coord&) const noexcept = default;
         
