@@ -10,8 +10,6 @@ macro(toolbox_test name)
     add_test(NAME ${name} COMMAND test_${name} ${ARGN})
 endmacro()
 
-toolbox_test(coord6)
-
 
 toolbox_test(any)
 toolbox_test(axbox1)
@@ -19,6 +17,8 @@ toolbox_test(axbox2)
 toolbox_test(axbox3)
 toolbox_test(axbox4)
 toolbox_test(circle2)
+toolbox_test(coord5)
+toolbox_test(coord6)
 toolbox_test(diffengine)
 toolbox_test(encode64)
 toolbox_test(fraction)
