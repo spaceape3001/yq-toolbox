@@ -8,6 +8,7 @@
 
 #include "Coord.hpp"
 #include <trait/has_zero.hpp>
+#include <basic/keywords.hpp>
 
 namespace yq {
 

@@ -7,6 +7,8 @@
 #pragma once
 
 #include "Coord.hpp"
+#include <trait/has_zero.hpp>
+#include <basic/keywords.hpp>
 
 namespace yq {
 
@@ -19,6 +21,12 @@ namespace yq {
         using component_type    = T;
         static constexpr const uint8_t  DIMS    = 4;
         T       i, j, k, l;
+
+        constexpr Coord<T,4>() noexcept = default;
+        constexpr Coord<T,4>(T _i, T _j, T _k, T _l) noexcept : 
+            i(_i), j(_j), k(_k), l(_l) {}
+        constexpr Coord<T,4>(all_t, T _v) noexcept : Coord<T,4>(_v, _v, _v, _v) {}
+        constexpr Coord<T,4>(zero_t) noexcept : Coord<T,4>(ALL, zero_v<T>) {}
 
         //! Defaulted equality  operator
         constexpr bool operator==(const Coord&) const noexcept = default;
