@@ -440,10 +440,23 @@ namespace yq {
     using Circle2I                  = Circle2<int>;
     using Circle2U                  = Circle2<unsigned>;
 
+    using Coord1D                   = Coord1<double>;
+    using Coord1F                   = Coord1<float>;
+
     using Coord2D                   = Coord2<double>;
     using Coord2F                   = Coord2<float>;
-    //using Coord2I                   = Coord2<int>;
-    //using Coord2U                   = Coord2<unsigned>;
+
+    using Coord3D                   = Coord3<double>;
+    using Coord3F                   = Coord3<float>;
+
+    using Coord4D                   = Coord4<double>;
+    using Coord4F                   = Coord4<float>;
+
+    using Coord5D                   = Coord5<double>;
+    using Coord5F                   = Coord5<float>;
+
+    using Coord6D                   = Coord6<double>;
+    using Coord6F                   = Coord6<float>;
 
     using FractionI                 = Fraction<int>;
     //using Fraction8      = Fraction<int8_t>;

@@ -6,7 +6,12 @@
 
 #include <math/preamble.hpp>
 #include <math/Complex.hpp>
+#include <math/Coord1.hpp>
 #include <math/Coord2.hpp>
+#include <math/Coord3.hpp>
+#include <math/Coord4.hpp>
+#include <math/Coord5.hpp>
+#include <math/Coord6.hpp>
 #include <math/Counter.hpp>
 #include <math/unit/Dimension.hpp>
 #include <math/unit/MKS.hpp>
@@ -175,10 +180,35 @@ YQ_TYPE_IMPLEMENT(yq::ComplexF)
 YQ_TYPE_IMPLEMENT(yq::ComplexI)
 YQ_TYPE_IMPLEMENT(yq::ComplexU)
 
+YQ_TYPE_IMPLEMENT(yq::Coord1D)
+YQ_TYPE_IMPLEMENT(yq::Coord1F)
+YQ_TYPE_IMPLEMENT(yq::Coord1I)
+YQ_TYPE_IMPLEMENT(yq::Coord1U)
+
 YQ_TYPE_IMPLEMENT(yq::Coord2D)
 YQ_TYPE_IMPLEMENT(yq::Coord2F)
 YQ_TYPE_IMPLEMENT(yq::Coord2I)
 YQ_TYPE_IMPLEMENT(yq::Coord2U)
+
+YQ_TYPE_IMPLEMENT(yq::Coord3D)
+YQ_TYPE_IMPLEMENT(yq::Coord3F)
+YQ_TYPE_IMPLEMENT(yq::Coord3I)
+YQ_TYPE_IMPLEMENT(yq::Coord3U)
+
+YQ_TYPE_IMPLEMENT(yq::Coord4D)
+YQ_TYPE_IMPLEMENT(yq::Coord4F)
+YQ_TYPE_IMPLEMENT(yq::Coord4I)
+YQ_TYPE_IMPLEMENT(yq::Coord4U)
+
+YQ_TYPE_IMPLEMENT(yq::Coord5D)
+YQ_TYPE_IMPLEMENT(yq::Coord5F)
+YQ_TYPE_IMPLEMENT(yq::Coord5I)
+YQ_TYPE_IMPLEMENT(yq::Coord5U)
+
+YQ_TYPE_IMPLEMENT(yq::Coord6D)
+YQ_TYPE_IMPLEMENT(yq::Coord6F)
+YQ_TYPE_IMPLEMENT(yq::Coord6I)
+YQ_TYPE_IMPLEMENT(yq::Coord6U)
 
 YQ_TYPE_IMPLEMENT(yq::CountI8)
 YQ_TYPE_IMPLEMENT(yq::CountI16)
@@ -841,7 +871,9 @@ static constexpr const std::string_view     szIncircle_Box              = "Incir
 static constexpr const std::string_view     szJ                         = "j";
 static constexpr const std::string_view     szJ_Coord                   = "J-component of the coordinate";
 static constexpr const std::string_view     szK                         = "k";
+static constexpr const std::string_view     szK_Coord                   = "K-component of the coordinate";
 static constexpr const std::string_view     szL                         = "l";
+static constexpr const std::string_view     szL_Coord                   = "L-component of the coordinate";
 static constexpr const std::string_view     szLen                       = "len";
 static constexpr const std::string_view     szLen²                      = "len2";
 static constexpr const std::string_view     szLength                    = "length";
@@ -853,10 +885,12 @@ static constexpr const std::string_view     szLow                       = "low";
 static constexpr const std::string_view     szLow_Box                   = "Low-corner of the box";
 static constexpr const std::string_view     szLow_Range                 = "Low-value of the range";
 static constexpr const std::string_view     szM                         = "m";
+static constexpr const std::string_view     szM_Coord                   = "M-component of the coordinate";
 static constexpr const std::string_view     szMag                       = "mag";
 static constexpr const std::string_view     szMagnitude                 = "magnitude";
 static constexpr const std::string_view     szMagnitude_Complex         = "Magnitude of the complex number";
 static constexpr const std::string_view     szN                         = "n";
+static constexpr const std::string_view     szN_Coord                   = "N-component of the coordinate";
 static constexpr const std::string_view     szNE                        = "ne";
 static constexpr const std::string_view     szNortheast                 = "northeast";
 static constexpr const std::string_view     szNortheast_Box             = "North-east corner of the box";
@@ -1509,6 +1543,30 @@ static void reg_math () {
     //  Coordinates
 
     {
+        auto w = writer<Coord1D>();
+        w.description("1D coordinate in double");
+        w.property(szI, &Coord1D::i).description(szI_Coord);
+    }
+
+    {
+        auto w = writer<Coord1F>();
+        w.description("1D coordinate in float");
+        w.property(szI, &Coord1F::i).description(szI_Coord);
+    }
+
+    {
+        auto w = writer<Coord1I>();
+        w.description("1D coordinate in integer");
+        w.property(szI, &Coord1I::i).description(szI_Coord);
+    }
+
+    {
+        auto w = writer<Coord1U>();
+        w.description("1D coordinate in unsigned integer");
+        w.property(szI, &Coord1U::i).description(szI_Coord);
+    }
+
+    {
         auto w = writer<Coord2D>();
         w.description("2D coordinate in double");
         w.property(szI, &Coord2D::i).description(szI_Coord);
@@ -1534,6 +1592,158 @@ static void reg_math () {
         w.description("2D coordinate in unsigned integer");
         w.property(szI, &Coord2U::i).description(szI_Coord);
         w.property(szJ, &Coord2U::j).description(szJ_Coord);
+    }
+
+    {
+        auto w = writer<Coord3D>();
+        w.description("3D coordinate in double");
+        w.property(szI, &Coord3D::i).description(szI_Coord);
+        w.property(szJ, &Coord3D::j).description(szJ_Coord);
+        w.property(szK, &Coord3D::k).description(szK_Coord);
+    }
+
+    {
+        auto w = writer<Coord3F>();
+        w.description("3D coordinate in float");
+        w.property(szI, &Coord3F::i).description(szI_Coord);
+        w.property(szJ, &Coord3F::j).description(szJ_Coord);
+        w.property(szK, &Coord3F::k).description(szK_Coord);
+    }
+
+    {
+        auto w = writer<Coord3I>();
+        w.description("3D coordinate in integer");
+        w.property(szI, &Coord3I::i).description(szI_Coord);
+        w.property(szJ, &Coord3I::j).description(szJ_Coord);
+        w.property(szK, &Coord3I::k).description(szK_Coord);
+    }
+
+    {
+        auto w = writer<Coord3U>();
+        w.description("3D coordinate in unsigned integer");
+        w.property(szI, &Coord3U::i).description(szI_Coord);
+        w.property(szJ, &Coord3U::j).description(szJ_Coord);
+        w.property(szK, &Coord3U::k).description(szK_Coord);
+    }
+
+    {
+        auto w = writer<Coord4D>();
+        w.description("4D coordinate in double");
+        w.property(szI, &Coord4D::i).description(szI_Coord);
+        w.property(szJ, &Coord4D::j).description(szJ_Coord);
+        w.property(szK, &Coord4D::k).description(szK_Coord);
+        w.property(szL, &Coord4D::l).description(szL_Coord);
+    }
+
+    {
+        auto w = writer<Coord4F>();
+        w.description("4D coordinate in float");
+        w.property(szI, &Coord4F::i).description(szI_Coord);
+        w.property(szJ, &Coord4F::j).description(szJ_Coord);
+        w.property(szK, &Coord4F::k).description(szK_Coord);
+        w.property(szL, &Coord4F::l).description(szL_Coord);
+    }
+
+    {
+        auto w = writer<Coord4I>();
+        w.description("4D coordinate in integer");
+        w.property(szI, &Coord4I::i).description(szI_Coord);
+        w.property(szJ, &Coord4I::j).description(szJ_Coord);
+        w.property(szK, &Coord4I::k).description(szK_Coord);
+        w.property(szL, &Coord4I::l).description(szL_Coord);
+    }
+
+    {
+        auto w = writer<Coord4U>();
+        w.description("4D coordinate in unsigned integer");
+        w.property(szI, &Coord4U::i).description(szI_Coord);
+        w.property(szJ, &Coord4U::j).description(szJ_Coord);
+        w.property(szK, &Coord4U::k).description(szK_Coord);
+        w.property(szL, &Coord4U::l).description(szL_Coord);
+    }
+
+    {
+        auto w = writer<Coord5D>();
+        w.description("5D coordinate in double");
+        w.property(szI, &Coord5D::i).description(szI_Coord);
+        w.property(szJ, &Coord5D::j).description(szJ_Coord);
+        w.property(szK, &Coord5D::k).description(szK_Coord);
+        w.property(szL, &Coord5D::l).description(szL_Coord);
+        w.property(szM, &Coord5D::m).description(szM_Coord);
+    }
+
+    {
+        auto w = writer<Coord5F>();
+        w.description("5D coordinate in float");
+        w.property(szI, &Coord5F::i).description(szI_Coord);
+        w.property(szJ, &Coord5F::j).description(szJ_Coord);
+        w.property(szK, &Coord5F::k).description(szK_Coord);
+        w.property(szL, &Coord5F::l).description(szL_Coord);
+        w.property(szM, &Coord5F::m).description(szM_Coord);
+    }
+
+    {
+        auto w = writer<Coord5I>();
+        w.description("5D coordinate in integer");
+        w.property(szI, &Coord5I::i).description(szI_Coord);
+        w.property(szJ, &Coord5I::j).description(szJ_Coord);
+        w.property(szK, &Coord5I::k).description(szK_Coord);
+        w.property(szL, &Coord5I::l).description(szL_Coord);
+        w.property(szM, &Coord5I::m).description(szM_Coord);
+    }
+
+    {
+        auto w = writer<Coord5U>();
+        w.description("5D coordinate in unsigned integer");
+        w.property(szI, &Coord5U::i).description(szI_Coord);
+        w.property(szJ, &Coord5U::j).description(szJ_Coord);
+        w.property(szK, &Coord5U::k).description(szK_Coord);
+        w.property(szL, &Coord5U::l).description(szL_Coord);
+        w.property(szM, &Coord5U::m).description(szM_Coord);
+    }
+
+    {
+        auto w = writer<Coord6D>();
+        w.description("6D coordinate in double");
+        w.property(szI, &Coord6D::i).description(szI_Coord);
+        w.property(szJ, &Coord6D::j).description(szJ_Coord);
+        w.property(szK, &Coord6D::k).description(szK_Coord);
+        w.property(szL, &Coord6D::l).description(szL_Coord);
+        w.property(szM, &Coord6D::m).description(szM_Coord);
+        w.property(szN, &Coord6D::n).description(szN_Coord);
+    }
+
+    {
+        auto w = writer<Coord6F>();
+        w.description("6D coordinate in float");
+        w.property(szI, &Coord6F::i).description(szI_Coord);
+        w.property(szJ, &Coord6F::j).description(szJ_Coord);
+        w.property(szK, &Coord6F::k).description(szK_Coord);
+        w.property(szL, &Coord6F::l).description(szL_Coord);
+        w.property(szM, &Coord6F::m).description(szM_Coord);
+        w.property(szN, &Coord6F::n).description(szN_Coord);
+    }
+
+    {
+        auto w = writer<Coord6I>();
+        w.description("6D coordinate in integer");
+        w.property(szI, &Coord6I::i).description(szI_Coord);
+        w.property(szJ, &Coord6I::j).description(szJ_Coord);
+        w.property(szK, &Coord6I::k).description(szK_Coord);
+        w.property(szL, &Coord6I::l).description(szL_Coord);
+        w.property(szM, &Coord6I::m).description(szM_Coord);
+        w.property(szN, &Coord6I::n).description(szN_Coord);
+    }
+
+    {
+        auto w = writer<Coord6U>();
+        w.description("6D coordinate in unsigned integer");
+        w.property(szI, &Coord6U::i).description(szI_Coord);
+        w.property(szJ, &Coord6U::j).description(szJ_Coord);
+        w.property(szK, &Coord6U::k).description(szK_Coord);
+        w.property(szL, &Coord6U::l).description(szL_Coord);
+        w.property(szM, &Coord6U::m).description(szM_Coord);
+        w.property(szN, &Coord6U::n).description(szN_Coord);
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
