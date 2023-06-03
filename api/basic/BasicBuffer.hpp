@@ -86,6 +86,15 @@ namespace yq {
             m_size      = 0;
         }
         
+        //! Clobbers existing data, makes this a data of one
+        template <typename T>
+        T*                  create_single() 
+        {
+            static_assert((sizeof(T) <= N) && std::is_trivially_copyable_v<T>);
+            m_size      =    sizeof(T);
+            return new(m_buffer) T;
+        }
+        
         //! Start of data
         char*               data() { return m_buffer; }
 
