@@ -174,3 +174,9 @@ namespace yq {
 
 }
 
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, const std::error_code&ec)
+{
+    str << ec.message();
+    return str;
+}
+

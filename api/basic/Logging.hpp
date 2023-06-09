@@ -13,7 +13,7 @@
 #include <log4cpp/CategoryStream.hh>
 #include <log4cpp/Priority.hh>
 #include <optional>
-
+#include <system_error>
 
 namespace yq {
 
@@ -152,6 +152,8 @@ log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& str, const std::opt
         str << "(unset)";
     return str;
 }
+
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const std::error_code&);
 
 //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const QByteArray&);
 //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const QDate&);
