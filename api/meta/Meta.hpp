@@ -72,6 +72,7 @@ namespace yq {
         RENDER3D        = 1ULL << 20,
         CAMERA          = 1ULL << 21,
         PIPELINE        = 1ULL << 22,
+        GENERATOR       = 1ULL << 23,
         
         STATE           = 1ULL << 26, //!< "State" property
         STATIC          = 1ULL << 27, //!< Non-object specific (global variables, functions, etc)

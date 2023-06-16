@@ -13,8 +13,8 @@
 #include <meta/TypeInfo.hpp>
 #include <basic/Any.hpp>
 #include <basic/errors.hpp>
-
 #include <basic/Logging.hpp>
+#include "AnyArgHelper.hpp"
 
 namespace yq {
     MethodInfo::MethodInfo(std::string_view zName, const std::source_location& sl, Meta* parentMeta, options_t opts) : Meta(zName, parentMeta, sl)
@@ -90,46 +90,24 @@ namespace yq {
         
         Any                         result;
         void*                       rptr        = nullptr;
-        std::vector<const void*>    ptrs;;
-        std::vector<Any>            data;
+        AnyArgHelper                aaa;
+        //std::vector<const void*>    ptrs;
+        //std::vector<Any>            data;
 
             //  guard against results that aren't types
         if(m_result && !m_result->type().is_type())
             return errors::internal_error();
         
-        if(ac){
-        
-            //  quick sanity check to guard against arguments that aren't types
-            for(size_t n = 0; n<ac; ++n){
-                if(!m_args[n]->type().is_type())
-                    return errors::internal_error();
-            }
-        
-            ptrs.resize(ac, nullptr);
-            data.resize(ac);
-            
-            for(size_t n =0; n<ac; ++n){
-                const Any& arg  = args[n];
-                if(&arg.type() == &m_args[n]->type()){
-                    ptrs[n] = arg.raw_ptr();
-                    continue;
-                }
-                
-                auto v      = arg.convert(static_cast<const TypeInfo&>(m_args[n]->type()));
-                if(!v)
-                    return errors::bad_argument();
-                
-                data[n] = std::move(*v);
-                ptrs[n] = data[n].raw_ptr();
-            }
-        }
+        std::error_code ec  = aaa.construct(m_args, args);
+        if(ec)
+            return std::unexpected(ec);
     
         if(m_result){
             result  = std::move(Any(static_cast<const TypeInfo&>(m_result->type())));
             rptr    = result.raw_ptr();
         }
         
-        std::error_code ec  = _invoke(rptr, obj, ptrs.data());
+        ec  = _invoke(rptr, obj, aaa);
         if(ec != std::error_code())
             return std::unexpected(ec);
         if(m_result)

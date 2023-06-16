@@ -53,7 +53,7 @@ namespace yq {
             \param[in]      obj     Pointer to the object
             \param[in]      args    Pointer to the arguments
         */
-        virtual std::error_code _invoke(void* res, void* obj, const void** args) const = 0;
+        virtual std::error_code _invoke(void* res, void* obj, const void* const * args) const = 0;
         
         template <typename...> struct DefineArg;
         template <typename R, typename...> void define_signature(options_t options=0);

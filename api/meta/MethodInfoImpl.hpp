@@ -49,7 +49,7 @@ namespace yq {
 
     namespace impl {
         template <typename R, typename Obj, typename... Args, unsigned... Is>
-        std::error_code    invokeConst(R* res, const Obj*obj, R(Obj::*fn)(Args...) const, const void** args, indices<Is...>)
+        std::error_code    invokeConst(R* res, const Obj*obj, R(Obj::*fn)(Args...) const, const void* const* args, indices<Is...>)
         {
             if constexpr (std::is_same_v<R, std::error_code>){
                 return (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
@@ -85,7 +85,7 @@ namespace yq {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        std::error_code  _invoke(void* res, void* obj, const void** args) const override final
+        std::error_code  _invoke(void* res, void* obj, const void* const* args) const override final
         {
             if(!obj)
                 return errors::null_object();
@@ -112,7 +112,7 @@ namespace yq {
 
     namespace impl {
         template <typename R, typename Obj, typename... Args, unsigned... Is>
-        std::error_code    invokeDynamic(R* res, Obj*obj, R(Obj::*fn)(Args...) const, const void** args, indices<Is...>)
+        std::error_code    invokeDynamic(R* res, Obj*obj, R(Obj::*fn)(Args...) const, const void* const* args, indices<Is...>)
         {
             if constexpr (std::is_same_v<R, std::error_code>){
                 return (obj->*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
@@ -147,7 +147,7 @@ namespace yq {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        std::error_code   _invoke(void* res, void* obj, const void** args) const override final
+        std::error_code   _invoke(void* res, void* obj, const void* const* args) const override final
         {
             if(!obj)
                 return errors::null_object();
@@ -175,12 +175,12 @@ namespace yq {
     
     namespace impl {
         template <typename R, typename... Args, unsigned... Is>
-        std::error_code    invokeStatic(R* res, R(*fn)(Args...), const void** args, indices<Is...>)
+        std::error_code    invokeStatic(R* res, R(*fn)(Args...), const void* const* args, indices<Is...>)
         {
             if constexpr (std::is_same_v<R, std::error_code>){
                 return (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
             } else  if constexpr (!std::is_same_v<R,void>){
-                *(R*) res = (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
+                *res = (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
                 return std::error_code();
             } else {
                 (*fn)(*(const std::remove_cvref_t<Args>*) args[Is]...);
@@ -210,7 +210,7 @@ namespace yq {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
-        std::error_code            _invoke(void* res, void*, const void** args) const override final
+        std::error_code            _invoke(void* res, void*, const void* const* args) const override final
         {
             if constexpr (is_returnable_v<R>){
                 if(!res)
