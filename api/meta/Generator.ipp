@@ -14,27 +14,50 @@
 
 namespace yq {
     struct GeneratorInfo::Repo {
+        std::string                                                 name;
         std::vector<const GeneratorInfo*>                           all;
         std::map<std::string_view, const GeneratorInfo*, IgCase>    byName;
+        Repo*                                                       next    = nullptr;
     };
-    
-    GeneratorInfo::Repo*    GeneratorInfo::newRepo()
+
+    GeneratorInfo::Repo*    GeneratorInfo::addRepo(Repo* r)
     {
-        return new Repo;
+        static Repo*        s_top   = nullptr;
+        if(r){
+            r->next = s_top;
+            s_top   = r;
+        }
+        return s_top;
+    }
+    
+    GeneratorInfo::Repo*    GeneratorInfo::newRepo(const char* name)
+    {
+        Repo*r  = new Repo;
+        r->name = name;
+        addRepo(r);
+        return r;
     }
 
     
-    const std::vector<const GeneratorInfo*>&     GeneratorInfo::all(Repo& r)
+    const std::vector<const GeneratorInfo*>&     GeneratorInfo::all(const Repo& r)
     {
         return r.all;
     }
     
-    const GeneratorInfo*                         GeneratorInfo::find(Repo&r, std::string_view k)
+    const GeneratorInfo*                         GeneratorInfo::find(const Repo&r, std::string_view k)
     {
         auto i = r.byName.find(k);
         if(i != r.byName.end())
             return i->second;
         return nullptr;
+    }
+
+    std::vector<std::string_view> GeneratorInfo::generator_types()
+    {
+        std::vector<std::string_view>    ret;
+        for(Repo* r = addRepo(nullptr);r; r = r -> next)
+            ret.push_back(r->name);
+        return ret;
     }
     
     void                                         GeneratorInfo::register_me(Repo&r, const GeneratorInfo*gi)

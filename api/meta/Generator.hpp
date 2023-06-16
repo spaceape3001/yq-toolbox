@@ -9,6 +9,7 @@
 #include <meta/Meta.hpp>
 #include <vector>
 #include <span>
+#include <typeinfo>
 
 namespace yq {
 
@@ -18,16 +19,21 @@ namespace yq {
         class Writer;
         const std::vector<const ArgInfo*>& arguments() const { return m_arguments; }
     
+        static std::vector<std::string_view> generator_types();
+    
     protected:
         std::vector<const ArgInfo*> m_arguments;
 
         struct Repo;
-        static Repo*    newRepo();
+        static Repo*    newRepo(const char*);
+        
+        //! Adds a repo, if r is not null, returns the "current" repo otherwise
+        static Repo*    addRepo(Repo* r=nullptr);
 
         GeneratorInfo(std::string_view zName, const std::source_location& sl, options_t opts=0);
         
-        static const std::vector<const GeneratorInfo*>&     all(Repo&);
-        static const GeneratorInfo*                         find(Repo&, std::string_view);
+        static const std::vector<const GeneratorInfo*>&     all(const Repo&);
+        static const GeneratorInfo*                         find(const Repo&, std::string_view);
         static void                                         register_me(Repo&, const GeneratorInfo*);
 
         template <typename...> struct DefineArg;
@@ -67,7 +73,7 @@ namespace yq {
     private:
         static Repo*    repo()
         {
-            static Repo*    ret   = newRepo();
+            static Repo*    ret   = newRepo(typeid(G).name());
             return ret;
         }
     };
