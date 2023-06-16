@@ -65,4 +65,38 @@ namespace yq {
         
         return _create(ret, aaa);
     }
+
+    void    GeneratorInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription, options_t opts)
+    {
+        if(n < m_arguments.size()){
+            ArgInfo*    ai  = const_cast<ArgInfo*>(m_arguments[n]);
+            Meta::Writer w{ ai };
+            if( ai->name().empty() && !zName.empty())
+                w.name(zName);
+            if( ai->description().empty() && !zDescription.empty())
+                w.description(zDescription);
+            if(opts)
+                w.options(opts);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    GeneratorInfo::Writer::Writer(GeneratorInfo* obj) : Meta::Writer(obj) 
+    {
+        assert(obj);
+    }
+    
+    GeneratorInfo::Writer::Writer(GeneratorInfo& obj) : Writer(&obj)
+    {
+    }
+
+    GeneratorInfo::Writer  GeneratorInfo::Writer::argument(std::string_view zName, std::string_view zDescription, options_t opts)
+    {
+        if(Meta::Writer::m_meta){
+            static_cast<GeneratorInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription, opts);
+            ++m_arg;
+        }
+        return *this;
+    }
+    
 }

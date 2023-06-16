@@ -8,6 +8,7 @@
 
 #include <meta/Generator.hpp>
 #include <meta/TypedArgInfo.hpp>
+#include <meta/MetaWriter.hpp>
 #include <trait/indices.hpp>
 
 namespace yq {
@@ -71,5 +72,23 @@ namespace yq {
         
         FN  m_function;
     };
+    
+    class GeneratorInfo::Writer : public Meta::Writer {
+    public:
+        
+        Writer  argument(std::string_view zName, std::string_view zDescription=std::string_view(), options_t opts=0);
+        Writer(GeneratorInfo* obj);
+        Writer(GeneratorInfo& obj);
+        
+    private:
+        size_t  m_arg   = 0;
+    };
+
+    template <typename G, typename ... Args>
+    GeneratorInfo::Writer   register_generator(std::string_view n, G (*fn)(Args...), const std::source_location&sl=std::source_location::current())
+    {
+        return GeneratorInfo::Writer(new SpecificGenerator<G,Args...>(n, fn, sl));
+    }
+        
 }
 

@@ -15,7 +15,7 @@ namespace yq {
     class GeneratorInfo : public Meta {
     public:
     
-        struct Writer;
+        class Writer;
         const std::vector<const ArgInfo*>& arguments() const { return m_arguments; }
     
     protected:
@@ -35,6 +35,8 @@ namespace yq {
         
         std::error_code         create(void*, std::span<const Any> args) const;
         virtual std::error_code _create(void* res, const void* const * args) const = 0;
+        
+        void    fill_argument_info(size_t, std::string_view zName, std::string_view zDescription, options_t opts);
     };
 
     /*! \brief Generator is about creating helpers or similar things
