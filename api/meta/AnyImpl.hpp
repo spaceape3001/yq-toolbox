@@ -78,6 +78,7 @@ namespace yq {
         return (m_type == &meta<T>()) ?  m_data.pointer<T>() : nullptr;
     }
 
+
     template <typename T>
     const T*    Any::ptr() const
     {
@@ -132,6 +133,12 @@ namespace yq {
         static const TypeInfo*  mtString    = &meta<std::string>();
         m_data.reference<std::string>() = std::move(mv);
         m_type  = mtString;
+    }
+
+    template <typename T>
+    const T*    Any::unsafe_ptr() const
+    {
+        return m_data.pointer<T>();
     }
 
     template <typename T>

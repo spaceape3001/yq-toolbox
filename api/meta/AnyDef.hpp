@@ -132,6 +132,9 @@ namespace yq {
         template <typename T>
         const T*        ptr() const;
 
+        //! Returns pointer *REGARDLESS* of feasibility
+        template <typename T>
+        const T*        unsafe_ptr() const;
         
         //! Raw pointer to void
         const void*         raw_ptr() const;
