@@ -74,6 +74,16 @@ namespace yq {
             m_value |= mask(e);
         }
         
+        //! Sets specified bit
+        void    set(E e, bool f)
+        {
+            if(f){
+                set(e);
+            } else {
+                clear(e);
+            }
+        }
+
         //! Clears specified bit
         void    clear(E e)
         {
