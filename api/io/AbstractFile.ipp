@@ -60,6 +60,8 @@ namespace yq {
     {
         if(!read_enabled())
             return errors::not_read_enabled();
+        if(!std::filesystem::exists(fp))
+            return errors::file_not_found();
 
         ByteArray       data;
         fin.seekg( 0, std::ios::end);
@@ -67,7 +69,7 @@ namespace yq {
         size_t  sz  = fin.tellg();
         fin.seekg( 0, std::ios::beg);
         
-        if(ok){
+        if(ok && (sz < (1<<20ULL))){ // only take the fast way if it's 1MB or less
             data.resize(sz+1);
             fin.read(data.data(), sz);
             data[sz]    = u8'\0';
