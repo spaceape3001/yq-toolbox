@@ -30,6 +30,7 @@ add_library(${PROJECT_NAME} SHARED
     ./basic/MD5.cpp
     ./chemistry/chemistry.cpp
     ./gis/gis.cpp
+    ./graph/graph.cpp
     ./io/io.cpp
     ./math/math.cpp
     ./meta/meta.cpp
