@@ -1,5 +1,5 @@
 #include "preamble.hpp"
-#include "GraphTraitAnalyzer.hpp"
+#include "GraphTraits.hpp"
 #include <cstdint>
 
 
@@ -28,7 +28,7 @@
         static_assert( has_node<TestGraph1> );
         static_assert( has_port<TestGraph1> );
 
-        [[maybe_unused]] GraphTraitAnalyzer<TestGraph1>      tg1;
+        [[maybe_unused]] GraphTraits<TestGraph1>      tg1;
 
         struct TestGraph1a {
 
@@ -44,7 +44,7 @@
         static_assert( has_node<TestGraph1a> );
         static_assert( !has_port<TestGraph1a> );
 
-        [[maybe_unused]] GraphTraitAnalyzer<TestGraph1a>    tg1a;
+        [[maybe_unused]] GraphTraits<TestGraph1a>    tg1a;
 
         struct TestGraph2 {
 
@@ -64,7 +64,7 @@
         static_assert( has_node<TestGraph2> );
         static_assert( has_port<TestGraph2> );
 
-        [[maybe_unused]] GraphTraitAnalyzer<TestGraph2>     tg2;
+        [[maybe_unused]] GraphTraits<TestGraph2>     tg2;
         
         struct TestGraph2a {
 
@@ -80,7 +80,7 @@
         static_assert( has_node<TestGraph2a> );
         static_assert( !has_port<TestGraph2a> );
 
-        [[maybe_unused]] GraphTraitAnalyzer<TestGraph2a>    tg2a;
+        [[maybe_unused]] GraphTraits<TestGraph2a>    tg2a;
     }
     
 #endif

@@ -81,7 +81,7 @@ namespace yq {
     
 
     template <typename T>
-    struct GraphTraitAnalyzer {
+    struct GraphTraits {
     
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         //  EDGE TRAITS
