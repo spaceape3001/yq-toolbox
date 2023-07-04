@@ -34,6 +34,7 @@ namespace yq::errors {
     using null_destination          = error_db::entry<"Destination is a NULL pointer">;
     using null_object               = error_db::entry<"Object is a NULL pointer" >;
     using null_pointer              = error_db::entry<"Null pointer not allowed" >;
+    using null_source               = error_db::entry<"Source is a NULL pointer">;
     using null_result               = error_db::entry<"Result is a NULL pointer" >;
     using null_value                = error_db::entry<"Value is a NULL pointer" >;
     using parser_failed             = error_db::entry<"Parser failed to parse string">;
