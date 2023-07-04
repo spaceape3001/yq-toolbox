@@ -123,6 +123,21 @@ namespace yq {
         return has(Flag::ABSTRACT); 
     }
 
+    bool  Meta::is_argument() const
+    {
+        return has(Flag::ARG);
+    }
+
+    bool  Meta::is_asset() const
+    {
+        return has(Flag::ASSET);
+    }
+
+    bool  Meta::is_camera() const
+    {
+        return has(Flag::CAMERA);
+    }
+
     bool  Meta::is_collection() const
     {
         return has(Flag::COLLECTION);
@@ -153,6 +168,11 @@ namespace yq {
         return has(Flag::INPUT); 
     }
 
+    bool  Meta::is_loader() const
+    {
+        return has(Flag::LOADER);
+    }
+
     bool  Meta::is_method() const
     {
         return has(Flag::METHOD);
@@ -178,9 +198,29 @@ namespace yq {
         return has(Flag::PIN);
     }
 
+    bool  Meta::is_pipeline() const
+    {
+        return has(Flag::PIPELINE);
+    }
+
     bool  Meta::is_property() const
     {
         return has(Flag::PROPERTY);
+    }
+
+    bool  Meta::is_render3d() const
+    {
+        return has(Flag::RENDER3D);
+    }
+
+    bool  Meta::is_rendered() const
+    {
+        return has(Flag::RENDERED);
+    }
+
+    bool  Meta::is_shader() const
+    {
+        return has(Flag::SHADER);
     }
 
     bool  Meta::is_small() const
@@ -211,6 +251,16 @@ namespace yq {
     bool  Meta::is_type() const 
     { 
         return has(Flag::TYPE); 
+    }
+
+    bool  Meta::is_widget() const
+    {
+        return has(Flag::WIDGET);
+    }
+
+    bool  Meta::is_xfg() const
+    {
+        return has(Flag::XFG);
     }
 
     void  Meta::set(Flag f)

@@ -69,56 +69,59 @@ namespace yq {
     class Meta : not_copyable, not_moveable {
     public:
     
+        /*! \brief Meta flags
+        
+            These are the flags that can be set on the meta. 
+        */
         enum class Flag {
-            TYPE,
-            OBJECT,
-            COMPOUND,
-            PROPERTY,
-            METHOD,
-            ENUM,
-            ARG,
-            GLOBAL,
-            COLLECTION,
-            TEMPLATE,
-            WEB,
-            PAGE,
-            ASSET,
-            SHADER,
-            TEXTURE,
-            LOADER,
-            CACHE,
-            COMPILER,
-            WIDGET,
-            RENDERED,
-            RENDER3D,
-            CAMERA,
-            PIPELINE,
-            GENERATOR,
-            NODE,
-            PIN,
-            
-            STATE,      //!< "State" property
-            STATIC,     //!< Non-object specific (global variables, functions, etc)
-            SMALL,      //!< Small enough to fit in DataBlock
-            TLS,        //!< Thread local storage
-            LESS,       //!< Can compare
-            TODO,
-            ABSTRACT,
-            CONST,      //!< Method/property is CONSTANT/READONLY
-            INPUT,
-            OUTPUT,
 
-            EXECUTE,
-            LOCAL_ONLY,
-            LOGIN_REQ,
-            NO_EXPAND,
-            POST_ANON,
-            HAS_SUBS,
-            DISABLE_REG,
-            SEALED,
-            SWEPT,
-            
-            
+            ABSTRACT,       //!< It's abstract (ie can't be created)
+            ARG,            //!< It's an argument (ArgInfo)
+            ASSET,          //!< It's an asset (AssetInfo)
+            CAMERA,         //!< It's a camera (CameraInfo)
+            CACHE,          //!< It's a cache
+            COLLECTION,     //!< It's a collection (TypeInfo)
+            COMPILER,       //!< It's a compiler
+            COMPOUND,       //!< It's a compound/struct (CompoundInfo)
+            CONST,          //!< Method/property is CONSTANT/READONLY
+            DISABLE_REG,    
+            ENUM,           //!< It's an enumeration (Enum)
+            EXECUTE,        //!< Execute permission/capabilty
+            GENERATOR,      //!< It's a generator (GeneratorInfo)
+            GLOBAL,         //!< It's a global (GlobalInfo)
+            HAS_SUBS,       
+            INPUT,          //!< It's flagged as input (graphs)
+            LESS,           //!< Can compare
+            LOADER,         //!< A loader
+            LOCAL_ONLY,     //!< Local only permission
+            LOGIN_REQ,      //!< Login required
+            METHOD,         //!< It's a method/function (MethodInfo)
+            NODE,           //!< It's a node
+            NO_EXPAND,      //!< Do not expand
+            OBJECT,         //!< Meta has ObjectInfo
+            OUTPUT,         //!< It's flagged as output (graphs)
+            PAGE,           //!< A (web) page
+            PIN,            //!< It's a pin
+            PIPELINE,       //!< It's a pipeline (PipelineInfo)
+            POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
+            PROPERTY,       //!< Meta has PropertyInfo
+            RENDER3D,       //!< It's a 3D render (Render3DInfo)
+            RENDERED,       //!< It's a rendered (RenderedInfo)
+            SEALED,         //!< Sealed?
+            SHADER,         //!< Meta has ShaderInfo
+            SMALL,          //!< Small enough to fit in DataBlock (typeinfo)
+            STATE,          //!< "State" property
+            STATIC,         //!< Non-object specific (global variables, functions, etc)
+            SWEPT,          //!< Meta internal
+            TEMPLATE,       //!< It's a template-based thing
+            TEXTURE,        //!< Meta has TextureInfo
+            TLS,            //!< Thread local storage
+            TODO,           //!< It's "TODO" later
+            TYPE,           //!< Meta has TypeInfo
+            WEB,            //!< Web related
+            WIDGET,         //!< It's a widget (WidgetInfo)
+            XFG,            //!< Executive Flow Graph
+
             NEXT_DEFINED_FLAG     //<! Use for custom flag values after this
         };
         
@@ -190,6 +193,12 @@ namespace yq {
         //! TRUE if the object is deemed abstract (uncreatable)
         bool                            is_abstract() const;
 
+        bool                            is_argument() const;
+        
+        bool                            is_asset() const;
+
+        bool                            is_camera() const;
+
         bool                            is_collection() const;
 
         bool                            is_compound() const;
@@ -199,6 +208,8 @@ namespace yq {
         bool                            is_execute() const;
         bool                            is_global() const;
         bool                            is_input() const;
+        
+        bool                            is_loader() const;
         
         bool                            is_method() const;
         
@@ -210,8 +221,15 @@ namespace yq {
         
         bool                            is_pin() const;
         
+        bool                            is_pipeline() const;
+        
         bool                            is_property() const;
+        
+        bool                            is_render3d() const;
 
+        bool                            is_rendered() const;
+
+        bool                            is_shader() const;
         
         //! TRUE if this type is marked as small (ie, a datablock in size or smaller)
         bool                            is_small() const;
@@ -233,6 +251,8 @@ namespace yq {
         bool                            is_todo() const;
         bool                            is_type() const;
         
+        bool                            is_widget() const;
+        bool                            is_xfg() const;
         
         std::string_view                label() const { return m_label; }
 
