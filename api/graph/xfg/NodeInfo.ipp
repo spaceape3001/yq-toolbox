@@ -13,9 +13,8 @@ namespace yq::xfg {
     NodeInfo::NodeInfo(std::string_view kname, const ObjectInfo&par, const std::source_location& sl) : 
         ObjectInfo(kname, par, sl)
     {
-        set(Flag::NODE);
-        if(par.is_node())
-            m_base  = static_cast<NodeInfo*>(const_cast<ObjectInfo*>(&par));
+        set({Flag::NODE, Flag::XFG});
+        m_base  = const_cast<NodeInfo*>(to_node(&par));
     }
     
     const NodeInfo::D& NodeInfo::_def(bool all) const 
@@ -55,6 +54,11 @@ namespace yq::xfg {
         
         m_all.inputs += m_local.inputs;
         m_all.outputs += m_local.outputs;
+    }
+
+    const NodeInfo*     to_node(const Meta* m)
+    {
+        return (m && m->is_node() && m->is_xfg()) ? static_cast<const NodeInfo*>(m) : nullptr;
     }
 }
 

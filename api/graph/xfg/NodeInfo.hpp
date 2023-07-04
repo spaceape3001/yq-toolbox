@@ -37,4 +37,6 @@ namespace yq::xfg {
 
         const D& _def(bool all) const;
     };
+    
+    const NodeInfo*     to_node(const Meta*);
 }

@@ -158,6 +158,11 @@ namespace yq {
         return has(Flag::EXECUTE);
     }
 
+    bool  Meta::is_expansion_disabled() const
+    {
+        return has(Flag::NO_EXPAND);
+    }
+
     bool  Meta::is_global() const
     {
         return has(Flag::GLOBAL);
@@ -171,6 +176,11 @@ namespace yq {
     bool  Meta::is_loader() const
     {
         return has(Flag::LOADER);
+    }
+
+    bool  Meta::is_login_required() const
+    {
+        return has(Flag::LOGIN_REQ);
     }
 
     bool  Meta::is_method() const
@@ -216,6 +226,11 @@ namespace yq {
     bool  Meta::is_rendered() const
     {
         return has(Flag::RENDERED);
+    }
+
+    bool  Meta::is_sealed() const
+    {
+        return has(Flag::SEALED);
     }
 
     bool  Meta::is_shader() const

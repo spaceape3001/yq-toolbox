@@ -107,7 +107,7 @@ namespace yq {
             PROPERTY,       //!< Meta has PropertyInfo
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
-            SEALED,         //!< Sealed?
+            SEALED,         //!< Registration sealed (WebPage)
             SHADER,         //!< Meta has ShaderInfo
             SMALL,          //!< Small enough to fit in DataBlock (typeinfo)
             STATE,          //!< "State" property
@@ -205,13 +205,20 @@ namespace yq {
 
         //! TRUE if this is a const method/property/etc
         bool                            is_const() const;
+
         bool                            is_execute() const;
+
+        bool                            is_expansion_disabled() const;
+
         bool                            is_global() const;
         bool                            is_input() const;
         
         bool                            is_loader() const;
         
+        bool                            is_login_required() const;
+        
         bool                            is_method() const;
+        
         
         bool                            is_node() const;
 
@@ -228,6 +235,8 @@ namespace yq {
         bool                            is_render3d() const;
 
         bool                            is_rendered() const;
+
+        bool                            is_sealed() const;
 
         bool                            is_shader() const;
         
