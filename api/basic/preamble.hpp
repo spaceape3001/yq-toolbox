@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <array>
 #include <chrono>
 #include <expected>
 #include <filesystem>
@@ -14,7 +15,6 @@
 #include <string>
 #include <string_view>
 #include <system_error>
-#include <array>
 #include <vector>
 
 #include <basic/128-bit.hpp>
