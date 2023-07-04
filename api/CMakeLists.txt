@@ -31,6 +31,7 @@ add_library(${PROJECT_NAME} SHARED
     ./chemistry/chemistry.cpp
     ./gis/gis.cpp
     ./graph/graph.cpp
+    ./graph/xfg/xfg.cpp
     ./io/io.cpp
     ./math/math.cpp
     ./meta/meta.cpp
