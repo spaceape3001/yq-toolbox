@@ -19,6 +19,7 @@ namespace yq {
 
     GlobalInfo::GlobalInfo(const std::source_location& sl) : CompoundInfo("Global", sl, nullptr, MC_Global)
     {
+        set(Flag::GLOBAL);
     }
 
     void     GlobalInfo::sweep_impl() 
@@ -27,9 +28,9 @@ namespace yq {
         gather(m_properties);
         gather(m_methods);
         for(const Meta* m : m_methods.all)
-            const_cast<Meta*>(m) -> m_flags |= GLOBAL | STATIC;
+            const_cast<Meta*>(m) -> set({ Flag::GLOBAL,  Flag::STATIC });
         for(const Meta* m : m_properties.all)
-            const_cast<Meta*>(m) -> m_flags |= GLOBAL | STATIC;
+            const_cast<Meta*>(m) -> set({ Flag::GLOBAL, Flag::STATIC });
     }
     
     
@@ -41,6 +42,16 @@ namespace yq {
     GlobalInfo&       InfoBinder<Global>::edit()
     {
         return GlobalInfo::instance();
+    }
+
+    GlobalInfo*  to_global(Meta*m)
+    {
+        return (m && m->is_global() && m->is_compound()) ? static_cast<GlobalInfo*>(m) : nullptr;
+    }
+    
+    const GlobalInfo*  to_global(const Meta*m)
+    {
+        return (m && m->is_global() && m->is_compound()) ? static_cast<const GlobalInfo*>(m) : nullptr;
     }
 }
 

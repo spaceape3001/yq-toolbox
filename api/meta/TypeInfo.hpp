@@ -38,7 +38,7 @@ namespace yq {
     
         //! All aliases for this type info
         const Vector<std::string_view>&         aliases() const { return m_aliases; }
-    
+        
         //! TRUE if this type has a string parser defined for it
         bool        can_parse() const { return m_parse != nullptr; }
         
@@ -48,11 +48,21 @@ namespace yq {
         //! TRUE if this type has a print function defined for it
         bool        can_print() const { return m_print != nullptr; }
 
+        //! Copy (trusting)
+        std::error_code copy(void*dst, const void*src) const;
+        
+        //! Copy (checking src type)
+        std::error_code copy(void*dst, const void*src, const TypeInfo& srcType) const;
+        
+        template <typename T>
+        std::error_code copy(void* dst, const T&src) const
+        {
+            return copy(dst, &src, meta<T>());
+        }
+    
         //! The "generic" classification for this meta which is type.
         virtual const char*     generic() const override { return "Type"; }
 
-        //! TRUE if this type is marked as small (ie, a datablock in size or smaller)
-        bool        is_small() const { return static_cast<bool>(flags() & SMALL); }
 
         //! Byte size of the type represented by this info
         size_t      size() const { return m_size; }
@@ -143,6 +153,9 @@ namespace yq {
         //! Function to copy the data, raw to block
         typedef void        (*FNCopyRawBlk)(DataBlock&, const void*);
 
+        //! Function to copy the data, raw to block
+        typedef void        (*FNCopyRawRaw)(void*, const void*);
+
             //  COPY CONSTRUCTORS
         //! Function to construct the data into a block from a raw pointer
         typedef void        (*FNCtorCopyRawBlk)(DataBlock&, const void*);
@@ -215,6 +228,9 @@ namespace yq {
         //! Our raw=>block copy operator
         FNCopyRawBlk            m_copyR         = nullptr;
         
+        //! Our raw=>raw copy operator
+        FNCopyRawRaw            m_copyRR        = nullptr;
+        
         //! Our copy constructor (from raw pointer)
         FNCtorCopyRawBlk        m_ctorCopyR     = nullptr;
 
@@ -262,19 +278,13 @@ namespace yq {
     
         \return TypeInfo pointer, if valid, NULL otherwise
     */
-    inline const TypeInfo* to_type(const Meta* m)
-    {
-        return (m && (m->flags() & TYPE)) ? static_cast<const TypeInfo*>(m) : nullptr;
-    }
+    const TypeInfo* to_type(const Meta* m);
     
     /*! \brief Converts meta to type, if it's valid
     
         \return TypeInfo pointer, if valid, NULL otherwise
     */
-    inline TypeInfo* to_type(Meta* m)
-    {
-        return (m && (m->flags() & TYPE)) ? static_cast<TypeInfo*>(m) : nullptr;
-    }
+    TypeInfo* to_type(Meta* m);
 
     template <typename T>
     std::error_code TypeInfo::parse(T&value, std::string_view sv)

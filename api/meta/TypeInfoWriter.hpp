@@ -92,14 +92,15 @@ namespace yq {
         */
         Typed(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : type_info_t<T>(zName, sl, i)
         {
-            options_t   opts    = 0;
-        
             TypeInfo::m_default.ctorCopy(T{});
             TypeInfo::m_copyB         = [](DataBlock& dst, const DataBlock&src){
-                dst.reference<T>() = src.reference<T>();
+                dst.reference<T>()  = src.reference<T>();
             };
             TypeInfo::m_copyR        = [](DataBlock& dst, const void* src){
-                dst.reference<T>() = *(const T*) src;
+                dst.reference<T>()  = *(const T*) src;
+            };
+            TypeInfo::m_copyRR      = [](void* dst, const void* src){
+                *(T*) dst           = *(const T*) src;
             };
             TypeInfo::m_ctorCopyR     = [](DataBlock& dst, const void* src){ 
                 dst.ctorCopy(*(const T*) src); 
@@ -127,7 +128,7 @@ namespace yq {
                 {
                     return a.reference<T>() < b.reference<T>();
                 };
-                opts |= LESS;
+                Meta::set(Flag::LESS);
             }
             
             TypeInfo::m_moveB         = [](DataBlock& a, DataBlock&&b) 
@@ -141,7 +142,7 @@ namespace yq {
             #if 0
                 TypeInfo::m_template.params     = GatherTemplateArgs<T>()(TypeInfo::m_template.args);
                 if(!TypeInfo::m_template.args.empty())  // only flag it as a template if any parameters trigger
-                    opts |= TEMPLATE;
+                    Meta::set(Flag::TEMPLATE);
             #endif
             }
             
@@ -152,9 +153,7 @@ namespace yq {
             }
             
             if(is_small_v<T>)
-                opts |= SMALL;
-            if(opts)
-                Meta::set_options(opts);
+                Meta::set(Flag::SMALL);
         }
     };
     
@@ -174,7 +173,7 @@ namespace yq {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Hash<K,V>>(zName, sl, i)
         {
-            Meta::set_option(COLLECTION);
+            Meta::set(Flag::COLLECTION);
         }
     };
 
@@ -183,7 +182,7 @@ namespace yq {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<List<T>>(zName, sl, i) 
         {
-            Meta::set_option(COLLECTION);
+            Meta::set(Flag::COLLECTION);
         }
     };
     
@@ -192,7 +191,7 @@ namespace yq {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Map<K,V,C>>(zName, sl, i)
         {
-            Meta::set_option(COLLECTION);
+            Meta::set(Flag::COLLECTION);
         }
     };
 
@@ -201,7 +200,7 @@ namespace yq {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<MultiMap<K,V,C>>(zName, sl, i)
         {
-            Meta::set_option(COLLECTION);
+            Meta::set(Flag::COLLECTION);
         }
     };
 
@@ -210,7 +209,7 @@ namespace yq {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Set<T,C>>(zName, sl, i) 
         {
-            Meta::set_option(COLLECTION);
+            Meta::set(Flag::COLLECTION);
         }
     };
 
@@ -219,7 +218,7 @@ namespace yq {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Vector<T>>(zName, sl, i) 
         {
-            Meta::set_option(COLLECTION);
+            Meta::set(Flag::COLLECTION);
         }
     };
     

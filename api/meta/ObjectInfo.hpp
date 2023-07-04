@@ -38,10 +38,7 @@ namespace yq {
             Caller is responsible for deleting the object.
         */
         virtual Object* create() const { return nullptr; }
-        
-        //! TRUE if the object is deemed abstract (uncreatable)
-        bool            is_abstract() const { return static_cast<bool>(flags()&ABSTRACT); }
-    
+   
         //! Vector of all object infos
         static const Vector<const ObjectInfo*>&   all();
         
@@ -154,17 +151,11 @@ namespace yq {
     
         \return ObjectInfo pointer, if valid, NULL otherwise
     */
-    inline const ObjectInfo* to_object(const Meta* m)
-    {
-        return (m && (m->flags() & OBJECT)) ? static_cast<const ObjectInfo*>(m) : nullptr;
-    }
+    const ObjectInfo* to_object(const Meta* m);
     
     /*! \brief Converts meta to object, if it's valid
     
         \return ObjectInfo pointer, if valid, NULL otherwise
     */
-    inline ObjectInfo* to_object(Meta* m)
-    {
-        return (m && (m->flags() & OBJECT)) ? static_cast<ObjectInfo*>(m) : nullptr;
-    }
+    ObjectInfo* to_object(Meta* m);
 }

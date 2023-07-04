@@ -55,14 +55,8 @@ namespace yq {
         static GlobalInfo&              edit();
     };
     
-    inline GlobalInfo*  to_global(Meta*m)
-    {
-        return (m && (m->flags() & GLOBAL)) ? static_cast<GlobalInfo*>(m) : nullptr;
-    }
+    GlobalInfo*  to_global(Meta*);
     
-    inline const GlobalInfo*  to_global(const Meta*m)
-    {
-        return (m && (m->flags() & GLOBAL)) ? static_cast<const GlobalInfo*>(m) : nullptr;
-    }
+    const GlobalInfo*  to_global(const Meta*m);
 }
 

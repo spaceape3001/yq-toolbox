@@ -19,29 +19,29 @@ namespace yq {
 
     template <typename...> 
     struct MethodInfo::DefineArg {
-        static void    define(const std::source_location&, Meta*, options_t)
+        static void    define(const std::source_location&, Meta*)
         {
         }
     };
     
     template <typename T, typename... Args> 
     struct MethodInfo::DefineArg<T, Args...> {
-        static void    define(const std::source_location&sl, Meta*parent, options_t options)
+        static void    define(const std::source_location&sl, Meta*parent)
         {
             using act_type  = std::remove_cvref_t<T>;
-            static_cast<MethodInfo*>(parent)->m_args.push_back( new ArgInfo::Typed<act_type>(sl, parent, options));
-            DefineArg<Args...>::define(sl, parent, options);
+            static_cast<MethodInfo*>(parent)->m_args.push_back( new ArgInfo::Typed<act_type>(sl, parent));
+            DefineArg<Args...>::define(sl, parent);
         }
     };
 
     template <typename R, typename...Args> 
-    void MethodInfo::define_signature(options_t opts)
+    void MethodInfo::define_signature()
     {
         if constexpr (is_returnable_v<R>){
             m_result    = new ArgInfo::Typed<R>(source(), this);
         }
     
-        DefineArg<Args...>::define(source(), this, opts);
+        DefineArg<Args...>::define(source(), this);
     }
     
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -79,9 +79,10 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        Const(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
-            MethodInfo(zName, sl, parent, opts|CONST), m_function(function)
+        Const(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
+            MethodInfo(zName, sl, parent), m_function(function)
         {
+            set(Flag::CONST);
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
 
@@ -141,8 +142,8 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        Dynamic(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
-            MethodInfo(zName, sl, parent, opts), m_function(function)
+        Dynamic(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
+            MethodInfo(zName, sl, parent), m_function(function)
         {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
@@ -204,9 +205,10 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        Static(FN function, std::string_view zName, const std::source_location& sl, Meta* parent, options_t opts=0) : 
-            MethodInfo(zName, sl, parent, opts|STATIC), m_function(function)
+        Static(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
+            MethodInfo(zName, sl, parent), m_function(function)
         {
+            set(Flag::STATIC);
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
 

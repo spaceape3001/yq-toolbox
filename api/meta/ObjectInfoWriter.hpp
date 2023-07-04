@@ -29,7 +29,7 @@ namespace yq {
         Writer&     abstract()
         {
             if(Meta::Writer::m_meta)
-                Meta::Writer::m_meta -> set_option(ABSTRACT);
+                Meta::Writer::m_meta -> set(Flag::ABSTRACT);
             return *this;
         }
         
@@ -37,7 +37,7 @@ namespace yq {
         {
             assert(obj);
             if constexpr ( std::is_abstract_v<C> ){
-                Meta::Writer::m_meta -> set_option(ABSTRACT);
+                Meta::Writer::m_meta -> set(Flag::ABSTRACT);
             }
             
         }

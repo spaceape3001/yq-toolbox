@@ -58,7 +58,7 @@ namespace yq {
     Meta::Writer&     Meta::Writer::options(options_t opts)
     {
         if(m_meta)
-            m_meta -> m_flags |= opts;
+            m_meta -> set(opts);
         return *this;
     }
 
@@ -93,14 +93,14 @@ namespace yq {
     Meta::Writer&   Meta::Writer::tls()
     {
         if(m_meta)
-            m_meta -> m_flags |= TLS;
+            m_meta -> set(Flag::TLS);
         return *this;
     }
 
     Meta::Writer&   Meta::Writer::todo()
     {
         if(m_meta)
-            m_meta -> m_flags |= TODO;
+            m_meta -> set(Flag::TODO);
         return *this;
     }
 }

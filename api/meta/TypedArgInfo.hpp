@@ -18,8 +18,8 @@ namespace yq {
         const Meta&        type() const { return m_type; }
     
         //! Master constructor, use only if you know what you're doing
-        Typed(const std::source_location& sl, Meta* parent, unsigned int options=0) : 
-            ArgInfo(sl, meta<T>(), parent, options)
+        Typed(const std::source_location& sl, Meta* parent) : 
+            ArgInfo(sl, meta<T>(), parent)
         {
             m_default   = m_defaultData.pointer<T>();
         }

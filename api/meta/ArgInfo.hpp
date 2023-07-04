@@ -19,7 +19,7 @@ namespace yq {
         template <typename T> class Typed;
     
     protected:
-        ArgInfo(const std::source_location& sl, const Meta&, Meta*, options_t opts);
+        ArgInfo(const std::source_location& sl, const Meta&, Meta*);
         
     private:
         const Meta&     m_type;

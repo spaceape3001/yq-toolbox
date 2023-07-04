@@ -20,11 +20,10 @@
 
 namespace yq {
 
-    PropertyInfo::PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo&theType, Meta* parentMeta, options_t opts) : Meta(zName, parentMeta, sl), m_type(theType)
+    PropertyInfo::PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo&theType, Meta* parentMeta) : Meta(zName, parentMeta, sl), m_type(theType)
     {
         assert(parentMeta);
-
-        m_flags |= PROPERTY | opts;
+        set(Flag::PROPERTY);
 
         if(GlobalInfo* g = to_global(parentMeta)){
             assert(g == &meta<Global>());
@@ -57,15 +56,6 @@ namespace yq {
         return ret;
     }
 
-    bool        PropertyInfo::is_state() const
-    {
-        return static_cast<bool>(flags() & STATE);
-    }
-    
-    bool        PropertyInfo::is_static() const
-    {
-        return static_cast<bool>(flags() & STATIC);
-    }
     
     std::error_code PropertyInfo::print(const void*obj, Stream&str) const
     {

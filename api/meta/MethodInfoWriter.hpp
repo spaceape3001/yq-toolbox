@@ -25,10 +25,10 @@ namespace yq {
     template <typename R> 
     class MethodInfo::Writer<R> : public Meta::Writer {
     public:
-        Meta::Writer    result(std::string_view zName, std::string_view zDescription=std::string_view(), options_t opts=0)
+        Meta::Writer    result(std::string_view zName, std::string_view zDescription=std::string_view())
         {
             if(Meta::Writer::m_meta)
-                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_result_info(zName, zDescription, opts);
+                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_result_info(zName, zDescription);
             return *this;
         }
 
@@ -40,10 +40,10 @@ namespace yq {
     class MethodInfo::Writer<void,T,Args...> : public Meta::Writer {
     public:
         
-        Writer<void, Args...>  argument(std::string_view zName, std::string_view zDescription=std::string_view(), options_t opts=0)
+        Writer<void, Args...>  argument(std::string_view zName, std::string_view zDescription=std::string_view())
         {
             if(Meta::Writer::m_meta)
-                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription, opts);
+                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription);
             return Writer<void, Args...>( static_cast<MethodInfo*>(Meta::Writer::m_meta), m_arg + 1);
         }
         
@@ -63,17 +63,17 @@ namespace yq {
     class MethodInfo::Writer<R,T,Args...> : public Meta::Writer {
     public:
         
-        Writer<R, Args...>  argument(std::string_view zName, std::string_view zDescription=std::string_view(), options_t opts=0)
+        Writer<R, Args...>  argument(std::string_view zName, std::string_view zDescription=std::string_view())
         {
             if(Meta::Writer::m_meta)
-                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription, opts);
+                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription);
             return Writer<R, Args...>( static_cast<MethodInfo*>(Meta::Writer::m_meta), m_arg + 1);
         }
         
-        Writer<void, Args...>    result(std::string_view zName, std::string_view zDescription=std::string_view(), options_t opts=0)
+        Writer<void, Args...>    result(std::string_view zName, std::string_view zDescription=std::string_view())
         {
             if(Meta::Writer::m_meta)
-                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_result_info(zName, zDescription, opts);
+                static_cast<MethodInfo*>(Meta::Writer::m_meta) -> fill_result_info(zName, zDescription);
             return Writer<void, Args...>( static_cast<MethodInfo*>(Meta::Writer::m_meta), m_arg );
         }
 

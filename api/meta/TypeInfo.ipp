@@ -16,6 +16,7 @@
 
 namespace yq {
 
+
     struct EmptyType : public TypeInfo {
     
         EmptyType(id_t i, const std::source_location& sl = std::source_location::current()) : TypeInfo( i ? "Any" : "Void", sl, i) 
@@ -93,7 +94,7 @@ namespace yq {
 
     TypeInfo::TypeInfo(std::string_view zName, const std::source_location& sl, id_t i) : CompoundInfo(zName, sl, nullptr, i)
     {
-        m_flags |= TYPE;
+        set(Flag::TYPE);
         
         Repo&   r  = repo();
         assert("no duplicate typenames!" && !r.types.lut.has(name())); 
@@ -112,6 +113,38 @@ namespace yq {
         m_aliases << sz;
     }
     
+    std::error_code        TypeInfo::copy(void*dst, const void*src) const
+    {
+        if(!m_copyRR)
+            return errors::no_handler();
+        if(!dst)
+            return errors::null_destination();
+        if(!src)
+            return errors::null_source();
+        m_copyRR(dst, src);
+        return errors::none();
+    }
+    
+    std::error_code        TypeInfo::copy(void*dst, const void*src, const TypeInfo& srcType) const
+    {
+        if(!dst)
+            return errors::null_destination();
+        if(!src)
+            return errors::null_source();
+
+        if(id() == srcType.id()){
+            if(!m_copyRR)
+                return errors::no_handler();
+            m_copyRR(dst, src);
+            return errors::none();
+        }
+
+        FNConvert   cvt = srcType.m_convert.get(this, nullptr);
+        if(!cvt)
+            return errors::no_conversion_handler();
+        return cvt(dst, src);
+    }
+
     size_t                              TypeInfo::method_count() const
     {
         return m_methods.all.size();
@@ -135,6 +168,26 @@ namespace yq {
     void    TypeInfo::sweep_impl() 
     {
         CompoundInfo::sweep_impl();
+    }
+
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    /*! \brief Converts meta to type, if it's valid
+    
+        \return TypeInfo pointer, if valid, NULL otherwise
+    */
+    const TypeInfo* to_type(const Meta* m)
+    {
+        return (m && m->is_type()) ? static_cast<const TypeInfo*>(m) : nullptr;
+    }
+    
+    /*! \brief Converts meta to type, if it's valid
+    
+        \return TypeInfo pointer, if valid, NULL otherwise
+    */
+    TypeInfo* to_type(Meta* m)
+    {
+        return (m && m->is_type()) ? static_cast<TypeInfo*>(m) : nullptr;
     }
 }
 

@@ -28,7 +28,8 @@ namespace yq {
         PropertyInfo::Writer<T>     property(std::string_view szName, T (C::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATE);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            ret -> set(Flag::STATE);
             new IPM_PropGetter<C,T>(ret, sl, pointer);
             if(!isReadOnly)
                 new IPM_PropSetter<C,T>(ret, sl, pointer);
@@ -46,7 +47,8 @@ namespace yq {
         PropertyInfo::Writer<T>     property(std::string_view szName, const T (C::*pointer), const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATE);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            ret -> set(Flag::STATE);
             new IPM_PropGetter<C,T>(ret, sl, pointer);
             return PropertyInfo::Writer<T>{ret};
         }

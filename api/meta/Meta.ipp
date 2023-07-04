@@ -44,7 +44,7 @@ namespace yq {
             Repo&   r = repo();
             for(const Meta* m : r.all)
                 if(m)   // gaps can show
-                    const_cast<Meta*>(m) -> m_flags &= ~SWEPT;
+                    const_cast<Meta*>(m) -> clear(Flag::SWEPT);
             for(const Meta* m : r.all)
                 if(m)
                     const_cast<Meta*>(m) -> sweep();
@@ -103,9 +103,128 @@ namespace yq {
 
     }
 
+    void        Meta::clear(Flag f)
+    {
+        m_flags.clear((size_t) f);
+    }
+
+    bool  Meta::has(Flag f) const
+    {
+        return m_flags[(size_t) f];
+    }
+
     bool  Meta::has_tag(std::string_view k) const
     {
         return m_tags.contains(k);
+    }
+
+    bool  Meta::is_abstract() const 
+    { 
+        return has(Flag::ABSTRACT); 
+    }
+
+    bool  Meta::is_collection() const
+    {
+        return has(Flag::COLLECTION);
+    }
+
+    bool  Meta::is_compound() const
+    {
+        return has(Flag::COMPOUND);
+    }
+
+    bool  Meta::is_const() const 
+    { 
+        return has(Flag::CONST); 
+    }
+
+    bool  Meta::is_execute() const
+    {
+        return has(Flag::EXECUTE);
+    }
+
+    bool  Meta::is_global() const
+    {
+        return has(Flag::GLOBAL);
+    }
+
+    bool  Meta::is_input() const 
+    { 
+        return has(Flag::INPUT); 
+    }
+
+    bool  Meta::is_method() const
+    {
+        return has(Flag::METHOD);
+    }
+
+    bool  Meta::is_node() const
+    {
+        return has(Flag::NODE);
+    }
+
+    bool  Meta::is_object() const 
+    { 
+        return has(Flag::OBJECT); 
+    }
+
+    bool  Meta::is_output() const 
+    { 
+        return has(Flag::OUTPUT); 
+    }
+
+    bool  Meta::is_pin() const
+    {
+        return has(Flag::PIN);
+    }
+
+    bool  Meta::is_property() const
+    {
+        return has(Flag::PROPERTY);
+    }
+
+    bool  Meta::is_small() const
+    { 
+        return has(Flag::SMALL); 
+    }
+
+    bool  Meta::is_state() const
+    {
+        return has(Flag::STATE);
+    }
+
+    bool  Meta::is_static() const 
+    { 
+        return has(Flag::STATIC); 
+    }
+
+    bool  Meta::is_template() const
+    {
+        return has(Flag::TEMPLATE);
+    }
+
+    bool  Meta::is_todo() const 
+    { 
+        return has(Flag::TODO);
+    }
+    
+    bool  Meta::is_type() const 
+    { 
+        return has(Flag::TYPE); 
+    }
+
+    void  Meta::set(Flag f)
+    {
+            //  If this flunks, it means the flags hasn't been enlarged.
+            //  Thus, go to Meta.h and bump the number (by at least one)
+        assert((size_t) f < m_flags.size() && "Expand the second number on meta flags"); 
+        m_flags.set((size_t) f);
+    }
+    
+    void    Meta::set(std::initializer_list<Flag> flags)
+    {
+        for(Flag f : flags)
+            set(f);
     }
 
     void  Meta::set_name(std::string_view v) 
@@ -122,13 +241,14 @@ namespace yq {
             m_stem  = m_name;
     }
 
+
     void  Meta::sweep()
     {
         assert(thread_safe_write());
 
-        if(!(m_flags & SWEPT)){
+        if(!has(Flag::SWEPT)){
             sweep_impl();
-            m_flags |= SWEPT;
+            set(Flag::SWEPT);
         }
     }
 

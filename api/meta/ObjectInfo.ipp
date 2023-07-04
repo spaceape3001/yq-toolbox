@@ -40,7 +40,7 @@ namespace yq {
     ObjectInfo::ObjectInfo(std::string_view zName, ObjectInfo* myBase, const std::source_location& sl) : 
         CompoundInfo(zName, sl), m_base(myBase)
     {
-        m_flags |= OBJECT;
+        set(Flag::OBJECT);
         Repo& r    = repo();
         if(r.objects.lut.has(zName))
             yCritical() << "Duplicate object registration: " << zName;
@@ -112,6 +112,17 @@ namespace yq {
             m_all.methods += m_base -> m_all.methods;
             m_all.properties += m_base -> m_all.properties;
         }
+    }
+
+
+    const ObjectInfo* to_object(const Meta* m)
+    {
+        return (m && m->is_object()) ? static_cast<const ObjectInfo*>(m) : nullptr;
+    }
+    
+    ObjectInfo* to_object(Meta* m)
+    {
+        return (m && m->is_object()) ? static_cast<ObjectInfo*>(m) : nullptr;
     }
 
 }

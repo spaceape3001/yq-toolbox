@@ -17,11 +17,11 @@
 #include "AnyArgHelper.hpp"
 
 namespace yq {
-    MethodInfo::MethodInfo(std::string_view zName, const std::source_location& sl, Meta* parentMeta, options_t opts) : Meta(zName, parentMeta, sl)
+    MethodInfo::MethodInfo(std::string_view zName, const std::source_location& sl, Meta* parentMeta) : Meta(zName, parentMeta, sl)
     {
         assert(parentMeta);
 
-        m_flags |= METHOD | opts;
+        set(Flag::METHOD);
 
         if(GlobalInfo* g = to_global(parentMeta)){
             assert(g == &meta<Global>());
@@ -36,7 +36,7 @@ namespace yq {
             type->m_methods << this;
     }
     
-    void    MethodInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription, options_t opts)
+    void    MethodInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription)
     {
         if(n < m_args.size()){
             Meta::Writer w{ const_cast<ArgInfo*>(m_args[n])};
@@ -44,20 +44,16 @@ namespace yq {
                 w.name(zName);
             if(!zDescription.empty())
                 w.description(zDescription);
-            if(opts)
-                w.options(opts);
         }
     }
 
-    void    MethodInfo::fill_result_info(std::string_view zName, std::string_view zDescription, options_t opts)
+    void    MethodInfo::fill_result_info(std::string_view zName, std::string_view zDescription)
     {
         Meta::Writer w{ const_cast<ArgInfo*>(m_result) };
         if(!zName.empty())
             w.name(zName);
         if(!zDescription.empty())
             w.description(zDescription);
-        if(opts)
-            w.options(opts);
     }
 
     //  INVOKATION

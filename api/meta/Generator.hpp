@@ -30,19 +30,19 @@ namespace yq {
         //! Adds a repo, if r is not null, returns the "current" repo otherwise
         static Repo*    addRepo(Repo* r=nullptr);
 
-        GeneratorInfo(std::string_view zName, const std::source_location& sl, options_t opts=0);
+        GeneratorInfo(std::string_view zName, const std::source_location& sl);
         
         static const std::vector<const GeneratorInfo*>&     all(const Repo&);
         static const GeneratorInfo*                         find(const Repo&, std::string_view);
         static void                                         register_me(Repo&, const GeneratorInfo*);
 
         template <typename...> struct DefineArg;
-        template <typename...> void define_signature(options_t options=0);
+        template <typename...> void define_signature();
         
         std::error_code         create(void*, std::span<const Any> args) const;
         virtual std::error_code _create(void* res, const void* const * args) const = 0;
         
-        void    fill_argument_info(size_t, std::string_view zName, std::string_view zDescription, options_t opts);
+        void    fill_argument_info(size_t, std::string_view zName, std::string_view zDescription);
     };
 
     /*! \brief Generator is about creating helpers or similar things

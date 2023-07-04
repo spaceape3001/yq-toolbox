@@ -11,7 +11,7 @@
 namespace yq {
     CompoundInfo::CompoundInfo(std::string_view zName, const std::source_location& sl, Meta* par, id_t i) : Meta(zName, par, sl, i)
     {
-        m_flags |= COMPOUND;
+        set(Flag::COMPOUND);
     }
     
     CompoundInfo::~CompoundInfo()
@@ -27,7 +27,7 @@ namespace yq {
     {
         res     = {};
         for(const Meta* m : children()){
-            if(m && (m->flags() & METHOD))
+            if(m && m->has(Flag::METHOD))
                 res << static_cast<const MethodInfo*>(m);
         }
     }
@@ -36,7 +36,7 @@ namespace yq {
     {
         res     = {};
         for(const Meta* m : children()){
-            if(m && (m->flags() & PROPERTY))
+            if(m && m->has(Flag::PROPERTY))
                 res << static_cast<const PropertyInfo*>(m);
         }
     }

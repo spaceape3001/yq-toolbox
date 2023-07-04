@@ -71,9 +71,9 @@ namespace yq {
     
     ////////////////////////////////////////////////////////////////////////////////
 
-    GeneratorInfo::GeneratorInfo(std::string_view zName, const std::source_location& sl, options_t opts) : Meta(zName, sl)
+    GeneratorInfo::GeneratorInfo(std::string_view zName, const std::source_location& sl) : Meta(zName, sl)
     {
-        set_options(opts | GENERATOR);
+        set(Flag::GENERATOR);
     }
 
     std::error_code         GeneratorInfo::create(void*ret, std::span<const Any> args) const
@@ -89,7 +89,7 @@ namespace yq {
         return _create(ret, aaa);
     }
 
-    void    GeneratorInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription, options_t opts)
+    void    GeneratorInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription)
     {
         if(n < m_arguments.size()){
             ArgInfo*    ai  = const_cast<ArgInfo*>(m_arguments[n]);
@@ -98,8 +98,6 @@ namespace yq {
                 w.name(zName);
             if( ai->description().empty() && !zDescription.empty())
                 w.description(zDescription);
-            if(opts)
-                w.options(opts);
         }
     }
 
@@ -113,10 +111,10 @@ namespace yq {
     {
     }
 
-    GeneratorInfo::Writer  GeneratorInfo::Writer::argument(std::string_view zName, std::string_view zDescription, options_t opts)
+    GeneratorInfo::Writer  GeneratorInfo::Writer::argument(std::string_view zName, std::string_view zDescription)
     {
         if(Meta::Writer::m_meta){
-            static_cast<GeneratorInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription, opts);
+            static_cast<GeneratorInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription);
             ++m_arg;
         }
         return *this;

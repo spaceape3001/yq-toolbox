@@ -12,6 +12,7 @@
 #include <meta/MethodInfoWriter.hpp>
 #include <meta/StaticPropGetter.hpp>
 #include <meta/StaticPropSetter.hpp>
+#include <meta/PropertyInfo.hpp>
 #include <meta/PropertyInfoWriter.hpp>
 
 namespace yq {
@@ -34,7 +35,8 @@ namespace yq {
         {
             assert(pointer);
             if(pointer && Meta::Writer::m_meta && thread_safe_write()){
-                PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+                ret -> set(Flag::STATIC);
                 new XPV_PropGetter<T>(ret, sl, pointer);
                 if(!isReadOnly)
                     new XPV_PropSetter<T>(ret, sl, pointer);
@@ -54,7 +56,8 @@ namespace yq {
         {
             assert(pointer);
             if(pointer && Meta::Writer::m_meta && thread_safe_write()){
-                PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+                ret -> set(Flag::STATIC);
                 new XPV_PropGetter<T>(ret, sl, pointer);
                 return PropertyInfo::Writer<T>{ret};
             }
@@ -72,7 +75,8 @@ namespace yq {
         {
             assert(function);
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+                ret -> set(Flag::STATIC);
                 new XFV_PropGetter<T>(ret, sl, function);
                 return PropertyInfo::VarW<T>(ret);
             }
@@ -90,7 +94,8 @@ namespace yq {
         {
             assert(function);
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+                ret -> set(Flag::STATIC);
                 new XFCR_PropGetter<T>(ret, sl, function);
                 return PropertyInfo::VarW<T>(ret);
             }
@@ -108,7 +113,8 @@ namespace yq {
         {
             assert(function);
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta, STATIC);
+                PropertyInfo*   ret = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+                ret -> set(Flag::STATIC);
                 new XFVR_PropGetter<T>(ret, sl, function);
                 return PropertyInfo::VarW<T>(ret);
             }
@@ -127,7 +133,8 @@ namespace yq {
         {
             assert(function);
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                PropertyInfo*   ret = new PropertyInfo(szName, meta<T>(), sl, m_meta, STATIC);
+                PropertyInfo*   ret = new PropertyInfo(szName, meta<T>(), sl, m_meta);
+                ret -> set(Flag::STATIC);
                 new XFBR_PropGetter<T>(ret, sl, function);
                 return PropertyInfo::VarW<T>(ret);
             }

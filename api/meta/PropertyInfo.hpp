@@ -28,6 +28,8 @@ namespace yq {
         friend class PropSetter;
     public:
     
+        using Meta::set;
+    
         //! Our writer
         template <typename T> class Writer;
         
@@ -72,19 +74,7 @@ namespace yq {
         //! Our setter (may be NULL for read-only)
         const PropSetter*   setter() const { return m_setter; }
         
-        //! TRUE if this is marked as state.
-        //! 
-        //! A state property is one that needs to be saved/loaded to properly recreate the object.
-        bool                is_state() const;
-        
         //! TRUE if this is a global/static variabels
-        //!
-        //! A global or static is one that lives outside a particular object, but is instead defined singularly
-        //! For the entire application
-        bool                is_static() const;
-        
-        bool                is_const() const { return flags() & CONST; }
-
             // best know what you're doing....
             
         /*! \brief Master Constructor 
@@ -95,7 +85,7 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo& type, Meta* parent, options_t opts=0);
+        PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo& type, Meta* parent);
         
     private:
         const PropSetter*   m_setter    = nullptr;

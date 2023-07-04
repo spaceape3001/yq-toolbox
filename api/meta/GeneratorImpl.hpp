@@ -15,25 +15,25 @@ namespace yq {
     
     template <typename...> 
     struct GeneratorInfo::DefineArg {
-        static void    define(const std::source_location&, GeneratorInfo*, options_t)
+        static void    define(const std::source_location&, GeneratorInfo*)
         {
         }
     };
     
     template <typename T, typename... Args> 
     struct GeneratorInfo::DefineArg<T, Args...> {
-        static void    define(const std::source_location&sl, GeneratorInfo*parent, options_t options)
+        static void    define(const std::source_location&sl, GeneratorInfo*parent)
         {
             using act_type  = std::remove_cvref_t<T>;
-            parent->m_arguments.push_back( new ArgInfo::Typed<act_type>(sl, parent, options));
-            DefineArg<Args...>::define(sl, parent, options);
+            parent->m_arguments.push_back( new ArgInfo::Typed<act_type>(sl, parent));
+            DefineArg<Args...>::define(sl, parent);
         }
     };
 
     template <typename...Args> 
-    void GeneratorInfo::define_signature(options_t opts)
+    void GeneratorInfo::define_signature()
     {
-        DefineArg<Args...>::define(source(), this, opts);
+        DefineArg<Args...>::define(source(), this);
     }
 
     namespace impl {
@@ -58,10 +58,10 @@ namespace yq {
         static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
         typedef G (*FN)(Args...);
     
-        SpecificGenerator(std::string_view zName, FN fn, const std::source_location& sl, Meta::options_t opts=0) : 
-            Generator<G>(zName, sl, opts), m_function(fn)
+        SpecificGenerator(std::string_view zName, FN fn, const std::source_location& sl) : 
+            Generator<G>(zName, sl), m_function(fn)
         {
-            GeneratorInfo::define_signature<Args...>(opts);
+            GeneratorInfo::define_signature<Args...>();
         }
         
     private:
@@ -76,7 +76,7 @@ namespace yq {
     class GeneratorInfo::Writer : public Meta::Writer {
     public:
         
-        Writer  argument(std::string_view zName, std::string_view zDescription=std::string_view(), options_t opts=0);
+        Writer  argument(std::string_view zName, std::string_view zDescription=std::string_view());
         Writer(GeneratorInfo* obj);
         Writer(GeneratorInfo& obj);
         

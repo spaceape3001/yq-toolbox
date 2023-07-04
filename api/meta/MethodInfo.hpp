@@ -31,17 +31,13 @@ namespace yq {
         //! Invokes for a static function (will error if not)
         Expect<Any>             invoke(std::span<const Any> args) const;
     
-        //! TRUE if this is a const method
-        bool                    is_const() const { return flags() & CONST; }
-        
-        bool                    is_static() const { return flags() & STATIC; }
 
         virtual size_t          arg_count() const noexcept = 0;
 
     private:
         const ArgInfo*              m_result;
         std::vector<const ArgInfo*> m_args;
-        MethodInfo(std::string_view zName, const std::source_location& sl, Meta*, options_t opts=0);
+        MethodInfo(std::string_view zName, const std::source_location& sl, Meta*);
 
         Expect<Any>            invoke(void* obj, std::span<const Any> args, bool constPtr) const;
 
@@ -56,9 +52,9 @@ namespace yq {
         virtual std::error_code _invoke(void* res, void* obj, const void* const * args) const = 0;
         
         template <typename...> struct DefineArg;
-        template <typename R, typename...> void define_signature(options_t options=0);
+        template <typename R, typename...> void define_signature();
         
-        void    fill_argument_info(size_t, std::string_view zName, std::string_view zDescription, options_t extraOptions);
-        void    fill_result_info(std::string_view zName, std::string_view zDescription, options_t extraOptions);
+        void    fill_argument_info(size_t, std::string_view zName, std::string_view zDescription);
+        void    fill_result_info(std::string_view zName, std::string_view zDescription);
     };
 }

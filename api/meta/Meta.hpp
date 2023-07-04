@@ -9,6 +9,7 @@
 #include <basic/preamble.hpp>
 #include <trait/not_copyable.hpp>
 #include <trait/not_moveable.hpp>
+#include <basic/BitArray.hpp>
 #include <basic/Hash.hpp>
 #include <basic/Map.hpp>
 #include <basic/MultiMap.hpp>
@@ -49,48 +50,6 @@ namespace yq {
         Do NOT rely on the numeric values, those are subject to change.
     */
     enum : uint64_t {
-        TYPE            = 1ULL << 0,
-        OBJECT          = 1ULL << 1,
-        COMPOUND        = 1ULL << 2,
-        PROPERTY        = 1ULL << 3,
-        METHOD          = 1ULL << 4,
-        ENUM            = 1ULL << 5,
-        ARG             = 1ULL << 6,
-        GLOBAL          = 1ULL << 7,
-        COLLECTION      = 1ULL << 8,
-        TEMPLATE        = 1ULL << 9,
-        WEB             = 1ULL << 10,
-        PAGE            = 1ULL << 11,
-        ASSET           = 1ULL << 12,
-        SHADER          = 1ULL << 13,
-        TEXTURE         = 1ULL << 14,
-        LOADER          = 1ULL << 15,
-        CACHE           = 1ULL << 16,
-        COMPILER        = 1ULL << 17,
-        WIDGET          = 1ULL << 18,
-        RENDERED        = 1ULL << 19,
-        RENDER3D        = 1ULL << 20,
-        CAMERA          = 1ULL << 21,
-        PIPELINE        = 1ULL << 22,
-        GENERATOR       = 1ULL << 23,
-        
-        STATE           = 1ULL << 26, //!< "State" property
-        STATIC          = 1ULL << 27, //!< Non-object specific (global variables, functions, etc)
-        SMALL           = 1ULL << 28, //!< Small enough to fit in DataBlock
-        TLS             = 1ULL << 29, //!< Thread local storage
-        LESS            = 1ULL << 30, //!< Can compare
-        TODO            = 1ULL << 40,
-        ABSTRACT        = 1ULL << 41,
-        CONST           = 1ULL << 42, //!< Method/property is CONSTANT/READONLY
-
-        LOCAL_ONLY      = 1ULL << 56,
-        LOGIN_REQ       = 1ULL << 57,
-        NO_EXPAND       = 1ULL << 58,
-        POST_ANON       = 1ULL << 59,
-        HAS_SUBS        = 1ULL << 60,
-        DISABLE_REG     = 1ULL << 61,
-        SEALED          = 1ULL << 62,
-        SWEPT           = 1ULL << 63
     };
     
     //bool    is_type(const Meta&);
@@ -110,6 +69,62 @@ namespace yq {
     class Meta : not_copyable, not_moveable {
     public:
     
+        enum class Flag {
+            TYPE,
+            OBJECT,
+            COMPOUND,
+            PROPERTY,
+            METHOD,
+            ENUM,
+            ARG,
+            GLOBAL,
+            COLLECTION,
+            TEMPLATE,
+            WEB,
+            PAGE,
+            ASSET,
+            SHADER,
+            TEXTURE,
+            LOADER,
+            CACHE,
+            COMPILER,
+            WIDGET,
+            RENDERED,
+            RENDER3D,
+            CAMERA,
+            PIPELINE,
+            GENERATOR,
+            NODE,
+            PIN,
+            
+            STATE,      //!< "State" property
+            STATIC,     //!< Non-object specific (global variables, functions, etc)
+            SMALL,      //!< Small enough to fit in DataBlock
+            TLS,        //!< Thread local storage
+            LESS,       //!< Can compare
+            TODO,
+            ABSTRACT,
+            CONST,      //!< Method/property is CONSTANT/READONLY
+            INPUT,
+            OUTPUT,
+
+            EXECUTE,
+            LOCAL_ONLY,
+            LOGIN_REQ,
+            NO_EXPAND,
+            POST_ANON,
+            HAS_SUBS,
+            DISABLE_REG,
+            SEALED,
+            SWEPT,
+            
+            
+            NEXT_DEFINED_FLAG     //<! Use for custom flag values after this
+        };
+        
+    
+    
+    
     
             //  I mean, really, 255 ain't enough?? Even in full-on UTF-8, that's over 40 characters.
             //  This applies to tags  too BTW
@@ -127,8 +142,8 @@ namespace yq {
         //! Meta ID type
         using id_t                      = unsigned int;
         
-        //! Our flags
-        using options_t                 = uint64_t;
+        using options_t                 = std::initializer_list<Flag>;
+        
         
         static const Vector<const Meta*>&   all();
         static const Meta*                  lookup(id_t);
@@ -154,22 +169,70 @@ namespace yq {
         //! \brief Vector of child-meta (could include pointers)
         const Vector<const Meta*>&      children() const { return m_children; }
         
+        void                            clear(Flag);
+        
         const std::string_view&         description() const { return m_description; }
         
         //! \brief Flags for this class
-        uint64_t                        flags() const { return m_flags; }
+        const auto&                     flags() const { return m_flags; }
         
+
         //! Generic type of this item
         virtual const char*             generic() const { return "Meta"; }
 
+        bool                            has(Flag) const;
         //  TODO
         bool                            has_tag(std::string_view) const;
 
         //! \brief Our ID number
         id_t                            id() const { return m_id; }
         
-        bool                            is_object() const { return (m_flags & OBJECT) != 0; }
-        bool                            is_type() const { return (m_flags & TYPE) != 0; }
+        //! TRUE if the object is deemed abstract (uncreatable)
+        bool                            is_abstract() const;
+
+        bool                            is_collection() const;
+
+        bool                            is_compound() const;
+
+        //! TRUE if this is a const method/property/etc
+        bool                            is_const() const;
+        bool                            is_execute() const;
+        bool                            is_global() const;
+        bool                            is_input() const;
+        
+        bool                            is_method() const;
+        
+        bool                            is_node() const;
+
+        bool                            is_object() const;
+
+        bool                            is_output() const;
+        
+        bool                            is_pin() const;
+        
+        bool                            is_property() const;
+
+        
+        //! TRUE if this type is marked as small (ie, a datablock in size or smaller)
+        bool                            is_small() const;
+
+        //! TRUE if this is marked as state.
+        //! 
+        //! A state property is one that needs to be saved/loaded to properly recreate the object.
+        bool                            is_state() const;
+        
+                //! TRUE if this is a global/static variabels
+        //!
+        //! A global or static is one that lives outside a particular object, but is instead defined singularly
+        //! For the entire application
+        bool                            is_static() const;
+        
+        bool                            is_template() const;
+
+        //! \brief Marked as "TODO" on this object (reminder for future work)
+        bool                            is_todo() const;
+        bool                            is_type() const;
+        
         
         std::string_view                label() const { return m_label; }
 
@@ -180,14 +243,15 @@ namespace yq {
         //  MAY BE NULL
         const Meta*                     parent() const { return m_parent; }
 
+        void    set(Flag);
+        void    set(std::initializer_list<Flag>);
+
         //! \brief Source location of this definition
         const std::source_location&     source() const { return m_source; }
         
         //  TODO
         const Any&                      tag(std::string_view) const;
         
-        //! \brief Marked as "TODO" on this object (reminder for future work)
-        bool                            todo() const { return (m_flags&TODO) != 0; }
         
 
             // used during the creation....
@@ -216,9 +280,6 @@ namespace yq {
         virtual void                    sweep_impl() {}
         static void                     sweep_all();
         
-        
-        void    set_option(options_t v) { m_flags |= v; }
-        void    set_options(options_t v) { m_flags |= v; }
         void    set_name(std::string_view v);
         
         
@@ -234,7 +295,7 @@ namespace yq {
         Vector<const Meta*>             m_children;
         const Meta*                     m_parent    = nullptr;
         std::source_location            m_source;
-        options_t                       m_flags     = 0;
+        BitArray<uint64_t, 2>           m_flags;
         id_t                            m_id        = AUTO_ID;
         
         struct Repo;
