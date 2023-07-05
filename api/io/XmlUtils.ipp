@@ -6,9 +6,17 @@
 
 #pragma once
 
+#include <basic/errors.hpp>
+#include <basic/ByteArray.hpp>
 #include <basic/Set.hpp>
 #include <basic/TextUtils.hpp>
+#include <io/errors.hpp>
+#include <io/FileUtils.hpp>
 #include <io/XmlUtils.hpp>
+
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
+#include "rapidxml_utils.hpp"
 
 namespace yq {
 
@@ -20,249 +28,249 @@ namespace yq {
         return cnt;
     }
 
-    Expect<bool>            to_boolean(const XmlBase*xb)
+    boolean_x           to_boolean(const XmlBase*xb)
     {
         return to_boolean(xb->value(), xb->value_size());
     }
 
-    Expect<double>          to_double(const XmlBase* xb)
+    double_x            to_double(const XmlBase* xb)
     {
         return to_double(xb->value(), xb->value_size());
     }
 
-    Expect<float>           to_float(const XmlBase* xb)
+    float_x             to_float(const XmlBase* xb)
     {
         return to_float(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        to_hex(const XmlBase*xb)
+    unsigned_x          to_hex(const XmlBase*xb)
     {
         return to_hex(xb->value(), xb->value_size());
     }
 
-    Expect<uint8_t>         to_hex8(const XmlBase*xb)
+    uint8_x             to_hex8(const XmlBase*xb)
     {
         return to_hex8(xb->value(), xb->value_size());
     }
 
-    Expect<uint16_t>        to_hex16(const XmlBase*xb)
+    uint16_x            to_hex16(const XmlBase*xb)
     {
         return to_hex16(xb->value(), xb->value_size());
     }
 
-    Expect<uint32_t>        to_hex32(const XmlBase*xb)
+    uint32_x            to_hex32(const XmlBase*xb)
     {
         return to_hex32(xb->value(), xb->value_size());
     }
 
-    Expect<uint64_t>        to_hex64(const XmlBase*xb)
+    uint64_x            to_hex64(const XmlBase*xb)
     {
         return to_hex64(xb->value(), xb->value_size());
     }
 
-    Expect<int>             to_int(const XmlBase*xb)
+    integer_x           to_int(const XmlBase*xb)
     {
         return to_int(xb->value(), xb->value_size());
     }
 
-    Expect<int>             to_integer(const XmlBase*xb)
+    integer_x           to_integer(const XmlBase*xb)
     {
         return to_integer(xb->value(), xb->value_size());
     }
 
-    Expect<int8_t>          to_int8(const XmlBase*xb)
+    int8_x              to_int8(const XmlBase*xb)
     {
         return to_int8(xb->value(), xb->value_size());
     }
 
-    Expect<int16_t>         to_int16(const XmlBase*xb)
+    int16_x             to_int16(const XmlBase*xb)
     {
         return to_int16(xb->value(), xb->value_size());
     }
 
-    Expect<int32_t>         to_int32(const XmlBase*xb)
+    int32_x             to_int32(const XmlBase*xb)
     {
         return to_int32(xb->value(), xb->value_size());
     }
 
-    Expect<int64_t>         to_int64(const XmlBase*xb)
+    int64_x             to_int64(const XmlBase*xb)
     {
         return to_int64(xb->value(), xb->value_size());
     }
 
-    Expect<short>           to_short(const XmlBase*xb)
+    short_x             to_short(const XmlBase*xb)
     {
         return to_short(xb->value(), xb->value_size());
     }
         
-    std::string_view        to_string_view(const XmlBase*xb)
+    std::string_view    to_string_view(const XmlBase*xb)
     {
         return std::string_view(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        to_uint(const XmlBase*xb)
+    unsigned_x          to_uint(const XmlBase*xb)
     {
         return to_uint(xb->value(), xb->value_size());
     }
 
-    Expect<uint8_t>         to_uint8(const XmlBase*xb)
+    uint8_x             to_uint8(const XmlBase*xb)
     {
         return to_uint8(xb->value(), xb->value_size());
     }
 
-    Expect<uint16_t>        to_uint16(const XmlBase*xb)
+    uint16_x            to_uint16(const XmlBase*xb)
     {
         return to_uint16(xb->value(), xb->value_size());
     }
 
-    Expect<uint32_t>        to_uint32(const XmlBase*xb)
+    uint32_x            to_uint32(const XmlBase*xb)
     {
         return to_uint32(xb->value(), xb->value_size());
     }
 
-    Expect<uint64_t>        to_uint64(const XmlBase*xb)
+    uint64_x            to_uint64(const XmlBase*xb)
     {
         return to_uint64(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        to_uinteger(const XmlBase*xb)
+    unsigned_x          to_uinteger(const XmlBase*xb)
     {
         return to_uinteger(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        to_unsigned(const XmlBase*xb)
+    unsigned_x          to_unsigned(const XmlBase*xb)
     {
         return to_unsigned(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned short>  to_ushort(const XmlBase*xb)
+    ushort_x            to_ushort(const XmlBase*xb)
     {
         return to_ushort(xb->value(), xb->value_size());
     }
     
     //  //////////////////
 
-    Expect<bool>            x_boolean(const XmlBase*xb)
+    boolean_x           x_boolean(const XmlBase*xb)
     {
         return to_boolean(xb->value(), xb->value_size());
     }
 
-    Expect<double>          x_double(const XmlBase* xb)
+    double_x            x_double(const XmlBase* xb)
     {
         return to_double(xb->value(), xb->value_size());
     }
 
-    Expect<float>           x_float(const XmlBase* xb)
+    float_x             x_float(const XmlBase* xb)
     {
         return to_float(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        x_hex(const XmlBase*xb)
+    unsigned_x          x_hex(const XmlBase*xb)
     {
         return to_hex(xb->value(), xb->value_size());
     }
 
-    Expect<uint8_t>         x_hex8(const XmlBase*xb)
+    uint8_x             x_hex8(const XmlBase*xb)
     {
         return to_hex8(xb->value(), xb->value_size());
     }
 
-    Expect<uint16_t>        x_hex16(const XmlBase*xb)
+    uint16_x            x_hex16(const XmlBase*xb)
     {
         return to_hex16(xb->value(), xb->value_size());
     }
 
-    Expect<uint32_t>        x_hex32(const XmlBase*xb)
+    uint32_x            x_hex32(const XmlBase*xb)
     {
         return to_hex32(xb->value(), xb->value_size());
     }
 
-    Expect<uint64_t>        x_hex64(const XmlBase*xb)
+    uint64_x            x_hex64(const XmlBase*xb)
     {
         return to_hex64(xb->value(), xb->value_size());
     }
 
-    Expect<int>             x_int(const XmlBase*xb)
+    integer_x           x_int(const XmlBase*xb)
     {
         return to_int(xb->value(), xb->value_size());
     }
 
-    Expect<int>             x_integer(const XmlBase*xb)
+    integer_x           x_integer(const XmlBase*xb)
     {
         return to_integer(xb->value(), xb->value_size());
     }
 
-    Expect<int8_t>          x_int8(const XmlBase*xb)
+    int8_x              x_int8(const XmlBase*xb)
     {
         return to_int8(xb->value(), xb->value_size());
     }
 
-    Expect<int16_t>         x_int16(const XmlBase*xb)
+    int16_x             x_int16(const XmlBase*xb)
     {
         return to_int16(xb->value(), xb->value_size());
     }
 
-    Expect<int32_t>         x_int32(const XmlBase*xb)
+    int32_x             x_int32(const XmlBase*xb)
     {
         return to_int32(xb->value(), xb->value_size());
     }
 
-    Expect<int64_t>         x_int64(const XmlBase*xb)
+    int64_x             x_int64(const XmlBase*xb)
     {
         return to_int64(xb->value(), xb->value_size());
     }
 
-    Expect<short>           x_short(const XmlBase*xb)
+    short_x             x_short(const XmlBase*xb)
     {
         return to_short(xb->value(), xb->value_size());
     }
         
-    std::string_view        x_string_view(const XmlBase*xb)
+    std::string_view    x_string_view(const XmlBase*xb)
     {
         return std::string_view(xb->value(), xb->value_size());
     }
 
-    std::string             x_string(const XmlBase*xb)
+    std::string         x_string(const XmlBase*xb)
     {
         return std::string(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        x_uint(const XmlBase*xb)
+    unsigned_x          x_uint(const XmlBase*xb)
     {
         return to_uint(xb->value(), xb->value_size());
     }
 
-    Expect<uint8_t>         x_uint8(const XmlBase*xb)
+    uint8_x             x_uint8(const XmlBase*xb)
     {
         return to_uint8(xb->value(), xb->value_size());
     }
 
-    Expect<uint16_t>        x_uint16(const XmlBase*xb)
+    uint16_x            x_uint16(const XmlBase*xb)
     {
         return to_uint16(xb->value(), xb->value_size());
     }
 
-    Expect<uint32_t>        x_uint32(const XmlBase*xb)
+    uint32_x            x_uint32(const XmlBase*xb)
     {
         return to_uint32(xb->value(), xb->value_size());
     }
 
-    Expect<uint64_t>        x_uint64(const XmlBase*xb)
+    uint64_x            x_uint64(const XmlBase*xb)
     {
         return to_uint64(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        x_uinteger(const XmlBase*xb)
+    unsigned_x          x_uinteger(const XmlBase*xb)
     {
         return to_uinteger(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned>        x_unsigned(const XmlBase*xb)
+    unsigned_x          x_unsigned(const XmlBase*xb)
     {
         return to_unsigned(xb->value(), xb->value_size());
     }
 
-    Expect<unsigned short>  x_ushort(const XmlBase*xb)
+    ushort_x            x_ushort(const XmlBase*xb)
     {
         return to_ushort(xb->value(), xb->value_size());
     }
@@ -374,4 +382,40 @@ namespace yq {
     {
         doc.append_node(doc.allocate_node(rapidxml::node_pi, "xml", "version=\"1.0\" encoding=\"UTF-8\""));
     }
+
+    std::error_code     read_file(XmlDocument&doc, const std::filesystem::path&fp)
+    {
+        if(fp.empty())
+            return errors::filepath_empty();
+        if(!file_exists(fp))
+            return errors::file_not_found();
+        ByteArray       ba  = file_bytes(fp);
+        if(ba.empty())
+            return errors::failed_to_read_file();
+        ba << '\0';
+        try {
+            doc.parse<0>(ba.data());
+        } catch(const rapidxml::parse_error& pe){
+            size_t  pt  = pe.where<char>() - ba.data();
+            yError() << "Xml parse error: " << pe.what() << " (at byte " << pt << ") : " << fp.string();
+            return errors::xml_bad_syntax();
+        }
+        return errors::none();
+    }
+    
+    std::error_code     save_file(const XmlDocument&doc, const std::filesystem::path&fp)
+    {
+        if(fp.empty())
+            return errors::filepath_empty();
+
+        // export to a buffer
+        std::vector<char> s;
+        rapidxml::print(std::back_inserter(s), doc, 0);
+        if(!file_backup(fp.c_str()))
+            return errors::failed_to_backup_file();
+        if(!file_write(fp, s))
+            return errors::failed_to_write_file();
+        return errors::none();
+    }
+
 }
