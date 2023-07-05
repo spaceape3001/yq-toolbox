@@ -44,25 +44,14 @@ const char*     ntype(node_type nt)
     };
 }
 
-
-string_view name(const XB* xn)
-{
-    return string_view(xn->name(), xn->name_size());
-}
-
-string_view value(const XB* xn)
-{
-    return string_view(xn->value(), xn->value_size());
-}
-
 void    write(const XA* xa, int depth=0)
 {
-    cout << string(depth, ' ') << "[att] '" << name(xa) << "': " << value(xa) << "\n";
+    cout << string(depth, ' ') << "[att] '" << xa->name() << "': " << xa->value() << "\n";
 }
 
 void    write(const XN*xn, int depth=0)
 {
-    cout << string(depth, ' ') << '[' << ntype(xn->type()) << "] '" << name(xn) << "': " << value(xn) << "\n";
+    cout << string(depth, ' ') << '[' << ntype(xn->type()) << "] '" << xn->name() << "': " << xn->value() << "\n";
     for(const XA* xa=xn->first_attribute();  xa; xa = xa -> next_attribute())
         write(xa, depth+1);
     for(const XN* cn=xn->first_node(); cn; cn = cn -> next_sibling())

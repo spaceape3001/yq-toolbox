@@ -129,11 +129,11 @@ namespace yq {
         };
         
 
-        std::error_code  load(Document&, const std::filesystem::path&);
-        std::error_code  load(Document&, const XmlDocument&);
+        std::error_code  load(Document&, const std::filesystem::path&, std::string_view rootTagName);
+        std::error_code  load(Document&, const XmlDocument&, std::string_view rootTagName, std::string_view fileName=std::string_view());
 
-        std::error_code  save(const std::filesystem::path&, const Document&);
-        std::error_code  save(XmlDocument&, const Document&);
+        std::error_code  save(const std::filesystem::path&, const Document&, std::string_view rootTagName);
+        std::error_code  save(XmlDocument&, const Document&, std::string_view rootTagName);
         
     }
 }

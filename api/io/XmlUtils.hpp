@@ -194,9 +194,10 @@ namespace yq {
     template <typename E>
     Expect<E>           to_enum(const XmlBase*xb)
     {
-        if(xb -> value_size() == 0)
+        auto vt  = xb->value();
+        if(vt.empty())
             return E::default_value();
-        auto   v    = E::value_for(to_string_view(xb));
+        auto   v    = E::value_for(vt);
         if(v)
             return *v;
         return v;
@@ -422,12 +423,7 @@ namespace yq {
     template <typename E>
     Expect<E>           x_enum(const XmlBase*xb)
     {
-        if(xb -> value_size() == 0)
-            return E::default_value();
-        auto v = E::value_for(x_string_view(xb));
-        if(v)
-            return E(*v);
-        return v;
+        return to_enum<E>(xb);
     }
     
     /*! \brief Converts xml node/attribute to flag-set of enumerated value
@@ -441,7 +437,7 @@ namespace yq {
     Flag<E>             x_flag(const XmlBase* xb)
     {
         Flag<E> ret;
-        vsplit(x_string(xb), ',', [&](std::string_view k){
+        vsplit(xb->value(), ',', [&](std::string_view k){
             auto    v   = E::value_for(k);
             if(v)
                 ret.set(*v);

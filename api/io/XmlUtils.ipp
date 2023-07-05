@@ -30,249 +30,249 @@ namespace yq {
 
     boolean_x           to_boolean(const XmlBase*xb)
     {
-        return to_boolean(xb->value(), xb->value_size());
+        return to_boolean(xb->value());
     }
 
     double_x            to_double(const XmlBase* xb)
     {
-        return to_double(xb->value(), xb->value_size());
+        return to_double(xb->value());
     }
 
     float_x             to_float(const XmlBase* xb)
     {
-        return to_float(xb->value(), xb->value_size());
+        return to_float(xb->value());
     }
 
     unsigned_x          to_hex(const XmlBase*xb)
     {
-        return to_hex(xb->value(), xb->value_size());
+        return to_hex(xb->value());
     }
 
     uint8_x             to_hex8(const XmlBase*xb)
     {
-        return to_hex8(xb->value(), xb->value_size());
+        return to_hex8(xb->value());
     }
 
     uint16_x            to_hex16(const XmlBase*xb)
     {
-        return to_hex16(xb->value(), xb->value_size());
+        return to_hex16(xb->value());
     }
 
     uint32_x            to_hex32(const XmlBase*xb)
     {
-        return to_hex32(xb->value(), xb->value_size());
+        return to_hex32(xb->value());
     }
 
     uint64_x            to_hex64(const XmlBase*xb)
     {
-        return to_hex64(xb->value(), xb->value_size());
+        return to_hex64(xb->value());
     }
 
     integer_x           to_int(const XmlBase*xb)
     {
-        return to_int(xb->value(), xb->value_size());
+        return to_int(xb->value());
     }
 
     integer_x           to_integer(const XmlBase*xb)
     {
-        return to_integer(xb->value(), xb->value_size());
+        return to_integer(xb->value());
     }
 
     int8_x              to_int8(const XmlBase*xb)
     {
-        return to_int8(xb->value(), xb->value_size());
+        return to_int8(xb->value());
     }
 
     int16_x             to_int16(const XmlBase*xb)
     {
-        return to_int16(xb->value(), xb->value_size());
+        return to_int16(xb->value());
     }
 
     int32_x             to_int32(const XmlBase*xb)
     {
-        return to_int32(xb->value(), xb->value_size());
+        return to_int32(xb->value());
     }
 
     int64_x             to_int64(const XmlBase*xb)
     {
-        return to_int64(xb->value(), xb->value_size());
+        return to_int64(xb->value());
     }
 
     short_x             to_short(const XmlBase*xb)
     {
-        return to_short(xb->value(), xb->value_size());
+        return to_short(xb->value());
     }
         
     std::string_view    to_string_view(const XmlBase*xb)
     {
-        return std::string_view(xb->value(), xb->value_size());
+        return std::string_view(xb->value());
     }
 
     unsigned_x          to_uint(const XmlBase*xb)
     {
-        return to_uint(xb->value(), xb->value_size());
+        return to_uint(xb->value());
     }
 
     uint8_x             to_uint8(const XmlBase*xb)
     {
-        return to_uint8(xb->value(), xb->value_size());
+        return to_uint8(xb->value());
     }
 
     uint16_x            to_uint16(const XmlBase*xb)
     {
-        return to_uint16(xb->value(), xb->value_size());
+        return to_uint16(xb->value());
     }
 
     uint32_x            to_uint32(const XmlBase*xb)
     {
-        return to_uint32(xb->value(), xb->value_size());
+        return to_uint32(xb->value());
     }
 
     uint64_x            to_uint64(const XmlBase*xb)
     {
-        return to_uint64(xb->value(), xb->value_size());
+        return to_uint64(xb->value());
     }
 
     unsigned_x          to_uinteger(const XmlBase*xb)
     {
-        return to_uinteger(xb->value(), xb->value_size());
+        return to_uinteger(xb->value());
     }
 
     unsigned_x          to_unsigned(const XmlBase*xb)
     {
-        return to_unsigned(xb->value(), xb->value_size());
+        return to_unsigned(xb->value());
     }
 
     ushort_x            to_ushort(const XmlBase*xb)
     {
-        return to_ushort(xb->value(), xb->value_size());
+        return to_ushort(xb->value());
     }
     
     //  //////////////////
 
     boolean_x           x_boolean(const XmlBase*xb)
     {
-        return to_boolean(xb->value(), xb->value_size());
+        return to_boolean(xb->value());
     }
 
     double_x            x_double(const XmlBase* xb)
     {
-        return to_double(xb->value(), xb->value_size());
+        return to_double(xb->value());
     }
 
     float_x             x_float(const XmlBase* xb)
     {
-        return to_float(xb->value(), xb->value_size());
+        return to_float(xb->value());
     }
 
     unsigned_x          x_hex(const XmlBase*xb)
     {
-        return to_hex(xb->value(), xb->value_size());
+        return to_hex(xb->value());
     }
 
     uint8_x             x_hex8(const XmlBase*xb)
     {
-        return to_hex8(xb->value(), xb->value_size());
+        return to_hex8(xb->value());
     }
 
     uint16_x            x_hex16(const XmlBase*xb)
     {
-        return to_hex16(xb->value(), xb->value_size());
+        return to_hex16(xb->value());
     }
 
     uint32_x            x_hex32(const XmlBase*xb)
     {
-        return to_hex32(xb->value(), xb->value_size());
+        return to_hex32(xb->value());
     }
 
     uint64_x            x_hex64(const XmlBase*xb)
     {
-        return to_hex64(xb->value(), xb->value_size());
+        return to_hex64(xb->value());
     }
 
     integer_x           x_int(const XmlBase*xb)
     {
-        return to_int(xb->value(), xb->value_size());
+        return to_int(xb->value());
     }
 
     integer_x           x_integer(const XmlBase*xb)
     {
-        return to_integer(xb->value(), xb->value_size());
+        return to_integer(xb->value());
     }
 
     int8_x              x_int8(const XmlBase*xb)
     {
-        return to_int8(xb->value(), xb->value_size());
+        return to_int8(xb->value());
     }
 
     int16_x             x_int16(const XmlBase*xb)
     {
-        return to_int16(xb->value(), xb->value_size());
+        return to_int16(xb->value());
     }
 
     int32_x             x_int32(const XmlBase*xb)
     {
-        return to_int32(xb->value(), xb->value_size());
+        return to_int32(xb->value());
     }
 
     int64_x             x_int64(const XmlBase*xb)
     {
-        return to_int64(xb->value(), xb->value_size());
+        return to_int64(xb->value());
     }
 
     short_x             x_short(const XmlBase*xb)
     {
-        return to_short(xb->value(), xb->value_size());
+        return to_short(xb->value());
     }
         
     std::string_view    x_string_view(const XmlBase*xb)
     {
-        return std::string_view(xb->value(), xb->value_size());
+        return std::string_view(xb->value());
     }
 
     std::string         x_string(const XmlBase*xb)
     {
-        return std::string(xb->value(), xb->value_size());
+        return std::string(xb->value());
     }
 
     unsigned_x          x_uint(const XmlBase*xb)
     {
-        return to_uint(xb->value(), xb->value_size());
+        return to_uint(xb->value());
     }
 
     uint8_x             x_uint8(const XmlBase*xb)
     {
-        return to_uint8(xb->value(), xb->value_size());
+        return to_uint8(xb->value());
     }
 
     uint16_x            x_uint16(const XmlBase*xb)
     {
-        return to_uint16(xb->value(), xb->value_size());
+        return to_uint16(xb->value());
     }
 
     uint32_x            x_uint32(const XmlBase*xb)
     {
-        return to_uint32(xb->value(), xb->value_size());
+        return to_uint32(xb->value());
     }
 
     uint64_x            x_uint64(const XmlBase*xb)
     {
-        return to_uint64(xb->value(), xb->value_size());
+        return to_uint64(xb->value());
     }
 
     unsigned_x          x_uinteger(const XmlBase*xb)
     {
-        return to_uinteger(xb->value(), xb->value_size());
+        return to_uinteger(xb->value());
     }
 
     unsigned_x          x_unsigned(const XmlBase*xb)
     {
-        return to_unsigned(xb->value(), xb->value_size());
+        return to_unsigned(xb->value());
     }
 
     ushort_x            x_ushort(const XmlBase*xb)
     {
-        return to_ushort(xb->value(), xb->value_size());
+        return to_ushort(xb->value());
     }
 
 
