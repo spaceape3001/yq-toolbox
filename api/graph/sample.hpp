@@ -14,7 +14,7 @@ namespace yq::example {
         MyGraph*    graph(uint64_t) const;
         MyNode*     node(uint64_t) const;
         MyEdge*     edge(uint64_t) const;
-        MyPort*     port(uint64_t) const;
+        MyPin*      pin(uint64_t) const;
     };
 
 
@@ -22,7 +22,7 @@ namespace yq::example {
         using graph_type = MyGraph*;        // Enables the sub-graph features
         using node_type  = MyNode*;         // Enables the node features (required)
         using edge_type  = MyEdge*;         // Enables the edge features (required)
-        using port_type  = MyPort*;         // Enables the port features
+        using pin_type   = MyPin*;          // Enables the pin features
     };
     
     struct Definition_Pointer_With_U64_ID {
@@ -35,8 +35,8 @@ namespace yq::example {
         using edge_type  = MyEdge*;         // Enables the edge features
         using edge_id    = uint64_t;
         
-        using port_type  = MyPort*;         // Enables the port features
-        using port_id    = uint64_t;
+        using pin_type   = MyPin*;          // Enables the pin features
+        using pin_id     = uint64_t;
     };
     
         /*
@@ -53,7 +53,7 @@ namespace yq::example {
         using edge_type  = MyEdge;          // Enables the edge features
         using edge_id    = uint64_t;
         
-        using port_type  = MyPort;          // Enables the port features
-        using port_id    = uint64_t;
+        using pin_type   = MyPin;           // Enables the pin features
+        using pin_id     = uint64_t;
     };
 }

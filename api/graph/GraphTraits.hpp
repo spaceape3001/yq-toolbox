@@ -65,18 +65,18 @@ namespace yq {
     };
         
     template <typename T>
-    concept has_port  = requires {
-        { &T::port };
+    concept has_pin  = requires {
+        { &T::pin };
     };
 
     template <typename T>
-    concept has_port_id_type  = requires {
-        { T::port_id_type };
+    concept has_pin_id_type  = requires {
+        { T::pin_id_type };
     };
         
     template <typename T>
-    concept has_port_type  = requires {
-        { T::port_type };
+    concept has_pin_type  = requires {
+        { T::pin_type };
     };
     
 
@@ -282,69 +282,69 @@ namespace yq {
         static_assert(!std::is_same_v<node_id_type, void>, "Graph definition issue: node_id_type is undefined and cannot be deduced");
 
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        //  PORT TRAITS
+        //  PIN TRAITS
 
 
-            //! Detects for presence of an port member
-        static consteval bool isPortMember()
+            //! Detects for presence of an pin member
+        static consteval bool isPinMember()
         {
-            if constexpr (has_port<T>)
-                return std::is_member_function_pointer_v<decltype(&T::port)>;
+            if constexpr (has_pin<T>)
+                return std::is_member_function_pointer_v<decltype(&T::pin)>;
             return false;
         }
 
-        static constexpr bool   is_port_member  = isPortMember();
+        static constexpr bool   is_pin_member  = isPinMember();
 
-        static consteval bool isPortFunction()
+        static consteval bool isPinFunction()
         {
-            if constexpr (has_port<T> && !is_port_member)
-                return std::is_function_v<decltype(T::port)>;
+            if constexpr (has_pin<T> && !is_pin_member)
+                return std::is_function_v<decltype(T::pin)>;
             return false;
         }
 
-            //! TRUE if this trait uses a static function for port lookups
-        static constexpr bool is_port_function = isPortFunction();
+            //! TRUE if this trait uses a static function for pin lookups
+        static constexpr bool is_pin_function = isPinFunction();
 
-            //! Detects the port type... this cannot fail
-        static consteval auto deducePortType() 
+            //! Detects the pin type... this cannot fail
+        static consteval auto deducePinType() 
         {
-            if constexpr (is_port_member)
-                return return_type_t<decltype(&T::port)>();
-            if constexpr (is_port_function)
-                return return_type_t<decltype(T::port)>();
-            if constexpr (has_port_type<T>)
-                return T::port_type();
+            if constexpr (is_pin_member)
+                return return_type_t<decltype(&T::pin)>();
+            if constexpr (is_pin_function)
+                return return_type_t<decltype(T::pin)>();
+            if constexpr (has_pin_type<T>)
+                return T::pin_type();
         }
         
-            //! Our port type
-        using port_type = decltype(deducePortType());
+            //! Our pin type
+        using pin_type = decltype(deducePinType());
         
-            //! TRUE if this supports ports
-        static constexpr const bool is_port_enabled     = !std::is_same_v<port_type, void>;
+            //! TRUE if this suppins pins
+        static constexpr const bool is_pin_enabled     = !std::is_same_v<pin_type, void>;
 
-            //! TRUE if the port type is a pointer type
-        static constexpr bool is_port_pointer = std::is_pointer_v<port_type>;
+            //! TRUE if the pin type is a pointer type
+        static constexpr bool is_pin_pointer = std::is_pointer_v<pin_type>;
 
-        static auto deducePortId()
+        static auto deducePinId()
         {
-            if constexpr (is_port_enabled){
-                if constexpr (has_port_id_type<T>){
-                    return T::port_id_type();
-                } else if constexpr (is_port_member) {
-                    using arg_type  = decltype(function_first_argument(&T::port));
+            if constexpr (is_pin_enabled){
+                if constexpr (has_pin_id_type<T>){
+                    return T::pin_id_type();
+                } else if constexpr (is_pin_member) {
+                    using arg_type  = decltype(function_first_argument(&T::pin));
                     return std::remove_cvref_t<arg_type>();
-                } else if constexpr (is_port_function){
-                    using arg_type  = decltype(function_first_argument(T::port));
+                } else if constexpr (is_pin_function){
+                    using arg_type  = decltype(function_first_argument(T::pin));
                     return std::remove_cvref_t<arg_type>();
-                } else if constexpr (is_port_pointer) {
-                    return port_type();
+                } else if constexpr (is_pin_pointer) {
+                    return pin_type();
                 }
             }
         }
 
-        using port_id_type = decltype(deducePortId());
+        using pin_id_type = decltype(deducePinId());
 
-        static_assert(!is_port_enabled || !std::is_same_v<port_id_type, void>, "Graph definition issue: port_id_type is undefined and cannot be deduced");
+        static_assert(!is_pin_enabled || !std::is_same_v<pin_id_type, void>, "Graph definition issue: pin_id_type is undefined and cannot be deduced");
 
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
