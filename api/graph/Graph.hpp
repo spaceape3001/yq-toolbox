@@ -1,0 +1,142 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <graph/preamble.hpp>
+
+#include <basic/Any.hpp>
+#include <basic/Enum.hpp>
+#include <basic/Flag.hpp>
+#include <basic/Map.hpp>
+#include <basic/MinMaxDef.hpp>
+
+namespace yq {
+    /*! \brief Graph Descriptor Language
+    
+    
+        This is a data-based graph descriptor language, for the purposes of 
+        display & I/O.
+        
+        \note All structures can double as either definition or meta/generic
+    */
+    namespace g { 
+        YQ_ENUM(Option, , 
+            /*! \brief Marks the target as informational
+            
+                This means it's meta-data defining a property/node that *CAN* 
+                be added.
+            */
+            INFO = 0,
+            
+            //! Pin support
+            PINS
+        );
+    
+    
+        /*! \brief Type/Name/Description
+        
+            Base type/name/description descriptor block.
+        */
+        struct TND {
+        
+            //! Type of thing
+            std::string     type;
+            
+            //! Name of thing
+            std::string     name;
+            
+            //! Description of thing
+            std::string     description;
+            
+            //! Flags for thing
+            Flag<Option>    flags       = {};
+        };
+        
+        /*! \brief Generic property
+        */
+        struct Property : public TND {
+        
+            //! Value of the property (or default for info)
+            Any                 value;
+            
+            //! COUNT of the property
+            MinMaxDef<unsigned> count   = {0, 1, 0};
+        };
+        
+        /*! \brief Base thing, has properties
+        */
+        struct Base : public TND {
+            std::vector<Property>       properties;
+        };
+        
+        /*! \brief Pin
+        
+            Pin to a node, maps inputs/outputs for the
+            object.
+        */
+        struct Pin : public Base {
+            Flow                flow;
+            MinMaxDef<unsigned> count   = {1, 1, 1};
+        };
+        
+        /*! \brief Node
+        */
+        struct Node : public Base {
+            std::vector<Pin>        pins;
+        };
+    
+        /*! \brief Socket
+        
+            used to represent endpoints
+        */
+        struct Socket {
+            std::string     node;       //!< Node (empty implies graph-scoped pins)
+            std::string     pin, sub;
+            string_vector_t nodes;      //!< Type of nodes to restrict to
+        };
+        
+        /*! \brief Edge
+        
+            Edge between nodes.
+            
+            Note, it'll be ILLEGAL for edges to jump graphs w/o hitting a pin.
+        */
+        struct Edge : public Base {
+            Socket          source, target;
+            string_vector_t datas;      //!< Type of datas permissible
+        };
+
+        /*! \brief Graph
+            
+            Graph (pins, nodes, & edges)
+        */
+        struct Graph : public Base {
+            std::vector<Pin>    pins;
+            std::vector<Node>   nodes;
+            std::vector<Edge>   edges;
+        };
+
+        /*! \brief Document
+        
+            Document has graphs.
+        */
+        struct Document : public Base {
+            std::vector<Graph>  graphs;
+        };
+        
+
+        std::error_code  load(Document&, const std::filesystem::path&);
+        std::error_code  load(Document&, const XmlDocument&);
+
+        std::error_code  save(const std::filesystem::path&, const Document&);
+        std::error_code  save(XmlDocument&, const Document&);
+        
+    }
+}
+
+YQ_TYPE_DECLARE(yq::g::Option)
+

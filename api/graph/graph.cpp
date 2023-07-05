@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "gdl.ipp"
-#include "preamble.hpp"
+#include "GraphIO.ipp"
 #include "GraphTraits.hpp"
 #include <cstdint>
+#include <meta/Init.hpp>
 
 
 #ifndef NDEBUG
@@ -91,4 +91,8 @@
     }
     
 #endif
+
+YQ_TYPE_IMPLEMENT(yq::g::Flow)
+YQ_TYPE_IMPLEMENT(yq::g::Option)
+
 
