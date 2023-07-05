@@ -13,6 +13,7 @@
 #include <graph/xfg/ArrayOutputPin.hpp>
 #include <graph/xfg/SingleInputPin.hpp>
 #include <graph/xfg/SingleOutputPin.hpp>
+#include <graph/xfg/VectorConfigInputPin.hpp>
 #include <graph/xfg/VectorInputPin.hpp>
 #include <graph/xfg/VectorOutputPin.hpp>
 
@@ -31,6 +32,8 @@ namespace yq::xfg {
 
         template <typename T> using VecIn   = VectorInputPin<T>;
         template <typename T> using VecOut  = VectorOutputPin<T>;
+        
+        template <typename T, typename C> using VecCfgIn = VectorConfigInputPin<T,C>;
 
         template <typename T, size_t N> using ArrIn   = ArrayInputPin<T, N>;
         template <typename T, size_t N> using ArrOut  = ArrayOutputPin<T, N>;

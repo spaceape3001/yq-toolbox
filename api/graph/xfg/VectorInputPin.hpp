@@ -18,6 +18,9 @@ namespace yq::xfg {
         using const_iterator    = typename std::vector<T>::const_iterator;
         using value_type        = T;
         
+        VectorInputPin();
+        ~VectorInputPin();
+        
         constexpr const_iterator  cbegin() const noexcept;
         constexpr const_iterator  cend() const noexcept;
 
@@ -33,8 +36,20 @@ namespace yq::xfg {
         const T&            operator[](size_t) const;
 
     private:
+        void                resize(size_t, const T& v=T{});
+
         std::vector<T>  m_data;
     };
+
+    template <typename T>
+    VectorInputPin<T>::VectorInputPin()
+    {
+    }
+
+    template <typename T>
+    VectorInputPin<T>::~VectorInputPin()
+    {
+    }
 
     template <typename T>
     constexpr typename VectorInputPin<T>::const_iterator  VectorInputPin<T>::cbegin() const noexcept
@@ -85,6 +100,12 @@ namespace yq::xfg {
     size_t              VectorInputPin<T>::size() const
     {
         return m_data.size();
+    }
+
+    template <typename T>
+    void                VectorInputPin<T>::resize(size_t sz, const T& v)
+    {
+        m_data.resize(sz, v);
     }
     
     template <typename T>

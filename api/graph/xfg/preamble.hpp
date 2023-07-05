@@ -30,9 +30,10 @@ namespace yq::xfg {
     class NodeInfo;
     struct PinInfo;
 
-    template <typename>         class SingleInputPin;
-    template <typename>         class VectorInputPin;
-    template <typename,size_t>  class ArrayInputPin;
+    template <typename>             class SingleInputPin;
+    template <typename>             class VectorInputPin;
+    template <typename,size_t>      class ArrayInputPin;
+    template <typename,typename>    class VectorConfigInputPin;
     
     struct OutputPin;
     template <typename>         class SingleOutputPin;
