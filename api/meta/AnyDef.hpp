@@ -151,6 +151,8 @@ namespace yq {
 
         const TypeInfo& type() const { return *m_type; }
 
+        bool                valid() const { return is_valid(); }
+
         template <typename T>
         Result<const T&>    value() const;
         

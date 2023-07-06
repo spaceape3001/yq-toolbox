@@ -22,167 +22,167 @@ namespace yq {
         This parses the text contained by the XML node/attribute,
         returns it as a boolean.
     */
-    boolean_x               to_boolean(const XmlBase*);
+    boolean_x               to_boolean(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to double
     
         This parses the text contained by the XML node/attribute,
         returns it as a double.
     */
-    double_x                to_double(const XmlBase*);
+    double_x                to_double(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to float
     
         This parses the text contained by the XML node/attribute,
         returns it as a float.
     */
-    float_x                 to_float(const XmlBase*);
+    float_x                 to_float(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal integer
     */
-    unsigned_x              to_hex(const XmlBase*);
+    unsigned_x              to_hex(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 8-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 8-bit integer
     */
-    uint8_x                 to_hex8(const XmlBase*);
+    uint8_x                 to_hex8(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 16-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 16-bit integer
     */
-    uint16_x                to_hex16(const XmlBase*);
+    uint16_x                to_hex16(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 32-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 32-bit integer
     */
-    uint32_x                to_hex32(const XmlBase*);
+    uint32_x                to_hex32(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 64-bit hexadecimal integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned hexadecimal 64-bit integer
     */
-    uint64_x                to_hex64(const XmlBase*);
+    uint64_x                to_hex64(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed integer
     */
-    integer_x               to_int(const XmlBase*);
+    integer_x               to_int(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed integer
     */
-    integer_x               to_integer(const XmlBase*);
+    integer_x               to_integer(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed 8-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 8-bit integer
     */
-    int8_x                  to_int8(const XmlBase*);
+    int8_x                  to_int8(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed 16-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 16-bit integer
     */
-    int16_x                 to_int16(const XmlBase*);
+    int16_x                 to_int16(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed 32-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 32-bit integer
     */
-    int32_x                 to_int32(const XmlBase*);
+    int32_x                 to_int32(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed 64-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed 64-bit integer
     */
-    int64_x                 to_int64(const XmlBase*);
+    int64_x                 to_int64(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to signed short integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an signed short integer
     */
-    short_x                 to_short(const XmlBase*);
+    short_x                 to_short(const XmlBase&);
     
     /*! \brief Converts to string view
     
         \note Return value is a REFERENCE to the given data, therefore, copy off if the XML is being altered/destroyed.
     */
-    std::string_view        to_string_view(const XmlBase*);
+    std::string_view        to_string_view(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned integer
     */
-    unsigned_x              to_uint(const XmlBase*);
+    unsigned_x              to_uint(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 8-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 8-bit integer
     */
-    uint8_x                 to_uint8(const XmlBase*);
+    uint8_x                 to_uint8(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 16-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 16-bit integer
     */
-    uint16_x                to_uint16(const XmlBase*);
+    uint16_x                to_uint16(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 32-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 32-bit integer
     */
-    uint32_x                to_uint32(const XmlBase*);
+    uint32_x                to_uint32(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned 64-bit integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned 64-bit integer
     */
-    uint64_x                to_uint64(const XmlBase*);
+    uint64_x                to_uint64(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned integer
     */
-    unsigned_x              to_uinteger(const XmlBase*);
+    unsigned_x              to_uinteger(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned integer
     */
-    unsigned_x              to_unsigned(const XmlBase*);
+    unsigned_x              to_unsigned(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned short integer
     
         This parses the text contained by the XML node/attribute,
         returns it as an unsigned short integer
     */
-    ushort_x                to_ushort(const XmlBase*);
+    ushort_x                to_ushort(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to enumerated value
     
@@ -192,9 +192,9 @@ namespace yq {
         \typename E enumeration type to parse for
     */
     template <typename E>
-    Expect<E>           to_enum(const XmlBase*xb)
+    Expect<E>           to_enum(const XmlBase& xb)
     {
-        auto vt  = xb->value();
+        auto vt  = xb.value();
         if(vt.empty())
             return E::default_value();
         auto   v    = E::value_for(vt);
@@ -209,7 +209,7 @@ namespace yq {
         
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    boolean_x               x_boolean(const XmlBase*);
+    boolean_x               x_boolean(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to double
     
@@ -218,7 +218,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    double_x                x_double(const XmlBase*);
+    double_x                x_double(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to float
     
@@ -227,7 +227,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    float_x                 x_float(const XmlBase*);
+    float_x                 x_float(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal integer
     
@@ -236,7 +236,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_x              x_hex(const XmlBase*);
+    unsigned_x              x_hex(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 8-bit integer
     
@@ -245,7 +245,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint8_x                 x_hex8(const XmlBase*);
+    uint8_x                 x_hex8(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 16-bit integer
     
@@ -254,7 +254,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint16_x                x_hex16(const XmlBase*);
+    uint16_x                x_hex16(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 32-bit integer
     
@@ -263,7 +263,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint32_x                x_hex32(const XmlBase*);
+    uint32_x                x_hex32(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to unsigned hexadecimal 64-bit integer
     
@@ -272,7 +272,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint64_x                x_hex64(const XmlBase*);
+    uint64_x                x_hex64(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to integer
     
@@ -281,7 +281,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    integer_x               x_int(const XmlBase*);
+    integer_x               x_int(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to integer
     
@@ -290,7 +290,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    integer_x               x_integer(const XmlBase*);
+    integer_x               x_integer(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to 8-bit integer
     
@@ -299,7 +299,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int8_x                  x_int8(const XmlBase*);
+    int8_x                  x_int8(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to 16-bit integer
     
@@ -307,7 +307,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int16_x                 x_int16(const XmlBase*);
+    int16_x                 x_int16(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to 32-bit integer
     
@@ -315,7 +315,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int32_x                 x_int32(const XmlBase*);
+    int32_x                 x_int32(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to 64-bit integer
     
@@ -323,7 +323,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    int64_x                 x_int64(const XmlBase*);
+    int64_x                 x_int64(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to a short integer
     
@@ -331,14 +331,14 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    short_x                 x_short(const XmlBase*);
+    short_x                 x_short(const XmlBase&);
     
     /*! \brief Converts to string 
     
         This returns the string to the FIRST bit of data for the node/attribute, which is normally 
         sufficient for to_(whatever).
     */
-    std::string             x_string(const XmlBase*);
+    std::string             x_string(const XmlBase&);
     
     /*! \brief Converts to string view
     
@@ -347,7 +347,7 @@ namespace yq {
     
         \note Return value is a REFERENCE to the given data, therefore, copy off if the XML is being altered/destroyed.
     */
-    std::string_view        x_string_view(const XmlBase*);
+    std::string_view        x_string_view(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned integer
     
@@ -355,7 +355,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_x              x_uint(const XmlBase*);
+    unsigned_x              x_uint(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned 8-bit integer
     
@@ -363,7 +363,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint8_x                 x_uint8(const XmlBase*);
+    uint8_x                 x_uint8(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned 16-bit integer
     
@@ -371,7 +371,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint16_x                x_uint16(const XmlBase*);
+    uint16_x                x_uint16(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned 32-bit integer
     
@@ -379,7 +379,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint32_x                x_uint32(const XmlBase*);
+    uint32_x                x_uint32(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned 64-bit integer
     
@@ -387,7 +387,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    uint64_x                x_uint64(const XmlBase*);
+    uint64_x                x_uint64(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned integer
     
@@ -395,7 +395,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_x              x_uinteger(const XmlBase*);
+    unsigned_x              x_uinteger(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned integer
     
@@ -403,7 +403,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    unsigned_x              x_unsigned(const XmlBase*);
+    unsigned_x              x_unsigned(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to an unsigned short integer
     
@@ -411,7 +411,7 @@ namespace yq {
 
         \note This is the same as the "to", different name to be unique for read_attribute.
     */
-    ushort_x                x_ushort(const XmlBase*);
+    ushort_x                x_ushort(const XmlBase&);
 
     /*! \brief Converts xml node/attribute to enumerated value
     
@@ -421,7 +421,7 @@ namespace yq {
         \typename E enumeration type to parse for
     */
     template <typename E>
-    Expect<E>           x_enum(const XmlBase*xb)
+    Expect<E>           x_enum(const XmlBase& xb)
     {
         return to_enum<E>(xb);
     }
@@ -434,10 +434,10 @@ namespace yq {
         \typename E enumeration type to parse for
     */
     template <typename E>
-    Flag<E>             x_flag(const XmlBase* xb)
+    Flag<E>             x_flag(const XmlBase& xb)
     {
         Flag<E> ret;
-        vsplit(xb->value(), ',', [&](std::string_view k){
+        vsplit(xb.value(), ',', [&](std::string_view k){
             auto    v   = E::value_for(k);
             if(v)
                 ret.set(*v);
@@ -454,12 +454,12 @@ namespace yq {
         \param[in]  pred        Converter of XmlAttribute to value (use one of the x_ methods)
     */
     template <typename Pred>
-    auto                read_attribute(const XmlNode* xn, const char* pszAttr, Pred pred)
+    auto                read_attribute(const XmlNode& xn, std::string_view pszAttr, Pred pred)
     {
-        using Res = std::invoke_result_t<Pred, const XmlAttribute*>;
-        const XmlAttribute*xa   = xn -> first_attribute(pszAttr);
+        using Res = std::invoke_result_t<Pred, const XmlAttribute&>;
+        const XmlAttribute*xa   = xn.first_attribute(pszAttr);
         if(xa)
-            return pred(xa);
+            return pred(*xa);
         return Res();
     }
     
@@ -473,12 +473,12 @@ namespace yq {
         \param[in]  pred        Converter of XmlNode to value (use one of the x_ or xn_ methods)
     */
     template <typename Pred>
-    auto                read_child(const XmlNode* xn, const char* pszTag, Pred pred)
+    auto                read_child(const XmlNode& xn, std::string_view pszTag, Pred pred)
     {
-        using Res = std::invoke_result_t<Pred, const XmlNode*>;
-        const XmlNode*      xb  = xn -> first_node(pszTag);
+        using Res = std::invoke_result_t<Pred, const XmlNode&>;
+        const XmlNode*      xb  = xn.first_node(pszTag);
         if(xb)
-            return pred(xb);
+            return pred(*xb);
         return Res();
     }
 
@@ -492,12 +492,12 @@ namespace yq {
         \param[in]  pred        Converter of XmlNode to value (use one of the x_ or xn_ methods)
     */
     template <typename Pred>
-    auto                read_children(const XmlNode* xn, const char* pszTag, Pred pred)
+    auto                read_children(const XmlNode& xn, std::string_view pszTag, Pred pred)
     {
-        using Res = std::invoke_result_t<Pred, const XmlNode*>;
+        using Res = std::invoke_result_t<Pred, const XmlNode&>;
         std::vector<Res> ret;
-        for(const XmlNode* xb = xn->first_node(pszTag); xb; xb = xb -> next_sibling(pszTag))
-            ret.push_back(pred(xb));
+        for(const XmlNode* xb = xn.first_node(pszTag); xb; xb = xb -> next_sibling(pszTag))
+            ret.push_back(pred(*xb));
         return ret;
     }
     
@@ -508,7 +508,7 @@ namespace yq {
         \param[in]  xn          Containing/Parent XmlNode
         \param[in]  pszTag      XML element being searched for
     */
-    string_set_t        read_child_string_set(const XmlNode* xn, const char* pszTag);
+    string_set_t        read_child_string_set(const XmlNode& xn, std::string_view pszTag);
 
 
     /*! \brief Counts the child elements with specified name
@@ -518,7 +518,7 @@ namespace yq {
         \param[in]  xn          Containing/Parent XmlNode
         \param[in]  pszTag      XML element being searched for
     */
-    size_t              count_children(const XmlNode*, const char* pszTag);
+    size_t              count_children(const XmlNode&, std::string_view pszTag);
 
 
     /*
@@ -527,7 +527,7 @@ namespace yq {
 
     /*! \brief Determine the document for the given xml object
     */
-    XmlDocument*         document_for(XmlBase* xb);
+    XmlDocument*         document_for(XmlBase& xb);
 
     /*! \brief Writes value as hex
     
@@ -536,7 +536,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_hex(XmlBase* xb, uint8_t v);
+    void                 write_hex(XmlBase& xb, uint8_t v);
 
     /*! \brief Writes value as hex
     
@@ -545,7 +545,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_hex(XmlBase* xb, uint16_t v);
+    void                 write_hex(XmlBase& xb, uint16_t v);
 
     /*! \brief Writes value as hex
     
@@ -554,7 +554,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_hex(XmlBase* xb, uint32_t v);
+    void                 write_hex(XmlBase& xb, uint32_t v);
 
     /*! \brief Writes value as hex
     
@@ -563,7 +563,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_hex(XmlBase* xb, uint64_t v);
+    void                 write_hex(XmlBase& xb, uint64_t v);
 
     /*! \brief Writes value as true/false
     
@@ -572,7 +572,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, bool v);
+    void                 write_x(XmlBase& xb, bool v);
 
     /*! \brief Writes value to XML
     
@@ -581,7 +581,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, double v);
+    void                 write_x(XmlBase& xb, double v);
 
     /*! \brief Writes value to XML
     
@@ -590,7 +590,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, float v);
+    void                 write_x(XmlBase& xb, float v);
 
     /*! \brief Writes value to XML
     
@@ -599,7 +599,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, int8_t v);
+    void                 write_x(XmlBase& xb, int8_t v);
 
     /*! \brief Writes value to XML
     
@@ -608,7 +608,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, int16_t v);
+    void                 write_x(XmlBase& xb, int16_t v);
 
     /*! \brief Writes value to XML
     
@@ -617,7 +617,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, int32_t v);
+    void                 write_x(XmlBase& xb, int32_t v);
 
     /*! \brief Writes value to XML
     
@@ -626,7 +626,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, int64_t v);
+    void                 write_x(XmlBase& xb, int64_t v);
 
     /*! \brief Writes value to XML
     
@@ -635,7 +635,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, uint8_t v);
+    void                 write_x(XmlBase& xb, uint8_t v);
 
     /*! \brief Writes value to XML
     
@@ -644,7 +644,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, uint16_t v);
+    void                 write_x(XmlBase& xb, uint16_t v);
 
     /*! \brief Writes value to XML
     
@@ -653,7 +653,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, uint32_t v);
+    void                 write_x(XmlBase& xb, uint32_t v);
 
     /*! \brief Writes value to XML
     
@@ -662,7 +662,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, uint64_t v);
+    void                 write_x(XmlBase& xb, uint64_t v);
 
     /*! \brief Writes value to XML
     
@@ -671,7 +671,7 @@ namespace yq {
         \param[in] xb   XmlBase object to write to (ie node, attribute, etc)
         \param[in] v    Value to write
     */
-    void                 write_x(XmlBase* xb, std::string_view v);
+    void                 write_x(XmlBase& xb, std::string_view v);
 
     /*! \brief Writes value to XML
     
@@ -681,7 +681,7 @@ namespace yq {
         \param[in] v    Value to write
     */
     template <typename E>
-    void                 write_x(XmlBase* xb, EnumImpl<E> v)
+    void                 write_x(XmlBase& xb, EnumImpl<E> v)
     {
         write_x(xb, v.key());
     }
@@ -694,7 +694,7 @@ namespace yq {
         \param[in] v    Value to write
     */
     template <typename E>
-    void                 write_x(XmlBase* xb, Flag<E> v)
+    void                 write_x(XmlBase& xb, Flag<E> v)
     {
         std::string     build   = v.as_string(","sv);
         write_x(xb, build);
@@ -708,7 +708,7 @@ namespace yq {
         \param[in] v    Value to write
     */
     template <typename T>
-    void                write_xn(XmlNode*xn, const T& val) 
+    void                write_xn(XmlNode& xn, const T& val) 
     {
         write_x(xn, val);
     }
@@ -729,29 +729,25 @@ namespace yq {
         the attribute name/key into strings for the XML and thereby dodge the dragons.
     */
     template <typename T>
-    void                write_attribute(XmlNode* xb, const char* pszAttr, const T& value, bool copyAttr=false)
+    void                write_attribute(XmlNode& xb, std::string_view pszAttr, const T& value)
     {
-        assert(xb);
-        XmlDocument*    doc = xb -> document();
+        XmlDocument*    doc = xb.document();
         assert(doc);
-        XmlAttribute*   xa  = doc -> allocate_attribute();
-        if(copyAttr){
-            xa -> name( doc -> allocate_string(pszAttr));
-        } else
-            xa -> name(pszAttr);
-        xb -> append_attribute(xa);
-        write_x(xa, value);
+        XmlAttribute*   xa  = doc -> allocate_attribute(pszAttr);
+        xb.append_attribute(xa);
+        write_x(*xa, value);
     }
 
+    void                write_cdata(XmlNode&xb, std::string_view szTag, std::string_view szValue);
 
-    /*! \brief Writes value to chld node
+
+    /*! \brief Writes value to child node
     
         This writes the specified value as a child-node to the given node, needs "write_xn" defined for type T.
         
         \param[in] xb       Parent node
         \param[in] pszTag   Name/key for the child node
         \param[in] value    Value to record
-        \param[in] copyTag  TRUE to actually copy the element name into the XML
         
         \note For performance, the const char* is assumed to be a program constant, ie, "key" and is therefore
         not going to die between the invocation of this method and the actual write/destruction.  If this assumption
@@ -759,33 +755,25 @@ namespace yq {
         the element name/key into strings for the XML and thereby dodge the dragons.
     */
     template <typename T>
-    XmlNode*             write_child(XmlNode* xb, const char* pszTag, const T& value, bool copyTag=false)
+    XmlNode*             write_child(XmlNode& xb, std::string_view pszTag, const T& value)
     {
-        assert(xb && pszTag);
-        XmlDocument*    doc = xb -> document();
+        XmlDocument*    doc = xb.document();
         assert(doc);
-        XmlNode*        xn  = doc -> allocate_node(rapidxml::node_element);
-        if(copyTag){
-            xn -> name(doc->allocate_string(pszTag));
-        } else 
-            xn -> name(pszTag);
-        xb->append_node(xn);
-        write_xn(xn, value);
+        XmlNode*        xn  = doc -> allocate_element(pszTag);
+        xb.append_node(xn);
+        write_xn(*xn, value);
         return xn;
     }
 
-    /*! \brief Overload for writing child node
-    
-        This writes the specified value as a child-node to the given node, needs "write_xn" defined for type T.
-
-        \param[in] xb       Parent node
-        \param[in] pszTag   Name/key for the child node
-        \param[in] value    Value to record
-    */
-    template <typename T>
-    XmlNode*             write_child(XmlNode* xb, const std::string& pszTag, const T& value)
+    template <typename T, typename Pred>
+    XmlNode*             write_child(XmlNode& xb, std::string_view pszTag, const T& value, Pred pred)
     {
-        return write_child(xb, pszTag.c_str(), value, true);
+        XmlDocument*    doc = xb.document();
+        assert(doc);
+        XmlNode*        xn  = doc -> allocate_element(pszTag);
+        xb.append_node(xn);
+        pred(*xn, value);
+        return xn;
     }
 
     /*! \brief Writes set values as child nodes
@@ -797,14 +785,13 @@ namespace yq {
         \param[in] values   Values to record
     */
     template <typename T,typename C>
-    void    write_children(XmlNode* xb, const char* pszTag, const std::set<T,C>& values)
+    void    write_children(XmlNode& xb, std::string_view pszTag, const std::set<T,C>& values)
     {
-        assert(xb && pszTag);
-        XmlDocument*    doc = xb -> document();
+        XmlDocument*    doc = xb.document();
         assert(doc);
         for(const T& v : values){
-            XmlNode*    xn  = doc -> allocate_node(rapidxml::node_element, pszTag);
-            xb -> append_node(xn);
+            XmlNode*    xn  = doc -> allocate_element(pszTag);
+            xb.append_node(xn);
             write_xn(xn, v);
         }
     }
@@ -818,18 +805,29 @@ namespace yq {
         \param[in] values   Values to record
     */
     template <typename T>
-    void    write_children(XmlNode* xb, const char* pszTag, const std::vector<T>& values)
+    void    write_children(XmlNode& xb, std::string_view pszTag, const std::vector<T>& values)
     {
-        assert(xb && pszTag);
-        XmlDocument*    doc = xb -> document();
+        XmlDocument*    doc = xb.document();
         assert(doc);
         for(const T& v : values){
-            XmlNode*    xn  = doc -> allocate_node(rapidxml::node_element, pszTag);
-            xb -> append_node(xn);
+            XmlNode*    xn  = doc -> allocate_element(pszTag);
+            xb.append_node(xn);
             write_xn(xn, v);
         }
     }
 
+    template <typename T, typename Pred>
+    void    write_children(XmlNode& xb, std::string_view pszTag, const std::vector<T>& values, Pred p)
+    {
+        XmlDocument*    doc = xb.document();
+        assert(doc);
+        for(const T& v : values){
+            XmlNode*    xn  = doc -> allocate_element(pszTag);
+            xb.append_node(xn);
+            p(*xn, v);
+        }
+    }
+    
     //! Adds the customary <?xml version=" ... line
     void    xml_start(XmlDocument&);
     

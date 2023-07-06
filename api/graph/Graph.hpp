@@ -52,8 +52,11 @@ namespace yq {
             //! Description of thing
             std::string     description;
             
+            //! Miscellaneous notes
+            std::string     notes;
+            
             //! Flags for thing
-            Flag<Option>    flags       = {};
+            Flag<Option>    options       = {};
         };
         
         /*! \brief Generic property
@@ -64,7 +67,7 @@ namespace yq {
             Any                 value;
             
             //! COUNT of the property
-            MinMaxDef<unsigned> count   = {0, 1, 0};
+            MinMaxDef<unsigned> count   = {0, 0, 0};
         };
         
         /*! \brief Base thing, has properties
@@ -80,7 +83,7 @@ namespace yq {
         */
         struct Pin : public Base {
             Flow                flow;
-            MinMaxDef<unsigned> count   = {1, 1, 1};
+            MinMaxDef<unsigned> count   = {0, 0, 0};
         };
         
         /*! \brief Node

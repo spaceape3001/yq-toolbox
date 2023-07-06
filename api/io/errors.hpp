@@ -16,6 +16,7 @@ namespace yq::errors {
     using failed_to_write_file      = error_db::entry<"Failed to write to the file">;
     using failed_to_read_file       = error_db::entry<"Failed to read the file (or it's an empty file)">;
     using filepath_empty            = error_db::entry<"Filepath is empty">;
+    using wrong_format              = error_db::entry<"Format specifier does not match expectations">;
     using xml_bad_syntax            = error_db::entry<"XML syntax failure">;
     using xml_no_root_element       = error_db::entry<"XML document has no sutable root element">;
     using xml_wrong_document_node   = error_db::entry<"XML document type does not match expectations">;
