@@ -13,5 +13,7 @@ namespace yq {
         T   min = {};
         T   max = {};
         T   def = {};
+        
+        constexpr bool operator==(const MinMaxDef&) const = default;
     };
 }

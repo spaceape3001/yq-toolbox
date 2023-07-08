@@ -33,7 +33,10 @@ namespace yq {
             INFO = 0,
             
             //! Pin support
-            PINS
+            PINS,
+            
+            //! Supports multiple items
+            MULTI
         );
     
     
@@ -86,10 +89,13 @@ namespace yq {
             MinMaxDef<unsigned> count   = {0, 0, 0};
         };
         
+        struct Pinned : public Base {
+            std::vector<Pin>        pins;
+        };
+        
         /*! \brief Node
         */
-        struct Node : public Base {
-            std::vector<Pin>        pins;
+        struct Node : public Pinned {
         };
     
         /*! \brief Socket
@@ -117,8 +123,7 @@ namespace yq {
             
             Graph (pins, nodes, & edges)
         */
-        struct Graph : public Base {
-            std::vector<Pin>    pins;
+        struct Graph : public Pinned {
             std::vector<Node>   nodes;
             std::vector<Edge>   edges;
         };

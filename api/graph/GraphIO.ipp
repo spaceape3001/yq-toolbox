@@ -91,12 +91,17 @@ namespace yq::g {
         return errors::todo(); // TODO
     }
 
-    std::error_code load(Node& v, const XmlNode& xml)
+    std::error_code load(Pinned& v, const XmlNode& xml)
     {
         std::error_code ec = load((Base&) v, xml);
         if(ec)
             return ec;
         return load(v.pins, xml, szPin);
+    }
+
+    std::error_code load(Node& v, const XmlNode& xml)
+    {
+        return load((Pinned&) v, xml);
     }
 
     Socket xn_socket(const XmlNode& xml)
@@ -124,11 +129,7 @@ namespace yq::g {
 
     std::error_code load(Graph& v, const XmlNode& xml)
     {
-        std::error_code ec = load((Base&) v, xml);
-        if(ec)
-            return ec;
-        
-        ec  = load(v.pins, xml, szPin);
+        std::error_code ec = load((Pinned&) v, xml);
         if(ec)
             return ec;
         
@@ -220,10 +221,15 @@ namespace yq::g {
         write_mmd(xml, v.count);
     }
     
-    void    write_node(XmlNode& xml, const Node& v)
+    void    write_pinned(XmlNode& xml, const Pinned& v)
     {
         write_base(xml, v);
         write_children(xml, szPin, v.pins, write_pin);
+    }
+    
+    void    write_node(XmlNode& xml, const Node& v)
+    {   
+        write_pinned(xml, v);
     }
 
     void    write_socket(XmlNode& xml, const Socket& v)
@@ -247,8 +253,7 @@ namespace yq::g {
     
     void    write_graph(XmlNode& xml, const Graph& v)
     {
-        write_base(xml, v);
-        write_children(xml, szPin, v.pins, write_pin);
+        write_pinned(xml, v);
         write_children(xml, szNode, v.nodes, write_node);
         write_children(xml, szEdge, v.edges, write_edge);
     }
