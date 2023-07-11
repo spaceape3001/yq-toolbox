@@ -118,6 +118,36 @@ namespace yq {
         return m_tags.contains(k);
     }
 
+    bool  Meta::is_1d() const
+    {
+        return has(Flag::D1);
+    }
+    
+    bool  Meta::is_2d() const
+    {
+        return has(Flag::D2);
+    }
+    
+    bool  Meta::is_3d() const
+    {
+        return has(Flag::D3);
+    }
+    
+    bool  Meta::is_4d() const
+    {
+        return has(Flag::D4);
+    }
+
+    bool  Meta::is_5d() const
+    {
+        return has(Flag::D5);
+    }
+    
+    bool  Meta::is_6d() const
+    {
+        return has(Flag::D6);
+    }
+
     bool  Meta::is_abstract() const 
     { 
         return has(Flag::ABSTRACT); 
@@ -167,6 +197,12 @@ namespace yq {
     {
         return has(Flag::GLOBAL);
     }
+
+    bool  Meta::is_imgui() const
+    {
+        return has(Flag::IMGUI);
+    }
+
 
     bool  Meta::is_input() const 
     { 
@@ -266,6 +302,11 @@ namespace yq {
     bool  Meta::is_type() const 
     { 
         return has(Flag::TYPE); 
+    }
+
+    bool  Meta::is_vulkan() const
+    {
+        return has(Flag::VULKAN);
     }
 
     bool  Meta::is_widget() const

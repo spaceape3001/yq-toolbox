@@ -84,12 +84,19 @@ namespace yq {
             COMPILER,       //!< It's a compiler
             COMPOUND,       //!< It's a compound/struct (CompoundInfo)
             CONST,          //!< Method/property is CONSTANT/READONLY
+            D1,             //!< Item has one dimensional attributes (or is a 1-dimensional object)
+            D2,             //!< Item has two dimensional attributes (or is a 2-dimensional object)
+            D3,             //!< Item has three dimensional attributes (or is a 3-dimensional object)
+            D4,             //!< Item has four dimensional attributes (or is 4-dimensional object)
+            D5,             //!< Item has five dimensional attributes (or is 5-dimensional object)
+            D6,             //!< Item has six dimensional attributes (or is a 6-dimensional object)
             DISABLE_REG,    
             ENUM,           //!< It's an enumeration (Enum)
             EXECUTE,        //!< Execute permission/capabilty
             GENERATOR,      //!< It's a generator (GeneratorInfo)
             GLOBAL,         //!< It's a global (GlobalInfo)
             HAS_SUBS,       
+            IMGUI,          //!< ImGUI api enabled/similar usage
             INPUT,          //!< It's flagged as input (graphs)
             LESS,           //!< Can compare
             LOADER,         //!< A loader
@@ -118,6 +125,7 @@ namespace yq {
             TLS,            //!< Thread local storage
             TODO,           //!< It's "TODO" later
             TYPE,           //!< Meta has TypeInfo
+            VULKAN,         //!< Vulkan api enabled
             WEB,            //!< Web related
             WIDGET,         //!< It's a widget (WidgetInfo)
             XFG,            //!< Executive Flow Graph
@@ -190,6 +198,13 @@ namespace yq {
         //! \brief Our ID number
         id_t                            id() const { return m_id; }
         
+        bool                            is_1d() const;
+        bool                            is_2d() const;
+        bool                            is_3d() const;
+        bool                            is_4d() const;
+        bool                            is_5d() const;
+        bool                            is_6d() const;
+        
         //! TRUE if the object is deemed abstract (uncreatable)
         bool                            is_abstract() const;
 
@@ -211,6 +226,9 @@ namespace yq {
         bool                            is_expansion_disabled() const;
 
         bool                            is_global() const;
+        
+        bool                            is_imgui() const;
+        
         bool                            is_input() const;
         
         bool                            is_loader() const;
@@ -259,6 +277,8 @@ namespace yq {
         //! \brief Marked as "TODO" on this object (reminder for future work)
         bool                            is_todo() const;
         bool                            is_type() const;
+        
+        bool                            is_vulkan() const;
         
         bool                            is_widget() const;
         bool                            is_xfg() const;
