@@ -18,6 +18,48 @@ namespace yq {
     }
 
 
+    Meta::Writer&     Meta::Writer::_1d()
+    {
+        if(m_meta)
+            m_meta -> set(Flag::D1);
+        return *this;
+    }
+    
+    Meta::Writer&     Meta::Writer::_2d()
+    {
+        if(m_meta)
+            m_meta -> set(Flag::D2);
+        return *this;
+    }
+
+    Meta::Writer&     Meta::Writer::_3d()
+    {
+        if(m_meta)
+            m_meta -> set(Flag::D3);
+        return *this;
+    }
+
+    Meta::Writer&     Meta::Writer::_4d()
+    {
+        if(m_meta)
+            m_meta -> set(Flag::D4);
+        return *this;
+    }
+    
+    Meta::Writer&     Meta::Writer::_5d()
+    {
+        if(m_meta)
+            m_meta -> set(Flag::D5);
+        return *this;
+    }
+
+    Meta::Writer&     Meta::Writer::_6d()
+    {
+        if(m_meta)
+            m_meta -> set(Flag::D6);
+        return *this;
+    }
+
     Meta::Writer&     Meta::Writer::alias(std::string_view zAlias)
     {
         if(m_meta)
@@ -40,7 +82,7 @@ namespace yq {
             m_meta -> m_description = std::string_view(zDescription);
         return *this;
     }
-    
+
     Meta::Writer&     Meta::Writer::label(std::string_view zLabel)
     {
         if(m_meta)

@@ -17,6 +17,14 @@ namespace yq {
     class Meta::Writer {
     public:
     
+        Writer&     _1d();
+        Writer&     _2d();
+        Writer&     _3d();
+        Writer&     _4d();
+        Writer&     _5d();
+        Writer&     _6d();
+    
+    
         /*! \brief Sets an alias
         
             This defines an alias for the meta.  
@@ -40,7 +48,7 @@ namespace yq {
             \return Reference to this writer object
         */
         Writer&     description(std::string_view zDescription);
-
+        
         /*! \brief Sets a label
         
             This defines a label for the meta, ie the human friendly version
