@@ -12,12 +12,12 @@
 
 namespace yq {
 
-    bool    XmlObject::load(const XmlNode*)
+    bool    XmlObject::load(const XmlNode&)
     {
         return true;
     }
     
-    bool    XmlObject::save(XmlNode*) const
+    bool    XmlObject::save(XmlNode&) const
     {
         return true;
     }
