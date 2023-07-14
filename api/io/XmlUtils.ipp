@@ -225,6 +225,11 @@ namespace yq {
         return to_short(xb.value());
     }
         
+    std::string             to_string(const XmlBase& xb)
+    {
+        return std::string(xb.value());
+    }
+
     std::string_view    x_string_view(const XmlBase&xb)
     {
         return std::string_view(xb.value());

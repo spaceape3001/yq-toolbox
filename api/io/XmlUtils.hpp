@@ -122,6 +122,12 @@ namespace yq {
     */
     short_x                 to_short(const XmlBase&);
     
+    /*! \brief Converts to string 
+    
+        This converts the first value to a string
+    */
+    std::string             to_string(const XmlBase&);
+
     /*! \brief Converts to string view
     
         \note Return value is a REFERENCE to the given data, therefore, copy off if the XML is being altered/destroyed.
@@ -792,7 +798,7 @@ namespace yq {
         for(const T& v : values){
             XmlNode*    xn  = doc -> allocate_element(pszTag);
             xb.append_node(xn);
-            write_xn(xn, v);
+            write_xn(*xn, v);
         }
     }
 
@@ -812,7 +818,7 @@ namespace yq {
         for(const T& v : values){
             XmlNode*    xn  = doc -> allocate_element(pszTag);
             xb.append_node(xn);
-            write_xn(xn, v);
+            write_xn(*xn, v);
         }
     }
 
