@@ -102,6 +102,7 @@ namespace yq {
             LOADER,         //!< A loader
             LOCAL_ONLY,     //!< Local only permission
             LOGIN_REQ,      //!< Login required
+            MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
             NODE,           //!< It's a node
             NO_EXPAND,      //!< Do not expand
