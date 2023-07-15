@@ -451,6 +451,13 @@ namespace yq {
         return a;
     }
     
+    template <typename T, typename C, typename A>
+    std::vector<T,A>    make_vector(const std::set<T,C,A>& data)
+    {
+        return std::vector<T,A>(data.begin(), data.end());
+    }
+    
+
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  REVERSING!
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
