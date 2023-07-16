@@ -688,6 +688,9 @@ namespace yq {
     /*! \brief Right pads the result until the character count is met */
     std::string     pad_right(std::string_view data, size_t minSize, char32_t ch);
     
+    //! Will *attempt* to make a plural form, won't be perfect
+    std::string     pluralize(std::string_view);
+    
     /*! \brief Replaces all instances of old character with new character */
     size_t          replace_all(std::string&, char what, char with);
     

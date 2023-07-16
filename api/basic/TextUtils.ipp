@@ -786,6 +786,33 @@ namespace yq {
         return ret;
     }
 
+    std::string     pluralize(std::string_view sv)
+    {
+        if(sv.empty())
+            return std::string(sv);
+        std::string     ret;
+        switch(sv[sv.size()-1]){
+        case 's':
+        case 'S':
+            ret = sv;
+            ret += "es";
+            break;
+        case 'y':
+        case 'Y':
+            if(sv.size() >= 2){
+                ret += sv.substr(0,sv.size()-2);
+                ret += "ies";
+                break;
+            }
+            //[[fallthrough]]
+        default:
+            ret     += sv;
+            ret += 's';
+            break;
+        }
+        return ret;
+    }
+
     size_t  replace_all(std::string& data, char what, char with)
     {
         size_t  cnt = 0;
