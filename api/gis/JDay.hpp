@@ -19,13 +19,7 @@ namespace yq {
         
         static consteval JDay    gregorian();
         
-        JDay(Date);
-        
         consteval JDay(gregorian_t);
-        
-        JDay(gregorian_t, Date);
-        JDay(julian_t, Date);
-        JDay(Calendar, Date);
         
         constexpr auto operator<=>(const JDay&) const noexcept = default;
         
@@ -35,6 +29,12 @@ namespace yq {
     consteval JDay::JDay(gregorian_t) : jday(2299161) // 15 Oct 1582
     {
     }
+    
+    JDay    jday(Date);
+    JDay    jday(gregorian_t, Date);
+    JDay    jday(julian_t, Date);
+    JDay    jday(Calendar, Date);
+    
 }
 
 YQ_TYPE_DECLARE(yq::JDay)

@@ -26,18 +26,15 @@ namespace yq {
         constexpr Date() noexcept = default;
         constexpr Date(int64_t y, uint8_t m, uint8_t d) : year(y), month(m), day(d) {}
         
+        static constexpr const int16_t  kGregorianYear  = 1582;
+        
         
         //! Gets today's earth date
         Date(today_t);
         
         consteval Date(gregorian_t);
         
-        Date(JDay);
-        
-        Date(gregorian_t, JDay);
-        Date(julian_t, JDay);
-        Date(Calendar, JDay);
-        
+
         constexpr auto operator<=>(const Date&) const noexcept = default;
         
         //! True if gregorian date (per 1582 transition)
@@ -47,6 +44,19 @@ namespace yq {
     consteval Date::Date(gregorian_t) : Date(1582, 10, 15)
     {
     }
+    
+    Date        date(JDay);
+    Date        date(julian_t, JDay);
+    Date        date(gregorian_t, JDay);
+    Date        date(Calendar, JDay);
+    
+    Date        easter(int16_t);
+    Date        easter(julian_t, int16_t);
+    Date        easter(gregorian_t, int16_t);
+    Date        easter(Calendar, int16_t);
+    
 }
+
+log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const yq::Date&);
 
 YQ_TYPE_DECLARE(yq::Date)

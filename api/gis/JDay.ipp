@@ -16,12 +16,14 @@ namespace yq {
         return *this >= GREGORIAN;
     }
 
-    JDay::JDay(Date d)
+    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    JDay    jday(Date d)
     {
-        *this = d.is_gregorian() ? JDay(GREGORIAN, d) : JDay(JULIAN, d);
+        return d.is_gregorian() ? jday(GREGORIAN, d) : jday(JULIAN, d);
     }
     
-    JDay::JDay(gregorian_t, Date v)
+    JDay    jday(gregorian_t, Date v)
     {
         if(v.year < 0)
             ++v.year;
@@ -30,10 +32,10 @@ namespace yq {
         int     y   = v.year + 4800 - a;
         int     m   = v.month + 12*a - 3;
         
-        jday = (int32_t)( v.day + (153*m+2)/5+365*y+y/4-y/100+y/400-32045);
+        return { (int32_t)( v.day + (153*m+2)/5+365*y+y/4-y/100+y/400-32045) };
     }
     
-    JDay::JDay(julian_t, Date v)
+    JDay    jday(julian_t, Date v)
     {
         if(v.year < 0)
             ++v.year;
@@ -42,21 +44,18 @@ namespace yq {
         int     y   = v.year + 4800 - a;
         int     m   = v.month + 12*a - 3;
 
-        jday    = (int32_t)(v.day + (153*m+2)/5+365*y+y/4-32083);
+        return { (int32_t)(v.day + (153*m+2)/5+365*y+y/4-32083) };
     }
     
-    JDay::JDay(Calendar cal, Date d)
+    JDay    jday(Calendar cal, Date d)
     {
         switch(cal){
         case Calendar::Gregorian:
-            *this = JDay(GREGORIAN, d);
-            break;
+            return jday(GREGORIAN, d);
         case Calendar::Julian:
-            *this = JDay(JULIAN, d);
-            break;
+            return jday(JULIAN, d);
         default:
-            jday        = 0;
-            break;
+            return {};
         }
     }
 }

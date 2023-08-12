@@ -11,11 +11,14 @@
 
 namespace yq {
 
+    struct easter_t {};
     struct gregorian_t {};
-    static constexpr const gregorian_t  GREGORIAN;
     struct julian_t {};
-    static constexpr const julian_t     JULIAN;
     struct today_t {};
+
+    static constexpr const easter_t     EASTER;
+    static constexpr const gregorian_t  GREGORIAN;
+    static constexpr const julian_t     JULIAN;
     static constexpr const today_t      TODAY;
 
     struct Date;

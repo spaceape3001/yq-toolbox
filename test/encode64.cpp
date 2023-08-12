@@ -101,8 +101,8 @@ ut::suite tests = []{
 };
 
 
-int main(){
-
+int main()
+{
     log_to_std_error();
     return ut::cfg<>.run();
 }
