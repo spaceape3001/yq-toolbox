@@ -10,7 +10,6 @@
 #include "Date.hpp"
 
 namespace yq {
-    
     std::span<const Date>    leap_seconds()
     {
         static const Date    kLeapSeconds[] = {
@@ -46,7 +45,5 @@ namespace yq {
         static const std::span<const Date>   s_ret(kLeapSeconds);
         return s_ret;
     }
-
-
 }
 
