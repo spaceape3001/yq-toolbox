@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <gis/EarthDate.hpp>
+#include <gis/Date.hpp>
+#include <gis/JDay.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-bool    jday_test(EarthDate d, JulianDay j)
+bool    jday_test(Date d, JDay j)
 {
-    EarthDate   d2  = date(j);
-    JulianDay   j2  = julian_day(d);
+    Date        d2  = Date(j);
+    JDay        j2  = JDay(d);
     return (d == d2) && (j == j2);
 }
-
 
 ut::suite tests = []{
     "julian days"_test = []{

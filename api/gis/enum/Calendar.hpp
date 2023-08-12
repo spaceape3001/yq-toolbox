@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <basic/Enum.hpp>
+#include <meta/InfoBinder.hpp>
+
+namespace yq {
+    YQ_ENUM( Calendar, ,
+        None        = 0,
+        Julian,
+        Gregorian
+    )
+    
+}
+
+YQ_TYPE_DECLARE(yq::Calendar)

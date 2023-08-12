@@ -6,34 +6,21 @@
 
 #pragma once
 
-#include <math/preamble.hpp>
-#include <basic/Enum.hpp>
-#include <meta/InfoBinder.hpp>
+#include <cstdint>
 
 namespace yq {
-    struct EarthDate;
-    struct JulianDay;
-    struct EarthTime;
+
+    struct gregorian_t {};
+    static constexpr const gregorian_t  GREGORIAN;
+    struct julian_t {};
+    static constexpr const julian_t     JULIAN;
+    struct today_t {};
+    static constexpr const today_t      TODAY;
     
-    YQ_ENUM( Weekday, ,
-        Sunday  = 1,
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday
-    );
-    
-    enum class CubeSurface {
-        None = 0,
-        XPositive,
-        YPositive,
-        ZPositive,
-        XNegative,
-        YNegative,
-        ZNegative
-    };
+
+    struct Date;
+    struct Time;
+    struct JDay;
     
     namespace gis {
     }
@@ -42,4 +29,3 @@ namespace yq {
     }
 }
 
-YQ_TYPE_DECLARE(yq::Weekday)

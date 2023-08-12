@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    enum class CubeSide {
+        None = 0,
+        XPositive,
+        YPositive,
+        ZPositive,
+        XNegative,
+        YNegative,
+        ZNegative
+    };
+    
+}
