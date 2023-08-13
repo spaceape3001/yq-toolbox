@@ -161,8 +161,8 @@ namespace yq {
     YQ_IS_NAN_1(Segment3, is_nan(v.a) || is_nan(v.b))
 
     template <typename T, typename U>
-    requires is_arithmetic_v<T,U>
-    constexpr Segment3<product_t<T,U>> operator*(T, const Segment3<T>&) noexcept;
+    requires is_arithmetic_v<T>
+    constexpr Segment3<product_t<T,U>> operator*(T, const Segment3<U>&) noexcept;
 
     /*! \brief Creates axially aligned bounding box from the segment
     */

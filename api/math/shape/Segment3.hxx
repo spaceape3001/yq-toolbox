@@ -264,8 +264,8 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T, typename U>
-    requires is_arithmetic_v<T,U>
-    constexpr Segment3<product_t<T,U>> operator*(T lhs, const Segment3<T>& rhs) noexcept
+    requires is_arithmetic_v<T>
+    constexpr Segment3<product_t<T,U>> operator*(T lhs, const Segment3<U>& rhs) noexcept
     {
         return Segment3<product_t<T,U>>(lhs*rhs.a, lhs*rhs.b);
     }
