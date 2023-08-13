@@ -11,6 +11,8 @@
 #include <ctime>
 #include <cstdio>
 #include <log4cpp/CategoryStream.hh>
+#include <iostream>
+#include <io/Stream.hpp>
 
 namespace yq {
     Date::Date(today_t) : Date()
@@ -147,14 +149,29 @@ namespace yq {
         }
     }
 
+    std::string_view    to_string_view(const Date& v)
+    {
+        static thread_local char        buffer[64];
+        snprintf(buffer,sizeof(buffer), "%04d-%02d-%02d", (int) v.year, (int) v.month, (int) v.day);
+        buffer[63] = '\0';
+        return buffer;
+    }
+
+    Stream&             operator<<(Stream&str, const Date&v)
+    {
+        return str << to_string_view(v);
+    }
 }
 
 log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&log, const yq::Date&v)
 {
-    char        buffer[64];
-    snprintf(buffer,sizeof(buffer), "{%04d-%02d-%02d}", (int) v.year, (int) v.month, (int) v.day);
-    buffer[63] = '\0';
-    return log << buffer;
+    return log << yq::to_string_view(v);
 }
+
+std::ostream&               operator<<(std::ostream&str, const yq::Date&v)
+{
+    return str << yq::to_string_view(v);
+}
+
 
 

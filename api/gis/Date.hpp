@@ -8,8 +8,11 @@
 
 #include <gis/preamble.hpp>
 #include <gis/enum/Calendar.hpp>
+#include <iosfwd>
 
 namespace yq {
+
+    class Stream;
 
     /*! \brief Year Month Day
     
@@ -54,9 +57,15 @@ namespace yq {
     Date        easter(julian_t, int16_t);
     Date        easter(gregorian_t, int16_t);
     Date        easter(Calendar, int16_t);
+
+    //! Puts date out as string view (copy to preserve, it's thread-local)
+    std::string_view    to_string_view(const Date&);
+    
+    Stream&             operator<<(Stream&, const Date&);
     
 }
 
 log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const yq::Date&);
+std::ostream&               operator<<(std::ostream&, const yq::Date&);
 
 YQ_TYPE_DECLARE(yq::Date)
