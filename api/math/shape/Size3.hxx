@@ -282,7 +282,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     template <typename T, typename U>
-    requires is_arithmetic_v<T,U>
+    requires is_arithmetic_v<T>
     constexpr Size3<product_t<T,U>> operator*(T a, const Size3<U>& b) noexcept
     {
         return Size3<product_t<T,U>>(a*b.x, a*b.y, a*b.z);

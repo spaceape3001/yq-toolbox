@@ -250,6 +250,13 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    template <typename T, typename U>
+    requires is_arithmetic_v<T>
+    constexpr Size1<product_t<T,U>> operator*(T a, const Size1<U>& b) noexcept
+    {
+        return Size1<product_t<T,U>>(a*b.x);
+    }
+
     template <typename T>
     AllComponents<Size1<T>>   all(const Size1<T>& val)
     {
