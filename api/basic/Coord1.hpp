@@ -18,14 +18,27 @@ namespace yq {
     */
     template <typename T>
     struct Coord<T,1> {
+    
+        //! Component type
         using component_type    = T;
+        
+        //! Number of dimensions
         static constexpr const uint8_t  DIMS    = 1;
+        
+        //! Data (I-value)
         T       i;
 
+        //! Default constructor
         constexpr Coord<T,1>() noexcept = default;
+        
+        //! Initializing constructor
         constexpr Coord<T,1>(T _i) noexcept : 
             i(_i)  {}
+            
+        //! All components to given value
         constexpr Coord<T,1>(all_t, T _v) noexcept : Coord<T,1>(_v) {}
+        
+        //! Zero initializes
         constexpr Coord<T,1>(zero_t) noexcept : Coord<T,1>(ALL, zero_v<T>) {}
 
         //! Defaulted spaceship  operator
