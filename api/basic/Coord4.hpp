@@ -18,14 +18,36 @@ namespace yq {
     */
     template <typename T>
     struct Coord<T,4> {
+    
+        //! Component type
         using component_type    = T;
+        
+        //! Number of dimensions
         static constexpr const uint8_t  DIMS    = 4;
-        T       i, j, k, l;
+        
+        //! Coordinate in I
+        T   i;
 
+        //! Coordinate in J
+        T   j;
+
+        //! Coordinate in K
+        T   k;
+
+        //! Coordinate in L
+        T   l;
+
+        //! Default constructor
         constexpr Coord<T,4>() noexcept = default;
+        
+        //! Component-wise initializing constructor
         constexpr Coord<T,4>(T _i, T _j, T _k, T _l) noexcept : 
             i(_i), j(_j), k(_k), l(_l) {}
+            
+        //! Constructs ALL components to same value
         constexpr Coord<T,4>(all_t, T _v) noexcept : Coord<T,4>(_v, _v, _v, _v) {}
+        
+        //! Constructs a ZERO coordinate
         constexpr Coord<T,4>(zero_t) noexcept : Coord<T,4>(ALL, zero_v<T>) {}
 
         //! Defaulted equality  operator
