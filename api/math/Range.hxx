@@ -200,7 +200,7 @@ namespace yq {
         if(!hs.empty()){
             hi.x    = *std::min_element(hs.begin(), hs.end());
         } else {
-            hi      = Vector1<T>(ZERO);
+            hi      = zero_v<T>;
         }
      }
 
@@ -320,7 +320,7 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires is_arithmetic_v<U>
-    constexpr Range<product_t<T,U>>    Range<T>::operator*(U b) noexcept
+    constexpr Range<product_t<T,U>>    Range<T>::operator*(U b) const noexcept
     {
         if(b >= zero_v<U>)
             return Range<product_t<T,U>>(lo*b, hi*b);

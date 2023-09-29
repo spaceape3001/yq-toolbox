@@ -22,84 +22,145 @@ namespace yq {
     */
     template <typename T>
     struct Range {
+    
+        //! Component Type
         using component_type    = T;
-        T   lo, hi;
         
+        //! Low value
+        T   lo;
+        
+        //! High value
+        T   hi;
+        
+        //! Default constructor
         constexpr Range() noexcept = default;
+        
+        //! Initializing both low & high from one  value
         explicit constexpr Range(T v) : lo(v), hi(v) {}
+        
+        //! Initializing constructor by component
         constexpr Range(T _lo, T _hi) noexcept : lo(_lo), hi(_hi) {}
+        
+        //! Initialize all components to same value
         constexpr Range(all_t, T v) noexcept : lo(v), hi(v) {}
+        
+        //! Initialize with nan
         consteval Range(nan_t) noexcept : Range(ALL, nan_v<T>) {}
+        
+        //! Initialize with zero
         consteval Range(zero_t) noexcept : Range(ALL, zero_v<T>) {}
         
+        //! Construct by intersection of two value lists
         constexpr Range(intersect_t, std::initializer_list<T>, std::initializer_list<T>);
+
+        //! Construct by intersection of two value lists
         constexpr Range(intersect_t, std::span<const T>, std::span<const T>);
+        
+        //! Construct by sorting the two arguments
         constexpr Range(sort_t, T, T) noexcept;
+        
+        //! Construct by the union of the two arguments
         constexpr Range(union_t, T, T) noexcept;
-        constexpr Range(union_t, std::initializer_list<T>);
-        constexpr Range(union_t, std::span<const T>);
-        constexpr Range(union_t, std::initializer_list<T>, std::initializer_list<T>);
-        constexpr Range(union_t, std::span<const T>, std::span<const T>);
+        
+        //! Construct by the union of the listed values
+        constexpr Range(union_t, std::initializer_list<T>vs);
+
+        //! Construct by the union of the listed values
+        constexpr Range(union_t, std::span<const T>vs);
+
+        //! Construct by the union of the listed values for lo & high
+        constexpr Range(union_t, std::initializer_list<T>ls, std::initializer_list<T>hs);
+
+        //! Construct by the union of the listed values for lo & high
+        constexpr Range(union_t, std::span<const T>ls, std::span<const T>hs);
         
         //! Default comparison object
         constexpr bool      operator==(const Range&) const noexcept = default;
         
+        //! Affirmation operator
         constexpr Range<T>  operator+() const noexcept;
 
+        //! Negation operator
         constexpr Range<T>  operator-() const noexcept;
         
+        //! Adds value to range
         constexpr Range<T>  operator+(T) const noexcept;
+        
+        //! Increments range by value
         Range<T>&           operator+=(T) noexcept;
 
+        //! Adds two ranges together
         constexpr Range<T>  operator+(const Range<T>& b) const noexcept;
+        
+        //! Increments the left range with the right
         Range<T>&           operator+=(const Range<T>& b) noexcept;
 
+        //! Subtracts a value from a range
         constexpr Range<T>  operator-(T) const noexcept;
+        
+        //! Self-subtraction operator (range & value)
         Range<T>&           operator-=(T) noexcept;
 
+        //! Subtracts two ranges
         constexpr Range<T>  operator-(const Range<T>& b) const noexcept;
+        
+        //! Self-subtraction operator (range & range)
         Range<T>&           operator-=(const Range<T>& b) noexcept;
 
+        //! Multiplies range with value
         template <typename U>
         requires is_arithmetic_v<U>
-        constexpr Range<product_t<T,U>>    operator*(U b) noexcept;
+        constexpr Range<product_t<T,U>>    operator*(U b) const noexcept;
 
+        //! Self-multiplication with value
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>) 
         Range<T>&           operator*=(U b) noexcept;
 
+        //! Multiples range with range
         template <typename U>
         constexpr Range<product_t<T,U>>   operator*(const Range<U>&b) const noexcept;
         
+        //! Self-multiplication with range
         template <typename U>
         requires self_mul_v<T,U>
         Range<T>&    operator*=(const Range<U>& b) noexcept;
 
+        //! Division of range with value
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Range<quotient_t<T,U>>    operator/(U b) const noexcept;
 
+        //! Self-Division of range with value
         template <typename U>
         requires (std::is_arithmetic_v<U> && self_div_v<T,U>) 
         Range<T>&    operator/=(U b) noexcept;
 
+        //! Divdes one range by another
         template <typename U>
         constexpr Range<quotient_t<T,U>>   operator/(const Range<U>&b) const noexcept;
 
+        //! Self-division of one range with another
         template <typename U>
         requires self_div_v<T,U>
         Range<T>&    operator/=(const Range<U>& b) noexcept;
 
-        template <typename U>
-        constexpr Range<product_t<T,U>>   operator/(const Range<U>&b) const noexcept;
-
+        //! Unions range with value
         constexpr Range<T>  operator|(T) const noexcept;
+        
+        //! Unions into this range with value
         Range<T>&           operator|=(T) noexcept;
 
+        //! Unions two ranges (both assumed to be valid)
         constexpr Range<T>  operator|(const Range<T>& b) const noexcept;
+        
+        //! Self-unions right range into left (both assumed to be valid)
         Range<T>&           operator|=(const Range<T>& b) noexcept;
 
+        //! Intersects of two ranges (both assumed to be valid)
         constexpr Range<T>  operator&(const Range<T>& b) const noexcept;
+        
+        //! Self-intersects right range into left (both assumed to be valid)
         Range<T>&           operator&=(const Range<T>& b) noexcept;
 
         //  see if the for() syntax will work?
@@ -125,6 +186,7 @@ namespace yq {
         //! Returns a fixed range (if feasible)
         constexpr Range     fixed() const noexcept;
         
+        //! Inflates range by given amount
         constexpr Range     inflate(T) const noexcept;
         
         //! Checks for validity
@@ -149,6 +211,7 @@ namespace yq {
         requires is_floating_point_v<T>
         constexpr T   unproject(T v) const noexcept;
         
+        //! Tests for validity (same as is_valid() )
         constexpr bool    valid() const noexcept;
 
     };
@@ -222,9 +285,11 @@ namespace yq {
     template <typename T>
     constexpr Range<T>    operator|(T a, const Range<T>& b) noexcept;
 
+    //! Center of range
     template <typename T>
     constexpr Range<T>    center(const Range<T>& a) noexcept;
     
+    //! Span of range
     template <typename T>
     constexpr T           span(const Range<T>& a) noexcept;
 }
