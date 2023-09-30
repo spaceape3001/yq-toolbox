@@ -28,12 +28,20 @@ namespace yq {
     #endif
 
     /*! \brief Simple count that's always zero-initialized
+    
+        \tparam T   counter type
+        \tparam R   value to reset to
     */
     template <typename T, T R>
     struct Counter {
+    
+            //! Min value ever
         static constexpr const T    MIN  = std::numeric_limits<T>::min();
+        
+            //! Max value ever
         static constexpr const T    MAX  = std::numeric_limits<T>::max();
     
+            //! Our count
         T   cnt   = R;
         
             //! Comparison spaceship operator
