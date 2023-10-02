@@ -16,7 +16,14 @@ namespace yq {
     */
     template <typename T>
     struct Data2 {
-        T   x, y;
+    
+        //! Data in the x-axis
+        T   x;
+        
+        //! Data in the y-axis
+        T   y;
+        
+        //! Defaulted equality constructor
         constexpr bool operator==(const Data2&) const noexcept = default;
     };
 }
