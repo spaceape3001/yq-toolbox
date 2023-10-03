@@ -16,7 +16,17 @@ namespace yq {
     */
     template <typename T>
     struct Data3 {
-        T   x, y, z;
+    
+        //! Data in the x-axis
+        T   x;
+        
+        //! Data in the y-axis
+        T   y;
+        
+        //! Data in the z-axis
+        T   z;
+        
+        //! Equality operator (defaulted)
         constexpr bool operator==(const Data3&) const noexcept = default;
     };
 }
