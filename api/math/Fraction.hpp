@@ -27,10 +27,16 @@ namespace yq {
         //! Denominator
         I   den = I{1};
         
+        //! Default constructor
         consteval Fraction() noexcept : num(0), den(one_v<I>) {}
+        
+        //! Creates fraction from whole number
         constexpr Fraction(I n) : num(n), den(one_v<I>) {}
+        
+        //! Creates fraction from two parts
         constexpr Fraction(I n, I d) : num(n), den(d) {}
         
+        //! Creates fraction from template fractoin
         template <int N, int D>
         consteval Fraction(const FRACTION<N,D>&) : num(N), den(D) {}
 
@@ -43,19 +49,37 @@ namespace yq {
         //! Negation operator
         constexpr Fraction  operator-() const noexcept;
         
+        //! Addition
         constexpr Fraction  operator+(const Fraction& b) const noexcept;
+        
+        //! Self addition
         Fraction&           operator+=(const Fraction& b) noexcept;
+        
+        //! Subtraction
         constexpr Fraction  operator-(const Fraction& b) const noexcept;
+        
+        //! Self-subtraction
         Fraction&           operator-=(const Fraction& b) noexcept;
+        
+        //! Multiplication
         constexpr Fraction  operator*(const Fraction&b) const noexcept;
+        
+        //! Self-multiplication
         Fraction&           operator*=(const Fraction& b) noexcept;
+        
+        //! Division
         constexpr Fraction  operator/(const Fraction&b) const noexcept;
+        
+        //! Self division
         Fraction&           operator/=(const Fraction& b) noexcept;
         
+        //! Powers
         constexpr Fraction  operator^(I b) const noexcept;
+        
+        //! Self powers
         Fraction&           operator^=(I b) noexcept;
         
-        
+        //! Comparison
         constexpr std::strong_ordering   operator<=>(const Fraction&b) const noexcept
         {
             return num*b.den <=> den*b.num;
@@ -64,6 +88,7 @@ namespace yq {
         //! Reduces numerator and denominator by a common divisor
         constexpr Fraction simplified() const noexcept;
         
+        //! Validity test (ie, denominator is not zero)
         constexpr bool    valid() const noexcept;
     };
 
@@ -91,6 +116,7 @@ namespace yq {
         return a.valid();
     }
 
+    //! Simplified form of fraction
     template <typename I>
     Fraction<I>  simplified(Fraction<I> a)
     {
