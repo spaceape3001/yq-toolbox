@@ -17,7 +17,11 @@ namespace yq {
         Used for testing, becomes TRUE when the deviation is small enough in a relative fashion.
     */
     struct Relative {
+    
+        //! Threshhold of the relative
         double      threshhold;
+        
+        //! Evaluation operator
         bool operator()(double error, double expected) const
         {
             return fabs((error)/expected) <= threshhold;
