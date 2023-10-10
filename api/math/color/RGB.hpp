@@ -14,21 +14,30 @@ namespace yq {
     */
     template <typename T>
     struct RGB {
+        //! Component type
         using component_type = T;
     
-        T   red;    //!< Red data
-        T   green;  //!< Green data
-        T   blue;   //!< Blue data
+        //! Red data
+        T   red;    
         
+        //! Green data
+        T   green;
+        
+        //! Blue data
+        T   blue; 
+        
+        //! Equality operator
         constexpr bool    operator==(const RGB&) const noexcept = default;
 
         #ifdef YQ_USE_GLM
+        //! Conversion to GLM
         constexpr operator glm::vec<3, T, glm::defaultp>() const noexcept
         {
             return { red, green, blue };
         }
         #endif
         
+        //! Conversion of normalized floating (scaling) RGB to integer RGB
         template <typename U>
         requires (std::is_floating_point_v<T> && std::is_integral_v<U>)
         constexpr explicit operator RGB<U>() const noexcept
@@ -38,6 +47,7 @@ namespace yq {
             return { (U)((red + half) * mx), (U)((green + half) * mx), (U)((blue + half) * mx) };
         }
         
+        //! Conversion of integer RGB to normalized floating RGB
         template <typename U>
         requires (std::is_integral_v<T> && std::is_floating_point_v<U>)
         constexpr explicit operator RGB<U>() const noexcept
