@@ -17,12 +17,20 @@ namespace yq {
     */
     template <typename A>
     struct LatLon {
+    
+        //! Latitude data
         A   lat;
+        
+        //! Longitude data
         A   lon;
         
+        //! Default constructor
         constexpr LatLon() noexcept = default;
+        
+        //! Component wise constructor
         constexpr LatLon(A _lat, A _lon) noexcept : lat(_lat), lon(_lon) {}
         
+        //! Default equality operator
         constexpr bool operator==(const LatLon&) const noexcept = default;
     };
 
