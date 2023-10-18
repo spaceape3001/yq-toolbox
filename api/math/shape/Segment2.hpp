@@ -13,19 +13,33 @@
 
 namespace yq {
 
+    /*! \brief Segment in 2D
+    */
     template <typename T>
     struct Segment2 {
         //! Capture the template parameter
         using component_type    = T;
     
-        Vector2<T>  a, b;
+        //! First point
+        Vector2<T>  a;
+
+        //! Second point
+        Vector2<T>  b;
         
+        //! Default constructor
         constexpr Segment2() noexcept = default;
+
+        //! Component wise constructor (vector and vector)
         constexpr Segment2(const Vector2<T>& _a, const Vector2<T>& _b) : a(_a), b(_b) {}
+
+        //! NaN constructor
         template <typename=void> requires has_nan_v<T>
         constexpr Segment2(nan_t) : Segment2( Vector2<T>(NAN), Vector2<T>(NAN)) {}
+
+        //! Zero constructor
         constexpr Segment2(zero_t) : Segment2( Vector2<T>(ZERO), Vector2<T>(ZERO)) {}
 
+        //! Converter to another segment2 of compatible data types
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Segment2<U>() const noexcept
@@ -33,6 +47,7 @@ namespace yq {
             return { (Vector2<U>) a, (Vector2<U>) b };
         }
         
+        //! Converter to another segment2 of compatible data types
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Segment2<U>() const 
@@ -43,51 +58,70 @@ namespace yq {
         //! Defaulted equality
         constexpr bool operator==(const Segment2&) const noexcept = default;
 
+        //! Converts to segment data
         constexpr operator SegmentData<Vector2<T>>() const noexcept;
 
+        //! Affirmation (positive) operator
         constexpr Segment2      operator+() const noexcept;
+
+        //! Negation operator
         constexpr Segment2      operator-() const noexcept;
         
-        
+        //! Returns the segment displaced by the given amount
         Segment2                operator+(const Vector2<T>&) const noexcept;
+
+        //! Returns the segment anti-displaced by the given amount
         Segment2                operator-(const Vector2<T>&) const noexcept;
         
+        //! Moves the segment by the given amount (ie, added to both a and b)
         Segment2&               operator+=(const Vector2<T>&) noexcept;
+
+        //! Moves the segment opposite to the given amount
         Segment2&               operator-=(const Vector2<T>&) noexcept;
         
+        //! Scale the segment on both values
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Segment2<product_t<T,U>>    operator*(U) const noexcept;
         
+        //! Self-scaling for the segment
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Segment2<T>&                operator*=(U)  noexcept;
         
 
+        //! Projects segment into one dimension
         template <typename U>
         Segment1<product_t<T,U>>    operator*(const Tensor21<U>&) const noexcept;
 
+        //! Projects segment into two dimensions
         template <typename U>
         Segment2<product_t<T,U>>    operator*(const Tensor22<U>&) const noexcept;
 
+        //! Projects segment into three dimensions
         template <typename U>
         Segment3<product_t<T,U>>    operator*(const Tensor23<U>&) const noexcept;
 
+        //! Projects segment in four dimensions
         template <typename U>
         Segment4<product_t<T,U>>    operator*(const Tensor24<U>&) const noexcept;
         
+        //! Self-projection of segment with tensor
         template <typename U>
         requires self_mul_v<T,U>
         Segment2&                   operator*=(const Tensor22<U>&) noexcept;
         
+        //! Returns a scaled down the segment by the specified amount
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Segment2<quotient_t<T,U>>   operator/(U) const noexcept;
         
+        //! Self-scaling down this segment by the specified amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Segment2<T>&                operator/=(U)  noexcept;
 
+        //! Bounding box to this segment
         constexpr AxBox2<T>     bounds() const noexcept;
 
         //! Net displacement
