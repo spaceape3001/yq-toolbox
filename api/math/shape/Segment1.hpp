@@ -11,9 +11,7 @@
 #include <math/vector/Vector1.hpp>
 
 namespace yq {
-    /*! \brief Data for a segment
-    
-        \note Can be the vertex themselves, or other data.
+    /*! \brief Segment in 1D
     */
     template <typename T>
     struct Segment1 {
@@ -21,14 +19,26 @@ namespace yq {
         //! Capture the template parameter
         using component_type    = T;
         
-        Vector1<T>   a, b;
+        //! First point
+        Vector1<T>  a;
+
+        //! Second point
+        Vector1<T>  b;
         
+        //! Default constructor
         constexpr Segment1() noexcept = default;
+
+        //! Component wise constructor (vector and vector)
         constexpr Segment1(const Vector1<T>& _a, const Vector1<T>& _b) : a(_a), b(_b) {}
+
+        //! NaN constructor
         template <typename=void> requires has_nan_v<T>
         constexpr Segment1(nan_t) : Segment1( Vector1<T>(NAN), Vector1<T>(NAN)) {}
+
+        //! Zero constructor
         constexpr Segment1(zero_t) : Segment1( Vector1<T>(ZERO), Vector1<T>(ZERO)) {}
         
+        //! Converter to another segment3 of compatible data types
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Segment1<U>() const noexcept
@@ -36,6 +46,7 @@ namespace yq {
             return { (Vector1<U>) a, (Vector1<U>) b };
         }
         
+        //! Converter to another segment1 of compatible data types
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Segment1<U>() const 
@@ -46,51 +57,69 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Segment1&) const noexcept = default;
         
+        //! Converts to segment data
         constexpr operator SegmentData<Vector1<T>>() const noexcept;
         
+        //! Affirmation (positive) operator
         constexpr Segment1      operator+() const noexcept;
+
+        //! Negation operator
         constexpr Segment1      operator-() const noexcept;
         
-        
+        //! Returns the segment displaced by the given amount
         Segment1                operator+(const Vector1<T>&) const noexcept;
+
+        //! Returns the segment anti-displaced by the given amount
         Segment1                operator-(const Vector1<T>&) const noexcept;
         
+        //! Moves the segment by the given amount (ie, added to both a and b)
         Segment1&               operator+=(const Vector1<T>&) noexcept;
+
+        //! Moves the segment opposite to the given amount
         Segment1&               operator-=(const Vector1<T>&) noexcept;
         
+        //! Scale the segment on both values
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Segment1<product_t<T,U>>    operator*(U) const noexcept;
         
+        //! Self-scaling for the segment
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Segment1<T>&                operator*=(U)  noexcept;
         
-
+        //! Projects segment into one dimension
         template <typename U>
         Segment1<product_t<T,U>>    operator*(const Tensor11<U>&) const noexcept;
 
+        //! Projects segment into two dimensions
         template <typename U>
         Segment2<product_t<T,U>>    operator*(const Tensor12<U>&) const noexcept;
 
+        //! Projects segment into three dimensions
         template <typename U>
         Segment3<product_t<T,U>>    operator*(const Tensor13<U>&) const noexcept;
 
+        //! Projects segment in four dimensions
         template <typename U>
-        Segment4<product_t<T,U>>    operator*(const Tensor14<U>&) const noexcept;
+        Segment4<product_t<T,U>>                operator*(const Tensor14<U>&) const noexcept;
         
+        //! Self-projection of segment with tensor
         template <typename U>
         requires self_mul_v<T,U>
-        Segment1&                   operator*=(const Tensor11<U>&) noexcept;
+        Segment1&                               operator*=(const Tensor11<U>&) noexcept;
 
+        //! Returns a scaled down the segment by the specified amount
         template <typename U>
         requires is_arithmetic_v<U>
-        constexpr Segment1<quotient_t<T,U>>   operator/(U) const noexcept;
+        constexpr Segment1<quotient_t<T,U>>     operator/(U) const noexcept;
         
+        //! Self-scaling down this segment by the specified amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
-        Segment1<T>&                operator/=(U)  noexcept;
+        Segment1&                               operator/=(U)  noexcept;
 
+        //! Bounding box to this segment
         constexpr AxBox1<T>     bounds() const noexcept;
         
         //! Net displacement
