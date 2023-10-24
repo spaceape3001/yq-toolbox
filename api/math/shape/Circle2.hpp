@@ -26,16 +26,31 @@ namespace yq {
         //! Radius
         T           radius;
         
+        //! Default constructor
         constexpr Circle2() noexcept = default;
+        
+        //! Component wise constructor
         constexpr Circle2(const Vector2<T>& pt, T r) : center(pt), radius(r) {}
+        
+        //! Constructs to NaN
         consteval Circle2(nan_t) : Circle2(Vector2<T>(NAN), nan_v<T>) {}
+        
+        //! Constructs to unit circle at origin
         consteval Circle2(unit_t) : Circle2(Vector2<T>(ZERO), one_v<T>) {}
+        
+        //! Constructs to zero circle
         consteval Circle2(zero_t) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
         
+        //! Constructs to focus and radius
         constexpr Circle2(focus_t, const Vector2<T>& focus, const T dist) noexcept : Circle2(focus, dist) {}
+        
+        //! Constructs to focus and edge
         Circle2(focus_t, const Vector2<T>& focus, const Vector2<T>& edge);
+        
+        //! Constructs between two opposite points
         Circle2(opposite_t, const Vector2<T>&, const Vector2<T>&);
 
+        //! Converts to circle of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Circle2<U>() const noexcept
@@ -43,6 +58,7 @@ namespace yq {
             return { (Vector2<U>) center, (U) radius };
         }
         
+        //! Converts to circle of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Circle2<U>() const 
@@ -52,27 +68,41 @@ namespace yq {
 
         //! Equality operator (defaulted)
         constexpr bool operator==(const Circle2&) const noexcept = default;
-            
+
+        //! Positive (affirmation) operator
         constexpr Circle2   operator+() const noexcept;
+        
+        //! Negation operator
         constexpr Circle2   operator-() const noexcept;
         
+        //! Returns a circle shifted by the specified displacement
         constexpr Circle2   operator+(const Vector2<T>&) const noexcept;
+        
+        //! Shifts this circle by the given displacement
         Circle2&            operator+=(const Vector2<T>&) noexcept;
+        
+        //! Returns a circle anti-shifted by the specified displacement
         constexpr Circle2   operator-(const Vector2<T>&) const noexcept;
+        
+        //! Shifts this circle opposite the given displacement
         Circle2&            operator-=(const Vector2<T>&) noexcept;
         
+        //! Returns a scaled circle by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         Circle2<product_t<T,U>> operator*(U) const noexcept;
         
+        //! Scales THIS circle by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Circle2<T>& operator*=(U) noexcept;
             
+        //! Returns a reduced circle by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         Circle2<quotient_t<T,U>> operator/(U) const noexcept;
         
+        //! Reduces THIS circle by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Circle2<T>& operator/=(U) noexcept;
@@ -124,6 +154,7 @@ namespace yq {
     YQ_IS_FINITE_1(Circle2, is_finite(v.center) && is_finite(v.radius))
     YQ_IS_NAN_1(Circle2, is_nan(v.center) || is_nan(v.radius))
 
+    //! Returns a circle that's the result of the left term scalaing the right circle
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Circle2<product_t<T,U>> operator*(T, const Circle2<U>&);
