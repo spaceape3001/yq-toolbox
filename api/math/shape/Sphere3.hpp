@@ -29,16 +29,31 @@ namespace yq {
         //! Radius of the sphere
         T           radius;
         
+        //! Default constructor
         constexpr Sphere3() noexcept = default;
+        
+        //! Component wise constructor
         constexpr Sphere3(const Vector3<T>& pt, T r) : center(pt), radius(r) {}
+        
+        //! Not a number constructor
         consteval Sphere3(nan_t) : Sphere3(Vector3<T>(NAN), nan_v<T>) {}
+        
+        //! Unit sphere constructor
         consteval Sphere3(unit_t) : Sphere3(Vector3<T>(ZERO), one_v<T>) {}
+        
+        //! Zero constructor
         consteval Sphere3(zero_t) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
 
+        //! Construct with focus and distance
         constexpr Sphere3(focus_t, const Vector3<T>& focus, const T dist) noexcept : Sphere3(focus, dist) {}
+        
+        //! Construct with focus and point
         Sphere3(focus_t, const Vector3<T>& focus, const Vector3<T>& edge);
+        
+        //! Construct with two opposite points
         Sphere3(opposite_t, const Vector3<T>&, const Vector3<T>&);
 
+        //! Convert to another sphere with compatible data type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Sphere3<U>() const noexcept
@@ -46,6 +61,7 @@ namespace yq {
             return { (Vector3<U>) center, (U) radius };
         }
         
+        //! Convert to another sphere with compatible data type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Sphere3<U>() const 
@@ -56,31 +72,45 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere3&) const noexcept = default;
         
+        //! Positive (affirmative) operator
         constexpr Sphere3   operator+() const noexcept;
+        
+        //! Negation operator
         constexpr Sphere3   operator-() const noexcept;
         
+        //! Return a moved sphere by the given displacement
         constexpr Sphere3   operator+(const Vector3<T>&) const noexcept;
+        
+        //! Moves the sphere by the given displacement
         Sphere3&            operator+=(const Vector3<T>&) noexcept;
+        
+        //! Return a sphere anti-moved by the given displacement
         constexpr Sphere3   operator-(const Vector3<T>&) const noexcept;
+        
+        //! Moves the sphere against the given displacement
         Sphere3&            operator-=(const Vector3<T>&) noexcept;
         
+        //! Returns a scaled sphere by the given term
         template <typename U>
         requires is_arithmetic_v<U>
         Sphere3<product_t<T,U>> operator*(U) const noexcept;
         
+        //! Scales this sphere by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Sphere3<T>& operator*=(U) noexcept;
             
+        //! Returns a reduced sphere by the given term
         template <typename U>
         requires is_arithmetic_v<U>
         Sphere3<quotient_t<T,U>> operator/(U) const noexcept;
         
+        //! Reduces this sphere by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Sphere3<T>& operator/=(U) noexcept;
 
-
+        //! Bounding box for this sphere
         constexpr AxBox3<T> bounds() const noexcept;
 
         /*! \brief Checks if the center is inside (or touching) the sphere
@@ -129,6 +159,7 @@ namespace yq {
     YQ_IS_FINITE_1(Sphere3, is_finite(v.center) && is_finite(v.radius))
     YQ_IS_NAN_1(Sphere3, is_nan(v.center) || is_nan(v.radius))
 
+    //! Scales the right sphere by the left amount
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Sphere3<product_t<T,U>> operator*(T, const Sphere3<U>&);
