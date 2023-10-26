@@ -26,16 +26,31 @@ namespace yq {
         //! Radius of the hypersphere
         T           radius;
         
+        //! Default constructor
         constexpr Sphere4() noexcept = default;
+
+        //! Component wise constructor
         constexpr Sphere4(const Vector4<T>& pt, T r) : center(pt), radius(r) {}
+
+        //! Not a number constructor
         consteval Sphere4(nan_t) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
+        
+        //! Unit sphere constructor
         consteval Sphere4(unit_t) : Sphere4(Vector4<T>(ZERO), one_v<T>) {}
+
+        //! Zero constructor
         consteval Sphere4(zero_t) : Sphere4(Vector4<T>(ZERO), zero_v<T>) {}
 
+        //! Construct with focus and distance
         constexpr Sphere4(focus_t, const Vector4<T>& focus, const T dist) noexcept : Sphere4(focus, dist) {}
+
+        //! Construct with focus and point
         Sphere4(focus_t, const Vector4<T>& focus, const Vector4<T>& edge);
+
+        //! Construct with two opposite points
         Sphere4(opposite_t, const Vector4<T>&, const Vector4<T>&);
 
+        //! Convert to another sphere with compatible data type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Sphere4<U>() const noexcept
@@ -43,6 +58,7 @@ namespace yq {
             return { (Vector4<U>) center, (U) radius };
         }
         
+        //! Convert to another sphere with compatible data type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Sphere4<U>() const 
@@ -53,26 +69,40 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Sphere4&) const noexcept = default;
 
+        //! Positive (affirmative) operator
         constexpr Sphere4   operator+() const noexcept;
+
+        //! Negation operator
         constexpr Sphere4   operator-() const noexcept;
         
+        //! Return a moved sphere by the given displacement
         constexpr Sphere4   operator+(const Vector4<T>&) const noexcept;
+
+        //! Moves the sphere by the given displacement
         Sphere4&            operator+=(const Vector4<T>&) noexcept;
+
+        //! Return a sphere anti-moved by the given displacement
         constexpr Sphere4   operator-(const Vector4<T>&) const noexcept;
+
+        //! Moves the sphere against the given displacement
         Sphere4&            operator-=(const Vector4<T>&) noexcept;
         
+        //! Returns a scaled sphere by the given term
         template <typename U>
         requires is_arithmetic_v<U>
         Sphere4<product_t<T,U>> operator*(U) const noexcept;
         
+        //! Scales this sphere by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Sphere4<T>& operator*=(U) noexcept;
             
+        //! Returns a reduced sphere by the given term
         template <typename U>
         requires is_arithmetic_v<U>
         Sphere4<quotient_t<T,U>> operator/(U) const noexcept;
         
+        //! Reduces this sphere by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Sphere4<T>& operator/=(U) noexcept;
@@ -91,6 +121,7 @@ namespace yq {
         //! Returns a fixed copy of the circle (if it's invalid and possible to do)
         constexpr Sphere4   fixed() const noexcept;
         
+        //! Computes the hypervolume of this sphere
         constexpr fourth_t<T>   hypervolume() const noexcept;
 
         //! TRUE if the radius is greater than zero!
@@ -129,6 +160,7 @@ namespace yq {
     YQ_IS_FINITE_1(Sphere4, is_finite(v.center) && is_finite(v.radius))
     YQ_IS_NAN_1(Sphere4, is_nan(v.center) || is_nan(v.radius))
 
+    //! Scales the right sphere by the left amount
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Sphere4<product_t<T,U>> operator*(T a, const Sphere4<U>& b);
