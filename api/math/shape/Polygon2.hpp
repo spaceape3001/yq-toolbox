@@ -24,17 +24,32 @@ namespace yq {
         //! Vertex data
         std::vector<Vector2<T>>     vertex;
         
+        //! Default constructor
         constexpr Polygon2() noexcept = default;
+        
+        //! Constructor by copy from vector
         Polygon2(const std::vector<Vector2<T>>&);
+
+        //! Constructor by moving in from vector
         Polygon2(std::vector<Vector2<T>>&&);
+        //! Constructor by copy from span
         Polygon2(std::span<const Vector2<T>>);
+        //! Constructor by copy from initializer list
         Polygon2(std::initializer_list<Vector2<T>>);
         
+        //! Constructor from axially aligned bounding box
         explicit Polygon2(const AxBox2<T>&);
+
+        //! Constructor by quadrilateral
         explicit Polygon2(const Quadrilateral2<T>&);
+
+        //! Constructor by copy from rectangle
         explicit Polygon2(const Rectangle2<T>&);
+
+        //! Constructor by copy from triangle
         explicit Polygon2(const Triangle2<T>&);
         
+        //! Converts to polygon of compatible data type
         template <typename U>
         requires std::is_convertible_v<T,U>
         explicit operator Polygon2<U>() const;
@@ -42,42 +57,64 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon2&) const noexcept = default;
         
+        //! Converts to polygon data
         operator PolygonData<Vector2<T>>() const;
 
         //! Addsa a point to the polygon
         Polygon2&   operator<<(const Vector2<T>& pt);
         
+        //! Positive affirmation operator
         const Polygon2&    operator+() const;
+        
+        //! Negation operator
         Polygon2           operator-() const;
         
+        //! Returns a shifted polygon by the given displacement
         Polygon2   operator+(const Vector2<T>&) const;
+        
+        //! Displaces this polygon by the given displacement
         Polygon2&  operator+=(const Vector2<T>&);
+        
+        //! Returns an shifted polygon by the given anti-displacement
         Polygon2   operator-(const Vector2<T>&) const;
+
+        //! Displaces this polygon by the given anti displacement
         Polygon2&  operator-=(const Vector2<T>&);
 
+        //! Returns a scaled polygon by the given right hand term
         template <typename U>
         requires is_arithmetic_v<U>
         Polygon2<product_t<T,U>> operator*(U) const;
         
+        //! Scales this polygon by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Polygon2& operator*=(U);
 
+        //! Projects this polygon to another two dimension space
         template <typename U>
         Polygon2<product_t<T,U>>   operator*(const Tensor22<U>&) const;
+        
+        //! Projects this polygon into three dimensions
         template <typename U>
         Polygon3<product_t<T,U>>   operator*(const Tensor23<U>&) const;
+        
+        //! Projects this polygon into four dimensions
         template <typename U>
         Polygon4<product_t<T,U>>   operator*(const Tensor24<U>&) const;
         
+        //! Self-projects this polygon
         template <typename U>
         requires self_mul_v<T,U>
         Polygon2&  operator*=(const Tensor22<U>&);
         
+        
+        //! Returns a polygon with every element divided by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         Polygon2<quotient_t<T,U>> operator/(U) const;
         
+        //! Divides every element by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Polygon2& operator/=(U);
@@ -127,15 +164,23 @@ namespace yq {
     template <typename T>
     Polygon2<T> polygon(const AxBox2<T>& ax);
 
+    /*! \brief Creates a polygon from points
+    */
     template <typename T>
     Polygon2<T> polygon(std::vector<Vector2<T>>&& pts);
 
+    /*! \brief Creates a polygon from points
+    */
     template <typename T>
     Polygon2<T> polygon(std::span<const Vector2<T>> pts);
 
+    /*! \brief Creates a polygon from points
+    */
     template <typename T>
     Polygon2<T> polygon(std::initializer_list<const Vector2<T>> pts);
 
+    /*! \brief Creates a polygon from a triangle
+    */
     template <typename T>
     Polygon2<T> polygon(const Triangle2<T>& ax);
 
@@ -200,6 +245,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  MULTIPLICATION
 
+    /*! \brief Scales the right polygon by the left amount
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Polygon2<product_t<T,U>> operator*(T, const Polygon2<U>&b);
