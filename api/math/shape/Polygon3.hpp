@@ -23,13 +23,25 @@ namespace yq {
         //! Vertex data
         std::vector<Vector3<T>>  vertex;
         
+        //! Default constructor
         constexpr Polygon3() noexcept = default;
+
+        //! Constructor by copy from vector
         Polygon3(const std::vector<Vector3<T>>&);
+
+        //! Constructor by moving in from vector
         Polygon3(std::vector<Vector3<T>>&&);
+
+        //! Constructor by copy from span
         Polygon3(std::span<const Vector3<T>>);
+
+        //! Constructor by copy from initializer list
         Polygon3(std::initializer_list<Vector3<T>>);
+
+        //! Constructor by copy from triangle
         explicit Polygon3(const Triangle3<T>&);
 
+        //! Converts to polygon of compatible data type
         template <typename U>
         requires std::is_convertible_v<T,U>
         explicit operator Polygon3<U>() const;
@@ -37,43 +49,64 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Polygon3&) const noexcept = default;
         
+        //! Converts to polygon data
         operator PolygonData<Vector3<T>>() const;
 
         //! Addsa a point to the polygon
         Polygon3&   operator<<(const Vector3<T>& pt);
 
+        //! Positive affirmation operator
         const Polygon3&    operator+() const;
+
+        //! Negation operator
         Polygon3           operator-() const;
         
+        //! Returns a shifted polygon by the given displacement
         Polygon3   operator+(const Vector3<T>&) const;
+
+        //! Displaces this polygon by the given displacement
         Polygon3&  operator+=(const Vector3<T>&);
+        
+        //! Returns an shifted polygon by the given anti-displacement
         Polygon3   operator-(const Vector3<T>&) const;
+
+        //! Displaces this polygon by the given anti displacement
         Polygon3&  operator-=(const Vector3<T>&);
 
+        //! Returns a scaled polygon by the given right hand term
         template <typename U>
         requires is_arithmetic_v<U>
         Polygon3<product_t<T,U>> operator*(U) const;
         
+        //! Scales this polygon by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Polygon3& operator*=(U);
 
 
+        //! Projects this polygon into two dimensions
         template <typename U>
         Polygon2<product_t<T,U>>   operator*(const Tensor32<U>&) const;
+
+        //! Projects this polygon to another three dimension space
         template <typename U>
         Polygon3<product_t<T,U>>   operator*(const Tensor33<U>&) const;
+
+        //! Projects this polygon into four dimensions
         template <typename U>
         Polygon4<product_t<T,U>>   operator*(const Tensor34<U>&) const;
         
+        //! Self-projects this polygon
         template <typename U>
         requires self_mul_v<T,U>
         Polygon3&  operator*=(const Tensor33<U>&);
 
+        //! Returns a polygon with every element divided by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         Polygon3<quotient_t<T,U>> operator/(U) const;
         
+        //! Divides every element by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Polygon3& operator/=(U);
@@ -100,15 +133,23 @@ namespace yq {
 //  --------------------------------------------------------
 //  COMPOSITION
 
+    /*! \brief Creates a polygon from points
+    */
     template <typename T>
     Polygon3<T> polygon(std::vector<Vector3<T>>&& pts);
 
+    /*! \brief Creates a polygon from points
+    */
     template <typename T>
     Polygon3<T> polygon(std::span<const Vector3<T>> pts);
 
+    /*! \brief Creates a polygon from points
+    */
     template <typename T>
     Polygon3<T> polygon(std::initializer_list<const Vector3<T>> pts);
 
+    /*! \brief Creates a polygon from a triangle
+    */
     template <typename T>
     Polygon3<T> polygon(const Triangle3<T>& ax);
 
@@ -120,6 +161,8 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    /*! \brief Scales the right polygon by the left amount
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Polygon3<product_t<T,U>> operator*(T, const Polygon3<U>&b);

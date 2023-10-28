@@ -32,8 +32,10 @@ namespace yq {
 
         //! Constructor by moving in from vector
         Polygon2(std::vector<Vector2<T>>&&);
+
         //! Constructor by copy from span
         Polygon2(std::span<const Vector2<T>>);
+
         //! Constructor by copy from initializer list
         Polygon2(std::initializer_list<Vector2<T>>);
         
