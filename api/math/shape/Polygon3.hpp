@@ -123,6 +123,7 @@ namespace yq {
         //! \note accuracy may vary on integral types
         T       perimeter() const;
         
+        //! Walks the segments of this polygon
         template <typename Pred>
         void    segments(Pred) const;
         

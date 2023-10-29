@@ -151,9 +151,11 @@ namespace yq {
         */
         constexpr square_t<T>    point_area() const noexcept;
 
+        //! Walks the segments of this polygon
         template <typename Pred>
         void    segments(Pred) const;
         
+        //! Divides every element by the given amount
         std::vector<Segment2<T>>    segments() const;
     };
 
