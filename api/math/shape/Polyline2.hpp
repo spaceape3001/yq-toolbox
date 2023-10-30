@@ -23,7 +23,10 @@ namespace yq {
         //! Vertex data
         std::vector<Vector2<T>>     vertex;
         
+        //! Default constructor
         constexpr Polyline2() noexcept = default;
+
+        //! Constructor by copy from vector
         Polyline2(const std::vector<Vector2<T>>&);
         Polyline2(std::vector<Vector2<T>>&&);
         Polyline2(std::initializer_list<Vector2<T>>);
