@@ -28,8 +28,14 @@ namespace yq {
 
         //! Constructor by copy from vector
         Polyline2(const std::vector<Vector2<T>>&);
+
+        //! Constructor by moving in from vector
         Polyline2(std::vector<Vector2<T>>&&);
+
+        //! Constructor by copy from initializer list
         Polyline2(std::initializer_list<Vector2<T>>);
+
+        //! Constructor by copy from span
         Polyline2(std::span<const Vector2<T>>);
         
         explicit Polyline2(const Segment2<T>&);
