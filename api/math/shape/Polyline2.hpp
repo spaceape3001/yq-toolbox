@@ -38,8 +38,10 @@ namespace yq {
         //! Constructor by copy from span
         Polyline2(std::span<const Vector2<T>>);
         
+        //! Constructor from segment
         explicit Polyline2(const Segment2<T>&);
 
+        //! Converts to polyline of compatible data type
         template <typename U>
         requires std::is_convertible_v<T,U>
         explicit operator Polyline2<U>() const;
@@ -47,6 +49,7 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Polyline2&) const noexcept = default;
 
+        //! Converts to polyline data
         operator PolylineData<Vector2<T>>() const;
         
         const Polyline2&    operator+() const;
