@@ -52,7 +52,10 @@ namespace yq {
         //! Converts to polyline data
         operator PolylineData<Vector2<T>>() const;
         
+        //! Positive affirmation operator
         const Polyline2&    operator+() const;
+
+        //! Negation operator
         Polyline2           operator-() const;
         
         Polyline2   operator+(const Vector2<T>&) const;
