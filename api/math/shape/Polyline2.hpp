@@ -58,9 +58,16 @@ namespace yq {
         //! Negation operator
         Polyline2           operator-() const;
         
+        //! Returns a shifted polyline by the given displacement
         Polyline2   operator+(const Vector2<T>&) const;
+
+        //! Displaces this polyline by the given displacement
         Polyline2&  operator+=(const Vector2<T>&);
+
+        //! Returns an shifted polyline by the given anti-displacement
         Polyline2   operator-(const Vector2<T>&) const;
+
+        //! Displaces this polyline by the given anti displacement
         Polyline2&  operator-=(const Vector2<T>&);
 
         template <typename U>
