@@ -70,10 +70,12 @@ namespace yq {
         //! Displaces this polyline by the given anti displacement
         Polyline2&  operator-=(const Vector2<T>&);
 
+        //! Returns a scaled polyline by the given right hand term
         template <typename U>
         requires is_arithmetic_v<U>
         Polyline2<product_t<T,U>> operator*(U) const;
         
+        //! Scales this polyline by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Polyline2& operator*=(U);
