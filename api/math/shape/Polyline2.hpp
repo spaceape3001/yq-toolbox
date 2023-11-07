@@ -118,9 +118,11 @@ namespace yq {
         //! \note May be less accurate with non-floating point types
         T       length() const;
 
+        //! Walks the segments of this polyline
         template <typename Pred>
         void    segments(Pred) const;
 
+        //! Segments of this polyline
         std::vector<Segment2<T>>    segments() const;
     };
 
@@ -129,15 +131,23 @@ namespace yq {
     template <typename T>
     Polyline2<T> polyline(const AxBox2<T>& ax);
 
+    /*! \brief Creates a polyline from points
+    */
     template <typename T>
     Polyline2<T> polyline(std::span<const Vector2<T>> pts);
 
+    /*! \brief Creates a polyline from points
+    */
     template <typename T>
     Polyline2<T> polyline(std::initializer_list<const Vector2<T>> pts);
 
+    /*! \brief Creates a polyline from points
+    */
     template <typename T>
     Polyline2<T> polyline(std::vector<Vector2<T>>&& pts);
 
+    /*! \brief Creates a polyline a segment
+    */
     template <typename T>
     Polyline2<T> polyline(const Segment2<T>&);
 
@@ -146,6 +156,8 @@ namespace yq {
     YQ_IS_INTEGER_1(Polyline2)
     YQ_ZERO_1(Polyline2, { })
 
+    /*! \brief Scales the right polyline by the left amount
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Polyline2<product_t<T,U>> operator*(T, const Polyline2<U>&b);
@@ -175,6 +187,7 @@ namespace yq {
         return false;
     }
     
+    //! Length of this polyline across all segments
     template <typename T>
     T       length(const Polyline2<T>& poly);
 }

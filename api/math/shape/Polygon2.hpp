@@ -155,7 +155,7 @@ namespace yq {
         template <typename Pred>
         void    segments(Pred) const;
         
-        //! Divides every element by the given amount
+        //! Segments of this polygon
         std::vector<Segment2<T>>    segments() const;
     };
 
