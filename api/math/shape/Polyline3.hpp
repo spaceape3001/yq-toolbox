@@ -53,18 +53,30 @@ namespace yq {
         //! Addsa a point to the polyline
         Polyline3&   operator<<(const Vector3<T>& pt);
 
+        //! Positive affirmation operator
         const Polyline3&    operator+() const;
+
+        //! Negation operator
         Polyline3           operator-() const;
         
+        //! Returns a shifted polyline by the given displacement
         Polyline3   operator+(const Vector3<T>&) const;
+
+        //! Displaces this polyline by the given displacement
         Polyline3&  operator+=(const Vector3<T>&);
+
+        //! Returns an shifted polyline by the given anti-displacement
         Polyline3   operator-(const Vector3<T>&) const;
+
+        //! Displaces this polyline by the given anti displacement
         Polyline3&  operator-=(const Vector3<T>&);
 
+        //! Returns a scaled polyline by the given right hand term
         template <typename U>
         requires is_arithmetic_v<U>
         Polyline3<product_t<T,U>> operator*(U) const;
         
+        //! Scales this polyline by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Polyline3& operator*=(U);
