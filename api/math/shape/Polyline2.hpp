@@ -146,7 +146,7 @@ namespace yq {
     template <typename T>
     Polyline2<T> polyline(std::vector<Vector2<T>>&& pts);
 
-    /*! \brief Creates a polyline a segment
+    /*! \brief Creates a polyline from a segment
     */
     template <typename T>
     Polyline2<T> polyline(const Segment2<T>&);

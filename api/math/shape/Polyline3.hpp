@@ -98,10 +98,12 @@ namespace yq {
         requires self_mul_v<T,U>
         Polyline3&  operator*=(const Tensor33<U>&);
 
+        //! Returns a polyline with every element divided by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         Polyline3<quotient_t<T,U>> operator/(U) const;
         
+        //! Divides every element by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Polyline3& operator/=(U);
@@ -113,9 +115,11 @@ namespace yq {
         //! \note May be less accurate with non-floating point types
         T       length() const;
 
+        //! Walks the segments of this polyline
         template <typename Pred>
         void    segments(Pred) const;
 
+        //! Segments of this polyline
         std::vector<Segment3<T>>    segments() const;
     };
 
@@ -124,15 +128,23 @@ namespace yq {
     template <typename T>
     Polyline3<T> polyline(const AxBox3<T>& ax);
 
+    /*! \brief Creates a polyline from points
+    */
     template <typename T>
     Polyline3<T> polyline(std::span<const Vector3<T>> pts);
 
+    /*! \brief Creates a polyline from points
+    */
     template <typename T>
     Polyline3<T> polyline(std::initializer_list<const Vector3<T>> pts);
 
+    /*! \brief Creates a polyline from points
+    */
     template <typename T>
     Polyline3<T> polyline(std::vector<Vector3<T>>&& pts);
 
+    /*! \brief Creates a polyline from a segment
+    */
     template <typename T>
     Polyline3<T> polyline(const Segment3<T>&);
 
@@ -141,6 +153,8 @@ namespace yq {
     YQ_IS_INTEGER_1(Polyline3)
     YQ_ZERO_1(Polyline3, { })
 
+    /*! \brief Scales the right polyline by the left amount
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Polyline3<product_t<T,U>> operator*(T, const Polyline3<U>&b);
@@ -170,6 +184,7 @@ namespace yq {
         return false;
     }
     
+    //! Length of this polyline across all segments
     template <typename T>
     T       length(const Polyline3<T>& poly);
 }
