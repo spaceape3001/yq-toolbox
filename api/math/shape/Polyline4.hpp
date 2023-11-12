@@ -23,12 +23,22 @@ namespace yq {
         //! Vertex data
         std::vector<Vector4<T>>     vertex;
         
+        //! Default constructor
         constexpr Polyline4() noexcept = default;
+
+        //! Constructor by copy from vector
         Polyline4(const std::vector<Vector4<T>>&);
+
+        //! Constructor by moving in from vector
         Polyline4(std::vector<Vector4<T>>&&);
+
+        //! Constructor by copy from initializer list
         Polyline4(std::initializer_list<Vector4<T>>);
+
+        //! Constructor by copy from span
         Polyline4(std::span<const Vector4<T>>);
         
+        //! Constructor from segment
         explicit Polyline4(const Segment4<T>&);
 
         template <typename U>
