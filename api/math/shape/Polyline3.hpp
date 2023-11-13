@@ -41,6 +41,7 @@ namespace yq {
         //! Constructor from segment
         explicit Polyline3(const Segment3<T>&);
 
+        //! Converts to another polyline of compatible type
         template <typename U>
         requires std::is_convertible_v<T,U>
         explicit operator Polyline3<U>() const;
@@ -48,6 +49,7 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Polyline3&) const noexcept = default;
 
+        //! Conversion to polyline data
         operator PolylineData<Vector3<T>>() const;
 
         //! Addsa a point to the polyline
