@@ -80,13 +80,19 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Polyline4& operator*=(U);
 
+        //! Projects this polyline into two dimensions
         template <typename U>
         Polyline2<product_t<T,U>>   operator*(const Tensor42<U>&) const;
+
+        //! Projects this polyline into three dimensions
         template <typename U>
         Polyline3<product_t<T,U>>   operator*(const Tensor43<U>&) const;
+
+        //! Projects this polyline to another four dimension space
         template <typename U>
         Polyline4<product_t<T,U>>   operator*(const Tensor44<U>&) const;
         
+        //! Self-projects this polyline
         template <typename U>
         requires self_mul_v<T,U>
         Polyline4&  operator*=(const Tensor44<U>&);
