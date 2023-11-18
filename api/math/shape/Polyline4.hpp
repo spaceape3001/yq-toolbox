@@ -97,10 +97,12 @@ namespace yq {
         requires self_mul_v<T,U>
         Polyline4&  operator*=(const Tensor44<U>&);
 
+        //! Returns a polyline with every element divided by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         Polyline4<quotient_t<T,U>> operator/(U) const;
         
+        //! Divides every element by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Polyline4& operator/=(U);
