@@ -117,9 +117,11 @@ namespace yq {
         //! \note May be less accurate with non-floating point types
         T       length() const;
 
+        //! Walks the segments of this polyline
         template <typename Pred>
         void    segments(Pred) const;
 
+        //! Segments of this polyline
         std::vector<Segment4<T>>    segments() const;
     };
 
