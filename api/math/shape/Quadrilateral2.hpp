@@ -19,7 +19,17 @@ namespace yq {
         //! Capture the template paremater
         using component_type = T;
     
-        Vector2<T>     a, b, c, d;
+        //! First vertex
+        Vector2<T>     a;
+        
+        //! Second vertex
+        Vector2<T>     b;
+        
+        //! Third vertex
+        Vector2<T>     c;
+        
+        //! Fourth vertex
+        Vector2<T>     d;
         
         constexpr Quadrilateral2() noexcept = default;
         constexpr Quadrilateral2(const Vector2<T>& _a, const Vector2<T>& _b, const Vector2<T>& _c, const Vector2<T>& _d) :
