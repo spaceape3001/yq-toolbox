@@ -57,7 +57,7 @@ namespace yq {
         //! Construct from Rectangle
         explicit constexpr Quadrilateral2(const Rectangle2<T>&) noexcept;
         
-        
+        //! Converts to another (compatible) quadrilateral
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Quadrilateral2<U>() const noexcept
@@ -65,6 +65,7 @@ namespace yq {
             return Quadrilateral2<U>((Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d);
         }
         
+        //! Converts to another (compatible) quadrilateral
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Quadrilateral2<U>() const 
@@ -72,6 +73,7 @@ namespace yq {
             return Quadrilateral2<U>((Vector2<U>) a, (Vector2<U>) b, (Vector2<U>) c, (Vector2<U>) d);
         }
 
+        //! Converts to QuadrilateralData
         constexpr operator QuadrilateralData<Vector2<T>>() const noexcept;
 
 
