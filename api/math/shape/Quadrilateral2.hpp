@@ -80,7 +80,10 @@ namespace yq {
         //! Defaulted comparison operator
         constexpr bool operator==(const Quadrilateral2&) const noexcept = default;
         
+        //! Positive affirmation operator
         constexpr Quadrilateral2 operator+() const noexcept;
+
+        //! Negation operator
         constexpr Quadrilateral2 operator-() const noexcept;
         
         constexpr Quadrilateral2 operator+(const Vector2<T>&) const noexcept;
