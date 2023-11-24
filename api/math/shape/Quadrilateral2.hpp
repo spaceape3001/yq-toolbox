@@ -86,10 +86,16 @@ namespace yq {
         //! Negation operator
         constexpr Quadrilateral2 operator-() const noexcept;
         
+        //! Returns a shifted quadrilateral by the given displacement
         constexpr Quadrilateral2 operator+(const Vector2<T>&) const noexcept;
+
+        //! Displaces this quadrilateral by the given displacement
         Quadrilateral2& operator+=(const Vector2<T>&) noexcept;
         
+        //! Returns a shifted quadrilateral by the given anti-displacement
         constexpr Quadrilateral2 operator-(const Vector2<T>&) const noexcept;
+
+        //! Displaces this quadrilateral by the given anti displacement
         Quadrilateral2& operator-=(const Vector2<T>&) noexcept;
         
         template <typename U>
