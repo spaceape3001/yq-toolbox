@@ -98,10 +98,12 @@ namespace yq {
         //! Displaces this quadrilateral by the given anti displacement
         Quadrilateral2& operator-=(const Vector2<T>&) noexcept;
         
+        //! Returns a scaled quadrilateral by the given right hand term
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Quadrilateral2<product_t<T,U>>  operator*(U) const noexcept;
 
+        //! Scales this quadrilateral by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Quadrilateral2<T>& operator*=(U) noexcept;
