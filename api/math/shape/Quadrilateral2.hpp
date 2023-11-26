@@ -108,9 +108,11 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Quadrilateral2<T>& operator*=(U) noexcept;
 
+        //! Projects this quadrilateral to another two dimension space
         template <typename U>
         constexpr Quadrilateral2<product_t<T,U>>  operator*(const Tensor22<U>&) const noexcept;
 
+        //! Self-projects this quadrilateral
         template <typename U>
         requires self_mul_v<T,U>
         Quadrilateral2<T>& operator*=(const Tensor22<U>&) noexcept;
