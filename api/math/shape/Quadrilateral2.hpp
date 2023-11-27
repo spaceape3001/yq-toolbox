@@ -117,11 +117,12 @@ namespace yq {
         requires self_mul_v<T,U>
         Quadrilateral2<T>& operator*=(const Tensor22<U>&) noexcept;
 
-
+        //! Returns a reduced quadrilateral by this amount (applied to each point)
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Quadrilateral2<quotient_t<T,U>>  operator/(U) const noexcept;
 
+        //! Reduces *THIS* quadrilateral by this amount (each point self-divided by this value)
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Quadrilateral2<T>& operator/=(U) noexcept;
