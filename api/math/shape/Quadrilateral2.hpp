@@ -130,8 +130,10 @@ namespace yq {
         //! The point "area" (not the actual area, but a component of it)
         constexpr square_t<T>   _area() const noexcept;
 
+        //! Area of this quadrilateral
         constexpr square_t<T>   area() const noexcept;
 
+        //! Bounding box of this quadrilateral
         constexpr AxBox2<T>   bounds() const noexcept;
         
         constexpr bool      is_ccw() const noexcept;
