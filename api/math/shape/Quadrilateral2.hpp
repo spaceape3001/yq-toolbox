@@ -136,8 +136,12 @@ namespace yq {
         //! Bounding box of this quadrilateral
         constexpr AxBox2<T>   bounds() const noexcept;
         
+        //! Tests for a counter-clockwise winding order
         constexpr bool      is_ccw() const noexcept;
+        
+        //! Tests for a clockwise winding order
         constexpr bool      is_clockwise() const noexcept;
+        
         T         perimeter() const;
     };
 
