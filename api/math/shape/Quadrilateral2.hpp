@@ -142,6 +142,7 @@ namespace yq {
         //! Tests for a clockwise winding order
         constexpr bool      is_clockwise() const noexcept;
         
+        //! Perimeter of this quadrilateral
         T         perimeter() const;
     };
 
