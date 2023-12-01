@@ -156,6 +156,7 @@ namespace yq {
     YQ_NAN_1(Quadrilateral2, { nan_v<Vector2<T>>, nan_v<Vector2<T>>, nan_v<Vector2<T>>, nan_v<Vector2<T>> })
     YQ_ZERO_1(Quadrilateral2, { zero_v<Vector2<T>>, zero_v<Vector2<T>>, zero_v<Vector2<T>>, zero_v<Vector2<T>> })
 
+    //! Quadrilateral from an axially aligned box
     template <typename T>
     Quadrilateral2<T> quadrilateral(const AxBox2<T>& ax);
 
