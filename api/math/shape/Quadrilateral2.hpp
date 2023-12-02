@@ -51,7 +51,7 @@ namespace yq {
         //! Constructs a zero Quad
         consteval Quadrilateral2(zero_t) noexcept : Quadrilateral2(ALL, zero_v<T>) {}
         
-        //! Construct from AABB
+        //! Construct from Axially aligned bounding box
         explicit constexpr Quadrilateral2(const AxBox2<T>&) noexcept;
         
         //! Construct from Rectangle
@@ -160,6 +160,7 @@ namespace yq {
     template <typename T>
     Quadrilateral2<T> quadrilateral(const AxBox2<T>& ax);
 
+    //! Quadrilateral from a rectangle
     template <typename T>
     Quadrilateral2<T> quadrilateral(const Rectangle2<T>& ax);
 

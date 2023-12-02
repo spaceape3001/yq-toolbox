@@ -28,14 +28,14 @@ namespace yq {
         //! Default constructor
         constexpr AxBox2() noexcept = default;
 
-        /*! \brief Initializing constructor with ONE value
+        /*! \brief Constructs an axially aligned bounding box with ONE value
         
             This constructor initializes BOTH lo and hi with the same value.  
             This will technically be a valid axbox with zero span.
         */
         explicit constexpr AxBox2(const Vector2<T>& a) noexcept : lo(a), hi(a) {}
 
-        /*! \brief Initializing constructor with TWO values
+        /*! \brief Constructs an axially aligned bounding box from two points
         
             This constructor initializes the box as specified.  
             
@@ -43,6 +43,17 @@ namespace yq {
         */
         constexpr AxBox2(const Vector2<T>& _lo, const Vector2<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
 
+        /*! \brief Construct an axially aligned bounding box from the intersection of points
+        
+            This takes the smallest box from the given low and high values.
+            
+            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
+
+            \param[in] low Low values
+            \param[in] high High values
+        */
+        constexpr AxBox2(intersect_t, std::initializer_list<Vector2<T>> low, std::initializer_list<Vector2<T>> high) noexcept;
+
         /*! \brief Construct as an intersection of points
         
             This takes the smallest box from the given low and high values.
@@ -52,18 +63,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox2(intersect_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
-
-        /*! \brief Construct as an intersection of points
-        
-            This takes the smallest box from the given low and high values.
-            
-            \note This result may be an invalid box if *ANY* lows have components higher than a corresponding high value
-
-            \param[in] low Low values
-            \param[in] high High values
-        */
-        constexpr AxBox2(intersect_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
+        constexpr AxBox2(intersect_t, std::span<const Vector2<T>> low, std::span<const Vector2<T>> high) noexcept;
 
         /*! \brief Construct a box using the two points
         
