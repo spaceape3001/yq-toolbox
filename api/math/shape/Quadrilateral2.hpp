@@ -164,6 +164,7 @@ namespace yq {
     template <typename T>
     Quadrilateral2<T> quadrilateral(const Rectangle2<T>& ax);
 
+    //! Quadrilateral from four points
     template <typename T>
     Quadrilateral2<T> quadrilateral(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c, const Vector2<T>& d)
     {
