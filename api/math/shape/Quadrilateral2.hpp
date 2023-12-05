@@ -196,6 +196,7 @@ namespace yq {
     template <typename T>
     square_t<T>    area(const Quadrilateral2<T>& quad);
 
+    //! Tests for counter clockwise order on the quadrilateral's points
     template <typename T>
     bool    is_ccw(const Quadrilateral2<T>& quad);
 
