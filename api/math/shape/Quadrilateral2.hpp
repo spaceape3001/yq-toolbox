@@ -200,6 +200,7 @@ namespace yq {
     template <typename T>
     bool    is_ccw(const Quadrilateral2<T>& quad);
 
+    //! Computes the perimeter of the provided quadrilateral
     template <typename T>
     T       perimeter(const Quadrilateral2<T>& quad);
 
