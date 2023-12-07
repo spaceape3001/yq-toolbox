@@ -188,6 +188,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    /*! \brief Returns a quadrilateral (right term) scaled by the left term */
     template <typename T, typename U>
     constexpr Quadrilateral2<product_t<T,U>> operator*(T, const Quadrilateral2<U>&) noexcept;
 
