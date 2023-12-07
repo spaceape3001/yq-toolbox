@@ -143,7 +143,10 @@ namespace yq {
         //! Defaulted equatlity operator
         constexpr bool operator==(const AxBox1&) const noexcept = default;
 
+        //! Positive (affirmative) operator
         AxBox1  operator+() const noexcept;
+        
+        //! Negation operator
         AxBox1  operator-() const noexcept;
 
         AxBox1  operator+(const Vector1<T>&) const noexcept;
