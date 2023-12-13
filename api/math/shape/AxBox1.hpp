@@ -162,6 +162,7 @@ namespace yq {
         //! Shifts this box against the displacement provided
         AxBox1& operator-=(const Vector1<T>&) noexcept;
         
+        //! Returns a box scaled by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         AxBox1<product_t<T,U>> operator*(U) const noexcept;
