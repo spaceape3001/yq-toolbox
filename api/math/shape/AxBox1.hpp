@@ -167,6 +167,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         AxBox1<product_t<T,U>> operator*(U) const noexcept;
 
+        //! Scales this box by the given amount
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         AxBox1& operator*=(U) noexcept;
