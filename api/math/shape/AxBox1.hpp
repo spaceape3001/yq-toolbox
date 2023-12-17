@@ -188,6 +188,8 @@ namespace yq {
         */
         constexpr AxBox1<T> operator|(const AxBox1<T>&b) const noexcept;
 
+        /*! \brief Union of AABB and point
+        */
         constexpr AxBox1<T> operator|(const Vector1<T>&b) const noexcept;
 
         //! Union in a box
