@@ -209,6 +209,7 @@ namespace yq {
         */
         constexpr Vector1<T> center() const noexcept;
 
+        //! Classifies the point's location in regard to this box
         constexpr Data1<Side>       classify(const Vector1<T>&) const noexcept;
 
         constexpr Side              classify_x(T) const noexcept;
