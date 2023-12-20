@@ -214,6 +214,8 @@ namespace yq {
 
         //! Classifies the given x-value in regard to this box's x-range
         constexpr Side              classify_x(T) const noexcept;
+
+        //! Classifies the given vector's x-value in regard to this box's x-range
         constexpr Side              classify_x(const Vector1<T>&) const noexcept;
 
         /*! \brief Checks if the point is inside (or touching) the box
