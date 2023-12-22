@@ -133,6 +133,8 @@ namespace yq {
         //! Constructs using the bounding box of the given triangel
         explicit constexpr AxBox2(const Triangle2<T>&) noexcept;
 
+        //! Converts to another box of compatible type
+        //! \note This assumes that a<b is preserved while converting T to U
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator AxBox2<U>() const noexcept
