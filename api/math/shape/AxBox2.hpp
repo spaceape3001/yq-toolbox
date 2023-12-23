@@ -142,6 +142,8 @@ namespace yq {
             return { (Vector2<U>) lo, (Vector2<U>) hi };
         }
         
+        //! Converts to another box of compatible type
+        //! \note This assumes that a<b is preserved while converting T to U
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator AxBox2<U>() const 
