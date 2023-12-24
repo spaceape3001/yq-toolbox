@@ -154,6 +154,7 @@ namespace yq {
         //! Equality operator (defaulted)
         constexpr bool operator==(const AxBox2&) const noexcept = default;
 
+        //! Positive (affirmation) operator
         AxBox2  operator+() const noexcept;
         AxBox2  operator-() const noexcept;
 
