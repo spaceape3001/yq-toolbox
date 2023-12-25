@@ -156,6 +156,8 @@ namespace yq {
 
         //! Positive (affirmation) operator
         AxBox2  operator+() const noexcept;
+        
+        //! Negation operator
         AxBox2  operator-() const noexcept;
 
         AxBox2  operator+(const Vector2<T>&) const noexcept;
