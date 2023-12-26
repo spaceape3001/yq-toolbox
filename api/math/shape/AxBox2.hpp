@@ -160,6 +160,7 @@ namespace yq {
         //! Negation operator
         AxBox2  operator-() const noexcept;
 
+        //! Returns a box shifted by the given displacement
         AxBox2  operator+(const Vector2<T>&) const noexcept;
         AxBox2& operator+=(const Vector2<T>&) noexcept;
         AxBox2  operator-(const Vector2<T>&) const noexcept;
