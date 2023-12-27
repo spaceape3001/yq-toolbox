@@ -28,7 +28,6 @@
 #include <trait/is_integral.hpp>
 
 #include <math/unit/dims.hpp>
-#include <math/keywords.hpp>
 #include <math/unit/declare.hpp>
 
 #include <algorithm>
@@ -746,4 +745,10 @@ namespace yq {
     
     struct Side;
 }
+
+#ifdef NAN
+    // Get RID of the old C macro!
+    #undef NAN
+#endif
+
 
