@@ -12,6 +12,7 @@ namespace yq::errors {
     using bad_access                = error_db::entry<"Bad access">;
     using bad_argument              = error_db::entry<"Bad argument provided">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
+    using checksum_failure          = error_db::entry<"Checksum failure">;
     using const_object_violation    = error_db::entry<"Constant object violated">;
     using empty_string              = error_db::entry<"Empty string">;
     using getter_failed             = error_db::entry<"Getter function returned false">;

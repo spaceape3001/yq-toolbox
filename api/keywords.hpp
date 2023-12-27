@@ -43,13 +43,17 @@ namespace yq {
     struct easter_t {};
     struct edge_t {};
     struct euler_t {};
+    struct even_t {};
+    struct every_t {};
     struct focus_t {};
+    struct frequency_t {};
     struct graph_t {};
     struct gregorian_t {};
     struct guard_t {};
     struct hpr_t {};
     struct identity_t {};
     struct intersect_t {};
+    struct interval_t {};
     struct json_t {};
     struct julian_t {};
     struct move_t {};
@@ -57,6 +61,7 @@ namespace yq {
     struct no_throw_t {};
     struct node_t {};
     struct normal_t {};
+    struct odd_t {};
     struct once_t {};
     struct one_t {};
     struct opposite_t {};
@@ -70,6 +75,7 @@ namespace yq {
     struct span_t {};
     struct three_t {};
     struct throw_t {};
+    struct ticks_t {};
     struct today_t {};
     struct two_t {};
     struct union_t {};
@@ -119,13 +125,17 @@ namespace yq {
     static constexpr const easter_t         EASTER;
     static constexpr const edge_t           EDGE;
     static constexpr const euler_t          EULER;
+    static constexpr const even_t           EVEN;
+    static constexpr const every_t          EVERY;
     static constexpr const focus_t          FOCUS;
+    static constexpr const frequency_t      FREQUENCY;
     static constexpr const graph_t          GRAPH;
     static constexpr const gregorian_t      GREGORIAN;
     static constexpr const guard_t          GUARD;
     static constexpr const hpr_t            HPR;
     static constexpr const identity_t       IDENTITY;
     static constexpr const intersect_t      INTERSECT;
+    static constexpr const interval_t       INTERVAL;
     static constexpr const json_t           JSON;
     static constexpr const julian_t         JULIAN;
     static constexpr const move_t           MOVE;
@@ -133,6 +143,7 @@ namespace yq {
     static constexpr const no_throw_t       NO_THROW;
     static constexpr const node_t           NODE;
     static constexpr const normal_t         NORMAL;
+    static constexpr const odd_t            ODD;
     static constexpr const once_t           ONCE;
     static constexpr const one_t            ONE;
     static constexpr const opposite_t       OPPOSITE; 
@@ -146,6 +157,7 @@ namespace yq {
     static constexpr const span_t           SPAN;
     static constexpr const three_t          THREE;
     static constexpr const throw_t          THROW;
+    static constexpr const ticks_t          TICKS;
     static constexpr const today_t          TODAY;
     static constexpr const two_t            TWO;
     static constexpr const union_t          UNION;
