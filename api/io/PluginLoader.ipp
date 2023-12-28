@@ -9,9 +9,9 @@
 #include "PluginLoader.hpp"
 
 #include <io/DirUtils.hpp>
-#include <basic/Logging.hpp>
-#include <basic/ThreadId.hpp>
-#include <basic/TextUtils.hpp>
+#include <0/basic/Logging.hpp>
+#include <0/basic/ThreadId.hpp>
+#include <0/basic/TextUtils.hpp>
 
 #include <dlfcn.h>
 

@@ -7,8 +7,8 @@
 #pragma once
 
 #include "Curl.hpp"
-#include <basic/ByteArray.hpp>
-#include <basic/Url.hpp>
+#include <0/basic/ByteArray.hpp>
+#include <0/basic/Url.hpp>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 

@@ -6,26 +6,26 @@
 
 #pragma once
 
-#include <basic/preamble.hpp>
+#include <0/basic/preamble.hpp>
 
 #include <io/StreamOps.hpp>
 #include <meta/InfoBinder.hpp>
-#include <trait/always_false.hpp>
+#include <0/trait/always_false.hpp>
 
-#include <trait/has_abs.hpp>
-#include <trait/has_copysign.hpp>
-#include <trait/has_half.hpp>
-#include <trait/has_identity.hpp>
-#include <trait/has_is_finite.hpp>
-#include <trait/has_nan.hpp>
-#include <trait/has_one.hpp>
-#include <trait/has_sqrt.hpp>
-#include <trait/has_zero.hpp>
-#include <trait/ieee754.hpp>
-#include <trait/integer.hpp>
-#include <trait/is_arithmetic.hpp>
-#include <trait/is_floating_point.hpp>
-#include <trait/is_integral.hpp>
+#include <0/trait/has_abs.hpp>
+#include <0/trait/has_copysign.hpp>
+#include <0/trait/has_half.hpp>
+#include <0/trait/has_identity.hpp>
+#include <0/trait/has_is_finite.hpp>
+#include <0/trait/has_nan.hpp>
+#include <0/trait/has_one.hpp>
+#include <0/trait/has_sqrt.hpp>
+#include <0/trait/has_zero.hpp>
+#include <0/trait/ieee754.hpp>
+#include <0/trait/integer.hpp>
+#include <0/trait/is_arithmetic.hpp>
+#include <0/trait/is_floating_point.hpp>
+#include <0/trait/is_integral.hpp>
 
 #include <math/unit/dims.hpp>
 #include <math/unit/declare.hpp>

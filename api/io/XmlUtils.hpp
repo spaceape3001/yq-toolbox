@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <basic/TextUtils.hpp>
-#include <basic/Enum.hpp>
-#include <basic/Flag.hpp>
+#include <0/basic/TextUtils.hpp>
+#include <0/basic/Enum.hpp>
+#include <0/basic/Flag.hpp>
 
 #include "rapidxml.hpp"
 #include <type_traits>

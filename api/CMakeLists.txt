@@ -26,8 +26,8 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED 
     #${core_test_source}
-    ./basic/basic.cpp
-    ./basic/MD5.cpp
+    0/basic/basic.cpp
+    0/basic/MD5.cpp
     ./chemistry/chemistry.cpp
     ./gis/gis.cpp
     ./graph/graph.cpp

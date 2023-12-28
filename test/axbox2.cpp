@@ -8,7 +8,7 @@
 
 #include <math/shape/AxBox2.hpp>
 #include <math/shape/Circle2.hpp>
-#include <basic/Logging.hpp>
+#include <0/basic/Logging.hpp>
 
 #include <math/shape/AxBox2.hxx>
 #include <math/vector/Vector2.hxx>

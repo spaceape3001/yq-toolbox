@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <basic/ByteArray.hpp>
-#include <basic/Logging.hpp>
+#include <0/basic/ByteArray.hpp>
+#include <0/basic/Logging.hpp>
 #include <io/Stream.hpp>
 #include <io/XmlFile.hpp>
 

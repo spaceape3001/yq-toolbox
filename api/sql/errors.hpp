@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/ErrorDB.hpp>
+#include <0/basic/ErrorDB.hpp>
 
 namespace yq {
     namespace errors {

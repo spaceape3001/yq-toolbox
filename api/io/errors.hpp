@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <basic/ErrorDB.hpp>
+#include <0/basic/ErrorDB.hpp>
 
 namespace yq::errors {
     using cant_open_read            = error_db::entry<"Unable to open file for reading">;

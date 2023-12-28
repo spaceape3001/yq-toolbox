@@ -7,7 +7,7 @@
 #pragma once
 
 #include <cmath>
-#include <trait/has_is_finite.hpp>
+#include <0/trait/has_is_finite.hpp>
 
 namespace yq {
     

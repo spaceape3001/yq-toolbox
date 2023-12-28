@@ -8,7 +8,7 @@
 
 #include <io/Stream.hpp>
 #include <io/StreamOps.hpp>
-#include <basic/TextUtils.hpp>
+#include <0/basic/TextUtils.hpp>
 
 //#include "Bytes.hpp"
 //#include "File.hpp"
@@ -18,8 +18,8 @@
 //#include "Ops.hpp"
 //#include "Text.hpp"
 
-//#include <basic/FileUtils.hpp>
-//#include <basic/ByteArray.hpp>
+//#include <0/basic/FileUtils.hpp>
+//#include <0/basic/ByteArray.hpp>
 
 //#include <cstring>
 

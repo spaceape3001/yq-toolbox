@@ -7,7 +7,7 @@
 #pragma once
 
 #include <math/preamble.hpp>
-#include <basic/Coord6.hpp>
+#include <0/basic/Coord6.hpp>
 
 namespace yq {
     YQ_NAN_1(Coord6, Coord6<T>(ALL, nan_v<T>))

@@ -10,9 +10,9 @@
 #include <meta/ReservedIDs.hpp>
 #include <meta/Init.hpp>
 
-#include <basic/DelayInit.hpp>
-#include <basic/TextUtils.hpp>
-#include <basic/Any.hpp>
+#include <0/basic/DelayInit.hpp>
+#include <0/basic/TextUtils.hpp>
+#include <0/basic/Any.hpp>
 
 YQ_TYPE_FIXED(MT_String, std::string)
 YQ_TYPE_FIXED(MT_Boolean, bool)

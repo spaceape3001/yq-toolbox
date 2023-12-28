@@ -7,8 +7,8 @@
 #pragma once
 
 #include <sql/preamble.hpp>
-#include <trait/not_moveable.hpp>
-#include <trait/not_copyable.hpp>
+#include <0/trait/not_moveable.hpp>
+#include <0/trait/not_copyable.hpp>
 
 struct sqlite3;
 

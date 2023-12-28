@@ -9,8 +9,8 @@
 #include "Generator.hpp"
 #include "GeneratorImpl.hpp"
 #include "AnyArgHelper.hpp"
-#include <basic/IgCase.hpp>
-#include <basic/Logging.hpp>
+#include <0/basic/IgCase.hpp>
+#include <0/basic/Logging.hpp>
 
 namespace yq {
     struct GeneratorInfo::Repo {

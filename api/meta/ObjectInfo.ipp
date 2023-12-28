@@ -8,8 +8,8 @@
 
 #include <meta/MetaRepo.hpp>
 #include <meta/ObjectInfo.hpp>
-#include <basic/Logging.hpp>
-#include <basic/Object.hpp>
+#include <0/basic/Logging.hpp>
+#include <0/basic/Object.hpp>
 
 namespace yq {
     const Vector<const ObjectInfo*>&   ObjectInfo::all()

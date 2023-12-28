@@ -9,8 +9,8 @@
 #include <meta/TypeInfo.hpp>
 #include <meta/InfoBinder.hpp>
 #include <meta/CompoundInfoDynamic.hpp>
-#include <trait/has_less.hpp>
-#include <trait/is_template.hpp>
+#include <0/trait/has_less.hpp>
+#include <0/trait/is_template.hpp>
 #include <io/StreamOps.hpp>
 #include <expected>
 #include <list>

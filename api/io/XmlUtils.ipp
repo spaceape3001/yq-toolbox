@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <basic/errors.hpp>
-#include <basic/ByteArray.hpp>
-#include <basic/Set.hpp>
-#include <basic/TextUtils.hpp>
+#include <0/basic/errors.hpp>
+#include <0/basic/ByteArray.hpp>
+#include <0/basic/Set.hpp>
+#include <0/basic/TextUtils.hpp>
 #include <io/errors.hpp>
 #include <io/FileUtils.hpp>
 #include <io/XmlUtils.hpp>
