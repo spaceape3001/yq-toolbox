@@ -8,7 +8,7 @@
 
 #include <0/basic/XmlObject.hpp>
 #include <0/basic/DelayInit.hpp>
-#include <meta/ObjectInfoWriter.hpp>
+#include <0/meta/ObjectInfoWriter.hpp>
 
 namespace yq {
 

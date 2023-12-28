@@ -7,7 +7,7 @@
 #pragma once
 
 #include <gis/preamble.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief General purpose geodetic-style structure

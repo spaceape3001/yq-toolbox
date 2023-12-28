@@ -111,7 +111,7 @@
 #include <math/vector/Vector4.hpp>
 
 #include <0/basic/DelayInit.hpp>
-#include <meta/Init.hpp>
+#include <0/meta/Init.hpp>
 
 #include <math/glm_types.hpp>
 #include <math/shape/shape_utils.hpp>

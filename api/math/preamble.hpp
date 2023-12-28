@@ -9,7 +9,7 @@
 #include <0/basic/preamble.hpp>
 
 #include <io/StreamOps.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/meta/InfoBinder.hpp>
 #include <0/trait/always_false.hpp>
 
 #include <0/trait/has_abs.hpp>

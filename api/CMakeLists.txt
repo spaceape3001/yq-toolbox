@@ -28,13 +28,14 @@ add_library(${PROJECT_NAME} SHARED
     #${core_test_source}
     0/basic/basic.cpp
     0/basic/MD5.cpp
+    0/meta/meta.cpp
+
     ./chemistry/chemistry.cpp
     ./gis/gis.cpp
     ./graph/graph.cpp
     ./graph/xfg/xfg.cpp
     ./io/io.cpp
     ./math/math.cpp
-    ./meta/meta.cpp
     ./sql/sql.cpp
     ./physics/physics.cpp
 )

@@ -8,7 +8,7 @@
 
 #include <math/preamble.hpp>
 #include <0/basic/Enum.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/meta/InfoBinder.hpp>
 
 namespace yq {
     namespace chemistry {

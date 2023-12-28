@@ -8,7 +8,7 @@
 
 #include <0/basic/Enum.hpp>
 #include <0/basic/preamble.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief Generic graph namespace

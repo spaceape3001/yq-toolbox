@@ -7,7 +7,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <meta/InfoBinder.hpp>
+#include <0/meta/InfoBinder.hpp>
 
 YQ_TYPE_DECLARE(glm::vec1)
 YQ_TYPE_DECLARE(glm::vec2)
