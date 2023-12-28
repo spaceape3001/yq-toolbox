@@ -28,16 +28,15 @@ add_library(${PROJECT_NAME} SHARED
     #${core_test_source}
     0/basic/basic.cpp
     0/basic/MD5.cpp
+    0/chemistry/chemistry.cpp
+    0/gis/gis.cpp
+    0/graph/graph.cpp
+    0/graph/xfg/xfg.cpp
+    0/io/io.cpp
+    0/math/math.cpp
     0/meta/meta.cpp
-
-    ./chemistry/chemistry.cpp
-    ./gis/gis.cpp
-    ./graph/graph.cpp
-    ./graph/xfg/xfg.cpp
-    ./io/io.cpp
-    ./math/math.cpp
-    ./sql/sql.cpp
-    ./physics/physics.cpp
+    0/sql/sql.cpp
+    0/physics/physics.cpp
 )
 
 if(Feature_GLM)

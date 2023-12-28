@@ -8,7 +8,7 @@
 
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/Logging.hpp>
-#include <io/StreamOps.hpp>
+#include <0/io/StreamOps.hpp>
 #include <0/meta/MetaRepo.hpp>
 #include <0/meta/TypeInfo.hpp>
 #include <0/meta/ReservedIDs.hpp>

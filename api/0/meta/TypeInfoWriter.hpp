@@ -11,7 +11,7 @@
 #include <0/meta/CompoundInfoDynamic.hpp>
 #include <0/trait/has_less.hpp>
 #include <0/trait/is_template.hpp>
-#include <io/StreamOps.hpp>
+#include <0/io/StreamOps.hpp>
 #include <expected>
 #include <list>
 #include <map>

@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <math/Absolute.hpp>
-#include <math/utility.hpp>
-#include <math/shape/Segment2.hpp>
-#include <math/vector/Vector2.hpp>
+#include <0/math/Absolute.hpp>
+#include <0/math/utility.hpp>
+#include <0/math/shape/Segment2.hpp>
+#include <0/math/vector/Vector2.hpp>
 
-#include <math/shape/Segment2.hxx>
-#include <math/vector/Vector2.hxx>
+#include <0/math/shape/Segment2.hxx>
+#include <0/math/vector/Vector2.hxx>
 
 #include <iostream>
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/Object.hpp>
-#include <io/XmlSerialize.hpp>
+#include <0/io/XmlSerialize.hpp>
 
 namespace yq {
     class XmlObject : public Object, public XmlSerialize {
