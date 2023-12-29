@@ -168,6 +168,8 @@ namespace yq {
 
         //! Returns a box shifted opposite the given displacement
         AxBox2  operator-(const Vector2<T>&) const noexcept;
+        
+        //! Shifts this box opposite the given displacement
         AxBox2& operator-=(const Vector2<T>&) noexcept;
 
         template <typename U>
