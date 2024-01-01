@@ -182,6 +182,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         AxBox2& operator*=(U) noexcept;
         
+        //! Returns a box reduced by the given amount
         template <typename U>
         requires is_arithmetic_v<U>
         AxBox2<quotient_t<T,U>> operator/(U) const noexcept;
