@@ -484,6 +484,8 @@ namespace yq {
     YQ_IS_FINITE_1( AxBox2, is_finite(v.lo) && is_finite(v.hi))
     YQ_IS_NAN_1(AxBox2, is_nan(v.lo) || is_nan(v.hi))
 
+    /*! \brief Scales the right box by the left amount, returns it
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr AxBox2<product_t<T,U>> operator*(T a, const AxBox2<U>&b) noexcept;
