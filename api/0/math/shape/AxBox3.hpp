@@ -134,6 +134,7 @@ namespace yq {
         //! Constructs using the bounding box of the given tetrahedron
         explicit constexpr AxBox3(const Tetrahedron3<T>&) noexcept;
 
+        //! Converts to another box of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator AxBox3<U>() const noexcept
