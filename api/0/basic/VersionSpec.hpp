@@ -20,6 +20,12 @@ namespace yq {
         
         operator Version() const { return Version { major, minor, 0, 0 }; }
         bool    operator==(const VersionSpec&) const = default;
+        
+        template <typename S>
+        S&        write_stream(S& s) const
+        {
+            return s << protocol << '/' << major << '.' << minor;
+        }
     };
     
     inline consteval VersionSpec    http09() { return { "HTTP", 0, 9 }; }
@@ -36,13 +42,13 @@ namespace yq {
         class WebHtml;
     }
 
-    //Stream& operator<<(Stream&, const VersionSpec&);
-    //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const VersionSpec&);
+    Stream& operator<<(Stream&, const VersionSpec&);
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const VersionSpec&);
+    
     template <typename S>
     requires (!std::is_same_v<S, mithril::WebHtml>)
     S&  operator<<(S& s, const VersionSpec&v)
     {
-        s << v.protocol << '/' << v.major << '.' << v.minor;
-        return s;
+        return v.write_stream(s);
     }
 }

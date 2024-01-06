@@ -17,15 +17,15 @@
 //#include <stdio.h>
 
 namespace yq {
-    //Stream& operator<<(Stream&s, const VersionSpec&v)
-    //{
-        //return s << v.protocol << '/' << v.major << '.' << v.minor;
-    //}
+    Stream& operator<<(Stream&s, const VersionSpec&v)
+    {
+        return v.write_stream(s);
+    }
     
-    //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&s, const VersionSpec&v)
-    //{
-        //return s << v.protocol << '/' << v.major << '.' << v.minor;
-    //}
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&s, const VersionSpec&v)
+    {
+        return v.write_stream(s);
+    }
 
     bool       is_similar(const VersionSpec& a, const VersionSpec& b)
     {
