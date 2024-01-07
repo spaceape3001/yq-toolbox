@@ -11,6 +11,7 @@
 #include <expected>
 #include <filesystem>
 #include <initializer_list>
+#include <map>
 #include <span>
 #include <string>
 #include <string_view>
@@ -258,11 +259,14 @@ namespace yq {
     using StringAnyMap          = Map<std::string,Any,IgCase>;
     using StringAnyMultiMap     = MultiMap<std::string,Any,IgCase>;
 
+    using string_any_map_t      = std::map<std::string,Any,IgCase>;
+    using string_any_pair_t     = std::pair<std::string,Any>;
+
     using string_map_t          = Map<std::string,std::string,IgCase>;
     using string_set_t          = Set<std::string,IgCase>;
     using string_vector_t       = std::vector<std::string>;
     using string_view_set_t     = Set<std::string_view,IgCase>;
-
+    
     using string_view_pair_t    = std::pair<std::string_view,std::string_view>;
     using string_view_set_t     = Set<std::string_view,IgCase>;
     using string_view_vector_t  = Vector<std::string_view>;

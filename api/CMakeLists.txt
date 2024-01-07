@@ -25,7 +25,7 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
 endif()
 
 add_library(${PROJECT_NAME} SHARED 
-    #${core_test_source}
+    ${core_test_source}
     0/basic/basic.cpp
     0/basic/MD5.cpp
     0/chemistry/chemistry.cpp
@@ -55,6 +55,7 @@ IF(GCC)
     target_link_libraries(${PROJECT_NAME}
         PUBLIC
             stdc++fs
+            stdc++exp
     )
 ENDIF()
 
