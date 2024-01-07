@@ -155,6 +155,8 @@ namespace yq {
 
         //! Positive (affirmation) operator
         AxBox3  operator+() const noexcept;
+        
+        //! Negation operator
         AxBox3  operator-() const noexcept;
 
         AxBox3  operator+(const Vector3<T>&) const noexcept;
