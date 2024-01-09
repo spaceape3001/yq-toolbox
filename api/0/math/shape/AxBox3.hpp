@@ -161,6 +161,8 @@ namespace yq {
 
         //! Returns a box shifted by the given displacement
         AxBox3  operator+(const Vector3<T>&) const noexcept;
+        
+        //! Shifts this box by the given displacement
         AxBox3& operator+=(const Vector3<T>&) noexcept;
         AxBox3  operator-(const Vector3<T>&) const noexcept;
         AxBox3& operator-=(const Vector3<T>&) noexcept;
