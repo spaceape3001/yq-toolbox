@@ -186,6 +186,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         AxBox3<quotient_t<T,U>> operator/(U) const noexcept;
 
+        //! Reduces this box by the given factor
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         AxBox3& operator/=(U) noexcept;
