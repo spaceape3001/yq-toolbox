@@ -196,6 +196,9 @@ namespace yq {
         */
         constexpr AxBox3<T> operator|(const AxBox3<T>&b) const noexcept;
 
+
+        /*! \brief Returns the union of a box and a point
+        */
         constexpr AxBox3<T> operator|(const Vector3<T>&b) const noexcept;
 
         //! Union in a box
