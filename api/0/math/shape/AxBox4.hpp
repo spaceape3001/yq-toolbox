@@ -136,6 +136,7 @@ namespace yq {
             return { (Vector4<U>) lo, (Vector4<U>) hi };
         }
         
+        //! Converts this box to another box of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator AxBox4<U>() const 
