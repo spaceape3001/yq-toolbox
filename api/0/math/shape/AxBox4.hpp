@@ -149,6 +149,8 @@ namespace yq {
 
         //! Positive (affirmation) operator
         AxBox4  operator+() const noexcept;
+        
+        //! Negation operator
         AxBox4  operator-() const noexcept;
 
 
