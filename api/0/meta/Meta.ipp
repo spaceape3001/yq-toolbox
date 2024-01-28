@@ -23,7 +23,6 @@ namespace yq {
         return repo().all;
     }
 
-
     void    Meta::freeze()
     {
         init();
@@ -36,6 +35,14 @@ namespace yq {
             DelayInit::init_all();
             sweep_all();
         }
+    }
+
+    const Meta*                  Meta::lookup(id_t i)
+    {
+        Repo&   r   = repo();
+        if(i < r.all.size())
+            return r.all[i];
+        return nullptr;
     }
 
     void    Meta::sweep_all()
