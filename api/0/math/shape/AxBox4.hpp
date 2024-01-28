@@ -175,6 +175,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         AxBox4& operator*=(U) noexcept;
         
+        //! Returns a box reduced by the given divisor
         template <typename U>
         requires is_arithmetic_v<U>
         AxBox4<quotient_t<T,U>> operator/(U) const noexcept;
