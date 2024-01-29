@@ -99,7 +99,57 @@ namespace yq {
             right(*first2);
     }
     
+    /*! Executes on differences between two maps, in order
     
+        \tparam K       key type
+        \tparam V       value type
+        \tparam C       comparator type
+        \tparam AL      allocator type for left map
+        \tparam AR      allocator type for right map
+        \tparam LEFT    functor type for left-only
+        \tparam MIDDLE  functor type for middle-changed
+        \tparam SAME    functor type for same-value
+        \tparam RIGHT   functor type for right-only
+            
+        \param[in] A        Left map
+        \param[in] B        Right map
+        \param[in] left     functor to execute for left-only
+        \param[in] middle   functor to execute for middle (changed second)
+        \param[in] same     functor to execute for middle (unchanged second)
+        \param[in] right    functor to execute for right-only
+    */
+    template <typename K, typename V, typename C, typename AL, typename AR, typename LEFT, typename MIDDLE, typename SAME, typename RIGHT>
+    void    map_difference_exec2(const std::map<K,V,C,AL>& A, const std::map<K,V,C,AR>& B, LEFT left, MIDDLE middle, SAME same, RIGHT right)
+    {
+        static_assert( has_inequality_v<V>, "Type V must have an inequality operator for it.");
+    
+        auto    first1  = A.cbegin();
+        auto    first2  = B.cbegin();
+        auto    last1   = A.cend();
+        auto    last2   = B.cend();
+        
+        while (first1 != last1 && first2 != last2) {
+            if( first1->first < first2->first){
+                left(*first1);
+                *first1++;
+            } else if( first1->first == first2->first){
+                if(first1->second != first2->second){
+                    middle(*first2);
+                } else
+                    same(*first2);
+                ++first1, ++first2;
+            } else {
+                right(*first2);
+                ++first2;
+            }
+        }
+        
+        for(;first1 != last1; ++first1)
+            left(*first1);
+            
+        for(;first2 != last2; ++first2)
+            right(*first2);
+    }    
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  SET RELATED
