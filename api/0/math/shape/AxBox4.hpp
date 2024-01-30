@@ -190,6 +190,7 @@ namespace yq {
         */
         constexpr AxBox4<T> operator|(const AxBox4<T>&b) const noexcept;
 
+        //! Returns a box unioned with this new point
         constexpr AxBox4<T> operator|(const Vector4<T>&b) const noexcept;
 
         //! Union in a box
