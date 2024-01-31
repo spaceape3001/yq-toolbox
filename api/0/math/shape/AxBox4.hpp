@@ -586,6 +586,7 @@ namespace yq {
     YQ_IS_NAN_1(AxBox4, is_nan(v.lo) || is_nan(v.hi))
 
 
+    //! Returns a scaled right box by the given left factor
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr AxBox4<product_t<T,U>> operator*(T a, const AxBox4<U>& b) noexcept;
