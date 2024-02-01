@@ -185,6 +185,8 @@ namespace yq {
     YQ_IS_FINITE_1( Segment2, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment2, is_nan(v.a) || is_nan(v.b))
 
+    /*! \brief Returns a segment scaled by given factor
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr Segment2<product_t<T,U>> operator*(T, const Segment2<U>&) noexcept;
