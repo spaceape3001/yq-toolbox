@@ -170,6 +170,8 @@ namespace yq {
     YQ_IS_FINITE_1( Segment1, is_finite(v.a) && is_finite(v.b))
     YQ_IS_NAN_1(Segment1, is_nan(v.a) || is_nan(v.b))
     
+    /*!  Scales the right segment by the left factor
+    */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr Segment1<product_t<T,U>> operator*(T, const Segment1<U>&) noexcept;
