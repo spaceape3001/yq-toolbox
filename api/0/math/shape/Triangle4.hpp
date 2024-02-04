@@ -190,6 +190,7 @@ namespace yq {
     YQ_IS_FINITE_1(Triangle4, is_finite(v.a) && is_finite(v.b) && is_finite(v.c))
     YQ_IS_NAN_1(Triangle4, is_nan(v.a) || is_nan(v.b) || is_nan(v.c) )
 
+    /*! \brief Scales the right triangle by the left factor */
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr Triangle4<product_t<T,U>> operator*(T lhs, const Triangle4<U>& rhs) noexcept;
