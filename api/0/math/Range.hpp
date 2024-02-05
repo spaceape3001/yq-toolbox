@@ -233,6 +233,10 @@ namespace yq {
         return Range<T>(SORT, a, b);
     }
     
+    /*! \brief Constructs a range
+    
+        This routine returns a range made from the given elements.
+    */
     template <typename T>
     constexpr Range<T> range(std::initializer_list<T> them) noexcept
     {
