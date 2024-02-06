@@ -260,6 +260,7 @@ namespace yq {
     template <typename T>
     constexpr T         _gap(T v, T lo, T hi) noexcept;
 
+    //! Checks to see if the given range is valid (lo <= hi)
     template <typename T>
     constexpr bool    is_valid(const Range<T>& a) noexcept
     {
