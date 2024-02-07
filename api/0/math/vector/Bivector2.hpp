@@ -24,6 +24,7 @@ namespace yq {
         //! The value... since it's a unit area, square of T
         T               xy;
         
+        //! Default constructor
         constexpr Bivector2() noexcept = default;
         constexpr Bivector2(T _xy) noexcept : xy(_xy) {}
         constexpr Bivector2(all_t, T v) noexcept : xy(v) {}
