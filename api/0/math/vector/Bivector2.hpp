@@ -26,6 +26,8 @@ namespace yq {
         
         //! Default constructor
         constexpr Bivector2() noexcept = default;
+        
+        //! Component wise constructor 
         constexpr Bivector2(T _xy) noexcept : xy(_xy) {}
         constexpr Bivector2(all_t, T v) noexcept : xy(v) {}
         consteval Bivector2(nan_t) noexcept : Bivector2(ALL, nan_v<T>) {}
