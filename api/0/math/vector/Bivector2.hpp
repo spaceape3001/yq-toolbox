@@ -29,6 +29,8 @@ namespace yq {
         
         //! Component wise constructor 
         constexpr Bivector2(T _xy) noexcept : xy(_xy) {}
+        
+        //! Constructs all components to the same value
         constexpr Bivector2(all_t, T v) noexcept : xy(v) {}
         consteval Bivector2(nan_t) noexcept : Bivector2(ALL, nan_v<T>) {}
         consteval Bivector2(one_t) noexcept : Bivector2(ALL, one_v<T>) {}
