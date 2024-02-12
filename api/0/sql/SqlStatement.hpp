@@ -37,6 +37,8 @@ namespace yq {
 
         class AutoFinish;
         
+        //! Executes the specified string
+        //! \note the SQL needs to be a std::string to force the null termination
         static bool             exec(SqlLite&, const std::string&);
         
         
