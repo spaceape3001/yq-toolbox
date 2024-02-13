@@ -95,6 +95,10 @@ namespace yq {
         //! \note this data MUST be available until unbind() is called (or reset_all)
         //! \param[in] col  Parameter/column index, starts at ONE
         bool                bind(int col, std::string_view);
+        
+        //! Binds a TEXT
+        //! \note this data MUST be available until unbind() is called (or reset_all)
+        //! \param[in] col  Parameter/column index, starts at ONE
         bool                bind(int col, const std::string&);
 
         //! \brief Returns the column count
