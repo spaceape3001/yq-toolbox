@@ -58,7 +58,13 @@ namespace yq {
         //! \param[in] v    BLOB to push in
         bool                bind(int col, std::span<uint8_t> v);
         
-        bool                bind(int col, const void*, size_t);
+        //! Binds a BLOB
+        //! \note this data MUST be available until unbind() is called (or reset_all)
+        //! 
+        //! \param[in] col      Parameter/column index, starts at ONE
+        //! \param[in] pData    Pointer to data
+        //! \param[in] cbData   Size of the data
+        bool                bind(int col, const void* pData, size_t cbData);
 
 
         //! \brief Binds a Boolean (maps to 0/1)
