@@ -41,9 +41,10 @@ namespace yq {
         //! \note the SQL needs to be a std::string to force the null termination
         static bool             exec(SqlLite&, const std::string&);
         
-        
-        
+        //! Use this to get the auto-finish helper 
         AutoFinish  af();
+
+        //! Use this to get the auto-finish helper 
         AutoFinish  autoFinish();
 
         //! Binds NULL to column
@@ -203,6 +204,10 @@ namespace yq {
     };
 
 
+    /*! \brief Helper to Auto Finish/Reset the statement
+    
+        The destructor will make sure the statement has been reset for the next call.
+    */
     class SqlStatement::AutoFinish : not_copyable {
     public:
         AutoFinish(){}
