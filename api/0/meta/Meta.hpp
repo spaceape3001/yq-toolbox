@@ -92,6 +92,7 @@ namespace yq {
             D6,             //!< Item has six dimensional attributes (or is a 6-dimensional object)
             DISABLE_REG,    
             ENUM,           //!< It's an enumeration (Enum)
+            EVENT,          //!< It's an event
             EXECUTE,        //!< Execute permission/capabilty
             GENERATOR,      //!< It's a generator (GeneratorInfo)
             GLOBAL,         //!< It's a global (GlobalInfo)
