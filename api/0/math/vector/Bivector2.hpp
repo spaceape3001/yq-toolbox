@@ -48,6 +48,7 @@ namespace yq {
         //! Constructs a zero bivector
         consteval Bivector2(zero_t) noexcept : Bivector2(ALL, zero_v<T>) {}
         
+        //! Converts to another bivector of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Bivector2<U>() const noexcept
