@@ -86,6 +86,7 @@ namespace yq {
         //! Self-incrementing this bivector
         Bivector2<T>& operator+=(const Bivector2<T>& b) noexcept;
         
+        //! Adds a bivector with a multivector
         constexpr Multivector2<T> operator+(const Multivector2<T>& b) const noexcept;
         constexpr Multivector2<T> operator+(const Vector2<T>& b) const noexcept;
 
