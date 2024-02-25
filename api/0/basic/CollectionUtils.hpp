@@ -341,7 +341,7 @@ namespace yq {
     std::set<T, C, A>    operator-(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
         std::set<T, C, A>   ret;
-        std::set_difference(a.begin(), a.end(), b.begin(), b.end(), ret.begin());
+        std::set_difference(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ret, ret.begin()));
         return ret;
     }
 
@@ -353,7 +353,7 @@ namespace yq {
     std::set<T, C, A>    operator|(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
         std::set<T, C, A>   ret;
-        std::set_union(a.begin(), a.end(), b.begin(), b.end(), ret.begin());
+        std::set_union(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ret, ret.begin()));
         return ret;
     }
 
@@ -365,7 +365,7 @@ namespace yq {
     std::set<T, C, A>    operator&(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
         std::set<T, C, A>   ret;
-        std::set_intersection(a.begin(), a.end(), b.begin(), b.end(), ret.begin());
+        std::set_intersection(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ret, ret.begin()));
         return ret;
     }
 
@@ -377,7 +377,7 @@ namespace yq {
     std::set<T, C, A>    operator^(const std::set<T, C, A>& a, const std::set<T, C, A>& b)
     {
         std::set<T, C, A>   ret;
-        set_exclusive(a.begin(), a.end(), b.begin(), b.end(), ret.begin());
+        set_exclusive(a.begin(), a.end(), b.begin(), b.end(), std::inserter(ret, ret.begin()));
         return ret;
     }
 
