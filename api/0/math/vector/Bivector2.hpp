@@ -92,6 +92,7 @@ namespace yq {
         //! Adds a bivector with a vector
         constexpr Multivector2<T> operator+(const Vector2<T>& b) const noexcept;
 
+        //! Subtracts a scalar from this bivector
         constexpr Multivector2<T> operator-(T b) const noexcept;
         constexpr Bivector2<T> operator-( const Bivector2<T>& b) const noexcept;
         Bivector2<T>& operator-=(const Bivector2<T>& b) noexcept;
