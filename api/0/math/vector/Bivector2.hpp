@@ -122,6 +122,7 @@ namespace yq {
         requires is_arithmetic_v<T>
         constexpr Bivector2<quotient_t<T,U>> operator/(U b) noexcept;
 
+        //! Self-divides this bivector by the given factor
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Bivector2<T>& operator/=(U b) noexcept;
