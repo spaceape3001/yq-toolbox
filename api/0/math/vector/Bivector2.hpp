@@ -163,6 +163,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  --------------------------------------------------------
 
+    //! Adds a value with a bivector (same type)
     template <typename T>
     constexpr Multivector2<T> operator+(T a, const Bivector2<T>& b) noexcept;
 
