@@ -167,6 +167,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector2<T> operator+(T a, const Bivector2<T>& b) noexcept;
 
+    //! Subtracts a bivector from a value (same type)
     template <typename T>
     constexpr Multivector2<T> operator-(T a, const Bivector2<T>& b) noexcept;
 
