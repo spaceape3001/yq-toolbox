@@ -33,6 +33,8 @@ namespace yq {
 
         //! Default constructor
         constexpr Bivector3() noexcept = default;
+        
+        //! Component wise constructor
         constexpr Bivector3(T _xy, T _yz, T _zx) noexcept : xy(_xy), yz(_yz), zx(_zx) {}
         constexpr Bivector3(all_t, T v) noexcept : xy(v), yz(v), zx(v) {}
         consteval Bivector3(nan_t) noexcept : Bivector3(ALL, nan_v<T>) {}
