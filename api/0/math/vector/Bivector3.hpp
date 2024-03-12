@@ -42,6 +42,8 @@ namespace yq {
         
         //! Constructs to NaN
         consteval Bivector3(nan_t) noexcept : Bivector3(ALL, nan_v<T>) {}
+
+        //! Constructs to all ones
         consteval Bivector3(one_t) noexcept : Bivector3(ALL, one_v<T>) {}
         constexpr Bivector3(xy_t, T v) noexcept : xy(v), yz(zero_v<T>), zx(zero_v<T>) {}
         consteval Bivector3(xy_t) noexcept : Bivector3(XY, one_v<T>) {}
