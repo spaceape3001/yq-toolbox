@@ -60,6 +60,8 @@ namespace yq {
 
         //! Constructs a bivector with the ZX component set as given
         constexpr Bivector3(zx_t, T v) noexcept : xy(zero_v<T>), yz(zero_v<T>), zx(v) {}
+
+        //! Constructs a unit bivector in the ZX component
         consteval Bivector3(zx_t) noexcept : Bivector3(ZX, one_v<T>) {}
         consteval Bivector3(zero_t) noexcept : Bivector3(ALL, zero_v<T>) {}
 
