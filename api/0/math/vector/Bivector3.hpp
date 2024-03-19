@@ -63,6 +63,8 @@ namespace yq {
 
         //! Constructs a unit bivector in the ZX component
         consteval Bivector3(zx_t) noexcept : Bivector3(ZX, one_v<T>) {}
+        
+        //! Constructs a zero bivector
         consteval Bivector3(zero_t) noexcept : Bivector3(ALL, zero_v<T>) {}
 
         template <typename U>
