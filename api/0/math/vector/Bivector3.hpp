@@ -86,6 +86,7 @@ namespace yq {
         //! Defaulted comparison operator
         constexpr bool operator==(const Bivector3&) const noexcept = default;
 
+        //! Positive (affirmation) operator
         constexpr Bivector3         operator+() const noexcept;
         constexpr Bivector3         operator-() const noexcept;
 
