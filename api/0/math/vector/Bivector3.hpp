@@ -97,6 +97,8 @@ namespace yq {
         
         //! Adds two bivectors
         constexpr Bivector3         operator+(const Bivector3& b) const noexcept;
+        
+        //! Self-increments this bivector with the other
         Bivector3&                  operator+=(const Bivector3&b) noexcept;
         constexpr Multivector3<T>   operator+(const Multivector3<T>& b) const noexcept;
         constexpr Multivector3<T>   operator+(const Trivector3<T>& b) const noexcept;
