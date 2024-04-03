@@ -124,6 +124,8 @@ namespace yq {
 
         //! Subtracts trivector from bivector
         constexpr Multivector3<T>   operator-(const Trivector3<T>& b) const noexcept;
+
+        //! Subtracts vector from bivector
         constexpr Multivector3<T>   operator-(const Vector3<T>& b) const noexcept;
 
         template <typename U>
