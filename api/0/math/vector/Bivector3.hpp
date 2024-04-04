@@ -133,6 +133,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         Bivector3<product_t<T,U>> operator*(U b) const noexcept;
         
+        //! Self multiplies this bivector with the given scalar
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Bivector3<product_t<T,U>>& operator*=(U b) noexcept;
