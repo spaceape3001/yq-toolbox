@@ -138,11 +138,12 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Bivector3<product_t<T,U>>& operator*=(U b) noexcept;
         
-        //! Self divides this bivector with the given scalar
+        //! Divides this bivector with the given scalar
         template <typename U>
         requires is_arithmetic_v<T>
         Bivector3<quotient_t<T,U>> operator/(U b) const noexcept;
         
+        //! Self divides this bivector with the given scalar
         template <typename U>
         requires (is_arithmetic_v<T> && self_div_v<T,U>)
         Bivector3& operator/=(U b) noexcept;
