@@ -214,6 +214,8 @@ namespace yq {
 //  --------------------------------------------------------
 
 template <typename T>
+
+	//! Adds scalar to bivector
     constexpr Multivector3<T> operator+(T a, const Bivector3<T>& b) noexcept;
 
     template <typename T>
