@@ -222,6 +222,7 @@ template <typename T>
     template <typename T>
     constexpr Multivector3<T> operator-(T a, const Bivector3<T>& b) noexcept;
     
+	//! Multiplies scalar with bivector
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     Bivector3<product_t<T,U>> operator*(T a, const Bivector3<U>& b) noexcept;
