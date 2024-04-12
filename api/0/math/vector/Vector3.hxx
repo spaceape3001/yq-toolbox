@@ -6,6 +6,8 @@
 
 #pragma once
 
+#define YQ_MATH_VECTOR_3_HXX 1
+
 /* 
     This is the template IMPLEMENTATION of the vector3 code.  Include this
     *IF* you need the operator and it's not yet available as explicit 
