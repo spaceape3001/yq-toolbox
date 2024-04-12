@@ -30,6 +30,8 @@ namespace yq {
         //! Component-wise constructor
         constexpr Bivector4(T _xy, T _yz, T _zw, T _wx, T _xz, T _yw) noexcept : 
             xy(_xy), yz(_yz), zw(_zw), wx(_wx), xz(_xz), yw(_yw) {}
+            
+        //! Constructs all elements to same value
         constexpr Bivector4(all_t, T v) noexcept : xy(v), yz(v), zw(v), wx(v), xz(v), yw(v) {}
         consteval Bivector4(nan_t) noexcept : Bivector4(ALL, nan_v<T>) {}
         consteval Bivector4(one_t) noexcept : Bivector4(ALL, one_v<T>) {}
