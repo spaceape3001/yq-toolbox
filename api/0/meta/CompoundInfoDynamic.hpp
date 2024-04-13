@@ -36,6 +36,13 @@ namespace yq {
             return PropertyInfo::Writer<T>{ret};
         }
         
+        template <typename T>
+        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_t, T (C::*pointer), const std::source_location& sl=std::source_location::current())
+        {
+            return property(szName, pointer, true, sl);
+        }
+
+
         /*! \brief Defines a property
         
             This defines a property for the type/object
@@ -52,6 +59,13 @@ namespace yq {
             new IPM_PropGetter<C,T>(ret, sl, pointer);
             return PropertyInfo::Writer<T>{ret};
         }
+
+        template <typename T>
+        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_t, const T (C::*pointer), const std::source_location& sl=std::source_location::current())
+        {
+            return property(szName, pointer, sl);
+        }
+        
 
         /*! \brief Defines a property
         
