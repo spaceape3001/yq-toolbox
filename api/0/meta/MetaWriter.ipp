@@ -63,7 +63,7 @@ namespace yq {
     Meta::Writer&     Meta::Writer::alias(std::string_view zAlias)
     {
         if(m_meta)
-            m_meta -> m_aliases << zAlias;
+            m_meta -> add_alias(zAlias);
         return *this;
     }
     
@@ -71,7 +71,7 @@ namespace yq {
     {
         if(m_meta){
             for(std::string_view z : zAlias)
-                m_meta -> m_aliases << z;
+                m_meta -> add_alias(z);
         }
         return *this;
     }
@@ -107,7 +107,7 @@ namespace yq {
     Meta::Writer&     Meta::Writer::tag(std::string_view zKey)
     {
         if(m_meta){
-            assert("Tag already set!" && !m_meta->m_tags.has(zKey));
+            assert("Tag already set!" && !m_meta->m_tags.contains(zKey));
             m_meta -> m_tags[zKey] = Any(true);
         }
         return *this;
@@ -116,7 +116,7 @@ namespace yq {
     Meta::Writer&     Meta::Writer::tag(std::string_view zKey, Any&& value)
     {
         if(m_meta){
-            assert("Tag already set!" && !m_meta->m_tags.has(zKey));
+            assert("Tag already set!" && !m_meta->m_tags.contains(zKey));
             m_meta -> m_tags[zKey] = std::move(value);
         }
         return *this;
@@ -126,7 +126,7 @@ namespace yq {
     Meta::Writer&     Meta::Writer::tag(std::string_view zKey, const Any& value)
     {
         if(m_meta){
-            assert("Tag already set!" && !m_meta->m_tags.has(zKey));
+            assert("Tag already set!" && !m_meta->m_tags.contains(zKey));
             m_meta -> m_tags[zKey] = value;
         }
         return *this;

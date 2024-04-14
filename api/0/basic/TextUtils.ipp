@@ -665,7 +665,7 @@ namespace yq {
     
     bool  is_in(std::string_view str, const string_view_set_t& pat)
     {
-        return pat.has(str);
+        return pat.contains(str);
     }
 
     bool  is_in(std::string_view str, const std::vector<std::string_view>& pat)

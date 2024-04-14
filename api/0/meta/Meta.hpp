@@ -158,8 +158,8 @@ namespace yq {
         using options_t                 = std::initializer_list<Flag>;
         
         
-        static const Vector<const Meta*>&   all();
-        static const Meta*                  lookup(id_t);
+        static const std::vector<const Meta*>&  all();
+        static const Meta*                      lookup(id_t);
         
         //! Forces the initialization of the meta
         static void                         init();     // starts/triggers the initialization (can be repeated)
@@ -177,10 +177,10 @@ namespace yq {
 
         /*! \brief Any relevant aliases
         */
-        const Set<std::string_view>&    aliases() const { return m_aliases; }
+        const std::set<std::string_view>&    aliases() const { return m_aliases; }
         
         //! \brief Vector of child-meta (could include pointers)
-        const Vector<const Meta*>&      children() const { return m_children; }
+        const std::vector<const Meta*>&      children() const { return m_children; }
         
         void                            clear(Flag);
         
@@ -333,21 +333,22 @@ namespace yq {
         
         void    set_name(std::string_view v);
         
+        virtual void                add_alias(std::string_view);
         
     private:
-        using TagMap    = Map<std::string_view, Any, IgCase>;
+        using TagMap    = std::map<std::string_view, Any, IgCase>;
     
-        TagMap                          m_tags;
-        Set<std::string_view>           m_aliases;
-        std::string_view                m_description;
-        std::string_view                m_label;
-        std::string_view                m_name;
-        std::string_view                m_stem;
-        Vector<const Meta*>             m_children;
-        const Meta*                     m_parent    = nullptr;
-        std::source_location            m_source;
-        BitArray<uint64_t, 2>           m_flags;
-        id_t                            m_id        = AUTO_ID;
+        std::map<std::string_view, Any, IgCase> m_tags;
+        std::set<std::string_view>              m_aliases;
+        std::string_view                        m_description;
+        std::string_view                        m_label;
+        std::string_view                        m_name;
+        std::string_view                        m_stem;
+        std::vector<const Meta*>                m_children;
+        const Meta*                             m_parent    = nullptr;
+        std::source_location                    m_source;
+        BitArray<uint64_t, 2>                   m_flags;
+        id_t                                    m_id        = AUTO_ID;
         
         struct Repo;
         static Repo&    repo();

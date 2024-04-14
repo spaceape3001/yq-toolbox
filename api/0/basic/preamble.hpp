@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <initializer_list>
 #include <map>
+#include <set>
 #include <span>
 #include <string>
 #include <string_view>
@@ -265,10 +266,9 @@ namespace yq {
     using string_map_t          = Map<std::string,std::string,IgCase>;
     using string_set_t          = Set<std::string,IgCase>;
     using string_vector_t       = std::vector<std::string>;
-    using string_view_set_t     = Set<std::string_view,IgCase>;
     
     using string_view_pair_t    = std::pair<std::string_view,std::string_view>;
-    using string_view_set_t     = Set<std::string_view,IgCase>;
+    using string_view_set_t     = std::set<std::string_view,IgCase>;
     using string_view_vector_t  = Vector<std::string_view>;
     using path_vector_t         = Vector<std::filesystem::path>;
 

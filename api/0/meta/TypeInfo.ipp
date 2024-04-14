@@ -52,7 +52,7 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    const Vector<const TypeInfo*>&   TypeInfo::all()
+    const std::vector<const TypeInfo*>&   TypeInfo::all()
     {
         assert(thread_safe_read());
         return repo().types.all;
@@ -71,9 +71,9 @@ namespace yq {
         return repo().types.lut.first(sv, nullptr);
     }
 
-    Vector<const TypeInfo*>          TypeInfo::find_all(const string_set_t& types, bool noisy)
+    std::vector<const TypeInfo*>          TypeInfo::find_all(const string_set_t& types, bool noisy)
     {
-        Vector<const TypeInfo*> ret;
+        std::vector<const TypeInfo*> ret;
         auto&   r   = repo().types.lut;
         for(const std::string& s : types){
             if(s.empty())
@@ -85,7 +85,7 @@ namespace yq {
                     yWarning() << "Unable to find type info for: " << s;
                 continue;
             }
-            ret << ti;
+            ret.push_back(ti);
         }
         return ret;
     }
@@ -109,8 +109,8 @@ namespace yq {
 
     void            TypeInfo::add_alias(std::string_view sz)
     {
+        Meta::add_alias(sz);
         repo().types.add_mapping(sz, this);
-        m_aliases << sz;
     }
     
     std::error_code        TypeInfo::copy(void*dst, const void*src) const
@@ -150,12 +150,12 @@ namespace yq {
         return m_methods.all.size();
     }
 
-    const Vector<const MethodInfo*>&    TypeInfo::methods() const
+    const std::vector<const MethodInfo*>&    TypeInfo::methods() const
     {
         return m_methods.all;
     }
     
-    const Vector<const PropertyInfo*>&  TypeInfo::properties() const
+    const std::vector<const PropertyInfo*>&  TypeInfo::properties() const
     {
         return m_properties.all;
     }

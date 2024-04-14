@@ -17,7 +17,7 @@
 
 namespace yq {
 
-    const Vector<const Meta*>&   Meta::all()
+    const std::vector<const Meta*>&   Meta::all()
     {
         assert(thread_safe_read());
         return repo().all;
@@ -98,16 +98,21 @@ namespace yq {
             _r.all[i]   = this;
         } else {
             m_id    = _r.all.size();
-            _r.all << this;
+            _r.all.push_back(this);
         }
         if(i >= MT_String)
-            _r.metas << this;
+            _r.metas.push_back(this);
     }
     
     Meta::~Meta()
     {
         assert(false && "Do NOT delete Meta!  It's not meant to be deleted.");
 
+    }
+
+    void        Meta::add_alias(std::string_view sv)
+    {
+        m_aliases.insert(sv);
     }
 
     void        Meta::clear(Flag f)

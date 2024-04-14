@@ -24,7 +24,7 @@ namespace yq {
             \note WARNING Unsafe in unlocked multithreaded mode (as this isn't a copy, 
                     its the actual list that could be changing.)
         */
-        static const Vector<const TypeInfo*>&   all();
+        static const std::vector<const TypeInfo*>&   all();
         
         //! Finds the type info by ID
         static const TypeInfo*                  find(id_t);
@@ -34,10 +34,10 @@ namespace yq {
         
         //! Finds the type info of a set
         //! \param[in] Noisy    TRUE will dump failures-to-find to the log
-        static Vector<const TypeInfo*>          find_all(const string_set_t&, bool noisy=false);
+        static std::vector<const TypeInfo*>     find_all(const string_set_t&, bool noisy=false);
     
         //! All aliases for this type info
-        const Vector<std::string_view>&         aliases() const { return m_aliases; }
+        //const std::vector<std::string_view>&    aliases() const { return m_aliases; }
         
         //! TRUE if this type has a string parser defined for it
         bool        can_parse() const { return m_parse != nullptr; }
@@ -78,13 +78,13 @@ namespace yq {
         size_t                              method_count() const;
         
         //! List of methods for this type
-        const Vector<const MethodInfo*>&    methods() const;
+        const std::vector<const MethodInfo*>&    methods() const;
 
         //! Number of properties for this type
         size_t                              property_count() const;
         
         //! List of properties for this type
-        const Vector<const PropertyInfo*>&  properties() const;
+        const std::vector<const PropertyInfo*>&  properties() const;
 
         /*! \brief Parsing helper
         
@@ -139,7 +139,7 @@ namespace yq {
         virtual ~TypeInfo();
 
         //! Adds an alias to the type (note view is NOT copied, so should come from program strings "" )
-        void            add_alias(std::string_view);
+        virtual void    add_alias(std::string_view) override;
 
         //! Sweeps on the type (ie gathers properties/methdos)
         virtual void    sweep_impl() override;
@@ -206,11 +206,11 @@ namespace yq {
         DataBlock                   m_default;
         
         //! Aliases for this type
-        Vector<std::string_view>        m_aliases;
+        //std::vector<std::string_view>   m_aliases;
         
         struct {
             //! Template arguments for this type
-            Vector<const TypeInfo*> args;
+            std::vector<const TypeInfo*> args;
             
             //!  total number of parameters (typed or not)
             unsigned                params          = 0;
@@ -254,6 +254,9 @@ namespace yq {
         
         //! Text formatting for human eyes
         FNFormat                m_print         = nullptr;
+
+        //! Map of "slot" to formatters
+        std::map<std::string,FNFormat>  m_printers;
 
         //! Text formatting for data storage
         FNFormat                m_write         = nullptr;
