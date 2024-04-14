@@ -180,7 +180,7 @@ namespace yq {
     template <typename T, typename A>
     class TypeInfo::Special<std::list<T,A>> : public Typed<std::list<T,A>> {
     protected:
-        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<List<T>>(zName, sl, i) 
+        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::list<T,A>>(zName, sl, i) 
         {
             Meta::set(Flag::COLLECTION);
         }
@@ -189,7 +189,7 @@ namespace yq {
     template <typename K, typename V, typename C, typename A>
     class TypeInfo::Special<std::map<K,V,C,A>> : public Typed<std::map<K,V,C,A>> {
     protected:
-        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Map<K,V,C>>(zName, sl, i)
+        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::map<K,V,C,A>>(zName, sl, i)
         {
             Meta::set(Flag::COLLECTION);
         }
@@ -198,7 +198,7 @@ namespace yq {
     template <typename K, typename V, typename C, typename A>
     class TypeInfo::Special<std::multimap<K,V,C,A>> : public Typed<std::multimap<K,V,C,A>> {
     protected:
-        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<MultiMap<K,V,C>>(zName, sl, i)
+        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::multimap<K,V,C,A>>(zName, sl, i)
         {
             Meta::set(Flag::COLLECTION);
         }
@@ -207,7 +207,7 @@ namespace yq {
     template <typename T, typename C, typename A>
     class TypeInfo::Special<std::set<T,C,A>> : public Typed<std::set<T,C,A>> {
     protected:
-        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Set<T,C>>(zName, sl, i) 
+        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::set<T,C,A>>(zName, sl, i) 
         {
             Meta::set(Flag::COLLECTION);
         }
@@ -216,7 +216,7 @@ namespace yq {
     template <typename T, typename A>
     class TypeInfo::Special<std::vector<T,A>> : public Typed<std::vector<T,A>> {
     protected:
-        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Vector<T>>(zName, sl, i) 
+        Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::vector<T,A>>(zName, sl, i) 
         {
             Meta::set(Flag::COLLECTION);
         }
