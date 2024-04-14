@@ -256,7 +256,7 @@ namespace yq {
         FNFormat                m_print         = nullptr;
 
         //! Map of "slot" to formatters
-        std::map<std::string,FNFormat>  m_printers;
+        std::map<std::string_view,FNFormat,IgCase>  m_printers;
 
         //! Text formatting for data storage
         FNFormat                m_write         = nullptr;
@@ -275,6 +275,11 @@ namespace yq {
 
         //! XML reading from node as value
         FNXmlNodeRead           m_xnread        = nullptr;
+        
+        FNFormat        printer(std::string_view) const;
+        
+        void            add_printer(std::string_view, FNFormat);
+        
     };
     
     /*! \brief Converts meta to type, if it's valid

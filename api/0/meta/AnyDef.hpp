@@ -111,14 +111,14 @@ namespace yq {
             This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
             therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
         */
-        std::error_code     print(Stream&) const;
+        std::error_code     print(Stream&, std::string_view k={}) const;
         
         
         /*! \brief "Printable" version for debugging/general-output
         
             \note There's no corresponding "parse" (deliberate), see the I/O helpers
         */
-        std::string          printable() const;
+        std::string          printable(std::string_view k={}) const;
         
         /*! \brief Guarded pointer
             Returns the pointer *IF* it's feasible, otherwise null

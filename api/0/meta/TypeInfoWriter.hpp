@@ -466,24 +466,24 @@ namespace yq {
         /*! \brief Registers debug string formatting handler.
         */
         template <std::string(*FN)(T)>
-        void    print()
+        void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_print   = [](Stream& dst, const void* src)  {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
-                };
+                });
             }
         }
         
         /*! \brief Registers debug string formatting handler.
         */
         template <std::string(*FN)(const T&)>
-        void    print()
+        void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_print   = [](Stream& dst, const void* src)  {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
-                };
+                });
             }
         }
 
@@ -492,12 +492,12 @@ namespace yq {
             The stream based ones are preferred
         */
         template <void(*FN)(Stream&, const T&)>
-        void    print()
+        void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_print   = [](Stream& dst, const void* src)  {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     FN(dst, *(const T*) src);
-                };
+                });
             }
         }
 
@@ -506,12 +506,12 @@ namespace yq {
             The stream based ones are preferred
         */
         template <void(*FN)(Stream&, T)>
-        void    print()
+        void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_print   = [](Stream& dst, const void* src)  {
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     FN(dst, *(const T*) src);
-                };
+                });
             }
         }
 

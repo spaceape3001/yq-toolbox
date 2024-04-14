@@ -113,6 +113,16 @@ namespace yq {
         repo().types.add_mapping(sz, this);
     }
     
+    void            TypeInfo::add_printer(std::string_view k, FNFormat fn)
+    {
+        if(fn){
+            if(k.empty() || !m_print)
+                m_print   = fn;
+            if(!k.empty())
+                m_printers[k]   = fn;
+        }
+    }
+    
     std::error_code        TypeInfo::copy(void*dst, const void*src) const
     {
         if(!m_copyRR)
@@ -153,6 +163,18 @@ namespace yq {
     const std::vector<const MethodInfo*>&    TypeInfo::methods() const
     {
         return m_methods.all;
+    }
+
+    TypeInfo::FNFormat        TypeInfo::printer(std::string_view k) const
+    {
+        if(!k.empty()){
+            auto i = m_printers.find(k);
+            if((i != m_printers.end()) && i->second) 
+                return i->second;
+        }
+        if(m_print)
+            return m_print;
+        return m_write;
     }
     
     const std::vector<const PropertyInfo*>&  TypeInfo::properties() const
