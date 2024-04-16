@@ -116,10 +116,11 @@ namespace yq {
     void            TypeInfo::add_printer(std::string_view k, FNFormat fn)
     {
         if(fn){
-            if(k.empty() || !m_print)
-                m_print   = fn;
-            if(!k.empty())
+            if(k.empty()){
+                m_print     = fn;
+            } else {
                 m_printers[k]   = fn;
+            }
         }
     }
     
