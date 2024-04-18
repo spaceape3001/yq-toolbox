@@ -177,6 +177,22 @@ namespace yq {
             return m_print;
         return m_write;
     }
+
+    TypeInfo::FNFormat        TypeInfo::printer(string_view_initializer_list_t keys) const
+    {
+        for(std::string_view k : keys){
+            if(k.empty())
+                continue;
+            auto i = m_printers.find(k);
+            if((i != m_printers.end()) && i->second) 
+                return i->second;
+        }
+        
+        if(m_print)
+            return m_print;
+        return m_write;
+    }
+
     
     const std::vector<const PropertyInfo*>&  TypeInfo::properties() const
     {

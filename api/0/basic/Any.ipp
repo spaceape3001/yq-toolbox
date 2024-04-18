@@ -283,6 +283,18 @@ namespace yq {
         return std::error_code();
     }
 
+    std::error_code     Any::print(Stream&str, string_view_initializer_list_t keys) const
+    {
+        assert(m_type);
+        if(!m_type)
+            return errors::null_any_type();
+        TypeInfo::FNFormat    fn  = m_type->printer(keys);
+        if(!fn)
+            return errors::no_print_handler();
+        (fn)(str, raw_ptr());
+        return std::error_code();
+    }
+
     std::string          Any::printable(std::string_view k) const
     {
         std::string  result;

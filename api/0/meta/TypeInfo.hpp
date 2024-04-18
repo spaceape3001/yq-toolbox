@@ -278,6 +278,8 @@ namespace yq {
         
         FNFormat        printer(std::string_view) const;
         
+        FNFormat        printer(string_view_initializer_list_t) const;
+        
         void            add_printer(std::string_view, FNFormat);
         
     };
