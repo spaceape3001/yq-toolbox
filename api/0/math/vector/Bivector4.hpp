@@ -53,6 +53,8 @@ namespace yq {
         
         //! Constructs a unit bivector in the YZ component
         consteval Bivector4(yz_t) noexcept : Bivector4(YZ, one_v<T>) {}
+
+        //! Constructs a bivector with the specified value to the ZW component, all others zero
         constexpr Bivector4(zw_t, T v) noexcept : 
             xy(zero_v<T>), yz(zero_v<T>), zw(zero_v<T>), wx(v), xz(zero_v<T>), yw(zero_v<T>) {}
         consteval Bivector4(zw_t) noexcept : Bivector4(ZW, one_v<T>) {}
