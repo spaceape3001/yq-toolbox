@@ -67,6 +67,7 @@ namespace yq {
     struct opposite_t {};
     struct parse_t {};
     struct read_only_t {};
+    struct recursive_t {};
     struct ref_t {};
     struct rotor_t {};
     struct rows_t {};
@@ -150,6 +151,7 @@ namespace yq {
     static constexpr const opposite_t       OPPOSITE; 
     static constexpr const parse_t          PARSE;
     static constexpr const read_only_t      READ_ONLY;
+    static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;
     static constexpr const rotor_t          ROTOR;
     static constexpr const rows_t           ROWS;
