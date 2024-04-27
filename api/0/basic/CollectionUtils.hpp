@@ -300,6 +300,28 @@ namespace yq {
     
     /*! \brief Augment set
     
+        This augments the set on the left with the new item
+    */
+    template <typename T, typename C, typename A>
+    std::set<T, C, A>&    operator+=(std::set<T, C, A>& a, const T& b)
+    {
+        a.insert(b);
+        return a;
+    }
+
+    /*! \brief Augment set
+    
+        This augments the set on the left with the new item
+    */
+    template <typename T, typename C, typename A>
+    std::set<T, C, A>&    operator+=(std::set<T, C, A>& a, T&& b)
+    {
+        a.insert(std::move(b));
+        return a;
+    }
+
+    /*! \brief Augment set
+    
         This augments the set on the left with the contents of the right
     */
     template <typename T, typename C, typename C2, typename A, typename A2>
