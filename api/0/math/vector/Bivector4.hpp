@@ -82,6 +82,7 @@ namespace yq {
         //! Constructs a unit bivector in the YW component
         consteval Bivector4(yw_t) noexcept : Bivector4(YW, one_v<T>) {}
         
+        //! Constructs a zero bivector
         consteval Bivector4(zero_t) noexcept : Bivector4(ALL, zero_v<T>) {}
 
         template <typename U>
