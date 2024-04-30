@@ -93,6 +93,7 @@ namespace yq {
             return { (U) xy, (U) yz, (U) zw, (U) wx, (U) xz, (U) yw };
         }
         
+        //! Converts to another bivector of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Bivector4<U>() const 
