@@ -104,6 +104,7 @@ namespace yq {
         //! Defaulted comparison operator
         bool operator==(const Bivector4&) const noexcept = default;
         
+        //! Positive (affirmation) operator
         constexpr Bivector4 operator+() const noexcept;
         constexpr Bivector4 operator-() const noexcept;
 
