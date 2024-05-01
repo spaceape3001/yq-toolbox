@@ -53,8 +53,16 @@ namespace yq {
         //! Default constructor
         MetaObject();
         
+        //! Copy constructor (to allow copies), but ID & revision will be different
+        MetaObject(const MetaObject&);
+        
         //! Default destructor
         virtual ~MetaObject();
+        
+    private:
+        MetaObject(MetaObject&&) = delete;
+        MetaObject& operator=(const MetaObject&) = delete;
+        MetaObject& operator=(MetaObject&&) = delete;
     };
 
     /*! \brief Writer of meta object's meta

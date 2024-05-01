@@ -19,6 +19,10 @@ namespace yq {
     {
     }
     
+    MetaObject::MetaObject(const MetaObject&) : MetaObject()
+    {
+    }
+
     MetaObject::~MetaObject()
     {
     }
