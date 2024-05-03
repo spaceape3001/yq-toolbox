@@ -78,12 +78,14 @@ namespace yq {
             ABSTRACT,       //!< It's abstract (ie can't be created)
             ARG,            //!< It's an argument (ArgInfo)
             ASSET,          //!< It's an asset (AssetInfo)
+            ASSOCIATION,    //!< It's an association
             CAMERA,         //!< It's a camera (CameraInfo)
             CACHE,          //!< It's a cache
             COLLECTION,     //!< It's a collection (TypeInfo)
             COMPILER,       //!< It's a compiler
             COMPOUND,       //!< It's a compound/struct (CompoundInfo)
             CONST,          //!< Method/property is CONSTANT/READONLY
+            CONSTRAINT,     //!< It's a constraint
             D1,             //!< Item has one dimensional attributes (or is a 1-dimensional object)
             D2,             //!< Item has two dimensional attributes (or is a 2-dimensional object)
             D3,             //!< Item has three dimensional attributes (or is a 3-dimensional object)
@@ -91,6 +93,7 @@ namespace yq {
             D5,             //!< Item has five dimensional attributes (or is 5-dimensional object)
             D6,             //!< Item has six dimensional attributes (or is a 6-dimensional object)
             DISABLE_REG,    
+            DOODLE,         //!< It's a doodle object
             ENUM,           //!< It's an enumeration (Enum)
             EVENT,          //!< It's an event
             EXECUTE,        //!< Execute permission/capabilty
@@ -113,6 +116,7 @@ namespace yq {
             PIN,            //!< It's a pin
             PIPELINE,       //!< It's a pipeline (PipelineInfo)
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
+            PHYSICAL,       //!< Physical doodle item
             PROPERTY,       //!< Meta has PropertyInfo
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
