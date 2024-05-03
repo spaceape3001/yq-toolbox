@@ -10,11 +10,17 @@
 
 namespace yq {
 
-/*! \brief Macro to override th einfo
+/*! \brief Macro to override the info
 
     This overrides the "MyInfo" for a class (& base) to be the new type.
 */
-#define YQ_OBJECT_INFO( info )     public: using MyInfo    = info;
+#define YQ_OBJECT_INFO( info )      public: using MyInfo    = info;
+
+/*! \brief Macro to override the fixer
+
+    This overrides the "MyFixer" for a class (& base) to be the new type.
+*/
+#define YQ_OBJECT_FIXER( fixer )     public: template <typename T> using MyFixer    = fixer<T>;
 
 /*! \brief Declares an object type
 
@@ -31,7 +37,9 @@ public:                                                 \
     virtual const MyInfo& metaInfo() const override;    \
     static const MyInfo&  staticMetaInfo();
 
-
+    template <typename Obj>
+    struct ObjectFixer;
+    
     //! Root Meta Capable Object 
     //! Serialization to/from XML is expected
     class Object {
@@ -43,19 +51,22 @@ public:                                                 \
         
         Should *ALWAYS* be the most specific info for the class
         */
-        using MyInfo    = ObjectInfo;
+        using MyInfo        = ObjectInfo;
         
         /*! \brief Base Class
         
             Except for Object, all others should have a base class.
         */
-        using MyBase    = void;
+        using MyBase        = void;
         
         /*! \brief Object type itself
         
             A little redundant, but can be useful
         */
-        using MyObject  = Object;
+        using MyObject      = Object;
+        
+        template <typename T>
+        using MyFixer       = ObjectFixer<T>;
         
         
         /*! \brief ObjectInfo applicaable to the derived class
@@ -92,6 +103,9 @@ public:                                                 \
         ObjectFixer(std::string_view szName, typename Obj::MyBase::MyInfo& myBase, std::source_location sl=std::source_location::current()) :
             Obj::MyInfo(szName, myBase, sl)
         {
+            if constexpr ( std::is_abstract_v<Obj> ){
+                Meta::set(Meta::Flag::ABSTRACT);
+            }
         }
         
         //! Got the type, rig the size up
@@ -124,7 +138,7 @@ public:                                                 \
 #define YQ_OBJECT_IMPLEMENT(name)                                                                                   \
     const name::MyInfo&     name::staticMetaInfo()                                                                  \
     {                                                                                                               \
-        static yq::ObjectFixer<name>*  s_info = new yq::ObjectFixer<name>(#name, yq::InfoBinder<MyBase>::edit());   \
+        static name::MyFixer<name>*  s_info = new name::MyFixer<name>(#name, yq::InfoBinder<MyBase>::edit());   \
         return *s_info;                                                                                             \
     }                                                                                                               \
     const name::MyInfo&     name::metaInfo() const                                                                  \
