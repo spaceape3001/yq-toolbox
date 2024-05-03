@@ -110,6 +110,7 @@ namespace yq {
         //! Negative operator
         constexpr Bivector4 operator-() const noexcept;
 
+        //! Adds scalar to this bivector
         constexpr Multivector4<T> operator+(T b) const noexcept;
         constexpr Bivector4 operator+(const Bivector4& b) const noexcept;
         Bivector4&       operator+=(const Bivector4&b) noexcept;
