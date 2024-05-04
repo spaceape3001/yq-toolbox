@@ -120,6 +120,7 @@ namespace yq {
             PIPELINE,       //!< It's a pipeline (PipelineInfo)
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
             PHYSICAL,       //!< Physical doodle item
+            PROJECT,        //!< A project type of object
             PROPERTY,       //!< Meta has PropertyInfo
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
