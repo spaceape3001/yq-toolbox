@@ -86,6 +86,7 @@ namespace yq {
             COMPOUND,       //!< It's a compound/struct (CompoundInfo)
             CONST,          //!< Method/property is CONSTANT/READONLY
             CONSTRAINT,     //!< It's a constraint
+            D0,             //!< Item has zero dimensional attributes (or is a 0-dimensional object)
             D1,             //!< Item has one dimensional attributes (or is a 1-dimensional object)
             D2,             //!< Item has two dimensional attributes (or is a 2-dimensional object)
             D3,             //!< Item has three dimensional attributes (or is a 3-dimensional object)
@@ -123,6 +124,7 @@ namespace yq {
             SEALED,         //!< Registration sealed (WebPage)
             SHADER,         //!< Meta has ShaderInfo
             SMALL,          //!< Small enough to fit in DataBlock (typeinfo)
+            SPACE,          //!< Item is a space item
             STATE,          //!< "State" property
             STATIC,         //!< Non-object specific (global variables, functions, etc)
             SWEPT,          //!< Meta internal

@@ -38,7 +38,7 @@ namespace yq {
             Caller is responsible for deleting the object.
         */
         virtual Object* create() const { return nullptr; }
-   
+
         //! Vector of all object infos
         static const Vector<const ObjectInfo*>&   all();
         
