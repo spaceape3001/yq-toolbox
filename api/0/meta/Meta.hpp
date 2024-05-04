@@ -86,13 +86,13 @@ namespace yq {
             COMPOUND,       //!< It's a compound/struct (CompoundInfo)
             CONST,          //!< Method/property is CONSTANT/READONLY
             CONSTRAINT,     //!< It's a constraint
-            D0,             //!< Item has zero dimensional attributes (or is a 0-dimensional object)
-            D1,             //!< Item has one dimensional attributes (or is a 1-dimensional object)
-            D2,             //!< Item has two dimensional attributes (or is a 2-dimensional object)
-            D3,             //!< Item has three dimensional attributes (or is a 3-dimensional object)
-            D4,             //!< Item has four dimensional attributes (or is 4-dimensional object)
-            D5,             //!< Item has five dimensional attributes (or is 5-dimensional object)
-            D6,             //!< Item has six dimensional attributes (or is a 6-dimensional object)
+            D0,             //!< Item has/supports zero dimensional attributes (or is a 0-dimensional object)
+            D1,             //!< Item has/supports one dimensional attributes (or is a 1-dimensional object)
+            D2,             //!< Item has/supports two dimensional attributes (or is a 2-dimensional object)
+            D3,             //!< Item has/supports three dimensional attributes (or is a 3-dimensional object)
+            D4,             //!< Item has/supports four dimensional attributes (or is 4-dimensional object)
+            D5,             //!< Item has/supports five dimensional attributes (or is 5-dimensional object)
+            D6,             //!< Item has/supports six dimensional attributes (or is a 6-dimensional object)
             DISABLE_REG,    
             DOODLE,         //!< It's a doodle object
             ENUM,           //!< It's an enumeration (Enum)
