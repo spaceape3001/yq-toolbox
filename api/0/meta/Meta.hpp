@@ -104,6 +104,7 @@ namespace yq {
             IMGUI,          //!< ImGUI api enabled/similar usage
             INPUT,          //!< It's flagged as input (graphs)
             LESS,           //!< Can compare
+            LIGHT,          //!< A light source
             LOADER,         //!< A loader
             LOCAL_ONLY,     //!< Local only permission
             LOGIN_REQ,      //!< Login required
