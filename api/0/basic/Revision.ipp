@@ -21,5 +21,10 @@ namespace yq {
         if(m_master)
             m_master->changed();
     }
+
+    void    Revision::set_master(Revision* m)
+    {
+        m_master        = m;
+    }
 }
 

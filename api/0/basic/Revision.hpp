@@ -33,6 +33,9 @@ namespace yq {
         
         //! Call this when something's changed, so that way the revision number is incremented.
         void        changed();
+        
+        void        set_master(Revision* m);
+        
     private:
         uint64_t    m_revision;
         Revision*   m_master;
