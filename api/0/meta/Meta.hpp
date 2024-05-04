@@ -109,6 +109,7 @@ namespace yq {
             LOGIN_REQ,      //!< Login required
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
+            MOTION,         //!< It's a motion item
             NODE,           //!< It's a node
             NO_EXPAND,      //!< Do not expand
             OBJECT,         //!< Meta has ObjectInfo
