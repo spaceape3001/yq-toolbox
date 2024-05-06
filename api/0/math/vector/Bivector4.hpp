@@ -118,6 +118,8 @@ namespace yq {
         
         //! Self-incrementing adding right bivector onto the left.
         Bivector4&       operator+=(const Bivector4&b) noexcept;
+        
+        //! Adds a multivector to this bivector
         constexpr Multivector4<T> operator+(const Multivector4<T>& b) const noexcept;
         constexpr Multivector4<T> operator+(const Quadvector4<T>& b) const noexcept;
         constexpr Multivector4<T> operator+(const Trivector4<T>& b) const noexcept;
