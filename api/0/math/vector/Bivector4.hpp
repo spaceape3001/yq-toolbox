@@ -136,6 +136,8 @@ namespace yq {
         
         //! Subtracts two bivectors
         constexpr Bivector4 operator-(const Bivector4& b) const noexcept;
+        
+        //! Self-decrementing the bivector with the right
         Bivector4&       operator-=(const Bivector4&b) noexcept;
         constexpr Multivector4<T> operator-(const Multivector4<T>& b) const noexcept;
         constexpr Multivector4<T> operator-(const Quadvector4<T>& b) const noexcept;
