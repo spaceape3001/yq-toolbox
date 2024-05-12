@@ -6,9 +6,8 @@
 
 #pragma once
 
-#include <0/json.hpp>
-#include <0/basic/preamble.hpp>
-#include <filesystem>
+#include <nlohmann/json_fwd.hpp>
 
 namespace yq {
+    using json = nlohmann::json;
 }
