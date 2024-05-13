@@ -837,6 +837,8 @@ namespace yq {
     //! Adds the customary <?xml version=" ... line
     void    xml_start(XmlDocument&);
     
+    XmlNode*            create_child(XmlNode&, std::string_view pszTag);
+    
     std::error_code     read_file(XmlDocument&, const std::filesystem::path&);
     std::error_code     save_file(const XmlDocument&, const std::filesystem::path&);
 }

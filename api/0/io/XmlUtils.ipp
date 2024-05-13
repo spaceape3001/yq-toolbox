@@ -283,6 +283,17 @@ namespace yq {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    XmlNode*    create_child(XmlNode& xn, std::string_view pszTag)
+    {
+        XmlDocument*    doc = document_for(xn);
+        if(!doc)
+            return nullptr;
+        XmlNode*        n   = doc -> allocate_element(pszTag);
+        xn.append_node(n);
+        return n;
+    }
+
+
     XmlDocument*         document_for(XmlBase& xb)
     {
         XmlNode*    xn  = xb.parent();
