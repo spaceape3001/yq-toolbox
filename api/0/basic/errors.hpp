@@ -22,6 +22,7 @@ namespace yq::errors {
     using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
     using key_not_found             = error_db::entry<"Key not found">;
     using name_lookup_failed        = error_db::entry<"Name Lookup Failed" >;
+    using no_file_name              = error_db::entry<"No filename specified">;
     using no_getter                 = error_db::entry<"No getter exists" >;
     using no_setter                 = error_db::entry<"No setter exists" >;
     using no_handler                = error_db::entry<"No handler exists" >;
