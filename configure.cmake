@@ -66,6 +66,8 @@ if(NOT YOUR_QUILL_TOOLBOX)
     endif()
 
     SET(YOUR_QUILL_TOOLBOX ${CMAKE_CURRENT_LIST_DIR})
+    
+    find_package(PkgConfig REQUIRED)
 endif()
 
 

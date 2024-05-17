@@ -11,6 +11,7 @@
 #include "Execute.ipp"
 #include "FileResolver.ipp"
 #include "FileUtils.ipp"
+#include "KeyValue.ipp"
 #include "PidFile.ipp"
 #include "PluginLoader.ipp"
 #include "Stream.ipp"
