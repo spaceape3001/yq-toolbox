@@ -152,6 +152,7 @@ namespace yq {
         //! Subtracts vector from bivector
         constexpr Multivector4<T> operator-(const Vector4<T>& b) const noexcept;
 
+        //! Multiplies bivector with value
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Bivector4<product_t<T,U>> operator*(U b) const noexcept;
