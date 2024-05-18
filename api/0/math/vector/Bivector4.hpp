@@ -157,6 +157,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Bivector4<product_t<T,U>> operator*(U b) const noexcept;
 
+        //! Self multiplies bivector with value
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Bivector4& operator*=(U b) noexcept;
