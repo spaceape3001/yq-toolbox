@@ -58,7 +58,7 @@ namespace yq {
     struct Parsed;
     class RefCount;
     class Stream;
-    
+    struct MaybeCase;
 
         // TEMPLATE CLASS (BY CLASS)
     template <class> class EnumImpl;
