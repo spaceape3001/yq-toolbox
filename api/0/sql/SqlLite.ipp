@@ -23,7 +23,7 @@ namespace yq {
 
     int     SqlLite::tables_callback(void* ret, int, char**argv, char**)  
     {
-        (*(string_set_t*) ret) << argv[0];
+        (*(string_set_t*) ret).insert(argv[0]);
         return 0;
     }
 

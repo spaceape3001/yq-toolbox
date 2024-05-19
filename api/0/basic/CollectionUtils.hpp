@@ -36,6 +36,16 @@ namespace yq {
     //  MAP RELATED
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    template <typename K, typename V, typename C, typename A>
+    V   get_value(const std::map<K,V,C,A>& data, const K& key, const V& defValue=V())
+    {
+        auto i = data.find(key);
+        if(i != data.end()){
+            return i->second;
+        } else
+            return defValue;
+    }
+
     template <typename K, typename V, typename C=std::less<K>, typename A=std::allocator<std::pair<const K, V>> >
     std::map<K,V,C,A> make_map(const std::vector<std::pair<K,V>>&values, C cmp=C(), A alloc=A())
     {
