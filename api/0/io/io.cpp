@@ -14,6 +14,7 @@
 #include "KeyValue.ipp"
 #include "PidFile.ipp"
 #include "PluginLoader.ipp"
+#include "StdFile.ipp"
 #include "Stream.ipp"
 #include "StreamOps.ipp"
 #include "XmlFile.ipp"
