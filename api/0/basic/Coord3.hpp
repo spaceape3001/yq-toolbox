@@ -35,17 +35,17 @@ namespace yq {
         T       k;
 
         //! Default constructor
-        constexpr Coord<T,3>() noexcept = default;
+        constexpr Coord() noexcept = default;
         
         //! Initializing constructor
-        constexpr Coord<T,3>(T _i, T _j, T _k) noexcept : 
+        constexpr Coord(T _i, T _j, T _k) noexcept : 
             i(_i), j(_j), k(_k) {}
             
         //! Constructs all elements to same value
-        constexpr Coord<T,3>(all_t, T _v) noexcept : Coord<T,3>(_v, _v, _v) {}
+        constexpr Coord(all_t, T _v) noexcept : Coord<T,3>(_v, _v, _v) {}
         
         //! Zero constructor
-        constexpr Coord<T,3>(zero_t) noexcept : Coord<T,3>(ALL, zero_v<T>) {}
+        constexpr Coord(zero_t) noexcept : Coord<T,3>(ALL, zero_v<T>) {}
 
         //! Defaulted equality  operator
         constexpr bool operator==(const Coord&) const noexcept = default;

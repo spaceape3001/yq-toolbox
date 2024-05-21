@@ -29,17 +29,17 @@ namespace yq {
         T       i;
 
         //! Default constructor
-        constexpr Coord<T,1>() noexcept = default;
+        constexpr Coord() noexcept = default;
         
         //! Initializing constructor
-        constexpr Coord<T,1>(T _i) noexcept : 
+        constexpr Coord(T _i) noexcept : 
             i(_i)  {}
             
         //! All components to given value
-        constexpr Coord<T,1>(all_t, T _v) noexcept : Coord<T,1>(_v) {}
+        constexpr Coord(all_t, T _v) noexcept : Coord<T,1>(_v) {}
         
         //! Zero initializes
-        constexpr Coord<T,1>(zero_t) noexcept : Coord<T,1>(ALL, zero_v<T>) {}
+        constexpr Coord(zero_t) noexcept : Coord<T,1>(ALL, zero_v<T>) {}
 
         //! Defaulted spaceship  operator
         constexpr auto operator<=>(const Coord&) const noexcept = default;

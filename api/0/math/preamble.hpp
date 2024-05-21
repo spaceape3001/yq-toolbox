@@ -654,6 +654,8 @@ namespace yq {
     
     struct SimpleSpace;
     
+    class UserExpr;
+    
     template <typename T, T> struct Counter;
     
     //!  Standard "zero-point" counter
