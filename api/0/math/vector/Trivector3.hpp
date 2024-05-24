@@ -17,6 +17,8 @@ namespace yq {
     struct Trivector3 {
         //! Our argument type
         using component_type = T;
+        
+        //! XYZ component (which for 3-dimension is only one)
         T     xyz;
 
         constexpr Trivector3() noexcept = default;
