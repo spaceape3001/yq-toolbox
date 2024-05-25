@@ -21,6 +21,7 @@ namespace yq {
         //! XYZ component (which for 3-dimension is only one)
         T     xyz;
 
+		//! Default constructor
         constexpr Trivector3() noexcept = default;
         constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
         constexpr Trivector3(all_t, T v) noexcept : xyz(v) {}
