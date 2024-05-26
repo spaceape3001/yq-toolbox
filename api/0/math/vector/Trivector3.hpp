@@ -23,6 +23,8 @@ namespace yq {
 
 		//! Default constructor
         constexpr Trivector3() noexcept = default;
+        
+        //! Component wise constructor (which is only one)
         constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
         constexpr Trivector3(all_t, T v) noexcept : xyz(v) {}
         template <typename=void> requires has_nan_v<T>
