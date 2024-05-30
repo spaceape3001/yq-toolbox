@@ -36,6 +36,8 @@ namespace yq {
         
         //! Constructs to a size of one, the unit trivector
         consteval Trivector3(one_t) noexcept : Trivector3(ALL, one_v<T>) {}
+        
+        //! Constructs to a value in the XYZ component
         constexpr Trivector3(xyz_t, T v) noexcept : xyz(v) {}
         consteval Trivector3(xyz_t) noexcept : Trivector3(XYZ, one_v<T>) {}
         consteval Trivector3(zero_t) noexcept : Trivector3(ALL, zero_v<T>) {}
