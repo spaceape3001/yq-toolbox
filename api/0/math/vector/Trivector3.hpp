@@ -42,6 +42,8 @@ namespace yq {
 
         //! Constructs to a unit value in the XYZ component
         consteval Trivector3(xyz_t) noexcept : Trivector3(XYZ, one_v<T>) {}
+        
+        //! Constructs to a zero trivector
         consteval Trivector3(zero_t) noexcept : Trivector3(ALL, zero_v<T>) {}
         
         template <typename U>
