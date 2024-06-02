@@ -46,6 +46,7 @@ namespace yq {
         //! Constructs to a zero trivector
         consteval Trivector3(zero_t) noexcept : Trivector3(ALL, zero_v<T>) {}
         
+        //! Converts to another Trivector3 of convertible data type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Trivector3<U>() const noexcept
