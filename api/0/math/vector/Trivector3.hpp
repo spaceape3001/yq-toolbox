@@ -54,6 +54,7 @@ namespace yq {
             return { (U) xyz };
         }
         
+        //! Converts to another Trivector3 of convertible data type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Trivector3<U>() const 
