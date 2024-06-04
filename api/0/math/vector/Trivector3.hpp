@@ -73,6 +73,7 @@ namespace yq {
         */
         constexpr Trivector3 operator-() const noexcept;
 
+        //! Adds scalar to trivector
         constexpr Multivector3<T> operator+(T b) const noexcept;
         constexpr Trivector3 operator+(const Trivector3& b) const noexcept;
         Trivector3& operator+=(const Trivector3& b) noexcept;
