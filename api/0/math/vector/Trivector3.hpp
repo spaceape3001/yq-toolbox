@@ -78,6 +78,8 @@ namespace yq {
         
         //! Adds trivectors 
         constexpr Trivector3 operator+(const Trivector3& b) const noexcept;
+        
+        //! Self-incrementing adding right trivector into this trivector
         Trivector3& operator+=(const Trivector3& b) noexcept;
         constexpr Multivector3<T> operator+(const Bivector3<T>& b) const noexcept;
         constexpr Multivector3<T> operator+(const Multivector3<T>& b) const noexcept;
