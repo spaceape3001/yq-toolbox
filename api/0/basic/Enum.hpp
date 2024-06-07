@@ -511,6 +511,12 @@ namespace yq {
     }
 
 
+    template <typename E>
+    std::string_view    key(EnumImpl<E> e)
+    {
+        return e.key();
+    }
+
     //template <typename E>
     //bool    EnumImpl<E>::operator==(typename E::enum_t rhs) const
     //{

@@ -14,6 +14,7 @@ namespace yq::errors {
     using bad_conversion            = error_db::entry<"Bad conversion">;
     using checksum_failure          = error_db::entry<"Checksum failure">;
     using const_object_violation    = error_db::entry<"Constant object violated">;
+    using empty_key                 = error_db::entry<"Empty key">;
     using empty_string              = error_db::entry<"Empty string">;
     using getter_failed             = error_db::entry<"Getter function returned false">;
     using incompatible_types        = error_db::entry<"Incompatible types">;

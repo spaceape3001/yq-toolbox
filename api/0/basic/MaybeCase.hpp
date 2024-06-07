@@ -12,7 +12,7 @@ namespace yq {
 
     //! Used for situations that may or may not be case sensitive... note one-way on construction
     struct MaybeCase {
-        const bool  igCase = false;
+        bool  igCase = false;
         
         bool    operator()(const std::string_view&, const std::string_view&) const;
         bool    operator()(char, char) const;

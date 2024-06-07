@@ -513,6 +513,9 @@ namespace yq {
     /*! \brief Test to see if string matches one of the patterns
     */
     bool  is_in(std::string_view str, const std::vector<std::string_view>& pat);
+    
+    bool is_in(char32_t, std::u32string_view);
+    bool is_in(char32_t, std::string_view);
 
     /*! \brief Tests if b < a ignoring case
     
@@ -1589,6 +1592,8 @@ namespace yq {
     /*! \brief Formats a time to a string
     */
     std::string         to_time_string(std::time_t, const char* fmt="yyyy-MM-dd HH:mm:ss");
+    
+    std::u32string      to_u32string(std::string_view);
 
     /*! \brief Decodes the given string into an unsigned integer
     

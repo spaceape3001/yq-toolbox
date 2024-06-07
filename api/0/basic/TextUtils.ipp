@@ -8,6 +8,7 @@
 
 #include "TextUtils.hpp"
 #include <0/basic/IterUtf8.hpp>
+#include <0/basic/Iter32.hpp>
 #include <0/basic/IterW.hpp>
 
 #include <0/basic/Compare.hpp>
@@ -676,6 +677,25 @@ namespace yq {
         return false;
     }
 
+    bool is_in(char32_t ch, std::u32string_view pat)
+    {
+        for(char32_t c : pat){
+            if(is_similar(c, ch))
+                return true;
+        }
+        return false;
+    }
+
+    bool  is_in(char32_t ch, std::string_view pat)
+    {
+        Iter32 them(pat);
+        while(them.more()){
+            if(is_similar(them.next(), ch))
+                return true;
+        }
+        return false;
+    }
+
     bool  is_less_igCase(std::string_view a, std::string_view b)
     {
         return is_less( compare_igCase(a,b));
@@ -684,6 +704,16 @@ namespace yq {
     bool    is_newline(char ch)
     {
         return (ch == '\r') || (ch == '\n');
+    }
+
+    bool  is_similar(char a, char b)
+    {
+        return to_lower(a) == to_lower(b);
+    }
+
+    bool  is_similar(char32_t a, char32_t b)
+    {
+        return to_lower(a) == to_lower(b);
     }
 
     bool  is_similar(std::string_view a, std::string_view b)
@@ -1783,6 +1813,15 @@ namespace yq {
         char    buffer[256];
         strftime(buffer, sizeof(buffer), fmt, &gt);
         return std::string(buffer);
+    }
+
+    std::u32string      to_u32string(std::string_view in)
+    {
+        std::u32string      ret;
+        Iter32  input(in);
+        while(input.more())
+            ret.push_back(input.next());
+        return ret;
     }
 
     Expect<unsigned>  to_uint(const char*s, size_t n)
