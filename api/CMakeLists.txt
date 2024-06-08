@@ -29,6 +29,7 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/basic.cpp
     0/basic/MD5.cpp
     0/chemistry/chemistry.cpp
+    0/expr/expr.cpp
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
