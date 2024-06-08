@@ -23,7 +23,7 @@ namespace yq::expr {
 
     class Grammar {
     public:
-        using OpMap         = std::map<std::u32string_view, void*>;
+        using OpMap         = std::map<std::u32string_view, const void*>;
         //using U32ViewSet    = std::set<std::u32string_view>;
         using C32Hash       = std::unordered_set<char32_t>;
         //using U32Hash       = std::unordered_set<char32_t>;
@@ -40,7 +40,6 @@ namespace yq::expr {
         //! (ie, '_')
         void        add_punct_text(char32_t);
         
-        static const Grammar&   default_grammar();
     
     private:
         OpMap       m_operators;

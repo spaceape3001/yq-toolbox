@@ -18,6 +18,9 @@
     Symbol is the text the user defined, minimal interpretation.
     
     OpCode is the execution.
+    
+    And YES this is using UTF-32 encoding... so we can capture the other mathematical
+    operators, etc.
 */
 namespace yq::expr {
 
@@ -63,4 +66,6 @@ namespace yq::expr {
         //! Close (ie pop)
         Close
     };
+
+    const Grammar&   default_grammar();
 }

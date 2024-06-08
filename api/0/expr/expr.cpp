@@ -33,6 +33,13 @@ namespace yq::expr {
         static Repo&  _r  = repo();                                     \
         tbb::spin_rw_mutex::scoped_lock     _lock(_r.mutex, true);
 
+    const Grammar&   default_grammar()
+    {
+        const Repo& _r  = repo();
+        return _r.grammar;
+    }
+
 }
 
+#include "Expression.ipp"
 #include "Grammar.ipp"

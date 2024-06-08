@@ -10,12 +10,6 @@
 #include <0/basic/TextUtils.hpp>
 
 namespace yq::expr {
-    const Grammar&   Grammar::default_grammar()
-    {
-        const Repo& _r  = repo();
-        return _r.grammar;
-    }
-
     Grammar::Grammar()
     {
     }
