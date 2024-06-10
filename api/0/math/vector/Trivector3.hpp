@@ -90,6 +90,8 @@ namespace yq {
         
         //! Adds a vector to this trivector, returns the multivector result
         constexpr Multivector3<T> operator+(const Vector3<T>& b) const noexcept;
+        
+        //! Subtracts a scalar from this trivector, returns the mulltivector result
         constexpr Multivector3<T> operator-(T b) const noexcept;
         constexpr Trivector3 operator-(const Trivector3& b) const noexcept;
         Trivector3& operator-=(const Trivector3& b) noexcept;
