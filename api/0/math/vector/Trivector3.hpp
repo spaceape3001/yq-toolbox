@@ -96,6 +96,8 @@ namespace yq {
         
         //! Subtracts one trivector from another, returns the trivector result
         constexpr Trivector3 operator-(const Trivector3& b) const noexcept;
+        
+        //! Self-subtracts a trivector from this trivector
         Trivector3& operator-=(const Trivector3& b) noexcept;
         constexpr Multivector3<T> operator-(const Bivector3<T>& b) const noexcept;
         constexpr Multivector3<T> operator-(const Multivector3<T>& b) const noexcept;
