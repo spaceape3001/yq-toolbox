@@ -109,6 +109,7 @@ namespace yq {
         //! Subtracts a vector from this trivector, returns the multivector result
         constexpr Multivector3<T> operator-(const Vector3<T>& b) const noexcept;
 
+        //! Multiplies a scalar with this trivector, returning the trivector result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Trivector3<product_t<T,U>> operator*(U b) const noexcept;
