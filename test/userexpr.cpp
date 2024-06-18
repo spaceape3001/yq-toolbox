@@ -5,11 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
+#include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
 #include <0/math/expr/Symbol.hpp>
-//#include <0/expr/Expression.hpp>
+#include <0/math/expr/Instruction.hpp>
 #include <iostream>
+#include <cmath>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -61,10 +63,41 @@ bool    parses(const std::string_view uexpr, std::initializer_list<Symbol> match
     return success;
 }
 
+bool    sdouble(std::string_view ux, double val, double ep=1e-14)
+{
+    auto toks   = tokenize(ux);
+    if(!toks){
+        std::cerr << "Expression parsing failed: " << toks.error().message() << "\n";
+        return false;
+    }
+    
+    auto ccx    = compile(*toks);
+    if(!ccx){
+        std::cerr << "Expression compiling failed: " << ccx.error().message() << "\n";
+        return false;
+    }
+    
+    auto valx    = evaluate(*ccx);
+    if(!valx){
+        std::cerr << "Expression evaluation failed: " << valx.error().message() << "\n";
+        return false;
+    }
+    
+    auto dd = to_double(*valx);
+    if(!dd){
+        std::cerr << "Extraction of value failed: " << dd.error().message() << "\n";
+        return false;
+    }
+    
+    return ::fabs(*dd - val) <= ep;
+}
 
 ut::suite tests = []{
     "Tokenize"_test = []{
         expect( token(U"0") == Token{ SymType::Int, 1 });
+        expect( token(U"0x1") == Token{ SymType::Hex, 3 });
+        expect( token(U"0xA") == Token{ SymType::Hex, 3 });
+        expect( token(U"001") == Token{ SymType::Octal, 3 });
         expect( token(U"pi") == Token{ SymType::Text, 2 });
         expect( token(U"3pi") == Token{ SymType::Int, 1 });
         expect( token(U".3pi") == Token{ SymType::Float, 2 });
@@ -87,9 +120,21 @@ ut::suite tests = []{
         expect(parses( "a^2+y", {{ U"a", SymType::Text }, {U"^", SymType::Operator}, 
             {U"2", SymType::Int}, { U"+", SymType::Operator}, {U"y", SymType::Text}}));
     };
+    
+    "Evaluate Simple"_test = []{
+        expect(sdouble("0.", 0.));
+        expect(sdouble("1.0", 1.));
+        expect(sdouble("0x1", 1.));
+        expect(sdouble("10.0", 10.));
+        expect(sdouble("10", 10.));
+        expect(sdouble("0XA", 10.));
+        expect(sdouble("012", 10.));
+        expect(sdouble("pi", std::numbers::pi_v<double>));
+    };
 };
 
 int main(){
+    log_to_std_error();
     return ut::cfg<>.run();
 };
 

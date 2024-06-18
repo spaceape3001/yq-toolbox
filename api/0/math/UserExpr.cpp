@@ -53,52 +53,10 @@ namespace yq::expr {
 
 }
 
+#include "expr/Instruction.ipp"
 #include "expr/Symbol.ipp"
 
 namespace yq::expr {
-    Expect<InsVector>   compile(const SymVector& syms)
-    {
-        static const Repo&    _r  = repo();
-        
-        InsVector       ret;
-        if(syms.empty())
-            return ret;
-            
-        ret.reserve(syms.size());
-        for(const Symbol& sym : syms){
-            Instruction     ins;
-            std::error_code ec;
-            switch(sym.type){
-            case SymType::None:
-                continue;
-            case SymType::Error:
-                return errors::existing_error();
-            case SymType::Float:
-                ins.data    = *to_double(sym.text);
-                break;
-            default:
-                break;
-            }
-        }
-        
-        return errors::todo();
-    }
-    
-    Expect<InsVector>   compile(std::string_view in)
-    {
-        std::u32string  u32 = to_u32string(in);
-        return compile(u32);
-    }
-    
-    Expect<InsVector>   compile(std::u32string_view in)
-    {
-        Expect<SymVector>   syms    = tokenize(in);
-        if(!syms)
-            return unexpected(syms.error());
-        return compile(*syms);
-    }
-    
-
     Expect<Any>         constant(std::string_view sv)
     {
         std::u32string      u32 = to_u32string(sv);
@@ -116,10 +74,16 @@ namespace yq::expr {
         return errors::bad_argument();
     }
 
-    Expect<Any>         evaluate(const InsVector& vec, VarMap& vars)
+    bool                has_constant(std::string_view k)
     {
-        std::stack<Any>     data;
-        
+        std::u32string u32  = to_u32string(k);
+        return has_constant(u32);
+    }
+    
+    bool                has_constant(const std::u32string& k)
+    {
+        LOCK
+        return _r.constants.contains(k);
     }
 
     void                set_constant(const std::u32string& k, const Any& v)

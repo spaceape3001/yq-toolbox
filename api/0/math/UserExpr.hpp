@@ -8,11 +8,11 @@
 
 #include <0/basic/preamble.hpp>
 #include <0/basic/Any.hpp>
-#include <0/basic/Enum.hpp>
 #include <0/basic/MaybeCase.hpp>
 #include <0/math/preamble.hpp>
 #include <0/math/expr/preamble.hpp>
 #include <0/math/expr/Symbol.hpp>
+#include <0/math/expr/Instruction.hpp>
 
 #include <functional>
 #include <iosfwd>
@@ -27,45 +27,14 @@ namespace log4cpp { class CategoryStream; }
 
 
 namespace yq::expr {
-    struct Operator;
-    struct Function;
-
-    using u32string_set_t   = std::set<std::u32string>;
-    
-    YQ_ENUM(OpCode,,
-        //! No operation (no-op)
-        None        = 0,
-        
-        //! Assign top item in stack to key in instruction data
-        Assign
-    )
-    
-    struct Instruction {
-        Any                 data;
-        std::u32string      key;
-        void*               exec    = nullptr;
-        OpCode              code    = OpCode::None;
-    };
-
-    using OpMap         = std::map<std::u32string_view, const Operator*>;
-    using C32Hash       = std::unordered_set<char32_t>;
-    using VarMap        = std::map<std::u32string,Any,IgCase>;
-    using ConMap        = std::map<std::u32string,Any,IgCase>;
-    using FnMap         = std::map<std::u32string_view, const Function*, IgCase>;
-    
-    Expect<Any>         evaluate(const InsVector&, VarMap&);
-
-    Expect<InsVector>   compile(const SymVector&);
-    Expect<InsVector>   compile(std::string_view);
-    Expect<InsVector>   compile(std::u32string_view);
+    bool                has_constant(std::string_view);
+    bool                has_constant(const std::u32string&);
     void                set_constant(const std::u32string&, const Any&);
     void                set_constant(std::string_view, const Any&);
     void                set_constant(const std::u32string&, Any&&);
     void                set_constant(std::string_view, Any&&);
     Expect<Any>         constant(std::string_view);
     Expect<Any>         constant(const std::u32string&);
-    
-
 }
 
 

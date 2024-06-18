@@ -11,10 +11,14 @@
 namespace yq::errors {
     using bad_access                = error_db::entry<"Bad access">;
     using bad_argument              = error_db::entry<"Bad argument provided">;
+    using bad_constant              = error_db::entry<"Bad constant">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
+    using bad_instruction           = error_db::entry<"Bad instruction">;
+    using bad_variable              = error_db::entry<"Bad variable">;
     using checksum_failure          = error_db::entry<"Checksum failure">;
     using const_object_violation    = error_db::entry<"Constant object violated">;
     using empty_key                 = error_db::entry<"Empty key">;
+    using empty_stack               = error_db::entry<"Empty stack">;
     using empty_string              = error_db::entry<"Empty string">;
     using existing_error            = error_db::entry<"Existing error in argument">;
     using getter_failed             = error_db::entry<"Getter function returned false">;
@@ -23,6 +27,7 @@ namespace yq::errors {
     using internal_error            = error_db::entry<"Internal consistency error">;
     using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
     using key_not_found             = error_db::entry<"Key not found">;
+    using mulitple_values           = error_db::entry<"Multiple values remain">;
     using name_lookup_failed        = error_db::entry<"Name Lookup Failed" >;
     using no_file_name              = error_db::entry<"No filename specified">;
     using no_getter                 = error_db::entry<"No getter exists" >;
