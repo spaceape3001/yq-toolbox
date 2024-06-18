@@ -1464,6 +1464,66 @@ namespace yq {
         return ret;
     }
 
+    Expect<uint8_t>  to_octal8(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        trim_ws(s,n);
+        if(!n)
+            return errors::empty_string();
+        return int_from_chars<uint8_t>(s,n,8);
+    }
+    
+    Expect<uint8_t>  to_octal8(std::u32string_view s)
+    {
+        return to_octal8(s.data(), s.size());
+    }
+
+    Expect<uint16_t>  to_octal16(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        trim_ws(s,n);
+        if(!n)
+            return errors::empty_string();
+        return int_from_chars<uint16_t>(s,n,8);
+    }
+    
+    Expect<uint16_t>  to_octal16(std::u32string_view s)
+    {
+        return to_octal16(s.data(), s.size());
+    }
+
+    Expect<uint32_t>  to_octal32(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        trim_ws(s,n);
+        if(!n)
+            return errors::empty_string();
+        return int_from_chars<uint32_t>(s,n,8);
+    }
+    
+    Expect<uint32_t>  to_octal32(std::u32string_view s)
+    {
+        return to_octal32(s.data(), s.size());
+    }
+
+    Expect<uint64_t>  to_octal64(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        trim_ws(s,n);
+        if(!n)
+            return errors::empty_string();
+        return int_from_chars<uint64_t>(s,n,8);
+    }
+
+    Expect<uint64_t>  to_octal64(std::u32string_view s)
+    {
+        return to_octal64(s.data(), s.size());
+    }
+
     Expect<short>  to_short(const char32_t*s, size_t n)
     {
         if(!s)

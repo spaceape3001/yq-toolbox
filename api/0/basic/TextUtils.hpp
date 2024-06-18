@@ -1285,6 +1285,17 @@ namespace yq {
     */
     std::string  to_lower(std::string_view s);
 
+    Expect<uint8_t>   to_octal8(const char*s, size_t n);
+    Expect<uint8_t>   to_octal8(std::string_view s);
+
+    Expect<uint16_t>  to_octal16(const char*s, size_t n);
+    Expect<uint16_t>  to_octal16(std::string_view s);
+
+    Expect<uint32_t>  to_octal32(const char*s, size_t n);
+    Expect<uint32_t>  to_octal32(std::string_view s);
+
+    Expect<uint64_t>  to_octal64(const char*s, size_t n);
+    Expect<uint64_t>  to_octal64(std::string_view s);
 
     /*! \brief Decodes the given string into a short integer
     

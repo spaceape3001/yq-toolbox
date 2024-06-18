@@ -1266,6 +1266,18 @@ namespace yq {
     */
     std::u32string  to_lower(const std::u32string_view&s);
 
+    Expect<uint8_t>   to_octal8(const char32_t*s, size_t n);
+    Expect<uint8_t>   to_octal8(std::u32string_view s);
+
+    Expect<uint16_t>  to_octal16(const char32_t*s, size_t n);
+    Expect<uint16_t>  to_octal16(std::u32string_view s);
+
+    Expect<uint32_t>  to_octal32(const char32_t*s, size_t n);
+    Expect<uint32_t>  to_octal32(std::u32string_view s);
+
+    Expect<uint64_t>  to_octal64(const char32_t*s, size_t n);
+    Expect<uint64_t>  to_octal64(std::u32string_view s);
+
     /*! \brief Decodes the given u32string into a short integer
     
         This trims whitespace from both ends & decodes the non-whitespace text.
