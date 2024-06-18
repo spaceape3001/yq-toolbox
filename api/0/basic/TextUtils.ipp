@@ -6,18 +6,19 @@
 
 #pragma once
 
-#include "TextUtils.hpp"
-#include <0/basic/IterUtf8.hpp>
-#include <0/basic/Iter32.hpp>
-#include <0/basic/IterW.hpp>
+#include <0/basic/TextUtils.hpp>
 
 #include <0/basic/Compare.hpp>
 #include <0/basic/Comma.hpp>
+#include <0/basic/IterUtf8.hpp>
+#include <0/basic/Iter32.hpp>
+#include <0/basic/IterW.hpp>
 #include <0/basic/List.hpp>
+#include <0/basic/Logging.hpp>
 #include <0/basic/Map.hpp>
 #include <0/basic/MultiMap.hpp>
 #include <0/basic/Set.hpp>
-#include <0/basic/Logging.hpp>
+#include <0/basic/TextUtils32.hpp>
 #include <0/basic/errors.hpp>
 
 #include <bitset>
@@ -677,15 +678,6 @@ namespace yq {
         return false;
     }
 
-    bool is_in(char32_t ch, std::u32string_view pat)
-    {
-        for(char32_t c : pat){
-            if(is_similar(c, ch))
-                return true;
-        }
-        return false;
-    }
-
     bool  is_in(char32_t ch, std::string_view pat)
     {
         Iter32 them(pat);
@@ -707,11 +699,6 @@ namespace yq {
     }
 
     bool  is_similar(char a, char b)
-    {
-        return to_lower(a) == to_lower(b);
-    }
-
-    bool  is_similar(char32_t a, char32_t b)
     {
         return to_lower(a) == to_lower(b);
     }
@@ -1018,7 +1005,7 @@ namespace yq {
     
     std::vector<std::string_view>  split(const char* s, size_t n, char32_t ch, size_t number)
     {
-        Vector<std::string_view>    ret;
+        std::vector<std::string_view>    ret;
         if(s && n){
             const char*     z0  = s;
             if(number){
@@ -1217,14 +1204,6 @@ namespace yq {
         });
     }
 
-    size_t       strnlen(const char32_t* z, size_t cb)
-    { 
-        size_t  n   = 0;
-        for(; z && *z && cb; --cb, ++z, ++n)
-            ;
-        return n;
-    }
-
     const char*  strnstr(const char* haystack, size_t nHay, const char* needle, size_t nNeedle)
     {
         //  weed outs
@@ -1397,19 +1376,11 @@ namespace yq {
         }
         
 
-        #if FP_CHARCONV
-            double  result = NaN;
-            auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
-            if(ec != std::errc())
-                return std::unexpected(std::make_error_code(ec));
-            return result;
-        #else
-            char*   z       = nullptr;
-            double  res     = std::strtod(s, &z);
-            if((const char*) s != z)
-                return res;
-            return errors::bad_argument();
-        #endif
+        double  result = NaN;
+        auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
+        if(ec != std::errc())
+            return std::unexpected(std::make_error_code(ec));
+        return result;
     }
 
     Expect<double>  to_double(std::string_view s)
@@ -1435,19 +1406,11 @@ namespace yq {
             break;
         }
         
-        #if FP_CHARCONV
-            float  result = NaNf;
-            auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
-            if(ec != std::errc())
-                return std::unexpected(std::make_error_code(ec));
-            return result;
-        #else
-            char*   z       = nullptr;
-            float  res     = std::strtof(s, &z);
-            if((const char*) s != z)
-                return res;
-            return errors::bad_argument();
-        #endif
+        float  result = NaNf;
+        auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
+        if(ec != std::errc())
+            return std::unexpected(std::make_error_code(ec));
+        return result;
     }
 
     Expect<float>  to_float(std::string_view s)
@@ -1634,15 +1597,6 @@ namespace yq {
         return ret;
     }
     
-    std::u32string  to_lower(const std::u32string_view&s)
-    {
-        std::u32string ret;
-        ret.reserve(s.size());
-        for(char32_t ch : s)
-            ret += to_lower(ch);
-        return ret;
-    }
-
     Expect<short>  to_short(const char*s, size_t n)
     {
         if(!s)
@@ -1927,6 +1881,16 @@ namespace yq {
     Expect<unsigned>  to_unsigned(std::string_view s)
     {
         return to_unsigned(s.data(), s.size());
+    }
+
+    std::string  to_upper(std::string_view s)
+    {
+        std::string ret;
+        ret.reserve(s.size());
+        iter_utf8(s, [&](char32_t ch){
+            ret += to_upper(ch);
+        });
+        return ret;
     }
 
     Expect<unsigned short>    to_ushort(const char*s, size_t n)

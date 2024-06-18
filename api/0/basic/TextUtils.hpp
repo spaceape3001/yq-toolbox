@@ -14,8 +14,6 @@
 
 namespace yq {
 
-    //! The reasonable maximum for a raw null terminated string... anything else should be in a string view (at least)
-    static constexpr const uint64_t         MAX_NULL_TERM       = 8192;
     
     //! Concatenates the given 32-bit UTF character on to the string as UTF-8
     std::string&  operator+=(std::string&, char32_t);
@@ -364,28 +362,12 @@ namespace yq {
         return ::isalnum(ch);
     }
     
-    /*! \brief Tests for an alphanumeric character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_alnum(char32_t ch)
-    {
-        return ::iswalnum(ch);
-    }
-
     /*! \brief Tests for an alphabetical character
         \note   This is here for reasons of better spelling and to harmonize with overloads.
     */
     inline bool  is_alpha(char ch)
     {
         return ::isalpha(ch);
-    }
-
-    /*! \brief Tests for an alphabetical character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_alpha(char32_t ch)
-    {
-        return ::iswalpha(ch);
     }
 
     /*! \brief Tests entire string for alpha
@@ -411,14 +393,6 @@ namespace yq {
         return ::isblank(ch);
     }
 
-    /*! \brief Tests for blank character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_blank(char32_t ch)
-    {
-        return ::iswblank(ch);
-    }
-
     /*! \brief Tests for blank string
         \param[in] s pointer to string
         \param[in] n length of the string
@@ -438,28 +412,12 @@ namespace yq {
         return ::iscntrl(ch);
     }
     
-    /*! \brief Tests for control character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_control(char32_t ch)
-    {
-        return ::iswcntrl(ch);
-    }
-    
     /*! \brief Tests for numeric digit
         \note   This is here for reasons of better spelling and to harmonize with overloads.
     */
     inline bool  is_digit(char ch)
     {
         return ::isdigit(ch);
-    }
-    
-    /*! \brief Tests for numeric digit
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_digit(char32_t ch)
-    {
-        return ::iswdigit(ch);
     }
     
     /*! \brief Tests for emptiness
@@ -481,14 +439,6 @@ namespace yq {
         return ::isgraph(ch);
     }
     
-    /*! \brief Tests for graphical character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_graph(char32_t ch)
-    {
-        return ::iswgraph(ch);
-    }
-
     /*! \brief Tests if b > a ignoring case
     
         This ignores case differences as it compares strings a & b.
@@ -513,9 +463,6 @@ namespace yq {
     /*! \brief Test to see if string matches one of the patterns
     */
     bool  is_in(std::string_view str, const std::vector<std::string_view>& pat);
-    
-    bool is_in(char32_t, std::u32string_view);
-    bool is_in(char32_t, std::string_view);
 
     /*! \brief Tests if b < a ignoring case
     
@@ -531,14 +478,6 @@ namespace yq {
         return ::islower(ch);
     }
 
-    /*! \brief Tests for lower-case alphabetical character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_lower(char32_t ch)
-    {
-        return ::islower(ch);
-    }
-    
     /*! \brief Tests for new line character
     */
     bool         is_newline(char);
@@ -551,14 +490,6 @@ namespace yq {
         return ::isprint(ch);
     }
     
-    /*! \brief Tests for printable character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_print(char32_t ch)
-    {
-        return ::iswprint(ch);
-    }
-    
     /*! \brief Tests for punctuation character
         \note   This is here for reasons of better spelling and to harmonize with overloads.
     */
@@ -566,22 +497,10 @@ namespace yq {
     {
         return ::ispunct(ch);
     }
-    
-    /*! \brief Tests for punctuation character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_punct(char32_t ch)
-    {
-        return ::iswpunct(ch);
-    }
 
     /*! \brief Tests for equality while ignoring case
     */
     bool  is_similar(char, char);
-
-    /*! \brief Tests for equality while ignoring case
-    */
-    bool  is_similar(char32_t, char32_t);
 
 
     /*! \brief Tests for equality while ignoring case
@@ -595,14 +514,6 @@ namespace yq {
     {
         return ::isspace(ch);
     }
-
-    /*! \brief Tests for white-space character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_space(char32_t ch)
-    {
-        return ::iswspace(ch);
-    }
     
     /*! \brief Tests for white-space characters
         \return TRUE if ALL characters in the string view are white space
@@ -615,14 +526,6 @@ namespace yq {
     inline bool  is_upper(char ch)
     {
         return ::isupper(ch);
-    }
-
-    /*! \brief Tests for upper-case alphabetical character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_upper(char32_t ch)
-    {
-        return ::iswupper(ch);
     }
     
     /*! \brief Tests for a valid key
@@ -640,14 +543,6 @@ namespace yq {
     inline bool  is_xdigit(char ch)
     {
         return ::isxdigit(ch);
-    }
-    
-    /*! \brief Tests for hexadecimal digit character
-        \note   This is here for reasons of better spelling and to harmonize with overloads.
-    */
-    inline bool  is_xdigit(char32_t ch)
-    {
-        return ::iswxdigit(ch);
     }
     
 
@@ -1004,6 +899,8 @@ namespace yq {
     /*! \brief Strips ALL spaces from the input
     */
     std::string  strip_spaces(std::string_view);
+    
+    using ::strlen;
 
     /*! \brief Finds the next character 
     
@@ -1057,10 +954,9 @@ namespace yq {
         return strlen_s(z, cb);
     }
     #else
+    using ::strncasecmp;
     using ::strnlen;
     #endif
-    
-    size_t          strnlen(const char32_t* z, size_t cb);
     
     
     /*! \brief Finds the first needle
@@ -1382,16 +1278,6 @@ namespace yq {
     {
         return ::tolower(ch);
     }
-
-    /*! \brief Converts to lower case
-    
-        Harmonized overload (for name consistency) to convert a character to lower case. 
-        (If it's not upper case, then the input argument is returned.)
-    */
-    inline char32_t  to_lower(char32_t ch)
-    {
-        return ::towlower(ch);
-    }
     
     /*! \brief Converts to lower case
     
@@ -1399,10 +1285,6 @@ namespace yq {
     */
     std::string  to_lower(std::string_view s);
 
-    /*! \brief Converts to lower case
-        Converts the given string to lowercase.
-    */
-    std::u32string  to_lower(const std::u32string_view&s);
 
     /*! \brief Decodes the given string into a short integer
     
@@ -1753,24 +1635,10 @@ namespace yq {
     
     /*! \brief Converts to upper case
     
-        Converts the given character to upper case
-    */
-    inline char32_t  to_upper(char32_t ch)
-    {
-        return ::towupper(ch);
-    }
-    
-    /*! \brief Converts to upper case
-    
         Converts the given string to upper case (as unicode characters)
     */
     std::string  to_upper(std::string_view);
 
-    /*! \brief Converts to upper case
-    
-        Converts the given string to upper case (as unicode characters)
-    */
-    std::u32string  to_upper(const std::u32string_view&);
 
     /*! \brief Decodes the given string into an unsigned short integer
     

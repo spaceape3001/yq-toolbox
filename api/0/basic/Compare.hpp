@@ -55,6 +55,7 @@ namespace yq {
 
     Compare compare(std::string_view  a, std::string_view  b);
     Compare compare_igCase(std::string_view  a, std::string_view  b);
+    Compare compare_igCase(std::u32string_view  a, std::u32string_view  b);
 
     template <typename T>
     Compare  compare(const T& a, const T& b)

@@ -6,7 +6,13 @@
 
 #pragma once
 
-//  Symbol's in the expression, however, leave this header here for others
+#include <vector>
 
-#include <0/expr/Expression.hpp>
-
+namespace yq::expr {
+    struct Instruction;
+    struct Symbol;
+    struct Token;
+    
+    using InsVector = std::vector<Instruction>;
+    using SymVector = std::vector<Symbol>;
+}

@@ -276,9 +276,24 @@ namespace yq {
     using string_view_set_t     = std::set<std::string_view,IgCase>;
     using string_view_vector_t  = std::vector<std::string_view>;
     using path_vector_t         = std::vector<std::filesystem::path>;
-    
 
     using string_view_initializer_list_t       = std::initializer_list<std::string_view>;
+    
+    using u32string_pair_t         = std::pair<std::u32string,std::u32string>;
+    using u32string_int_pair_t     = std::pair<std::u32string,int>;
+
+    using u32string_any_map_t      = std::map<std::u32string,Any,IgCase>;
+    using u32string_any_pair_t     = std::pair<std::u32string,Any>;
+
+    using u32string_map_t          = std::map<std::u32string,std::u32string,IgCase>;
+    using u32string_set_t          = std::set<std::u32string,IgCase>;
+    using u32string_vector_t       = std::vector<std::u32string>;
+    
+    using u32string_view_pair_t    = std::pair<std::u32string_view,std::u32string_view>;
+    using u32string_view_set_t     = std::set<std::u32string_view,IgCase>;
+    using u32string_view_vector_t  = std::vector<std::u32string_view>;
+
+    using u32string_view_initializer_list_t       = std::initializer_list<std::u32string_view>;
 
         // TODO move these to use std::filesystem::path
     #if defined(__APPLE__) || defined(WIN32)
@@ -290,6 +305,8 @@ namespace yq {
     template <typename T> struct BasicUrl;
     using UrlView       = BasicUrl<std::string_view>;
     using Url           = BasicUrl<std::string>;
+    using Url32         = BasicUrl<std::u32string>;
+    using Url32View     = BasicUrl<std::u32string_view>;
     
     using url_r         = Result<Url>;
     using url_view_r    = Result<UrlView>;
@@ -350,5 +367,8 @@ namespace yq {
     using XmlNode       = rapidxml::xml_node<char>;
     using XmlAttribute  = rapidxml::xml_attribute<char>;
     using XmlDocument   = rapidxml::xml_document<char>;
+
+    //! The reasonable maximum for a raw null terminated string... anything else should be in a string view (at least)
+    static constexpr const uint64_t         MAX_NULL_TERM       = 8192;
 }
 

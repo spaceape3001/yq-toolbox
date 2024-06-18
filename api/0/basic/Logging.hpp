@@ -13,6 +13,7 @@
 #include <log4cpp/CategoryStream.hh>
 #include <log4cpp/Priority.hh>
 #include <optional>
+#include <string_view>
 #include <system_error>
 
 namespace yq {
@@ -154,6 +155,8 @@ log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& str, const std::opt
 }
 
 log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const std::error_code&);
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, std::u32string_view);
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const std::u32string&);
 
 //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const QByteArray&);
 //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const QDate&);

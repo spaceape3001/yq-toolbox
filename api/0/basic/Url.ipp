@@ -11,6 +11,7 @@
 #include <0/io/StreamOps.hpp>
 #include <0/io/stream/Text.hpp>
 #include <0/basic/TextUtils.hpp>
+#include <0/basic/TextUtils32.hpp>
 
 namespace yq {
     url_view_r      as_host_port(const char*sz, size_t cb)

@@ -34,6 +34,7 @@
 #include "RevIgCase.ipp"
 #include "Revision.ipp"
 #include "TextUtils.ipp"
+#include "TextUtils32.ipp"
 #include "ThreadId.ipp"
 #include "UniqueID.ipp"
 #include "Url.ipp"

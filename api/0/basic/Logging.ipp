@@ -8,6 +8,8 @@
 
 #include "Logging.hpp"
 
+#include <0/basic/TextUtils.hpp>
+
 #include <log4cpp/OstreamAppender.hh>
 #include <log4cpp/FileAppender.hh>
 
@@ -179,4 +181,18 @@ log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, const std::erro
     str << ec.message();
     return str;
 }
+
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& out, std::u32string_view sv)
+{
+    for(char32_t ch : sv)
+        out << yq::to_string_view(ch);
+    return out;
+}
+
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&out, const std::u32string&s)
+{
+    return out << (std::u32string_view) s;
+}
+
+
 

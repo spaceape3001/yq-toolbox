@@ -6,35 +6,52 @@
 
 #pragma once
 
-#include "Grammar.hpp"
+#include "Symbol.hpp"
+#include <0/basic/errors.hpp>
+#include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
+#include <0/basic/TextUtils32.hpp>
 
 namespace yq::expr {
-    Grammar::Grammar()
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&out, const Symbol&sym)
     {
+        out << "{" << key(sym.type) << ": " << sym.text << "}";
+        return out;
     }
     
-    Grammar::~Grammar()
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&out, const Token&tok)
     {
+        out << "{" << key(tok.type) << ": " << tok.len << "}";
+        return out;
     }
 
-    void    Grammar::add_punct_text(char32_t ch)
+    std::ostream&    operator<<(std::ostream&out, const Symbol&sym)
     {
-        m_punctText.insert(ch);
+        out << "{" << key(sym.type) << ": " << sym.text << "}";
+        return out;
+    }
+    
+    std::ostream&    operator<<(std::ostream&out, const Token&tok)
+    {
+        out << "{" << key(tok.type) << ": " << tok.len << "}";
+        return out;
     }
 
-    Token   Grammar::next_token(std::u32string_view in) const
+
+    Token   token(std::u32string_view in) 
     {
+        static const Repo& _r = repo();
+        
+        Token         ret{};
         if(in.empty())
-            return Token{};
+            return ret;
             
-        Token       ret;
         size_t&     cnt = ret.len;
         char32_t    ch  = in[0];
         
         //  white space
         if(is_space(ch)){
-            ret.type    = SymType::Space;
+            ret.type   = SymType::Space;
             for(cnt = 1; cnt<in.size(); ++cnt){
                 if(!is_space(in[cnt]))
                     break;
@@ -43,14 +60,14 @@ namespace yq::expr {
         }
         
         //  text identifier
-        if(is_alpha(ch) || (m_punctStartText && m_punctText.contains(ch))){
-            ret.type    = SymType::Text;
+        if(is_alpha(ch) || (kPunctStartsText && _r.punctText.contains(ch))){
+            ret.type   = SymType::Text;
             for(cnt=1; cnt<in.size(); ++cnt){
                 if(is_alpha(in[cnt]))
                     continue;
-                if(m_digitsText && is_digit(in[cnt]))
+                if(kDigitsText && is_digit(in[cnt]))
                     continue;
-                if(m_punctText.contains(in[cnt]))
+                if(_r.punctText.contains(in[cnt]))
                     continue;
                 break;
             }
@@ -61,9 +78,9 @@ namespace yq::expr {
         
         //  It's a NUMBER
         if(is_digit(ch) || ((ch == '.') && is_digit(nx))){
-            ret.type    = SymType::Value;
         
             if( (ch == '0') && ((nx == 'x') || (nx == 'X'))){
+                ret.type   = SymType::Hex;
                 //  it's a hex constant
                 for(cnt=2; cnt<in.size(); ++cnt){
                     if(!is_xdigit(in[cnt]))
@@ -73,6 +90,8 @@ namespace yq::expr {
             }
             
             if((ch == '0') && is_digit(nx)){
+                ret.type   = SymType::Octal;
+                
                 //  it's an octal constant
                 for(cnt=2; cnt<in.size(); ++cnt){
                     if(!is_digit(in[cnt]))
@@ -82,7 +101,6 @@ namespace yq::expr {
                 return ret;
             }
             
-            using   feature_t = std::pair<bool,size_t>;
             
             //  Ordinary number (may or may not be floating point)
             feature_t  decimal     = {};
@@ -168,6 +186,12 @@ namespace yq::expr {
                 break;
             }
             
+            if(decimal.first || exponent.first){
+                ret.type   = SymType::Float;
+            } else {
+                ret.type   = SymType::Int;
+            }
+            
             return ret;
         }   // end of value test
         
@@ -180,17 +204,57 @@ namespace yq::expr {
                     break;
 
                 std::u32string_view part    = in.substr(0,cnt);
-                if(!m_operators.contains(part))
+                if(!_r.operators.contains(part))
                     break;
             }
             
             return ret;
         }
         
+        return { SymType::Error, 1 };
+    }
+
+
+    Expect<SymVector>  tokenize(std::string_view input)
+    {
+        std::u32string  u32 = to_u32string(input);
+        return tokenize(u32);
+    }
+    
+    Expect<SymVector>  tokenize(std::u32string_view input)
+    {
+        SymVector   ret;
+        std::error_code ec  = tokenize(input, [&](SymType c, std::u32string_view s) -> std::error_code {
+            ret.push_back(Symbol{ std::u32string(s), c });
+            return std::error_code();
+        });
+        if(ec != std::error_code())
+            return unexpected(ec);
+        return ret;
+    }
+
+    std::error_code     tokenize(std::u32string_view input, TokenFN&&fn) 
+    {
+        if(!fn){
+            return errors::bad_argument();
+        }
         
-        return Token{
-            .len    = 1,
-            .type   = SymType::Error
-        };
+        for(std::u32string_view i=input; !i.empty(); ){
+            Token   t   = token(i);
+            if((t.type == SymType::Error) || (t.len == 0)){
+                return errors::bad_argument();
+            }
+            
+            fn(t.type, i.substr(0, t.len));
+            i = i.substr(t.len);
+        }
+        return std::error_code();
+    }
+    
+    
+    std::error_code     tokenize(std::string_view input, TokenFN&& fn) 
+    {
+        std::u32string      u32 = to_u32string(input);
+        return tokenize(u32, std::move(fn));
     }
 }

@@ -16,6 +16,7 @@ namespace yq::errors {
     using const_object_violation    = error_db::entry<"Constant object violated">;
     using empty_key                 = error_db::entry<"Empty key">;
     using empty_string              = error_db::entry<"Empty string">;
+    using existing_error            = error_db::entry<"Existing error in argument">;
     using getter_failed             = error_db::entry<"Getter function returned false">;
     using incompatible_types        = error_db::entry<"Incompatible types">;
     using insufficient_arguments    = error_db::entry<"Not enough arguments for method call">;
