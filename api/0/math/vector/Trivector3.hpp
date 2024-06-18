@@ -119,6 +119,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Trivector3& operator*=(U b) noexcept;
 
+        //! Divides a scalar against this trivector, returns the trivector result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Trivector3<quotient_t<T,U>> operator/(const U b) const noexcept;
