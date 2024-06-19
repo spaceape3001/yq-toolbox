@@ -8,7 +8,6 @@
 
 #include <0/basic/preamble.hpp>
 #include <0/trait/always_false.hpp>
-#include <0/basic/Result.hpp>
 #include <cstring>
 #include <vector>
 

@@ -1,5 +1,6 @@
 #include <boost/ut.hpp>
 #include <0/basic/HttpParser.hpp>
+#include <0/basic/Result.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/Url.hpp>
 #include <0/basic/VersionSpec.hpp>

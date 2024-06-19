@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/Any.hpp>
-
+#include <0/basic/Result.hpp>
 #include <0/meta/ReservedIDs.hpp>
 #include <0/io/stream/Text.hpp>
 #include <0/basic/TextUtils.hpp>

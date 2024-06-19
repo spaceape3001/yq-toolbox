@@ -44,7 +44,7 @@ namespace yq {
     Expect<short>       to_short(const Any&);
 
     /*! \brief Extract a string from Any */
-    string_r    to_string(const Any&);
+    Expect<std::string> to_string(const Any&);
 
     /*! \brief Extract an 8-bit unsigned integer from Any */
     Expect<uint8_t>     to_uint8(const Any&);

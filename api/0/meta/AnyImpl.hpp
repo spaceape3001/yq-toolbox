@@ -7,6 +7,7 @@
 #pragma once
 #include <cassert>
 #include <0/basic/errors.hpp>
+#include <0/basic/Result.hpp>
 
     //  SKIPPING INCLUDES... done in order by others
 
