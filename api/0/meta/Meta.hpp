@@ -162,7 +162,7 @@ namespace yq {
         
     
         //! Meta ID type
-        using id_t                      = unsigned int;
+        using id_t                      = uint64_t;
         
         using options_t                 = std::initializer_list<Flag>;
         

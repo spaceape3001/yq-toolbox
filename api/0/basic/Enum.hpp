@@ -175,7 +175,7 @@ namespace yq {
 
         /*! Constructor
         
-            WARNING, this can't be private due to constructos, don't touch it
+            WARNING, this can't be private due to constructors, don't touch it
             
             \param[in] name     STRING that'll have to persist the whole program execution
             \param[in] def      STRING that'll have to persist the whole program execution
@@ -197,7 +197,7 @@ namespace yq {
         std::string_view            m_name;
         Name2Val                    m_name2value;
         Val2Name                    m_value2name;
-        Vector<std::string_view>    m_keys;
+        Vector<std::string_view>    m_keys;         //!< Keys (as parsed)
         Vector<std::string_view>    m_ordered;      //!< Keys ordered by value
         Vector<std::string_view>    m_sorted;       //!< Keys in alphabetical order
         int                         m_defValue;
