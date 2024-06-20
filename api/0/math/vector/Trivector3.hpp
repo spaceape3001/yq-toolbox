@@ -167,6 +167,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  --------------------------------------------------------
 
+    //! Adds scalar with trivector, returns the result
     template <typename T>
     constexpr Multivector3<T> operator+(T a, const Trivector3<T>& b) noexcept;
 
