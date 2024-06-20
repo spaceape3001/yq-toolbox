@@ -501,20 +501,485 @@ namespace yq {
         return errors::bad_conversion();
     }
     
-    #if 0
-    int8_r      to_int8(const Any&v);
-    int16_r     to_int16(const Any&v);
-    int32_r     to_int32(const Any&v);
-    int64_r     to_int64(const Any&v);
-    integer_r   to_integer(const Any&v);
-    short_r     to_short(const Any&v);
-    //string_r    to_string(const Any&v);
-    uint8_r     to_uint8(const Any&v);
-    uint16_r    to_uint16(const Any&v);
-    uint32_r    to_uint32(const Any&v);
-    uint64_r    to_uint64(const Any&v);
-    unsigned_r  to_uinteger(const Any&v);
-    ushort_r    to_ushort(const Any&v);
-    #endif
+    Expect<int8_t>      to_int8(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_int8(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<int8_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<int8_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<int8_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<int8_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<int8_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<int8_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<int8_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<int8_t>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<int8_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<int8_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<int8_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<int8_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
 
+    Expect<int16_t>      to_int16(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_int16(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<int16_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<int16_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<int16_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<int16_t>( v.data().reference<int16_t>());
+        case MT_Int16:
+            return static_cast<int16_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<int16_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<int16_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<int16_t>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<int16_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<int16_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<int16_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<int16_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+
+    Expect<int32_t>     to_int32(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_int32(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<int32_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<int32_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<int32_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<int32_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<int32_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<int32_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<int32_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<int32_t>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<int32_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<int32_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<int32_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<int32_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<int64_t>     to_int64(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_int64(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<int64_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<int64_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<int64_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<int64_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<int64_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<int64_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<int64_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<int64_t>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<int64_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<int64_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<int64_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<int64_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<int>     to_integer(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_int(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<int>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<int>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<int>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<int>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<int>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<int>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<int>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<int>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<int>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<int>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<int>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<int>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<short>     to_short(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_short(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<short>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<short>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<short>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<short>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<short>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<short>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<short>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<short>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<short>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<short>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<short>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<short>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<uint8_t>     to_uint8(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_uint8(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<uint8_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<uint8_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<uint8_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<uint8_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<uint8_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<uint8_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<uint8_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<uint8_t>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<uint8_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<uint8_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<uint8_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<uint8_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<uint16_t>     to_uint16(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_uint16(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<uint16_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<uint16_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<uint16_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<uint16_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<uint16_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<uint16_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<uint16_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<uint16_t>( v.data().reference<uint16_t>());
+        case MT_UInt16:
+            return static_cast<uint16_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<uint16_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<uint16_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<uint16_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<uint32_t>     to_uint32(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_uint32(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<uint32_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<uint32_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<uint32_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<uint32_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<uint32_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<uint32_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<uint32_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<uint32_t>( v.data().reference<uint32_t>());
+        case MT_UInt16:
+            return static_cast<uint32_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<uint32_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<uint32_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<uint32_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<uint64_t>     to_uint64(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_uint64(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<uint64_t>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<uint64_t>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<uint64_t>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<uint64_t>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<uint64_t>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<uint64_t>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<uint64_t>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<uint64_t>( v.data().reference<uint64_t>());
+        case MT_UInt16:
+            return static_cast<uint64_t>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<uint64_t>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<uint64_t>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<uint64_t>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<unsigned int>     to_uint(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_uinteger(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<unsigned int>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<unsigned int>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<unsigned int>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<unsigned int>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<unsigned int>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<unsigned int>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<unsigned int>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<unsigned int>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<unsigned int>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<unsigned int>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<unsigned int>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<unsigned int>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+    
+    Expect<unsigned int>     to_uinteger(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_uinteger(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<unsigned int>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<unsigned int>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<unsigned int>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<unsigned int>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<unsigned int>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<unsigned int>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<unsigned int>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<unsigned int>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<unsigned int>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<unsigned int>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<unsigned int>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<unsigned int>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
+
+    Expect<unsigned short>     to_ushort(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return to_ushort(v.data().reference<std::string>());
+        case MT_Boolean:
+            return static_cast<unsigned short>(v.data().reference<bool>());
+        case MT_Float:
+            return static_cast<unsigned short>(v.data().reference<float>());
+        case MT_Double:
+            return static_cast<unsigned short>(v.data().reference<double>());
+        case MT_Int8:
+            return static_cast<unsigned short>( v.data().reference<int8_t>());
+        case MT_Int16:
+            return static_cast<unsigned short>( v.data().reference<int16_t>());
+        case MT_Int32:
+            return static_cast<unsigned short>( v.data().reference<int32_t>());
+        case MT_Int64:
+            return static_cast<unsigned short>( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return static_cast<unsigned short>( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return static_cast<unsigned short>( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return static_cast<unsigned short>( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return static_cast<unsigned short>( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<unsigned short>();
+        if(v2.good)
+            return v2.value;
+        return errors::bad_conversion();
+    }
 }

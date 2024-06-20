@@ -46,6 +46,9 @@ namespace yq {
     /*! \brief Extract a string from Any */
     Expect<std::string> to_string(const Any&);
 
+    /*! \brief Extract an unsigned integer from Any */
+    Expect<unsigned int> to_uint(const Any&);
+
     /*! \brief Extract an 8-bit unsigned integer from Any */
     Expect<uint8_t>     to_uint8(const Any&);
 
@@ -59,9 +62,9 @@ namespace yq {
     Expect<uint64_t>    to_uint64(const Any&);
 
     /*! \brief Extract an unsigned integer from Any */
-    Expect<unsigned>    to_uinteger(const Any&);
+    Expect<unsigned int> to_uinteger(const Any&);
 
     /*! \brief Extract an unsigned short from Any */
-    Expect<short>       to_ushort(const Any&);
+    Expect<unsigned short> to_ushort(const Any&);
 }
 
