@@ -167,10 +167,11 @@ namespace yq {
 //  --------------------------------------------------------
 //  --------------------------------------------------------
 
-    //! Adds scalar with trivector, returns the result
+    //! Adds scalar with trivector, returns the multivector result
     template <typename T>
     constexpr Multivector3<T> operator+(T a, const Trivector3<T>& b) noexcept;
 
+    //! Subtracts the trivector from the scalar, returns the multivector result
     template <typename T>
     constexpr Multivector3<T> operator-(T a, const Trivector3<T>& b) noexcept;
 
