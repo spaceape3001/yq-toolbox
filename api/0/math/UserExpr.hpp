@@ -27,6 +27,7 @@ namespace log4cpp { class CategoryStream; }
 
 
 namespace yq::expr {
+    bool                has_function(const std::u32string&);
     bool                has_constant(std::string_view);
     bool                has_constant(const std::u32string&);
     void                set_constant(const std::u32string&, const Any&);

@@ -8,6 +8,7 @@
 
 #include <0/basic/errors.hpp>
 #include <0/basic/Logging.hpp>
+#include <0/basic/MultiMap.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <tbb/spin_rw_mutex.h>
 #include <stack>
@@ -16,6 +17,55 @@ namespace yq::expr {
 
     static constexpr bool       kDigitsText         = true;
     static constexpr bool       kPunctStartsText    = true;
+
+    //! General category of operation
+    enum class Flop {
+        None    = 0,
+        //! Setter (so won't have any operator)
+        Set,
+        //! Unary with operator on left side
+        Left,
+        //! Unary with operator on right side
+        Right,
+        //! Standard binary (a+b)
+        Binary,
+        //! Open-mark
+        Open,
+        //! Close-mark
+        Close
+    };
+    
+    struct OpData {
+        std::u32string_view text;
+        Operator            code        = Operator::None;
+        Flop                flop        = Flop::None;
+        std::u32string_view other;
+        
+        // Higher priority takes precedence
+        int                 priority    = 0;
+        
+        //! Self-Setting
+        bool                self        = false;
+    };
+    
+    using OpMap         = MultiMap<std::u32string_view, const OpData*>;
+    
+    struct FnData {
+        std::u32string_view text;
+    };
+    
+    static const OpData     all_operators[] = {
+        { .text = U"=", .flop=Flop::Set, .self=true },
+        { .text = U"+", .code=Operator::Affirm,     .flop=Flop::Left,   .priority=0 },
+        { .text = U"-", .code=Operator::Negate,     .flop=Flop::Left,   .priority=0 },
+        { .text = U"+", .code=Operator::Add,        .flop=Flop::Binary, .priority=0 },
+        { .text = U"-", .code=Operator::Subtract,   .flop=Flop::Binary, .priority=0 },
+        { .text = U"*", .code=Operator::Multiply,   .flop=Flop::Binary, .priority=1 },
+        { .text = U"/", .code=Operator::Divide,     .flop=Flop::Binary, .priority=1 },
+        { .text = U"(", .flop = Flop::Open, .other=U")" },
+        { .text = U")", .flop = Flop::Close, .other=U"(" }
+    };
+    
 
     struct Repo {
         mutable tbb::spin_rw_mutex  mutex;
@@ -34,6 +84,9 @@ namespace yq::expr {
             constants[U"ln10"]   = std::numbers::ln10_v<double>;
             constants[U"egamma"] = std::numbers::egamma_v<double>;
             punctText.insert(U'_');
+            
+            for(const OpData& d : all_operators)
+                operators.insert(d.text, &d);
         }
     };
     
@@ -110,6 +163,11 @@ namespace yq::expr {
         set_constant(u32, std::move(v));
     }
 
+    bool                has_function(const std::u32string&)
+    {
+        // TODO
+        return false;
+    }
 
 
     #undef LOCK

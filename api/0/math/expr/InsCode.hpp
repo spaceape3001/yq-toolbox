@@ -25,6 +25,10 @@ namespace yq::expr {
         Value,
         
         //! Loads up the assigned variable
-        Variable
+        Variable,
+        
+        Operator,
+        
+        Function
     )
 }

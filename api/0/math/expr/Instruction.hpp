@@ -15,6 +15,7 @@ namespace yq::expr {
         InsCode             code    = InsCode::None;
         std::u32string      key;
         void*               exec    = nullptr;
+        uint32_t            args    = 0;
         Any                 data;
     };
 

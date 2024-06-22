@@ -12,6 +12,7 @@
 namespace yq::expr {
     Expect<InsVector>   compile(const SymVector& syms)
     {
+        static const Repo& _r   = repo();
         InsVector       ret;
         if(syms.empty())
             return ret;
@@ -54,6 +55,23 @@ namespace yq::expr {
                         .code   = InsCode::Constant,
                         .key    = sym.text
                     });
+                }
+                #if 0
+                if(has_function(sym.text)){
+                    ret.push_back(Instruction{
+                        .code   = InsCode::Function,
+                        .key    = sym.text
+                    });
+                }
+                #endif
+                break;
+            case SymType::Operator:
+                {
+                    auto r  = _r.operators.equal_range(sym.text);
+                    for(auto i=r.first; i!=r.second; ++i){
+                        const OpData &op    = *(i->second);
+                    }
+                    return errors::todo();
                 }
                 break;
             default:

@@ -13,6 +13,8 @@ namespace yq {
     YQ_ENUM(Operator, , 
         None   = 0,
         Add,
+        //! Positive operator
+        Affirm,
         And,
         Cross,
         Divide,
