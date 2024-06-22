@@ -7,12 +7,12 @@
 #pragma once
 
 #include <0/math/expr/preamble.hpp>
-#include <0/math/expr/OpCode.hpp>
+#include <0/math/expr/InsCode.hpp>
 #include <0/basic/Any.hpp>
 
 namespace yq::expr {
     struct Instruction {
-        OpCode              code    = OpCode::None;
+        InsCode             code    = InsCode::None;
         std::u32string      key;
         void*               exec    = nullptr;
         Any                 data;

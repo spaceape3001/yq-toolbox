@@ -2582,6 +2582,7 @@ static void reg_math () {
         auto w = writer<Tensor11D>();
         w.description("1x1 tensor in double");
         w.property(szXX, &Tensor11D::xx);
+        w.operate_self();
     }
 
     {
@@ -2607,6 +2608,7 @@ static void reg_math () {
         w.description("1x2 tensor in double");
         w.property(szXX, &Tensor12D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor12D::xy).description(szXY_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2636,6 +2638,7 @@ static void reg_math () {
         w.property(szXX, &Tensor13D::xx).description(szXX_Tensor);
         w.property(szXY, &Tensor13D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor13D::xz).description(szXZ_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2669,6 +2672,7 @@ static void reg_math () {
         w.property(szXY, &Tensor14D::xy).description(szXY_Tensor);
         w.property(szXZ, &Tensor14D::xz).description(szXZ_Tensor);
         w.property(szXW, &Tensor14D::xw).description(szXW_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2703,6 +2707,7 @@ static void reg_math () {
         w.description("2x1 tensor in double");
         w.property(szXX, &Tensor21D::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor21D::yx).description(szYX_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2733,6 +2738,7 @@ static void reg_math () {
         w.property(szXY, &Tensor22D::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22D::yx).description(szYX_Tensor);
         w.property(szYY, &Tensor22D::yy).description(szYY_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2771,6 +2777,7 @@ static void reg_math () {
         w.property(szYX, &Tensor23D::yx).description(szYX_Tensor);
         w.property(szYY, &Tensor23D::yy).description(szYY_Tensor);
         w.property(szYZ, &Tensor23D::yz).description(szYZ_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2817,6 +2824,7 @@ static void reg_math () {
         w.property(szYY, &Tensor24D::yy).description(szYY_Tensor);
         w.property(szYZ, &Tensor24D::yz).description(szYZ_Tensor);
         w.property(szYW, &Tensor24D::yw).description(szYW_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2864,6 +2872,7 @@ static void reg_math () {
         w.property(szXX, &Tensor31D::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor31D::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor31D::zx).description(szZX_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2899,6 +2908,7 @@ static void reg_math () {
         w.property(szYY, &Tensor32D::yy).description(szYY_Tensor);
         w.property(szZX, &Tensor32D::zx).description(szZX_Tensor);
         w.property(szZY, &Tensor32D::zy).description(szZY_Tensor);
+        w.operate_self();
     }
 
     {
@@ -2946,6 +2956,7 @@ static void reg_math () {
         w.property(szZX, &Tensor33D::zx).description(szZX_Tensor);
         w.property(szZY, &Tensor33D::zy).description(szZY_Tensor);
         w.property(szZZ, &Tensor33D::zz).description(szZZ_Tensor);
+        w.operate_self();
     }
 
     {
@@ -3005,6 +3016,7 @@ static void reg_math () {
         w.property(szZY, &Tensor34D::zy).description(szZY_Tensor);
         w.property(szZZ, &Tensor34D::zz).description(szZZ_Tensor);
         w.property(szZW, &Tensor34D::zw).description(szZW_Tensor);
+        w.operate_self();
     }
 
     {
@@ -3065,6 +3077,7 @@ static void reg_math () {
         w.property(szYX, &Tensor41D::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41D::zx).description(szZX_Tensor);
         w.property(szWX, &Tensor41D::wx).description(szWX_Tensor);
+        w.operate_self();
     }
 
     {
@@ -3105,6 +3118,7 @@ static void reg_math () {
         w.property(szZY, &Tensor42D::zy).description(szZY_Tensor);
         w.property(szWX, &Tensor42D::wx).description(szWX_Tensor);
         w.property(szWY, &Tensor42D::wy).description(szWY_Tensor);
+        w.operate_self();
     }
 
     {
@@ -3161,6 +3175,7 @@ static void reg_math () {
         w.property(szWX, &Tensor43D::wx).description(szWX_Tensor);
         w.property(szWY, &Tensor43D::wy).description(szWY_Tensor);
         w.property(szWZ, &Tensor43D::wz).description(szWZ_Tensor);
+        w.operate_self();
     }
 
     {
@@ -3233,6 +3248,7 @@ static void reg_math () {
         w.property(szWY, &Tensor44D::wy).description(szWY_Tensor);
         w.property(szWZ, &Tensor44D::wz).description(szWZ_Tensor);
         w.property(szWW, &Tensor44D::ww).description(szWW_Tensor);
+        w.operate_self();
     }
 
     {
@@ -3478,6 +3494,8 @@ static void reg_math () {
         w.property(szLength, &Vector1D::length).description(szLength_Vector).alias(szLen);
         w.property(szLength², &Vector1D::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1D::x).description(szX_Vector);
+        w.operate_self({ Operator::Add, Operator::Subtract });
+        w.operate_with<double>();
     }
 
     {
@@ -3510,6 +3528,8 @@ static void reg_math () {
         w.property(szX, &Vector2D::x).description(szX_Vector);
         w.property(szY, &Vector2D::y).description(szY_Vector);
         w.method(szZ, &Vector2D::z).description(szZ_Vector2);
+        w.operate_self({ Operator::Add, Operator::Subtract });
+        w.operate_with<double>();
     }
 
     {
@@ -3548,6 +3568,8 @@ static void reg_math () {
         w.property(szX, &Vector3D::x).description(szX_Vector);
         w.property(szY, &Vector3D::y).description(szY_Vector);
         w.property(szZ, &Vector3D::z).description(szZ_Vector);
+        w.operate_self({ Operator::Add, Operator::Subtract });
+        w.operate_with<double>();
     }
 
     {
@@ -3587,6 +3609,8 @@ static void reg_math () {
         w.property(szY, &Vector4D::y).description(szY_Vector);
         w.property(szZ, &Vector4D::z).description(szZ_Vector);
         w.property(szW, &Vector4D::w).description(szW_Vector);
+        w.operate_self({ Operator::Add, Operator::Subtract });
+        w.operate_with<double>();
     }
 
     {

@@ -26,32 +26,32 @@ namespace yq::expr {
                 return errors::existing_error();
             case SymType::Float:
                 ret.push_back(Instruction{
-                    .code   = OpCode::Value,
+                    .code   = InsCode::Value,
                     .data   = Any((double) *to_double(sym.text))
                 });
                 break;
             case SymType::Hex:
                 ret.push_back(Instruction{
-                    .code   = OpCode::Value,
+                    .code   = InsCode::Value,
                     .data   = Any((uint64_t) *to_hex64(sym.text.substr(2)))
                 });
                 break;
             case SymType::Octal:
                 ret.push_back(Instruction{
-                    .code   = OpCode::Value,
+                    .code   = InsCode::Value,
                     .data   = Any((uint64_t) *to_octal64(sym.text))
                 });
                 break;
             case SymType::Int:
                 ret.push_back(Instruction{
-                    .code   = OpCode::Value,
-                    .data   = Any((int64_t) *to_integer(sym.text))
+                    .code   = InsCode::Value,
+                    .data   = Any((int64_t) *to_int64(sym.text))
                 });
                 break;
             case SymType::Text:
                 if(has_constant(sym.text)){
                     ret.push_back(Instruction{
-                        .code   = OpCode::Constant,
+                        .code   = InsCode::Constant,
                         .key    = sym.text
                     });
                 }
@@ -91,7 +91,7 @@ namespace yq::expr {
         std::stack<Any>     theStack;
         for(const Instruction& ins : insVec){
             switch(ins.code){
-            case OpCode::Assign:
+            case InsCode::Assign:
                 {
                     if(theStack.empty())
                         return errors::empty_stack();
@@ -99,7 +99,7 @@ namespace yq::expr {
                     theStack.pop();
                 }
                 break;
-            case OpCode::Constant:
+            case InsCode::Constant:
                 {
                     auto x  = constant(ins.key);
                     if(!x)
@@ -107,15 +107,15 @@ namespace yq::expr {
                     theStack.push(*x);
                 }
                 break;
-            case OpCode::Duplicate:
+            case InsCode::Duplicate:
                 if(theStack.empty())
                     return errors::empty_stack();
                 theStack.push(theStack.top());
                 break;
-            case OpCode::Value:
+            case InsCode::Value:
                 theStack.push(ins.data);
                 break;
-            case OpCode::Variable:
+            case InsCode::Variable:
                 {
                     auto i = vmap.find(ins.key);
                     if(i == vmap.end())

@@ -9,6 +9,8 @@
 #include <0/trait/sink.hpp>
 
 namespace yq {
+    template <typename T, typename U> auto generic_two_subtract(T a, U b) { return a-b; }
+
     //! Tests for two types that can can add
     //! \tparam T   left term type
     //! \tparam U   right term type

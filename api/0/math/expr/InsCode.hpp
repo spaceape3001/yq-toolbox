@@ -9,7 +9,7 @@
 #include <0/basic/Enum.hpp>
 
 namespace yq::expr {
-    YQ_ENUM(OpCode,,
+    YQ_ENUM(InsCode,,
         //! No operation (no-op)
         None        = 0,
         

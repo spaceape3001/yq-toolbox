@@ -9,6 +9,8 @@
 #include <0/trait/sink.hpp>
 
 namespace yq {
+    template <typename T, typename U> auto generic_two_divide(T a, U b) { return a/b; }
+
     /*! \brief Tests for two items being dividable
     
         This tests if a type T() can be divided by U()

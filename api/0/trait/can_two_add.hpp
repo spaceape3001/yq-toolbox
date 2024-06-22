@@ -9,6 +9,8 @@
 #include <0/trait/sink.hpp>
 
 namespace yq {
+    template <typename T, typename U> auto generic_two_add(T a, U b) { return a+b; }
+
     //! Test to see if two types can add
     template <typename T, typename U, typename=void> struct can_two_add : public std::false_type {};
     template <typename T, typename U> struct can_two_add<T,U,sink_t<decltype(T()+U())>> : public std::true_type {};

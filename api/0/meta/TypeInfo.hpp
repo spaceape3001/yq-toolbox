@@ -7,6 +7,7 @@
 #pragma once
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfo.hpp>
+#include <0/meta/OperatorInfo.hpp>
 #include <0/basic/errors.hpp>
 #include <0/basic/preamble.hpp>
 #include <unordered_map>
@@ -125,6 +126,10 @@ namespace yq {
         
     protected:
     
+        friend class PropertyInfo;
+        friend class MethodInfo;
+        friend class OperatorInfo;
+
         /*! \brief Constructor 
         
             \note Only used this if you know what you're up to
@@ -193,17 +198,19 @@ namespace yq {
 
         //! Converter hash
         using ConvertHash   = Hash<const TypeInfo*, FNConvert>;
-        friend class PropertyInfo;
-        friend class MethodInfo;
-        
-        //! Properties for this type
-        LUC<PropertyInfo>           m_properties;
-        
-        //! Method for this type
-        LUC<MethodInfo>             m_methods;
         
         //! Default for this type
         DataBlock                   m_default;
+
+        
+        //! Method for this type
+        LUC<MethodInfo>             m_methods;
+
+        using OperatorLUC = LUC2<OperatorInfo,Operator,&OperatorInfo::code>;
+        OperatorLUC                 m_operators;
+        
+        //! Properties for this type
+        LUC<PropertyInfo>           m_properties;
         
         //! Aliases for this type
         //std::vector<std::string_view>   m_aliases;

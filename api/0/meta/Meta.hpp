@@ -114,6 +114,7 @@ namespace yq {
             NODE,           //!< It's a node
             NO_EXPAND,      //!< Do not expand
             OBJECT,         //!< Meta has ObjectInfo
+            OPERATOR,       //!< It's an operator
             OUTPUT,         //!< It's flagged as output (graphs)
             PAGE,           //!< A (web) page
             PIN,            //!< It's a pin
@@ -125,6 +126,7 @@ namespace yq {
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
             SEALED,         //!< Registration sealed (WebPage)
+            SELF,           //!< Self-modifying (operator)
             SHADER,         //!< Meta has ShaderInfo
             SMALL,          //!< Small enough to fit in DataBlock (typeinfo)
             SPACE,          //!< Item is a space item
@@ -252,6 +254,8 @@ namespace yq {
         bool                            is_node() const;
 
         bool                            is_object() const;
+        
+        bool                            is_operator() const;
 
         bool                            is_output() const;
         
@@ -320,11 +324,15 @@ namespace yq {
         template <typename T>
         struct LUC;
 
+        template <typename T, typename K, K (T::*FN)() const>
+        struct LUC2;
+
     protected:
         friend class ArgInfo;
         friend class CompoundInfo;
         friend class GlobalInfo;
         friend class MethodInfo;
+        friend class OperatorInfo;
         friend class ObjectInfo;
         friend class PropertyInfo;
         friend class TypeInfo;
@@ -393,6 +401,33 @@ namespace yq {
         {
             lut.insert(k,d);
             keys += k;
+        }
+    };
+
+    template <typename T, typename K, K (T::*FN)() const>
+    struct Meta::LUC2 {
+        //   CONDITION is still valid, however, we can't use it w/o compiler issues
+        //static_assert( std::is_base_of_v<Meta, T>, "T must derive from Meta!");
+        using MM    = MultiMap<K, const T*>;
+        Vector<const T*>            all;
+        MM                          lut;
+        Set<K>                      keys;
+        
+        LUC2& operator<<(const T* p)
+        {
+            all << p;
+            K   k   = (p->*FN)();
+            lut.insert(k, p);
+            keys << k;
+            return *this;
+        }
+        
+        LUC2&    operator += (const LUC2& b)
+        {
+            all += b.all;
+            lut += b.lut;
+            keys += b.keys;
+            return *this;
         }
     };
 

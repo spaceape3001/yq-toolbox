@@ -246,6 +246,11 @@ namespace yq {
         return has(Flag::OBJECT); 
     }
 
+    bool  Meta::is_operator() const
+    {
+        return has(Flag::OPERATOR);
+    }
+
     bool  Meta::is_output() const 
     { 
         return has(Flag::OUTPUT); 

@@ -34,9 +34,10 @@ namespace yq {
 
         virtual size_t          arg_count() const noexcept = 0;
 
-    private:
+    protected:
         const ArgInfo*              m_result;
         std::vector<const ArgInfo*> m_args;
+
         MethodInfo(std::string_view zName, const std::source_location& sl, Meta*);
 
         Expect<Any>            invoke(void* obj, std::span<const Any> args, bool constPtr) const;

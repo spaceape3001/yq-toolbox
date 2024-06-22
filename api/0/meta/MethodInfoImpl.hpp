@@ -200,10 +200,9 @@ namespace yq {
         /*! \brief Constructor 
             \note   Only use directly this if you know what you're doing, otherwise, stay away
             \param[in] function Function pointer
-            \param[in] zName    name of the property
+            \param[in] zName    name of the method
             \param[in] sl       Source location of the definition (usually auto-picked up by the meta declare helpers
             \param[in] parent   Parent object this is apart of
-            \param[in] opts     Options
         */
         Static(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
             MethodInfo(zName, sl, parent), m_function(function)

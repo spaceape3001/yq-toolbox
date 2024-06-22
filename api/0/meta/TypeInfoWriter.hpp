@@ -9,6 +9,12 @@
 #include <0/meta/TypeInfo.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoDynamic.hpp>
+#include <0/meta/OperatorInfoImpl.hpp>
+#include <0/meta/OperatorInfoWriter.hpp>
+#include <0/trait/can_two_add.hpp>
+#include <0/trait/can_two_divide.hpp>
+#include <0/trait/can_two_multiply.hpp>
+#include <0/trait/can_two_subtract.hpp>
 #include <0/trait/has_less.hpp>
 #include <0/trait/is_template.hpp>
 #include <0/io/StreamOps.hpp>
@@ -353,6 +359,71 @@ namespace yq {
         }
         
         
+        /*
+        void operate()
+        {
+        }
+        */
+        
+        /*! \brief Define operators
+        
+            \note, the name is "operate" rather than "operator" due to naming conflicts with C++ keyword "operator"
+        */
+        template <typename R, typename ... Args>
+        OperatorInfo::Writer<R, const T&, Args...>  operate(Operator opId, R (*function)(const T&, Args...), const std::source_location& sl=std::source_location::current())
+        {
+            if(function && thread_safe_write()){
+                OperatorInfo* ret = new OperatorInfo::Static<R,const T&, Args...>(function, opId, sl, Meta::Writer::m_meta);
+                return OperatorInfo::Writer<R,const T&, Args...>(ret, 0ULL);
+            }
+            
+            return OperatorInfo::Writer<R,const T&, Args...>();
+        }
+        
+        template <typename R, typename ... Args>
+        OperatorInfo::Writer<R, T, Args...>  operate(Operator opId, R (*function)(T, Args...), const std::source_location& sl=std::source_location::current())
+        {
+            if(function && thread_safe_write()){
+                OperatorInfo* ret = new OperatorInfo::Static<R,T,Args...>(function, opId, sl, Meta::Writer::m_meta);
+                return OperatorInfo::Writer<R,T,Args...>(ret, 0ULL);
+            }
+            
+            return OperatorInfo::Writer<R,T,Args...>();
+        }
+        
+        /*! \brief Convenience methods for defining common binary operations with right term
+        */
+        template <typename U>
+        void    operate_with(OperatorFlags enabled=ALL, const std::source_location& sl=std::source_location::current())
+        {
+            if(enabled(Operator::Add)){
+                if constexpr (can_two_add_v<T,U>){
+                    operate(Operator::Add, generic_two_add<T,U>, sl);
+                }
+            }
+            if(enabled(Operator::Subtract)){
+                if constexpr (can_two_subtract_v<T,U>){
+                    operate(Operator::Subtract, generic_two_subtract<T,U>, sl);
+                }
+            }
+            if(enabled(Operator::Multiply)){
+                if constexpr (can_two_multiply_v<T,U>){
+                    operate(Operator::Multiply, generic_two_multiply<T,U>, sl);
+                }
+            }
+            if(enabled(Operator::Divide)){
+                if constexpr (can_two_divide_v<T,U>){
+                    operate(Operator::Divide, generic_two_divide<T,U>, sl);
+                }
+            }
+        }
+        
+        void    operate_self(OperatorFlags enabled=ALL, const std::source_location& sl=std::source_location::current())
+        {
+            operate_with<T>(enabled, sl);
+        }
+
+        
         /*! \brief Registers IO stream parsing handler
         */
         template <bool (*FN)(T&, const std::string_view&)>
@@ -514,6 +585,7 @@ namespace yq {
                 });
             }
         }
+        
 
         //! Construct from pointer
         Writer(TypeInfo* ti) : TypeInfoWriterBase<T>(ti) {}

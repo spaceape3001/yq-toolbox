@@ -167,11 +167,13 @@ namespace yq {
                 w.casts<float>();
                 w.parse<parse_double>();
                 w.print<print_double>();
+                w.operate_self();
             }
             {
                 auto w = writer<float>();
                 w.parse<parse_float>();
                 w.print<print_float>();
+                w.operate_self();
             }
             {
                 auto w  = writer<int8_t>();
@@ -180,6 +182,7 @@ namespace yq {
                 w.casts<int64_t>();
                 w.parse<parse_int8>();
                 w.print<print_int8>();
+                w.operate_self();
             }
             {
                 auto w  = writer<int16_t>();
@@ -187,6 +190,7 @@ namespace yq {
                 w.casts<int64_t>();
                 w.parse<parse_int16>();
                 w.print<print_int16>();
+                w.operate_self();
             }
             {
                 auto w  = writer<int32_t>();
@@ -194,11 +198,13 @@ namespace yq {
                 w.casts<int64_t>();
                 w.parse<parse_int32>();
                 w.print<print_int32>();
+                w.operate_self();
             }
             {
                 auto w  = writer<int64_t>();
                 w.parse<parse_int64>();
                 w.print<print_int64>();
+                w.operate_self();
             }
             {
                 auto w  = writer<uint8_t>();
@@ -210,6 +216,7 @@ namespace yq {
                 w.casts<uint64_t>();
                 w.parse<parse_uint8>();
                 w.print<print_uint8>();
+                w.operate_self();
             }
             {
                 auto w  = writer<uint16_t>();
@@ -219,6 +226,7 @@ namespace yq {
                 w.casts<uint64_t>();
                 w.parse<parse_uint16>();
                 w.print<print_uint16>();
+                w.operate_self();
             }
             {
                 auto w  = writer<uint32_t>();
@@ -226,11 +234,13 @@ namespace yq {
                 w.casts<uint64_t>();
                 w.parse<parse_uint32>();
                 w.print<print_uint32>();
+                w.operate_self();
             }
             {
                 auto w  = writer<uint64_t>();
                 w.parse<parse_uint64>();
                 w.print<print_uint64>();
+                w.operate_self();
             }
             {
                 auto w  = writer<std::string>();
