@@ -18,7 +18,12 @@ namespace yq {
 
         //! Component type
         using component_type = T;
-        T     xyz, yzw, zwx, wxy;
+        
+        //! XYZ Component
+        T     xyz;
+        T     yzw;
+        T     zwx;
+        T     wxy;
 
         constexpr Trivector4() noexcept = default;
         constexpr Trivector4(T _xyz, T _yzw, T _zwx, T _wxy) noexcept : xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy) {}
