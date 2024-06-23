@@ -21,6 +21,8 @@ namespace yq {
         
         //! XYZ Component
         T     xyz;
+        
+        //! YZW Component
         T     yzw;
         T     zwx;
         T     wxy;
