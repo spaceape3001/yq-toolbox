@@ -27,6 +27,8 @@ namespace yq {
         
         //! ZWX Component
         T     zwx;
+        
+        //! WXY Component
         T     wxy;
 
         constexpr Trivector4() noexcept = default;
