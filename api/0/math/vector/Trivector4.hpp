@@ -31,6 +31,7 @@ namespace yq {
         //! WXY Component
         T     wxy;
 
+        //! Default constructor
         constexpr Trivector4() noexcept = default;
         constexpr Trivector4(T _xyz, T _yzw, T _zwx, T _wxy) noexcept : xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy) {}
         constexpr Trivector4(all_t, T v) noexcept : xyz(v), yzw(v), zwx(v), wxy(v) {}
