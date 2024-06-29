@@ -39,6 +39,8 @@ namespace yq {
         
         //! Constructs all components to same value
         constexpr Trivector4(all_t, T v) noexcept : xyz(v), yzw(v), zwx(v), wxy(v) {}
+        
+        //! Constructs the trivector to not-a-number
         template <typename=void> requires has_nan_v<T>
         consteval Trivector4(nan_t) noexcept : Trivector4(ALL, nan_v<T>) {}
         consteval Trivector4(one_t) noexcept : Trivector4(ALL, one_v<T>) {}
