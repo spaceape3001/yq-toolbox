@@ -41,6 +41,8 @@
 
 
 namespace yq {
+
+    std::u32string      to_u32string(std::string_view);
     //class Any;
     
     /*
@@ -303,6 +305,7 @@ namespace yq {
         std::string_view                name() const { return m_name; }
         std::string_view                name_stem() const { return m_stem; }
         
+        const std::u32string&           name32() const { return m_name32; }
         
         //  MAY BE NULL
         const Meta*                     parent() const { return m_parent; }
@@ -326,6 +329,9 @@ namespace yq {
 
         template <typename T, typename K, K (T::*FN)() const>
         struct LUC2;
+
+        template <typename T>
+        struct LUC32;
 
     protected:
         friend class ArgInfo;
@@ -360,6 +366,7 @@ namespace yq {
         std::string_view                        m_description;
         std::string_view                        m_label;
         std::string_view                        m_name;
+        std::u32string                          m_name32;
         std::string_view                        m_stem;
         std::vector<const Meta*>                m_children;
         const Meta*                             m_parent    = nullptr;
@@ -431,5 +438,59 @@ namespace yq {
         }
     };
 
+    template <typename T>
+    struct Meta::LUC32 {
+        //   CONDITION is still valid, however, we can't use it w/o compiler issues
+        //static_assert( std::is_base_of_v<Meta, T>, "T must derive from Meta!");
+        using MM    = MultiMap<std::string_view, const T*, IgCase>;
+        using MM32  = MultiMap<std::u32string_view, const T*, IgCase>;
+        Vector<const T*>                all;
+        MM                              lut;
+        MM32                            lut32;
+        StringViewSet                   keys;
+        U32StringViewSet                keys32;
+        std::vector<std::u32string*>    alts32;
+
+        LUC32(){}
+        ~LUC32()
+        {
+            lut32.clear();
+            keys32.clear();
+            for(std::u32string* p : alts32)
+                delete p;
+            alts32.clear();
+        }
+        
+        
+        LUC32& operator<<(const T* p)
+        {
+            all << p;
+            lut.insert(p->name(), p);
+            lut32.insert(p->name32(), p);
+            keys << p->name();
+            keys32 << p->name32();
+            return *this;
+        }
+        
+        LUC32&    operator += (const LUC32& b)
+        {
+            all += b.all;
+            lut += b.lut;
+            lut32 += b.lut32;
+            keys += b.keys;
+            keys32 += b.keys32;
+            return *this;
+        }
+        
+        void    add_mapping(std::string_view k, const T* d)
+        {
+            std::u32string* s   = new std::u32string(to_u32string(k));
+            alts32.push_back(s);
+            lut32.insert(*s, d);
+            lut.insert(k,d);
+            keys += k;
+            keys32 += *s;
+        }
+    };
 }
 

@@ -17,7 +17,7 @@ namespace yq {
         return *s_ret;
     }
 
-    GlobalInfo::GlobalInfo(const std::source_location& sl) : CompoundInfo("Global", sl, nullptr, MC_Global)
+    GlobalInfo::GlobalInfo(std::string_view name, const std::source_location& sl) : CompoundInfo(name, sl, nullptr, MC_Global)
     {
         set(Flag::GLOBAL);
     }

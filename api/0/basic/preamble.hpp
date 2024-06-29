@@ -279,6 +279,8 @@ namespace yq {
     using path_vector_t         = std::vector<std::filesystem::path>;
 
     using string_view_initializer_list_t       = std::initializer_list<std::string_view>;
+
+    using U32StringViewSet      = Set<std::u32string_view, IgCase>;
     
     using u32string_pair_t         = std::pair<std::u32string,std::u32string>;
     using u32string_int_pair_t     = std::pair<std::u32string,int>;

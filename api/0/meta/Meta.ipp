@@ -13,6 +13,7 @@
 #include <0/meta/ReservedIDs.hpp>
 #include <0/basic/Any.hpp>
 #include <0/basic/TextUtils.hpp>
+#include <0/basic/TextUtils32.hpp>
 #include <cassert>
 
 namespace yq {
@@ -357,6 +358,7 @@ namespace yq {
             m_name  = v.substr(4);
         else
             m_name = v;
+        m_name32    = to_u32string(m_name);
         auto ecolon = m_name.find_last_of(':');
         if(ecolon != std::string_view::npos){
             m_stem  = m_name.substr(ecolon+1);

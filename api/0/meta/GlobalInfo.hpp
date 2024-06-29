@@ -29,7 +29,7 @@ namespace yq {
         
 
     protected:
-        GlobalInfo(const std::source_location& sl = std::source_location::current());
+        GlobalInfo(std::string_view name="Global", const std::source_location& sl = std::source_location::current());
         virtual void                sweep_impl() override;
 
         friend class PropertyInfo;
