@@ -43,6 +43,8 @@ namespace yq {
         //! Constructs the trivector to not-a-number
         template <typename=void> requires has_nan_v<T>
         consteval Trivector4(nan_t) noexcept : Trivector4(ALL, nan_v<T>) {}
+        
+        //! Constructs the trivector to all ones
         consteval Trivector4(one_t) noexcept : Trivector4(ALL, one_v<T>) {}
         constexpr Trivector4(wxy_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(zero_v<T>), wxy(v) {}
         consteval Trivector4(wxy_t) noexcept : Trivector4(WXY, one_v<T>) {}
