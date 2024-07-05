@@ -11,15 +11,29 @@
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
 
+
 namespace yq::expr {
+    enum {
+        PCompare    = (int8_t) 1,
+        PLogic,
+        PAddSub,
+        PMulDiv,
+        PPower
+    };
+    
     const Repo::OpData             Repo::kStandardOperators[] = {
         { .text = U"=", .type=OperatorType::Set, .self=true },
-        { .text = U"+", .code=Operator::Affirm,     .type=OperatorType::Left,   .priority=0 },
-        { .text = U"-", .code=Operator::Negate,     .type=OperatorType::Left,   .priority=0 },
-        { .text = U"+", .code=Operator::Add,        .type=OperatorType::Binary, .priority=0 },
-        { .text = U"-", .code=Operator::Subtract,   .type=OperatorType::Binary, .priority=0 },
-        { .text = U"*", .code=Operator::Multiply,   .type=OperatorType::Binary, .priority=1 },
-        { .text = U"/", .code=Operator::Divide,     .type=OperatorType::Binary, .priority=1 },
+        { .text = U"+", .code=Operator::Affirm,     .type=OperatorType::Left,   .priority=PAddSub },
+        { .text = U"-", .code=Operator::Negate,     .type=OperatorType::Left,   .priority=PAddSub },
+        { .text = U"+", .code=Operator::Add,        .type=OperatorType::Binary, .priority=PAddSub },
+        { .text = U"-", .code=Operator::Subtract,   .type=OperatorType::Binary, .priority=PAddSub },
+        { .text = U"*", .code=Operator::Multiply,   .type=OperatorType::Binary, .priority=PMulDiv },
+        { .text = U"/", .code=Operator::Divide,     .type=OperatorType::Binary, .priority=PMulDiv },
+        { .text = U"^", .code=Operator::Power,      .type=OperatorType::Binary, .priority=PPower },
+        { .text = U"⊗", .code=Operator::TensorProduct, .type=OperatorType::Binary, .priority=PMulDiv },
+        { .text = U"√", .code=Operator::SquareRoot, .type=OperatorType::Left, .priority=PPower },
+        { .text = U"∛", .code=Operator::CubeRoot,   .type=OperatorType::Left, .priority=PPower },
+        { .text = U"∜", .code=Operator::FourthRoot, .type=OperatorType::Left, .priority=PPower },
         { .text = U"(", .type = OperatorType::Open, .other=U")" },
         { .text = U")", .type = OperatorType::Close, .other=U"(" }
     };

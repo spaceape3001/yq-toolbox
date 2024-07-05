@@ -130,7 +130,7 @@ namespace yq::expr {
         Operator                code        = Operator::None;
         OperatorType            type        = OperatorType::None;
         std::u32string_view     other;
-        int                     priority    = 0;
+        int8_t                  priority    = 0;
         bool                    self        = false;
     };
 

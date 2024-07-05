@@ -24,15 +24,14 @@ namespace yq::expr {
 
         //! Duplicates top item of stack
         Duplicate,        
+
+        //! Invokes function
+        Function,
         
         //! Loads up its value
         Value,
         
         //! Loads up the assigned variable
-        Variable,
-        
-        Operator,
-        
-        Function
+        Variable
     )
 }

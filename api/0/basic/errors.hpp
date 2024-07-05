@@ -14,6 +14,7 @@ namespace yq::errors {
     using bad_constant              = error_db::entry<"Bad constant">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
     using bad_instruction           = error_db::entry<"Bad instruction">;
+    using bad_operator              = error_db::entry<"Bad operator">;
     using bad_userexpr              = error_db::entry<"Bad user expression">;
     using bad_variable              = error_db::entry<"Bad variable">;
     using checksum_failure          = error_db::entry<"Checksum failure">;
@@ -47,6 +48,7 @@ namespace yq::errors {
     using null_source               = error_db::entry<"Source is a NULL pointer">;
     using null_result               = error_db::entry<"Result is a NULL pointer" >;
     using null_value                = error_db::entry<"Value is a NULL pointer" >;
+    using parenthesis_mismatch      = error_db::entry<"Parenthesis mismatch">;
     using parser_failed             = error_db::entry<"Parser failed to parse string">;
     using setter_failed             = error_db::entry<"Setter function returned false">;
     using todo                      = error_db::entry<"Feature is not yet implemented (TODO)">;

@@ -12,15 +12,11 @@
 
 namespace yq::expr {
     struct Instruction {
-        InsCode             code    = InsCode::None;
+        InsCode             code        = InsCode::None;
         std::u32string      key;
         Any                 data;
-
-        union {
-            uint64_t        u64   = 0;
-            uint32_t        u32;
-            int32_t         i32;
-        };
+        uint16_t            args        = 0;
+        int8_t              priority    = 0;
     };
 
     Expect<InsVector>   compile(const SymVector&);

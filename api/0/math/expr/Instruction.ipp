@@ -13,66 +13,157 @@
 #include <0/basic/Stack.hpp>
 
 namespace yq::expr {
+    struct InsInfo {
+        
+    };
+
+    struct Builder {
+        InsVector           m_rpn;
+        Stack<InsInfo>      m_stack;
+        
+        Builder()
+        {
+            m_stack << InsInfo{};
+        }
+        
+        std::error_code     add_operator(const Symbol& sym)
+        {
+            static const Repo& _r   = repo();
+            bool success = _r.all_operators(sym.text, [&](const Repo::OpData& data) -> bool {
+                switch(data.type){
+                case OperatorType::None:
+                    break;
+                case OperatorType::Set:
+                    break;
+                case OperatorType::Left:
+                    break;
+                case OperatorType::Right:
+                    break;
+                case OperatorType::Binary:
+                    break;
+                case OperatorType::Trinary1:
+                    break;
+                case OperatorType::Trinary2:
+                    break;
+                case OperatorType::Open:
+                    break;
+                case OperatorType::Close:
+                    break;
+                }
+                return false;
+            });
+            
+            if(!success)
+                return errors::bad_operator();
+            return errors::todo();
+        }
+        
+        std::error_code    add(const Symbol&sym)
+        {
+            static const Repo& _r   = repo();
+            switch(sym.type){
+            case SymType::None:
+                return {};
+            case SymType::Error:
+                return errors::existing_error();
+            case SymType::Float:
+                m_rpn.push_back(Instruction{
+                    .code   = InsCode::Value,
+                    .data   = Any((double) *to_double(sym.text))
+                });
+                return {};
+            case SymType::Hex:
+                m_rpn.push_back(Instruction{
+                    .code   = InsCode::Value,
+                    .data   = Any((uint64_t) *to_hex64(sym.text.substr(2)))
+                });
+                return {};
+            case SymType::Octal:
+                m_rpn.push_back(Instruction{
+                    .code   = InsCode::Value,
+                    .data   = Any((uint64_t) *to_octal64(sym.text))
+                });
+                return {};
+            case SymType::Int:
+                m_rpn.push_back(Instruction{
+                    .code   = InsCode::Value,
+                    .data   = Any((int64_t) *to_int64(sym.text))
+                });
+                return {};
+            case SymType::Text:
+                if(_r.has_constant(sym.text)){
+                    m_rpn.push_back(Instruction{
+                        .code   = InsCode::Constant,
+                        .key    = sym.text
+                    });
+                    return {};
+                } 
+                
+                if(_r.has_function(sym.text)){
+                #if 0
+                    temp << Instruction{
+                        .code   = InsCode::Function,
+                        .key    = sym.text
+                    };
+                    break;
+                #endif
+                    return errors::todo();
+                }
+                
+                m_rpn.push_back(Instruction{
+                    .code   = InsCode::Variable,
+                    .key    = sym.text
+                });
+                
+                break;
+            case SymType::Operator:
+                return add_operator(sym);
+            default:
+                return errors::todo();
+            }
+            return {};
+        }
+        
+        std::error_code operator<<(const Symbol&sym)
+        {
+            return add(sym);
+        }
+    };
+
     Expect<InsVector>   compile(const SymVector& syms)
     {
-        static const Repo& _r   = repo();
+        
+        Builder build;
+        if(syms.empty())
+            return build.m_rpn;
+        build.m_rpn.reserve(syms.size());
+        
+        std::error_code ec;
+        for(const Symbol& sym : syms){
+            ec  = build << sym;
+            if(ec != std::error_code())
+                return unexpected(ec);
+        }
+        
+        if(build.m_stack.size() != 1)
+            return errors::parenthesis_mismatch();
+        return build.m_rpn;
+        
+        #if 0
+        
         InsVector           ret;
         if(syms.empty())
             return ret;
+
         Stack<Instruction>    temp;
+        temp << Instruction{};      // padding for top element
             
         ret.reserve(syms.size());
         for(const Symbol& sym : syms){
             std::error_code ec;
             switch(sym.type){
-            case SymType::None:
-                continue;
-            case SymType::Error:
-                return errors::existing_error();
-            case SymType::Float:
-                ret.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((double) *to_double(sym.text))
-                });
-                break;
-            case SymType::Hex:
-                ret.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((uint64_t) *to_hex64(sym.text.substr(2)))
-                });
-                break;
-            case SymType::Octal:
-                ret.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((uint64_t) *to_octal64(sym.text))
-                });
-                break;
-            case SymType::Int:
-                ret.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((int64_t) *to_int64(sym.text))
-                });
-                break;
-            case SymType::Text:
-                if(_r.has_constant(sym.text)){
-                    ret.push_back(Instruction{
-                        .code   = InsCode::Constant,
-                        .key    = sym.text
-                    });
-                }
-                if(_r.has_function(sym.text)){
-                    temp << Instruction{
-                        .code   = InsCode::Function,
-                        .key    = sym.text
-                    };
-                }
-                break;
             case SymType::Operator:
                 {
-                    bool success = _r.all_operators(sym.text, [&](const Repo::OpData&) -> bool {
-                        return false;
-                    });
-                    return errors::todo();
                 }
                 break;
             default:
@@ -80,7 +171,11 @@ namespace yq::expr {
             }
         }
         
+        if(temp.size() != 1)
+            return errors::parenthesis_mismatch();
+        
         return ret;
+        #endif
     }
     
     Expect<InsVector>   compile(std::string_view in)

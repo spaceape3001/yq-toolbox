@@ -16,9 +16,11 @@ namespace yq {
         Affirm,             \
         And,                \
         Cross,              \
+        CubeRoot,           \
         Divide,             \
         Dot,                \
         Equal,              \
+        FourthRoot,         \
         Greater,            \
         GreaterEqual,       \
         Inner,              \
@@ -32,7 +34,9 @@ namespace yq {
         Or,                 \
         Outer,              \
         Power,              \
+        SquareRoot,         \
         Subtract,           \
+        TensorProduct,      \
         Union,              \
         Xor
 
