@@ -14,6 +14,7 @@ namespace yq::errors {
     using bad_constant              = error_db::entry<"Bad constant">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
     using bad_instruction           = error_db::entry<"Bad instruction">;
+    using bad_userexpr              = error_db::entry<"Bad user expression">;
     using bad_variable              = error_db::entry<"Bad variable">;
     using checksum_failure          = error_db::entry<"Checksum failure">;
     using const_object_violation    = error_db::entry<"Constant object violated">;

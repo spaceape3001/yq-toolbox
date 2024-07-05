@@ -14,9 +14,13 @@ namespace yq::expr {
     struct Instruction {
         InsCode             code    = InsCode::None;
         std::u32string      key;
-        void*               exec    = nullptr;
-        uint32_t            args    = 0;
         Any                 data;
+
+        union {
+            uint64_t        u64   = 0;
+            uint32_t        u32;
+            int32_t         i32;
+        };
     };
 
     Expect<InsVector>   compile(const SymVector&);

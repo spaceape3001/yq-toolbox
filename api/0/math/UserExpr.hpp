@@ -26,17 +26,13 @@
 namespace log4cpp { class CategoryStream; }
 
 
-namespace yq::expr {
-    bool                has_function(const std::u32string&);
-    bool                has_constant(std::string_view);
-    bool                has_constant(const std::u32string&);
-    void                set_constant(const std::u32string&, const Any&);
-    void                set_constant(std::string_view, const Any&);
-    void                set_constant(const std::u32string&, Any&&);
-    void                set_constant(std::string_view, Any&&);
-    Expect<Any>         constant(std::string_view);
-    Expect<Any>         constant(const std::u32string&);
-}
+//namespace yq::expr {
+    //bool                has_function(const std::u32string&);
+    //bool                has_constant(std::string_view);
+    //bool                has_constant(const std::u32string&);
+    //Expect<Any>         constant(std::string_view);
+    //Expect<Any>         constant(const std::u32string&);
+//}
 
 
 namespace yq {
@@ -57,6 +53,7 @@ namespace yq {
         const expr::InsVector&  instructions() const { return m_instructions; }
         bool                    is_good() const { return m_good; }
         
+        Expect<Any>     evaluate() const;
         Expect<Any>     evaluate(expr::VarMap&) const;
         
 

@@ -8,6 +8,7 @@
 #include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
+#include <0/math/expr/Repo.hpp>
 #include <0/math/expr/Symbol.hpp>
 #include <0/math/expr/Instruction.hpp>
 #include <iostream>
@@ -93,6 +94,16 @@ bool    sdouble(std::string_view ux, double val, double ep=1e-14)
 }
 
 ut::suite tests = []{
+    "Has Operator"_test = []{
+        auto& _r    = Repo::instance();
+        expect( true == _r.has_operator("+"));
+        expect( false == _r.has_operator("+."));
+        expect( false == _r.has_operator("+*"));
+        expect( true == _r.has_operator("-"));
+        expect( false == _r.has_operator("-*"));
+        expect( false == _r.has_operator("-."));
+    };
+
     "Tokenize"_test = []{
         expect( token(U"0") == Token{ SymType::Int, 1 });
         expect( token(U"0x1") == Token{ SymType::Hex, 3 });
@@ -130,6 +141,13 @@ ut::suite tests = []{
         expect(sdouble("0XA", 10.));
         expect(sdouble("012", 10.));
         expect(sdouble("pi", std::numbers::pi_v<double>));
+    };
+    
+    "Evaluate Addition"_test = []{
+        expect(sdouble("0.+0.", 0.));
+        expect(sdouble("1.+0.", 1.));
+        expect(sdouble("0.+1.", 1.));
+        expect(sdouble("1.+1.", 2.));
     };
 };
 

@@ -60,14 +60,14 @@ namespace yq::expr {
         }
         
         //  text identifier
-        if(is_alpha(ch) || (kPunctStartsText && _r.punctText.contains(ch))){
+        if(is_alpha(ch) || (_r.punctuation_can_start_text() && _r.is_punct_text(ch))){
             ret.type   = SymType::Text;
             for(cnt=1; cnt<in.size(); ++cnt){
                 if(is_alpha(in[cnt]))
                     continue;
-                if(kDigitsText && is_digit(in[cnt]))
+                if(_r.digits_in_text() && is_digit(in[cnt]))
                     continue;
-                if(_r.punctText.contains(in[cnt]))
+                if(_r.is_punct_text(in[cnt]))
                     continue;
                 break;
             }
@@ -199,15 +199,19 @@ namespace yq::expr {
         if(is_punct(ch)){
             ret.type    = SymType::Operator;
             
-            for(cnt=1; cnt<in.size(); ++cnt){
-                if(!is_punct(in[cnt]))  // non punctuation break
+            size_t cc = 1;
+            for(; cc<in.size(); ++cc)
+                if(!is_punct(in[cc]))
                     break;
-
-                std::u32string_view part    = in.substr(0,cnt);
-                if(!_r.operators.contains(part))
+            
+            size_t  lc = 0;
+            for(; lc<cc; ++lc){
+                std::u32string_view part    = in.substr(0,lc+1);
+                if(!_r.has_operator(part))
                     break;
             }
-            
+
+            cnt     = lc ? lc : 1;
             return ret;
         }
         
