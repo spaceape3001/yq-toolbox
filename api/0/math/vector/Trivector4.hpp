@@ -56,11 +56,13 @@ namespace yq {
         //! Constructs to the specified value in XYZ component, all others zero
         constexpr Trivector4(xyz_t, T v) noexcept : xyz(v), yzw(zero_v<T>), zwx(zero_v<T>), wxy(zero_v<T>) {}
         
-        //! Constructs to a unit vector in the XYZ component
+        //! Constructs to a unit trivector in the XYZ component
         consteval Trivector4(xyz_t) noexcept : Trivector4(XYZ, one_v<T>) {}
         
         //! Construct to the specified value in YZW component, all others zero
         constexpr Trivector4(yzw_t, T v) noexcept : xyz(zero_v<T>), yzw(v), zwx(zero_v<T>), wxy(zero_v<T>) {}
+        
+        //! Constructs to a unit trivector in the YZW component
         consteval Trivector4(yzw_t) noexcept : Trivector4(YZW, one_v<T>) {}
         constexpr Trivector4(zwx_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(v), wxy(zero_v<T>) {}
         consteval Trivector4(zwx_t) noexcept : Trivector4(ZWX, one_v<T>) {}
