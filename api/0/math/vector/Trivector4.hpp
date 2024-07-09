@@ -70,6 +70,8 @@ namespace yq {
         
         //! Constructs to a unit trivector in the ZWX component
         consteval Trivector4(zwx_t) noexcept : Trivector4(ZWX, one_v<T>) {}
+        
+        //! Constructs to a zero trivector
         consteval Trivector4(zero_t) noexcept : Trivector4(ALL, zero_v<T>) {}
 
         template <typename U>
