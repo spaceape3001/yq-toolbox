@@ -82,6 +82,7 @@ namespace yq {
             return { (U) xyz, (U) yzw, (U) zwx, (U) wxy };
         }
         
+        //! Converts to another trivector of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Trivector4<U>() const 
