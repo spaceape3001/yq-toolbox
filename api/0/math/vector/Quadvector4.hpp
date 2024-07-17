@@ -22,7 +22,7 @@ namespace yq {
         //! Component type
         using component_type = T;
 
-        //! Component
+        //! XYZW Component
         T     xyzw;
 
         constexpr Quadvector4() noexcept = default;
