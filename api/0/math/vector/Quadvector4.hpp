@@ -25,6 +25,7 @@ namespace yq {
         //! XYZW Component
         T     xyzw;
 
+        //! Default constructor
         constexpr Quadvector4() noexcept = default;
         constexpr Quadvector4(T _xyzw) noexcept : xyzw(_xyzw) {}
         constexpr Quadvector4(all_t, T v) noexcept : xyzw(v) {}
