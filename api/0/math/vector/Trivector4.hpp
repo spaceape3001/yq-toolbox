@@ -120,6 +120,8 @@ namespace yq {
         
         //! Self increments left trivector with the right hand term
         Trivector4&                 operator+=(const Trivector4& b) noexcept;
+        
+        //! Adds vector to this trivector, returns multivector
         constexpr Multivector4<T>   operator+(const Vector4<T>& b) const noexcept;
 
         constexpr Multivector4<T>   operator-(T b) const noexcept;
