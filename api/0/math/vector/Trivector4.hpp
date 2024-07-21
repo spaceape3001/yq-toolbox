@@ -124,6 +124,7 @@ namespace yq {
         //! Adds vector to this trivector, returns multivector
         constexpr Multivector4<T>   operator+(const Vector4<T>& b) const noexcept;
 
+        //! Subtracts scalar from this trivector, returns multivector result
         constexpr Multivector4<T>   operator-(T b) const noexcept;
         constexpr Multivector4<T>   operator-(const Bivector4<T>& b) const noexcept;
         constexpr Multivector4<T>   operator-(const Multivector4<T>& b) const noexcept;
