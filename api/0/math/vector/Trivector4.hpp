@@ -143,6 +143,7 @@ namespace yq {
         Trivector4&                 operator-=(const Trivector4& b) noexcept;
         constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
 
+		//! Scaling mulitplication of this trivector with the right side scalar, returns the trivector product
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Trivector4<product_t<T,U>> operator*(U b) const noexcept;
