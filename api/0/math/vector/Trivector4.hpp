@@ -141,6 +141,8 @@ namespace yq {
         
         //! Subtracts right trivector from the left, returns a reference
         Trivector4&                 operator-=(const Trivector4& b) noexcept;
+        
+        //! Subtracts vector from the trivector, returns multivector
         constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
 
 		//! Scaling mulitplication of this trivector with the right side scalar, returns the trivector product
