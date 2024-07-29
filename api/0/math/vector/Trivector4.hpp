@@ -150,6 +150,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Trivector4<product_t<T,U>> operator*(U b) const noexcept;
 
+		//! Scaling self mulitplication of trivector by right hand term, returns reference
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Trivector4& operator*=(U b) noexcept;
