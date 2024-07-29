@@ -21,21 +21,37 @@ namespace yq::expr {
         PPower
     };
     
-    const Repo::OpData             Repo::kStandardOperators[] = {
-        { .text = U"=", .type=OperatorType::Set, .self=true },
-        { .text = U"+", .code=Operator::Affirm,     .type=OperatorType::Left,   .priority=PAddSub },
-        { .text = U"-", .code=Operator::Negate,     .type=OperatorType::Left,   .priority=PAddSub },
-        { .text = U"+", .code=Operator::Add,        .type=OperatorType::Binary, .priority=PAddSub },
-        { .text = U"-", .code=Operator::Subtract,   .type=OperatorType::Binary, .priority=PAddSub },
-        { .text = U"*", .code=Operator::Multiply,   .type=OperatorType::Binary, .priority=PMulDiv },
-        { .text = U"/", .code=Operator::Divide,     .type=OperatorType::Binary, .priority=PMulDiv },
-        { .text = U"^", .code=Operator::Power,      .type=OperatorType::Binary, .priority=PPower },
-        { .text = U"⊗", .code=Operator::TensorProduct, .type=OperatorType::Binary, .priority=PMulDiv },
-        { .text = U"√", .code=Operator::SquareRoot, .type=OperatorType::Left, .priority=PPower },
-        { .text = U"∛", .code=Operator::CubeRoot,   .type=OperatorType::Left, .priority=PPower },
-        { .text = U"∜", .code=Operator::FourthRoot, .type=OperatorType::Left, .priority=PPower },
-        { .text = U"(", .type = OperatorType::Open, .other=U")" },
-        { .text = U")", .type = OperatorType::Close, .other=U"(" }
+    // Table of known operators (this *WILL* grow)
+    const OpData             Repo::kStandardOperators[] = {
+        { 
+			.text = U",",  
+			.type=OperatorType::Comma,
+			.category=SymCategory::Special,
+			.kind=SymKind::Comma
+		},
+        { .text = U":=", .type=OperatorType::Set, .self=true },
+        { .text = U"+",  .code=Operator::Affirm,     .type=OperatorType::Left,   .priority=PAddSub },
+        { .text = U"-",  .code=Operator::Negate,     .type=OperatorType::Left,   .priority=PAddSub },
+        { .text = U"+",  .code=Operator::Add,        .type=OperatorType::Binary, .priority=PAddSub },
+        { .text = U"-",  .code=Operator::Subtract,   .type=OperatorType::Binary, .priority=PAddSub },
+        { .text = U"*",  .code=Operator::Multiply,   .type=OperatorType::Binary, .priority=PMulDiv },
+        { .text = U"/",  .code=Operator::Divide,     .type=OperatorType::Binary, .priority=PMulDiv },
+        { .text = U"^",  .code=Operator::Power,      .type=OperatorType::Binary, .priority=PPower },
+        { .text = U"⊗",  .code=Operator::TensorProduct, .type=OperatorType::Binary, .priority=PMulDiv },
+        { .text = U"√",  .code=Operator::SquareRoot, .type=OperatorType::Left, .priority=PPower },
+        { .text = U"∛",  .code=Operator::CubeRoot,   .type=OperatorType::Left, .priority=PPower },
+        { .text = U"∜",  .code=Operator::FourthRoot, .type=OperatorType::Left, .priority=PPower },
+        { .text = U"!=", .code=Operator::NotEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"<>", .code=Operator::NotEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"≠",  .code=Operator::NotEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"<",  .code=Operator::Less, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"<=", .code=Operator::LessEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"≤",  .code=Operator::LessEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U">",  .code=Operator::Greater, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U">=", .code=Operator::GreaterEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"≥",  .code=Operator::GreaterEqual, .type=OperatorType::Binary, .priority=PCompare },
+        { .text = U"(",  .type = OperatorType::Open, .other=U")" },
+        { .text = U")",  .type = OperatorType::Close, .other=U"(" }
     };
 
     Repo& Repo::instance()

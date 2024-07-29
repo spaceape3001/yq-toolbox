@@ -9,10 +9,22 @@
 #include <0/meta/CompoundInfo.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoStatic.hpp>
+#include <0/math/expr/Symbol.hpp>
 #include <unordered_set>
 #include <tbb/spin_rw_mutex.h>
 
 namespace yq::expr {
+
+    struct OpData {
+        std::u32string_view     text;
+        Operator                code        = Operator::None;
+        OperatorType            type        = OperatorType::None;
+        SymCategory				category	= SymCategory::None;
+        SymKind					kind		= SymKind::None;
+        std::u32string_view     other;
+        int8_t                  priority    = 0;
+        bool                    self        = false;
+    };
 
 
     /*! \brief All things the user expression evaluation needs
@@ -57,8 +69,6 @@ namespace yq::expr {
         
         template <typename Pred>
         auto            all_operators(std::u32string_view, Pred) const;
-
-        struct OpData;
 
     private:
         Repo();
@@ -123,15 +133,6 @@ namespace yq::expr {
         
     private:
         Repo&   m_repo;
-    };
-
-    struct Repo::OpData {
-        std::u32string_view     text;
-        Operator                code        = Operator::None;
-        OperatorType            type        = OperatorType::None;
-        std::u32string_view     other;
-        int8_t                  priority    = 0;
-        bool                    self        = false;
     };
 
     template <typename Pred>

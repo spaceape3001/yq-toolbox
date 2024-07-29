@@ -29,6 +29,21 @@ namespace yq {
     UserExpr& UserExpr::operator=(UserExpr&&) = default;
     UserExpr::~UserExpr() = default;
 
+    UserExpr::UserExpr(std::string_view sv)
+    {
+		std::u32string 	u32	= to_u32string(sv);
+		_init(u32);
+	}
+	
+    UserExpr::UserExpr(std::u32string_view uin)
+    {
+		_init(uin);
+	}
+
+	void    UserExpr::_init(std::u32string_view) 
+	{
+	}
+
     Expect<Any>     UserExpr::evaluate() const
     {
         expr::VarMap    variables;

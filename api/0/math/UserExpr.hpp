@@ -63,7 +63,6 @@ namespace yq {
         std::u32string      m_definition;
         bool                m_good          = false;
         
-        void    _init(std::string_view);
         void    _init(std::u32string_view);
     };
 }

@@ -9,53 +9,41 @@
 #include "Instruction.hpp"
 #include "Symbol.hpp"
 //#include "Repo.hpp"
+#include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils32.hpp>
 #include <0/basic/Stack.hpp>
 
 namespace yq::expr {
+    enum class InsType {
+        None,
+        Open,
+        Close,
+        Operator,
+        Function
+    };
+
     struct InsInfo {
-        
+        InsType                 type        = InsType::None;
+        std::u32string_view     text, other;
+        uint16_t                commas      = 0;
+        uint16_t                values      = 0;
+        int8_t                  priority    = 0;
+        bool                    self        = false;
     };
 
     struct Builder {
         InsVector           m_rpn;
         Stack<InsInfo>      m_stack;
+        SymType             m_last  = SymType::None;
         
         Builder()
         {
             m_stack << InsInfo{};
         }
-        
-        std::error_code     add_operator(const Symbol& sym)
+
+        std::error_code operator<<(const Symbol&sym)
         {
-            static const Repo& _r   = repo();
-            bool success = _r.all_operators(sym.text, [&](const Repo::OpData& data) -> bool {
-                switch(data.type){
-                case OperatorType::None:
-                    break;
-                case OperatorType::Set:
-                    break;
-                case OperatorType::Left:
-                    break;
-                case OperatorType::Right:
-                    break;
-                case OperatorType::Binary:
-                    break;
-                case OperatorType::Trinary1:
-                    break;
-                case OperatorType::Trinary2:
-                    break;
-                case OperatorType::Open:
-                    break;
-                case OperatorType::Close:
-                    break;
-                }
-                return false;
-            });
-            
-            if(!success)
-                return errors::bad_operator();
-            return errors::todo();
+            return add(sym);
         }
         
         std::error_code    add(const Symbol&sym)
@@ -67,55 +55,15 @@ namespace yq::expr {
             case SymType::Error:
                 return errors::existing_error();
             case SymType::Float:
-                m_rpn.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((double) *to_double(sym.text))
-                });
-                return {};
+                return add_float(sym);
             case SymType::Hex:
-                m_rpn.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((uint64_t) *to_hex64(sym.text.substr(2)))
-                });
-                return {};
+                return add_hex(sym);
             case SymType::Octal:
-                m_rpn.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((uint64_t) *to_octal64(sym.text))
-                });
-                return {};
+                return add_octal(sym);
             case SymType::Int:
-                m_rpn.push_back(Instruction{
-                    .code   = InsCode::Value,
-                    .data   = Any((int64_t) *to_int64(sym.text))
-                });
-                return {};
+                return add_integer(sym);
             case SymType::Text:
-                if(_r.has_constant(sym.text)){
-                    m_rpn.push_back(Instruction{
-                        .code   = InsCode::Constant,
-                        .key    = sym.text
-                    });
-                    return {};
-                } 
-                
-                if(_r.has_function(sym.text)){
-                #if 0
-                    temp << Instruction{
-                        .code   = InsCode::Function,
-                        .key    = sym.text
-                    };
-                    break;
-                #endif
-                    return errors::todo();
-                }
-                
-                m_rpn.push_back(Instruction{
-                    .code   = InsCode::Variable,
-                    .key    = sym.text
-                });
-                
-                break;
+                return add_text(sym);
             case SymType::Operator:
                 return add_operator(sym);
             default:
@@ -123,10 +71,207 @@ namespace yq::expr {
             }
             return {};
         }
-        
-        std::error_code operator<<(const Symbol&sym)
+
+        std::error_code     add_binary(const Symbol& sym, const OpData& op)
         {
-            return add(sym);
+            return errors::todo();
+        }
+        
+        std::error_code     add_close(const Symbol& sym, const OpData& op)
+        {
+            return errors::todo();
+        }
+        
+        std::error_code     add_comma(const Symbol& sym, const OpData&)
+        {
+            ++(m_stack.back().commas);
+            return {};
+        }
+        
+        std::error_code     add_constant(const Symbol& sym)
+        {
+            m_rpn.push_back(Instruction{
+                .code   = InsCode::Constant,
+                .key    = sym.text
+            });
+            ++(m_stack.back().values);
+            return {};
+        }
+        
+        std::error_code    add_float(const Symbol& sym)
+        {
+            m_rpn.push_back(Instruction{
+                .code   = InsCode::Value,
+                .data   = Any((double) *to_double(sym.text))
+            });
+            ++(m_stack.back().values);
+            return {};
+        }
+        
+        std::error_code     add_function(const Symbol& sym)
+        {
+            m_stack << InsInfo{
+                .type   = InsType::Function,
+                .text   = sym.text
+            };
+            return {};
+        }
+        
+        std::error_code     add_hex(const Symbol& sym)
+        {
+            m_rpn.push_back(Instruction{
+                .code   = InsCode::Value,
+                .data   = Any((uint64_t) *to_hex64(sym.text.substr(2)))
+            });
+            ++(m_stack.back().values);
+            return {};
+        }
+
+        std::error_code     add_integer(const Symbol& sym)
+        {
+            m_rpn.push_back(Instruction{
+                .code   = InsCode::Value,
+                .data   = Any((int64_t) *to_int64(sym.text))
+            });
+            ++(m_stack.back().values);
+            return {};
+        }
+        
+        std::error_code     add_left(const Symbol& sym, const OpData& op)
+        {
+            return errors::todo();
+        }
+        
+        std::error_code     add_octal(const Symbol& sym)
+        {
+            m_rpn.push_back(Instruction{
+                .code   = InsCode::Value,
+                .data   = Any((uint64_t) *to_octal64(sym.text))
+            });
+            ++(m_stack.back().values);
+            return {};
+        }
+        
+        std::error_code     add_operator(const Symbol& sym)
+        {
+            static const Repo& _r   = repo();
+            
+            const OpData*     setter      = nullptr;
+            const OpData*     left        = nullptr;
+            const OpData*     right       = nullptr;
+            const OpData*     binary      = nullptr;
+            const OpData*     trinary1    = nullptr;
+            const OpData*     trinary2    = nullptr;
+            const OpData*     open        = nullptr;
+            const OpData*     close       = nullptr;
+            const OpData*     comma       = nullptr;
+            
+            _r.all_operators(sym.text, [&](const OpData& data) {
+                yInfo() << "Examining operator info (" << data.type << ") of " << data.text;
+            
+            
+                switch(data.type){
+                case OperatorType::None:
+                    break;
+                case OperatorType::Set:
+                    setter       = &data;
+                    break;
+                case OperatorType::Left:
+                    left        = &data;
+                    break;
+                case OperatorType::Right:
+                    right       = &data;
+                    break;
+                case OperatorType::Binary:
+                    binary      = &data;
+                    break;
+                case OperatorType::Trinary1:
+                    trinary1    = &data;
+                    break;
+                case OperatorType::Trinary2:
+                    trinary2    = &data;
+                    break;
+                case OperatorType::Open:
+                    open        = &data;
+                    break;
+                case OperatorType::Close:
+                    close       = &data;
+                    break;
+                case OperatorType::Comma:
+                    comma       = &data;
+                    break;
+                }
+            });
+            
+            if(setter && false)
+                return add_setter(sym, *setter);
+            if(comma)
+                return add_comma(sym, *comma);
+            if(open)
+                return add_open(sym, *open);
+            if(close)
+                return add_close(sym, *close);
+            if(trinary1)
+                return add_trinary1(sym, *trinary1);
+            if(trinary2)
+                return add_trinary2(sym, *trinary2);
+            if(left && false)
+                return add_left(sym, *left);
+            if(right && false)
+                return add_right(sym, *right);
+            if(binary && false)
+                return add_binary(sym, *binary);
+            return errors::todo();
+        }
+        
+        std::error_code     add_open(const Symbol& sym, const OpData& op)
+        {
+            m_stack << InsInfo{
+                .type   = InsType::Open,
+                .text   = sym.text,
+                .other  = op.other
+            };
+            return {};
+        }
+        
+        std::error_code     add_right(const Symbol& sym, const OpData& op)
+        {
+            return errors::todo();
+        }
+        
+        std::error_code     add_setter(const Symbol& sym, const OpData& op)
+        {
+            return errors::todo();
+        }
+
+        std::error_code     add_text(const Symbol& sym)
+        {
+            static const Repo& _r   = repo();
+            if(_r.has_constant(sym.text))
+                return add_constant(sym);
+            if(_r.has_function(sym.text))
+                return add_function(sym);
+            return add_variable(sym);
+        }
+        
+        std::error_code     add_trinary1(const Symbol& sym, const OpData& op)
+        {
+            return errors::todo();
+        }
+        
+        std::error_code     add_trinary2(const Symbol& sym, const OpData& op)
+        {
+            return errors::todo();
+        }
+        
+        std::error_code     add_variable(const Symbol& sym)
+        {
+            m_rpn.push_back(Instruction{
+                .code   = InsCode::Variable,
+                .key    = sym.text
+            });
+            ++(m_stack.back().values);
+            return {};
         }
     };
 
@@ -143,39 +288,12 @@ namespace yq::expr {
             ec  = build << sym;
             if(ec != std::error_code())
                 return unexpected(ec);
+            build.m_last    = sym.type;
         }
         
         if(build.m_stack.size() != 1)
             return errors::parenthesis_mismatch();
         return build.m_rpn;
-        
-        #if 0
-        
-        InsVector           ret;
-        if(syms.empty())
-            return ret;
-
-        Stack<Instruction>    temp;
-        temp << Instruction{};      // padding for top element
-            
-        ret.reserve(syms.size());
-        for(const Symbol& sym : syms){
-            std::error_code ec;
-            switch(sym.type){
-            case SymType::Operator:
-                {
-                }
-                break;
-            default:
-                return errors::todo();
-            }
-        }
-        
-        if(temp.size() != 1)
-            return errors::parenthesis_mismatch();
-        
-        return ret;
-        #endif
     }
     
     Expect<InsVector>   compile(std::string_view in)

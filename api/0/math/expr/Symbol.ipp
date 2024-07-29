@@ -21,7 +21,7 @@ namespace yq::expr {
     
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&out, const Token&tok)
     {
-        out << "{" << key(tok.type) << ": " << tok.len << "}";
+        out << "{" << key(tok.type) << ": " << tok.length << "}";
         return out;
     }
 
@@ -33,7 +33,7 @@ namespace yq::expr {
     
     std::ostream&    operator<<(std::ostream&out, const Token&tok)
     {
-        out << "{" << key(tok.type) << ": " << tok.len << "}";
+        out << "{" << key(tok.type) << ": " << tok.length << "}";
         return out;
     }
 
@@ -46,12 +46,14 @@ namespace yq::expr {
         if(in.empty())
             return ret;
             
-        size_t&     cnt = ret.len;
+        size_t&     cnt = ret.length;
         char32_t    ch  = in[0];
         
         //  white space
         if(is_space(ch)){
-            ret.type   = SymType::Space;
+            ret.type   		= SymType::Space;
+            ret.category	= SymCategory::Space;
+            ret.kind		= SymKind::None;
             for(cnt = 1; cnt<in.size(); ++cnt){
                 if(!is_space(in[cnt]))
                     break;
@@ -61,7 +63,9 @@ namespace yq::expr {
         
         //  text identifier
         if(is_alpha(ch) || (_r.punctuation_can_start_text() && _r.is_punct_text(ch))){
-            ret.type   = SymType::Text;
+            ret.type   		= SymType::Text;
+            ret.category	= SymCategory::Text;
+            ret.kind		= SymKind::None;
             for(cnt=1; cnt<in.size(); ++cnt){
                 if(is_alpha(in[cnt]))
                     continue;
@@ -80,7 +84,9 @@ namespace yq::expr {
         if(is_digit(ch) || ((ch == '.') && is_digit(nx))){
         
             if( (ch == '0') && ((nx == 'x') || (nx == 'X'))){
-                ret.type   = SymType::Hex;
+                ret.type   		= SymType::Hex;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Hexadecimal;
                 //  it's a hex constant
                 for(cnt=2; cnt<in.size(); ++cnt){
                     if(!is_xdigit(in[cnt]))
@@ -90,7 +96,9 @@ namespace yq::expr {
             }
             
             if((ch == '0') && is_digit(nx)){
-                ret.type   = SymType::Octal;
+                ret.type   		= SymType::Octal;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Octal;
                 
                 //  it's an octal constant
                 for(cnt=2; cnt<in.size(); ++cnt){
@@ -187,9 +195,13 @@ namespace yq::expr {
             }
             
             if(decimal.first || exponent.first){
-                ret.type   = SymType::Float;
+                ret.type   		= SymType::Float;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Float;
             } else {
-                ret.type   = SymType::Int;
+                ret.type   		= SymType::Int;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Integer;
             }
             
             return ret;
@@ -197,7 +209,8 @@ namespace yq::expr {
         
         
         if(is_punct(ch)){
-            ret.type    = SymType::Operator;
+            ret.type    	= SymType::Operator;
+            ret.category	= SymCategory::Operator;
             
             size_t cc = 1;
             for(; cc<in.size(); ++cc)
@@ -215,7 +228,7 @@ namespace yq::expr {
             return ret;
         }
         
-        return { SymType::Error, 1 };
+        return Token{ .type = SymType::Error, .category=SymCategory::Error, .length=1 };
     }
 
 
@@ -228,8 +241,13 @@ namespace yq::expr {
     Expect<SymVector>  tokenize(std::u32string_view input)
     {
         SymVector   ret;
-        std::error_code ec  = tokenize(input, [&](SymType c, std::u32string_view s) -> std::error_code {
-            ret.push_back(Symbol{ std::u32string(s), c });
+        std::error_code ec  = tokenize(input, [&](SymCode c, std::u32string_view s) -> std::error_code {
+            ret.push_back(Symbol{ 
+					.type = c.type,
+					.category = c.category,
+					.kind = c.kind,
+					.text = std::u32string(s)
+				});
             return std::error_code();
         });
         if(ec != std::error_code())
@@ -245,12 +263,12 @@ namespace yq::expr {
         
         for(std::u32string_view i=input; !i.empty(); ){
             Token   t   = token(i);
-            if((t.type == SymType::Error) || (t.len == 0)){
+            if((t.category == SymCategory::Error) || (t.length == 0)){
                 return errors::bad_argument();
             }
             
-            fn(t.type, i.substr(0, t.len));
-            i = i.substr(t.len);
+            fn({.kind = t.kind, .category=t.category, .type = t.type}, i.substr(0, t.length));
+            i = i.substr(t.length);
         }
         return std::error_code();
     }
@@ -261,4 +279,24 @@ namespace yq::expr {
         std::u32string      u32 = to_u32string(input);
         return tokenize(u32, std::move(fn));
     }
+    
+    std::error_code		streamline(std::vector<Symbol>& syms)
+    {
+		for(auto itr=syms.begin(); itr != syms.end(); ){
+			Symbol*		last	= nullptr;
+			if(itr != syms.begin()){
+				last		= &*(itr-1);
+			}
+			SymType		next	= SymType::None;
+			if((itr + 1) != syms.end()){
+				next	= (itr+1) -> type;
+			}
+			
+			Symbol& sym	= *itr;
+			
+			
+		}
+		
+		return errors::todo();
+	}
 }

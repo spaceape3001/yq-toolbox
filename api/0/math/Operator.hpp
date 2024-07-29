@@ -60,6 +60,8 @@ namespace yq {
         Trinary1,
         //! Second Trinary operator (a?b:c)
         Trinary2,
+        //! Comma
+        Comma,
         //! Open-mark
         Open,
         //! Close-mark

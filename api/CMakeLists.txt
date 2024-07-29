@@ -60,6 +60,8 @@ IF(GCC)
     )
 ENDIF()
 
+message("Log4cpp libraries... ${LOG4CPP_LIBRARIES}")
+
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
         ${LOG4CPP_LIBRARIES} 
