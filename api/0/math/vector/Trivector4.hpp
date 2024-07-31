@@ -160,6 +160,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Trivector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
+		//! Self divides this trivector by the given factor, returns the trivector result
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Trivector4& operator/=(U b) noexcept;
