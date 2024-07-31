@@ -13,8 +13,8 @@
 
 
 namespace yq::expr {
-    enum {
-        PCompare    = (int8_t) 1,
+    enum : uint8_t {
+        PCompare    = 1,
         PLogic,
         PAddSub,
         PMulDiv,
@@ -24,34 +24,201 @@ namespace yq::expr {
     // Table of known operators (this *WILL* grow)
     const OpData             Repo::kStandardOperators[] = {
         { 
-			.text = U",",  
-			.type=OperatorType::Comma,
-			.category=SymCategory::Special,
-			.kind=SymKind::Comma
+			.text 		= U",",  
+			.type		= OperatorType::Comma,
+			.category 	= SymCategory::Special,
+			.kind		= SymKind::Comma
 		},
-        { .text = U":=", .type=OperatorType::Set, .self=true },
-        { .text = U"+",  .code=Operator::Affirm,     .type=OperatorType::Left,   .priority=PAddSub },
-        { .text = U"-",  .code=Operator::Negate,     .type=OperatorType::Left,   .priority=PAddSub },
-        { .text = U"+",  .code=Operator::Add,        .type=OperatorType::Binary, .priority=PAddSub },
-        { .text = U"-",  .code=Operator::Subtract,   .type=OperatorType::Binary, .priority=PAddSub },
-        { .text = U"*",  .code=Operator::Multiply,   .type=OperatorType::Binary, .priority=PMulDiv },
-        { .text = U"/",  .code=Operator::Divide,     .type=OperatorType::Binary, .priority=PMulDiv },
-        { .text = U"^",  .code=Operator::Power,      .type=OperatorType::Binary, .priority=PPower },
-        { .text = U"⊗",  .code=Operator::TensorProduct, .type=OperatorType::Binary, .priority=PMulDiv },
-        { .text = U"√",  .code=Operator::SquareRoot, .type=OperatorType::Left, .priority=PPower },
-        { .text = U"∛",  .code=Operator::CubeRoot,   .type=OperatorType::Left, .priority=PPower },
-        { .text = U"∜",  .code=Operator::FourthRoot, .type=OperatorType::Left, .priority=PPower },
-        { .text = U"!=", .code=Operator::NotEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"<>", .code=Operator::NotEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"≠",  .code=Operator::NotEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"<",  .code=Operator::Less, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"<=", .code=Operator::LessEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"≤",  .code=Operator::LessEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U">",  .code=Operator::Greater, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U">=", .code=Operator::GreaterEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"≥",  .code=Operator::GreaterEqual, .type=OperatorType::Binary, .priority=PCompare },
-        { .text = U"(",  .type = OperatorType::Open, .other=U")" },
-        { .text = U")",  .type = OperatorType::Close, .other=U"(" }
+        { 
+			.text 		= U":=", 
+			.type 		= OperatorType::Set, 
+			.category 	= SymCategory::Special,
+			.kind		= SymKind::Assign,
+			.self 		= true 
+		},
+		{ 
+			.text 		= U"+",  
+			.code		= Operator::Add,        
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::Add,
+			.priority	= PAddSub 
+		},
+        { 
+			.text 		= U"-",  
+			.code 		= Operator::Subtract,   
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::Subtract,
+			.priority   = PAddSub 
+		},
+        { 
+			.text 		= U"*",  
+			.code		= Operator::Multiply,   
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::Multiply,
+			.priority	= PMulDiv 
+		},
+        { 
+			.text 		= U"/",  
+			.code		= Operator::Divide,     
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::Divide,
+			.priority	= PMulDiv 
+		},
+        { 
+			.text 		= U"^",  
+			.code		= Operator::Power,      
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::Power,
+			.priority 	= PPower 
+		},
+        { 
+			.text 		= U"⊗",  
+			.code 		= Operator::TensorProduct, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::TensorProduct,
+			.priority	= PMulDiv 
+		},
+        { 
+			.text 		= U"√",  
+			.code		= Operator::SquareRoot, 
+			.type		= OperatorType::Left, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::SquareRoot,
+			.priority	= PPower 
+		},
+        { 
+			.text 		= U"∛",  
+			.code		= Operator::CubeRoot,   
+			.type		= OperatorType::Left, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::CubeRoot,
+			.priority	= PPower 
+		},
+        { 
+			.text 		= U"∜",  
+			.code 		= Operator::FourthRoot, 
+			.type		= OperatorType::Left, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::FourthRoot,
+			.priority	= PPower 
+		},
+        { 
+			.text 		= U"!=", 
+			.code		= Operator::NotEqual, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::NotEqual,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U"<>", 
+			.code		= Operator::NotEqual, 
+			.type 		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::NotEqual,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U"≠",  
+			.code 		= Operator::NotEqual, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::NotEqual,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U"<",  
+			.code		= Operator::Less, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::NotEqual,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U"<=", 
+			.code 		= Operator::LessEqual, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::LessEqual,
+			.priority 	= PCompare 
+		},
+        { 
+			.text 		= U"≤",  
+			.code		= Operator::LessEqual, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::LessEqual,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U">",  
+			.code		= Operator::Greater, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U">=", 
+			.code		= Operator::GreaterEqual, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U"≥",  
+			.code		= Operator::GreaterEqual, 
+			.type		= OperatorType::Binary, 
+			.category	= SymCategory::Operator,
+			.priority	= PCompare 
+		},
+        { 
+			.text 		= U"(",  
+			.type 		= OperatorType::Open, 
+			.category	= SymCategory::Open,
+			.kind		= SymKind::Generic,
+			.other 		= U")" 
+		},
+        { 
+			.text 		= U")",  
+			.type 		= OperatorType::Close, 
+			.category	= SymCategory::Close,
+			.kind		= SymKind::Generic,
+			.other 		= U"(" 
+		},
+        { 
+			.text 		= U"[",  
+			.type 		= OperatorType::Open, 
+			.category	= SymCategory::Open,
+			.kind		= SymKind::Array,
+			.other 		= U"]" 
+		},
+        { 
+			.text 		= U"]",  
+			.type 		= OperatorType::Close, 
+			.category	= SymCategory::Close,
+			.kind		= SymKind::Array,
+			.other 		= U"[" 
+		},
+        { 
+			.text 		= U"{",  
+			.type 		= OperatorType::Open, 
+			.category	= SymCategory::Open,
+			.kind		= SymKind::Tuple,
+			.other 		= U"}" 
+		},
+        { 
+			.text 		= U"}",  
+			.type 		= OperatorType::Close, 
+			.category	= SymCategory::Close,
+			.kind		= SymKind::Tuple,
+			.other 		= U"{" 
+		}
     };
 
     Repo& Repo::instance()
@@ -72,7 +239,7 @@ namespace yq::expr {
         m_punctText.insert(U'_');
 
         for(const OpData& d : kStandardOperators){
-            m_operators.insert({d.text, d});
+            m_operators[d.text] = &d;
         }
     }
     
@@ -152,6 +319,14 @@ namespace yq::expr {
     {
         return m_punctText.contains(ch);
     }
+
+	const OpData*	Repo::operator_(std::u32string_view k) const
+	{
+		auto itr = m_operators.find(k);
+		if(itr != m_operators.end())
+			return (itr->second);
+		return nullptr;
+	}
 
     Expect<Any>     Repo::variable(std::string_view k) const
     {

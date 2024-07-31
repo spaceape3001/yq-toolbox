@@ -22,7 +22,9 @@ namespace yq::expr {
         SymCategory				category	= SymCategory::None;
         SymKind					kind		= SymKind::None;
         std::u32string_view     other;
-        int8_t                  priority    = 0;
+        uint8_t                 priority    = 0;
+        bool					left		= false;
+        bool					right		= false;
         bool                    self        = false;
     };
 
@@ -67,8 +69,9 @@ namespace yq::expr {
         
         bool            is_punct_text(char32_t) const;
         
-        template <typename Pred>
-        auto            all_operators(std::u32string_view, Pred) const;
+        //template <typename Pred>
+        //auto            all_operators(std::u32string_view, Pred) const;
+		const OpData*	operator_(std::u32string_view k) const;
 
     private:
         Repo();
@@ -80,7 +83,7 @@ namespace yq::expr {
         Repo& operator=(Repo&&) = delete;
         
         
-        using OpMap = MultiMap<std::u32string_view, OpData>;
+        using OpMap 		= std::map<std::u32string_view, const OpData*>;
         using C32Hash       = std::unordered_set<char32_t>;
         
         void    sweep_impl() override;
@@ -156,6 +159,7 @@ namespace yq::expr {
         }
     }
 
+#if 0
     template <typename Pred>
     auto            Repo::all_operators(std::u32string_view k, Pred pred) const
     {
@@ -176,6 +180,7 @@ namespace yq::expr {
             return;
         }
     }
+#endif
 }
 
 namespace yq {

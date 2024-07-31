@@ -280,23 +280,128 @@ namespace yq::expr {
         return tokenize(u32, std::move(fn));
     }
     
+    constexpr bool is_starting_term(const SymCode& sc)
+    {
+		if(sc == SymCode{})
+			return true;
+		if(sc.category == SymCategory::Open)
+			return true;
+		if(sc.category == SymCategory::Operator)
+			return true;
+		if(is_comma(sc))
+			return true;
+		return false;
+	}
+    
+    constexpr bool is_ending_term(const SymCode& sc)
+    {
+		if(sc == SymCode{})
+			return true;
+		if(sc.category == SymCategory::Close)
+			return true;
+		if(sc.category == SymCategory::Operator)
+			return true;
+		if(is_comma(sc))
+			return true;
+		return false;
+	}
+
     std::error_code		streamline(std::vector<Symbol>& syms)
     {
-		for(auto itr=syms.begin(); itr != syms.end(); ){
-			Symbol*		last	= nullptr;
-			if(itr != syms.begin()){
-				last		= &*(itr-1);
+        static const Repo& _r = repo();
+
+		SymCode		last	= {};
+		
+		// Start with the critical organizations
+		for(Symbol& sym : syms){
+			if(sym.text == U","){
+				sym.category	= SymCategory::Special;
+				sym.kind		= SymKind::Comma;
 			}
-			SymType		next	= SymType::None;
-			if((itr + 1) != syms.end()){
-				next	= (itr+1) -> type;
+			if(sym.text == U"("){
+				sym.category	= SymCategory::Open;
+				sym.kind		= SymKind::Generic;
 			}
-			
-			Symbol& sym	= *itr;
-			
-			
+			if(sym.text == U")"){
+				sym.category	= SymCategory::Close;
+				sym.kind		= SymKind::Generic;
+			}
+			if(sym.text == U"["){
+				sym.category	= SymCategory::Open;
+				sym.kind		= SymKind::Array;
+			}
+			if(sym.text == U"]"){
+				sym.category	= SymCategory::Close;
+				sym.kind		= SymKind::Array;
+			}
+			if(sym.text == U"{"){
+				sym.category	= SymCategory::Open;
+				sym.kind		= SymKind::Tuple;
+			}
+			if(sym.text == U"}"){
+				sym.category	= SymCategory::Close;
+				sym.kind		= SymKind::Tuple;
+			}
 		}
 		
-		return errors::todo();
+		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
+			if((itr -> text != U"-") && (itr->text != U"+"))
+				continue;
+			// This symbol is "-" negative
+			if(!is_starting_term(last))
+				continue;
+			auto jtr = itr + 1;
+			if(jtr == syms.end())
+				continue;
+			if(jtr -> category != SymCategory::Value)
+				continue;
+			if(!((jtr -> kind == SymKind::Integer) ||  (jtr -> kind == SymKind::Float))){
+				jtr -> kind	= (itr->text == U"-") ? SymKind::Negate : SymKind::Affirm;
+				continue;
+			}
+			
+			jtr -> text	= itr->text + jtr->text;
+			itr = syms.erase(itr);
+		}
+		
+		last = {};
+		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
+			if( itr -> category != SymCategory::Operator)
+				continue;
+			if( itr -> kind != SymKind::None)
+				continue;
+			const OpData* op = _r.operator_(itr->text);
+			if(!op)
+				return errors::bad_argument();
+			
+			itr->category	= op->category;
+			itr->kind		= op->kind;
+			itr->extra   	= op->priority;
+		}
+		
+		//	Interpret values
+		for(Symbol& sym : syms) {
+			if(sym.category != SymCategory::Value)
+				continue;
+			switch(sym.kind){
+			case SymKind::Integer:
+				sym.value	= Any((int64_t) *to_int64(sym.text));
+				break;
+			case SymKind::Hexadecimal:
+				sym.value	= Any((uint64_t) *to_hex64(sym.text));
+				break;
+			case SymKind::Float:
+				sym.value	= Any((double) *to_integer(sym.text));
+				break;
+			case SymKind::Octal:
+				sym.value	= Any((uint64_t) *to_octal64(sym.text));
+				break;
+			default:
+				break;
+			}
+		}
+		
+		return {};
 	}
+
 }

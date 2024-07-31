@@ -17,6 +17,7 @@
 #include <string>
 #include <string_view>
 #include <system_error>
+#include <unordered_set>
 #include <vector>
 
 #include <0/basic/128-bit.hpp>
@@ -282,6 +283,8 @@ namespace yq {
 
     using U32StringViewSet      = Set<std::u32string_view, IgCase>;
     
+    using char32_set_t				= std::unordered_set<char32_t>;
+
     using u32string_pair_t         = std::pair<std::u32string,std::u32string>;
     using u32string_int_pair_t     = std::pair<std::u32string,int>;
 
@@ -291,7 +294,7 @@ namespace yq {
     using u32string_map_t          = std::map<std::u32string,std::u32string,IgCase>;
     using u32string_set_t          = std::set<std::u32string,IgCase>;
     using u32string_vector_t       = std::vector<std::u32string>;
-    
+
     using u32string_view_pair_t    = std::pair<std::u32string_view,std::u32string_view>;
     using u32string_view_set_t     = std::set<std::u32string_view,IgCase>;
     using u32string_view_vector_t  = std::vector<std::u32string_view>;

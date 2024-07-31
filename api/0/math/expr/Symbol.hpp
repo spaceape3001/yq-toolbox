@@ -51,7 +51,12 @@ namespace yq::expr {
 			// SPECIALS
         Assign,
         Duplicate,
-        Comma
+        Comma,
+        
+			// OPEN/CLOSE
+		Generic,
+		Array,
+		Tuple
 	};
 	
 
@@ -59,6 +64,8 @@ namespace yq::expr {
 		SymKind		kind		= SymKind::None;
 		SymCategory	category	= SymCategory::None;
 		SymType		type		= SymType::None;
+		
+		constexpr bool operator==(const SymCode&) const = default;
 	};
 	
     //! Heavy weight symbol
@@ -71,6 +78,11 @@ namespace yq::expr {
 		Any					value;
 		
 		constexpr bool operator==(const Symbol&) const = default;
+		
+		constexpr operator SymCode() const noexcept 
+		{
+			return { kind, category, type };
+		}
 	};
 	
 	
@@ -93,6 +105,7 @@ namespace yq::expr {
         relevant symbol.  
     */
     Token               token(std::u32string_view);
+    
 
     Expect<SymVector>   tokenize(std::string_view);
     Expect<SymVector>   tokenize(std::u32string_view);
@@ -104,4 +117,18 @@ namespace yq::expr {
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const Token&);
     std::ostream&    operator<<(std::ostream&, const Symbol&);
     std::ostream&    operator<<(std::ostream&, const Token&);
+
+    std::error_code		streamline(std::vector<Symbol>&);
+    
+    Expect<SymVector>	compile_rpn(const SymVector&);
+
+    constexpr bool		is_comma(const Symbol&sym)
+    {
+		return (sym.category == SymCategory::Special) && (sym.kind == SymKind::Comma);
+	}
+
+    constexpr bool		is_comma(const SymCode&sym)
+    {
+		return (sym.category == SymCategory::Special) && (sym.kind == SymKind::Comma);
+	}
 }

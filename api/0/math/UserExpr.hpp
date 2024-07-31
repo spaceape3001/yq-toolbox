@@ -10,6 +10,7 @@
 #include <0/basic/Any.hpp>
 #include <0/basic/MaybeCase.hpp>
 #include <0/math/preamble.hpp>
+#include <0/math/Operator.hpp>
 #include <0/math/expr/preamble.hpp>
 #include <0/math/expr/Symbol.hpp>
 #include <0/math/expr/Instruction.hpp>
@@ -38,6 +39,22 @@ namespace log4cpp { class CategoryStream; }
 namespace yq {
     class UserExpr {
     public:
+		
+		//	We'll fold things together once this all works
+		#if 0
+		struct Symbol;
+		struct SymCode;
+		struct SymData;
+		
+		struct Token;
+		
+		using SymVector = std::vector<Symbol>;
+		
+		static std::error_code	tokenize(SymVector&, std::u32string_view);
+		static std::error_code	streamline(SymVector&);
+		static std::error_code	algebra_to_rpn(SymVector&, const SymVector&);
+		#endif
+    
         UserExpr();
         UserExpr(const UserExpr&);
         UserExpr(UserExpr&&);
@@ -58,13 +75,54 @@ namespace yq {
         
 
     private:
+        #if 0
+        SymVector			m_algebra;
+        SymVector			m_rpn;
+        #endif
+
         expr::SymVector     m_symbols;
         expr::InsVector     m_instructions;
         std::u32string      m_definition;
         bool                m_good          = false;
         
-        void    _init(std::u32string_view);
+        
+        bool    _init(std::u32string_view);
+        
+        #if 0
+		struct Repo;
+		static Repo& repo();
+        #endif
     };
+
+	#if 0
+	struct UserExpr::Symbol {
+		enum class Category : uint8_t {
+			None	= 0,
+			Error,
+			Operator,
+			Space,
+			Text,
+			Value,
+			Open,
+			Close,
+			Special
+		};
+		
+		enum class Kind : uint16_t {
+			None	= 0
+		};
+		
+		std::u32string	text;
+		Category		category	= Category::None;
+		Kind			kind		= Kind::None;
+		uint8_t			extra		= 0;
+		std::u32string	text;
+		Any				value;
+		
+		constexpr bool operator==(const Symbol&) const = default;
+	};
+	#endif
+
 }
 
 #if 0
@@ -159,27 +217,6 @@ namespace yq {
         Options     m_options;
     };
     
-    class UserExpr::Grammar {
-    public:
-    
-        Grammar();
-        Grammar(const Grammar&);
-        Grammar(Grammar&&);
-        Grammar& operator=(const Grammar&);
-        Grammar& operator=(Grammar&&);
-        ~Grammar();
-    
-    };
-    
-    struct UserExpr::Symbol {
-        std::string_view  text;
-    };
-    
-    struct UserExpr::Instruction {
-        
-        
-        Code            code;
-    };
 }
 
 #endif

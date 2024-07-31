@@ -154,6 +154,7 @@ namespace yq::expr {
         
         std::error_code     add_operator(const Symbol& sym)
         {
+			#if 0
             static const Repo& _r   = repo();
             
             const OpData*     setter      = nullptr;
@@ -221,6 +222,7 @@ namespace yq::expr {
                 return add_right(sym, *right);
             if(binary && false)
                 return add_binary(sym, *binary);
+            #endif
             return errors::todo();
         }
         
