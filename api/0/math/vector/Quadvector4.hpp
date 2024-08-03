@@ -31,6 +31,7 @@ namespace yq {
         //! Initializing componentwise constructor
         explicit constexpr Quadvector4(T _xyzw) noexcept : xyzw(_xyzw) {}
         
+        //! Constructs ALL components to same value
         constexpr Quadvector4(all_t, T v) noexcept : xyzw(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Quadvector4(nan_t) noexcept : Quadvector4(ALL, nan_v<T>) {}
