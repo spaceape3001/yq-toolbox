@@ -44,6 +44,8 @@ namespace yq {
         //! Constructs with the XYZW component set to the specified value
         //! \note This is done for consistency to the other structs.
         constexpr Quadvector4(xyzw_t, T v) noexcept : xyzw(v) {}
+        
+        //! Constructs to a unit quadvector in the XYZW component
         consteval Quadvector4(xyzw_t) noexcept : Quadvector4(XYZW, one_v<T>) {}
         consteval Quadvector4(zero_t) noexcept : Quadvector4(ALL, zero_v<T>) {}
 
