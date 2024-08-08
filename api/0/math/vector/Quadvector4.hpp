@@ -47,6 +47,8 @@ namespace yq {
         
         //! Constructs to a unit quadvector in the XYZW component
         consteval Quadvector4(xyzw_t) noexcept : Quadvector4(XYZW, one_v<T>) {}
+        
+        //! Constructs with all components zero
         consteval Quadvector4(zero_t) noexcept : Quadvector4(ALL, zero_v<T>) {}
 
         template <typename U>
