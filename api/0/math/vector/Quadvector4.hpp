@@ -68,6 +68,7 @@ namespace yq {
         //! Defaulted comparison operator
         constexpr auto operator<=>(const Quadvector4&) const noexcept = default;
 
+        //! Positive/Affirmation operator
         constexpr Quadvector4       operator+() const noexcept;
         constexpr Quadvector4       operator-() const noexcept;
 
