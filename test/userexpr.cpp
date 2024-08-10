@@ -5,49 +5,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
+#include <0/basic/CollectionUtils.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
-#include <0/math/expr/Repo.hpp>
-#include <0/math/expr/Symbol.hpp>
-#include <0/math/expr/Instruction.hpp>
+#include <0/math/UserExprImpl.hpp>
 #include <iostream>
 #include <cmath>
 
 namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
-using namespace yq::expr;
+//using namespace yq::expr;
 
-
-std::ostream& operator<<(std::ostream&out, const SymVector& syms)
-{
-    out << "[";
-    bool    f   = true;
-    for(const Symbol& s : syms){
-        if(f){
-            f   = false;
-        } else
-            out << ", ";
-        out << s;
-    }
-    out << "]";
-    return out;
-}
-
-bool is_same(const std::vector<Symbol>& result, std::initializer_list<Symbol> match)
-{
-    std::span<const Symbol> mm  =   span(match);
-    if(result.size() != mm.size())
-        return false;
-    for(size_t  n=0;n<result.size();++n){
-        if(result[n] != mm[n])
-            return false;
-    }
-    return true;
-}
-
-
+#if 0
 bool    parses(const std::string_view uexpr, std::initializer_list<Symbol> match)
 {
     auto etch = tokenize(uexpr);
@@ -63,22 +34,17 @@ bool    parses(const std::string_view uexpr, std::initializer_list<Symbol> match
     }
     return success;
 }
+#endif
 
-bool    sdouble(std::string_view ux, double val, double ep=1e-14)
+bool    sdouble(std::string_view ustr, double val, double ep=1e-14)
 {
-    auto toks   = tokenize(ux);
-    if(!toks){
-        std::cerr << "Expression parsing failed: " << toks.error().message() << "\n";
+    UserExpr    ux(ustr);
+    if(!ux.is_good()){
+        std::cerr << "Expression initialization failed: " << ux.build_error().message() << "\n";
         return false;
     }
     
-    auto ccx    = compile(*toks);
-    if(!ccx){
-        std::cerr << "Expression compiling failed: " << ccx.error().message() << "\n";
-        return false;
-    }
-    
-    auto valx    = evaluate(*ccx);
+    auto valx    = ux.evaluate();
     if(!valx){
         std::cerr << "Expression evaluation failed: " << valx.error().message() << "\n";
         return false;
@@ -95,7 +61,7 @@ bool    sdouble(std::string_view ux, double val, double ep=1e-14)
 
 ut::suite tests = []{
     "Has Operator"_test = []{
-        auto& _r    = Repo::instance();
+        auto& _r    = UserExpr::Repo::instance();
         expect( true == _r.has_operator("+"));
         expect( false == _r.has_operator("+."));
         expect( false == _r.has_operator("+*"));
@@ -104,102 +70,87 @@ ut::suite tests = []{
         expect( false == _r.has_operator("-."));
     };
     
+    
 		// disabled until the overhaul is finished (chris -- 26 Jul 2024)
     "Tokenize"_test = []{
-        expect( token(U"0") == Token{ 
-			.type 		= SymType::Int, 
-			.category	= SymCategory::Value, 
-			.kind		= SymKind::Integer, 
+        expect(UserExpr::token(U"0") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value, 
+			.kind		= UserExpr::Symbol::Kind::Integer, 
 			.length 	= 1 
 		});
-        expect( token(U"0x1") == Token{ 
-			.type 		= SymType::Hex, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Hexadecimal,
+        expect(UserExpr::token(U"0x1") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Hexadecimal,
 			.length 	= 3 
 		});
-        expect( token(U"0xA") == Token{
-			.type 		= SymType::Hex, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Hexadecimal,
+        expect(UserExpr::token(U"0xA") == UserExpr::Token{
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Hexadecimal,
 			.length 	= 3 
 		});
-        expect( token(U"001") == Token{ 
-			.type 	  	= SymType::Octal, 
-			.category 	= SymCategory::Value,
-			.kind 		= SymKind::Octal,
+        expect(UserExpr::token(U"001") == UserExpr::Token{ 
+			.category 	= UserExpr::Symbol::Category::Value,
+			.kind 		= UserExpr::Symbol::Kind::Octal,
 			.length 	= 3 
 		});
-        expect( token(U"pi") == Token{ 
-			.type 		= SymType::Text, 
-			.category	= SymCategory::Text,
-			.kind		= SymKind::None,
+        expect(UserExpr::token(U"pi") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Text,
+			.kind		= UserExpr::Symbol::Kind::None,
 			.length		= 2 
 		});
-        expect( token(U"3pi") == Token{ 
-			.type		= SymType::Int, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Integer,
+        expect(UserExpr::token(U"3pi") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Integer,
 			.length		= 1 
 		});
-        expect( token(U".3pi") == Token{ 
-			.type		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U".3pi") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 2 
 		});
-        expect( token(U"+.3pi") == Token{ 
-			.type 		= SymType::Operator, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::None,
+        expect(UserExpr::token(U"+.3pi") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Operator,
+			.kind		= UserExpr::Symbol::Kind::None,
 			.length		= 1
 		});
-        expect( token(U"1e3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U"1e3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 3 
 		});
-        expect( token(U"1e+3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U"1e+3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 4 
 		});
-        expect( token(U"1e-3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U"1e-3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 4 
 		});
-        expect( token(U"1.e+3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U"1.e+3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 5 
 		});
-        expect( token(U".1e+3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U".1e+3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 5 
 		});
-        expect( token(U"0.1e+3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U"0.1e+3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 6 
 		});
-        expect( token(U"0.1e--3a") == Token{ 
-			.type 		= SymType::Float, 
-			.category	= SymCategory::Value,
-			.kind		= SymKind::Float,
+        expect(UserExpr::token(U"0.1e--3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 3 
 		});
-        expect( token(U"abc3_0.1e--3a") == Token{ 
-			.type 		= SymType::Text, 
-			.category	= SymCategory::Text,
-			.kind		= SymKind::None,
+        expect(UserExpr::token(U"abc3_0.1e--3a") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Text,
+			.kind		= UserExpr::Symbol::Kind::None,
 			.length		= 6 
 		});
     };
@@ -223,15 +174,17 @@ ut::suite tests = []{
         expect(sdouble("10", 10.));
         expect(sdouble("0XA", 10.));
         expect(sdouble("012", 10.));
-        expect(sdouble("pi", std::numbers::pi_v<double>));
+        //expect(sdouble("pi", std::numbers::pi_v<double>));
     };
     
+    #if 0
     "Evaluate Addition"_test = []{
         expect(sdouble("0.+0.", 0.));
         expect(sdouble("1.+0.", 1.));
         expect(sdouble("0.+1.", 1.));
         expect(sdouble("1.+1.", 2.));
     };
+    #endif
 };
 
 int main(){

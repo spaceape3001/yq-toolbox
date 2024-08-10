@@ -12,6 +12,7 @@
 #include <list>
 #include <map>
 #include <set>
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -537,6 +538,24 @@ namespace yq {
     std::vector<T,A>    make_vector(const std::set<T,C,A>& data)
     {
         return std::vector<T,A>(data.begin(), data.end());
+    }
+
+    template <typename T>
+    bool    is_same(const std::span<const T>& a, const std::span<const T>& b)
+    {
+        if(a.size() != b.size())
+            return false;
+        for(size_t  n=0;n<a.size();++n){
+            if(a[n] != b[n])
+                return false;
+        }
+        return true;
+    }
+    
+    template <typename T, typename A>
+    bool    is_same(const std::vector<T, A>& a, const std::initializer_list<T>& b)
+    {
+        return is_same(span(a), span(b));
     }
     
 

@@ -301,6 +301,8 @@ namespace yq {
 
     using u32string_view_initializer_list_t       = std::initializer_list<std::u32string_view>;
 
+    using any_stack_t               = Stack<Any>;
+
         // TODO move these to use std::filesystem::path
     #if defined(__APPLE__) || defined(WIN32)
         using PathSet   = StringSet;
