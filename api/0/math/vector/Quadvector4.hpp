@@ -51,6 +51,7 @@ namespace yq {
         //! Constructs with all components zero
         consteval Quadvector4(zero_t) noexcept : Quadvector4(ALL, zero_v<T>) {}
 
+        //! Converts this quadvector to another of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Quadvector4<U>() const noexcept
