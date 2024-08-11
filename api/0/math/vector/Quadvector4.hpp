@@ -59,6 +59,7 @@ namespace yq {
             return { (U) xyzw };
         }
         
+        //! Converts this quadvector to another of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Quadvector4<U>() const 
