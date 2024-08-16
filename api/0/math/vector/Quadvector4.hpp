@@ -84,6 +84,8 @@ namespace yq {
         
         //! Adds multivector to quadvector, returns multivector result
         constexpr Multivector4<T>   operator+(const Multivector4<T>& b) const noexcept;
+        
+        //! Adds two quadvectors, returns the quadvector result
         constexpr Quadvector4       operator+(const Quadvector4& b) const noexcept;
         Quadvector4&                operator+=(const Quadvector4& b) noexcept;
         constexpr Multivector4<T>   operator+(const Trivector4<T>& b) const noexcept;
