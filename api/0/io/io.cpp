@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-
 #include "AbstractFile.ipp"
 #include "Curl.ipp"
 #include "DirUtils.ipp"
@@ -25,4 +24,7 @@
 #include "stream/First.ipp"
 #include "stream/LineCol.ipp"
 #include "stream/OSFile.ipp"
+#include "stream/StdError.ipp"
+#include "stream/StdOut.ipp"
+#include "stream/StdStream.ipp"
 #include "stream/Text.ipp"
