@@ -9,7 +9,7 @@
 #include <0/trait/sink.hpp>
 
 namespace yq {
-    template <typename T, typename U> auto generic_two_divide(T a, U b) { return a/b; }
+    template <typename T, typename U> auto generic_two_divide(const T& a, const U& b) { return a/b; }
 
     /*! \brief Tests for two items being dividable
     

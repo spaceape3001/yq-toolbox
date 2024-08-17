@@ -5,11 +5,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UserExprImpl.hpp"
+#include <0/basic/DelayInit.hpp>
 #include <0/basic/errors.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/basic/Stack.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
+#include <0/meta/ArgInfo.hpp>
+#include <0/meta/OperatorInfo.hpp>
+#include <0/meta/TypeInfo.hpp>
 
 namespace yq {
 	namespace {
@@ -277,9 +281,9 @@ namespace yq {
     {
         return tokenize(input, [&](SymCode c, std::u32string_view s) -> std::error_code {
             tokens.push_back(Symbol{ 
+                    .text = std::u32string(s),
 					.category = c.category,
-					.kind = c.kind,
-					.text = std::u32string(s)
+					.kind = c.kind
 				});
             return std::error_code();
         });
@@ -391,7 +395,13 @@ namespace yq {
 			if(jtr -> category != Symbol::Category::Value)
 				continue;
 			if(!((jtr -> kind == Symbol::Kind::Integer) ||  (jtr -> kind == Symbol::Kind::Float))){
-				jtr -> kind	= (itr->text == U"-") ? Symbol::Kind::Negate : Symbol::Kind::Affirm;
+                if(itr->text == U"-"){
+                    jtr -> kind = Symbol::Kind::Negate;
+                    jtr -> text = U"negate";
+                } else {
+                    jtr -> kind = Symbol::Kind::Affirm;
+                    jtr -> text = U"affirm";
+                }
 				continue;
 			}
 			
@@ -416,7 +426,8 @@ namespace yq {
 			
 			itr->category	= op->category;
 			itr->kind		= op->kind;
-			itr->extra   	= op->priority;
+			itr->priority  	= op->priority;
+            itr->argcnt     = op->args;
 		}
         return {};
     }
@@ -428,17 +439,16 @@ namespace yq {
 				continue;
 			switch(sym.kind){
 			case Symbol::Kind::Integer:
-				sym.value	= Any((int64_t) *to_int64(sym.text));
+				sym.value	= Any((double) *to_int64(sym.text));
 				break;
 			case Symbol::Kind::Hexadecimal:
-yInfo() << "Hexadecimal... " << sym.text;
-				sym.value	= Any((uint64_t) *to_hex64(sym.text.substr(2)));
+				sym.value	= Any((double) *to_hex64(sym.text.substr(2)));
 				break;
 			case Symbol::Kind::Float:
-				sym.value	= Any((double) *to_integer(sym.text));
+				sym.value	= Any((double) *to_double(sym.text));
 				break;
 			case Symbol::Kind::Octal:
-				sym.value	= Any((uint64_t) *to_octal64(sym.text));
+				sym.value	= Any((double) *to_octal64(sym.text));
 				break;
 			default:
 				break;
@@ -449,6 +459,63 @@ yInfo() << "Hexadecimal... " << sym.text;
 
 //------------------------------------------------------------------------------
 //  Algebra to RPN
+
+    #if 0
+    void            zuserexpr::makeRpn()
+    {
+        m_rpn.clear();
+        m_rpn.reserve(m_algebra.size());
+        zstack<Operation*>     stk;
+        Operation*               u;
+        
+        for(Symbol* s : m_algebra){
+            if(!s)
+                continue;
+                
+            switch( s-> type){
+            case ST_None:
+                break;
+            case ST_Operator:
+                u   = static_cast<Operation*>(s);
+                if(!u)          // bad....
+                    break;
+                
+                for(;;){
+                    if(stk.empty())
+                        break;
+                       
+                    Operation* p   = stk.top(nullptr);
+                    if(p->type == ST_Open)
+                        break;
+                    if((p->type == ST_Operator) && (p->priority < u->priority))
+                        break;
+                    m_rpn << stk.pop();
+                }
+                stk << u;
+                break;
+            case ST_Function:
+                stk << static_cast<Operation*>(s);
+                break;
+            case ST_Value:
+            case ST_Variable:
+                m_rpn << s;
+                break;
+            case ST_Open:
+                stk << static_cast<Operation*>(s);
+                break;
+            case ST_Close:
+                while(!stk.empty() && stk.top()->type != ST_Open){
+                    m_rpn << stk.pop();
+                }
+                break;
+            }
+        }
+        
+        while(!stk.empty()){
+            m_rpn << stk.pop();
+        }
+    }
+    #endif
 
     std::error_code	UserExpr::algebra_to_rpn(SymVector& rpn, const SymVector& alg)
     {
@@ -461,9 +528,18 @@ yInfo() << "Hexadecimal... " << sym.text;
             case Symbol::Category::Error:
                 return errors::bad_userexpr();
             case Symbol::Category::Operator:
-                return errors::todo();
+                while(!pending.empty()){
+                    const Symbol& top   = pending.top();
+                    if(top.category == Symbol::Category::Open)
+                        break;
+                    if((top.category == Symbol::Category::Operator) && (top.priority < sym.priority))
+                        break;
+                    rpn.push_back(pending.pop());
+                }
+                pending << sym;
+                break;
             case Symbol::Category::Space:
-                //  ignore
+                //  ignore 
                 break;
             case Symbol::Category::Text:
                 return errors::todo();
@@ -471,15 +547,39 @@ yInfo() << "Hexadecimal... " << sym.text;
                 rpn.push_back(sym);
                 break;
             case Symbol::Category::Open:
-                return errors::todo();
+                pending << sym;
+                break;
             case Symbol::Category::Close:
-                return errors::todo();
+				while(!pending.empty()){
+                    auto& top   = pending.top();
+                    
+                    if(top.category == Symbol::Category::Open){
+                        if(top.kind != sym.kind){
+                            return errors::bad_userexpr();
+                        }
+                        pending.pop();
+                        break;
+                    }
+                    
+                    rpn.push_back(pending.pop());
+				}
+                break;
             case Symbol::Category::Special:
                 return errors::todo();
             }
         }
+        
+        while(!pending.empty()){
+            Symbol  s   = pending.pop();
+            if(s.category != Symbol::Category::Operator){
+                return errors::bad_userexpr();
+            }
+            rpn.push_back(s);
+        }
+        
         if(pending.empty())
             return {};
+        
         return errors::bad_userexpr();
     }
 
@@ -488,23 +588,28 @@ yInfo() << "Hexadecimal... " << sym.text;
 
     Expect<Any>  UserExpr::execute(u32string_any_map_t&vars, const SymVector& codes)
     {
+        std::error_code ec;
         any_stack_t     theStack;
-        for(const Symbol& x : codes){
-            switch(x.category){
+        for(const Symbol& sym : codes){
+            switch(sym.category){
             case Symbol::Category::None:
                 //  ignore
                 break;
             case Symbol::Category::Error:
                 return errors::bad_instruction();
             case Symbol::Category::Operator:
-                return errors::todo();
+                ec  = x_operator(theStack, sym);
+                if(ec != std::error_code()){
+                    return unexpected(ec);
+                }
+                break;
             case Symbol::Category::Space:
                 //  ignore
                 break;
             case Symbol::Category::Text:
                 return errors::todo();
             case Symbol::Category::Value:
-                theStack << x.value;
+                theStack << sym.value;
                 break;
             case Symbol::Category::Open:
                 return errors::todo();
@@ -520,6 +625,59 @@ yInfo() << "Hexadecimal... " << sym.text;
         if(theStack.size() > 1)
             return errors::mulitple_values();
         return theStack.pop();
+    }
+    
+    const OperatorInfo*  UserExpr::x_best_operator(std::span<const Any> span, Operator opCode)
+    {
+        if(span.size() == 0)
+            return nullptr;
+            
+        const OperatorInfo* best    = nullptr;
+        int                 score   = 0;
+        
+        const TypeInfo& ti  = span[0].type();
+        auto er             = ti.operators(opCode);
+        for(auto itr=er.first; itr != er.second; ++itr){
+            const OperatorInfo* op  = itr->second;
+            if(!op)
+                continue;
+                
+            int     r   = op -> type_match(span);
+            if(r < 0)
+                continue;
+            if(r == 0)
+                return op;
+
+            if((r<score) || !best){
+                best        = op;
+                score       = r;
+            }
+        }
+        
+        return best;
+    }
+
+    std::error_code  UserExpr::x_operator(any_stack_t& values, const Symbol& symbol)
+    {
+        if(!symbol.argcnt)
+            return errors::bad_operator();
+        
+        std::span<const Any>  args = values.top_cspan(symbol.argcnt);
+        if(args.size() < symbol.argcnt){
+            return errors::insufficient_arguments();
+        }
+        
+        const OperatorInfo* op  = x_best_operator(args, (Operator) symbol.kind);
+        if(!op)
+            return errors::bad_operator();
+        
+        Expect<Any>     res = op->invoke(args);
+        if(!res)
+            return res.error();
+            
+        values.pop_last(symbol.argcnt);
+        values << std::move(*res);
+        return {};
     }
 
 //------------------------------------------------------------------------------
@@ -598,7 +756,8 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::Add,
-			.priority	= PAddSub 
+			.priority	= PAddSub,
+            .args       = 2
 		},
         { 
 			.text 		= U"-",  
@@ -606,15 +765,35 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::Subtract,
-			.priority   = PAddSub 
+			.priority   = PAddSub,
+            .args       = 2 
 		},
+        {
+            .text       = U"negate",
+            .code       = Operator::Negate,
+            .type       = OperatorType::Left,
+            .category   = Symbol::Category::Operator,
+            .kind       = Symbol::Kind::Negate,
+            .priority   = PMulDiv,
+            .args       = 1
+        },
+        {
+            .text       = U"affirm",
+            .code       = Operator::Affirm,
+            .type       = OperatorType::Left,
+            .category   = Symbol::Category::Operator,
+            .kind       = Symbol::Kind::Affirm,
+            .priority   = PMulDiv,
+            .args       = 1
+        },
         { 
 			.text 		= U"*",  
 			.code		= Operator::Multiply,   
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::Multiply,
-			.priority	= PMulDiv 
+			.priority	= PMulDiv,
+            .args       = 2
 		},
         { 
 			.text 		= U"/",  
@@ -622,7 +801,8 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::Divide,
-			.priority	= PMulDiv 
+			.priority	= PMulDiv,
+            .args       = 2 
 		},
         { 
 			.text 		= U"^",  
@@ -630,26 +810,29 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::Power,
-			.priority 	= PPower 
+			.priority 	= PPower,
+            .args       = 2
 		},
         { 
-			.text 		= U"⊗",  
+			.text 		= U"\u2297",  
 			.code 		= Operator::TensorProduct, 
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::TensorProduct,
-			.priority	= PMulDiv 
+			.priority	= PMulDiv,
+            .args       = 2
 		},
         { 
-			.text 		= U"√",  
+			.text 		= U"\u221a",  
 			.code		= Operator::SquareRoot, 
 			.type		= OperatorType::Left, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::SquareRoot,
-			.priority	= PPower 
+			.priority	= PPower,
+            .args       = 1
 		},
         { 
-			.text 		= U"∛",  
+			.text 		= U"\u221b",  
 			.code		= Operator::CubeRoot,   
 			.type		= OperatorType::Left, 
 			.category	= Symbol::Category::Operator,
@@ -657,7 +840,7 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.priority	= PPower 
 		},
         { 
-			.text 		= U"∜",  
+			.text 		= U"\u221c",  
 			.code 		= Operator::FourthRoot, 
 			.type		= OperatorType::Left, 
 			.category	= Symbol::Category::Operator,
@@ -670,7 +853,8 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::NotEqual,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
 			.text 		= U"<>", 
@@ -678,15 +862,17 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type 		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::NotEqual,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
-			.text 		= U"≠",  
+			.text 		= U"\u2260",  
 			.code 		= Operator::NotEqual, 
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::NotEqual,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
 			.text 		= U"<",  
@@ -694,7 +880,8 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::NotEqual,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
 			.text 		= U"<=", 
@@ -702,36 +889,41 @@ yInfo() << "Hexadecimal... " << sym.text;
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::LessEqual,
-			.priority 	= PCompare 
+			.priority 	= PCompare,
+            .args       = 2
 		},
         { 
-			.text 		= U"≤",  
+			.text 		= U"\u2264",  
 			.code		= Operator::LessEqual, 
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
 			.kind		= Symbol::Kind::LessEqual,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
 			.text 		= U">",  
 			.code		= Operator::Greater, 
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
 			.text 		= U">=", 
 			.code		= Operator::GreaterEqual, 
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
-			.text 		= U"≥",  
+			.text 		= U"\u2265",  
 			.code		= Operator::GreaterEqual, 
 			.type		= OperatorType::Binary, 
 			.category	= Symbol::Category::Operator,
-			.priority	= PCompare 
+			.priority	= PCompare,
+            .args       = 2
 		},
         { 
 			.text 		= U"(",  
@@ -962,88 +1154,10 @@ yInfo() << "Hexadecimal... " << sym.text;
         stream_out(out, tok);
         return out;
     }
+    
+    namespace {
+        YQ_INVOKE( UserExpr::repo(); )
+    }
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-#if 0
-namespace yq::expr {
-
-	void            zuserexpr::makeRpn()
-	{
-		m_rpn.clear();
-		m_rpn.reserve(m_algebra.size());
-		zstack<Operation*>     stk;
-		Operation*               u;
-		
-		for(Symbol* s : m_algebra){
-			if(!s)
-				continue;
-				
-			switch( s-> type){
-			case ST_None:
-				break;
-			case ST_Operator:
-				u   = static_cast<Operation*>(s);
-				if(!u)          // bad....
-					break;
-				
-				for(;;){
-					if(stk.empty())
-						break;
-					   
-					Operation* p   = stk.top(nullptr);
-					if(p->type == ST_Open)
-						break;
-					if((p->type == ST_Operator) && (p->priority < u->priority))
-						break;
-					m_rpn << stk.pop();
-				}
-				stk << u;
-				break;
-			case ST_Function:
-				stk << static_cast<Operation*>(s);
-				break;
-			case ST_Value:
-			case ST_Variable:
-				m_rpn << s;
-				break;
-			case ST_Open:
-				stk << static_cast<Operation*>(s);
-				break;
-			case ST_Close:
-				while(!stk.empty() && stk.top()->type != ST_Open){
-					m_rpn << stk.pop();
-				}
-				break;
-			}
-		}
-		
-		while(!stk.empty()){
-			m_rpn << stk.pop();
-		}
-	}
-
-    Expect<SymVector>	compile_rpn(const SymVector& input)
-    {
-		SymVector		ret;
-		Stack<SymData>	stack;
-		static auto& _r	= expr::repo();
-		
-		for(const Symbol& sym : input){
-			switch(sym.category){
-			case Symbol::Category::None:
-			case Symbol::Category::Error:
-				break;
-			case Symbol::Category::Value:
-				ret.push_back(sym);
-				break;
-			}
-		}
-		
-		return errors::todo();
-	}
-}
-#endif

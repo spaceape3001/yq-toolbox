@@ -27,6 +27,8 @@
 
 #include <0/keywords.hpp>
 
+#define YQ_CPPSTRING(...) #__VA_ARGS__
+
 using namespace std::literals::chrono_literals;
 using namespace std::literals::string_literals;
 using namespace std::literals::string_view_literals;

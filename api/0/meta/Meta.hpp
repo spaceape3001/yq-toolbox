@@ -420,6 +420,8 @@ namespace yq {
         MM                          lut;
         Set<K>                      keys;
         
+        using equal_range_t = decltype(((const LUC2*)nullptr) -> lut.equal_range(K()));
+        
         LUC2& operator<<(const T* p)
         {
             all << p;

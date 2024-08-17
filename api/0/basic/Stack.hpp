@@ -29,10 +29,16 @@ namespace yq {
         Stack&     operator>>(T&);
 
         T           pop(const T& def={});
-        T           top(const T& def={}) const;
+        const T&    top() const;
         
         /*! \brief Pops the stack until the size is beneath the argument */
         void        pop_to(size_t sz);
+        
+        //! Pops this many items from the stack
+        void        pop_last(size_t);
+        
+        std::span<const T>  top_cspan(size_t n) const;
+        std::span<T>        top_span(size_t n);
         
     };
 
@@ -129,6 +135,17 @@ namespace yq {
     }
 
     template <typename T>
+    void        Stack<T>::pop_last(size_t n)
+    {
+        if(n > base_stack::size())
+            n   = base_stack::size();
+        if(n){
+            size_t m = base_stack::size() - n;
+            base_stack::erase(base_stack::begin()+m, base_stack::end());
+        }
+    }
+
+    template <typename T>
     void        Stack<T>::pop_to(size_t sz)
     {
         if(sz < base_stack::size())
@@ -137,10 +154,33 @@ namespace yq {
 
 
     template <typename T>
-    T           Stack<T>::top(const T&def) const
+    const T&    Stack<T>::top() const
+    {
+        static const T  s_def{};
+        if(base_stack::empty())
+            return s_def;
+        return base_stack::back();
+    }
+
+    template <typename T>
+    std::span<const T>  Stack<T>::top_cspan(size_t n) const
     {
         if(base_stack::empty())
-            return def;
-        return base_stack::back();
+            return {};
+        if(n > base_stack::size())
+            n   = base_stack::size();
+        size_t m = base_stack::size() - n;
+        return std::span<const T>(base_stack::data()+m, n);
+    }
+
+    template <typename T>
+    std::span<T>        Stack<T>::top_span(size_t n)
+    {
+        if(base_stack::empty())
+            return {};
+        if(n > base_stack::size())
+            n   = base_stack::size();
+        size_t m = base_stack::size() - n;
+        return std::span<T>(base_stack::data()+m, n);
     }
 }

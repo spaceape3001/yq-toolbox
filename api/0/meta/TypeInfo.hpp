@@ -18,6 +18,7 @@ namespace yq {
     class TypeInfo : public CompoundInfo {
         friend class Any;
     public:
+        using OperatorLUC = LUC2<OperatorInfo,Operator,&OperatorInfo::code>;
     
             // WARNING UNSAFE IN UNLOCKED MULTITHREADED MODE!
             
@@ -48,6 +49,8 @@ namespace yq {
         
         //! TRUE if this type has a print function defined for it
         bool        can_print() const { return m_print != nullptr; }
+        
+        bool        can_convert_to(const TypeInfo& otherType) const;
 
         //! Copy (trusting)
         std::error_code copy(void*dst, const void*src) const;
@@ -76,13 +79,22 @@ namespace yq {
         template <typename T> class Final;      //  Final one for storing the type info
 
         //! Number of methods for this type
-        size_t                              method_count() const;
+        size_t                                  method_count() const;
         
         //! List of methods for this type
-        const std::vector<const MethodInfo*>&    methods() const;
+        const std::vector<const MethodInfo*>&   methods() const;
+
+        //! List of operators for this type
+        const std::vector<const OperatorInfo*>& operators() const;
+        
+        //! All operators for the specified operator
+        OperatorLUC::equal_range_t              operators(Operator) const;
+
+        size_t                                  operators_count() const;
+        
 
         //! Number of properties for this type
-        size_t                              property_count() const;
+        size_t                                  property_count() const;
         
         //! List of properties for this type
         const std::vector<const PropertyInfo*>&  properties() const;
@@ -206,7 +218,6 @@ namespace yq {
         //! Method for this type
         LUC<MethodInfo>             m_methods;
 
-        using OperatorLUC = LUC2<OperatorInfo,Operator,&OperatorInfo::code>;
         OperatorLUC                 m_operators;
         
         //! Properties for this type
@@ -288,7 +299,6 @@ namespace yq {
         FNFormat        printer(string_view_initializer_list_t) const;
         
         void            add_printer(std::string_view, FNFormat);
-        
     };
     
     /*! \brief Converts meta to type, if it's valid

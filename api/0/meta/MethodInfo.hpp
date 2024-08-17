@@ -33,6 +33,11 @@ namespace yq {
     
 
         virtual size_t          arg_count() const noexcept = 0;
+        
+        //! Computes the type match
+        //!
+        //! If there's a total mismatch, -1 is returned, 0 is a perfect match, higher numbers indicate it's possible but some conversion is required
+        int                     type_match(std::span<const Any> args) const;
 
     protected:
         const ArgInfo*              m_result;

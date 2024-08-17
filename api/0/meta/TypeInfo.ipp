@@ -123,6 +123,11 @@ namespace yq {
             }
         }
     }
+
+    bool        TypeInfo::can_convert_to(const TypeInfo& otherType) const
+    {
+        return static_cast<bool>(m_convert.get(&otherType, nullptr));
+    }
     
     std::error_code        TypeInfo::copy(void*dst, const void*src) const
     {
@@ -164,6 +169,23 @@ namespace yq {
     const std::vector<const MethodInfo*>&    TypeInfo::methods() const
     {
         return m_methods.all;
+    }
+
+    //! List of operators for this type
+    const std::vector<const OperatorInfo*>& TypeInfo::operators() const
+    {
+        return m_operators.all;
+    }
+    
+    //! All operators for the specified operator
+    TypeInfo::OperatorLUC::equal_range_t    TypeInfo::operators(Operator opt) const
+    {
+        return m_operators.lut.equal_range(opt);
+    }
+
+    size_t                                  TypeInfo::operators_count() const
+    {
+        return m_operators.all.size();
     }
 
     TypeInfo::FNFormat        TypeInfo::printer(std::string_view k) const

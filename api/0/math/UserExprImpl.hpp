@@ -59,11 +59,12 @@ namespace yq {
 			Tuple
 		);
 		
-		Category		category	= Category::None;
-		Kind			kind		= Kind::None;
-		unsigned int	extra		= 0;
 		std::u32string	text;
 		Any				value;
+		Category		category	= Category::None;
+		Kind			kind		= Kind::None;
+		uint16_t        priority	= 0;
+        uint16_t        argcnt      = 0;
 		
 		constexpr bool operator==(const Symbol&) const = default;
 
@@ -90,6 +91,7 @@ namespace yq {
         Symbol::Kind			kind		= Symbol::Kind::None;
         std::u32string_view     other;
         uint8_t                 priority    = 0;
+        uint8_t                 args        = 0;
         bool					left		= false;
         bool					right		= false;
         bool                    self        = false;

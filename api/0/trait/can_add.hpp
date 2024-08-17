@@ -9,6 +9,8 @@
 #include <0/trait/sink.hpp>
 
 namespace yq {
+    template <typename T> auto generic_add(const T& a, const T& b) { return a+b; }
+
     /*! \brief Trait to test for addition
     
         This trait will be TRUE if the type can add with itself.

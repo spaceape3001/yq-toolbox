@@ -11,6 +11,12 @@
 #include <0/meta/CompoundInfoDynamic.hpp>
 #include <0/meta/OperatorInfoImpl.hpp>
 #include <0/meta/OperatorInfoWriter.hpp>
+#include <0/trait/can_add.hpp>
+#include <0/trait/can_affirm.hpp>
+#include <0/trait/can_divide.hpp>
+#include <0/trait/can_multiply.hpp>
+#include <0/trait/can_negate.hpp>
+#include <0/trait/can_subtract.hpp>
 #include <0/trait/can_two_add.hpp>
 #include <0/trait/can_two_divide.hpp>
 #include <0/trait/can_two_multiply.hpp>
@@ -396,23 +402,23 @@ namespace yq {
         template <typename U>
         void    operate_with(OperatorFlags enabled=ALL, const std::source_location& sl=std::source_location::current())
         {
-            if(enabled(Operator::Add)){
-                if constexpr (can_two_add_v<T,U>){
+            if constexpr (can_two_add_v<T,U>){
+                if(enabled(Operator::Add)){
                     operate(Operator::Add, generic_two_add<T,U>, sl);
                 }
             }
-            if(enabled(Operator::Subtract)){
-                if constexpr (can_two_subtract_v<T,U>){
+            if constexpr (can_two_subtract_v<T,U>){
+                if(enabled(Operator::Subtract)){
                     operate(Operator::Subtract, generic_two_subtract<T,U>, sl);
                 }
             }
-            if(enabled(Operator::Multiply)){
-                if constexpr (can_two_multiply_v<T,U>){
+            if constexpr (can_two_multiply_v<T,U>){
+                if(enabled(Operator::Multiply)){
                     operate(Operator::Multiply, generic_two_multiply<T,U>, sl);
                 }
             }
-            if(enabled(Operator::Divide)){
-                if constexpr (can_two_divide_v<T,U>){
+            if constexpr (can_two_divide_v<T,U>){
+                if(enabled(Operator::Divide)){
                     operate(Operator::Divide, generic_two_divide<T,U>, sl);
                 }
             }
@@ -420,7 +426,36 @@ namespace yq {
         
         void    operate_self(OperatorFlags enabled=ALL, const std::source_location& sl=std::source_location::current())
         {
-            operate_with<T>(enabled, sl);
+            if constexpr ( can_add_v<T> && !is_template_enum_v<T>){
+                if(enabled(Operator::Add)){
+                    operate(Operator::Add, generic_add<T>, sl );
+                }
+            }
+            if constexpr ( can_affirm_v<T> && !is_template_enum_v<T> ){
+                if(enabled(Operator::Affirm)){
+                    operate(Operator::Affirm, generic_affirm<T>, sl );
+                }
+            }
+            if constexpr ( can_divide_v<T> && !is_template_enum_v<T> ){
+                if(enabled(Operator::Divide)){
+                    operate(Operator::Divide, generic_divide<T>, sl );
+                }
+            }
+            if constexpr ( can_multiply_v<T> && !is_template_enum_v<T> ){
+                if(enabled(Operator::Multiply)){
+                    operate(Operator::Multiply, generic_multiply<T>, sl );
+                }
+            }
+            if constexpr ( can_negate_v<T> && !is_template_enum_v<T> ){
+                if(enabled(Operator::Negate)){
+                    operate(Operator::Negate, generic_negate<T>, sl );
+                }
+            }
+            if constexpr ( can_subtract_v<T> && !is_template_enum_v<T> ){
+                if(enabled(Operator::Subtract)){
+                    operate(Operator::Subtract, generic_subtract<T>, sl );
+                }
+            }
         }
 
         

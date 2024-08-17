@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <0/basic/preamble.hpp>
 #include <0/basic/Map.hpp>
 #include <0/basic/Vector.hpp>
 
@@ -54,7 +55,7 @@
     public:                                                                     \
         enum { isEnum = 1 };                                                    \
         enum enum_t { __VA_ARGS__ };                                            \
-        static const char* definition() { return #__VA_ARGS__; }                \
+        static const char* definition() { return YQ_CPPSTRING(__VA_ARGS__); }   \
         static const char* name() { return #cls; }                              \
         static const EnumDef*  staticEnumInfo()                                 \
         {                                                                       \

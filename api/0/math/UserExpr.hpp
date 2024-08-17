@@ -111,6 +111,9 @@ namespace yq {
         static std::error_code s2_signs(SymVector&);
         static std::error_code s3_operators(SymVector&);
         static std::error_code s4_interpret_values(SymVector&);
+        
+        static std::error_code      x_operator(any_stack_t&, const Symbol&);
+        static const OperatorInfo*  x_best_operator(std::span<const Any>, Operator);
     };
 
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const UserExpr::Symbol&);

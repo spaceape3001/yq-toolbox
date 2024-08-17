@@ -385,16 +385,16 @@ namespace yq::expr {
 				continue;
 			switch(sym.kind){
 			case SymKind::Integer:
-				sym.value	= Any((int64_t) *to_int64(sym.text));
+				sym.value	= Any((double) *to_int64(sym.text));
 				break;
 			case SymKind::Hexadecimal:
-				sym.value	= Any((uint64_t) *to_hex64(sym.text));
+				sym.value	= Any((double) *to_hex64(sym.text));
 				break;
 			case SymKind::Float:
 				sym.value	= Any((double) *to_integer(sym.text));
 				break;
 			case SymKind::Octal:
-				sym.value	= Any((uint64_t) *to_octal64(sym.text));
+				sym.value	= Any((double) *to_octal64(sym.text));
 				break;
 			default:
 				break;

@@ -56,7 +56,12 @@ bool    sdouble(std::string_view ustr, double val, double ep=1e-14)
         return false;
     }
     
-    return ::fabs(*dd - val) <= ep;
+    if(::fabs(*dd - val) <= ep){
+        return true;
+    }
+    
+    std::cerr << "Evalulation failed on \"" << ustr << "\" to produce: " << *dd << " instead of " << val << "\n";
+    return false;
 }
 
 ut::suite tests = []{
@@ -107,6 +112,11 @@ ut::suite tests = []{
 			.category	= UserExpr::Symbol::Category::Value,
 			.kind		= UserExpr::Symbol::Kind::Float,
 			.length		= 2 
+		});
+        expect(UserExpr::token(U"3.5") == UserExpr::Token{ 
+			.category	= UserExpr::Symbol::Category::Value,
+			.kind		= UserExpr::Symbol::Kind::Float,
+			.length		= 3
 		});
         expect(UserExpr::token(U"+.3pi") == UserExpr::Token{ 
 			.category	= UserExpr::Symbol::Category::Operator,
@@ -166,29 +176,38 @@ ut::suite tests = []{
     };
     #endif
     
-    "Evaluate Simple"_test = []{
+    "Evaluate Simple Double Result"_test = []{
         expect(sdouble("0.", 0.));
         expect(sdouble("1.0", 1.));
+        expect(sdouble("3.5", 3.5));
         expect(sdouble("0x1", 1.));
+        expect(sdouble("(0x1)", 1.));
+        expect(sdouble("[0x1]", 1.));
         expect(sdouble("10.0", 10.));
+        expect(sdouble("(10.0)", 10.));
+        expect(sdouble("({10.0})", 10.));
+        expect(sdouble("({[10.0]})", 10.));
         expect(sdouble("10", 10.));
         expect(sdouble("0XA", 10.));
         expect(sdouble("012", 10.));
+        expect(sdouble("0.+0.", 0.));
+        expect(sdouble("1.+0.", 1.));
+        expect(sdouble("0.+1.", 1.));
+        expect(sdouble("1.+1.", 2.));
+        expect(sdouble("2*3.5", 7.));
+        expect(sdouble("14./2", 7.));
         //expect(sdouble("pi", std::numbers::pi_v<double>));
     };
     
     #if 0
     "Evaluate Addition"_test = []{
-        expect(sdouble("0.+0.", 0.));
-        expect(sdouble("1.+0.", 1.));
-        expect(sdouble("0.+1.", 1.));
-        expect(sdouble("1.+1.", 2.));
     };
     #endif
 };
 
 int main(){
     log_to_std_error();
+    Meta::freeze();
     return ut::cfg<>.run();
 };
 
