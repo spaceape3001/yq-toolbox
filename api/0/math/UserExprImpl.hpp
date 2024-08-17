@@ -47,6 +47,7 @@ namespace yq {
 			Variable,
 			Function,
 			Constant,
+            Constructor,
 			
 				// SPECIALS
 			Assign,

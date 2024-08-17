@@ -52,6 +52,8 @@ namespace yq {
         
         bool        can_convert_to(const TypeInfo& otherType) const;
 
+        const std::vector<const ConstructorInfo*>& constructors() const { return m_constructors; }
+
         //! Copy (trusting)
         std::error_code copy(void*dst, const void*src) const;
         
@@ -141,6 +143,7 @@ namespace yq {
         friend class PropertyInfo;
         friend class MethodInfo;
         friend class OperatorInfo;
+        friend class ConstructorInfo;
 
         /*! \brief Constructor 
         
@@ -211,6 +214,9 @@ namespace yq {
         //! Converter hash
         using ConvertHash   = Hash<const TypeInfo*, FNConvert>;
         
+        //! Method for this type
+        std::vector<const ConstructorInfo*> m_constructors;
+
         //! Default for this type
         DataBlock                   m_default;
 

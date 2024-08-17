@@ -49,6 +49,7 @@ namespace yq {
     class Global;       //  a global property ... effectively
     
     class ArgInfo;
+    class ConstructorInfo;
     class GlobalInfo;   // Meta for global
     class Meta;         // base meta 
     class MethodInfo;   // Function call

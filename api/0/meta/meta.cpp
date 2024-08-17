@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "OperatorInfo.ipp"
+#include "ConstructorInfo.ipp"
 
 #include "AnyArgHelper.ipp"
 #include "ArgInfo.ipp"
@@ -16,6 +16,7 @@
 #include "MetaWriter.ipp"
 #include "MethodInfo.ipp"
 #include "ObjectInfo.ipp"
+#include "OperatorInfo.ipp"
 #include "PropGetter.ipp"
 #include "PropSetter.ipp"
 #include "PropertyInfo.ipp"

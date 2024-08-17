@@ -9,6 +9,8 @@
 #include <0/meta/TypeInfo.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoDynamic.hpp>
+#include <0/meta/ConstructorInfoImpl.hpp>
+#include <0/meta/ConstructorInfoWriter.hpp>
 #include <0/meta/OperatorInfoImpl.hpp>
 #include <0/meta/OperatorInfoWriter.hpp>
 #include <0/trait/can_add.hpp>
@@ -291,6 +293,17 @@ namespace yq {
                     return std::error_code();
                 };
             }
+        }
+        
+        template <typename ... Args>
+        ConstructorInfo::Writer<T, Args...> constructor(T(*function)(Args...), const std::source_location& sl=std::source_location::current())
+        {
+            if(function && thread_safe_write()){
+                ConstructorInfo* ret = new OperatorInfo::Static<T, Args...>(function, sl, Meta::Writer::m_meta);
+                return ConstructorInfo::Writer<T, Args...>(ret, 0ULL);
+            }
+            
+            return ConstructorInfo::Writer<T, Args...>();
         }
         
         /*! \brief Conversion with routine

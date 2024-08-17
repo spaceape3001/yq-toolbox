@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include "OperatorInfo.hpp"
+#include "ConstructorInfo.hpp"
 #include <0/meta/TypeInfo.hpp>
 #include <cassert>
 
 namespace yq {
-    OperatorInfo::OperatorInfo(Operator codeId, const std::source_location&sl, Meta*parentMeta) : 
-        MethodInfo("(operator)", sl, parentMeta), m_code(codeId)
+    ConstructorInfo::ConstructorInfo(const std::source_location&sl, Meta*parentMeta) : 
+        MethodInfo("(constructor)", sl, parentMeta)
     {
         assert(parentMeta);
-        set(Flag::OPERATOR);
+        set(Flag::CONSTRUCTOR);
         
         if(TypeInfo* type = to_type(parentMeta))
-            type->m_operators << this;
+            type->m_constructors.push_back(this);
     }
 }
