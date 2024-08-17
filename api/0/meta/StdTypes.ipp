@@ -14,6 +14,8 @@
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/Any.hpp>
 
+#include <cmath>
+
 YQ_TYPE_FIXED(MT_String, std::string)
 YQ_TYPE_FIXED(MT_Boolean, bool)
 YQ_TYPE_FIXED(MT_Float, float)
@@ -155,6 +157,15 @@ namespace yq {
         }
     
 
+        //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        double  double_power(double x, double y)
+        {
+            return std::pow(x, y);
+        }
+
+        //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         void    init_stdtypes()
         {
             {
@@ -168,6 +179,7 @@ namespace yq {
                 w.parse<parse_double>();
                 w.print<print_double>();
                 w.operate_self();
+                w.operate(Operator::Power, double_power);
             }
             {
                 auto w = writer<float>();

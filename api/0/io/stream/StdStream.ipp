@@ -16,6 +16,7 @@ namespace yq::stream {
     
     StdStream::~StdStream()
     {
+        m_output.flush();
     }
 
     bool StdStream::write(const char* buf, size_t cb) 

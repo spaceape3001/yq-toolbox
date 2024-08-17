@@ -9,9 +9,9 @@
 #include <0/io/stream/StdStream.hpp>
 
 namespace yq::stream {
-    class StdOut : public StdStream {
+    class StdOutput : public StdStream {
     public:
-        explicit StdOut();
-        ~StdOut();
+        explicit StdOutput();
+        ~StdOutput();
     };
 }

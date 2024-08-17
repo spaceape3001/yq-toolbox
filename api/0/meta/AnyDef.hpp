@@ -120,7 +120,34 @@ namespace yq {
         */
         std::error_code     print(Stream&, string_view_initializer_list_t keys) const;
 
+        /*! \brief Debug writing to stream
         
+            This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
+            therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
+        */
+        std::error_code     print(cerr_t, std::string_view k={}) const;
+        
+        /*! \brief Debug writing to stream
+        
+            This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
+            therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
+        */
+        std::error_code     print(cerr_t, string_view_initializer_list_t keys) const;
+        
+        /*! \brief Debug writing to stream
+        
+            This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
+            therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
+        */
+        std::error_code     print(cout_t, std::string_view k={}) const;
+        
+        /*! \brief Debug writing to stream
+        
+            This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
+            therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
+        */
+        std::error_code     print(cout_t, string_view_initializer_list_t keys) const;
+
         /*! \brief "Printable" version for debugging/general-output
         
             \note There's no corresponding "parse" (deliberate), see the I/O helpers

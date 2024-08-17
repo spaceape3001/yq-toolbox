@@ -196,6 +196,7 @@ ut::suite tests = []{
         expect(sdouble("1.+1.", 2.));
         expect(sdouble("2*3.5", 7.));
         expect(sdouble("14./2", 7.));
+        expect(sdouble("1.5^2", 2.25));
         //expect(sdouble("pi", std::numbers::pi_v<double>));
     };
     

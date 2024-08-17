@@ -31,11 +31,13 @@ namespace yq {
     struct always_t {};
     struct cache_t {};
     struct ccw_t {};
+    struct cerr_t {};
     struct class_t {};
     struct clock_arg_t {};
     struct clockwise_t {};
     struct columns_t {};
     struct copy_t {};
+    struct cout_t {};
     struct default_t {};
     struct diagonal_t {};
     struct diameter_t {};
@@ -115,11 +117,13 @@ namespace yq {
     static constexpr const always_t         ALWAYS;
     static constexpr const cache_t          CACHE;
     static constexpr const ccw_t            CCW;
+    static constexpr const cerr_t           CERR;
     static constexpr const class_t          CLASS;
     static constexpr const clock_arg_t      CLOCK;
     static constexpr const clockwise_t      CLOCKWISE;
     static constexpr const columns_t        COLUMNS;
     static constexpr const copy_t           COPY;
+    static constexpr const cout_t           COUT;
     static constexpr const default_t        DEFAULT;
     static constexpr const diagonal_t       DIAGONAL;
     static constexpr const diameter_t       DIAMETER;

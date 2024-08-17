@@ -25,6 +25,6 @@
 #include "stream/LineCol.ipp"
 #include "stream/OSFile.ipp"
 #include "stream/StdError.ipp"
-#include "stream/StdOut.ipp"
+#include "stream/StdOutput.ipp"
 #include "stream/StdStream.ipp"
 #include "stream/Text.ipp"

@@ -9,6 +9,8 @@
 #include <0/basic/Any.hpp>
 #include <0/basic/Result.hpp>
 #include <0/meta/ReservedIDs.hpp>
+#include <0/io/stream/StdError.hpp>
+#include <0/io/stream/StdOutput.hpp>
 #include <0/io/stream/Text.hpp>
 #include <0/basic/TextUtils.hpp>
 
@@ -294,6 +296,31 @@ namespace yq {
         (fn)(str, raw_ptr());
         return std::error_code();
     }
+
+    std::error_code     Any::print(cerr_t, std::string_view k) const
+    {
+        stream::StdError  str;
+        return print(str, k);
+    }
+    
+    std::error_code     Any::print(cerr_t, string_view_initializer_list_t keys) const
+    {
+        stream::StdError  str;
+        return print(str, keys);
+    }
+    
+    std::error_code     Any::print(cout_t, std::string_view k) const
+    {
+        stream::StdOutput  str;
+        return print(str, k);
+    }
+    
+    std::error_code     Any::print(cout_t, string_view_initializer_list_t keys) const
+    {
+        stream::StdOutput  str;
+        return print(str, keys);
+    }
+
 
     std::string          Any::printable(std::string_view k) const
     {

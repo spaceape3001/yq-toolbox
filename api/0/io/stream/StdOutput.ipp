@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include "StdOut.hpp"
+#include "StdOutput.hpp"
 #include <iostream>
 
 namespace yq::stream {
-    StdOut::StdOut() : StdStream(std::cout)
+    StdOutput::StdOutput() : StdStream(std::cout)
     {
     }
     
-    StdOut::~StdOut()
+    StdOutput::~StdOutput()
     {
     }
 }
