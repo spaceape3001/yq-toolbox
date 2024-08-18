@@ -66,7 +66,7 @@ bool    sdouble(std::string_view ustr, double val, double ep=1e-14)
 
 ut::suite tests = []{
     "Has Operator"_test = []{
-        auto& _r    = UserExpr::Repo::instance();
+        auto& _r    = expr::Repo::instance();
         expect( true == _r.has_operator("+"));
         expect( false == _r.has_operator("+."));
         expect( false == _r.has_operator("+*"));

@@ -130,18 +130,7 @@ namespace yq::expr {
         const string_t  m_text;
     };
 
-    /*! \brief Sub-tokenizes
-    
-        This is the sub-tokenizer, it scans the text for what seems like the next
-        relevant symbol.  
-    */
-    Token        token(std::u32string_view);
-}
-
-
-namespace yq {
-
-    struct UserExpr::OpData {
+    struct OpData {
         std::u32string_view     text;
         Operator                code        = Operator::None;
         OperatorType            type        = OperatorType::None;
@@ -156,14 +145,13 @@ namespace yq {
     };
 
 
-
     /*! \brief All things the user expression evaluation needs
     
         Constant ... map of string/any
         Variable ... repo static properties, can change with time
         Function ... repo methods
     */
-    class UserExpr::Repo : public CompoundInfo {
+    class Repo : public CompoundInfo {
     public:
         template <typename> class Writer;
     
@@ -227,8 +215,28 @@ namespace yq {
         bool                            m_punctStartsText   = true;
     };
     
+    Repo&   repo();
+
+    /*! \brief Sub-tokenizes
+    
+        This is the sub-tokenizer, it scans the text for what seems like the next
+        relevant symbol.  
+    */
+    Token        token(std::u32string_view);
+
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const Symbol&);
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const SymVector&);
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const Token&);
+    std::ostream&    operator<<(std::ostream&, const Symbol&);
+    std::ostream&    operator<<(std::ostream&, const SymVector&);
+    std::ostream&    operator<<(std::ostream&, const Token&);
+
+}
+
+
+namespace yq::expr {
     template <typename>
-    class UserExpr::Repo::Writer : public CompoundInfo::Static {
+    class Repo::Writer : public CompoundInfo::Static {
     public:
         Writer(Repo& p) : CompoundInfo::Static(&p), m_repo(p)
         {
@@ -267,7 +275,7 @@ namespace yq {
     };
 
     template <typename Pred>
-    auto            UserExpr::Repo::all_functions(std::u32string_view k, Pred pred) const
+    auto            Repo::all_functions(std::u32string_view k, Pred pred) const
     {
         using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
         if constexpr (!std::is_same_v<pred_result_t, void>){
@@ -289,7 +297,7 @@ namespace yq {
 
 #if 0
     template <typename Pred>
-    auto            UserExpr::Repo::all_operators(std::u32string_view k, Pred pred) const
+    auto            Repo::all_operators(std::u32string_view k, Pred pred) const
     {
         using pred_result_t = decltype(pred((const OpData&) * (const OpData*) nullptr));
         if constexpr (!std::is_same_v<pred_result_t, void>){
@@ -310,16 +318,18 @@ namespace yq {
     }
 #endif
 
+}
 
+namespace yq {
     template <>
-    struct InfoBinder<UserExpr::Repo> {
-        using Info = UserExpr::Repo;
+    struct InfoBinder<expr::Repo> {
+        using Info = expr::Repo;
         
         static constexpr const bool     Defined     = true;
         static constexpr const bool     IsCompound  = true;     
         static constexpr const bool     IsType      = false;
         static constexpr const bool     IsObject    = false;
-        static const UserExpr::Repo&    bind();
-        static UserExpr::Repo&          edit();
+        static const expr::Repo&        bind();
+        static expr::Repo&              edit();
     };
 }

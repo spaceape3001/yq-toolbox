@@ -64,16 +64,11 @@ namespace yq {
         using SymVector     = expr::SymVector;
         using TokenFN       = expr::TokenFN;
 
-		struct OpData;
-		struct Repo;
 		struct SymData;
 
 
         using SymStack      = Stack<Symbol>;
         using SymDataStack  = Stack<SymData>;
-
-		static Repo& repo();
-        
         
         
         static Expect<SymVector>   tokenize(std::string_view);
@@ -151,11 +146,5 @@ namespace yq {
         static std::error_code          x_variable(any_stack_t&, const u32string_any_map_t&, const Symbol&);
     };
 
-    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const UserExpr::Symbol&);
-    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const UserExpr::SymVector&);
-    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const UserExpr::Token&);
-    std::ostream&    operator<<(std::ostream&, const UserExpr::Symbol&);
-    std::ostream&    operator<<(std::ostream&, const UserExpr::SymVector&);
-    std::ostream&    operator<<(std::ostream&, const UserExpr::Token&);
 }
 
