@@ -36,6 +36,12 @@ namespace yq {
         
         //! Pops this many items from the stack
         void        pop_last(size_t);
+
+        //! Peeks n from top, nullptr if not found
+        T*          peek(size_t);
+        
+        //! Peeks n from top, nullptr if not found
+        const T*    peek(size_t) const;
         
         std::span<const T>  top_cspan(size_t n) const;
         std::span<T>        top_span(size_t n);
@@ -122,6 +128,22 @@ namespace yq {
         value   =    base_stack::back();
         base_stack::pop_back();
         return *this;
+    }
+
+    template <typename T>
+    T*          Stack<T>::peek(size_t n) 
+    {
+        if(n > base_stack::size())
+            return nullptr;
+        return &base_stack::operator[](base_stack::size()-n);
+    }
+
+    template <typename T>
+    const T*    Stack<T>::peek(size_t n) const
+    {
+        if(n > base_stack::size())
+            return nullptr;
+        return &base_stack::operator[](base_stack::size()-n);
     }
 
     template <typename T>

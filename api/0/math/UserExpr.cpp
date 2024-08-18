@@ -12,6 +12,7 @@
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
 #include <0/meta/ArgInfo.hpp>
+#include <0/meta/ConstructorInfo.hpp>
 #include <0/meta/OperatorInfo.hpp>
 #include <0/meta/TypeInfo.hpp>
 
@@ -326,26 +327,78 @@ namespace yq {
     {
         std::error_code ec;
         
-        ec = s1_open_close(syms);
+        ec = s_open_close(syms);
         if(ec != std::error_code())
             return ec;
 
-        ec = s2_signs(syms);
+        ec = s_signs(syms);
         if(ec != std::error_code())
             return ec;
 
-        ec = s3_operators(syms);
+        ec = s_operators(syms);
         if(ec != std::error_code())
             return ec;
 
-        ec = s4_interpret_values(syms);
+        ec = s_values(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_functions(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_constants(syms);
         if(ec != std::error_code())
             return ec;
 
         return {};
     }
 
-    std::error_code UserExpr::s1_open_close(SymVector&syms)
+    std::error_code      UserExpr::s_constants(SymVector&syms)
+    {
+        static const Repo& _r = repo();
+        for(Symbol& sym : syms){
+            if(sym.category != Symbol::Category::Text)
+                continue;
+            if(sym.kind != Symbol::Kind::None)
+                continue;
+            if(_r.has_constant(sym.text)){
+                sym.kind    = Symbol::Kind::Constant;
+            } else {
+                sym.kind    = Symbol::Kind::Variable;
+            }
+        }
+        return {};
+    }
+
+    std::error_code UserExpr::s_functions(SymVector&syms)
+    {
+        Symbol* last    = nullptr;
+		for(auto itr = syms.begin(); itr != syms.end(); last=&*itr, ++itr){
+            if( itr -> category != Symbol::Category::Open)
+                continue;
+            if(!last)
+                continue;
+            if(last -> category != Symbol::Category::Text)
+                continue;
+
+            switch(itr->kind){
+            case Symbol::Kind::Generic:
+                last -> kind = Symbol::Kind::Function;
+                break;
+                
+            //  folding it into the function
+            //case Symbol::Kind::Tuple:
+                //last -> kind = Symbol::Kind::Constructor;
+                //break;
+            default:
+                break;
+            }
+		}
+        return {};
+    }
+
+    std::error_code UserExpr::s_open_close(SymVector&syms)
     {
 		for(Symbol& sym : syms){
 			if(sym.text == U","){
@@ -380,7 +433,30 @@ namespace yq {
         return {};
     }
     
-    std::error_code UserExpr::s2_signs(SymVector&syms)
+
+    std::error_code UserExpr::s_operators(SymVector&syms)
+    {
+        static const Repo& _r = repo();
+		SymCode		last	= {};
+		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
+			if( itr -> category != Symbol::Category::Operator)
+				continue;
+			if( itr -> kind != Symbol::Kind::None)
+				continue;
+			const OpData* op = _r.operator_(itr->text);
+			if(!op)
+				return errors::bad_argument();
+			
+			itr->category	= op->category;
+			itr->kind		= op->kind;
+			itr->priority  	= op->priority;
+            itr->argcnt     = op->args;
+		}
+        return {};
+    }
+    
+    
+    std::error_code UserExpr::s_signs(SymVector&syms)
     {
 		SymCode		last	= {};
 		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
@@ -410,29 +486,8 @@ namespace yq {
 		}
         return {};
     }
-    
-    std::error_code UserExpr::s3_operators(SymVector&syms)
-    {
-        static const Repo& _r = repo();
-		SymCode		last	= {};
-		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
-			if( itr -> category != Symbol::Category::Operator)
-				continue;
-			if( itr -> kind != Symbol::Kind::None)
-				continue;
-			const OpData* op = _r.operator_(itr->text);
-			if(!op)
-				return errors::bad_argument();
-			
-			itr->category	= op->category;
-			itr->kind		= op->kind;
-			itr->priority  	= op->priority;
-            itr->argcnt     = op->args;
-		}
-        return {};
-    }
-    
-    std::error_code UserExpr::s4_interpret_values(SymVector&syms)
+
+    std::error_code UserExpr::s_values(SymVector&syms)
     {
 		for(Symbol& sym : syms) {
 			if(sym.category != Symbol::Category::Value)
@@ -457,69 +512,23 @@ namespace yq {
         return {};
     }
 
+
 //------------------------------------------------------------------------------
 //  Algebra to RPN
 
-    #if 0
-    void            zuserexpr::makeRpn()
-    {
-        m_rpn.clear();
-        m_rpn.reserve(m_algebra.size());
-        zstack<Operation*>     stk;
-        Operation*               u;
+    struct UserExpr::SymData : public Symbol {
+        bool        has_value   = false;
         
-        for(Symbol* s : m_algebra){
-            if(!s)
-                continue;
-                
-            switch( s-> type){
-            case ST_None:
-                break;
-            case ST_Operator:
-                u   = static_cast<Operation*>(s);
-                if(!u)          // bad....
-                    break;
-                
-                for(;;){
-                    if(stk.empty())
-                        break;
-                       
-                    Operation* p   = stk.top(nullptr);
-                    if(p->type == ST_Open)
-                        break;
-                    if((p->type == ST_Operator) && (p->priority < u->priority))
-                        break;
-                    m_rpn << stk.pop();
-                }
-                stk << u;
-                break;
-            case ST_Function:
-                stk << static_cast<Operation*>(s);
-                break;
-            case ST_Value:
-            case ST_Variable:
-                m_rpn << s;
-                break;
-            case ST_Open:
-                stk << static_cast<Operation*>(s);
-                break;
-            case ST_Close:
-                while(!stk.empty() && stk.top()->type != ST_Open){
-                    m_rpn << stk.pop();
-                }
-                break;
-            }
-        }
-        
-        while(!stk.empty()){
-            m_rpn << stk.pop();
-        }
-    }
-    #endif
+        SymData() {}
+        SymData(const Symbol& sym) : Symbol(sym) {}
+    };
 
     std::error_code	UserExpr::algebra_to_rpn(SymVector& rpn, const SymVector& alg)
     {
-        SymStack    pending;
+        SymDataStack    pending;
+        SymData         lastPoppedOpen = {};
+        SymData*        sd  = nullptr;
+        
         for(const Symbol& sym : alg){
             switch(sym.category){
             case Symbol::Category::None:
@@ -542,14 +551,33 @@ namespace yq {
                 //  ignore 
                 break;
             case Symbol::Category::Text:
-                return errors::todo();
+                a2r_decl_value(pending);
+                switch(sym.kind){
+                case Symbol::Kind::Constant:
+                    rpn.push_back(sym);
+                    break;
+                case Symbol::Kind::Constructor:
+                    rpn.push_back(sym);
+                    break;
+                case Symbol::Kind::Function:
+                    pending << sym;
+                    break;
+                case Symbol::Kind::Variable:
+                    pending << sym;
+                    break;
+                default:
+                    return errors::bad_userexpr();
+                }
+                break;
             case Symbol::Category::Value:
+                a2r_decl_value(pending);
                 rpn.push_back(sym);
                 break;
             case Symbol::Category::Open:
                 pending << sym;
                 break;
             case Symbol::Category::Close:
+                lastPoppedOpen.category = {};
 				while(!pending.empty()){
                     auto& top   = pending.top();
                     
@@ -557,15 +585,38 @@ namespace yq {
                         if(top.kind != sym.kind){
                             return errors::bad_userexpr();
                         }
-                        pending.pop();
+                        lastPoppedOpen = pending.pop();
                         break;
                     }
                     
                     rpn.push_back(pending.pop());
 				}
+                if(!lastPoppedOpen.category)
+                    return errors::bad_userexpr();
+                if(lastPoppedOpen.argcnt){  // slight hack
+                    sd      = pending.peek(0);
+                    if(sd && (sd->category == Symbol::Category::Text) &&
+                        ((sd->kind == Symbol::Kind::Constructor) || (sd->kind == Symbol::Kind::Function)))
+                    {
+                        sd -> argcnt = lastPoppedOpen.argcnt;
+                    }
+                    a2r_decl_value(pending);
+                }
                 break;
             case Symbol::Category::Special:
-                return errors::todo();
+                switch(sym.kind){
+                case Symbol::Kind::Comma:
+                    
+                    sd  = a2r_top_open(pending);
+                    if(!sd)
+                        return errors::bad_userexpr();
+                    if(!sd->has_value)
+                        return errors::bad_userexpr();
+                    sd->has_value   = false;;
+                    break;
+                default:
+                    return errors::todo();
+                }
             }
         }
         
@@ -581,6 +632,26 @@ namespace yq {
             return {};
         
         return errors::bad_userexpr();
+    }
+
+    UserExpr::SymData*   UserExpr::a2r_top_open(SymDataStack& stack)
+    {
+        for(auto itr = stack.rbegin(); itr != stack.rend(); ++itr){
+            if(itr->category == Symbol::Category::Open)
+                return &*itr;
+        }
+        return nullptr;
+    }
+
+    void                 UserExpr::a2r_decl_value(SymDataStack&stack)
+    {
+        SymData*     sym = a2r_top_open(stack);
+        if(!sym)
+            return;
+        if(sym->has_value)
+            return;
+        sym->has_value  = true;
+        ++(sym->argcnt);
     }
 
 //------------------------------------------------------------------------------
@@ -599,24 +670,31 @@ namespace yq {
                 return errors::bad_instruction();
             case Symbol::Category::Operator:
                 ec  = x_operator(theStack, sym);
-                if(ec != std::error_code()){
+                if(ec != std::error_code())
                     return unexpected(ec);
-                }
                 break;
             case Symbol::Category::Space:
                 //  ignore
                 break;
             case Symbol::Category::Text:
-                return errors::todo();
+                ec = x_text(theStack, vars, sym);
+                if(ec != std::error_code())
+                    return unexpected(ec);
+                break;
             case Symbol::Category::Value:
-                theStack << sym.value;
+                ec = x_value(theStack, sym);
+                if(ec != std::error_code())
+                    return unexpected(ec);
                 break;
             case Symbol::Category::Open:
                 return errors::todo();
             case Symbol::Category::Close:
                 return errors::todo();
             case Symbol::Category::Special:
-                return errors::todo();
+                ec = x_special(theStack, vars, sym);
+                if(ec != std::error_code())
+                    return unexpected(ec);
+                break;
             }
         }
 
@@ -627,7 +705,157 @@ namespace yq {
         return theStack.pop();
     }
     
-    const OperatorInfo*  UserExpr::x_best_operator(std::span<const Any> span, Operator opCode)
+    std::error_code      UserExpr::x_assign(any_stack_t& values, u32string_any_map_t&vars, const Symbol&sym)
+    {
+        if(values.empty())
+            return errors::empty_stack();
+        if(sym.text.empty())
+            return errors::empty_key();
+        vars[sym.text]  = values.pop();
+        return {};
+    }
+
+
+
+    std::error_code      UserExpr::x_constant(any_stack_t&values, const Symbol&sym)
+    {   
+        static const Repo& _r = repo();
+        auto x = _r.constant(sym.text);
+        if(x){
+            values.push_back(*x);
+            return {};
+        }
+        return x.error();
+    }
+
+    std::error_code      UserExpr::x_constructor(any_stack_t& values, const Symbol&sym)
+    {
+        if(values.size() < sym.argcnt)
+            return errors::empty_stack();
+
+        const ConstructorInfo*  ci = x_constructor_find(values, sym);
+        if(!ci)
+            return errors::bad_constructor();
+        
+        Expect<Any> ret = ci->invoke(values.top_cspan(sym.argcnt));
+        if(!ret)
+            return ret.error();
+        values << *ret;
+        return {};
+    }
+
+    const ConstructorInfo*   UserExpr::x_constructor_find(any_stack_t&, const Symbol&)
+    {
+        return nullptr;
+    }
+
+    std::error_code      UserExpr::x_function(any_stack_t& values, const Symbol& sym)
+    {
+        if(values.size() < sym.argcnt)
+            return errors::empty_stack();
+            
+        switch(sym.argcnt){
+        case 0:
+            return x_function_zero(values, sym);
+        case 1:
+            return x_function_one(values, sym);
+        default:
+            return x_function_more(values, sym);
+        }
+
+
+#if 0
+    /*
+    
+        Functions....
+        
+        *)  Actual Functions (Type -- first arg, Globals, Repo)
+
+        *)  Methods on Type (first arg)
+
+        *)  Properties (getters)
+        
+            For instance, geodetic & latitude,
+            
+                latitude(geo)
+        
+        *)  Construction
+        
+            degree(20)
+            vec2d(x,y)
+            
+        *)  Conversions
+        
+        
+        
+    */
+
+
+
+        const MethodInfo*   mi  = x_function_find(values, sym);
+        if(!mi)
+            return errors::bad_function();
+        
+        Expect<Any>     ret;
+        if(mi->is_static()){
+            ret     = mi -> invoke(values.top_cspan(sym.argcnt));
+        } else if(!mi->is_const()){
+            return errors::bad_function();
+        } else {
+            if(!sym.argcnt)
+                return errors::bad_function();
+                
+        }
+#endif
+    }
+
+    std::error_code  UserExpr::x_function_zero(any_stack_t&, const Symbol&)
+    {
+        const Repo& _repo   = repo();
+        
+        
+        return create_error<"zero-arg functions are not yet implemented">();
+    }
+    
+    std::error_code  UserExpr::x_function_one(any_stack_t&, const Symbol&)
+    {
+        return create_error<"one-arg functions are not yet implemented">();
+    }
+    
+    std::error_code  UserExpr::x_function_more(any_stack_t&, const Symbol&)
+    {
+        return create_error<"more-arg functions are not yet implemented">();
+    }
+
+    const MethodInfo*    UserExpr::x_function_find(any_stack_t&, const Symbol&)
+    {
+        return nullptr;
+    }
+
+    std::error_code  UserExpr::x_operator(any_stack_t& values, const Symbol& symbol)
+    {
+        if(!symbol.argcnt)
+            return errors::bad_operator();
+        
+        std::span<const Any>  args = values.top_cspan(symbol.argcnt);
+        if(args.size() < symbol.argcnt){
+            return errors::insufficient_arguments();
+        }
+        
+        const OperatorInfo* op  = x_operator_find(args, (Operator) symbol.kind);
+        if(!op)
+            return errors::bad_operator();
+        
+        Expect<Any>     res = op->invoke(args);
+        if(!res)
+            return res.error();
+            
+        values.pop_last(symbol.argcnt);
+        values << std::move(*res);
+        return {};
+    }
+
+    const OperatorInfo*  UserExpr::x_operator_find(std::span<const Any> span, Operator opCode)
     {
         if(span.size() == 0)
             return nullptr;
@@ -656,27 +884,50 @@ namespace yq {
         
         return best;
     }
-
-    std::error_code  UserExpr::x_operator(any_stack_t& values, const Symbol& symbol)
-    {
-        if(!symbol.argcnt)
-            return errors::bad_operator();
-        
-        std::span<const Any>  args = values.top_cspan(symbol.argcnt);
-        if(args.size() < symbol.argcnt){
-            return errors::insufficient_arguments();
+    
+    std::error_code      UserExpr::x_special(any_stack_t&values, u32string_any_map_t&vars, const Symbol&sym)
+    {   
+        switch(sym.kind){
+        case Symbol::Kind::Assign:
+            return x_assign(values, vars, sym);
+        case Symbol::Kind::Duplicate:
+            if(values.empty())
+                return errors::empty_stack();
+            values << values.top();
+            return {};
+        default:
+            return errors::bad_instruction();
         }
-        
-        const OperatorInfo* op  = x_best_operator(args, (Operator) symbol.kind);
-        if(!op)
-            return errors::bad_operator();
-        
-        Expect<Any>     res = op->invoke(args);
-        if(!res)
-            return res.error();
-            
-        values.pop_last(symbol.argcnt);
-        values << std::move(*res);
+    }
+
+    std::error_code      UserExpr::x_text(any_stack_t&values, const u32string_any_map_t&vars, const Symbol&sym)
+    {
+        switch(sym.kind){
+        case Symbol::Kind::Function:
+            return x_function(values, sym);
+        case Symbol::Kind::Constructor:
+            return x_constructor(values, sym);
+        case Symbol::Kind::Constant:
+            return x_constant(values, sym);
+        case Symbol::Kind::Variable:
+            return x_variable(values, vars, sym);
+        default:
+            return errors::bad_instruction();
+        }
+    }
+    
+    std::error_code      UserExpr::x_value(any_stack_t&values, const Symbol&sym)
+    {
+        values << sym.value;
+        return {};
+    }
+
+    std::error_code      UserExpr::x_variable(any_stack_t&values, const u32string_any_map_t&vars, const Symbol&sym)
+    {   
+        auto i = vars.find(sym.text);
+        if(i == vars.end())
+            return errors::bad_variable();
+        values << i->second;
         return {};
     }
 

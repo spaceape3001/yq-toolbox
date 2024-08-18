@@ -262,7 +262,6 @@ namespace yq {
 #endif
 
 
-
     template <>
     struct InfoBinder<UserExpr::Repo> {
         using Info = UserExpr::Repo;

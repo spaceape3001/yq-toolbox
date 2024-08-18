@@ -12,7 +12,9 @@ namespace yq::errors {
     using bad_access                = error_db::entry<"Bad access">;
     using bad_argument              = error_db::entry<"Bad argument provided">;
     using bad_constant              = error_db::entry<"Bad constant">;
+    using bad_constructor           = error_db::entry<"Bad constructor">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
+    using bad_function              = error_db::entry<"Bad function">;
     using bad_instruction           = error_db::entry<"Bad instruction">;
     using bad_operator              = error_db::entry<"Bad operator">;
     using bad_userexpr              = error_db::entry<"Bad user expression">;

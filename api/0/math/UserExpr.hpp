@@ -37,6 +37,14 @@ namespace log4cpp { class CategoryStream; }
 
 
 namespace yq {
+
+    /*! \brief User defined expressions
+    
+        Premise is... take text in, parse it, and evaluate it.  It'll be 
+        less efficient than straight up code, but allows the flexibility.
+        So, DON'T put this into critical high-update paths, if possible.
+    
+    */
     class UserExpr {
     public:
 
@@ -47,10 +55,11 @@ namespace yq {
 		struct SymData;
 		struct Token;
 
-		using SymVector = std::vector<Symbol>;
-        using TokenFN   = std::function<std::error_code(SymCode,std::u32string_view)>;
+		using SymVector     = std::vector<Symbol>;
+        using TokenFN       = std::function<std::error_code(SymCode,std::u32string_view)>;
 
-        using SymStack  = Stack<Symbol>;
+        using SymStack      = Stack<Symbol>;
+        using SymDataStack  = Stack<SymData>;
 
 		static Repo& repo();
         
@@ -107,13 +116,33 @@ namespace yq {
         
         std::error_code    _init(std::u32string_view);
         
-        static std::error_code s1_open_close(SymVector&);
-        static std::error_code s2_signs(SymVector&);
-        static std::error_code s3_operators(SymVector&);
-        static std::error_code s4_interpret_values(SymVector&);
+        static std::error_code          s_open_close(SymVector&);
+        static std::error_code          s_signs(SymVector&);
+        static std::error_code          s_operators(SymVector&);
+        static std::error_code          s_values(SymVector&);
+        static std::error_code          s_functions(SymVector&);
+        static std::error_code          s_constants(SymVector&);
         
-        static std::error_code      x_operator(any_stack_t&, const Symbol&);
-        static const OperatorInfo*  x_best_operator(std::span<const Any>, Operator);
+        static SymData*                 a2r_top_open(SymDataStack&);
+        //! Declares that we have a value for current open
+        static void                     a2r_decl_value(SymDataStack&);
+        
+        static const OperatorInfo*      x_operator_find(std::span<const Any>, Operator);
+        static const MethodInfo*        x_function_find(any_stack_t&, const Symbol&);
+        static const ConstructorInfo*   x_constructor_find(any_stack_t&, const Symbol&);
+
+        static std::error_code          x_operator(any_stack_t&, const Symbol&);
+        static std::error_code          x_assign(any_stack_t&, u32string_any_map_t&, const Symbol&);
+        static std::error_code          x_constant(any_stack_t&, const Symbol&);
+        static std::error_code          x_constructor(any_stack_t&, const Symbol&);
+        static std::error_code          x_function(any_stack_t&, const Symbol&);
+        static std::error_code          x_function_zero(any_stack_t&, const Symbol&);
+        static std::error_code          x_function_one(any_stack_t&, const Symbol&);
+        static std::error_code          x_function_more(any_stack_t&, const Symbol&);
+        static std::error_code          x_special(any_stack_t&, u32string_any_map_t&, const Symbol&);
+        static std::error_code          x_text(any_stack_t&, const u32string_any_map_t&, const Symbol&);
+        static std::error_code          x_value(any_stack_t&, const Symbol&);
+        static std::error_code          x_variable(any_stack_t&, const u32string_any_map_t&, const Symbol&);
     };
 
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const UserExpr::Symbol&);
