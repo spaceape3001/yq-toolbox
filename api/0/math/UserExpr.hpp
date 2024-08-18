@@ -60,7 +60,7 @@ namespace yq {
         using Symbol        = expr::Symbol;
         using Instruction   = expr::Instruction;
         using Token         = expr::Token;
-        using SymCode       = expr::SymCode;
+        //using SymCode       = expr::SymCode;
         using SymVector     = expr::SymVector;
         using TokenFN       = expr::TokenFN;
 
@@ -71,17 +71,6 @@ namespace yq {
         using SymDataStack  = Stack<SymData>;
         
         
-        static Expect<SymVector>   tokenize(std::string_view);
-        static Expect<SymVector>   tokenize(std::u32string_view);
-        
-        static std::error_code  tokenize(std::u32string_view, SymVector&);
-        static std::error_code  tokenize(std::string_view, SymVector&);
-
-        static std::error_code  tokenize(std::u32string_view, TokenFN&&);
-        static std::error_code  tokenize(std::string_view, TokenFN&&);
-        
-        static std::error_code  streamline(SymVector&);
-		
 		//	We'll fold things together once this all works
 		static std::error_code	algebra_to_rpn(SymVector&, const SymVector&);
         static Expect<Any>      execute(u32string_any_map_t&, const SymVector&);
@@ -117,12 +106,6 @@ namespace yq {
         
         std::error_code    _init(std::u32string_view);
         
-        static std::error_code          s_open_close(SymVector&);
-        static std::error_code          s_signs(SymVector&);
-        static std::error_code          s_operators(SymVector&);
-        static std::error_code          s_values(SymVector&);
-        static std::error_code          s_functions(SymVector&);
-        static std::error_code          s_constants(SymVector&);
         
         static SymData*                 a2r_top_open(SymDataStack&);
         //! Declares that we have a value for current open

@@ -590,6 +590,9 @@ namespace yq::expr {
         return Repo::instance();
     }
 
+//------------------------------------------------------------------------------
+//  Tokenization
+
     Token   token(std::u32string_view in)
     {
         static const Repo& _r = repo();
@@ -776,6 +779,259 @@ namespace yq::expr {
         return Token{ .category=SymCategory::Error, .length=1 };
     }
 
+
+    Expect<UserExpr::SymVector>   tokenize(std::string_view input)
+    {
+        std::u32string  u32 = to_u32string(input);
+        return tokenize(u32);
+    }
+    
+    Expect<UserExpr::SymVector>   tokenize(std::u32string_view input)
+    {
+        SymVector   ret;
+        std::error_code ec  = tokenize(input, ret);
+        if(ec != std::error_code())
+            return unexpected(ec);
+        return ret;
+    }
+
+    std::error_code  tokenize(std::u32string_view input, SymVector& tokens)
+    {
+        return tokenize(input, [&](SymCode c, std::u32string_view s) -> std::error_code {
+            tokens.push_back(Symbol{ 
+                    .text = std::u32string(s),
+					.category = c.category,
+					.kind = c.kind
+				});
+            return std::error_code();
+        });
+    }
+    
+    std::error_code  tokenize(std::string_view input, SymVector& tokens)
+    {
+        std::u32string  u32 = to_u32string(input);
+        return tokenize(u32, tokens);
+    }
+        
+    std::error_code  tokenize(std::u32string_view input, TokenFN&&fn)
+    {
+        if(!fn){
+            return errors::bad_argument();
+        }
+        
+        for(std::u32string_view i=input; !i.empty(); ){
+            Token   t   = token(i);
+            if((t.category == SymCategory::Error) || (t.length == 0)){
+                return errors::bad_argument();
+            }
+            
+            fn({.category=t.category, .kind = t.kind}, i.substr(0, t.length));
+            i = i.substr(t.length);
+        }
+        return std::error_code();
+    }
+    
+    std::error_code  tokenize(std::string_view input, TokenFN&& fn)
+    {
+        std::u32string      u32 = to_u32string(input);
+        return tokenize(u32, std::move(fn));
+    }
+
+//------------------------------------------------------------------------------
+//  Streamlining (static user-expr)
+
+
+    std::error_code      s_constants(SymVector&syms)
+    {
+        static const Repo& _r = repo();
+        for(Symbol& sym : syms){
+            if(sym.category != SymCategory::Text)
+                continue;
+            if(sym.kind != Symbol::Kind::None)
+                continue;
+            if(_r.has_constant(sym.text)){
+                sym.kind    = SymKind::Constant;
+            } else {
+                sym.kind    = SymKind::Variable;
+            }
+        }
+        return {};
+    }
+
+    std::error_code s_functions(SymVector&syms)
+    {
+        Symbol* last    = nullptr;
+		for(auto itr = syms.begin(); itr != syms.end(); last=&*itr, ++itr){
+            if( itr -> category != SymCategory::Open)
+                continue;
+            if(!last)
+                continue;
+            if(last -> category != SymCategory::Text)
+                continue;
+
+            switch(itr->kind){
+            case SymKind::Generic:
+                last -> kind = SymKind::Function;
+                break;
+                
+            //  folding it into the function
+            //case SymKind::Tuple:
+                //last -> kind = SymKind::Constructor;
+                //break;
+            default:
+                break;
+            }
+		}
+        return {};
+    }
+
+    std::error_code s_open_close(SymVector&syms)
+    {
+		for(Symbol& sym : syms){
+			if(sym.text == U","){
+				sym.category	= SymCategory::Special;
+				sym.kind		= SymKind::Comma;
+			}
+			if(sym.text == U"("){
+				sym.category	= SymCategory::Open;
+				sym.kind		= SymKind::Generic;
+			}
+			if(sym.text == U")"){
+				sym.category	= SymCategory::Close;
+				sym.kind		= SymKind::Generic;
+			}
+			if(sym.text == U"["){
+				sym.category	= SymCategory::Open;
+				sym.kind		= SymKind::Array;
+			}
+			if(sym.text == U"]"){
+				sym.category	= SymCategory::Close;
+				sym.kind		= SymKind::Array;
+			}
+			if(sym.text == U"{"){
+				sym.category	= SymCategory::Open;
+				sym.kind		= SymKind::Tuple;
+			}
+			if(sym.text == U"}"){
+				sym.category	= SymCategory::Close;
+				sym.kind		= SymKind::Tuple;
+			}
+		}
+        return {};
+    }
+    
+
+    std::error_code s_operators(SymVector&syms)
+    {
+        static const Repo& _r = repo();
+		SymCode		last	= {};
+		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
+			if( itr -> category != SymCategory::Operator)
+				continue;
+			if( itr -> kind != SymKind::None)
+				continue;
+			const OpData* op = _r.operator_(itr->text);
+			if(!op)
+				return errors::bad_argument();
+			
+			itr->category	= op->category;
+			itr->kind		= op->kind;
+			itr->priority  	= op->priority;
+            itr->argcnt     = op->args;
+		}
+        return {};
+    }
+    
+    
+    std::error_code s_signs(SymVector&syms)
+    {
+		SymCode		last	= {};
+		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
+			if((itr -> text != U"-") && (itr->text != U"+"))
+				continue;
+			// This symbol is "-" negative
+			if(!expr::is_starting_term(last))
+				continue;
+			auto jtr = itr + 1;
+			if(jtr == syms.end())
+				continue;
+			if(jtr -> category != SymCategory::Value)
+				continue;
+			if(!((jtr -> kind == SymKind::Integer) ||  (jtr -> kind == SymKind::Float))){
+                if(itr->text == U"-"){
+                    jtr -> kind = SymKind::Negate;
+                    jtr -> text = U"negate";
+                } else {
+                    jtr -> kind = SymKind::Affirm;
+                    jtr -> text = U"affirm";
+                }
+				continue;
+			}
+			
+			jtr -> text	= itr->text + jtr->text;
+			itr = syms.erase(itr);
+		}
+        return {};
+    }
+
+    std::error_code s_values(SymVector&syms)
+    {
+		for(Symbol& sym : syms) {
+			if(sym.category != SymCategory::Value)
+				continue;
+			switch(sym.kind){
+			case SymKind::Integer:
+				sym.value	= Any((double) *to_int64(sym.text));
+				break;
+			case SymKind::Hexadecimal:
+				sym.value	= Any((double) *to_hex64(sym.text.substr(2)));
+				break;
+			case SymKind::Float:
+				sym.value	= Any((double) *to_double(sym.text));
+				break;
+			case SymKind::Octal:
+				sym.value	= Any((double) *to_octal64(sym.text));
+				break;
+			default:
+				break;
+			}
+		}
+        return {};
+    }
+
+
+    std::error_code  streamline(SymVector& syms)
+    {
+        std::error_code ec;
+        
+        ec = s_open_close(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_signs(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_operators(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_values(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_functions(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        ec = s_constants(syms);
+        if(ec != std::error_code())
+            return ec;
+
+        return {};
+    }
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -847,259 +1103,10 @@ namespace yq::expr {
 namespace yq {
 
 
-//------------------------------------------------------------------------------
-//  Tokenization
-
-
-
-    Expect<UserExpr::SymVector>   UserExpr::tokenize(std::string_view input)
-    {
-        std::u32string  u32 = to_u32string(input);
-        return tokenize(u32);
-    }
-    
-    Expect<UserExpr::SymVector>   UserExpr::tokenize(std::u32string_view input)
-    {
-        SymVector   ret;
-        std::error_code ec  = tokenize(input, ret);
-        if(ec != std::error_code())
-            return unexpected(ec);
-        return ret;
-    }
-
-    std::error_code  UserExpr::tokenize(std::u32string_view input, SymVector& tokens)
-    {
-        return tokenize(input, [&](SymCode c, std::u32string_view s) -> std::error_code {
-            tokens.push_back(Symbol{ 
-                    .text = std::u32string(s),
-					.category = c.category,
-					.kind = c.kind
-				});
-            return std::error_code();
-        });
-    }
-    
-    std::error_code  UserExpr::tokenize(std::string_view input, SymVector& tokens)
-    {
-        std::u32string  u32 = to_u32string(input);
-        return tokenize(u32, tokens);
-    }
-        
-    std::error_code  UserExpr::tokenize(std::u32string_view input, TokenFN&&fn)
-    {
-        if(!fn){
-            return errors::bad_argument();
-        }
-        
-        for(std::u32string_view i=input; !i.empty(); ){
-            Token   t   = expr::token(i);
-            if((t.category == Symbol::Category::Error) || (t.length == 0)){
-                return errors::bad_argument();
-            }
-            
-            fn({.category=t.category, .kind = t.kind}, i.substr(0, t.length));
-            i = i.substr(t.length);
-        }
-        return std::error_code();
-    }
-    
-    std::error_code  UserExpr::tokenize(std::string_view input, TokenFN&& fn)
-    {
-        std::u32string      u32 = to_u32string(input);
-        return tokenize(u32, std::move(fn));
-    }
 
 //------------------------------------------------------------------------------
 //  Streamlining (static user-expr)
 
-    std::error_code  UserExpr::streamline(SymVector& syms)
-    {
-        std::error_code ec;
-        
-        ec = s_open_close(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_signs(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_operators(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_values(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_functions(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_constants(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        return {};
-    }
-
-    std::error_code      UserExpr::s_constants(SymVector&syms)
-    {
-        static const expr::Repo& _r = expr::repo();
-        for(Symbol& sym : syms){
-            if(sym.category != Symbol::Category::Text)
-                continue;
-            if(sym.kind != Symbol::Kind::None)
-                continue;
-            if(_r.has_constant(sym.text)){
-                sym.kind    = Symbol::Kind::Constant;
-            } else {
-                sym.kind    = Symbol::Kind::Variable;
-            }
-        }
-        return {};
-    }
-
-    std::error_code UserExpr::s_functions(SymVector&syms)
-    {
-        Symbol* last    = nullptr;
-		for(auto itr = syms.begin(); itr != syms.end(); last=&*itr, ++itr){
-            if( itr -> category != Symbol::Category::Open)
-                continue;
-            if(!last)
-                continue;
-            if(last -> category != Symbol::Category::Text)
-                continue;
-
-            switch(itr->kind){
-            case Symbol::Kind::Generic:
-                last -> kind = Symbol::Kind::Function;
-                break;
-                
-            //  folding it into the function
-            //case Symbol::Kind::Tuple:
-                //last -> kind = Symbol::Kind::Constructor;
-                //break;
-            default:
-                break;
-            }
-		}
-        return {};
-    }
-
-    std::error_code UserExpr::s_open_close(SymVector&syms)
-    {
-		for(Symbol& sym : syms){
-			if(sym.text == U","){
-				sym.category	= Symbol::Category::Special;
-				sym.kind		= Symbol::Kind::Comma;
-			}
-			if(sym.text == U"("){
-				sym.category	= Symbol::Category::Open;
-				sym.kind		= Symbol::Kind::Generic;
-			}
-			if(sym.text == U")"){
-				sym.category	= Symbol::Category::Close;
-				sym.kind		= Symbol::Kind::Generic;
-			}
-			if(sym.text == U"["){
-				sym.category	= Symbol::Category::Open;
-				sym.kind		= Symbol::Kind::Array;
-			}
-			if(sym.text == U"]"){
-				sym.category	= Symbol::Category::Close;
-				sym.kind		= Symbol::Kind::Array;
-			}
-			if(sym.text == U"{"){
-				sym.category	= Symbol::Category::Open;
-				sym.kind		= Symbol::Kind::Tuple;
-			}
-			if(sym.text == U"}"){
-				sym.category	= Symbol::Category::Close;
-				sym.kind		= Symbol::Kind::Tuple;
-			}
-		}
-        return {};
-    }
-    
-
-    std::error_code UserExpr::s_operators(SymVector&syms)
-    {
-        static const expr::Repo& _r = expr::repo();
-		SymCode		last	= {};
-		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
-			if( itr -> category != Symbol::Category::Operator)
-				continue;
-			if( itr -> kind != Symbol::Kind::None)
-				continue;
-			const expr::OpData* op = _r.operator_(itr->text);
-			if(!op)
-				return errors::bad_argument();
-			
-			itr->category	= op->category;
-			itr->kind		= op->kind;
-			itr->priority  	= op->priority;
-            itr->argcnt     = op->args;
-		}
-        return {};
-    }
-    
-    
-    std::error_code UserExpr::s_signs(SymVector&syms)
-    {
-		SymCode		last	= {};
-		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
-			if((itr -> text != U"-") && (itr->text != U"+"))
-				continue;
-			// This symbol is "-" negative
-			if(!expr::is_starting_term(last))
-				continue;
-			auto jtr = itr + 1;
-			if(jtr == syms.end())
-				continue;
-			if(jtr -> category != Symbol::Category::Value)
-				continue;
-			if(!((jtr -> kind == Symbol::Kind::Integer) ||  (jtr -> kind == Symbol::Kind::Float))){
-                if(itr->text == U"-"){
-                    jtr -> kind = Symbol::Kind::Negate;
-                    jtr -> text = U"negate";
-                } else {
-                    jtr -> kind = Symbol::Kind::Affirm;
-                    jtr -> text = U"affirm";
-                }
-				continue;
-			}
-			
-			jtr -> text	= itr->text + jtr->text;
-			itr = syms.erase(itr);
-		}
-        return {};
-    }
-
-    std::error_code UserExpr::s_values(SymVector&syms)
-    {
-		for(Symbol& sym : syms) {
-			if(sym.category != Symbol::Category::Value)
-				continue;
-			switch(sym.kind){
-			case Symbol::Kind::Integer:
-				sym.value	= Any((double) *to_int64(sym.text));
-				break;
-			case Symbol::Kind::Hexadecimal:
-				sym.value	= Any((double) *to_hex64(sym.text.substr(2)));
-				break;
-			case Symbol::Kind::Float:
-				sym.value	= Any((double) *to_double(sym.text));
-				break;
-			case Symbol::Kind::Octal:
-				sym.value	= Any((double) *to_octal64(sym.text));
-				break;
-			default:
-				break;
-			}
-		}
-        return {};
-    }
 
 
 //------------------------------------------------------------------------------
@@ -1543,11 +1550,11 @@ namespace yq {
 	std::error_code    UserExpr::_init(std::u32string_view uxpr) 
 	{
         std::error_code ec;
-		ec	= tokenize(uxpr, m_algebra);
+		ec	= expr::tokenize(uxpr, m_algebra);
 		if(ec != std::error_code())
             return ec;
 		
-		ec	        = streamline(m_algebra);
+		ec	        = expr::streamline(m_algebra);
 		if(ec != std::error_code())
             return ec;
         
