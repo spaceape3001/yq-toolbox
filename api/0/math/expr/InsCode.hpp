@@ -6,8 +6,11 @@
 
 #pragma once
 
+#if 0
+
 #include <0/basic/Enum.hpp>
 #include <0/math/Operator.hpp>
+
 
 namespace yq::expr {
     YQ_ENUM(InsCode,,
@@ -35,3 +38,5 @@ namespace yq::expr {
         Variable
     )
 }
+
+#endif

@@ -6,6 +6,8 @@
 
 #pragma once
 
+#if 0
+
 #include <string>
 #include <string_view>
 #include <0/basic/Enum.hpp>
@@ -47,6 +49,7 @@ namespace yq::expr {
 		Variable,
 		Function,
 		Constant,
+        Constructor,
 		
 			// SPECIALS
         Assign,
@@ -132,3 +135,4 @@ namespace yq::expr {
 		return (sym.category == SymCategory::Special) && (sym.kind == SymKind::Comma);
 	}
 }
+#endif

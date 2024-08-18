@@ -7,6 +7,12 @@
 #pragma once
 
 #include "Instruction.hpp"
+
+namespace yq::expr {
+}
+
+#if 0
+
 #include "Symbol.hpp"
 //#include "Repo.hpp"
 #include <0/basic/Logging.hpp>
@@ -370,3 +376,4 @@ namespace yq::expr {
     
 }
 
+#endif

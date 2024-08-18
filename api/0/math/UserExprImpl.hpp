@@ -17,53 +17,59 @@
 
 namespace log4cpp { class CategoryStream; }
 
-namespace yq {
-	struct UserExpr::Symbol {
-		YQ_ENUM(Category,,
-			None	= 0,
-			Error,
-			Operator,
-			Space,
-			Text,
-			Value,
-			Open,
-			Close,
-			Special
-		);
-		
-		YQ_ENUM(Kind,, 
-			None		= 0,
-			
-				// OPERATORS (at front to match the operators enumeration)
-			YQ_OPERATORS,
 
-				// VALUES
-			Integer,
-			Octal,
-			Hexadecimal,
-			Float,
+namespace yq::expr {
 
-				// TEXTS
-			Variable,
-			Function,
-			Constant,
-            Constructor,
-			
-				// SPECIALS
-			Assign,
-			Duplicate,
-			Comma,
-			
-				// OPEN/CLOSE
-			Generic,
-			Array,
-			Tuple
-		);
+
+    YQ_ENUM(SymCategory,,
+        None	= 0,
+        Error,
+        Operator,
+        Space,
+        Text,
+        Value,
+        Open,
+        Close,
+        Special
+    );
+
+    YQ_ENUM(SymKind,, 
+        None		= 0,
+        
+            // OPERATORS (at front to match the operators enumeration)
+        YQ_OPERATORS,
+
+            // VALUES
+        Integer,
+        Octal,
+        Hexadecimal,
+        Float,
+
+            // TEXTS
+        Variable,
+        Function,
+        Constant,
+        Constructor,
+        
+            // SPECIALS
+        Assign,
+        Duplicate,
+        Comma,
+        
+            // OPEN/CLOSE
+        Generic,
+        Array,
+        Tuple
+    );
+
+	struct Symbol {
+        using Category  = expr::SymCategory;
+        using Kind      = expr::SymKind;
 		
 		std::u32string	text;
 		Any				value;
-		Category		category	= Category::None;
-		Kind			kind		= Kind::None;
+		SymCategory		category	= SymCategory::None;
+		SymKind			kind		= SymKind::None;
 		uint16_t        priority	= 0;
         uint16_t        argcnt      = 0;
 		
@@ -72,17 +78,68 @@ namespace yq {
 		constexpr operator SymCode() const noexcept;
 	};
 
-	struct UserExpr::SymCode {
-		Symbol::Category	category	= Symbol::Category::None;
-		Symbol::Kind		kind		= Symbol::Kind::None;
+	struct SymCode {
+		SymCategory	category	= SymCategory::None;
+		SymKind		kind		= SymKind::None;
 		
 		constexpr bool operator==(const SymCode&) const = default;
 	};
 
-	constexpr UserExpr::Symbol::operator SymCode() const noexcept 
+	constexpr Symbol::operator SymCode() const noexcept 
 	{
 		return { .category=category, .kind=kind };
 	}
+
+
+    //! Light weight token
+    struct Token {
+		SymCategory	category	= SymCategory::None;
+		SymKind		kind		= SymKind::None;
+        size_t              length     	= 0;
+        
+        constexpr bool  operator==(const Token&) const noexcept = default;
+    };
+    
+    /*! User expression instruction
+    
+        We'd tried a common class to symbols, but that's an ugly hack.
+    */
+    class Instruction {
+    public:
+    
+        using result_t  = std::variant<std::monostate, int, const TypeInfo*, std::vector<const TypeInfo*>>;
+
+        // Defining text
+        string_view_t               text() const { return m_text; }
+        
+        //! Executes this instruction
+        virtual std::error_code     execute(any_stack_t& valueStack, u32string_any_map_t& variables) const = 0;
+        
+        //! Expected result (monostate if unknown)
+        virtual result_t    result() const;
+        
+        //! Expected result for argument types
+        virtual result_t    result(std::span<const TypeInfo*>) const;
+        
+        //! Destructor
+        virtual ~Instruction();
+
+    protected:
+        Instruction(const string_t&);
+        
+        const string_t  m_text;
+    };
+
+    /*! \brief Sub-tokenizes
+    
+        This is the sub-tokenizer, it scans the text for what seems like the next
+        relevant symbol.  
+    */
+    Token        token(std::u32string_view);
+}
+
+
+namespace yq {
 
     struct UserExpr::OpData {
         std::u32string_view     text;
@@ -98,14 +155,6 @@ namespace yq {
         bool                    self        = false;
     };
 
-    //! Light weight token
-    struct UserExpr::Token {
-		Symbol::Category	category	= Symbol::Category::None;
-		Symbol::Kind		kind		= Symbol::Kind::None;
-        size_t              length     	= 0;
-        
-        constexpr bool  operator==(const Token&) const noexcept = default;
-    };
 
 
     /*! \brief All things the user expression evaluation needs

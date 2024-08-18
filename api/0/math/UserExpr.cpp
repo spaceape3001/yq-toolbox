@@ -5,81 +5,176 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UserExprImpl.hpp"
-#include <0/basic/DelayInit.hpp>
+
 #include <0/basic/errors.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/basic/Stack.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
-#include <0/meta/ArgInfo.hpp>
-#include <0/meta/ConstructorInfo.hpp>
-#include <0/meta/OperatorInfo.hpp>
-#include <0/meta/TypeInfo.hpp>
 
-namespace yq {
-	namespace {
-		enum : uint8_t {
-			PCompare    = 1,
-			PLogic,
-			PAddSub,
-			PMulDiv,
-			PPower
-		};
 
+namespace yq::expr {
+    namespace {
         using feature_t = std::pair<bool,size_t>;
-
-        constexpr bool  is_comma(const UserExpr::Symbol&sym)
-        {
-            return (sym.category == UserExpr::Symbol::Category::Special) && (sym.kind == UserExpr::Symbol::Kind::Comma);
-        }
-
-        constexpr bool	is_comma(const UserExpr::SymCode&sym)
-        {
-            return (sym.category == UserExpr::Symbol::Category::Special) && (sym.kind == UserExpr::Symbol::Kind::Comma);
-        }
-
-        constexpr bool is_starting_term(const UserExpr::SymCode& sc)
-        {
-            if(sc == UserExpr::SymCode{})
-                return true;
-            if(sc.category == UserExpr::Symbol::Category::Open)
-                return true;
-            if(sc.category == UserExpr::Symbol::Category::Operator)
-                return true;
-            if(is_comma(sc))
-                return true;
-            return false;
-        }
-        
-        constexpr bool is_ending_term(const UserExpr::SymCode& sc)
-        {
-            if(sc == UserExpr::SymCode{})
-                return true;
-            if(sc.category == UserExpr::Symbol::Category::Close)
-                return true;
-            if(sc.category == UserExpr::Symbol::Category::Operator)
-                return true;
-            if(is_comma(sc))
-                return true;
-            return false;
-        }
-	}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-    UserExpr::Repo&   UserExpr::repo() 
-    {   
-        return Repo::instance();
     }
 
-//------------------------------------------------------------------------------
-//  Tokenization
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    UserExpr::Token   UserExpr::token(std::u32string_view in)
+    Instruction::Instruction(const string_t& _text) : m_text(_text)
     {
-        static const Repo& _r = repo();
+    }
+    
+    Instruction::~Instruction()
+    {
+    }
+
+    Instruction::result_t    Instruction::result() const
+    {
+        return {};
+    }
+    
+        
+    Instruction::result_t    Instruction::result(std::span<const TypeInfo*>) const
+    {
+        return result();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    class AssignInstruction : public Instruction {
+    public:
+        AssignInstruction(const string_t& s) : Instruction(s)
+        {
+        }
+        
+        ~AssignInstruction(){}
+        
+        std::error_code     execute(any_stack_t&values, u32string_any_map_t&variables) const override
+        {
+            if(values.empty()){
+                return errors::empty_stack();
+            }
+            
+            variables[m_text]   = values.pop();
+            return {};
+        }
+
+        result_t    result() const override
+        {
+            return -1;
+        }
+    };
+    
+    class DuplicateInstruction : public Instruction {
+    public:
+        DuplicateInstruction(const string_t s) : Instruction(s)
+        {
+        }
+        
+        ~DuplicateInstruction(){}
+        
+        virtual std::error_code     execute(any_stack_t& values, u32string_any_map_t&) const override
+        {
+            if(values.empty()){
+                return errors::empty_stack();
+            }
+            
+            values << values.top();
+            return {};
+        }
+        
+        result_t   result() const override 
+        { 
+            return 1; 
+        }
+    };
+
+    class NullInstruction : public Instruction {
+    public:
+        NullInstruction(const string_t&s) : Instruction(s) 
+        {
+        }
+        
+        ~NullInstruction(){}
+        
+        std::error_code     execute(any_stack_t&, u32string_any_map_t&) const override
+        {
+            return {};
+        }
+
+        result_t   result() const override 
+        { 
+            return 0; 
+        }
+    };
+    
+    class OperatorInstruction : public Instruction {
+    public:
+    
+        OperatorInstruction(const string_t& s, Operator opcode) : Instruction(s), m_operator(opcode)
+        {
+        }
+        
+        std::error_code     execute(any_stack_t&, u32string_any_map_t&) const override
+        {
+            return {};
+        }
+
+        Operator m_operator;
+    };
+    
+    class PopInstruction : public Instruction {
+    public:
+        PopInstruction(const string_t&s) : Instruction(s) 
+        {
+        }
+        
+        ~PopInstruction(){}
+
+        std::error_code     execute(any_stack_t&, u32string_any_map_t&) const override
+        {
+            return {};
+        }
+
+        result_t   result() const override 
+        { 
+            return -1; 
+        }
+    };
+    
+    
+    class ValueInstruction : public Instruction {
+    public:
+        ValueInstruction(const string_t& s, Any&& value) : Instruction(s), m_value(std::move(value))
+        {
+        }
+        
+        ~ValueInstruction(){}
+        
+        std::error_code     execute(any_stack_t&values, u32string_any_map_t&) const override
+        {
+            values << m_value;
+            return {};
+        }
+
+        result_t    result() const override 
+        { 
+            return &m_value.type(); 
+        }
+
+    private:
+        Any m_value;
+    };
+    
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Token   token(std::u32string_view in)
+    {
+        static const UserExpr::Repo& _r = UserExpr::repo();
         
         Token         ret{};
         if(in.empty())
@@ -90,8 +185,8 @@ namespace yq {
         
         //  white space
         if(is_space(ch)){
-            ret.category	= Symbol::Category::Space;
-            ret.kind		= Symbol::Kind::None;
+            ret.category	= SymCategory::Space;
+            ret.kind		= SymKind::None;
             for(cnt = 1; cnt<in.size(); ++cnt){
                 if(!is_space(in[cnt]))
                     break;
@@ -101,8 +196,8 @@ namespace yq {
         
         //  text identifier
         if(is_alpha(ch) || (_r.punctuation_can_start_text() && _r.is_punct_text(ch))){
-            ret.category	= Symbol::Category::Text;
-            ret.kind		= Symbol::Kind::None;
+            ret.category	= SymCategory::Text;
+            ret.kind		= SymKind::None;
             for(cnt=1; cnt<in.size(); ++cnt){
                 if(is_alpha(in[cnt]))
                     continue;
@@ -121,8 +216,8 @@ namespace yq {
         if(is_digit(ch) || ((ch == '.') && is_digit(nx))){
         
             if( (ch == '0') && ((nx == 'x') || (nx == 'X'))){
-                ret.category	= Symbol::Category::Value;
-                ret.kind		= Symbol::Kind::Hexadecimal;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Hexadecimal;
                 //  it's a hex constant
                 for(cnt=2; cnt<in.size(); ++cnt){
                     if(!is_xdigit(in[cnt]))
@@ -132,8 +227,8 @@ namespace yq {
             }
             
             if((ch == '0') && is_digit(nx)){
-                ret.category	= Symbol::Category::Value;
-                ret.kind		= Symbol::Kind::Octal;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Octal;
                 
                 //  it's an octal constant
                 for(cnt=2; cnt<in.size(); ++cnt){
@@ -230,11 +325,11 @@ namespace yq {
             }
             
             if(decimal.first || exponent.first){
-                ret.category	= Symbol::Category::Value;
-                ret.kind		= Symbol::Kind::Float;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Float;
             } else {
-                ret.category	= Symbol::Category::Value;
-                ret.kind		= Symbol::Kind::Integer;
+                ret.category	= SymCategory::Value;
+                ret.kind		= SymKind::Integer;
             }
             
             return ret;
@@ -242,7 +337,7 @@ namespace yq {
         
         
         if(is_punct(ch)){
-            ret.category	= Symbol::Category::Operator;
+            ret.category	= SymCategory::Operator;
             
             size_t cc = 1;
             for(; cc<in.size(); ++cc)
@@ -260,8 +355,86 @@ namespace yq {
             return ret;
         }
         
-        return Token{ .category=Symbol::Category::Error, .length=1 };
+        return Token{ .category=SymCategory::Error, .length=1 };
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+namespace yq {
+}
+
+
+
+
+#include <0/basic/DelayInit.hpp>
+#include <0/meta/ArgInfo.hpp>
+#include <0/meta/ConstructorInfo.hpp>
+#include <0/meta/OperatorInfo.hpp>
+#include <0/meta/TypeInfo.hpp>
+
+namespace yq {
+	namespace {
+		enum : uint8_t {
+			PCompare    = 1,
+			PLogic,
+			PAddSub,
+			PMulDiv,
+			PPower
+		};
+
+
+        constexpr bool  is_comma(const UserExpr::Symbol&sym)
+        {
+            return (sym.category == UserExpr::Symbol::Category::Special) && (sym.kind == UserExpr::Symbol::Kind::Comma);
+        }
+
+        constexpr bool	is_comma(const UserExpr::SymCode&sym)
+        {
+            return (sym.category == UserExpr::Symbol::Category::Special) && (sym.kind == UserExpr::Symbol::Kind::Comma);
+        }
+
+        constexpr bool is_starting_term(const UserExpr::SymCode& sc)
+        {
+            if(sc == UserExpr::SymCode{})
+                return true;
+            if(sc.category == UserExpr::Symbol::Category::Open)
+                return true;
+            if(sc.category == UserExpr::Symbol::Category::Operator)
+                return true;
+            if(is_comma(sc))
+                return true;
+            return false;
+        }
+        
+        constexpr bool is_ending_term(const UserExpr::SymCode& sc)
+        {
+            if(sc == UserExpr::SymCode{})
+                return true;
+            if(sc.category == UserExpr::Symbol::Category::Close)
+                return true;
+            if(sc.category == UserExpr::Symbol::Category::Operator)
+                return true;
+            if(is_comma(sc))
+                return true;
+            return false;
+        }
+	}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+    UserExpr::Repo&   UserExpr::repo() 
+    {   
+        return Repo::instance();
+    }
+
+//------------------------------------------------------------------------------
+//  Tokenization
+
+
 
     Expect<UserExpr::SymVector>   UserExpr::tokenize(std::string_view input)
     {
@@ -303,7 +476,7 @@ namespace yq {
         }
         
         for(std::u32string_view i=input; !i.empty(); ){
-            Token   t   = token(i);
+            Token   t   = expr::token(i);
             if((t.category == Symbol::Category::Error) || (t.length == 0)){
                 return errors::bad_argument();
             }

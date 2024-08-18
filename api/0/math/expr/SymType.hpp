@@ -6,6 +6,8 @@
 
 #pragma once
 
+#if 0
+
 #include <0/basic/Enum.hpp>
 
 namespace yq::expr {
@@ -61,3 +63,4 @@ namespace yq::expr {
         Close
     );
 }
+#endif

@@ -42,6 +42,11 @@ namespace rapidxml {
 }
 
 namespace yq {
+    // switching to u32-strings (eventually)
+    using string_t      = std::u32string;
+    using string_view_t = std::u32string_view;
+    
+
     class Any;
     class ByteArray;
     class BasicApp;

@@ -16,7 +16,7 @@
 namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
-//using namespace yq::expr;
+using namespace yq::expr;
 
 #if 0
 bool    parses(const std::string_view uexpr, std::initializer_list<Symbol> match)
@@ -78,89 +78,89 @@ ut::suite tests = []{
     
 		// disabled until the overhaul is finished (chris -- 26 Jul 2024)
     "Tokenize"_test = []{
-        expect(UserExpr::token(U"0") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value, 
-			.kind		= UserExpr::Symbol::Kind::Integer, 
+        expect(token(U"0") == Token{ 
+			.category	= SymCategory::Value, 
+			.kind		= SymKind::Integer, 
 			.length 	= 1 
 		});
-        expect(UserExpr::token(U"0x1") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Hexadecimal,
+        expect(token(U"0x1") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Hexadecimal,
 			.length 	= 3 
 		});
-        expect(UserExpr::token(U"0xA") == UserExpr::Token{
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Hexadecimal,
+        expect(token(U"0xA") == Token{
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Hexadecimal,
 			.length 	= 3 
 		});
-        expect(UserExpr::token(U"001") == UserExpr::Token{ 
-			.category 	= UserExpr::Symbol::Category::Value,
-			.kind 		= UserExpr::Symbol::Kind::Octal,
+        expect(token(U"001") == Token{ 
+			.category 	= SymCategory::Value,
+			.kind 		= SymKind::Octal,
 			.length 	= 3 
 		});
-        expect(UserExpr::token(U"pi") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Text,
-			.kind		= UserExpr::Symbol::Kind::None,
+        expect(token(U"pi") == Token{ 
+			.category	= SymCategory::Text,
+			.kind		= SymKind::None,
 			.length		= 2 
 		});
-        expect(UserExpr::token(U"3pi") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Integer,
+        expect(token(U"3pi") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Integer,
 			.length		= 1 
 		});
-        expect(UserExpr::token(U".3pi") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U".3pi") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 2 
 		});
-        expect(UserExpr::token(U"3.5") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"3.5") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 3
 		});
-        expect(UserExpr::token(U"+.3pi") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Operator,
-			.kind		= UserExpr::Symbol::Kind::None,
+        expect(token(U"+.3pi") == Token{ 
+			.category	= SymCategory::Operator,
+			.kind		= SymKind::None,
 			.length		= 1
 		});
-        expect(UserExpr::token(U"1e3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"1e3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 3 
 		});
-        expect(UserExpr::token(U"1e+3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"1e+3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 4 
 		});
-        expect(UserExpr::token(U"1e-3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"1e-3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 4 
 		});
-        expect(UserExpr::token(U"1.e+3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"1.e+3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 5 
 		});
-        expect(UserExpr::token(U".1e+3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U".1e+3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 5 
 		});
-        expect(UserExpr::token(U"0.1e+3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"0.1e+3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 6 
 		});
-        expect(UserExpr::token(U"0.1e--3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Value,
-			.kind		= UserExpr::Symbol::Kind::Float,
+        expect(token(U"0.1e--3a") == Token{ 
+			.category	= SymCategory::Value,
+			.kind		= SymKind::Float,
 			.length		= 3 
 		});
-        expect(UserExpr::token(U"abc3_0.1e--3a") == UserExpr::Token{ 
-			.category	= UserExpr::Symbol::Category::Text,
-			.kind		= UserExpr::Symbol::Kind::None,
+        expect(token(U"abc3_0.1e--3a") == Token{ 
+			.category	= SymCategory::Text,
+			.kind		= SymKind::None,
 			.length		= 6 
 		});
     };

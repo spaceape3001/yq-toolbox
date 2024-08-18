@@ -35,6 +35,15 @@ namespace log4cpp { class CategoryStream; }
     //Expect<Any>         constant(const std::u32string&);
 //}
 
+namespace yq::expr {
+    class Instruction;
+    struct Symbol;
+    struct SymCode;
+    struct Token;
+    using SymVector     = std::vector<Symbol>;
+    using TokenFN       = std::function<std::error_code(SymCode,std::u32string_view)>;
+}
+
 
 namespace yq {
 
@@ -48,27 +57,23 @@ namespace yq {
     class UserExpr {
     public:
 
+        using Symbol        = expr::Symbol;
+        using Instruction   = expr::Instruction;
+        using Token         = expr::Token;
+        using SymCode       = expr::SymCode;
+        using SymVector     = expr::SymVector;
+        using TokenFN       = expr::TokenFN;
+
 		struct OpData;
 		struct Repo;
-		struct Symbol;
-		struct SymCode;
 		struct SymData;
-		struct Token;
 
-		using SymVector     = std::vector<Symbol>;
-        using TokenFN       = std::function<std::error_code(SymCode,std::u32string_view)>;
 
         using SymStack      = Stack<Symbol>;
         using SymDataStack  = Stack<SymData>;
 
 		static Repo& repo();
         
-        /*! \brief Sub-tokenizes
-        
-            This is the sub-tokenizer, it scans the text for what seems like the next
-            relevant symbol.  
-        */
-        static Token        token(std::u32string_view);
         
         
         static Expect<SymVector>   tokenize(std::string_view);
@@ -110,6 +115,7 @@ namespace yq {
     private:
         SymVector			m_algebra;
         SymVector			m_rpn;
+        
         std::u32string      m_definition;
         std::error_code     m_buildError     = {};
         
