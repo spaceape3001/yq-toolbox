@@ -8,6 +8,7 @@
 
 #include <0/basic/preamble.hpp>
 #include <0/basic/Any.hpp>
+#include <0/basic/Ref.hpp>
 #include <0/basic/MaybeCase.hpp>
 #include <0/math/preamble.hpp>
 #include <0/math/Operator.hpp>
@@ -42,6 +43,12 @@ namespace yq::expr {
     struct Token;
     using SymVector     = std::vector<Symbol>;
     using TokenFN       = std::function<std::error_code(SymCode,std::u32string_view)>;
+    using InstructionCPtr       = Ref<const Instruction>;
+    
+    using u32string_type_map_t  = std::map<std::u32string,const TypeInfo*,IgCase>;
+    
+    struct Context;
+    struct Analysis;
 }
 
 
@@ -93,15 +100,16 @@ namespace yq {
         std::error_code         build_error() const { return m_buildError; }
         
         Expect<Any>     evaluate() const;
-        Expect<Any>     evaluate(u32string_any_map_t&) const;
+        Expect<Any>     evaluate(expr::Context&) const;
         
 
     private:
-        SymVector			m_algebra;
-        SymVector			m_rpn;
+        SymVector			    m_algebra;
+        SymVector			    m_rpn;
+        expr::InstructionCPtr   m_instructions;
         
-        std::u32string      m_definition;
-        std::error_code     m_buildError     = {};
+        std::u32string          m_definition;
+        std::error_code         m_buildError     = {};
         
         
         std::error_code    _init(std::u32string_view);

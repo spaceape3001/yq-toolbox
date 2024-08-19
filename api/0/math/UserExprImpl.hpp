@@ -7,8 +7,10 @@
 #pragma once
 
 #include <0/basic/Enum.hpp>
+#include <0/basic/Ref.hpp>
 #include <0/math/Operator.hpp>
 #include <0/math/UserExpr.hpp>
+#include <0/math/UserExprContext.hpp>
 #include <0/meta/CompoundInfo.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoStatic.hpp>
@@ -104,7 +106,7 @@ namespace yq::expr {
     
         We'd tried a common class to symbols, but that's an ugly hack.
     */
-    class Instruction {
+    class Instruction : public RefCount {
     public:
     
         using result_t  = std::variant<std::monostate, int, const TypeInfo*, std::vector<const TypeInfo*>>;
@@ -113,7 +115,7 @@ namespace yq::expr {
         string_view_t               text() const { return m_text; }
         
         //! Executes this instruction
-        virtual std::error_code     execute(any_stack_t& valueStack, u32string_any_map_t& variables) const = 0;
+        virtual std::error_code     execute(Context&) const = 0;
         
         //! Expected result (monostate if unknown)
         virtual result_t    result() const;
@@ -232,6 +234,12 @@ namespace yq::expr {
 
     std::error_code     tokenize(std::u32string_view, TokenFN&&);
     std::error_code     tokenize(std::string_view, TokenFN&&);
+    
+    std::error_code     streamline(SymVector& syms);
+    
+    //! Compiles
+    //! \param[in,out]  ctx Context (it's expected may be modified with an assignment)
+    Expect<InstructionCPtr> compile(const SymVector&, const Context&ctx, Analysis* pAnalysis=nullptr);
 
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const Symbol&);
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const SymVector&);

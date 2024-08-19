@@ -102,13 +102,13 @@ namespace yq::expr {
         
         ~AssignInstruction(){}
         
-        std::error_code     execute(any_stack_t&values, u32string_any_map_t&variables) const override
+        std::error_code     execute(Context& ctx) const override
         {
-            if(values.empty()){
+            if(ctx.values.empty()){
                 return errors::empty_stack();
             }
             
-            variables[m_text]   = values.pop();
+            ctx.variables[m_text]  = ctx.values.pop();
             return {};
         }
 
@@ -126,13 +126,13 @@ namespace yq::expr {
         
         ~DuplicateInstruction(){}
         
-        virtual std::error_code     execute(any_stack_t& values, u32string_any_map_t&) const override
+        virtual std::error_code     execute(Context&ctx) const override
         {
-            if(values.empty()){
+            if(ctx.values.empty()){
                 return errors::empty_stack();
             }
             
-            values << values.top();
+            ctx.values << ctx.values.top();
             return {};
         }
         
@@ -150,7 +150,7 @@ namespace yq::expr {
         
         ~NullInstruction(){}
         
-        std::error_code     execute(any_stack_t&, u32string_any_map_t&) const override
+        std::error_code     execute(Context&ctx) const override
         {
             return {};
         }
@@ -168,9 +168,9 @@ namespace yq::expr {
         {
         }
         
-        std::error_code     execute(any_stack_t&, u32string_any_map_t&) const override
+        std::error_code     execute(Context&) const override
         {
-            return {};
+            return errors::todo();
         }
 
         Operator m_operator;
@@ -184,8 +184,11 @@ namespace yq::expr {
         
         ~PopInstruction(){}
 
-        std::error_code     execute(any_stack_t&, u32string_any_map_t&) const override
+        std::error_code     execute(Context&ctx) const override
         {
+            if(ctx.values.empty())
+                return errors::empty_stack();
+            ctx.values.pop();
             return {};
         }
 
@@ -196,6 +199,7 @@ namespace yq::expr {
     };
     
     
+    
     class ValueInstruction : public Instruction {
     public:
         ValueInstruction(const string_t& s, Any&& value) : Instruction(s), m_value(std::move(value))
@@ -204,9 +208,9 @@ namespace yq::expr {
         
         ~ValueInstruction(){}
         
-        std::error_code     execute(any_stack_t&values, u32string_any_map_t&) const override
+        std::error_code     execute(Context&ctx) const override
         {
-            values << m_value;
+            ctx.values << m_value;
             return {};
         }
 
@@ -219,6 +223,33 @@ namespace yq::expr {
         Any m_value;
     };
     
+
+    class VirtualMachine : public Instruction {
+    public:
+        std::vector<InstructionCPtr>    m_instructions;
+        result_t                        m_result;
+    
+        VirtualMachine() : Instruction({})
+        {
+        }
+
+        std::error_code     execute(Context&ctx) const override
+        {
+            for(auto& ins : m_instructions){
+                if(!ins)
+                    continue;
+                std::error_code ec = ins->execute(ctx);
+                if(ec)
+                    return ec;
+            }
+            return {};
+        }
+        
+        result_t    result() const override 
+        { 
+            return m_result; 
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1031,6 +1062,18 @@ namespace yq::expr {
         return {};
     }
 
+//------------------------------------------------------------------------------
+//  Algebra to RPN
+
+    Expect<InstructionCPtr> compile(const SymVector&syms, const Context&ctx, Analysis* pAnalysis)
+    {
+        Ref<VirtualMachine>    ret = new VirtualMachine;
+        
+        return ret;
+        return errors::todo();
+    }
+    
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1101,11 +1144,6 @@ namespace yq::expr {
 
 
 namespace yq {
-
-
-
-//------------------------------------------------------------------------------
-//  Streamlining (static user-expr)
 
 
 
@@ -1567,15 +1605,15 @@ namespace yq {
 
     Expect<Any>     UserExpr::evaluate() const
     {
-        u32string_any_map_t    variables;
-        return evaluate(variables);
+        expr::Context     context;
+        return evaluate(context);
     }
 
-    Expect<Any>     UserExpr::evaluate(u32string_any_map_t& variables) const
+    Expect<Any>     UserExpr::evaluate(expr::Context&ctx) const
     {
         if(!is_good())
             return errors::bad_userexpr();
-        return execute(variables, m_rpn);
+        return execute(ctx.variables, m_rpn);
     }
 
 
