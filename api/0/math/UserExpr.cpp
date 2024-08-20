@@ -1097,7 +1097,7 @@ namespace yq::expr {
         for(Symbol& sym : syms){
             if(sym.category != SymCategory::Text)
                 continue;
-            if(sym.kind != Symbol::Kind::None)
+            if(sym.kind != SymKind::None)
                 continue;
             if(_r.has_constant(sym.text)){
                 sym.kind    = SymKind::Constant;

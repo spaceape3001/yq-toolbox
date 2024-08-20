@@ -66,15 +66,9 @@ namespace yq::expr {
     );
 
 	struct Symbol {
-        using Category  = expr::SymCategory;
-        using Kind      = expr::SymKind;
-		
 		std::u32string	text;
-		Any				value;
 		SymCategory		category	= SymCategory::None;
 		SymKind			kind		= SymKind::None;
-		uint16_t        priority	= 0;
-        uint16_t        argcnt      = 0;
 		
 		constexpr bool operator==(const Symbol&) const = default;
 
@@ -137,8 +131,8 @@ namespace yq::expr {
         std::u32string_view     text;
         Operator                code        = Operator::None;
         OperatorType            type        = OperatorType::None;
-        Symbol::Category		category	= Symbol::Category::None;
-        Symbol::Kind			kind		= Symbol::Kind::None;
+        SymCategory		        category	= SymCategory::None;
+        SymKind			        kind		= SymKind::None;
         std::u32string_view     other;
         uint8_t                 priority    = 0;
         uint8_t                 args        = 0;
