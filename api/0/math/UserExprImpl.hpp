@@ -61,7 +61,8 @@ namespace yq::expr {
             // OPEN/CLOSE
         Generic,
         Array,
-        Tuple
+        Tuple,
+        Guard
     );
 
 	struct Symbol {
@@ -115,7 +116,7 @@ namespace yq::expr {
         string_view_t               text() const { return m_text; }
         
         //! Executes this instruction
-        virtual std::error_code     execute(Context&) const = 0;
+        virtual std::error_code     execute(any_stack_t&, Context&) const = 0;
         
         //! Expected result (monostate if unknown)
         virtual result_t    result() const;
@@ -236,10 +237,10 @@ namespace yq::expr {
     std::error_code     tokenize(std::string_view, TokenFN&&);
     
     std::error_code     streamline(SymVector& syms);
-    
+
     //! Compiles
     //! \param[in,out]  ctx Context (it's expected may be modified with an assignment)
-    Expect<InstructionCPtr> compile(const SymVector&, const Context&ctx, Analysis* pAnalysis=nullptr);
+    Expect<InstructionCPtr> compile(const SymVector&, const Context&ctx, Analysis& pAnalysis);
 
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const Symbol&);
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const SymVector&);

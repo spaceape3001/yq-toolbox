@@ -12,7 +12,6 @@
 
 namespace yq::expr {
     struct Context {
-        any_stack_t             values;
         u32string_any_map_t     variables;  //!< Variables (used during execution & compilation)
     };
     

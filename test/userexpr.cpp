@@ -83,6 +83,16 @@ ut::suite tests = []{
 			.kind		= SymKind::Integer, 
 			.length 	= 1 
 		});
+        expect(token(U"(") == Token{ 
+			.category	= SymCategory::Open, 
+			.kind		= SymKind::Generic, 
+			.length 	= 1 
+		});
+        expect(token(U")") == Token{ 
+			.category	= SymCategory::Close, 
+			.kind		= SymKind::Generic, 
+			.length 	= 1 
+		});
         expect(token(U"0x1") == Token{ 
 			.category	= SymCategory::Value,
 			.kind		= SymKind::Hexadecimal,
@@ -120,7 +130,7 @@ ut::suite tests = []{
 		});
         expect(token(U"+.3pi") == Token{ 
 			.category	= SymCategory::Operator,
-			.kind		= SymKind::None,
+			.kind		= SymKind::Add,
 			.length		= 1
 		});
         expect(token(U"1e3a") == Token{ 

@@ -69,6 +69,15 @@ namespace yq::expr {
 
     }
 
+    struct SymData : public Symbol {
+        bool            has_value   = false;
+		uint16_t        priority	= 0;
+        uint16_t        argcnt      = 0;
+        
+        SymData() {}
+        SymData(const Symbol& sym) : Symbol(sym) {}
+    };
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,6 +101,39 @@ namespace yq::expr {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const OperatorInfo*     find_operator(std::span<const Any> span, Operator opCode)
+    {
+        if(span.size() == 0)
+            return nullptr;
+            
+        const OperatorInfo* best    = nullptr;
+        int                 score   = 0;
+        
+        const TypeInfo& ti  = span[0].type();
+        auto er             = ti.operators(opCode);
+        for(auto itr=er.first; itr != er.second; ++itr){
+            const OperatorInfo* op  = itr->second;
+            if(!op)
+                continue;
+                
+            int     r   = op -> type_match(span);
+            if(r < 0)
+                continue;
+            if(r == 0)
+                return op;
+
+            if((r<score) || !best){
+                best        = op;
+                score       = r;
+            }
+        }
+        
+        return best;
+    }
+    
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     class AssignInstruction : public Instruction {
@@ -102,19 +144,40 @@ namespace yq::expr {
         
         ~AssignInstruction(){}
         
-        std::error_code     execute(Context& ctx) const override
+        std::error_code     execute(any_stack_t&values, Context& ctx) const override
         {
-            if(ctx.values.empty()){
+            if(values.empty()){
                 return errors::empty_stack();
             }
             
-            ctx.variables[m_text]  = ctx.values.pop();
+            ctx.variables[m_text]  = values.pop();
             return {};
         }
 
         result_t    result() const override
         {
             return -1;
+        }
+    };
+    
+    class ConstantInstruction : public Instruction {
+    public:
+        ConstantInstruction(const string_t& s) : Instruction(s)
+        {
+        }
+        
+        ~ConstantInstruction()
+        {
+        }
+
+        virtual std::error_code     execute(any_stack_t&values, Context&) const override
+        {
+            static const Repo& _repo    = repo();
+            auto x  = _repo.constant(m_text);
+            if(!x)
+                return x.error();
+            values << *x;
+            return {};
         }
     };
     
@@ -126,19 +189,55 @@ namespace yq::expr {
         
         ~DuplicateInstruction(){}
         
-        virtual std::error_code     execute(Context&ctx) const override
+        virtual std::error_code     execute(any_stack_t&values, Context&) const override
         {
-            if(ctx.values.empty()){
+            if(values.empty()){
                 return errors::empty_stack();
             }
             
-            ctx.values << ctx.values.top();
+            values << values.top();
             return {};
         }
         
         result_t   result() const override 
         { 
             return 1; 
+        }
+    };
+
+    class FunctionDynamic : public Instruction {
+    public:
+        FunctionDynamic(const SymData& sd) : Instruction(sd.text)
+        {
+        }
+        
+        virtual std::error_code     execute(any_stack_t&values, Context&) const override
+        {
+            return errors::todo();
+        }
+    };
+
+    class FunctionOneDynamic : public Instruction {
+    public:
+        FunctionOneDynamic(const SymData& sd) : Instruction(sd.text)
+        {
+        }
+        
+        virtual std::error_code     execute(any_stack_t&values, Context&) const override
+        {
+            return errors::todo();
+        }
+    };
+    
+    class FunctionZeroDynamic : public Instruction {
+    public:
+        FunctionZeroDynamic(const SymData& sd) : Instruction(sd.text)
+        {
+        }
+        
+        virtual std::error_code     execute(any_stack_t&values, Context&) const override
+        {
+            return errors::todo();
         }
     };
 
@@ -150,7 +249,7 @@ namespace yq::expr {
         
         ~NullInstruction(){}
         
-        std::error_code     execute(Context&ctx) const override
+        std::error_code     execute(any_stack_t&, Context&) const override
         {
             return {};
         }
@@ -161,19 +260,41 @@ namespace yq::expr {
         }
     };
     
-    class OperatorInstruction : public Instruction {
+    /*! \brief Dynamic operator when argument types aren't known until runtime
+    */
+    class OperatorDynamic : public Instruction {
     public:
     
-        OperatorInstruction(const string_t& s, Operator opcode) : Instruction(s), m_operator(opcode)
+        OperatorDynamic(const SymData&sym) : 
+            Instruction(sym.text), m_operator((Operator) sym.kind), m_args(sym.argcnt)
         {
         }
         
-        std::error_code     execute(Context&) const override
+        std::error_code     execute(any_stack_t&values, Context&ctx) const override
         {
-            return errors::todo();
+            if(!m_args)
+                return create_error<"bad user expression (dynamic operator with no arguments)">();
+            
+            std::span<const Any>  args = values.top_cspan(m_args);
+            if(args.size() < m_args){
+                return errors::insufficient_arguments();
+            }
+        
+            const OperatorInfo* op  = find_operator(args, m_operator);
+            if(!op)
+                return create_error<"bad user expression (unable to find operator)">();
+        
+            Expect<Any>     res = op->invoke(args);
+            if(!res)
+                return res.error();
+            
+            values.pop_last(m_args);
+            values << std::move(*res);
+            return {};
         }
 
-        Operator m_operator;
+        Operator        m_operator;
+        unsigned int    m_args;
     };
     
     class PopInstruction : public Instruction {
@@ -184,11 +305,11 @@ namespace yq::expr {
         
         ~PopInstruction(){}
 
-        std::error_code     execute(Context&ctx) const override
+        std::error_code     execute(any_stack_t&values, Context&) const override
         {
-            if(ctx.values.empty())
+            if(values.empty())
                 return errors::empty_stack();
-            ctx.values.pop();
+            values.pop();
             return {};
         }
 
@@ -208,9 +329,9 @@ namespace yq::expr {
         
         ~ValueInstruction(){}
         
-        std::error_code     execute(Context&ctx) const override
+        std::error_code     execute(any_stack_t&values, Context&) const override
         {
-            ctx.values << m_value;
+            values << m_value;
             return {};
         }
 
@@ -223,6 +344,24 @@ namespace yq::expr {
         Any m_value;
     };
     
+    class VariableInstruction : public Instruction {
+    public:
+        VariableInstruction(const string_t& s) : Instruction(s)
+        {
+        }
+        
+        ~VariableInstruction(){}
+
+        std::error_code     execute(any_stack_t&values, Context&ctx) const override
+        {
+            auto i = ctx.variables.find(m_text);
+            if(i == ctx.variables.end())
+                return errors::bad_variable();
+            values << i->second;
+            return {};
+        }
+    };
+    
 
     class VirtualMachine : public Instruction {
     public:
@@ -233,12 +372,12 @@ namespace yq::expr {
         {
         }
 
-        std::error_code     execute(Context&ctx) const override
+        std::error_code     execute(any_stack_t&values, Context&ctx) const override
         {
             for(auto& ins : m_instructions){
                 if(!ins)
                     continue;
-                std::error_code ec = ins->execute(ctx);
+                std::error_code ec = ins->execute(values, ctx);
                 if(ec)
                     return ec;
             }
@@ -803,6 +942,12 @@ namespace yq::expr {
                     break;
             }
 
+			const OpData* op = _r.operator_(in.substr(0, lc));
+			if(op){
+                ret.category    = op->category;
+                ret.kind        = op->kind;
+            }
+
             cnt     = lc ? lc : 1;
             return ret;
         }
@@ -916,64 +1061,6 @@ namespace yq::expr {
         return {};
     }
 
-    std::error_code s_open_close(SymVector&syms)
-    {
-		for(Symbol& sym : syms){
-			if(sym.text == U","){
-				sym.category	= SymCategory::Special;
-				sym.kind		= SymKind::Comma;
-			}
-			if(sym.text == U"("){
-				sym.category	= SymCategory::Open;
-				sym.kind		= SymKind::Generic;
-			}
-			if(sym.text == U")"){
-				sym.category	= SymCategory::Close;
-				sym.kind		= SymKind::Generic;
-			}
-			if(sym.text == U"["){
-				sym.category	= SymCategory::Open;
-				sym.kind		= SymKind::Array;
-			}
-			if(sym.text == U"]"){
-				sym.category	= SymCategory::Close;
-				sym.kind		= SymKind::Array;
-			}
-			if(sym.text == U"{"){
-				sym.category	= SymCategory::Open;
-				sym.kind		= SymKind::Tuple;
-			}
-			if(sym.text == U"}"){
-				sym.category	= SymCategory::Close;
-				sym.kind		= SymKind::Tuple;
-			}
-		}
-        return {};
-    }
-    
-
-    std::error_code s_operators(SymVector&syms)
-    {
-        static const Repo& _r = repo();
-		SymCode		last	= {};
-		for(auto itr = syms.begin(); itr != syms.end(); last=*itr, ++itr){
-			if( itr -> category != SymCategory::Operator)
-				continue;
-			if( itr -> kind != SymKind::None)
-				continue;
-			const OpData* op = _r.operator_(itr->text);
-			if(!op)
-				return errors::bad_argument();
-			
-			itr->category	= op->category;
-			itr->kind		= op->kind;
-			itr->priority  	= op->priority;
-            itr->argcnt     = op->args;
-		}
-        return {};
-    }
-    
-    
     std::error_code s_signs(SymVector&syms)
     {
 		SymCode		last	= {};
@@ -1005,49 +1092,12 @@ namespace yq::expr {
         return {};
     }
 
-    std::error_code s_values(SymVector&syms)
-    {
-		for(Symbol& sym : syms) {
-			if(sym.category != SymCategory::Value)
-				continue;
-			switch(sym.kind){
-			case SymKind::Integer:
-				sym.value	= Any((double) *to_int64(sym.text));
-				break;
-			case SymKind::Hexadecimal:
-				sym.value	= Any((double) *to_hex64(sym.text.substr(2)));
-				break;
-			case SymKind::Float:
-				sym.value	= Any((double) *to_double(sym.text));
-				break;
-			case SymKind::Octal:
-				sym.value	= Any((double) *to_octal64(sym.text));
-				break;
-			default:
-				break;
-			}
-		}
-        return {};
-    }
-
 
     std::error_code  streamline(SymVector& syms)
     {
         std::error_code ec;
-        
-        ec = s_open_close(syms);
-        if(ec != std::error_code())
-            return ec;
 
         ec = s_signs(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_operators(syms);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = s_values(syms);
         if(ec != std::error_code())
             return ec;
 
@@ -1064,13 +1114,363 @@ namespace yq::expr {
 
 //------------------------------------------------------------------------------
 //  Algebra to RPN
-
-    Expect<InstructionCPtr> compile(const SymVector&syms, const Context&ctx, Analysis* pAnalysis)
-    {
-        Ref<VirtualMachine>    ret = new VirtualMachine;
+    
+    struct Builder {
+        const Context&                  m_context;
+        Ref<VirtualMachine>             m_machine;
+        std::vector<InstructionCPtr>&   m_instructions;
+        Analysis&                       m_analysis;
+        SymDataStack                    m_pending;
         
-        return ret;
-        return errors::todo();
+        Builder(const Context& ctx, Analysis& rAnalysis) : 
+            m_context(ctx), 
+            m_machine(new VirtualMachine), 
+            m_instructions(m_machine->m_instructions),
+            m_analysis(rAnalysis)
+        {
+        }
+        
+        SymData*    opening()
+        {
+            for(auto itr = m_pending.rbegin(); itr != m_pending.rend(); ++itr){
+                if(itr->category == SymCategory::Open)
+                    return &*itr;
+            }
+            return nullptr;
+        }
+        
+        void        decl_value()
+        {
+            SymData*     sym = opening();
+            if(!sym)
+                return;
+            if(sym->has_value)
+                return;
+            sym->has_value  = true;
+            ++(sym->argcnt);
+        }
+        
+        std::error_code     add_assignment(const Symbol& sym)
+        {
+            m_pending << sym;
+            return {};
+        }
+        
+        std::error_code     add_close(const Symbol& sym)
+        {
+            SymData lastPop{};
+
+            while(!m_pending.empty()){
+                auto& top = m_pending.top();
+                
+                if(top.category == SymCategory::Open){
+                    if(top.kind != sym.kind)
+                        return create_error<"bad user expression (mismatched opener)">();
+                    lastPop = m_pending.pop();
+                    break;
+                }
+                
+                pop();
+            }
+
+            if(!lastPop.category)
+                return create_error<"bad user expression (no opener)">();
+
+            if(lastPop.argcnt){  // slight hack
+                SymData* sd      = m_pending.peek(0);
+                if(sd && (sd->category == SymCategory::Text) &&
+                    ((sd->kind == SymKind::Constructor) || (sd->kind == SymKind::Function)))
+                {
+                    sd -> argcnt = lastPop.argcnt;
+                }
+                decl_value();
+            }
+
+            return {};
+        }
+
+        std::error_code     add_comma(const Symbol& sym)
+        {
+            SymData*sd  = opening();
+            if(!sd)
+                return create_error<"bad user expression (comma outside open/close)">();
+            if(!sd->has_value)
+                return create_error<"bad user expression (comma without a left-side value)">();
+            sd->has_value   = false;;
+            return {};
+        }
+        
+        std::error_code     add_constant(const Symbol& sym)
+        {
+            decl_value();
+            m_instructions.push_back(new ConstantInstruction(sym.text));
+            return {};
+        }
+
+        std::error_code     add_constructor(const Symbol& sym)
+        {
+            m_pending << sym;
+            return {};
+        }
+
+        std::error_code     add_duplicate(const Symbol& sym)
+        {
+            m_pending << sym;
+            return {};
+        }
+
+        std::error_code     add_float(const Symbol& sym)
+        {
+            auto    val = to_double(sym.text);
+            if(!val)
+                return val.error();
+            decl_value();
+            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            return {};
+        }
+
+        std::error_code     add_function(const Symbol& sym)
+        {
+            m_pending << sym;
+            return {};
+        }
+
+        std::error_code     add_hexadecimal(const Symbol& sym)
+        {
+            auto    val = to_hex64(sym.text.substr(2));
+            if(!val)
+                return val.error();
+            decl_value();
+            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            return {};
+        }
+
+        std::error_code     add_integer(const Symbol& sym)
+        {
+            auto    val = to_int64(sym.text);
+            if(!val)
+                return val.error();
+            decl_value();
+            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            return {};
+        }
+
+        std::error_code     add_octal(const Symbol& sym)
+        {
+            auto    val = to_octal64(sym.text);
+            if(!val)
+                return val.error();
+            decl_value();
+            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            return {};
+        }
+
+        std::error_code     add_open(const Symbol& sym)
+        {
+            m_pending << sym;
+            return {};
+        }
+
+        std::error_code     add_operator(const Symbol& sym)
+        {
+            static const Repo&  _repo   = repo();
+            const OpData*   op  = _repo.operator_(sym.text);
+            if(!op)
+                return create_error<"bad user expression (unable to find operator--in add_operator)">();
+            
+            SymData     sd(sym);
+            sd.priority = op->priority;
+            sd.argcnt   = op->args;
+        
+            while(!m_pending.empty()){
+                const SymData& top   = m_pending.top();
+                if(top.category == SymCategory::Open)
+                    break;
+                if((top.category == SymCategory::Operator) && (top.priority < sd.priority))
+                    break;
+                pop();
+            }
+            m_pending << sd;
+            return {};
+        }
+
+        std::error_code     add_special(const Symbol& sym)
+        {
+            switch(sym.kind){
+            case SymKind::Comma:
+                return add_comma(sym);
+            case SymKind::Assign:
+                return add_assignment(sym);
+            case SymKind::Duplicate:
+                return add_duplicate(sym);
+            default:
+                return create_error<"bad user expression (unrecognized special symbol)">();
+            }
+        }
+
+        std::error_code     add_text(const Symbol& sym)
+        {
+            switch(sym.kind){
+            case SymKind::Constant:
+                return add_constant(sym);
+            case SymKind::Constructor:
+                return add_constructor(sym);
+            case SymKind::Function:
+                return add_function(sym);
+            case SymKind::Variable:
+                return add_variable(sym);
+            default:
+                return create_error<"bad user expression (unrecognized text symbol)">();
+            }
+        }
+        
+        std::error_code     add_value(const Symbol& sym)
+        {
+            switch(sym.kind){
+            case SymKind::Float:
+                return add_float(sym);
+            case SymKind::Hexadecimal:
+                return add_hexadecimal(sym);
+            case SymKind::Integer:
+                return add_integer(sym);
+            case SymKind::Octal:
+                return add_octal(sym);
+            default:
+                return create_error<"bad user expression (unrecognized value symbol)">();
+            }
+        }
+        
+        std::error_code     add_variable(const Symbol& sym)
+        {
+            decl_value();
+            m_instructions.push_back(new VariableInstruction(sym.text));
+            return {};
+        }
+        
+        std::error_code     pop()
+        {
+            if(m_pending.empty())
+                return errors::empty_stack();
+                
+            SymData     sym = m_pending.pop();
+            switch(sym.category){
+            case SymCategory::Operator:
+                return pop_operator(sym);
+            case SymCategory::Text:
+                switch(sym.kind){
+                case SymKind::Constructor:
+                    return pop_constructor(sym);
+                case SymKind::Function:
+                    return pop_function(sym);
+                default:
+                    break;
+                }
+                break;
+            case SymCategory::Special:
+                switch(sym.kind){
+                case SymKind::Assign:
+                    return pop_assignment(sym);
+                case SymKind::Duplicate:
+                    return pop_duplicate(sym);
+                default:
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
+            return create_error<"bad user expression (unrecognized popped symbol)">();
+        }
+
+        std::error_code     pop_assignment(const SymData&sym)
+        {
+            m_instructions.push_back(new AssignInstruction(sym.text));
+            return {};
+        }
+
+        std::error_code     pop_constructor(const SymData&)
+        {
+            return errors::todo();
+        }
+
+        std::error_code     pop_duplicate(const SymData&sym)
+        {
+            m_instructions.push_back(new DuplicateInstruction(sym.text));
+            return {};
+        }
+
+        std::error_code     pop_function(const SymData& sd)
+        {
+            switch(sd.argcnt){
+            case 0:
+                m_instructions.push_back(new FunctionZeroDynamic(sd));
+                break;
+            case 1:
+                m_instructions.push_back(new FunctionOneDynamic(sd));
+                break;
+            default:
+                m_instructions.push_back(new FunctionDynamic(sd));
+                break;
+            }
+            return {};
+        }
+
+        std::error_code     pop_operator(const SymData& sym)
+        {
+            m_instructions.push_back(new OperatorDynamic(sym));
+            return {};
+        }
+
+        std::error_code     add(const Symbol& sym)
+        {
+            switch(sym.category){
+            case SymCategory::None:
+            case SymCategory::Space:
+                //  ignore
+                return {};
+            case SymCategory::Error:
+                return errors::bad_userexpr();
+            case SymCategory::Operator:
+                return add_operator(sym);
+            case SymCategory::Value:
+                return add_value(sym);
+            case SymCategory::Text:
+                return add_text(sym);
+            case SymCategory::Open:
+                return add_open(sym);
+            case SymCategory::Close:
+                return add_close(sym);
+            case SymCategory::Special:
+                return add_special(sym);
+            default:
+                return create_error<"bad user expression (unrecognized symbol)">();
+            }
+        }
+        
+        std::error_code     compile(const SymVector& syms)
+        {
+            std::error_code ec;
+            add_open(Symbol{ .category=SymCategory::Open, .kind=SymKind::Guard });
+            for(const Symbol& sym : syms){
+                ec  = add(sym);
+                if(ec != std::error_code())
+                    return ec;
+            }
+            ec = add_close(Symbol{ .category=SymCategory::Close, .kind=SymKind::Guard });
+            if(ec != std::error_code())
+                return ec;
+            return {};
+        }
+    };
+    
+    Expect<InstructionCPtr> compile(const SymVector&syms, const Context&ctx, Analysis& rAnalysis)
+    {
+        Builder         builder(ctx, rAnalysis);
+        
+        std::error_code ec  = builder.compile(syms);
+        if(ec != std::error_code())
+            return unexpected(ec);
+        return builder.m_machine;
     }
     
 
@@ -1138,159 +1538,14 @@ namespace yq::expr {
         stream_out(out, tok);
         return out;
     }
-    
-
 }
 
 
 namespace yq {
 
-
-
-//------------------------------------------------------------------------------
-//  Algebra to RPN
-
-    struct UserExpr::SymData : public Symbol {
-        bool        has_value   = false;
-        
-        SymData() {}
-        SymData(const Symbol& sym) : Symbol(sym) {}
-    };
-
-    std::error_code	UserExpr::algebra_to_rpn(SymVector& rpn, const SymVector& alg)
-    {
-        SymDataStack    pending;
-        SymData         lastPoppedOpen = {};
-        SymData*        sd  = nullptr;
-        
-        for(const Symbol& sym : alg){
-            switch(sym.category){
-            case Symbol::Category::None:
-                //  ignore
-                break;
-            case Symbol::Category::Error:
-                return errors::bad_userexpr();
-            case Symbol::Category::Operator:
-                while(!pending.empty()){
-                    const Symbol& top   = pending.top();
-                    if(top.category == Symbol::Category::Open)
-                        break;
-                    if((top.category == Symbol::Category::Operator) && (top.priority < sym.priority))
-                        break;
-                    rpn.push_back(pending.pop());
-                }
-                pending << sym;
-                break;
-            case Symbol::Category::Space:
-                //  ignore 
-                break;
-            case Symbol::Category::Text:
-                a2r_decl_value(pending);
-                switch(sym.kind){
-                case Symbol::Kind::Constant:
-                    rpn.push_back(sym);
-                    break;
-                case Symbol::Kind::Constructor:
-                    rpn.push_back(sym);
-                    break;
-                case Symbol::Kind::Function:
-                    pending << sym;
-                    break;
-                case Symbol::Kind::Variable:
-                    pending << sym;
-                    break;
-                default:
-                    return errors::bad_userexpr();
-                }
-                break;
-            case Symbol::Category::Value:
-                a2r_decl_value(pending);
-                rpn.push_back(sym);
-                break;
-            case Symbol::Category::Open:
-                pending << sym;
-                break;
-            case Symbol::Category::Close:
-                lastPoppedOpen.category = {};
-				while(!pending.empty()){
-                    auto& top   = pending.top();
-                    
-                    if(top.category == Symbol::Category::Open){
-                        if(top.kind != sym.kind){
-                            return errors::bad_userexpr();
-                        }
-                        lastPoppedOpen = pending.pop();
-                        break;
-                    }
-                    
-                    rpn.push_back(pending.pop());
-				}
-                if(!lastPoppedOpen.category)
-                    return errors::bad_userexpr();
-                if(lastPoppedOpen.argcnt){  // slight hack
-                    sd      = pending.peek(0);
-                    if(sd && (sd->category == Symbol::Category::Text) &&
-                        ((sd->kind == Symbol::Kind::Constructor) || (sd->kind == Symbol::Kind::Function)))
-                    {
-                        sd -> argcnt = lastPoppedOpen.argcnt;
-                    }
-                    a2r_decl_value(pending);
-                }
-                break;
-            case Symbol::Category::Special:
-                switch(sym.kind){
-                case Symbol::Kind::Comma:
-                    
-                    sd  = a2r_top_open(pending);
-                    if(!sd)
-                        return errors::bad_userexpr();
-                    if(!sd->has_value)
-                        return errors::bad_userexpr();
-                    sd->has_value   = false;;
-                    break;
-                default:
-                    return errors::todo();
-                }
-            }
-        }
-        
-        while(!pending.empty()){
-            Symbol  s   = pending.pop();
-            if(s.category != Symbol::Category::Operator){
-                return errors::bad_userexpr();
-            }
-            rpn.push_back(s);
-        }
-        
-        if(pending.empty())
-            return {};
-        
-        return errors::bad_userexpr();
-    }
-
-    UserExpr::SymData*   UserExpr::a2r_top_open(SymDataStack& stack)
-    {
-        for(auto itr = stack.rbegin(); itr != stack.rend(); ++itr){
-            if(itr->category == Symbol::Category::Open)
-                return &*itr;
-        }
-        return nullptr;
-    }
-
-    void                 UserExpr::a2r_decl_value(SymDataStack&stack)
-    {
-        SymData*     sym = a2r_top_open(stack);
-        if(!sym)
-            return;
-        if(sym->has_value)
-            return;
-        sym->has_value  = true;
-        ++(sym->argcnt);
-    }
-
 //------------------------------------------------------------------------------
 //  Execution
-
+#if 0
     Expect<Any>  UserExpr::execute(u32string_any_map_t&vars, const SymVector& codes)
     {
         std::error_code ec;
@@ -1338,30 +1593,9 @@ namespace yq {
             return errors::mulitple_values();
         return theStack.pop();
     }
-    
-    std::error_code      UserExpr::x_assign(any_stack_t& values, u32string_any_map_t&vars, const Symbol&sym)
-    {
-        if(values.empty())
-            return errors::empty_stack();
-        if(sym.text.empty())
-            return errors::empty_key();
-        vars[sym.text]  = values.pop();
-        return {};
-    }
+#endif
 
-
-
-    std::error_code      UserExpr::x_constant(any_stack_t&values, const Symbol&sym)
-    {   
-        static const expr::Repo& _r = expr::repo();
-        auto x = _r.constant(sym.text);
-        if(x){
-            values.push_back(*x);
-            return {};
-        }
-        return x.error();
-    }
-
+#if 0
     std::error_code      UserExpr::x_constructor(any_stack_t& values, const Symbol&sym)
     {
         if(values.size() < sym.argcnt)
@@ -1377,7 +1611,9 @@ namespace yq {
         values << *ret;
         return {};
     }
+#endif
 
+#if 0
     const ConstructorInfo*   UserExpr::x_constructor_find(any_stack_t&, const Symbol&)
     {
         return nullptr;
@@ -1465,105 +1701,9 @@ namespace yq {
     {
         return nullptr;
     }
+#endif
 
-    std::error_code  UserExpr::x_operator(any_stack_t& values, const Symbol& symbol)
-    {
-        if(!symbol.argcnt)
-            return errors::bad_operator();
-        
-        std::span<const Any>  args = values.top_cspan(symbol.argcnt);
-        if(args.size() < symbol.argcnt){
-            return errors::insufficient_arguments();
-        }
-        
-        const OperatorInfo* op  = x_operator_find(args, (Operator) symbol.kind);
-        if(!op)
-            return errors::bad_operator();
-        
-        Expect<Any>     res = op->invoke(args);
-        if(!res)
-            return res.error();
-            
-        values.pop_last(symbol.argcnt);
-        values << std::move(*res);
-        return {};
-    }
 
-    const OperatorInfo*  UserExpr::x_operator_find(std::span<const Any> span, Operator opCode)
-    {
-        if(span.size() == 0)
-            return nullptr;
-            
-        const OperatorInfo* best    = nullptr;
-        int                 score   = 0;
-        
-        const TypeInfo& ti  = span[0].type();
-        auto er             = ti.operators(opCode);
-        for(auto itr=er.first; itr != er.second; ++itr){
-            const OperatorInfo* op  = itr->second;
-            if(!op)
-                continue;
-                
-            int     r   = op -> type_match(span);
-            if(r < 0)
-                continue;
-            if(r == 0)
-                return op;
-
-            if((r<score) || !best){
-                best        = op;
-                score       = r;
-            }
-        }
-        
-        return best;
-    }
-    
-    std::error_code      UserExpr::x_special(any_stack_t&values, u32string_any_map_t&vars, const Symbol&sym)
-    {   
-        switch(sym.kind){
-        case Symbol::Kind::Assign:
-            return x_assign(values, vars, sym);
-        case Symbol::Kind::Duplicate:
-            if(values.empty())
-                return errors::empty_stack();
-            values << values.top();
-            return {};
-        default:
-            return errors::bad_instruction();
-        }
-    }
-
-    std::error_code      UserExpr::x_text(any_stack_t&values, const u32string_any_map_t&vars, const Symbol&sym)
-    {
-        switch(sym.kind){
-        case Symbol::Kind::Function:
-            return x_function(values, sym);
-        case Symbol::Kind::Constructor:
-            return x_constructor(values, sym);
-        case Symbol::Kind::Constant:
-            return x_constant(values, sym);
-        case Symbol::Kind::Variable:
-            return x_variable(values, vars, sym);
-        default:
-            return errors::bad_instruction();
-        }
-    }
-    
-    std::error_code      UserExpr::x_value(any_stack_t&values, const Symbol&sym)
-    {
-        values << sym.value;
-        return {};
-    }
-
-    std::error_code      UserExpr::x_variable(any_stack_t&values, const u32string_any_map_t&vars, const Symbol&sym)
-    {   
-        auto i = vars.find(sym.text);
-        if(i == vars.end())
-            return errors::bad_variable();
-        values << i->second;
-        return {};
-    }
 
 //------------------------------------------------------------------------------
 
@@ -1596,10 +1736,14 @@ namespace yq {
 		if(ec != std::error_code())
             return ec;
         
-        ec      = algebra_to_rpn(m_rpn, m_algebra);
-		if(ec != std::error_code())
-            return ec;
-    
+        expr::Context ctx;
+        expr::Analysis    analy;
+        
+        auto x  = expr::compile(m_algebra, ctx, analy);
+        if(!x)
+            return x.error();
+        
+        m_instruction   = *x;
         return {};
 	}
 
@@ -1611,9 +1755,18 @@ namespace yq {
 
     Expect<Any>     UserExpr::evaluate(expr::Context&ctx) const
     {
-        if(!is_good())
+        if(!m_instruction.valid())
             return errors::bad_userexpr();
-        return execute(ctx.variables, m_rpn);
+
+        any_stack_t             values;
+        std::error_code ec  =  m_instruction -> execute(values, ctx);
+        if(ec != std::error_code())
+            return unexpected(ec);
+        if(values.empty())
+            return errors::empty_stack();
+        if(values.size() > 1)
+            return errors::mulitple_values();
+        return values.pop();
     }
 
 

@@ -40,6 +40,7 @@ namespace yq::expr {
     class Instruction;
     struct Symbol;
     struct SymCode;
+    struct SymData;
     struct Token;
     using SymVector     = std::vector<Symbol>;
     using TokenFN       = std::function<std::error_code(SymCode,std::u32string_view)>;
@@ -49,6 +50,7 @@ namespace yq::expr {
     
     struct Context;
     struct Analysis;
+    using SymDataStack  = Stack<SymData>;
 }
 
 
@@ -63,24 +65,7 @@ namespace yq {
     */
     class UserExpr {
     public:
-
-        using Symbol        = expr::Symbol;
-        using Instruction   = expr::Instruction;
-        using Token         = expr::Token;
-        //using SymCode       = expr::SymCode;
         using SymVector     = expr::SymVector;
-        using TokenFN       = expr::TokenFN;
-
-		struct SymData;
-
-
-        using SymStack      = Stack<Symbol>;
-        using SymDataStack  = Stack<SymData>;
-        
-        
-		//	We'll fold things together once this all works
-		static std::error_code	algebra_to_rpn(SymVector&, const SymVector&);
-        static Expect<Any>      execute(u32string_any_map_t&, const SymVector&);
     
     
         UserExpr();
@@ -95,47 +80,23 @@ namespace yq {
 
         const std::u32string&   definition() const { return m_definition; }
         const SymVector&        algebra() const { return m_algebra; }
-        const SymVector&        rpn() const { return m_rpn; }
-        constexpr bool          is_good() const { return m_buildError == std::error_code(); }
+        
+        constexpr bool          is_good() const { return m_instruction.valid(); }
         std::error_code         build_error() const { return m_buildError; }
         
-        Expect<Any>     evaluate() const;
-        Expect<Any>     evaluate(expr::Context&) const;
+        Expect<Any>             evaluate() const;
+        Expect<Any>             evaluate(expr::Context&) const;
         
 
     private:
         SymVector			    m_algebra;
-        SymVector			    m_rpn;
-        expr::InstructionCPtr   m_instructions;
+        expr::InstructionCPtr   m_instruction;
         
         std::u32string          m_definition;
         std::error_code         m_buildError     = {};
         
         
-        std::error_code    _init(std::u32string_view);
-        
-        
-        static SymData*                 a2r_top_open(SymDataStack&);
-        //! Declares that we have a value for current open
-        static void                     a2r_decl_value(SymDataStack&);
-        
-        static const OperatorInfo*      x_operator_find(std::span<const Any>, Operator);
-        static const MethodInfo*        x_function_find(any_stack_t&, const Symbol&);
-        static const ConstructorInfo*   x_constructor_find(any_stack_t&, const Symbol&);
-
-        static std::error_code          x_operator(any_stack_t&, const Symbol&);
-        static std::error_code          x_assign(any_stack_t&, u32string_any_map_t&, const Symbol&);
-        static std::error_code          x_constant(any_stack_t&, const Symbol&);
-        static std::error_code          x_constructor(any_stack_t&, const Symbol&);
-        static std::error_code          x_function(any_stack_t&, const Symbol&);
-        static std::error_code          x_function_zero(any_stack_t&, const Symbol&);
-        static std::error_code          x_function_one(any_stack_t&, const Symbol&);
-        static std::error_code          x_function_more(any_stack_t&, const Symbol&);
-        static std::error_code          x_special(any_stack_t&, u32string_any_map_t&, const Symbol&);
-        static std::error_code          x_text(any_stack_t&, const u32string_any_map_t&, const Symbol&);
-        static std::error_code          x_value(any_stack_t&, const Symbol&);
-        static std::error_code          x_variable(any_stack_t&, const u32string_any_map_t&, const Symbol&);
+        std::error_code         _init(std::u32string_view);
     };
-
 }
 
