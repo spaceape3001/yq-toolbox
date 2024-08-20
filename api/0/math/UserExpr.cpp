@@ -263,57 +263,70 @@ namespace yq::expr {
         }
     };
     
-    class FunctionZeroDynamic : public Instruction {
-    public:
-        std::string     m_text8;
-
-        FunctionZeroDynamic(const SymData& sd) : Instruction(sd.text)
+    namespace {
+        const MethodInfo*   is_zero_method(const MethodInfo* mi)
         {
-            m_text8 = to_string(m_text);
+            if(!mi->is_static())
+                return nullptr;
+            if(mi->arg_count() != 0)
+                return nullptr;
+            const ArgInfo*  res = mi->result();
+            if(!res)
+                return nullptr;
+            auto& rtype = res->type();
+            if(!rtype.is_type())
+                return nullptr;
+            return mi;
+        }
+    }
+    
+    class FunctionZeroMethodInfo : public Instruction {
+    public:
+        const MethodInfo*   m_method;
+        const TypeInfo*     m_result = nullptr;
+        
+        FunctionZeroMethodInfo(const string_t& s, const MethodInfo* method) : Instruction(s), m_method(method)
+        {
+            const ArgInfo*  resinfo = m_method -> result();
+            if(resinfo)
+                m_result    = static_cast<const TypeInfo*>(&(resinfo->type()));
         }
         
-        virtual std::error_code     execute(any_stack_t&values, Context&) const override
+        std::error_code     execute(any_stack_t&values, Context&) const override
         {
-            static const Repo&          _r  = repo();
-            static const GlobalInfo&    _g  = GlobalInfo::instance();
-            
-            //  Call on methods
-            const MethodInfo* call = _r.all_functions(m_text, [&](const MethodInfo* mi) -> const MethodInfo* {
-                if(!mi->is_static())
-                    return nullptr;
-                if(mi->arg_count() != 0)
-                    return nullptr;
-                return mi;
-            });
-            
-            if(!call){
-                 call = _g.all_functions(m_text8, [&](const MethodInfo* mi) -> const MethodInfo* {
-                    if(!mi->is_static())
-                        return nullptr;
-                    if(mi->arg_count() != 0)
-                        return nullptr;
-                    return mi;
-                });
-            }
-            
-            if(call){
-                auto val    = call -> invoke({});
-                if(!val)
-                    return val.error();
-                values.push_back(*val);
-                return {};
-            }
-            
-            const TypeInfo* type    = TypeInfo::find(m_text8);
-            if(type){
-                values.push_back(Any(type));
-                return {};
-            }
-            
+            auto val    = m_method -> invoke({});
+            if(!val)
+                return val.error();
+            values.push_back(*val);
+            return {};
+        }
         
-            return errors::bad_function();
+        result_t   result() const override 
+        { 
+            return m_result; 
         }
     };
+    
+    class FunctionZeroTypeInfo : public Instruction {
+    public:
+        const TypeInfo* m_type;
+        
+        FunctionZeroTypeInfo(const string_t& s, const TypeInfo* type) : Instruction(s), m_type(type)
+        {
+        }
+    
+        std::error_code     execute(any_stack_t&values, Context&) const override
+        {
+            values.push_back(Any(m_type));
+            return {};
+        }
+
+        result_t   result() const override 
+        { 
+            return m_type; 
+        }
+    };
+    
 
     class NullInstruction : public Instruction {
     public:
@@ -1477,17 +1490,57 @@ namespace yq::expr {
         {
             switch(sd.argcnt){
             case 0:
-                m_instructions.push_back(new FunctionZeroDynamic(sd));
-                break;
+                return pop_function_zero(sd);
             case 1:
-                m_instructions.push_back(new FunctionOneDynamic(sd));
-                break;
+                return pop_function_one(sd);
             default:
-                m_instructions.push_back(new FunctionDynamic(sd));
-                break;
+                return pop_function_many(sd);
             }
             return {};
         }
+
+        std::error_code     pop_function_many(const SymData& sd)
+        {
+            m_instructions.push_back(new FunctionDynamic(sd));
+            return {};
+        }
+        
+        std::error_code     pop_function_one(const SymData& sd)
+        {
+            m_instructions.push_back(new FunctionOneDynamic(sd));
+            return {};
+        }
+        
+        std::error_code     pop_function_zero(const SymData& sd)
+        {
+            static const Repo&          _r  = repo();
+            static const GlobalInfo&    _g  = GlobalInfo::instance();
+            
+            
+            //  Call on methods
+            const MethodInfo* call = _r.all_functions(sd.text, is_zero_method);
+            if(call){
+                m_instructions.push_back(new FunctionZeroMethodInfo(sd.text, call));
+                return {};
+            }
+
+            std::string txt8    = to_string(sd.text);
+
+            call = _g.all_functions(txt8, is_zero_method);
+            if(call){
+                m_instructions.push_back(new FunctionZeroMethodInfo(sd.text, call));
+                return {};
+            }
+
+            const TypeInfo* type    = TypeInfo::find(txt8);
+            if(type){
+                m_instructions.push_back(new FunctionZeroTypeInfo(sd.text, type));
+                return {};
+            }
+            
+            return errors::bad_function();
+        }
+        
 
         std::error_code     pop_operator(const SymData& sym)
         {
