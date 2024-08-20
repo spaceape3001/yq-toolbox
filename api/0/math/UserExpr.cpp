@@ -205,6 +205,31 @@ namespace yq::expr {
         }
     };
 
+    /*
+    
+        Functions....
+        
+        *)  Actual Functions (Type -- first arg, Globals, Repo)
+
+        *)  Methods on Type (first arg)
+
+        *)  Properties (getters)
+        
+            For instance, geodetic & latitude,
+            
+                latitude(geo)
+        
+        *)  Construction
+        
+            degree(20)
+            vec2d(x,y)
+            
+        *)  Conversions
+        
+        
+        
+    */
+
     class FunctionDynamic : public Instruction {
     public:
         FunctionDynamic(const SymData& sd) : Instruction(sd.text)
@@ -1545,55 +1570,6 @@ namespace yq {
 
 //------------------------------------------------------------------------------
 //  Execution
-#if 0
-    Expect<Any>  UserExpr::execute(u32string_any_map_t&vars, const SymVector& codes)
-    {
-        std::error_code ec;
-        any_stack_t     theStack;
-        for(const Symbol& sym : codes){
-            switch(sym.category){
-            case Symbol::Category::None:
-                //  ignore
-                break;
-            case Symbol::Category::Error:
-                return errors::bad_instruction();
-            case Symbol::Category::Operator:
-                ec  = x_operator(theStack, sym);
-                if(ec != std::error_code())
-                    return unexpected(ec);
-                break;
-            case Symbol::Category::Space:
-                //  ignore
-                break;
-            case Symbol::Category::Text:
-                ec = x_text(theStack, vars, sym);
-                if(ec != std::error_code())
-                    return unexpected(ec);
-                break;
-            case Symbol::Category::Value:
-                ec = x_value(theStack, sym);
-                if(ec != std::error_code())
-                    return unexpected(ec);
-                break;
-            case Symbol::Category::Open:
-                return errors::todo();
-            case Symbol::Category::Close:
-                return errors::todo();
-            case Symbol::Category::Special:
-                ec = x_special(theStack, vars, sym);
-                if(ec != std::error_code())
-                    return unexpected(ec);
-                break;
-            }
-        }
-
-        if(theStack.empty())
-            return errors::empty_stack();
-        if(theStack.size() > 1)
-            return errors::mulitple_values();
-        return theStack.pop();
-    }
-#endif
 
 #if 0
     std::error_code      UserExpr::x_constructor(any_stack_t& values, const Symbol&sym)
@@ -1611,57 +1587,10 @@ namespace yq {
         values << *ret;
         return {};
     }
-#endif
 
-#if 0
-    const ConstructorInfo*   UserExpr::x_constructor_find(any_stack_t&, const Symbol&)
-    {
-        return nullptr;
-    }
 
     std::error_code      UserExpr::x_function(any_stack_t& values, const Symbol& sym)
     {
-        if(values.size() < sym.argcnt)
-            return errors::empty_stack();
-            
-        switch(sym.argcnt){
-        case 0:
-            return x_function_zero(values, sym);
-        case 1:
-            return x_function_one(values, sym);
-        default:
-            return x_function_more(values, sym);
-        }
-
-
-#if 0
-    /*
-    
-        Functions....
-        
-        *)  Actual Functions (Type -- first arg, Globals, Repo)
-
-        *)  Methods on Type (first arg)
-
-        *)  Properties (getters)
-        
-            For instance, geodetic & latitude,
-            
-                latitude(geo)
-        
-        *)  Construction
-        
-            degree(20)
-            vec2d(x,y)
-            
-        *)  Conversions
-        
-        
-        
-    */
-
-
-
         const MethodInfo*   mi  = x_function_find(values, sym);
         if(!mi)
             return errors::bad_function();
@@ -1676,31 +1605,8 @@ namespace yq {
                 return errors::bad_function();
                 
         }
-#endif
     }
 
-    std::error_code  UserExpr::x_function_zero(any_stack_t&, const Symbol&)
-    {
-        const expr::Repo& _repo   = expr::repo();
-        
-        
-        return create_error<"zero-arg functions are not yet implemented">();
-    }
-    
-    std::error_code  UserExpr::x_function_one(any_stack_t&, const Symbol&)
-    {
-        return create_error<"one-arg functions are not yet implemented">();
-    }
-    
-    std::error_code  UserExpr::x_function_more(any_stack_t&, const Symbol&)
-    {
-        return create_error<"more-arg functions are not yet implemented">();
-    }
-
-    const MethodInfo*    UserExpr::x_function_find(any_stack_t&, const Symbol&)
-    {
-        return nullptr;
-    }
 #endif
 
 
