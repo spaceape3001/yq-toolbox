@@ -9,6 +9,7 @@
 #include <0/meta/Meta.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfo.hpp>
+#include <0/meta/MethodInfo.hpp>
 
 namespace yq {
 
@@ -27,6 +28,8 @@ namespace yq {
         const LUC<MethodInfo>&      methods() const { return m_methods; }
         const LUC<PropertyInfo>&    properties() const { return m_properties; }
         
+        template <typename Pred>
+        auto                        all_functions(std::string_view k, Pred pred) const;
 
     protected:
         GlobalInfo(std::string_view name="Global", const std::source_location& sl = std::source_location::current());
@@ -43,6 +46,31 @@ namespace yq {
         LUC<PropertyInfo>       m_properties;
 
     };
+
+    template <typename Pred>
+    auto    GlobalInfo::all_functions(std::string_view k, Pred pred) const
+    {
+        using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
+        if constexpr (!std::is_same_v<pred_result_t, void>){
+            auto R  = m_methods.lut.equal_range(k);
+            for(auto r = R.first; r!=R.second; ++r){
+                if(!r->second)
+                    continue;
+                pred_result_t   tmp = pred(r->second);
+                if(tmp != pred_result_t{})
+                    return tmp;
+            }
+            return pred_result_t{};
+        } else if constexpr (std::is_same_v<pred_result_t, void>){
+            auto R  = m_methods.lut.equal_range(k);
+            for(auto r = R.first; r!=R.second; ++r){
+                if(!r->second)
+                    continue;
+                pred(r->second);
+            }
+            return;
+        }
+    }
     
     template <>
     struct InfoBinder<Global>  {

@@ -14,6 +14,8 @@
 #include <0/basic/TextUtils32.hpp>
 #include <0/meta/ArgInfo.hpp>
 #include <0/meta/ConstructorInfo.hpp>
+#include <0/meta/GlobalInfo.hpp>
+#include <0/meta/MethodInfo.hpp>
 #include <0/meta/OperatorInfo.hpp>
 #include <0/meta/TypeInfo.hpp>
 
@@ -232,20 +234,27 @@ namespace yq::expr {
 
     class FunctionDynamic : public Instruction {
     public:
+        std::string     m_text8;
+        
         FunctionDynamic(const SymData& sd) : Instruction(sd.text)
         {
+            m_text8 = to_string(m_text);
         }
         
         virtual std::error_code     execute(any_stack_t&values, Context&) const override
         {
+            
             return errors::todo();
         }
     };
 
     class FunctionOneDynamic : public Instruction {
     public:
+        std::string     m_text8;
+
         FunctionOneDynamic(const SymData& sd) : Instruction(sd.text)
         {
+            m_text8 = to_string(m_text);
         }
         
         virtual std::error_code     execute(any_stack_t&values, Context&) const override
@@ -256,13 +265,53 @@ namespace yq::expr {
     
     class FunctionZeroDynamic : public Instruction {
     public:
+        std::string     m_text8;
+
         FunctionZeroDynamic(const SymData& sd) : Instruction(sd.text)
         {
+            m_text8 = to_string(m_text);
         }
         
         virtual std::error_code     execute(any_stack_t&values, Context&) const override
         {
-            return errors::todo();
+            static const Repo&          _r  = repo();
+            static const GlobalInfo&    _g  = GlobalInfo::instance();
+            
+            //  Call on methods
+            const MethodInfo* call = _r.all_functions(m_text, [&](const MethodInfo* mi) -> const MethodInfo* {
+                if(!mi->is_static())
+                    return nullptr;
+                if(mi->arg_count() != 0)
+                    return nullptr;
+                return mi;
+            });
+            
+            if(!call){
+                 call = _g.all_functions(m_text8, [&](const MethodInfo* mi) -> const MethodInfo* {
+                    if(!mi->is_static())
+                        return nullptr;
+                    if(mi->arg_count() != 0)
+                        return nullptr;
+                    return mi;
+                });
+            }
+            
+            if(call){
+                auto val    = call -> invoke({});
+                if(!val)
+                    return val.error();
+                values.push_back(*val);
+                return {};
+            }
+            
+            const TypeInfo* type    = TypeInfo::find(m_text8);
+            if(type){
+                values.push_back(Any(type));
+                return {};
+            }
+            
+        
+            return errors::bad_function();
         }
     };
 
@@ -1678,8 +1727,33 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+    const expr::Repo&        InfoBinder<expr::Repo>::bind()
+    {
+        return expr::Repo::instance();
+    }
+    
+    expr::Repo&       InfoBinder<expr::Repo>::edit()
+    {
+        return expr::Repo::instance();
+    }
+
+
     namespace {
-        YQ_INVOKE( expr::repo(); )
+        double  fn_time() 
+        {
+            time_t  now;
+            time(&now);
+            return (double) now;
+        }
+    
+    
+        void    init_repo()
+        {
+            auto w = writer<expr::Repo>();
+            w.function("time", fn_time);
+        }
+    
+        YQ_INVOKE( init_repo(); )
     }
 }
 

@@ -138,6 +138,9 @@ namespace yq {
         template <typename T>
         static std::error_code print(const T&data, Stream&str);
         
+        template <typename Pred>
+        auto            all_functions(std::string_view k, Pred pred) const;
+
     protected:
     
         friend class PropertyInfo;
@@ -351,5 +354,28 @@ namespace yq {
         return {};
     }
     
-    
+    template <typename Pred>
+    auto            TypeInfo::all_functions(std::string_view k, Pred pred) const
+    {
+        using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
+        if constexpr (!std::is_same_v<pred_result_t, void>){
+            auto R  = m_methods.lut.equal_range(k);
+            for(auto r = R.first; r!=R.second; ++r){
+                if(!r->second)
+                    continue;
+                pred_result_t   tmp = pred(r->second);
+                if(tmp != pred_result_t{})
+                    return tmp;
+            }
+            return pred_result_t{};
+        } else if constexpr (std::is_same_v<pred_result_t, void>){
+            auto R  = m_methods.lut.equal_range(k);
+            for(auto r = R.first; r!=R.second; ++r){
+                if(!r->second)
+                    continue;
+                pred(r->second);
+            }
+            return;
+        }
+    }    
 }

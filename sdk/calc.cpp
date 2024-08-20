@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     time_t      now;
     expr::Context       ctx;
     time(&now);
-    ctx.variables[U"time"] = Any((double) now);
+    ctx.variables[U"x"] = Any((double) now);
     
     for(int n=1;n<argc;++n){
         UserExpr    ux(argv[n]);

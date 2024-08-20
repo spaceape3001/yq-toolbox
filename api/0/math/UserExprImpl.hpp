@@ -299,6 +299,10 @@ namespace yq::expr {
         if constexpr (!std::is_same_v<pred_result_t, void>){
             auto R  = m_functions.lut32.equal_range(k);
             for(auto r = R.first; r!=R.second; ++r){
+                if(!r->second)
+                    continue;
+                if(!r->second->is_static())
+                    continue;
                 pred_result_t   tmp = pred(r->second);
                 if(tmp != pred_result_t{})
                     return tmp;
@@ -307,6 +311,10 @@ namespace yq::expr {
         } else if constexpr (std::is_same_v<pred_result_t, void>){
             auto R  = m_functions.lut32.equal_range(k);
             for(auto r = R.first; r!=R.second; ++r){
+                if(!r->second)
+                    continue;
+                if(!r->second->is_static())
+                    continue;
                 pred(r->second);
             }
             return;
