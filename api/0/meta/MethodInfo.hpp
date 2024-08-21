@@ -39,6 +39,11 @@ namespace yq {
         //! If there's a total mismatch, -1 is returned, 0 is a perfect match, higher numbers indicate it's possible but some conversion is required
         int                     type_match(std::span<const Any> args) const;
 
+        //! Computes the type match
+        //!
+        //! If there's a total mismatch, -1 is returned, 0 is a perfect match, higher numbers indicate it's possible but some conversion is required
+        int                     type_match(std::span<const TypeInfo*> args) const;
+
     protected:
         const ArgInfo*              m_result;
         std::vector<const ArgInfo*> m_args;

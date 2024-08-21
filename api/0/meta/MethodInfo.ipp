@@ -140,6 +140,37 @@ namespace yq {
         }
         return r;
     }
+
+    int     MethodInfo::type_match(std::span<const TypeInfo*> test) const
+    {
+        if(test.size() != m_args.size())
+            return -1;
+        int r   = 0;
+        for(size_t n=0;n<m_args.size();++n){
+            if(!m_args[n])
+                return -1;
+            if(!test[n])
+                return -1;
+
+            const TypeInfo& ti = *(test[n]);
+            const Meta&     am = m_args[n]->type();
+            if(!am.is_type())
+                continue;
+            const TypeInfo& ai = static_cast<const TypeInfo&>(am);
+            if(ai.id() == ti.id()) // perfect match
+                continue;
+            if(ai.id() == any().id()){
+                r += 2;
+                continue;
+            }
+            if(ti.can_convert_to(ai)){
+                ++r;
+                continue;
+            }
+            return -1;  // Incompatible type
+        }
+        return r;
+    }
 }
 
 

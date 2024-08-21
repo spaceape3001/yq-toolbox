@@ -11,7 +11,7 @@
 #include <0/basic/Any.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/math/UserExpr.hpp>
-#include <0/math/UserExprContext.hpp>
+#include <0/math/expr/Context.hpp>
 #include <0/io/stream/StdOutput.hpp>
 #include <iostream>
 #include <system_error>

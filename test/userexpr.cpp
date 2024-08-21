@@ -9,6 +9,9 @@
 #include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
+#include <0/math/expr/Repo.hpp>
+#include <0/math/expr/Token.hpp>
+#include <0/math/expr/Tokenize.hpp>
 #include <0/math/UserExprImpl.hpp>
 #include <iostream>
 #include <cmath>

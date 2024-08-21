@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <0/math/expr/preamble.hpp>
+#include <0/basic/Any.hpp>
+
+namespace yq::expr {
+    struct Context {
+        u32string_any_map_t     variables;  //!< Variables (used during execution & compilation)
+    };
+}

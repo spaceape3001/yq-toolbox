@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include <0/basic/preamble.hpp>
+#include <0/math/expr/preamble.hpp>
+
 #include <0/basic/Any.hpp>
 #include <0/basic/Ref.hpp>
 #include <0/basic/MaybeCase.hpp>
@@ -16,7 +17,6 @@
 //#include <0/math/expr/Symbol.hpp>
 //#include <0/math/expr/Instruction.hpp>
 
-#include <functional>
 #include <iosfwd>
 #include <set>
 #include <string>
@@ -25,7 +25,6 @@
 #include <unordered_set>
 #include <vector>
 
-namespace log4cpp { class CategoryStream; }
 
 
 //namespace yq::expr {
@@ -37,20 +36,6 @@ namespace log4cpp { class CategoryStream; }
 //}
 
 namespace yq::expr {
-    class Instruction;
-    struct Symbol;
-    struct SymCode;
-    struct SymData;
-    struct Token;
-    using SymVector     = std::vector<Symbol>;
-    using TokenFN       = std::function<std::error_code(SymCode,std::u32string_view)>;
-    using InstructionCPtr       = Ref<const Instruction>;
-    
-    using u32string_type_map_t  = std::map<std::u32string,const TypeInfo*,IgCase>;
-    
-    struct Context;
-    struct Analysis;
-    using SymDataStack  = Stack<SymData>;
 }
 
 
