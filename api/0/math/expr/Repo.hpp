@@ -28,6 +28,8 @@ namespace yq::expr {
         
         Expect<Any>     constant(std::string_view) const;
         Expect<Any>     constant(std::u32string_view) const;
+        
+        const TypeInfo* constant_type(string_view_t) const;
 
         bool            has_constant(std::string_view) const;
         bool            has_constant(std::u32string_view) const;

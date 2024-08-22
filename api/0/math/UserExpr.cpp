@@ -5,26 +5,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <0/math/expr/OperatorInstruction.ipp>
+#include "expr/VirtualMachine.ipp"
 
-
-#include <0/math/expr/AssignInstruction.hpp>
-#include <0/math/expr/ConstantInstruction.hpp>
-#include <0/math/expr/DuplicateInstruction.hpp>
 #include <0/math/expr/NullInstruction.hpp>
-#include <0/math/expr/PopInstruction.hpp>
-#include <0/math/expr/ValueInstruction.hpp>
-#include <0/math/expr/VariableInstruction.hpp>
 #include <0/math/expr/VirtualMachine.hpp>
 
 #include <0/math/expr/SymData.hpp>
 
+#include "expr/AssignInstruction.ipp"
+#include "expr/ConstantInstruction.ipp"
+#include "expr/DuplicateInstruction.ipp"
 #include "expr/Instruction.ipp"
+#include "expr/OperatorInstruction.ipp"
+#include "expr/PopInstruction.ipp"
 #include "expr/Repo.ipp"
 #include "expr/Streamline.ipp"
 #include "expr/Symbol.ipp"
 #include "expr/Token.ipp"
 #include "expr/Tokenize.ipp"
+#include "expr/ValueInstruction.ipp"
+#include "expr/VariableInstruction.ipp"
 
 #include "UserExprImpl.hpp"
 

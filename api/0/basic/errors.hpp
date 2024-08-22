@@ -28,6 +28,7 @@ namespace yq::errors {
     using getter_failed             = error_db::entry<"Getter function returned false">;
     using incompatible_types        = error_db::entry<"Incompatible types">;
     using insufficient_arguments    = error_db::entry<"Not enough arguments for method call">;
+    using insufficient_information  = error_db::entry<"Insufficient information">;
     using internal_error            = error_db::entry<"Internal consistency error">;
     using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
     using key_not_found             = error_db::entry<"Key not found">;
@@ -54,4 +55,5 @@ namespace yq::errors {
     using parser_failed             = error_db::entry<"Parser failed to parse string">;
     using setter_failed             = error_db::entry<"Setter function returned false">;
     using todo                      = error_db::entry<"Feature is not yet implemented (TODO)">;
+    using too_many_arguments        = error_db::entry<"Too many arguments">;
 }

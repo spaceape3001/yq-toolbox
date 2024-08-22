@@ -13,25 +13,15 @@
 namespace yq::expr {
     class DuplicateInstruction : public Instruction {
     public:
-        DuplicateInstruction(const string_t s) : Instruction(s)
-        {
-        }
-        
+        DuplicateInstruction(const string_t s);
         ~DuplicateInstruction(){}
         
-        virtual std::error_code     execute(any_stack_t&values, Context&) const override
-        {
-            if(values.empty()){
-                return errors::empty_stack();
-            }
-            
-            values << values.top();
-            return {};
-        }
+        virtual std::error_code     execute(any_stack_t&values, Context&) const override;
         
-        result_t   result() const override 
-        { 
-            return 1; 
-        }
+        virtual result_t   result() const override;
+        virtual result_t    result(std::span<const TypeInfo*>) const;
+
+        uint16_t            pop_count() const override { return 0; }
+        uint16_t            push_count() const override { return 1; }
     };
 }

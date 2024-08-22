@@ -19,7 +19,12 @@ namespace yq::expr {
     class Instruction : public RefCount {
     public:
     
-        using result_t  = std::variant<std::monostate, int, const TypeInfo*, std::vector<const TypeInfo*>>;
+        using result_t  = std::variant<
+            std::monostate, 
+            std::error_code, 
+            const TypeInfo*, 
+            std::vector<const TypeInfo*>
+        >;
 
         // Defining text
         string_view_t               text() const { return m_text; }

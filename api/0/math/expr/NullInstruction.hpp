@@ -24,7 +24,7 @@ namespace yq::expr {
 
         result_t   result() const override 
         { 
-            return 0; 
+            return {}; 
         }
     };
 }

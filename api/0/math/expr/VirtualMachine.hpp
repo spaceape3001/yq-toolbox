@@ -15,25 +15,10 @@ namespace yq::expr {
         std::vector<InstructionCPtr>    m_instructions;
         result_t                        m_result;
     
-        VirtualMachine() : Instruction({})
-        {
-        }
+        VirtualMachine();
 
-        std::error_code     execute(any_stack_t&values, Context&ctx) const override
-        {
-            for(auto& ins : m_instructions){
-                if(!ins)
-                    continue;
-                std::error_code ec = ins->execute(values, ctx);
-                if(ec)
-                    return ec;
-            }
-            return {};
-        }
+        std::error_code     execute(any_stack_t&values, Context&ctx) const override;
         
-        result_t    result() const override 
-        { 
-            return m_result; 
-        }
+        result_t    result() const override ;
     };
 }
