@@ -13,9 +13,6 @@
 #include <0/basic/MaybeCase.hpp>
 #include <0/math/preamble.hpp>
 #include <0/math/Operator.hpp>
-//#include <0/math/expr/preamble.hpp>
-//#include <0/math/expr/Symbol.hpp>
-//#include <0/math/expr/Instruction.hpp>
 
 #include <iosfwd>
 #include <set>
@@ -25,18 +22,6 @@
 #include <unordered_set>
 #include <vector>
 
-
-
-//namespace yq::expr {
-    //bool                has_function(const std::u32string&);
-    //bool                has_constant(std::string_view);
-    //bool                has_constant(const std::u32string&);
-    //Expect<Any>         constant(std::string_view);
-    //Expect<Any>         constant(const std::u32string&);
-//}
-
-namespace yq::expr {
-}
 
 
 namespace yq {
@@ -66,7 +51,7 @@ namespace yq {
         const std::u32string&   definition() const { return m_definition; }
         const SymVector&        algebra() const { return m_algebra; }
         
-        constexpr bool          is_good() const { return m_instruction.valid(); }
+        constexpr bool          is_good() const { return m_machine.valid(); }
         std::error_code         build_error() const { return m_buildError; }
         
         Expect<Any>             evaluate() const;
@@ -74,8 +59,8 @@ namespace yq {
         
 
     private:
-        SymVector			    m_algebra;
-        expr::InstructionCPtr   m_instruction;
+        SymVector			        m_algebra;
+        Ref<expr::VirtualMachine>   m_machine;
         
         std::u32string          m_definition;
         std::error_code         m_buildError     = {};

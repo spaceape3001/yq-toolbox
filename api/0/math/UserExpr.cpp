@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "expr/VirtualMachine.ipp"
 
 #include <0/math/expr/NullInstruction.hpp>
 #include <0/math/expr/VirtualMachine.hpp>
@@ -25,6 +24,7 @@
 #include "expr/Tokenize.ipp"
 #include "expr/ValueInstruction.ipp"
 #include "expr/VariableInstruction.ipp"
+#include "expr/VirtualMachine.ipp"
 
 #include "UserExprImpl.hpp"
 
@@ -248,15 +248,13 @@ namespace yq::expr {
     struct Builder {
         const Context&                  m_context;
         Ref<VirtualMachine>             m_machine;
-        std::vector<InstructionCPtr>&   m_instructions;
         Analysis&                       m_analysis;
         SymDataStack                    m_pending;
         Stack<const TypeInfo*>          m_types;
         
-        Builder(const Context& ctx, Analysis& rAnalysis) : 
+        Builder(const Context& ctx, Analysis& rAnalysis, Ref<VirtualMachine> vm) : 
             m_context(ctx), 
-            m_machine(new VirtualMachine), 
-            m_instructions(m_machine->m_instructions),
+            m_machine(vm), 
             m_analysis(rAnalysis)
         {
         }
@@ -334,7 +332,7 @@ namespace yq::expr {
         std::error_code     add_constant(const Symbol& sym)
         {
             decl_value();
-            m_instructions.push_back(new ConstantInstruction(sym.text));
+            push(new ConstantInstruction(sym.text));
             return {};
         }
 
@@ -356,7 +354,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            push(new ValueInstruction(sym.text, Any((double) *val)));
             return {};
         }
 
@@ -372,7 +370,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            push(new ValueInstruction(sym.text, Any((double) *val)));
             return {};
         }
 
@@ -382,7 +380,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            push(new ValueInstruction(sym.text, Any((double) *val)));
             return {};
         }
 
@@ -392,7 +390,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            m_instructions.push_back(new ValueInstruction(sym.text, Any((double) *val)));
+            push(new ValueInstruction(sym.text, Any((double) *val)));
             return {};
         }
 
@@ -474,7 +472,7 @@ namespace yq::expr {
         std::error_code     add_variable(const Symbol& sym)
         {
             decl_value();
-            m_instructions.push_back(new VariableInstruction(sym.text));
+            push(new VariableInstruction(sym.text));
             return {};
         }
         
@@ -515,7 +513,7 @@ namespace yq::expr {
 
         std::error_code     pop_assignment(const SymData&sym)
         {
-            m_instructions.push_back(new AssignInstruction(sym.text));
+            push(new AssignInstruction(sym.text));
             return {};
         }
 
@@ -526,7 +524,7 @@ namespace yq::expr {
 
         std::error_code     pop_duplicate(const SymData&sym)
         {
-            m_instructions.push_back(new DuplicateInstruction(sym.text));
+            push(new DuplicateInstruction(sym.text));
             return {};
         }
 
@@ -545,13 +543,13 @@ namespace yq::expr {
 
         std::error_code     pop_function_many(const SymData& sd)
         {
-            m_instructions.push_back(new FunctionDynamic(sd));
+            push(new FunctionDynamic(sd));
             return {};
         }
         
         std::error_code     pop_function_one(const SymData& sd)
         {
-            m_instructions.push_back(new FunctionOneDynamic(sd));
+            push(new FunctionOneDynamic(sd));
             return {};
         }
         
@@ -564,7 +562,7 @@ namespace yq::expr {
             //  Call on methods
             const MethodInfo* call = _r.all_functions(sd.text, is_zero_method);
             if(call){
-                m_instructions.push_back(new FunctionZeroMethodInfo(sd.text, call));
+                push(new FunctionZeroMethodInfo(sd.text, call));
                 return {};
             }
 
@@ -572,13 +570,13 @@ namespace yq::expr {
 
             call = _g.all_functions(txt8, is_zero_method);
             if(call){
-                m_instructions.push_back(new FunctionZeroMethodInfo(sd.text, call));
+                push(new FunctionZeroMethodInfo(sd.text, call));
                 return {};
             }
 
             const TypeInfo* type    = TypeInfo::find(txt8);
             if(type){
-                m_instructions.push_back(new FunctionZeroTypeInfo(sd.text, type));
+                push(new FunctionZeroTypeInfo(sd.text, type));
                 return {};
             }
             
@@ -588,7 +586,7 @@ namespace yq::expr {
 
         std::error_code     pop_operator(const SymData& sym)
         {
-            m_instructions.push_back(new OperatorDynamic(sym));
+            push(new OperatorDynamic(sym));
             return {};
         }
 
@@ -618,6 +616,12 @@ namespace yq::expr {
             }
         }
         
+        void    push(InstructionCPtr insptr)
+        {
+            if(insptr && m_machine)
+                m_machine->m_instructions.push_back(insptr);
+        }
+        
         std::error_code     compile(const SymVector& syms)
         {
             std::error_code ec;
@@ -633,16 +637,6 @@ namespace yq::expr {
             return {};
         }
     };
-    
-    Expect<InstructionCPtr> compile(const SymVector&syms, const Context&ctx, Analysis& rAnalysis)
-    {
-        Builder         builder(ctx, rAnalysis);
-        
-        std::error_code ec  = builder.compile(syms);
-        if(ec != std::error_code())
-            return unexpected(ec);
-        return builder.m_machine;
-    }
     
 
 
@@ -732,11 +726,13 @@ namespace yq {
         expr::Context ctx;
         expr::Analysis    analy;
         
-        auto x  = expr::compile(m_algebra, ctx, analy);
-        if(!x)
-            return x.error();
+        Ref<expr::VirtualMachine> vm  = new expr::VirtualMachine;
         
-        m_instruction   = *x;
+        expr::Builder         builder(ctx, analy, vm);
+        ec      = builder.compile(m_algebra);
+        if(ec)
+            return ec;
+        m_machine       = vm;
         return {};
 	}
 
@@ -748,11 +744,11 @@ namespace yq {
 
     Expect<Any>     UserExpr::evaluate(expr::Context&ctx) const
     {
-        if(!m_instruction.valid())
+        if(!m_machine.valid())
             return errors::bad_userexpr();
 
         any_stack_t             values;
-        std::error_code ec  =  m_instruction -> execute(values, ctx);
+        std::error_code ec  =  m_machine -> execute(values, ctx);
         if(ec != std::error_code())
             return unexpected(ec);
         if(values.empty())

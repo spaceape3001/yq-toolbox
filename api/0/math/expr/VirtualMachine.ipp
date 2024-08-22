@@ -7,13 +7,18 @@
 #pragma once
 
 #include "VirtualMachine.hpp"
+#include <0/math/expr/Instruction.hpp>
 
 namespace yq::expr {
-    VirtualMachine::VirtualMachine() : Instruction({})
+    VirtualMachine::VirtualMachine() 
     {
     }
 
-    std::error_code     VirtualMachine::execute(any_stack_t&values, Context&ctx) const 
+    VirtualMachine::~VirtualMachine()
+    {
+    }
+
+    std::error_code     VirtualMachine::execute(any_stack_t& values, Context& ctx) const 
     {
         for(auto& ins : m_instructions){
             if(!ins)
@@ -23,10 +28,5 @@ namespace yq::expr {
                 return ec;
         }
         return {};
-    }
-    
-    Instruction::result_t    VirtualMachine::result() const 
-    { 
-        return m_result; 
     }
 }

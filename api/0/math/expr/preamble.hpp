@@ -19,6 +19,7 @@ namespace yq::expr {
     struct SymCode;
     struct SymData;
     struct Token;
+    struct VirtualMachine;
 
     using SymVector             = std::vector<Symbol>;
     using TokenFN               = std::function<std::error_code(SymCode,std::u32string_view)>;
