@@ -315,6 +315,8 @@ namespace yq {
         \return TypeInfo pointer, if valid, NULL otherwise
     */
     const TypeInfo* to_type(const Meta* m);
+
+    const TypeInfo* to_type(const Meta& m);
     
     /*! \brief Converts meta to type, if it's valid
     

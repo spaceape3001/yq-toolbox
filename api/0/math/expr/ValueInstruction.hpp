@@ -25,6 +25,9 @@ namespace yq::expr {
             return {};
         }
 
+        uint16_t            pop_count() const override { return 0; }
+        uint16_t            push_count() const override { return 1; }
+
         result_t    result() const override 
         { 
             return &m_value.type(); 

@@ -112,6 +112,13 @@ namespace yq {
             return Any();
     }
 
+    const TypeInfo*         MethodInfo::result_type() const
+    {
+        if(!m_result)
+            return nullptr;
+        return to_type(m_result->type());
+    }
+
     int     MethodInfo::type_match(std::span<const Any> test) const
     {
         if(test.size() != m_args.size())

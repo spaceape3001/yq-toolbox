@@ -242,6 +242,11 @@ namespace yq {
         return (m && m->is_type()) ? static_cast<const TypeInfo*>(m) : nullptr;
     }
     
+    const TypeInfo* to_type(const Meta& m)
+    {
+        return m.is_type() ? static_cast<const TypeInfo*>(&m) : nullptr;
+    }
+
     /*! \brief Converts meta to type, if it's valid
     
         \return TypeInfo pointer, if valid, NULL otherwise

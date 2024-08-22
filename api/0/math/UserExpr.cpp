@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+#include <0/math/expr/OperatorInstruction.ipp>
+
 
 #include <0/math/expr/AssignInstruction.hpp>
 #include <0/math/expr/ConstantInstruction.hpp>
@@ -14,6 +16,8 @@
 #include <0/math/expr/ValueInstruction.hpp>
 #include <0/math/expr/VariableInstruction.hpp>
 #include <0/math/expr/VirtualMachine.hpp>
+
+#include <0/math/expr/SymData.hpp>
 
 #include "expr/Instruction.ipp"
 #include "expr/Repo.ipp"
@@ -46,49 +50,12 @@ namespace yq::expr {
 
     }
 
-    struct SymData : public Symbol {
-        bool            has_value   = false;
-		uint16_t        priority	= 0;
-        uint16_t        argcnt      = 0;
-        
-        SymData() {}
-        SymData(const Symbol& sym) : Symbol(sym) {}
-    };
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     namespace {
-        const OperatorInfo*     find_operator(std::span<const Any> span, Operator opCode)
-        {
-            if(span.size() == 0)
-                return nullptr;
-                
-            const OperatorInfo* best    = nullptr;
-            int                 score   = 0;
-            
-            const TypeInfo& ti  = span[0].type();
-            auto er             = ti.operators(opCode);
-            for(auto itr=er.first; itr != er.second; ++itr){
-                const OperatorInfo* op  = itr->second;
-                if(!op)
-                    continue;
-                    
-                int     r   = op -> type_match(span);
-                if(r < 0)
-                    continue;
-                if(r == 0)
-                    return op;
-
-                if((r<score) || !best){
-                    best        = op;
-                    score       = r;
-                }
-            }
-            
-            return best;
-        }
 
         const MethodInfo*   is_zero_method(const MethodInfo* mi)
         {
@@ -270,44 +237,6 @@ namespace yq::expr {
     };
     
 
-    
-    /*! \brief Dynamic operator when argument types aren't known until runtime
-    */
-    class OperatorDynamic : public Instruction {
-    public:
-    
-        OperatorDynamic(const SymData&sym) : 
-            Instruction(sym.text), m_operator((Operator) sym.kind), m_args(sym.argcnt)
-        {
-        }
-        
-        std::error_code     execute(any_stack_t&values, Context&ctx) const override
-        {
-            if(!m_args)
-                return create_error<"bad user expression (dynamic operator with no arguments)">();
-            
-            std::span<const Any>  args = values.top_cspan(m_args);
-            if(args.size() < m_args){
-                return errors::insufficient_arguments();
-            }
-        
-            const OperatorInfo* op  = find_operator(args, m_operator);
-            if(!op)
-                return create_error<"bad user expression (unable to find operator)">();
-        
-            Expect<Any>     res = op->invoke(args);
-            if(!res)
-                return res.error();
-            
-            values.pop_last(m_args);
-            values << std::move(*res);
-            return {};
-        }
-
-        Operator        m_operator;
-        unsigned int    m_args;
-    };
-    
     
 
 

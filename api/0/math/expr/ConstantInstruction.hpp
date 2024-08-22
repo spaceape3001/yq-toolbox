@@ -30,5 +30,8 @@ namespace yq::expr {
             values << *x;
             return {};
         }
+
+        uint16_t    pop_count() const override { return 0; }
+        uint16_t    push_count() const override { return 1; }
     };
 }

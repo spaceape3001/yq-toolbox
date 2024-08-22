@@ -23,6 +23,8 @@ namespace yq {
         
         //! Result (if any), otherwise null
         const ArgInfo*          result() const { return m_result; }
+        
+        const TypeInfo*         result_type() const;
     
         //! Invoke with flexibility if the any can convert to the appropriate type
         Expect<Any>             invoke(void* obj, std::span<const Any> args) const;

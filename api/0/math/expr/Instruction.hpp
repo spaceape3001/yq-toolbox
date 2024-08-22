@@ -33,6 +33,9 @@ namespace yq::expr {
         //! Expected result for argument types
         virtual result_t    result(std::span<const TypeInfo*>) const;
         
+        virtual uint16_t     pop_count() const { return 0xFFFF; }
+        virtual uint16_t     push_count() const { return 0xFFFF; }
+        
         //! Destructor
         virtual ~Instruction();
 
