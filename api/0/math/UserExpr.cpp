@@ -5,11 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+#include "expr/FunctionInstruction.ipp"
 
 #include <0/math/expr/NullInstruction.hpp>
-#include <0/math/expr/VirtualMachine.hpp>
 
-#include <0/math/expr/SymData.hpp>
 
 #include "expr/AssignInstruction.ipp"
 #include "expr/ConstantInstruction.ipp"
@@ -30,217 +29,10 @@
 
 #include <0/basic/errors.hpp>
 #include <0/basic/DelayInit.hpp>
-#include <0/basic/Stack.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
 #include <0/math/expr/OpData.hpp>
-#include <0/meta/ArgInfo.hpp>
-#include <0/meta/ConstructorInfo.hpp>
-#include <0/meta/GlobalInfo.hpp>
-#include <0/meta/MethodInfo.hpp>
-#include <0/meta/OperatorInfo.hpp>
-#include <0/meta/TypeInfo.hpp>
 
 
 namespace yq::expr {
-    namespace {
-
-
-        using conditional_t = std::variant<std::monostate, std::error_code>;
-
-    }
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    namespace {
-
-        const MethodInfo*   is_zero_method(const MethodInfo* mi)
-        {
-            if(!mi->is_static())
-                return nullptr;
-            if(mi->arg_count() != 0)
-                return nullptr;
-            const ArgInfo*  res = mi->result();
-            if(!res)
-                return nullptr;
-            auto& rtype = res->type();
-            if(!rtype.is_type())
-                return nullptr;
-            return mi;
-        }
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    
-    
-
-
-        /*
-        
-            Functions....
-            
-            *)  Actual Functions (Type -- first arg, Globals, Repo)
-
-            *)  Methods on Type (first arg)
-
-            *)  Properties (getters)
-            
-                For instance, geodetic & latitude,
-                
-                    latitude(geo)
-            
-            *)  Construction
-            
-                degree(20)
-                vec2d(x,y)
-                
-            *)  Conversions
-            
-            
-            
-        */
-
-
-    class FunctionDynamic : public Instruction {
-    public:
-        const std::string   m_text8;
-        const uint16_t      m_argcnt;
-
-        FunctionDynamic(const SymData& sd) : Instruction(sd.text), m_text8(to_string(sd.text)), m_argcnt(sd.argcnt)
-        {
-        }
-        
-        #if 0
-        
-        conditional_t x_repo(any_stack_t&values) const 
-        {
-            static const Repo&          _r  = repo();
-            auto  args  = values.top_cspan(m_argcnt);
-            const MethodInfo*   call    = _r.all_functions(m_text, [&](const MethodInfo* mi) -> const MethodInfo* {
-                if(mi.arg_count() != m_argcnt)
-                    return;
-                
-            });
-        }
-
-        conditional_t x_global(any_stack_t&values) const 
-        {
-            static const GlobalInfo&    _g  = GlobalInfo::instance();
-            auto  args  = values.top_cspan(m_argcnt);
-        }
-        #endif
-        
-        virtual std::error_code     execute(any_stack_t&values, Context&) const override
-        {
-        #if 0
-            static const GlobalInfo&    _g  = GlobalInfo::instance();
-
-            if(values.size() < m_argcnt)
-                return errors::empty_stack();
-
-            Any&    val = values.peek(m_argcnt-1);
-            const TypeInfo& type    = val.type();
-        #endif
-            return errors::todo();
-        }
-    };
-
-    class FunctionOneDynamic : public Instruction {
-    public:
-
-        const std::string   m_text8;
-
-        FunctionOneDynamic(const SymData& sd) : Instruction(sd.text), m_text8(to_string(sd.text))
-        {
-        }
-        
-        #if 0
-        std::pair<bool,std::error_code> x_repo(any_stack_t&) const 
-        {
-            static const Repo&          _r  = repo();
-        }
-
-        std::pair<bool,std::error_code> x_global(any_stack_t&) const 
-        {
-            static const GlobalInfo&    _g  = GlobalInfo::instance();
-        }
-        #endif
-
-        virtual std::error_code     execute(any_stack_t&values, Context&) const override
-        {
-        #if 0
-            static const Repo&          _r  = repo();
-
-            if(values.empty())
-                return errors::empty_stack();
-
-            Any&    val = values.top();
-            const TypeInfo& type    = val.type();
-        #endif
-        
-            return errors::todo();
-        }
-    };
-    
-    
-    class FunctionZeroMethodInfo : public Instruction {
-    public:
-        const MethodInfo*   m_method;
-        const TypeInfo*     m_result = nullptr;
-        
-        FunctionZeroMethodInfo(const string_t& s, const MethodInfo* method) : Instruction(s), m_method(method)
-        {
-            const ArgInfo*  resinfo = m_method -> result();
-            if(resinfo)
-                m_result    = static_cast<const TypeInfo*>(&(resinfo->type()));
-        }
-        
-        std::error_code     execute(any_stack_t&values, Context&) const override
-        {
-            auto val    = m_method -> invoke({});
-            if(!val)
-                return val.error();
-            values.push_back(*val);
-            return {};
-        }
-        
-        result_t   result() const override 
-        { 
-            return m_result; 
-        }
-    };
-    
-    class FunctionZeroTypeInfo : public Instruction {
-    public:
-        const TypeInfo* m_type;
-        
-        FunctionZeroTypeInfo(const string_t& s, const TypeInfo* type) : Instruction(s), m_type(type)
-        {
-        }
-    
-        std::error_code     execute(any_stack_t&values, Context&) const override
-        {
-            values.push_back(Any(m_type));
-            return {};
-        }
-
-        result_t   result() const override 
-        { 
-            return m_type; 
-        }
-    };
-    
-
-    
-
-
-
 
 //------------------------------------------------------------------------------
 //  Algebra to RPN
@@ -306,7 +98,7 @@ namespace yq::expr {
                 return create_error<"bad user expression (no opener)">();
 
             if(lastPop.argcnt){  // slight hack
-                SymData* sd      = m_pending.peek(0);
+                SymData* sd      = m_pending.peek(1);
                 if(sd && (sd->category == SymCategory::Text) &&
                     ((sd->kind == SymKind::Constructor) || (sd->kind == SymKind::Function)))
                 {
@@ -530,59 +322,10 @@ namespace yq::expr {
 
         std::error_code     pop_function(const SymData& sd)
         {
-            switch(sd.argcnt){
-            case 0:
-                return pop_function_zero(sd);
-            case 1:
-                return pop_function_one(sd);
-            default:
-                return pop_function_many(sd);
-            }
+            push(new FunctionInstruction(sd));
             return {};
         }
 
-        std::error_code     pop_function_many(const SymData& sd)
-        {
-            push(new FunctionDynamic(sd));
-            return {};
-        }
-        
-        std::error_code     pop_function_one(const SymData& sd)
-        {
-            push(new FunctionOneDynamic(sd));
-            return {};
-        }
-        
-        std::error_code     pop_function_zero(const SymData& sd)
-        {
-            static const Repo&          _r  = repo();
-            static const GlobalInfo&    _g  = GlobalInfo::instance();
-            
-            
-            //  Call on methods
-            const MethodInfo* call = _r.all_functions(sd.text, is_zero_method);
-            if(call){
-                push(new FunctionZeroMethodInfo(sd.text, call));
-                return {};
-            }
-
-            std::string txt8    = to_string(sd.text);
-
-            call = _g.all_functions(txt8, is_zero_method);
-            if(call){
-                push(new FunctionZeroMethodInfo(sd.text, call));
-                return {};
-            }
-
-            const TypeInfo* type    = TypeInfo::find(txt8);
-            if(type){
-                push(new FunctionZeroTypeInfo(sd.text, type));
-                return {};
-            }
-            
-            return errors::bad_function();
-        }
-        
 
         std::error_code     pop_operator(const SymData& sym)
         {
@@ -649,50 +392,6 @@ namespace yq::expr {
 
 namespace yq {
 
-//------------------------------------------------------------------------------
-//  Execution
-
-#if 0
-    std::error_code      UserExpr::x_constructor(any_stack_t& values, const Symbol&sym)
-    {
-        if(values.size() < sym.argcnt)
-            return errors::empty_stack();
-
-        const ConstructorInfo*  ci = x_constructor_find(values, sym);
-        if(!ci)
-            return errors::bad_constructor();
-        
-        Expect<Any> ret = ci->invoke(values.top_cspan(sym.argcnt));
-        if(!ret)
-            return ret.error();
-        values << *ret;
-        return {};
-    }
-
-
-    std::error_code      UserExpr::x_function(any_stack_t& values, const Symbol& sym)
-    {
-        const MethodInfo*   mi  = x_function_find(values, sym);
-        if(!mi)
-            return errors::bad_function();
-        
-        Expect<Any>     ret;
-        if(mi->is_static()){
-            ret     = mi -> invoke(values.top_cspan(sym.argcnt));
-        } else if(!mi->is_const()){
-            return errors::bad_function();
-        } else {
-            if(!sym.argcnt)
-                return errors::bad_function();
-                
-        }
-    }
-
-#endif
-
-
-
-//------------------------------------------------------------------------------
 
     UserExpr::UserExpr() = default;
     UserExpr::UserExpr(const UserExpr&) = default;

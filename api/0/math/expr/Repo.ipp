@@ -10,6 +10,7 @@
 
 #include <0/basic/DelayInit.hpp>
 #include <0/math/expr/OpData.hpp>
+#include <0/math/trig.hpp>
 
 namespace yq::expr {
 
@@ -420,11 +421,23 @@ namespace yq {
             return (double) now;
         }
     
+        double  fn_sqrt(double x)
+        {
+            return ::sqrt(x);
+        }
+        
+        unit::Radian    fn_atan2(double y, double x)
+        {
+            return atan(y,x);
+        }
+    
     
         void    init_repo()
         {
             auto w = writer<expr::Repo>();
             w.function("time", fn_time);
+            w.function("sqrt", fn_sqrt);
+            w.function("atan2", fn_atan2);
         }
     
         YQ_INVOKE( init_repo(); )

@@ -386,10 +386,13 @@ namespace yq {
         //   CONDITION is still valid, however, we can't use it w/o compiler issues
         //static_assert( std::is_base_of_v<Meta, T>, "T must derive from Meta!");
         using MM    = MultiMap<std::string_view, const T*, IgCase>;
+
         Vector<const T*>            all;
         MM                          lut;
         StringViewSet               keys;
         
+        using equal_range_t = decltype(((const LUC*)nullptr) -> lut.equal_range(std::string_view()));
+
         LUC& operator<<(const T* p)
         {
             all << p;
@@ -496,5 +499,7 @@ namespace yq {
             keys32 += *s;
         }
     };
+
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, std::span<const TypeInfo*>);
 }
 

@@ -183,12 +183,12 @@ namespace yq {
         return m_operators.lut.equal_range(opt);
     }
 
-    size_t                                  TypeInfo::operators_count() const
+    size_t  TypeInfo::operators_count() const
     {
         return m_operators.all.size();
     }
 
-    TypeInfo::FNFormat        TypeInfo::printer(std::string_view k) const
+    TypeInfo::FNFormat  TypeInfo::printer(std::string_view k) const
     {
         if(!k.empty()){
             auto i = m_printers.find(k);
@@ -200,7 +200,7 @@ namespace yq {
         return m_write;
     }
 
-    TypeInfo::FNFormat        TypeInfo::printer(string_view_initializer_list_t keys) const
+    TypeInfo::FNFormat  TypeInfo::printer(string_view_initializer_list_t keys) const
     {
         for(std::string_view k : keys){
             if(k.empty())
@@ -215,13 +215,23 @@ namespace yq {
         return m_write;
     }
 
+    const PropertyInfo*  TypeInfo::property(std::string_view k) const
+    {
+        return m_properties.lut.first(k, nullptr);
+    }
+
     
     const std::vector<const PropertyInfo*>&  TypeInfo::properties() const
     {
         return m_properties.all;
     }
 
-    size_t                              TypeInfo::property_count() const
+    TypeInfo::PropertyLUC::equal_range_t TypeInfo::properties(std::string_view k) const
+    {
+        return m_properties.lut.equal_range(k);
+    }
+
+    size_t  TypeInfo::property_count() const
     {
         return m_properties.all.size();
     }
@@ -254,6 +264,22 @@ namespace yq {
     TypeInfo* to_type(Meta* m)
     {
         return (m && m->is_type()) ? static_cast<TypeInfo*>(m) : nullptr;
+    }
+
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& str, std::span<const TypeInfo*> types)
+    {
+        bool    f = true;
+        str << "{";
+        for(const TypeInfo* ti : types){
+            if(f){
+                f   = false;
+            } else {
+                str << ", ";
+            }
+            str << ti->name();
+        }
+        str << "}";
+        return str;
     }
 }
 

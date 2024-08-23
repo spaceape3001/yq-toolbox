@@ -18,7 +18,9 @@ namespace yq {
     class TypeInfo : public CompoundInfo {
         friend class Any;
     public:
-        using OperatorLUC = LUC2<OperatorInfo,Operator,&OperatorInfo::code>;
+        using MethodLUC     = LUC<MethodInfo>;
+        using OperatorLUC   = LUC2<OperatorInfo,Operator,&OperatorInfo::code>;
+        using PropertyLUC   = LUC<PropertyInfo>;
     
             // WARNING UNSAFE IN UNLOCKED MULTITHREADED MODE!
             
@@ -95,11 +97,15 @@ namespace yq {
         size_t                                  operators_count() const;
         
 
+        const PropertyInfo*                     property(std::string_view) const;
+
         //! Number of properties for this type
         size_t                                  property_count() const;
         
         //! List of properties for this type
         const std::vector<const PropertyInfo*>&  properties() const;
+
+        PropertyLUC::equal_range_t              properties(std::string_view) const;
 
         /*! \brief Parsing helper
         
@@ -230,7 +236,7 @@ namespace yq {
         OperatorLUC                 m_operators;
         
         //! Properties for this type
-        LUC<PropertyInfo>           m_properties;
+        PropertyLUC                 m_properties;
         
         //! Aliases for this type
         //std::vector<std::string_view>   m_aliases;
