@@ -210,7 +210,10 @@ ut::suite tests = []{
         expect(sdouble("2*3.5", 7.));
         expect(sdouble("14./2", 7.));
         expect(sdouble("1.5^2", 2.25));
-        //expect(sdouble("pi", std::numbers::pi_v<double>));
+        expect(sdouble("pi", std::numbers::pi_v<double>));
+        expect(sdouble("2*pi", 2.0*std::numbers::pi_v<double>));
+        expect(sdouble("sqrt(4)", 2.0));
+        expect(sdouble("sqrt(25)", 5.0));
     };
     
     #if 0
