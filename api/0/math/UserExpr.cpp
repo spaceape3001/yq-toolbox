@@ -42,7 +42,8 @@ namespace yq::expr {
         Ref<VirtualMachine>             m_machine;
         Analysis&                       m_analysis;
         SymDataStack                    m_pending;
-        Stack<const TypeInfo*>          m_types;
+        //Stack<const TypeInfo*>          m_types;
+        int                             m_stack     = 0;
         
         Builder(const Context& ctx, Analysis& rAnalysis, Ref<VirtualMachine> vm) : 
             m_context(ctx), 
@@ -124,8 +125,7 @@ namespace yq::expr {
         std::error_code     add_constant(const Symbol& sym)
         {
             decl_value();
-            push(new ConstantInstruction(sym.text));
-            return {};
+            return push(new ConstantInstruction(sym.text));
         }
 
         std::error_code     add_constructor(const Symbol& sym)
@@ -146,13 +146,14 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            push(new ValueInstruction(sym.text, Any((double) *val)));
-            return {};
+            return push(new ValueInstruction(sym.text, Any((double) *val)));
         }
 
         std::error_code     add_function(const Symbol& sym)
         {
-            m_pending << sym;
+            SymData sd(sym);
+            sd.sstack   = m_stack;
+            m_pending << sd;
             return {};
         }
 
@@ -162,8 +163,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            push(new ValueInstruction(sym.text, Any((double) *val)));
-            return {};
+            return push(new ValueInstruction(sym.text, Any((double) *val)));
         }
 
         std::error_code     add_integer(const Symbol& sym)
@@ -172,8 +172,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            push(new ValueInstruction(sym.text, Any((double) *val)));
-            return {};
+            return push(new ValueInstruction(sym.text, Any((double) *val)));
         }
 
         std::error_code     add_octal(const Symbol& sym)
@@ -182,8 +181,7 @@ namespace yq::expr {
             if(!val)
                 return val.error();
             decl_value();
-            push(new ValueInstruction(sym.text, Any((double) *val)));
-            return {};
+            return push(new ValueInstruction(sym.text, Any((double) *val)));
         }
 
         std::error_code     add_open(const Symbol& sym)
@@ -264,8 +262,7 @@ namespace yq::expr {
         std::error_code     add_variable(const Symbol& sym)
         {
             decl_value();
-            push(new VariableInstruction(sym.text));
-            return {};
+            return push(new VariableInstruction(sym.text));
         }
         
         std::error_code     pop()
@@ -316,21 +313,20 @@ namespace yq::expr {
 
         std::error_code     pop_duplicate(const SymData&sym)
         {
-            push(new DuplicateInstruction(sym.text));
-            return {};
+            return push(new DuplicateInstruction(sym.text));
         }
 
         std::error_code     pop_function(const SymData& sd)
         {
-            push(new FunctionInstruction(sd));
-            return {};
+            SymData sd2(sd);
+            sd2.argcnt  = m_stack - sd.sstack;
+            return push(new FunctionInstruction(sd2));
         }
 
 
         std::error_code     pop_operator(const SymData& sym)
         {
-            push(new OperatorDynamic(sym));
-            return {};
+            return push(new OperatorDynamic(sym));
         }
 
         std::error_code     add(const Symbol& sym)
@@ -359,10 +355,16 @@ namespace yq::expr {
             }
         }
         
-        void    push(InstructionCPtr insptr)
+        std::error_code   push(InstructionCPtr insptr)
         {
-            if(insptr && m_machine)
+            if(insptr && m_machine){
+                if(insptr->pop_count() > m_stack)
+                    return create_error<"bad user expression (stack collision anticipated)">();
+                m_stack -= insptr->pop_count();
+                m_stack += insptr->push_count();
                 m_machine->m_instructions.push_back(insptr);
+            }
+            return {};
         }
         
         std::error_code     compile(const SymVector& syms)

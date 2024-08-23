@@ -13,6 +13,7 @@ namespace yq::expr {
         bool            has_value   = false;
 		uint16_t        priority	= 0;
         uint16_t        argcnt      = 0;
+        int             sstack      = 0;
         
         SymData() {}
         SymData(const Symbol& sym) : Symbol(sym) {}
