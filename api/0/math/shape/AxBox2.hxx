@@ -15,6 +15,7 @@
 #include <0/math/shape/AxBox2.hpp>
 #include <0/math/utility.hpp>
 #include <0/math/errors.hpp>
+#include <0/math/Range.hpp>
 
 namespace yq {
     template <typename T>

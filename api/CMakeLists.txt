@@ -34,6 +34,14 @@ add_library(${PROJECT_NAME} SHARED
     0/graph/xfg/xfg.cpp
     0/io/io.cpp
     0/math/math.cpp
+    0/math/meta_coords.cpp
+    0/math/meta_general.cpp
+    0/math/meta_glm.cpp
+    0/math/meta_shapes.cpp
+    0/math/meta_tensors.cpp
+    0/math/meta_units.cpp
+    0/math/meta_vectors.cpp
+    0/math/strings.cpp
     0/math/UserExpr.cpp
     0/meta/meta.cpp
     0/sql/sql.cpp
