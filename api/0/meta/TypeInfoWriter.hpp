@@ -271,6 +271,8 @@ namespace yq {
     public:
         static_assert( InfoBinder<T>::IsType, "T must be meta-type declared!");
     
+        using type_t    = T;
+    
         //! Adds an alias to the type
         //! \note the provided parameter is expected to be from the program strings table
         void    alias(std::string_view a)

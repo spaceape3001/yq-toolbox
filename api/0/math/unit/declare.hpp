@@ -44,6 +44,18 @@ namespace yq {
         static constexpr const long double   percent     = 0.01;
         static constexpr const long double   bar         = 1e5;
 
+        static constexpr const long double   quecto      = 1.e-30;
+        static constexpr const long double   quecto²     = quecto * quecto;
+        static constexpr const long double   quecto³     = quecto² * quecto;
+        static constexpr const long double   ronto       = 1.e-27;
+        static constexpr const long double   ronto²      = ronto * ronto;
+        static constexpr const long double   ronto³      = ronto² * ronto;
+        static constexpr const long double   yocto       = 1.e-24;
+        static constexpr const long double   yocto²      = yocto * yocto;
+        static constexpr const long double   yocto³      = yocto² * yocto;
+        static constexpr const long double   zepto       = 1.e-21;
+        static constexpr const long double   zepto²      = zepto * zepto;
+        static constexpr const long double   zepto³      = zepto² * zepto;
         static constexpr const long double   atto        = 1.e-18;
         static constexpr const long double   atto²       = atto * atto;
         static constexpr const long double   atto³       = atto² * atto;
@@ -92,6 +104,18 @@ namespace yq {
         static constexpr const long double   exa         = 1.e18;
         static constexpr const long double   exa²        = exa * exa;
         static constexpr const long double   exa³        = exa² * exa;
+        static constexpr const long double   zetta       = 1.e21;
+        static constexpr const long double   zetta²      = zetta * zetta;
+        static constexpr const long double   zetta³      = zetta² * zetta;
+        static constexpr const long double   yotta       = 1.e24;
+        static constexpr const long double   yotta²      = yotta * yotta;
+        static constexpr const long double   yotta³      = yotta² * yotta;
+        static constexpr const long double   ronna       = 1.e27;
+        static constexpr const long double   ronna²      = ronna * ronna;
+        static constexpr const long double   ronna³      = ronna² * ronna;
+        static constexpr const long double   quetta      = 1.e30;
+        static constexpr const long double   quetta²     = quetta * quetta;
+        static constexpr const long double   quetta³     = quetta² * quetta;
     }
 
 

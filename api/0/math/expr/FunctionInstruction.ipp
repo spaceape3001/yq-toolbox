@@ -106,7 +106,7 @@ namespace yq::expr {
 
         bool         conversions(const TypeInfo& type, std::string_view k)
         {
-            const TypeInfo*     ti  = TypeInfo::find(k);
+            const TypeInfo*     ti  = TypeInfo::find(STEM, k);
             if(ti){
                 scored.push_back({converter_t{ti}, 1});
                 return true;
@@ -185,7 +185,7 @@ namespace yq::expr {
     
     FunctionInstruction::FunctionInstruction(const SymData& sd) : 
         Instruction(sd.text), m_text8(to_string(sd.text)), m_argcnt(sd.argcnt),
-        m_type(TypeInfo::find(m_text8))
+        m_type(TypeInfo::find(STEM, m_text8))
     {
     }
 

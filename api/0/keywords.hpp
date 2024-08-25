@@ -79,6 +79,7 @@ namespace yq {
     struct skip_t {};
     struct sort_t {};
     struct span_t {};
+    struct stem_t {};
     struct three_t {};
     struct throw_t {};
     struct ticks_t {};
@@ -167,6 +168,7 @@ namespace yq {
     static constexpr const skip_t           SKIP;
     static constexpr const sort_t           SORT;
     static constexpr const span_t           SPAN;
+    static constexpr const stem_t           STEM;
     static constexpr const three_t          THREE;
     static constexpr const throw_t          THROW;
     static constexpr const ticks_t          TICKS;

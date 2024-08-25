@@ -71,6 +71,12 @@ namespace yq {
         return repo().types.lut.first(sv, nullptr);
     }
 
+    const TypeInfo*                  TypeInfo::find(stem_t, std::string_view sv)
+    {
+        assert(thread_safe_read());
+        return repo().types.stem.first(sv, nullptr);
+    }
+
     std::vector<const TypeInfo*>          TypeInfo::find_all(const string_set_t& types, bool noisy)
     {
         std::vector<const TypeInfo*> ret;
