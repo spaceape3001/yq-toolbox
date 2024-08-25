@@ -8,6 +8,7 @@
 
 #include <0/graph/xfg/preamble.hpp>
 #include <0/meta/ObjectInfo.hpp>
+#include <0/meta/MetaLookup.hpp>
 
 namespace yq::xfg {
     class NodeInfo : public ObjectInfo {
@@ -15,8 +16,8 @@ namespace yq::xfg {
         template <typename C> class Writer;
         NodeInfo(std::string_view, const ObjectInfo&, const std::source_location& sl = std::source_location::current());
         
-        const LUC<PinInfo>&  inputs(bool all=false) const;
-        const LUC<PinInfo>&  outputs(bool all=false) const;
+        const MetaLookup<PinInfo>&  inputs(bool all=false) const;
+        const MetaLookup<PinInfo>&  outputs(bool all=false) const;
     
     protected:
         //! Sweeps on the type (ie gathers properties/methdos)
@@ -24,8 +25,8 @@ namespace yq::xfg {
     private:
 
         struct D {
-            LUC<PinInfo>     inputs;
-            LUC<PinInfo>     outputs;
+            MetaLookup<PinInfo>     inputs;
+            MetaLookup<PinInfo>     outputs;
         };
 
         //! What's defined on this object

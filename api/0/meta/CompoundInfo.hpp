@@ -38,10 +38,10 @@ namespace yq {
         virtual void            sweep_impl() override;
         
         //! Used to gather the methods from the children meta
-        void        gather(LUC<MethodInfo>&);
+        void        gather(MetaLookup<MethodInfo>&);
 
         //! Used to gather the properties from the children meta
-        void        gather(LUC<PropertyInfo>&);
+        void        gather(MetaLookup<PropertyInfo>&);
         
 
     };

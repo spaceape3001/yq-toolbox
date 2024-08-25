@@ -7,6 +7,7 @@
 #pragma once
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfo.hpp>
+#include <0/meta/MetaLookup.hpp>
 #include <0/meta/OperatorInfo.hpp>
 #include <0/basic/errors.hpp>
 #include <0/basic/preamble.hpp>
@@ -18,9 +19,10 @@ namespace yq {
     class TypeInfo : public CompoundInfo {
         friend class Any;
     public:
-        using MethodLUC     = LUC<MethodInfo>;
-        using OperatorLUC   = LUC2<OperatorInfo,Operator,&OperatorInfo::code>;
-        using PropertyLUC   = LUC<PropertyInfo>;
+        using MethodLUC     = MetaLookup<MethodInfo>;
+        using OperatorLUC   = MetaLookup2<OperatorInfo,Operator,&OperatorInfo::code>;
+        using PropertyLUC   = MetaLookup<PropertyInfo>;
+        using TypeInfoLUC   = MetaLookup<TypeInfo>;
     
             // WARNING UNSAFE IN UNLOCKED MULTITHREADED MODE!
             
@@ -92,7 +94,7 @@ namespace yq {
         const std::vector<const OperatorInfo*>& operators() const;
         
         //! All operators for the specified operator
-        OperatorLUC::equal_range_t              operators(Operator) const;
+        const OperatorLUC::equal_range_t        operators(Operator) const;
 
         size_t                                  operators_count() const;
         
@@ -231,7 +233,7 @@ namespace yq {
 
         
         //! Method for this type
-        LUC<MethodInfo>             m_methods;
+        MethodLUC                   m_methods;
 
         OperatorLUC                 m_operators;
         

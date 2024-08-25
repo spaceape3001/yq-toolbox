@@ -49,6 +49,7 @@
 #include <0/math/shape/Quadrilateral2.hpp>
 
 #include <0/basic/DelayInit.hpp>
+#include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
 #include <0/math/shape/shape_utils.hpp>

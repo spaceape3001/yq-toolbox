@@ -8,6 +8,7 @@
 #include <0/math/strings.hpp>
 
 #include <0/basic/DelayInit.hpp>
+#include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
 #include <0/math/glm_types.hpp>

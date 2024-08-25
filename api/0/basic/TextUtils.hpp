@@ -469,6 +469,8 @@ namespace yq {
     */
     bool  is_less_igCase(std::string_view a, std::string_view b);
 
+    bool  is_less_igCase_u8(std::string_view a, std::string_view b);
+
     /*! \brief Tests for lower-case alphabetical character
         \note   This is here for reasons of better spelling and to harmonize with overloads.
     */

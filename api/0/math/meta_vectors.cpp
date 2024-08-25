@@ -29,6 +29,7 @@
 #include <0/math/vector/Vector4.hpp>
 
 #include <0/basic/DelayInit.hpp>
+#include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
 #include <0/math/unit/literals.hpp>
@@ -95,11 +96,37 @@ YQ_TYPE_IMPLEMENT(yq::Vector4U)
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 //  OTHER HELPERS FOR MATH
 
-namespace yq {
-    namespace {
-
+namespace {
+    template <typename T>
+    void    print_quaternion3(Stream& str, const Quaternion3<T>& v)
+    {
+        str << "(" << v.w << "," << v.x << "," << v.y << "," << v.z << ")";
     }
-}    
+
+    template <typename T>
+    void    print_vector1(Stream& str, const Vector1<T>& v)
+    {
+        str << "(" << v.x << ")";
+    }
+
+    template <typename T>
+    void    print_vector2(Stream& str, const Vector2<T>& v)
+    {
+        str << "(" << v.x << "," << v.y << ")";
+    }
+
+    template <typename T>
+    void    print_vector3(Stream& str, const Vector3<T>& v)
+    {
+        str << "(" << v.x << "," << v.y << "," << v.z << ")";
+    }
+
+    template <typename T>
+    void    print_vector4(Stream& str, const Vector4<T>& v)
+    {
+        str << "(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")";
+    }
+}
     
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -294,6 +321,7 @@ static void reg_vector_math () {
         w.property(szX, &Quaternion3D::x).description(szX_Quaternion);
         w.property(szY, &Quaternion3D::y).description(szY_Quaternion);
         w.property(szZ, &Quaternion3D::z).description(szZ_Quaternion);
+        w.print<print_quaternion3<double>>();
     }
 
     {
@@ -303,6 +331,7 @@ static void reg_vector_math () {
         w.property(szX, &Quaternion3F::x).description(szX_Quaternion);
         w.property(szY, &Quaternion3F::y).description(szY_Quaternion);
         w.property(szZ, &Quaternion3F::z).description(szZ_Quaternion);
+        w.print<print_quaternion3<float>>();
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -349,6 +378,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector1D::x).description(szX_Vector);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.operate_with<double>();
+        w.print<print_vector1<double>>();
     }
 
     {
@@ -357,6 +387,7 @@ static void reg_vector_math () {
         w.property(szLength, &Vector1F::length).description(szLength_Vector).alias(szLen);
         w.property(szLength², &Vector1F::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1F::x).description(szX_Vector);
+        w.print<print_vector1<float>>();
     }
 
     {
@@ -364,6 +395,7 @@ static void reg_vector_math () {
         w.description("1D vector in integer");
         w.property(szLength², &Vector1I::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1I::x).description(szX_Vector);
+        w.print<print_vector1<int>>();
     }
 
     {
@@ -371,6 +403,7 @@ static void reg_vector_math () {
         w.description("1D vector in unsigned integer");
         w.property(szLength², &Vector1U::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1U::x).description(szX_Vector);
+        w.print<print_vector1<unsigned>>();
     }
 
     {
@@ -383,6 +416,7 @@ static void reg_vector_math () {
         w.method(szZ, &Vector2D::z).description(szZ_Vector2);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.operate_with<double>();
+        w.print<print_vector2<double>>();
     }
 
     {
@@ -393,6 +427,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector2F::x).description(szX_Vector);
         w.property(szY, &Vector2F::y).description(szY_Vector);
         w.method(szZ, &Vector2F::z).description(szZ_Vector2);
+        w.print<print_vector2<float>>();
     }
 
     {
@@ -402,6 +437,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector2I::x).description(szX_Vector);
         w.property(szY, &Vector2I::y).description(szY_Vector);
         w.method(szZ, &Vector2I::z).description(szZ_Vector2);
+        w.print<print_vector2<int>>();
     }
 
     {
@@ -411,6 +447,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector2U::x).description(szX_Vector);
         w.property(szY, &Vector2U::y).description(szY_Vector);
         w.method(szZ, &Vector2U::z).description(szZ_Vector2);
+        w.print<print_vector2<unsigned>>();
     }
 
     {
@@ -423,6 +460,7 @@ static void reg_vector_math () {
         w.property(szZ, &Vector3D::z).description(szZ_Vector);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.operate_with<double>();
+        w.print<print_vector3<double>>();
     }
 
     {
@@ -433,6 +471,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector3F::x).description(szX_Vector);
         w.property(szY, &Vector3F::y).description(szY_Vector);
         w.property(szZ, &Vector3F::z).description(szZ_Vector);
+        w.print<print_vector3<float>>();
     }
 
     {
@@ -442,6 +481,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector3I::x).description(szX_Vector);
         w.property(szY, &Vector3I::y).description(szY_Vector);
         w.property(szZ, &Vector3I::z).description(szZ_Vector);
+        w.print<print_vector3<int>>();
     }
 
     {
@@ -451,6 +491,7 @@ static void reg_vector_math () {
         w.property(szX, &Vector3U::x).description(szX_Vector);
         w.property(szY, &Vector3U::y).description(szY_Vector);
         w.property(szZ, &Vector3U::z).description(szZ_Vector);
+        w.print<print_vector3<unsigned>>();
     }
 
     {
@@ -464,6 +505,7 @@ static void reg_vector_math () {
         w.property(szW, &Vector4D::w).description(szW_Vector);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.operate_with<double>();
+        w.print<print_vector4<double>>();
     }
 
     {
@@ -475,6 +517,7 @@ static void reg_vector_math () {
         w.property(szY, &Vector4F::y).description(szY_Vector);
         w.property(szZ, &Vector4F::z).description(szZ_Vector);
         w.property(szW, &Vector4F::w).description(szW_Vector);
+        w.print<print_vector4<float>>();
     }
 
     {
@@ -485,6 +528,7 @@ static void reg_vector_math () {
         w.property(szY, &Vector4I::y).description(szY_Vector);
         w.property(szZ, &Vector4I::z).description(szZ_Vector);
         w.property(szW, &Vector4I::w).description(szW_Vector);
+        w.print<print_vector4<int>>();
     }
 
     {
@@ -495,6 +539,7 @@ static void reg_vector_math () {
         w.property(szY, &Vector4U::y).description(szY_Vector);
         w.property(szZ, &Vector4U::z).description(szZ_Vector);
         w.property(szW, &Vector4U::w).description(szW_Vector);
+        w.print<print_vector4<unsigned>>();
     }
 }
 

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <0/meta/Meta.hpp>
+#include <0/meta/MetaLookup.hpp>
 #include <0/basic/Vector.hpp>
 
 namespace yq {
@@ -14,9 +15,9 @@ namespace yq {
         bool                    openReg     = true;
         Vector<const Meta*>     all;
         Vector<const Meta*>     metas;
-        LUC<ObjectInfo>         objects;
-        LUC<TypeInfo>           types;
-        
+        MetaLookup<ObjectInfo>  objects;
+        MetaLookup<TypeInfo>    types;
+                
         Repo();
     };
 }

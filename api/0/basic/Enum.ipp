@@ -199,7 +199,7 @@ namespace yq {
         proc();
         
         m_sorted    = m_keys;
-        m_sorted.sort(is_less_igCase);
+        m_sorted.sort(is_less_igCase_u8);
         m_ordered   = m_keys;
         m_ordered.sort([&](std::string_view  a, std::string_view b) -> bool {
             return m_name2value.get(a) < m_name2value.get(b);

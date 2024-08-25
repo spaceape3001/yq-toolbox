@@ -4,11 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ConstructorInfo.ipp"
+#include "MetaLookup.hpp"
 
 #include "AnyArgHelper.ipp"
 #include "ArgInfo.ipp"
 #include "CompoundInfo.ipp"
+#include "ConstructorInfo.ipp"
 #include "Generator.ipp"
 #include "GlobalInfo.ipp"
 #include "Meta.ipp"

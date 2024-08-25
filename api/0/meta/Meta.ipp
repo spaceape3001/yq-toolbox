@@ -364,6 +364,12 @@ namespace yq {
             m_stem  = m_name.substr(ecolon+1);
         } else
             m_stem  = m_name;
+            
+        ecolon      = m_name32.find_last_of(':');
+        if(ecolon != std::string_view::npos){
+            m_stem32  = m_name32.substr(ecolon+1);
+        } else
+            m_stem32  = m_name32;
     }
 
 

@@ -12,9 +12,11 @@
 #include <0/math/vector/Vector3.hpp>
 
 #include <0/basic/DelayInit.hpp>
+#include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
-#include <0/math/unit/literals.hpp>
+#include <0/basic/StringLiteral.hpp>
+#include <0/math/units.hpp>
 
 using namespace yq;
 
@@ -309,13 +311,36 @@ YQ_TYPE_IMPLEMENT(yq::unit::RadianPerSecond²3D)
 //  OTHER HELPERS FOR MATH
 
 namespace {
+    template <typename U, StringLiteral SYM="">
+    void    print_unit(Stream& str, const U& v)
+    {
+        str << v.value << SYM.value;
+    }
 }
     
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 static void reg_units_math () {
 
+    {
+        auto w = writer<unit::Acre>();
+        w.print<print_unit<unit::Acre, "ac">>();
+    }
+    
+    {
+        auto w = writer<unit::Ampere>();
+        w.print<print_unit<unit::Ampere, "A">>();
+    }
+    
+    {
+        auto w = writer<unit::Arcminute>();
+        w.print<print_unit<unit::Arcminute, "'">>();
+    }
 
+    {
+        auto w = writer<unit::Arcsecond>();
+        w.print<print_unit<unit::Arcsecond, "\"">>();
+    }
 }
 
 YQ_INVOKE(reg_units_math();)

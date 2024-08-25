@@ -178,7 +178,7 @@ namespace yq {
     }
     
     //! All operators for the specified operator
-    TypeInfo::OperatorLUC::equal_range_t    TypeInfo::operators(Operator opt) const
+    const TypeInfo::OperatorLUC::equal_range_t  TypeInfo::operators(Operator opt) const
     {
         return m_operators.lut.equal_range(opt);
     }

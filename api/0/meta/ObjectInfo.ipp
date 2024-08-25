@@ -19,7 +19,7 @@ namespace yq {
 
     const ObjectInfo*        ObjectInfo::find(std::string_view k)
     {
-        return repo().objects.lut.first(k, nullptr);
+        return repo().objects.find(k);
     }
 
     const ObjectInfo*        ObjectInfo::find(id_t i)
@@ -47,12 +47,12 @@ namespace yq {
         r.objects << this;
     }
 
-    const Meta::LUC<ObjectInfo>&    ObjectInfo::bases(bool all) const
+    const MetaLookup<ObjectInfo>&    ObjectInfo::bases(bool all) const
     {
         return def(all).bases;
     }
 
-    const Meta::LUC<ObjectInfo>&    ObjectInfo::deriveds(bool all) const
+    const MetaLookup<ObjectInfo>&    ObjectInfo::deriveds(bool all) const
     {
         return def(all).derived;
     }
@@ -76,12 +76,12 @@ namespace yq {
         return false;
     }
     
-    const Meta::LUC<MethodInfo>&    ObjectInfo::methods(bool all) const
+    const MetaLookup<MethodInfo>&    ObjectInfo::methods(bool all) const
     {
         return def(all).methods;
     }
     
-    const Meta::LUC<PropertyInfo>&  ObjectInfo::properties(bool all) const
+    const MetaLookup<PropertyInfo>&  ObjectInfo::properties(bool all) const
     {
         return def(all).properties;
     }
@@ -95,9 +95,9 @@ namespace yq {
     {
         CompoundInfo::sweep_impl();
         
-        m_all           = {};
-        m_local.bases   = {};
-        m_local.derived = {};
+        m_all.clear();
+        m_local.bases.clear();
+        m_local.derived.clear();
 
         if(m_base){
             m_local.bases << m_base;

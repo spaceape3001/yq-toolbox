@@ -7,6 +7,7 @@
 #pragma once
 
 #include <0/meta/CompoundInfo.hpp>
+#include <0/meta/MetaLookup.hpp>
 
 namespace yq {
 
@@ -78,7 +79,7 @@ namespace yq {
             
             \param[in] all  TRUE to get all sub-derived objects
         */
-        const LUC<ObjectInfo>&    deriveds(bool all=false) const;
+        const MetaLookup<ObjectInfo>&    deriveds(bool all=false) const;
         
         /*! \brief Base objects
         
@@ -86,7 +87,7 @@ namespace yq {
             
             \param[in] all      TRUE to get all base objects (all the way to Object)
         */
-        const LUC<ObjectInfo>&    bases(bool all=false) const;
+        const MetaLookup<ObjectInfo>&    bases(bool all=false) const;
         
         /*! \brief Properties
         
@@ -94,7 +95,7 @@ namespace yq {
             
             \param[in] all      TRUE to get all properties on all base objects too.
         */
-        const LUC<PropertyInfo>&  properties(bool all=false) const;
+        const MetaLookup<PropertyInfo>&  properties(bool all=false) const;
         
         /*! \brief Methods
             
@@ -102,7 +103,7 @@ namespace yq {
             
             \param[in] all      TRUE to get all the methods across all base objects too.
         */
-        const LUC<MethodInfo>&    methods(bool all=false) const;
+        const MetaLookup<MethodInfo>&  methods(bool all=false) const;
         
     
     protected:
@@ -126,13 +127,21 @@ namespace yq {
         //! General definitions to what it's an object
         struct D {
             //! Base classes
-            LUC<ObjectInfo>     bases;
+            MetaLookup<ObjectInfo>     bases;
             //! Derived classes
-            LUC<ObjectInfo>     derived;
+            MetaLookup<ObjectInfo>     derived;
             //! Properties
-            LUC<PropertyInfo>   properties;
+            MetaLookup<PropertyInfo>   properties;
             //! Methods
-            LUC<MethodInfo>     methods;
+            MetaLookup<MethodInfo>     methods;
+            
+            void                    clear()
+            {
+                bases.clear();
+                derived.clear();
+                properties.clear();
+                methods.clear();
+            }
         };
         
         //! What's defined on this object

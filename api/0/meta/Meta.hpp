@@ -19,6 +19,7 @@
 #include <0/meta/AnyDef.hpp>
 
 #include <source_location>
+#include <concepts>
 
 /*
     META is about runtime reflection & introspection
@@ -151,7 +152,7 @@ namespace yq {
         };
         
     
-    
+        
     
     
             //  I mean, really, 255 ain't enough?? Even in full-on UTF-8, that's over 40 characters.
@@ -318,14 +319,19 @@ namespace yq {
         //! \brief Source location of this definition
         const std::source_location&     source() const { return m_source; }
         
+        const std::string_view          stem() const { return m_stem; }
+        const std::u32string_view       stem32() const { return m_stem32; }
+
         //  TODO
         const Any&                      tag(std::string_view) const;
+        
         
         
 
             // used during the creation....
         class Writer;
-        
+
+#if 0        
         template <typename T>
         struct LUC;
 
@@ -334,6 +340,7 @@ namespace yq {
 
         template <typename T>
         struct LUC32;
+#endif
 
     protected:
         friend class ArgInfo;
@@ -370,6 +377,7 @@ namespace yq {
         std::string_view                        m_name;
         std::u32string                          m_name32;
         std::string_view                        m_stem;
+        std::u32string_view                     m_stem32;
         std::vector<const Meta*>                m_children;
         const Meta*                             m_parent    = nullptr;
         std::source_location                    m_source;
@@ -378,9 +386,15 @@ namespace yq {
         
         struct Repo;
         static Repo&    repo();
-        
     };
+    
+    template <typename T>
+    concept MetaType    = std::derived_from<T, Meta>;
 
+    template <typename MT> class MetaLookup;
+    template <typename MT, typename K, K (MT::*FN)() const> struct MetaLookup2;
+    
+#if 0
     template <typename T>
     struct Meta::LUC {
         //   CONDITION is still valid, however, we can't use it w/o compiler issues
@@ -457,6 +471,10 @@ namespace yq {
         StringViewSet                   keys;
         U32StringViewSet                keys32;
         std::vector<std::u32string*>    alts32;
+        MM32                            stem32;
+
+        using equal_range_t     = decltype(((const LUC32*)nullptr) -> lut.equal_range(std::string_view()));
+        using equal_range_32_t  = decltype(((const LUC32*)nullptr) -> lut32.equal_range(std::u32string_view()));
 
         LUC32(){}
         ~LUC32()
@@ -499,6 +517,7 @@ namespace yq {
             keys32 += *s;
         }
     };
+    #endif
 
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, std::span<const TypeInfo*>);
 }

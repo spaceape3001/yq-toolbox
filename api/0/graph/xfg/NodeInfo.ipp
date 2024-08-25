@@ -22,12 +22,12 @@ namespace yq::xfg {
         return all ? m_all : m_local; 
     }
 
-    const Meta::LUC<PinInfo>&  NodeInfo::inputs(bool all) const
+    const MetaLookup<PinInfo>&  NodeInfo::inputs(bool all) const
     {
         return _def(all).inputs;
     }
     
-    const Meta::LUC<PinInfo>&  NodeInfo::outputs(bool all) const
+    const MetaLookup<PinInfo>&  NodeInfo::outputs(bool all) const
     {
         return _def(all).outputs;
     }

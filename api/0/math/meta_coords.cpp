@@ -21,6 +21,7 @@
 #include <0/math/unit/MKS.hpp>
 
 #include <0/basic/DelayInit.hpp>
+#include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
 using namespace yq;
@@ -67,6 +68,42 @@ YQ_TYPE_IMPLEMENT(yq::Polar2M)
 //  OTHER HELPERS FOR MATH
 
 namespace {
+    template <typename T>
+    void     print_coord1(Stream& str, const Coord1<T>& v)
+    {
+        str << "(" << v.i << ")";
+    }
+
+
+    template <typename T>
+    void     print_coord2(Stream& str, const Coord2<T>& v)
+    {
+        str << "(" << v.i << "," << v.j << ")";
+    }
+
+    template <typename T>
+    void     print_coord3(Stream& str, const Coord3<T>& v)
+    {
+        str << "(" << v.i << "," << v.j << "," << v.k << ")";
+    }
+
+    template <typename T>
+    void     print_coord4(Stream& str, const Coord4<T>& v)
+    {
+        str << "(" << v.i << "," << v.j << "," << v.k << "," << v.l << ")";
+    }
+
+    template <typename T>
+    void     print_coord5(Stream& str, const Coord5<T>& v)
+    {
+        str << "(" << v.i << "," << v.j << "," << v.k << "," << v.l << "," << v.m << ")";
+    }
+
+    template <typename T>
+    void     print_coord6(Stream& str, const Coord6<T>& v)
+    {
+        str << "(" << v.i << "," << v.j << "," << v.k << "," << v.l << "," << v.m << "," << v.n << ")";
+    }
 }
     
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -87,24 +124,28 @@ static void reg_coord_math () {
         auto w = writer<Coord1D>();
         w.description("1D coordinate in double");
         w.property(szI, &Coord1D::i).description(szI_Coord);
+        w.print<print_coord1<double>>();
     }
 
     {
         auto w = writer<Coord1F>();
         w.description("1D coordinate in float");
         w.property(szI, &Coord1F::i).description(szI_Coord);
+        w.print<print_coord1<float>>();
     }
 
     {
         auto w = writer<Coord1I>();
         w.description("1D coordinate in integer");
         w.property(szI, &Coord1I::i).description(szI_Coord);
+        w.print<print_coord1<int>>();
     }
 
     {
         auto w = writer<Coord1U>();
         w.description("1D coordinate in unsigned integer");
         w.property(szI, &Coord1U::i).description(szI_Coord);
+        w.print<print_coord1<unsigned>>();
     }
 
     {
@@ -112,6 +153,7 @@ static void reg_coord_math () {
         w.description("2D coordinate in double");
         w.property(szI, &Coord2D::i).description(szI_Coord);
         w.property(szJ, &Coord2D::j).description(szJ_Coord);
+        w.print<print_coord2<double>>();
     }
 
     {
@@ -119,6 +161,7 @@ static void reg_coord_math () {
         w.description("2D coordinate in float");
         w.property(szI, &Coord2F::i).description(szI_Coord);
         w.property(szJ, &Coord2F::j).description(szJ_Coord);
+        w.print<print_coord2<float>>();
     }
 
     {
@@ -126,6 +169,7 @@ static void reg_coord_math () {
         w.description("2D coordinate in integer");
         w.property(szI, &Coord2I::i).description(szI_Coord);
         w.property(szJ, &Coord2I::j).description(szJ_Coord);
+        w.print<print_coord2<int>>();
     }
 
     {
@@ -133,6 +177,7 @@ static void reg_coord_math () {
         w.description("2D coordinate in unsigned integer");
         w.property(szI, &Coord2U::i).description(szI_Coord);
         w.property(szJ, &Coord2U::j).description(szJ_Coord);
+        w.print<print_coord2<unsigned>>();
     }
 
     {
@@ -141,6 +186,7 @@ static void reg_coord_math () {
         w.property(szI, &Coord3D::i).description(szI_Coord);
         w.property(szJ, &Coord3D::j).description(szJ_Coord);
         w.property(szK, &Coord3D::k).description(szK_Coord);
+        w.print<print_coord3<double>>();
     }
 
     {
@@ -149,6 +195,7 @@ static void reg_coord_math () {
         w.property(szI, &Coord3F::i).description(szI_Coord);
         w.property(szJ, &Coord3F::j).description(szJ_Coord);
         w.property(szK, &Coord3F::k).description(szK_Coord);
+        w.print<print_coord3<float>>();
     }
 
     {
@@ -157,6 +204,7 @@ static void reg_coord_math () {
         w.property(szI, &Coord3I::i).description(szI_Coord);
         w.property(szJ, &Coord3I::j).description(szJ_Coord);
         w.property(szK, &Coord3I::k).description(szK_Coord);
+        w.print<print_coord3<int>>();
     }
 
     {
@@ -165,6 +213,7 @@ static void reg_coord_math () {
         w.property(szI, &Coord3U::i).description(szI_Coord);
         w.property(szJ, &Coord3U::j).description(szJ_Coord);
         w.property(szK, &Coord3U::k).description(szK_Coord);
+        w.print<print_coord3<unsigned>>();
     }
 
     {
@@ -174,6 +223,7 @@ static void reg_coord_math () {
         w.property(szJ, &Coord4D::j).description(szJ_Coord);
         w.property(szK, &Coord4D::k).description(szK_Coord);
         w.property(szL, &Coord4D::l).description(szL_Coord);
+        w.print<print_coord4<double>>();
     }
 
     {
@@ -183,6 +233,7 @@ static void reg_coord_math () {
         w.property(szJ, &Coord4F::j).description(szJ_Coord);
         w.property(szK, &Coord4F::k).description(szK_Coord);
         w.property(szL, &Coord4F::l).description(szL_Coord);
+        w.print<print_coord4<float>>();
     }
 
     {
@@ -192,6 +243,7 @@ static void reg_coord_math () {
         w.property(szJ, &Coord4I::j).description(szJ_Coord);
         w.property(szK, &Coord4I::k).description(szK_Coord);
         w.property(szL, &Coord4I::l).description(szL_Coord);
+        w.print<print_coord4<int>>();
     }
 
     {
@@ -201,6 +253,7 @@ static void reg_coord_math () {
         w.property(szJ, &Coord4U::j).description(szJ_Coord);
         w.property(szK, &Coord4U::k).description(szK_Coord);
         w.property(szL, &Coord4U::l).description(szL_Coord);
+        w.print<print_coord4<unsigned>>();
     }
 
     {
@@ -211,6 +264,7 @@ static void reg_coord_math () {
         w.property(szK, &Coord5D::k).description(szK_Coord);
         w.property(szL, &Coord5D::l).description(szL_Coord);
         w.property(szM, &Coord5D::m).description(szM_Coord);
+        w.print<print_coord5<double>>();
     }
 
     {
@@ -221,6 +275,7 @@ static void reg_coord_math () {
         w.property(szK, &Coord5F::k).description(szK_Coord);
         w.property(szL, &Coord5F::l).description(szL_Coord);
         w.property(szM, &Coord5F::m).description(szM_Coord);
+        w.print<print_coord5<float>>();
     }
 
     {
@@ -231,6 +286,7 @@ static void reg_coord_math () {
         w.property(szK, &Coord5I::k).description(szK_Coord);
         w.property(szL, &Coord5I::l).description(szL_Coord);
         w.property(szM, &Coord5I::m).description(szM_Coord);
+        w.print<print_coord5<int>>();
     }
 
     {
@@ -241,6 +297,7 @@ static void reg_coord_math () {
         w.property(szK, &Coord5U::k).description(szK_Coord);
         w.property(szL, &Coord5U::l).description(szL_Coord);
         w.property(szM, &Coord5U::m).description(szM_Coord);
+        w.print<print_coord5<unsigned>>();
     }
 
     {
@@ -252,6 +309,7 @@ static void reg_coord_math () {
         w.property(szL, &Coord6D::l).description(szL_Coord);
         w.property(szM, &Coord6D::m).description(szM_Coord);
         w.property(szN, &Coord6D::n).description(szN_Coord);
+        w.print<print_coord6<double>>();
     }
 
     {
@@ -263,6 +321,7 @@ static void reg_coord_math () {
         w.property(szL, &Coord6F::l).description(szL_Coord);
         w.property(szM, &Coord6F::m).description(szM_Coord);
         w.property(szN, &Coord6F::n).description(szN_Coord);
+        w.print<print_coord6<float>>();
     }
 
     {
@@ -274,6 +333,7 @@ static void reg_coord_math () {
         w.property(szL, &Coord6I::l).description(szL_Coord);
         w.property(szM, &Coord6I::m).description(szM_Coord);
         w.property(szN, &Coord6I::n).description(szN_Coord);
+        w.print<print_coord6<int>>();
     }
 
     {
@@ -285,6 +345,7 @@ static void reg_coord_math () {
         w.property(szL, &Coord6U::l).description(szL_Coord);
         w.property(szM, &Coord6U::m).description(szM_Coord);
         w.property(szN, &Coord6U::n).description(szN_Coord);
+        w.print<print_coord6<unsigned>>();
     }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

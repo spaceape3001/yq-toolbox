@@ -23,18 +23,18 @@ namespace yq {
         Meta::sweep_impl();
     }
 
-    void        CompoundInfo::gather(LUC<MethodInfo>& res)
+    void        CompoundInfo::gather(MetaLookup<MethodInfo>& res)
     {
-        res     = {};
+        res.clear();
         for(const Meta* m : children()){
             if(m && m->has(Flag::METHOD))
                 res << static_cast<const MethodInfo*>(m);
         }
     }
     
-    void        CompoundInfo::gather(LUC<PropertyInfo>& res)
+    void        CompoundInfo::gather(MetaLookup<PropertyInfo>& res)
     {
-        res     = {};
+        res.clear();
         for(const Meta* m : children()){
             if(m && m->has(Flag::PROPERTY))
                 res << static_cast<const PropertyInfo*>(m);

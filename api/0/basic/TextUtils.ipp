@@ -693,6 +693,11 @@ namespace yq {
         return is_less( compare_igCase(a,b));
     }
 
+    bool  is_less_igCase_u8(std::string_view a, std::string_view b)
+    {
+        return is_less( compare_igCase(a,b));
+    }
+
     bool    is_newline(char ch)
     {
         return (ch == '\r') || (ch == '\n');

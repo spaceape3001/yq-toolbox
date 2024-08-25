@@ -10,6 +10,7 @@
 #include <0/meta/CompoundInfo.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoStatic.hpp>
+#include <0/meta/MetaLookup.hpp>
 
 namespace yq::expr {
 
@@ -77,8 +78,8 @@ namespace yq::expr {
         static const OpData             kStandardOperators[];
         
         u32string_any_map_t             m_constants;
-        LUC32<PropertyInfo>             m_variables;
-        LUC32<MethodInfo>               m_functions;
+        MetaLookup<PropertyInfo>        m_variables;
+        MetaLookup<MethodInfo>          m_functions;
         OpMap                           m_operators;
         char32_set_t                    m_punctText;
         bool                            m_digitsText        = true;

@@ -9,6 +9,7 @@
 #include <0/meta/Meta.hpp>
 #include <0/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfo.hpp>
+#include <0/meta/MetaLookup.hpp>
 #include <0/meta/MethodInfo.hpp>
 
 namespace yq {
@@ -25,8 +26,8 @@ namespace yq {
         
         static GlobalInfo&          instance();
 
-        const LUC<MethodInfo>&      methods() const { return m_methods; }
-        const LUC<PropertyInfo>&    properties() const { return m_properties; }
+        const MetaLookup<MethodInfo>&    methods() const { return m_methods; }
+        const MetaLookup<PropertyInfo>&  properties() const { return m_properties; }
         
         template <typename Pred>
         auto                        all_functions(std::string_view k, Pred pred) const;
@@ -40,10 +41,10 @@ namespace yq {
 
         
         //! Lookup/Container for the methods
-        LUC<MethodInfo>         m_methods;
+        MetaLookup<MethodInfo>         m_methods;
         
         //! Lookup/Container for the properties
-        LUC<PropertyInfo>       m_properties;
+        MetaLookup<PropertyInfo>       m_properties;
 
     };
 
