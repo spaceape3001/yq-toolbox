@@ -118,6 +118,7 @@ namespace yq {
         //! Subtracts vector from quadvector, returns multivector result
         constexpr Multivector4<T>   operator-(const Vector4<T>& b) const noexcept;
 
+        //! Multiplies quadvector by scalar, returns quadvector result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Quadvector4<product_t<T,U>> operator*(U b) const noexcept;
