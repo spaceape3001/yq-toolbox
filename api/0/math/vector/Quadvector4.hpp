@@ -128,6 +128,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Quadvector4& operator*=(U b) noexcept;
 
+        //! Divides this quadvector by the given scalar, returns quadvector result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Quadvector4<quotient_t<T,U>> operator/(U b) const noexcept;
