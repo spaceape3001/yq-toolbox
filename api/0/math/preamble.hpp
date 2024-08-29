@@ -725,8 +725,6 @@ namespace yq {
     template <typename T> using square_t = decltype(T()*T());
     template <typename T> using cube_t   = decltype(T()*T()*T());
     template <typename T> using fourth_t = decltype(T()*T()*T()*T());
-    template <typename T, typename U>  using product_t     = decltype(T()*U());
-    template <typename T, typename U>  using quotient_t    = decltype(T()/U());
     template <typename T> using inverse_t = decltype(T()/square_t<T>());
     template <typename T, typename U>  static constexpr const bool self_mul_v = std::is_same_v<T,product_t<T,U>>;
     template <typename T, typename U>  static constexpr const bool self_div_v = std::is_same_v<T,quotient_t<T,U>>;

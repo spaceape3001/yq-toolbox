@@ -428,13 +428,17 @@ namespace yq {
                 }
             }
             if constexpr (can_two_multiply_v<T,U>){
-                if(enabled(Operator::Multiply)){
-                    operate(Operator::Multiply, generic_two_multiply<T,U>, sl);
+                if constexpr (is_type_v<product_t<T,U>>){
+                    if(enabled(Operator::Multiply)){
+                        operate(Operator::Multiply, generic_two_multiply<T,U>, sl);
+                    }
                 }
             }
             if constexpr (can_two_divide_v<T,U>){
-                if(enabled(Operator::Divide)){
-                    operate(Operator::Divide, generic_two_divide<T,U>, sl);
+                if constexpr (is_type_v<quotient_t<T,U>>){
+                    if(enabled(Operator::Divide)){
+                        operate(Operator::Divide, generic_two_divide<T,U>, sl);
+                    }
                 }
             }
         }
@@ -451,14 +455,18 @@ namespace yq {
                     operate(Operator::Affirm, generic_affirm<T>, sl );
                 }
             }
-            if constexpr ( can_divide_v<T> && !is_template_enum_v<T> ){
-                if(enabled(Operator::Divide)){
-                    operate(Operator::Divide, generic_divide<T>, sl );
+            if constexpr ( can_divide_v<T> && !is_template_enum_v<T>){
+                if constexpr (is_type_v<quotient_t<T,T>>){
+                    if(enabled(Operator::Divide)){
+                        operate(Operator::Divide, generic_divide<T>, sl );
+                    }
                 }
             }
-            if constexpr ( can_multiply_v<T> && !is_template_enum_v<T> ){
-                if(enabled(Operator::Multiply)){
-                    operate(Operator::Multiply, generic_multiply<T>, sl );
+            if constexpr ( can_multiply_v<T> && !is_template_enum_v<T>){
+                if constexpr (is_type_v<product_t<T,T>> ){
+                    if(enabled(Operator::Multiply)){
+                        operate(Operator::Multiply, generic_multiply<T>, sl );
+                    }
                 }
             }
             if constexpr ( can_negate_v<T> && !is_template_enum_v<T> ){

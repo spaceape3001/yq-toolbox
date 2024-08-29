@@ -324,57 +324,68 @@ static void reg_units_math () {
 
     {
         auto w = writer<unit::Acre>();
+        w.operate_self();
         w.print<print_unit<unit::Acre, "ac">>();
     }
     
     {
         auto w = writer<unit::Ampere>();
+        w.operate_self();
         w.print<print_unit<unit::Ampere, "A">>();
     }
     
     {
         auto w = writer<unit::Arcminute>();
+        w.operate_self();
         w.print<print_unit<unit::Arcminute, "'">>();
     }
 
     {
         auto w = writer<unit::Arcsecond>();
+        w.operate_self();
         w.print<print_unit<unit::Arcsecond, "\"">>();
     }
     
     
     {
         auto w = writer<unit::Are>();
+        w.operate_self();
         w.print<print_unit<unit::Are, "are">>();
     }
 
     {
         auto w = writer<unit::Ångström>();
+        w.operate_self();
         w.print<print_unit<unit::Ångström, "Å">>();
     }
 
     {
         auto w = writer<unit::AstronomicalUnit>();
+        w.operate_self();
         w.print<print_unit<unit::AstronomicalUnit, "AU">>();
     }
 
     {
         auto w = writer<unit::Attosecond>();
+        w.operate_self();
         w.print<print_unit<unit::Attosecond, "as">>();
     }
 
     {
         auto w = writer<unit::Bar>();
+        w.operate_self();
         w.print<print_unit<unit::Bar, "bar">>();
     }
 
     {
         auto w = writer<unit::Barn>();
+        w.operate_self();
         w.print<print_unit<unit::Barn, "b">>();
     }
 
     {
         auto w = writer<unit::Barye>();
+        w.operate_self();
         w.print<print_unit<unit::Barye, "Ba">>();
     }
 

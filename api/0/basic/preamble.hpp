@@ -386,5 +386,8 @@ namespace yq {
 
     //! The reasonable maximum for a raw null terminated string... anything else should be in a string view (at least)
     static constexpr const uint64_t         MAX_NULL_TERM       = 8192;
+
+    template <typename T, typename U>  using product_t     = decltype(T()*U());
+    template <typename T, typename U>  using quotient_t    = decltype(T()/U());
 }
 

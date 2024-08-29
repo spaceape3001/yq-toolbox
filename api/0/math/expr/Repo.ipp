@@ -426,18 +426,47 @@ namespace yq {
             return ::sqrt(x);
         }
         
-        unit::Radian    fn_atan2(double y, double x)
+        double    fn_atan2(double y, double x)
         {
-            return atan(y,x);
+            return atan(y,x).value;
         }
     
+        double    fn_atan2d(double y, double x)
+        {
+            return Degree(atan(y,x)).value;
+        }
+        
+        double fn_cos(double v)
+        {
+            return cos(Radian(v));
+        }
+        
+        double fn_cosd(double v)
+        {
+            return cos(Degree(v));
+        }
+
+        double  fn_sin(double v)
+        {
+            return sin(Radian(v));
+        }
     
+        double  fn_sind(double v)
+        {
+            return sin(Degree(v));
+        }
+
         void    init_repo()
         {
             auto w = writer<expr::Repo>();
-            w.function("time", fn_time);
-            w.function("sqrt", fn_sqrt);
             w.function("atan2", fn_atan2);
+            w.function("atan2d", fn_atan2d);
+            w.function("cos", fn_cos);
+            w.function("cosd", fn_cosd);
+            w.function("sin", fn_sin);
+            w.function("sind", fn_sind);
+            w.function("sqrt", fn_sqrt);
+            w.function("time", fn_time);
         }
     
         YQ_INVOKE( init_repo(); )
