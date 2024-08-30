@@ -197,7 +197,7 @@ namespace yq {
     template <typename> struct Polyline2;
     template <typename> struct Polyline3;
     template <typename> struct Polyline4;
-    //template <typename> struct Pose2;
+    template <typename> struct Pose2;
     template <typename> struct Pose3;
     template <typename> struct Quadvector4;
     template <typename> struct Quaternion3;
@@ -728,8 +728,8 @@ namespace yq {
 
     using LCountZ   = LCount<size_t>;
 
-    //using Pose2D        = Pose2<double>;
-    //using Pose2F        = Pose2<float>;
+    using Pose2D        = Pose2<double>;
+    using Pose2F        = Pose2<float>;
 
     using Pose3D        = Pose3<double>;
     using Pose3F        = Pose3<float>;

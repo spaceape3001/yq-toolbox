@@ -76,6 +76,21 @@ add_library(${PROJECT_NAME} SHARED
     0/graph/xfg/xfg.cpp
     0/io/io.cpp
     0/math/math.cpp
+    0/math/Complex.hpp
+    0/math/Complex.cpp
+    0/math/Fraction.hpp
+    0/math/Fraction.cpp
+    0/math/Pose2.hpp
+    0/math/Pose2.hxx
+    0/math/Pose2.cpp
+    0/math/Pose3.hpp
+    0/math/Pose3.hxx
+    0/math/Pose3.cpp
+    0/math/Range.hpp
+    0/math/Range.hxx
+    0/math/Range.cpp
+    0/math/SimpleSpace.hpp
+    0/math/SimpleSpace.cpp
     0/math/meta_coords.cpp
     0/math/meta_general.cpp
     0/math/meta_glm.cpp

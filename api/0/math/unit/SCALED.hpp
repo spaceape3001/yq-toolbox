@@ -29,7 +29,7 @@ namespace yq {
          
         auto operator<=>(const SCALED& b) const noexcept = default;
         
-        constexpr SCALED(const MKS<T,DIM>& v) noexcept : value( T(value/K) ) {}
+        constexpr SCALED(const MKS<T,DIM>& v) noexcept : value( T(v.value/K) ) {}
         
         operator MKS<T,DIM>() const noexcept { return { T(value*K) }; }
         

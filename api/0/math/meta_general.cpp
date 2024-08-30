@@ -5,24 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <0/math/Complex.hpp>
 #include <0/math/Counter.hpp>
-#include <0/math/Fraction.hpp>
-#include <0/math/Pose3.hpp>
-#include <0/math/Range.hpp>
 #include <0/math/strings.hpp>
-
 #include <0/basic/DelayInit.hpp>
 #include <0/meta/Init.hpp>
 
-#include <0/math/SimpleSpace.hpp>
 
 using namespace yq;
-
-YQ_TYPE_IMPLEMENT(yq::ComplexD)
-YQ_TYPE_IMPLEMENT(yq::ComplexF)
-YQ_TYPE_IMPLEMENT(yq::ComplexI)
-YQ_TYPE_IMPLEMENT(yq::ComplexU)
 
 YQ_TYPE_IMPLEMENT(yq::CountI8)
 YQ_TYPE_IMPLEMENT(yq::CountI16)
@@ -35,10 +24,6 @@ YQ_TYPE_IMPLEMENT(yq::CountU32)
 YQ_TYPE_IMPLEMENT(yq::CountU64)
 
 
-YQ_TYPE_IMPLEMENT(yq::FractionI)
-//YQ_TYPE_IMPLEMENT(yq::Frac16)
-//YQ_TYPE_IMPLEMENT(yq::Frac32)
-//YQ_TYPE_IMPLEMENT(yq::Frac64)
 
 YQ_TYPE_IMPLEMENT(yq::HCountI8)
 YQ_TYPE_IMPLEMENT(yq::HCountI16)
@@ -55,35 +40,9 @@ YQ_TYPE_IMPLEMENT(yq::LCountI16)
 YQ_TYPE_IMPLEMENT(yq::LCountI32)
 YQ_TYPE_IMPLEMENT(yq::LCountI64)
 
-
-YQ_TYPE_IMPLEMENT(yq::Pose3D)
-YQ_TYPE_IMPLEMENT(yq::Pose3F)
-
-YQ_TYPE_IMPLEMENT(yq::RangeD)
-YQ_TYPE_IMPLEMENT(yq::RangeF)
-YQ_TYPE_IMPLEMENT(yq::RangeI)
-YQ_TYPE_IMPLEMENT(yq::RangeU)
-
-
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 //  OTHER HELPERS FOR MATH
 
-namespace yq {
-    namespace {
-        double  magnitude_complexD(const ComplexD& v)
-        {
-            return std::abs(v);
-        }
-
-        double  magnitude_complexF(const ComplexF& v)
-        {
-            return std::abs(v);
-        }
-
-
-
-    }
-}    
     
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -95,55 +54,6 @@ static void reg_general_math () {
     //      2. methods
     //
     
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  Complex Numbers
-    
-    {
-        auto w = writer<ComplexD>();
-        w.description("Complex number in double");
-        w.property(szReal, &ComplexD::real).setter((void(ComplexD::*)(double)) &ComplexD::real)
-            .description(szReal_Complex)
-            .alias({szRe, szR});
-        w.property(szImaginary, &ComplexD::imag).setter((void(ComplexD::*)(double)) &ComplexD::imag)
-            .description(szImaginary_Complex)
-            .alias({szImag, szIm, szI});
-        w.property(szMagnitude, magnitude_complexD).description(szMagnitude_Complex).alias(szMag);
-    }
-
-    {
-        auto w = writer<ComplexF>();
-        w.description("Complex number in float");
-        w.property(szReal, (float (ComplexF::*)() const) &ComplexF::real).setter((void(ComplexF::*)(float)) &ComplexF::real)
-            .description(szReal_Complex)
-            .alias({ szRe, szR });
-        w.property(szImaginary, (float (ComplexF::*)() const) &ComplexF::imag).setter((void(ComplexF::*)(float)) &ComplexF::imag)
-            .description(szImaginary_Complex)
-            .alias({szImag, szIm, szI});
-        w.property(szMagnitude, magnitude_complexF).description(szMagnitude_Complex).alias(szMag);
-    }
-
-    {
-        auto w = writer<ComplexI>();
-        w.description("Complex number in integer");
-        w.property(szReal, (int (ComplexI::*)() const) &ComplexI::real).setter((void(ComplexI::*)(int)) &ComplexI::real)
-            .description(szReal_Complex)
-            .alias({szRe, szR});
-        w.property(szImaginary, (int (ComplexI::*)() const) &ComplexI::imag).setter((void(ComplexI::*)(int)) &ComplexI::imag)
-            .description(szImaginary_Complex)
-            .alias({szImag, szIm, szI});
-    }
-
-    {
-        auto w = writer<ComplexU>();
-        w.description("Complex number in unsigned integer");
-        w.property(szReal, (unsigned (ComplexU::*)() const) &ComplexU::real).setter((void(ComplexU::*)(unsigned)) &ComplexU::real)
-            .description(szReal_Complex)
-            .alias({szRe, szR});
-        w.property(szImaginary, (unsigned (ComplexU::*)() const) &ComplexU::imag).setter((void(ComplexU::*)(unsigned)) &ComplexU::imag)
-            .description(szImaginary_Complex)
-            .alias({szImag, szIm, szI});
-    }
-
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Counters
@@ -197,29 +107,6 @@ static void reg_general_math () {
     }
 
 
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  Fractions
-
-    {
-        auto w  = writer<FractionI>();
-        w.description("Fraction using integers");
-        w.property(szNumerator, &FractionI::num).description(szNumerator_Fraction).alias({szNum, szN});
-        w.property(szDenominator, &FractionI::den).description(szDenominator_Fraction).alias({szDen, szD});
-    }
-    
-    /*
-        auto frac16 = writer<Frac16>();
-        frac16.property("n", &Frac16::num);
-        frac16.property("d", &Frac16::den);
-
-        auto frac32 = writer<Frac32>();
-        frac32.property("n", &Frac32::num);
-        frac32.property("d", &Frac32::den);
-
-        auto frac64 = writer<Frac64>();
-        frac64.property("n", &Frac64::num);
-        frac64.property("d", &Frac64::den);
-    */
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Hi-counters (start at max-value)
@@ -299,66 +186,7 @@ static void reg_general_math () {
     }
 
 
-
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  Pose
-
-    {
-        auto w = writer<Pose3D>();
-        w.description("3D pos in double");
-        w.property(szOrientation, &Pose3D::orientation).description(szOrientation_Pose).alias(szOri);
-        w.property(szPosition, &Pose3D::position).description(szPosition_Pose).alias(szPos);
-    }
-
-    {
-        auto w = writer<Pose3F>();
-        w.description("3D pos in float");
-        w.property(szOrientation, &Pose3F::orientation).description(szOrientation_Pose).alias(szOri);
-        w.property(szPosition, &Pose3F::position).description(szPosition_Pose).alias(szPos);
-    }
-    
-        
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  Range
-
-    {
-        auto w  = writer<RangeD>();
-        w.description("Range in double");
-        w.property(szLow, &RangeD::lo).description(szLow_Range).alias({szLo, szL});
-        w.property(szHigh, &RangeD::hi).description(szHigh_Range).alias({szHi, szH});
-    }
-    
-    {
-        auto w  = writer<RangeF>();
-        w.description("Range in float");
-        w.property(szLow, &RangeF::lo).description(szLow_Range).alias({szLo, szL});
-        w.property(szHigh, &RangeF::hi).description(szHigh_Range).alias({szHi, szH});
-    }
-
-    {
-        auto w  = writer<RangeI>();
-        w.description("Range in integer");
-        w.property(szLow, &RangeI::lo).description(szLow_Range).alias({szLo, szL});
-        w.property(szHigh, &RangeI::hi).description(szHigh_Range).alias({szHi, szH});
-    }
-
-    {
-        auto w  = writer<RangeU>();
-        w.description("Range in unsigned integer");
-        w.property(szLow, &RangeU::lo).description(szLow_Range).alias({szLo, szL});
-        w.property(szHigh, &RangeU::hi).description(szHigh_Range).alias({szHi, szH});
-    }
-
-    //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    //  RGB Colors
-
-
 }
 
 YQ_INVOKE(reg_general_math();)
 
-#include "Fraction.hxx"
-
-#include "Pose2.hxx"
-#include "Pose3.hxx"
-#include "Range.hxx"

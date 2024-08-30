@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "SimpleSpace.hpp"
 
 namespace yq {
@@ -32,4 +30,7 @@ namespace yq {
         };
     }
 }
+
+#include "vector/Quaternion3.hxx"
+#include "vector/Tensor33.hxx"
 
