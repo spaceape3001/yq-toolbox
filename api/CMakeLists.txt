@@ -6,6 +6,11 @@
 
 project(yqtoolbox)
 
+set(TOOLBOX_API_DIR "${CURRENT_LIST_DIR}")
+
+add_subdirectory(yq)
+
+add_subdirectory(0)
 option(Feature_GLM "Add GLM Bindings" ON)
 
 find_package(CURL REQUIRED)
@@ -26,32 +31,75 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED 
     ${core_test_source}
+    0/basic/128-bit.hpp
     0/basic/Any.hpp
     0/basic/Any.cpp
+    0/basic/Array.hpp
+    0/basic/ArrayX.hpp
+    0/basic/AutoReset.hpp
     0/basic/BasicApp.hpp
     0/basic/BasicApp.cpp
+    0/basic/BasicBuffer.hpp
+    0/basic/BinaryBucket.hpp
+    0/basic/BitArray.hpp
+    0/basic/ByteArray.hpp
+    0/basic/CollectionUtils.hpp
+    0/basic/Comma.hpp
+    0/basic/Compare.hpp
+    0/basic/Concat.hpp
     0/basic/ContentType.hpp
     0/basic/ContentType.cpp
+    0/basic/Coord1.hpp
+    0/basic/Coord2.hpp
+    0/basic/Coord3.hpp
+    0/basic/Coord4.hpp
+    0/basic/Coord5.hpp
+    0/basic/Coord6.hpp
+    0/basic/Coord.hpp
+    0/basic/Coords.hpp
+    0/basic/Created.hpp
+    0/basic/DbgRel.hpp
     0/basic/DelayInit.hpp
     0/basic/DelayInit.cpp
+    0/basic/Deque.hpp
+    0/basic/DiffEngine.hpp
+    0/basic/Dirty.hpp
     0/basic/Encode64.hpp
     0/basic/Encode64.cpp
     0/basic/Enum.hpp
     0/basic/Enum.cpp
+    0/basic/EnumMap.hpp
     0/basic/ErrorDB.hpp
     0/basic/ErrorDB.cpp
+    0/basic/errors.hpp
     0/basic/Exception.hpp
     0/basic/Exception.hxx
     0/basic/Exception.cpp
     0/basic/Flag.hpp
     0/basic/Flag.cpp
+    0/basic/Flags.hpp
     0/basic/Format.hpp
     0/basic/Format.cpp
+    0/basic/FowlerNollVo.hpp
+    0/basic/Future.hpp
     0/basic/Future.cpp
+    0/basic/Global.hpp
     0/basic/Global.cpp
+    0/basic/Guarded.hpp
+    0/basic/Hash.hpp
+    0/basic/HashListImpl.hxx
+    0/basic/HashMapImpl.hxx
+    0/basic/HashVectorImpl.hxx
+    0/basic/Http.hpp
+    0/basic/HttpOp.hpp
+    0/basic/HttpParser.hpp
     0/basic/HttpParser.cpp
+    0/basic/HttpStatus.hpp
     0/basic/HttpStatus.cpp
+    0/basic/IgCase.hpp
     0/basic/IgCase.cpp
+    0/basic/IntRange.hpp
+    0/basic/IterUtf8.hpp
     0/basic/IterUtf8.cpp
     0/basic/Logging.cpp
     0/basic/MaybeCase.cpp
@@ -74,6 +122,10 @@ add_library(${PROJECT_NAME} SHARED
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
+    0/io/AbstractFile.cpp
+    0/io/Curl.cpp
+    0/io/DirUtils.cpp
+    0/io/Execute.cpp
     0/io/io.cpp
     0/math/math.cpp
     0/math/Complex.hpp
@@ -144,6 +196,7 @@ target_link_libraries(${PROJECT_NAME}
         RapidXml
         json
         tbbmalloc_proxy
+        yqtrait yqconfig
      PRIVATE
         pstreams
 )
@@ -157,6 +210,7 @@ target_include_directories(${PROJECT_NAME}
         ${SQLite3_INCLUDE_DIRS}
         ${glm_INCLUDE_DIR}
 )
+
 
 LinkTest(${PROJECT_NAME})
 

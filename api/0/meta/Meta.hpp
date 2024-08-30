@@ -7,8 +7,8 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-#include <0/trait/not_copyable.hpp>
-#include <0/trait/not_moveable.hpp>
+#include <yq/trait/not_copyable.hpp>
+#include <yq/trait/not_moveable.hpp>
 #include <0/basic/BitArray.hpp>
 #include <0/basic/Hash.hpp>
 #include <0/basic/Map.hpp>

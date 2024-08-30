@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/keywords.hpp>
+#include <yq/config/keywords.hpp>
 
 namespace yq {
 

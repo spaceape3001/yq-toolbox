@@ -25,7 +25,7 @@
 #include <0/basic/LogFwd.hpp>
 #include <0/basic/RevIgCase.hpp>
 
-#include <0/keywords.hpp>
+#include <yq/config/keywords.hpp>
 
 #define YQ_CPPSTRING(...) #__VA_ARGS__
 

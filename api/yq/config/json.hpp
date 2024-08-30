@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/json_fwd.hpp>
+#include <yq/config/json_fwd.hpp>
 #include <nlohmann/json.hpp>
 
 namespace yq {

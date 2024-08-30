@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "Execute.hpp"
 #include <0/basic/ByteArray.hpp>
 #include <0/basic/Logging.hpp>

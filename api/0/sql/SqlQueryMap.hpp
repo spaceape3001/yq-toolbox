@@ -8,8 +8,8 @@
 
 #include <functional>
 #include <0/sql/SqlStatement.hpp>
-#include <0/trait/not_moveable.hpp>
-#include <0/trait/not_copyable.hpp>
+#include <yq/trait/not_moveable.hpp>
+#include <yq/trait/not_copyable.hpp>
 
 struct sqlite3_stmt;
 

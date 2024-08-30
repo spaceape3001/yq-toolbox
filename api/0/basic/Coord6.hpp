@@ -7,8 +7,8 @@
 #pragma once
 
 #include "Coord.hpp"
-#include <0/trait/has_zero.hpp>
-#include <0/keywords.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/config/keywords.hpp>
 
 namespace yq {
 

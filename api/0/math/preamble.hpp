@@ -10,22 +10,22 @@
 
 #include <0/io/StreamOps.hpp>
 #include <0/meta/InfoBinder.hpp>
-#include <0/trait/always_false.hpp>
+#include <yq/trait/always_false.hpp>
 
-#include <0/trait/has_abs.hpp>
-#include <0/trait/has_copysign.hpp>
-#include <0/trait/has_half.hpp>
-#include <0/trait/has_identity.hpp>
-#include <0/trait/has_is_finite.hpp>
-#include <0/trait/has_nan.hpp>
-#include <0/trait/has_one.hpp>
-#include <0/trait/has_sqrt.hpp>
-#include <0/trait/has_zero.hpp>
-#include <0/trait/ieee754.hpp>
-#include <0/trait/integer.hpp>
-#include <0/trait/is_arithmetic.hpp>
-#include <0/trait/is_floating_point.hpp>
-#include <0/trait/is_integral.hpp>
+#include <yq/trait/has_abs.hpp>
+#include <yq/trait/has_copysign.hpp>
+#include <yq/trait/has_half.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_sqrt.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_floating_point.hpp>
+#include <yq/trait/is_integral.hpp>
 
 #include <0/math/unit/dims.hpp>
 #include <0/math/unit/declare.hpp>

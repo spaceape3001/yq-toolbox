@@ -8,7 +8,7 @@
 
 #include <string>
 #include <vector>
-#include <0/trait/not_copyable.hpp>
+#include <yq/trait/not_copyable.hpp>
 
 
 /*! Lightly formatting string

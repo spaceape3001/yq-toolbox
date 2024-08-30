@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/json.hpp>
+#include <yq/config/json.hpp>
 #include <0/basic/preamble.hpp>
 #include <filesystem>
 

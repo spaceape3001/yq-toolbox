@@ -7,7 +7,7 @@
 #pragma once
 
 //#include <0/basic/preamble.hpp>
-#include <0/trait/always_false.hpp>
+#include <yq/trait/always_false.hpp>
 #include <cassert>
 #include <cuchar>
 #include <cwchar>

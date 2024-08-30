@@ -10,7 +10,6 @@
 #include <0/basic/SizeTimestamp.hpp>
 #include <iosfwd>
 
-
 namespace yq {
     class ByteArray;
     

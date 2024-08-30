@@ -9,7 +9,7 @@
 #include <0/meta/Generator.hpp>
 #include <0/meta/TypedArgInfo.hpp>
 #include <0/meta/MetaWriter.hpp>
-#include <0/trait/indices.hpp>
+#include <yq/trait/indices.hpp>
 
 namespace yq {
     
