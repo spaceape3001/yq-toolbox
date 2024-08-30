@@ -679,8 +679,8 @@ bool    equivalent(const std::vector<yq::diff::edit_t>& vec, std::initializer_li
 
 
 
-ut::suite tests = []{
-
+int main()
+{
     "same middle snake"_test = []{
         expect( diff::match_t{ { 0, 3 }, { 0, 3 }, 0 } == diff::middle_snake(hobbies3, hobbies3 ));
         expect( diff::match_t{ { 0, 5 }, { 0, 5 }, 0 } == diff::middle_snake(hobbies5, hobbies5 ));
@@ -737,10 +737,7 @@ ut::suite tests = []{
     "middle delete compare"_test = []{
         expect( true == equivalent(diff::consolidate(diff::compare(hobbies9, hobbies7d)), { 3_eq, 2_r, 4_eq } ));
     };
-};
 
-
-int main(){
     log_to_std_output();
     return ut::cfg<>.run();
 };

@@ -11,7 +11,8 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-ut::suite tests = []{
+int main()
+{
     "add"_test = []{
         expect(FractionI(1,2) + FractionI(1,2) == FractionI(1,1));
         expect(FractionI(1,2) + FractionI(1,4) == FractionI(3,4));
@@ -33,9 +34,6 @@ ut::suite tests = []{
         expect(FractionI(1,2) / FractionI(1,2) == FractionI(1,1));
         expect(FractionI(1,2) / FractionI(1,3) == FractionI(3,2));
     };
-};
 
-
-int main(){
     return ut::cfg<>.run();
 }

@@ -15,7 +15,6 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-
 bool    encode_decode(std::initializer_list<uint32_t> values)
 {
     ByteArray   bytes((const char*) std::data(values), sizeof(uint32_t)*values.size());
@@ -23,7 +22,8 @@ bool    encode_decode(std::initializer_list<uint32_t> values)
     return result == bytes;
 }
 
-ut::suite tests = []{
+int main()
+{
     
     //  TEST BIT PATTERNS
     //  --------------
@@ -98,11 +98,6 @@ ut::suite tests = []{
         encode_decode({0xA6FFEBC1, 0xDBB3D77E, 0x655C3C5A, 0x10485353 });
     };
 
-};
-
-
-int main()
-{
     log_to_std_error();
     return ut::cfg<>.run();
 }

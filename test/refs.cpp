@@ -29,7 +29,8 @@ struct TestObj : public RefCount {
     }
 };
 
-ut::suite tests = []{
+int main()
+{
     "Initial Count"_test = []{
         expect(TestObj::counter() == 0);
     };
@@ -75,9 +76,7 @@ ut::suite tests = []{
         }
         expect(0 == TestObj::counter());
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };
 

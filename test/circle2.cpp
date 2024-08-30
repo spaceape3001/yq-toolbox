@@ -20,9 +20,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect(true == (Circle2D(ZERO) == Circle2D(ZERO)));
     };
@@ -46,7 +47,7 @@ ut::suite tests = []{
         expect(true == (d == c));
     };
     
-    "area"_test = []{
+    "area"_test = [&]{
         Circle2D    cirA(Vector2D(4,2),10.);
         expect( true == is_close(tol, cirA.area(), 314.1592653589793 ));
     };
@@ -68,7 +69,7 @@ ut::suite tests = []{
         expect( true  == (bndA1 != bndB1));
     };
     
-    "circumference"_test = []{
+    "circumference"_test = [&]{
         Circle2D    cirA(Vector2D(4,2),10.);
         expect( true == is_close(tol, cirA.circumference(), 62.83185307179586 ));
     };
@@ -77,14 +78,11 @@ ut::suite tests = []{
         Circle2D    u   = Circle2D(UNIT);
         Circle2D    u10 = 10. * u + Vector2D(X, 10.);
         
-        
         expect(true == u10.contains({ 10., 0. }));
         expect(true == u10.contains({  5., 5. }));
         expect(false == u10.contains({ -10., 0. }));
     };
     
-};
 
-int main(){
     return ut::cfg<>.run();
 };

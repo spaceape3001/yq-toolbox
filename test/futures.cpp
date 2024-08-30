@@ -12,7 +12,8 @@ using namespace ut;
 using namespace yq;
 using namespace yq::future;
 
-int main(){
+int main()
+{
     "Empty"_test = []{
         Promise<void>       voidPromise;
         Future<void>        voidFuture;

@@ -67,7 +67,8 @@ bool    sdouble(std::string_view ustr, double val, double ep=1e-14)
     return false;
 }
 
-ut::suite tests = []{
+int main()
+{
     "Has Operator"_test = []{
         auto& _r    = expr::Repo::instance();
         expect( true == _r.has_operator("+"));
@@ -220,9 +221,7 @@ ut::suite tests = []{
     "Evaluate Addition"_test = []{
     };
     #endif
-};
 
-int main(){
     log_to_std_error();
     Meta::freeze();
     return ut::cfg<>.run();

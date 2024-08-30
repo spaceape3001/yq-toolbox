@@ -24,8 +24,8 @@ static constexpr const AxBox2<T> unitBox(-Vector2<T>(ONE), Vector2<T>(ONE));
 
 static constexpr const AxBox2I stepBox(Vector2I(-1,-2), Vector2I(1,2));
 
-
-ut::suite tests = []{
+int main()
+{
     "zero is zero"_test = []{
         expect( true == (AxBox2D(ZERO) == AxBox2D(ZERO) ));
     };
@@ -118,9 +118,7 @@ ut::suite tests = []{
         expect(true == (unitBox<int>.incircle() == Circle2<int>(Vector2I(ZERO), 1)));
         expect(true == (stepBox.incircle() == Circle2<int>(Vector2I(ZERO), 1)));
     };
-};
 
-int main(){
     //log_to_std_output();
     return ut::cfg<>.run();
 };

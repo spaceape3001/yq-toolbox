@@ -32,7 +32,9 @@ bool    easter_test(uint16_t y, Date d)
     return f;
 }
 
-ut::suite tests = []{
+int main()
+{
+
     "julian days"_test = []{
         expect(true == jday_test({ 2012, 11, 23 }, { 2456255 }));
         expect(true == jday_test({ 2012, 2, 29 }, { 2455987 }));
@@ -63,10 +65,7 @@ ut::suite tests = []{
         expect(true == easter_test(2285, {2285, 3, 22 }));
         expect(true == easter_test(2038, {2038, 4, 25 }));
     };
-};
 
-int main()
-{
     log_to_std_error();
     return ut::cfg<>.run();
 }

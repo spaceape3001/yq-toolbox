@@ -9,7 +9,8 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-ut::suite tests = []{
+int main()
+{
     "versions"_test = [](){
         expect( VersionSpec{ "http", 0, 9 } == to_version_spec("http/0.9") );
         expect( VersionSpec{ "https", 0, 9 } != to_version_spec("http/0.9") );
@@ -61,9 +62,6 @@ ut::suite tests = []{
         std::string     s   = web_decode("%2Fadmin%2Ftag%2Fcreate");
         expect( "/admin/tag/create"s == s );
     };
-};
 
-
-int main(){
     return ut::cfg<>.run();
 }

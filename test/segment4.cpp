@@ -17,9 +17,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    //Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect( true == (Segment4D(ZERO) == Segment4D(ZERO) ));
     };
@@ -39,8 +40,5 @@ ut::suite tests = []{
         expect(16 == a.length²());
     };
 
-};
-
-int main(){
     return ut::cfg<>.run();
 };

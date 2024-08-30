@@ -32,7 +32,7 @@ int    parse_int(int n)
     }
 }
 
-suite tests = []{
+int main(){
     "blank variant"_test = [](){
         Any     v;
         expect(0_u == v.type().id());
@@ -50,10 +50,7 @@ suite tests = []{
         expect( 42_i == parse_int(42));
         expect( -42_i == parse_int(-42));
     };
-};
 
-
-int main(){
     log_to_std_output();
     Meta::freeze();
     return ut::cfg<>.run();

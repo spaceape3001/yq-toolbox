@@ -14,9 +14,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect(true == (Sphere4D(ZERO) == Sphere4D(ZERO)));
     };
@@ -61,18 +62,15 @@ ut::suite tests = []{
         Sphere4D    u   = Sphere4D(UNIT);
         Sphere4D    u10 = 10. * u + Vector4D(X, 10.);
         
-        
         expect(true == u10.contains({ 10., 0., 0., 0. }));
         expect(true == u10.contains({  5., 5., 0., 0. }));
         expect(false == u10.contains({ -10., 0., 0., 0. }));
     };
     
-    "hypervolume"_test = []{
+    "hypervolume"_test = [&]{
         Sphere4D    sph(Vector4D(4,2,3,5),10.);
         expect( true == is_close(tol, sph.hypervolume(), 49348.02200544679));
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };

@@ -18,7 +18,8 @@ using namespace yq;
 template <typename T>
 static constexpr const Size4<T> unitBox(ONE);
 
-ut::suite tests = []{
+int main()
+{
     "zero is zero"_test = []{
         expect( true == (Size4I(ZERO) == Size4I(ZERO) ));
     };
@@ -34,9 +35,7 @@ ut::suite tests = []{
         expect(true == (unitBox<int> * 4 == Size4I(4,4,4,4)));
     };
     
-};
 
-int main(){
     //log_to_std_output();
     return ut::cfg<>.run();
 };

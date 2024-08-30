@@ -19,9 +19,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect( true == (Triangle4D(ZERO) == Triangle4D(ZERO) ));
     };
@@ -36,7 +37,7 @@ ut::suite tests = []{
         expect(true == (e == c));
     };
     
-    "area"_test = []{
+    "area"_test = [&]{
         Triangle4D      a( Vector4D(ZERO), Vector4D(3,4,0,0), Vector4D(3,4,0,5));
         expect(is_close(tol, a.area(), 12.5));
     };
@@ -64,12 +65,10 @@ ut::suite tests = []{
         expect( 25 == tri.edge_c_length²());
     };
     
-    "perimeter"_test = []{
+    "perimeter"_test = [&]{
         Triangle4D      tri( Vector4D(ZERO), Vector4D(3,4,0,0), Vector4D(3,4,5,0));
         expect(is_close(tol, tri.perimeter(), 17.07106781186548));
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };

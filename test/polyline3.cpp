@@ -17,9 +17,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
-
-ut::suite tests = []{
+int main()
+{
+    //Absolute tol{1e-12};
+    
     "zero is zero"_test = []{
         expect( true == (Polyline3D() == Polyline3D() ));
     };
@@ -33,8 +34,6 @@ ut::suite tests = []{
         expect(true == (d == c));
         expect(true == (e == c));
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };

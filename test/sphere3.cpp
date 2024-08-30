@@ -20,9 +20,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect(true == (Sphere3D(ZERO) == Sphere3D(ZERO)));
     };
@@ -74,17 +75,15 @@ ut::suite tests = []{
         expect(false == u10.contains({ -10., 0., 0. }));
     };
     
-    "surface_area"_test = []{
+    "surface_area"_test = [&]{
         Sphere3D    sph(Vector3D(4,2,3),10.);
         expect( true == is_close(tol, sph.surface_area(), 1256.637061435917 ));
     };
     
-    "volume"_test = []{
+    "volume"_test = [&]{
         Sphere3D    sph(Vector3D(4,2,3),10.);
         expect( true == is_close(tol, sph.volume(), 4188.790204786391));
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };

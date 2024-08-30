@@ -13,8 +13,8 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-ut::suite tests = []{
-    
+int main()
+{
     "is alnum"_test =  [](){
         expect(true == is_alnum('a'));
         expect(true == is_alnum('A'));
@@ -315,8 +315,6 @@ CREATE TABLE CTags (\n\
         expect( true == is_less_igCase(a,b));
         expect( true == !is_less_igCase(b,a));
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 }

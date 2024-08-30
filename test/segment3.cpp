@@ -13,15 +13,14 @@
 #include <0/math/shape/Segment3.hxx>
 #include <0/math/vector/Vector3.hxx>
 
-#include <iostream>
-
 namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    //Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect( true == (Segment3D(ZERO) == Segment3D(ZERO) ));
     };
@@ -41,8 +40,5 @@ ut::suite tests = []{
         expect(12 == a.length²());
     };
 
-};
-
-int main(){
     return ut::cfg<>.run();
 };

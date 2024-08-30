@@ -11,7 +11,8 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-ut::suite tests = []{
+int main()
+{
     "zero is zero"_test = []{
         expect(true == (Coord3I(ZERO) == Coord3I(ZERO)));
     };
@@ -24,8 +25,6 @@ ut::suite tests = []{
         expect(true == (c == d));
         expect(true == (c == Coord3I(2,3,4)));
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };

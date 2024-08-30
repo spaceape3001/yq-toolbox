@@ -17,11 +17,10 @@ using namespace yq;
 
 template <typename T>
 static constexpr const AxBox4<T> unitBox(-Vector4<T>(ONE), Vector4<T>(ONE));
-
 static constexpr const AxBox4I stepBox(Vector4I(-1,-2,-3,-4), Vector4I(1,2,3,4));
 
-
-ut::suite tests = []{
+int main()
+{
     "zero is zero"_test = []{
         expect( true == (AxBox4D(ZERO) == AxBox4D(ZERO) ));
     };
@@ -123,9 +122,7 @@ ut::suite tests = []{
         expect(true == stepBox.contains(stepBox.center()));
         expect(false == stepBox.contains({2,0,0,0}));
     };
-};
 
-int main(){
     //log_to_std_output();
     return ut::cfg<>.run();
 };

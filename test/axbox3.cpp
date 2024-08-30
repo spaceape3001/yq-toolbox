@@ -20,8 +20,8 @@ static constexpr const AxBox3<T> unitBox(-Vector3<T>(ONE), Vector3<T>(ONE));
 
 static constexpr const AxBox3I stepBox(Vector3I(-1,-2,-3), Vector3I(1,2,3));
 
-
-ut::suite tests = []{
+int main()
+{
     "zero is zero"_test = []{
         expect( true == (AxBox3D(ZERO) == AxBox3D(ZERO) ));
     };
@@ -116,9 +116,7 @@ ut::suite tests = []{
         expect(true == stepBox.contains(stepBox.center()));
         expect(false == stepBox.contains({2,0,0}));
     };
-};
 
-int main(){
     //log_to_std_output();
     return ut::cfg<>.run();
 };

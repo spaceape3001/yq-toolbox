@@ -11,7 +11,8 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-ut::suite tests = []{
+int main()
+{
     "add 2D int"_test = [](){
         expect( Vector2I{1,1}+Vector2I{2,2} == Vector2I{3,3});
         expect( Vector2I{1,2}+Vector2I(2,2) == Vector2I(3,4));
@@ -43,9 +44,7 @@ ut::suite tests = []{
         expect( true == ( all(v) < 2.5) );
         expect( false  == ( all(v) < 1.5) );
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };
 

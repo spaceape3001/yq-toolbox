@@ -18,7 +18,8 @@ using namespace yq;
 template <typename T>
 static constexpr const AxBox1<T> unitBox(-Vector1<T>(ONE), Vector1<T>(ONE));
 
-ut::suite tests = []{
+int main()
+{
     "zero is zero"_test = []{
         expect( true == (AxBox1D(ZERO) == AxBox1D(ZERO) ));
     };
@@ -91,9 +92,7 @@ ut::suite tests = []{
         expect(true == unitBox<int>.contains(unitBox<int>.center()));
         expect(false == unitBox<int>.contains({2}));
     };
-};
 
-int main(){
     //log_to_std_output();
     return ut::cfg<>.run();
 };

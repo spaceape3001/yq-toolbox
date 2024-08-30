@@ -13,9 +13,10 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-Absolute tol{1e-12};
+int main()
+{
+    //Absolute tol{1e-12};
 
-ut::suite tests = []{
     "zero is zero"_test = []{
         expect( true == (Tensor12U(ZERO) == Tensor12U(ZERO)));
         expect( true == (Tensor12D(ZERO) == Tensor12D(ZERO)));
@@ -141,9 +142,7 @@ ut::suite tests = []{
             )
         );
     };
-};
 
-int main(){
     return ut::cfg<>.run();
 };
 
