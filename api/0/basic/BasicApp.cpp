@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "BasicApp.hpp"
 #include "Logging.hpp"
 #include "TextUtils.hpp"
@@ -18,6 +16,7 @@
 #include <cstdlib>
 #include <pwd.h>
 #include <unistd.h>
+#include <limits.h>
 
 
 namespace yq {

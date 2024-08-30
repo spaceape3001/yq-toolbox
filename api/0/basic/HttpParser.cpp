@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include <0/basic/HttpParser.hpp>
 #include <0/basic/MultiMap.hpp>
 #include <0/basic/TextUtils.hpp>

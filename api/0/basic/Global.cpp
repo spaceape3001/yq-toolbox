@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include <0/basic/Global.hpp>
 #include <0/meta/GlobalInfo.hpp>
 #include <0/basic/errors.hpp>

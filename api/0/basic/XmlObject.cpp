@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include <0/basic/XmlObject.hpp>
 #include <0/basic/DelayInit.hpp>
 #include <0/meta/ObjectInfoWriter.hpp>
@@ -27,6 +25,7 @@ namespace yq {
 YQ_OBJECT_IMPLEMENT(yq::XmlObject)
 
 YQ_INVOKE(
-    yq::writer<yq::XmlObject>().abstract();
+    auto w   = yq::writer<yq::XmlObject>();
+    w.abstract();
 )
 

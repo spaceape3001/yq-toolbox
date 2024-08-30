@@ -4,16 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include "Format.hpp"
 #include <0/basic/CollectionUtils.hpp>
 #include <0/basic/Map.hpp>
 #include <charconv>
 
 namespace yq {
-
-
     Format::Format(std::string_view  str)
     {
         parse(str.data(), str.size());

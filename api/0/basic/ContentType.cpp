@@ -4,17 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include "Http.hpp"
+#include "ContentType.hpp"
 
 #include <0/basic/DelayInit.hpp>
 #include <0/basic/EnumMap.hpp>
-#include <0/basic/Logging.hpp>
-#include <0/io/StreamOps.hpp>
-#include <0/io/stream/Text.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <stdio.h>
 
 namespace yq {
 

@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include <0/basic/TextUtils32.hpp>
 
 #include <0/basic/Compare.hpp>
@@ -14,12 +12,10 @@
 #include <0/basic/Iter32.hpp>
 #include <0/basic/IterW.hpp>
 #include <0/basic/List.hpp>
-#include <0/basic/Logging.hpp>
 #include <0/basic/Map.hpp>
 #include <0/basic/MultiMap.hpp>
 #include <0/basic/Set.hpp>
 #include <0/basic/TextUtils.hpp>
-#include <0/basic/errors.hpp>
 
 #include <bitset>
 
@@ -41,6 +37,8 @@
 namespace yq {
 
     namespace {
+        //! Standard  buffer size for formatting numbers and the like
+        static constexpr const size_t   kStdTextBuf = 63;
 
         //! Trims a string's leading/trailing whitespace by altering parameters
         void    trim_ws(const char32_t*& s, size_t& n)

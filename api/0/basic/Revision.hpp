@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
 #include <cstdint>
 #include <0/trait/not_moveable.hpp>
 #include <0/trait/not_copyable.hpp>
