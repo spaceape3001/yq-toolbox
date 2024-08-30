@@ -30,6 +30,7 @@ namespace yq {
     struct all_t {};
     struct always_t {};
     struct cache_t {};
+    struct cancel_t {};
     struct ccw_t {};
     struct cerr_t {};
     struct class_t {};
@@ -41,6 +42,7 @@ namespace yq {
     struct default_t {};
     struct diagonal_t {};
     struct diameter_t {};
+    struct done_t {};
     struct down_t {};
     struct easter_t {};
     struct edge_t {};
@@ -119,6 +121,7 @@ namespace yq {
     static constexpr const all_t            ALL;
     static constexpr const always_t         ALWAYS;
     static constexpr const cache_t          CACHE;
+    static constexpr const cancel_t         CANCEL;
     static constexpr const ccw_t            CCW;
     static constexpr const cerr_t           CERR;
     static constexpr const class_t          CLASS;
@@ -130,6 +133,7 @@ namespace yq {
     static constexpr const default_t        DEFAULT;
     static constexpr const diagonal_t       DIAGONAL;
     static constexpr const diameter_t       DIAMETER;
+    static constexpr const done_t           DONE;
     static constexpr const down_t           DOWN;
     static constexpr const easter_t         EASTER;
     static constexpr const edge_t           EDGE;
