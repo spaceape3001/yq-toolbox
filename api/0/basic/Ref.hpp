@@ -70,51 +70,165 @@ namespace yq {
     public:
 
         //! Default constructor (null)
-        Ref() : m_ptr(nullptr) {}
+        constexpr Ref() noexcept : m_ptr(nullptr) {}
 
         //! Takes in an object 
-        Ref(T*ptr);
+        Ref(T* ptr) : m_ptr(ptr) 
+        {
+            if(m_ptr){
+                m_ptr->incRef();
+            }
+        }
 
-        Ref(const Ref& copy);
+        //! Copy constructor
+        Ref(const Ref& copy) : m_ptr(copy.m_ptr)
+        {
+            if(m_ptr){
+                m_ptr->incRef();
+            }
+        }
         
-        Ref(Ref&&move);
+        //! Move constructor
+        Ref(Ref&&move) noexcept
+        {
+            m_ptr		= move.m_ptr;
+            move.m_ptr	= nullptr;
+        }
 
-        ~Ref();
+        //! Destructor (decrements ref, possible deletion)
+        ~Ref()
+        {
+            if(m_ptr){
+                m_ptr->decRef();
+            
+                #ifdef _DEBUG
+                m_ptr	= nullptr;
+                #endif
+            }
+        }
         
-        Ref&   operator=(const Ref& rhs);
+        //! Copy constructor (possible deletion in LHS)
+        Ref&   operator=(const Ref& rhs)
+        {
+            if(rhs.m_ptr != m_ptr){
+                if(m_ptr)
+                    m_ptr->decRef();
+                m_ptr   = rhs.m_ptr;
+                if(m_ptr)
+                    m_ptr->incRef();
+            }
+            return *this;
+        }
         
-        Ref&   operator=(Ref&& rhs);
+        //! Move constructor (possible deletion in LHS)
+        Ref&   operator=(Ref&& rhs)
+        {
+            if(this != &rhs){
+                if(m_ptr)
+                    m_ptr -> decRef();
+                m_ptr       = rhs.m_ptr;
+                rhs.m_ptr   = nullptr;
+            }
+            return *this;
+        }
         
-        Ref&	operator=(T* ptr);
+        //! Assignment of pointer (possible deletion in LHS)
+        Ref&	operator=(T* ptr)
+        {
+            if(m_ptr == ptr)
+                return *this;
+            if(m_ptr)
+                m_ptr->decRef();
+            m_ptr   = ptr;
+            if(m_ptr)
+                m_ptr->incRef();
+            return *this;
+        }
         
-        operator T*();
+        //! Raw Pointer
+        operator T*() noexcept
+        {
+            return m_ptr;
+        }
 
-        operator const T*() const;
+        //! Raw Constant Pointer
+        operator const T*() const noexcept
+        {
+            return m_ptr;
+        }
 
-        T*			ptr();
-        const T*	ptr() const;
+        //! Raw Pointer
+        T*			ptr() noexcept
+        {
+            return m_ptr;
+        }
 
-        T*			operator->();
-        const T*	operator->() const;
+        //! Raw Constant Pointer
+        const T*	ptr() const noexcept
+        {
+            return m_ptr;
+        }
 
-        bool		valid() const;
+        //! Pointer accessor
+        T*			operator->() noexcept
+        {
+            return m_ptr;
+        }
+
+        //! Constant pointer accessor
+        const T*	operator->() const noexcept 
+        {
+            return m_ptr;
+        }
+
+        //! TRUE if valid (ie safe to access)
+        bool		valid() const noexcept
+        {
+            return m_ptr != nullptr;
+        }
         
-        bool        invalid() const;
-
-        bool		operator!() const;
-
-        bool		operator==(const Ref&rhs) const;
-
-        bool		operator==(const T* ptr) const;
+        //! TRUE if invalid (ie, don't access!)
+        bool        invalid() const
+        {
+            return m_ptr == nullptr;
+        }
         
-        friend bool operator==(const T* lhs, const Ref& rhs)
+        //! Used for if() statements, in lieu of valid
+        explicit operator bool() const noexcept
+        {
+            return m_ptr != nullptr;
+        }
+
+        //! Used for if() statements (ie, if(!ref){...} )
+        bool		operator!() const noexcept
+        {
+            return m_ptr == nullptr;
+        }
+
+        bool		operator==(const Ref&rhs) const noexcept
+        {
+            return m_ptr == rhs.m_ptr;
+        }
+
+        bool		operator==(const T* ptr) const noexcept
+        {
+            return m_ptr == ptr;
+        }
+        
+        friend bool operator==(const T* lhs, const Ref& rhs) noexcept
         {
             return lhs == rhs.m_ptr;
         }
 
-        bool		operator!=(const Ref&rhs) const;
+        bool		operator!=(const Ref&rhs) const noexcept
+        {
+            return m_ptr != rhs.m_ptr;
+        }
 
-        bool		operator!=(const T* ptr) const;
+        bool		operator!=(const T* ptr) const noexcept
+        {
+            return m_ptr != ptr;
+        }
         
         friend bool operator!=(const T* lhs, const Ref& rhs)
         {
@@ -138,162 +252,4 @@ namespace yq {
     private:
         T*			m_ptr;
     };
-
-
-        //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        //      IMPLEMENTATION
-        //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-    template <typename T>
-    Ref<T>::Ref(T*ptr) : m_ptr(ptr)
-    {
-        if(m_ptr)
-            m_ptr->incRef();
-    }
-
-    template <typename T>
-    Ref<T>::Ref(const Ref& copy) : m_ptr(copy.m_ptr)
-    {
-        if(m_ptr)
-            m_ptr->incRef();
-    }
-
-    template <typename T>
-    Ref<T>::Ref(Ref&&move)
-    {
-        m_ptr		= move.m_ptr;
-        move.m_ptr	= nullptr;
-    }
-
-    template <typename T>
-    Ref<T>::~Ref()
-    {
-        if(m_ptr){
-            m_ptr->decRef();
-        
-            #ifdef _DEBUG
-            m_ptr	= nullptr;
-            #endif
-        }
-    }
-
-    template <typename T>
-    Ref<T>&   Ref<T>::operator=(const Ref& rhs)
-    {
-        if(rhs.m_ptr != m_ptr){
-            if(m_ptr)
-                m_ptr->decRef();
-            m_ptr   = rhs.m_ptr;
-            if(m_ptr)
-                m_ptr->incRef();
-        }
-        return *this;
-    }
-
-    template <typename T>
-    Ref<T>&   Ref<T>::operator=(Ref&& rhs)
-    {
-        if(this != &rhs){
-            if(m_ptr)
-                m_ptr -> decRef();
-            m_ptr       = rhs.m_ptr;
-            rhs.m_ptr   = nullptr;
-        }
-        return *this;
-    }
-
-    template <typename T>
-    Ref<T>&	Ref<T>::operator=(T* ptr)
-    {
-        if(m_ptr == ptr)
-            return *this;
-        if(m_ptr)
-            m_ptr->decRef();
-        m_ptr   = ptr;
-        if(m_ptr)
-            m_ptr->incRef();
-        return *this;
-    }
-
-    template <typename T>
-    Ref<T>::operator T*()
-    {
-        return m_ptr;
-    }
-
-    template <typename T>
-    Ref<T>::operator const T*() const
-    {
-        return m_ptr;
-    }
-            
-    template <typename T>
-    T*			Ref<T>::ptr()
-    {
-        return m_ptr;
-    }
-
-    template <typename T>
-    const T*	Ref<T>::ptr() const
-    {
-        return m_ptr;
-    }
-
-    template <typename T>
-    T*			Ref<T>::operator->()
-    {
-        return m_ptr;
-    }
-
-    template <typename T>
-    const T*	Ref<T>::operator->() const
-    {
-        return m_ptr;
-    }
-
-    template <typename T>
-    bool		Ref<T>::valid() const
-    {
-        return m_ptr != nullptr;
-    }
-
-    template <typename T>
-    bool        Ref<T>::invalid() const
-    {
-        return m_ptr == nullptr;
-    }
-
-    template <typename T>
-    bool		Ref<T>::operator!() const
-    {
-        return m_ptr == nullptr;
-    }
-
-    template <typename T>
-    bool		Ref<T>::operator==(const Ref&rhs) const
-    {
-        return m_ptr == rhs.m_ptr;
-    }
-
-    template <typename T>
-    bool		Ref<T>::operator==(const T* ptr) const
-    {
-        return m_ptr == ptr;
-    }
-
-
-    template <typename T>
-    bool		Ref<T>::operator!=(const Ref&rhs) const
-    {
-        return m_ptr != rhs.m_ptr;
-    }
-
-    template <typename T>
-    bool		Ref<T>::operator!=(const T* ptr) const
-    {
-        return m_ptr != ptr;
-    }
-
-
 }
