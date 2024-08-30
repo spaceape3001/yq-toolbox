@@ -123,7 +123,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Quadvector4<product_t<T,U>> operator*(U b) const noexcept;
 
-        //! Self-multiplies this quadvector by the given scalar, returns quadvector result
+        //! Self-multiplies this quadvector by the given scalar, returns reference to this quadvector
         template <typename U>
         requires (is_arithmetic_v<U> && self_mul_v<T,U>)
         Quadvector4& operator*=(U b) noexcept;
@@ -133,6 +133,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Quadvector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
+        //! Self-divides this quadvector by the given scalar, returns reference to this quadvector
         template <typename U>
         requires (is_arithmetic_v<U> && self_div_v<T,U>)
         Quadvector4& operator/=(U b) noexcept;
