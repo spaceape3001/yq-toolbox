@@ -12,17 +12,12 @@
 #include <0/math/Range.hpp>
 #include <0/math/strings.hpp>
 
-#include <0/math/color/RGB.hpp>
-#include <0/math/color/RGBA.hpp>
-
 #include <0/basic/DelayInit.hpp>
 #include <0/meta/Init.hpp>
 
 #include <0/math/SimpleSpace.hpp>
 
 using namespace yq;
-
-
 
 YQ_TYPE_IMPLEMENT(yq::ComplexD)
 YQ_TYPE_IMPLEMENT(yq::ComplexF)
@@ -69,15 +64,6 @@ YQ_TYPE_IMPLEMENT(yq::RangeF)
 YQ_TYPE_IMPLEMENT(yq::RangeI)
 YQ_TYPE_IMPLEMENT(yq::RangeU)
 
-YQ_TYPE_IMPLEMENT(yq::RGB3D)
-YQ_TYPE_IMPLEMENT(yq::RGB3F)
-YQ_TYPE_IMPLEMENT(yq::RGB3U8)
-YQ_TYPE_IMPLEMENT(yq::RGB3U16)
-
-YQ_TYPE_IMPLEMENT(yq::RGBA4D)
-YQ_TYPE_IMPLEMENT(yq::RGBA4F)
-YQ_TYPE_IMPLEMENT(yq::RGBA4U8)
-YQ_TYPE_IMPLEMENT(yq::RGBA4U16)
 
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 //  OTHER HELPERS FOR MATH
@@ -366,73 +352,6 @@ static void reg_general_math () {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  RGB Colors
 
-    {
-        auto w   = writer<RGB3D>();
-        w.description("RGB color in double");
-        w.property(szRed, &RGB3D::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGB3D::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGB3D::blue).description(szBlue_Color).alias(szB);
-    }
-
-    {
-        auto w   = writer<RGB3F>();
-        w.description("RGB color in float");
-        w.property(szRed, &RGB3F::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGB3F::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGB3F::blue).description(szBlue_Color).alias(szB);
-    }
-
-    {
-        auto w   = writer<RGB3U8>();
-        w.description("RGB color in uint8");
-        w.property(szRed, &RGB3U8::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGB3U8::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGB3U8::blue).description(szBlue_Color).alias(szB);
-    }
-
-    {
-        auto w   = writer<RGB3U16>();
-        w.description("RGB color in uint16");
-        w.property(szRed, &RGB3U16::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGB3U16::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGB3U16::blue).description(szBlue_Color).alias(szB);
-    }
-
-    {
-        auto w   = writer<RGBA4D>();
-        w.description("RGBA color in double");
-        w.property(szRed, &RGBA4D::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGBA4D::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGBA4D::blue).description(szBlue_Color).alias(szB);
-        w.property(szAlpha, &RGBA4D::alpha).description(szAlpha_Color).alias(szA);
-    }
-
-    {
-        auto w   = writer<RGBA4F>();
-        w.description("RGBA color in float");
-        w.property(szRed, &RGBA4F::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGBA4F::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGBA4F::blue).description(szBlue_Color).alias(szB);
-        w.property(szAlpha, &RGBA4F::alpha).description(szAlpha_Color).alias(szA);
-    }
-
-    {
-        auto w   = writer<RGBA4U8>();
-        w.description("RGBA color in uint8");
-        w.property(szRed, &RGBA4U8::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGBA4U8::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGBA4U8::blue).description(szBlue_Color).alias(szB);
-        w.property(szAlpha, &RGBA4U8::alpha).description(szAlpha_Color).alias(szA);
-    }
-
-    {
-        auto w   = writer<RGBA4U16>();
-        w.description("RGBA color in uint16");
-        w.property(szRed, &RGBA4U16::red).description(szRed_Color).alias(szR);
-        w.property(szGreen, &RGBA4U16::green).description(szGreen_Color).alias(szG);
-        w.property(szBlue, &RGBA4U16::blue).description(szBlue_Color).alias(szB);
-        w.property(szAlpha, &RGBA4U16::alpha).description(szAlpha_Color).alias(szA);
-    }
 
 }
 
@@ -443,7 +362,3 @@ YQ_INVOKE(reg_general_math();)
 #include "Pose2.hxx"
 #include "Pose3.hxx"
 #include "Range.hxx"
-
-#include "color/RGB.hxx"
-#include "color/RGBA.hxx"
-

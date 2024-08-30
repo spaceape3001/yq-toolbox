@@ -91,6 +91,8 @@ add_library(${PROJECT_NAME} SHARED
     0/math/color/HSV.hpp
     0/math/color/HSV.hxx
     0/math/color/HSV.cpp
+    0/math/color/RGB.cpp
+    0/math/color/RGBA.cpp
     0/meta/meta.cpp
     0/sql/sql.cpp
     0/physics/physics.cpp
