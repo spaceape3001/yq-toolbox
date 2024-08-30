@@ -6,14 +6,12 @@
 
 #pragma once
 
-#include <yq/trait/not_copyable.hpp>
-
 namespace yq {
 
     /*! \brief Implementor of the safety function 
     */
     template <typename P>
-    class Safety : not_copyable {
+    class Safety {
     public:
 
         Safety() : m_done(true) {}
@@ -31,6 +29,10 @@ namespace yq {
         void    clear() { m_done = true; }
 
     private:
+    
+        Safety(const Safety&) = delete;
+        Safety& operator=(const Safety&) = delete;
+        
         P       m_pred;
         bool    m_done;
     };

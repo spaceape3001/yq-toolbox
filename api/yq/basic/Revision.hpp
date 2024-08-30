@@ -7,8 +7,6 @@
 #pragma once
 
 #include <cstdint>
-#include <yq/trait/not_moveable.hpp>
-#include <yq/trait/not_copyable.hpp>
 
 namespace yq {
 
@@ -19,7 +17,7 @@ namespace yq {
         An optional setting is to specify a "master" so if tracking an invididual component, it'll also 
         trigger an update to the master's revision number too.
     */
-    class Revision : not_copyable, not_moveable {
+    class Revision {
     public:
     
         //! Current revision number.
@@ -40,5 +38,10 @@ namespace yq {
     private:
         uint64_t    m_revision;
         Revision*   m_master;
+        
+        Revision(const Revision&) = delete;
+        Revision(Revision&&) = delete;
+        Revision& operator=(const Revision&) = delete;
+        Revision& operator=(Revision&&) = delete;
     };
 }

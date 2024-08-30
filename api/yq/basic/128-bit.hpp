@@ -8,7 +8,9 @@
 
 #include <cstdint>
 
-    //  Linux suppourts int128
+namespace yq { struct UInt128; }
+
+//  Linux suppourts int128
 //! 128 bit unsigned integer (gcc native)
 using uint128_t = unsigned __int128;
 

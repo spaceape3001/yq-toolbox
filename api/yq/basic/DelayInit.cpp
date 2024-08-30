@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "DelayInit.hpp"
-#include "ThreadId.hpp"
+#include <yq/basic/DelayInit.hpp>
+#include <yq/basic/ThreadId.hpp>
 #include <atomic>
 
 namespace yq {

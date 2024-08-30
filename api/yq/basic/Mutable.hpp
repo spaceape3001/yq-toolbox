@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "Revision.hpp"
+#include <yq/basic/Revision.hpp>
 #include <type_traits>
 
 namespace yq {

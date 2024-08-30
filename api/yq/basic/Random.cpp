@@ -4,8 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-
-#include "Random.hpp"
+#include <yq/basic/Random.hpp>
 #include <random>
 #include <sys/random.h>
 

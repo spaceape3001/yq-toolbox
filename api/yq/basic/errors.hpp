@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/ErrorDB.hpp>
+#include <yq/basic/ErrorDB.hpp>
 
 namespace yq::errors {
     using bad_access                = error_db::entry<"Bad access">;

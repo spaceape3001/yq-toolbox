@@ -22,5 +22,12 @@ namespace yq {
             dirty   = true;
             return *this;
         }
+
+        Dirty&  operator=(T&& v)
+        {
+            value   = std::move(v);
+            dirty   = true;
+            return *this;
+        }
     };
 }

@@ -10,7 +10,7 @@
 #include <yq/trait/can_two_multiply.hpp>
 #include "preamble.hpp"
 #include "Coords.hpp"
-#include "IntRange.hpp"
+#include <yq/basic/IntRange.hpp>
 #include <vector>
 #include <span>
 

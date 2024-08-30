@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/Enum.hpp>
-#include <0/basic/Flags.hpp>
+#include <yq/basic/Flags.hpp>
 
 namespace yq {
 

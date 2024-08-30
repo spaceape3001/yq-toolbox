@@ -20,26 +20,22 @@
 #include <unordered_set>
 #include <vector>
 
-#include <0/basic/128-bit.hpp>
+#include <yq/basic/128-bit.hpp>
+#include <yq/basic/Expect.hpp>
 #include <0/basic/IgCase.hpp>
 #include <0/basic/LogFwd.hpp>
 #include <0/basic/RevIgCase.hpp>
 
 #include <yq/config/keywords.hpp>
+#include <yq/config/string.hpp>
+#include <yq/config/json_fwd.hpp>
+#include <yq/config/xml_fwd.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
 
 #define YQ_CPPSTRING(...) #__VA_ARGS__
 
 using namespace std::literals::chrono_literals;
-using namespace std::literals::string_literals;
-using namespace std::literals::string_view_literals;
-
-namespace rapidxml {
-    // Forward declarations
-    template<class Ch> class xml_node;
-    template<class Ch> class xml_attribute;
-    template<class Ch> class xml_document;
-    template<class Ch> class xml_base;
-}
 
 namespace yq {
     // switching to u32-strings (eventually)
@@ -178,8 +174,6 @@ namespace yq {
     template <typename T> class Stack;
     template <typename T> class Vector;
 
-        // the "new" results
-    template <typename T> using Expect  = std::expected<T,std::error_code>;
 
         // RESULTS
     
@@ -327,8 +321,6 @@ namespace yq {
     using url_r         = Result<Url>;
     using url_view_r    = Result<UrlView>;
 
-    using std::literals::string_literals::operator""s;
-    using std::literals::string_view_literals::operator""sv;
     
 
     template<class T, typename U>
@@ -350,7 +342,8 @@ namespace yq {
     }
     
     //! Used for detection of overrides
-    struct disabled {};
+    [[deprecated]] struct disabled {};
+    struct disabled_t {};
 
     //! creates a span from an initializer list
     template <typename T>
@@ -379,15 +372,9 @@ namespace yq {
 
     class Stream;
 
-    using XmlBase       = rapidxml::xml_base<char>;
-    using XmlNode       = rapidxml::xml_node<char>;
-    using XmlAttribute  = rapidxml::xml_attribute<char>;
-    using XmlDocument   = rapidxml::xml_document<char>;
 
     //! The reasonable maximum for a raw null terminated string... anything else should be in a string view (at least)
     static constexpr const uint64_t         MAX_NULL_TERM       = 8192;
 
-    template <typename T, typename U>  using product_t     = decltype(T()*U());
-    template <typename T, typename U>  using quotient_t    = decltype(T()/U());
 }
 

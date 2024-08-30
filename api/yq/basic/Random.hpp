@@ -6,7 +6,7 @@
 
 #pragma once
 #include <cstdint>
-#include <vector>
+#include <span>
 
 namespace yq {
 
@@ -98,7 +98,7 @@ namespace yq {
         \return An element from the vector.
     */
     template <typename T>
-    T           random_pick(const std::vector<T>& vec, T def=T())
+    T           random_pick(std::span<const T> vec, T def=T())
     {
         if(vec.empty())
             return def;

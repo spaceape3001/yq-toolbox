@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <nlohmann/json_fwd.hpp>
-
 namespace yq {
-    using json   = nlohmann::json;
+    template <typename T, typename U>  using product_t     = decltype(T()*U());
 }

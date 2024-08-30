@@ -6,8 +6,6 @@
 
 #pragma once
 #include <cstdint>
-#include <yq/trait/not_moveable.hpp>
-#include <yq/trait/not_copyable.hpp>
 
 namespace yq {
 
@@ -16,7 +14,7 @@ namespace yq {
         For those situations where a unique ID is required (but the actual order unimportant),
         this is that class!
     */
-    class UniqueID : not_copyable, not_moveable {
+    class UniqueID {
     public:
     
         //! This instance's unique ID
@@ -28,5 +26,10 @@ namespace yq {
         UniqueID();
     private:
         uint64_t    m_id;
+
+        UniqueID(const UniqueID&) = delete;
+        UniqueID(UniqueID&&) = delete;
+        UniqueID& operator=(const UniqueID&) = delete;
+        UniqueID& operator=(UniqueID&&) = delete;
     };
 }

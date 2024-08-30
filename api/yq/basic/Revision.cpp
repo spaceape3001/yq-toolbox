@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Revision.hpp"
+#include <yq/basic/Revision.hpp>
 
 namespace yq {
     Revision::Revision(Revision* m)

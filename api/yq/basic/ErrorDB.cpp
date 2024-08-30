@@ -4,11 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ErrorDB.hpp"
+#include <yq/basic/ErrorDB.hpp>
 #include <atomic>
 #include <mutex>
-
-#include <0/basic/Logging.hpp>
 
 namespace yq {
     namespace error_db {
@@ -58,7 +56,6 @@ namespace yq {
             
             Repo()
             {
-                yInfo() << "Size of error_db::Table is " << sizeof(Table);
                 db.add("Unspecified/unknown error");
             }
             

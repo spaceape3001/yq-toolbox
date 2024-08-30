@@ -6,7 +6,7 @@
 
 #include "Url.hpp"
 
-#include <0/basic/Result.hpp>
+#include <yq/basic/Result.hpp>
 #include <0/io/StreamOps.hpp>
 #include <0/io/stream/Text.hpp>
 #include <0/basic/TextUtils.hpp>

@@ -6,7 +6,7 @@
 
 #pragma once
 #include "preamble.hpp"
-#include "IntRange.hpp"
+#include <yq/basic/IntRange.hpp>
 #include <cassert>
 #include <type_traits>
 #include <algorithm>

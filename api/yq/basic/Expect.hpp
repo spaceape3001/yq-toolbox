@@ -6,8 +6,10 @@
 
 #pragma once
 
-#include <nlohmann/json_fwd.hpp>
+#include <system_error>
+#include <expected>
 
 namespace yq {
-    using json   = nlohmann::json;
+        // the "new" results
+    template <typename T> using Expect  = std::expected<T,std::error_code>;
 }
