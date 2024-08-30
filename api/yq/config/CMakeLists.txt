@@ -13,3 +13,9 @@ add_library(${PROJECT_NAME} INTERFACE
 target_link_libraries(${PROJECT_NAME} INTERFACE
     json
 )
+
+if(Feature_GLM)
+    target_include_directories(${PROJECT_NAME} INTERFACE
+        ${glm_INCLUDE_DIR}
+    )
+endif()
