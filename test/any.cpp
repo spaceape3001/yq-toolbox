@@ -33,6 +33,9 @@ int    parse_int(int n)
 }
 
 int main(){
+    log_to_std_output();
+    Meta::freeze();
+
     "blank variant"_test = [](){
         Any     v;
         expect(0_u == v.type().id());
@@ -51,8 +54,6 @@ int main(){
         expect( -42_i == parse_int(-42));
     };
 
-    log_to_std_output();
-    Meta::freeze();
     return ut::cfg<>.run();
 }
 

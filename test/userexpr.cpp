@@ -69,6 +69,9 @@ bool    sdouble(std::string_view ustr, double val, double ep=1e-14)
 
 int main()
 {
+    log_to_std_error();
+    Meta::freeze();
+
     "Has Operator"_test = []{
         auto& _r    = expr::Repo::instance();
         expect( true == _r.has_operator("+"));
@@ -222,8 +225,6 @@ int main()
     };
     #endif
 
-    log_to_std_error();
-    Meta::freeze();
     return ut::cfg<>.run();
 };
 
