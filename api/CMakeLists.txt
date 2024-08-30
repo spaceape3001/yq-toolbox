@@ -85,6 +85,12 @@ add_library(${PROJECT_NAME} SHARED
     0/math/meta_vectors.cpp
     0/math/strings.cpp
     0/math/UserExpr.cpp
+    0/math/color/HSL.hpp
+    0/math/color/HSL.hxx
+    0/math/color/HSL.cpp
+    0/math/color/HSV.hpp
+    0/math/color/HSV.hxx
+    0/math/color/HSV.cpp
     0/meta/meta.cpp
     0/sql/sql.cpp
     0/physics/physics.cpp

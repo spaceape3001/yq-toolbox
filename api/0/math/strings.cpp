@@ -85,6 +85,8 @@ namespace yq {
     const std::string_view     szHigh                      = "high";
     const std::string_view     szHigh_Box                  = "High-corner of the box";
     const std::string_view     szHigh_Range                = "High-value of the range";
+    const std::string_view     szHue                       = "hue";
+    const std::string_view     szHue_Color                 = "Hue component of the color";
     const std::string_view     szHypervolume               = "hypervolume";
     const std::string_view     szHypervolume_Box4          = "Hypervolume of the box";
     const std::string_view     szHypervolume_Sphere4       = "Hypervolume of the sphere";
@@ -109,6 +111,8 @@ namespace yq {
     const std::string_view     szLength_Vector             = "Length of the vector";
     const std::string_view     szLength²                   = "length2";
     const std::string_view     szLength²_Vector            = "Length SQUARED of the vector";
+    const std::string_view     szLightness                 = "lightness";
+    const std::string_view     szLightness_Color           = "Lightness component of the color";
     const std::string_view     szLo                        = "lo";
     const std::string_view     szLow                       = "low";
     const std::string_view     szLow_Box                   = "Low-corner of the box";
@@ -159,8 +163,11 @@ namespace yq {
     const std::string_view     szReal_Complex              = "Real component of the comolex number";
     const std::string_view     szRed                       = "red";
     const std::string_view     szRed_Color                 = "Red channel of the color";
-    const std::string_view     szSE                        = "se";
+    const std::string_view     szS                         = "s";
     const std::string_view     szSArea                     = "sarea";
+    const std::string_view     szSaturation                = "saturation";
+    const std::string_view     szSaturation_Color          = "Saturation component of the color";
+    const std::string_view     szSE                        = "se";
     const std::string_view     szSize                      = "size";
     const std::string_view     szSize_Box                  = "Size of the box";
     const std::string_view     szSize_Rectangle            = "Size of the rectangle";
@@ -200,6 +207,9 @@ namespace yq {
     const std::string_view     szWY_Tensor                 = "WY component of the tensor";
     const std::string_view     szWZ                        = "wz";
     const std::string_view     szWZ_Tensor                 = "WZ component of the tensor";
+    const std::string_view     szV                         = "v";
+    const std::string_view     szValue                     = "value";
+    const std::string_view     szValue_Color               = "Value component of the color";
     const std::string_view     szX                         = "x";
     const std::string_view     szX_Box                     = "X range of the box";
     const std::string_view     szX_Multivector             = "X component of the multivector";

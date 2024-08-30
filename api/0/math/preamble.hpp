@@ -182,6 +182,8 @@ namespace yq {
     template <typename> struct Data4;
     template <typename> struct ElemComponents;
     template <typename> struct Fraction;
+    template <typename> struct HSL;
+    template <typename> struct HSV;
     template <typename> struct Multivector1;
     template <typename> struct Multivector2;
     template <typename> struct Multivector3;
@@ -636,6 +638,20 @@ namespace yq {
 
     //  ------------------------------------------------
     //  FORWARD DECLARE Colors
+
+    using HSL3D                     = HSL<double>;
+    using HSL3F                     = HSL<float>;
+    using HSL3I                     = HSL<int>;
+    using HSL3U                     = HSL<unsigned>;
+    using HSL3U8                    = HSL<uint8_t>;
+    using HSL3U16                   = HSL<uint16_t>;
+
+    using HSV3D                     = HSV<double>;
+    using HSV3F                     = HSV<float>;
+    using HSV3I                     = HSV<int>;
+    using HSV3U                     = HSV<unsigned>;
+    using HSV3U8                    = HSV<uint8_t>;
+    using HSV3U16                   = HSV<uint16_t>;
 
     using RGB3D                     = RGB<double>;
     using RGB3F                     = RGB<float>;

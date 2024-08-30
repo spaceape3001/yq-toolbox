@@ -87,6 +87,8 @@ namespace yq {
     extern const std::string_view     szHigh;
     extern const std::string_view     szHigh_Box;
     extern const std::string_view     szHigh_Range;
+    extern const std::string_view     szHue;
+    extern const std::string_view     szHue_Color;
     extern const std::string_view     szHypervolume;
     extern const std::string_view     szHypervolume_Box4;
     extern const std::string_view     szHypervolume_Sphere4;
@@ -111,6 +113,8 @@ namespace yq {
     extern const std::string_view     szLength_Vector;
     extern const std::string_view     szLength²;
     extern const std::string_view     szLength²_Vector;
+    extern const std::string_view     szLightness;
+    extern const std::string_view     szLightness_Color;
     extern const std::string_view     szLo;
     extern const std::string_view     szLow;
     extern const std::string_view     szLow_Box;
@@ -161,8 +165,11 @@ namespace yq {
     extern const std::string_view     szReal_Complex;
     extern const std::string_view     szRed;
     extern const std::string_view     szRed_Color;
-    extern const std::string_view     szSE;
+    extern const std::string_view     szS;
     extern const std::string_view     szSArea;
+    extern const std::string_view     szSaturation;
+    extern const std::string_view     szSaturation_Color;
+    extern const std::string_view     szSE;
     extern const std::string_view     szSize;
     extern const std::string_view     szSize_Box;
     extern const std::string_view     szSize_Rectangle;
@@ -175,6 +182,9 @@ namespace yq {
     extern const std::string_view     szSW;
     extern const std::string_view     szUnproject;
     extern const std::string_view     szUnproject_Box;
+    extern const std::string_view     szV;
+    extern const std::string_view     szValue;
+    extern const std::string_view     szValue_Color;
     extern const std::string_view     szValid;
     extern const std::string_view     szValid_Box;
     extern const std::string_view     szValid_Circle;
