@@ -6,7 +6,7 @@
 
 #include "HSV.hpp"
 #include <0/math/strings.hpp>
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/meta/Init.hpp>
 
 using namespace yq;

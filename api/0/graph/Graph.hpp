@@ -12,7 +12,7 @@
 #include <0/basic/Enum.hpp>
 #include <0/basic/Flag.hpp>
 #include <0/basic/Map.hpp>
-#include <0/basic/MinMaxDef.hpp>
+#include <yq/basic/MinMaxDef.hpp>
 
 namespace yq {
     /*! \brief Graph Descriptor Language

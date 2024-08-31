@@ -5,12 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <0/basic/ErrorDB.hpp>
+#include <yq/basic/ErrorDB.hpp>
 
-namespace yq {
-    namespace errors {
-        using degenerate_dimension  = error_db::entry<"Degenerate dimension">;
-        using invalid_box           = error_db::entry<"Invalid box">;
-    }
+namespace yq::errors {
+    using degenerate_dimension  = error_db::entry<"Degenerate dimension">;
+    using invalid_box           = error_db::entry<"Invalid box">;
 }
 

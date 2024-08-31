@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/io/preamble.hpp>
-#include <0/basic/SizeTimestamp.hpp>
+#include <yq/basic/SizeTimestamp.hpp>
 #include <iosfwd>
 
 namespace yq {

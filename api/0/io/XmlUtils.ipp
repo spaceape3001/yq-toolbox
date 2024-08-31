@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/errors.hpp>
+#include <yq/basic/errors.hpp>
 #include <0/basic/ByteArray.hpp>
 #include <0/basic/Set.hpp>
 #include <0/basic/TextUtils.hpp>

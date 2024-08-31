@@ -166,7 +166,9 @@ target_link_libraries(${PROJECT_NAME}
         RapidXml
         json
         tbbmalloc_proxy
-        yqtrait yqconfig
+        yqtrait 
+        yqconfig
+        yqbasic
      PRIVATE
         pstreams
 )

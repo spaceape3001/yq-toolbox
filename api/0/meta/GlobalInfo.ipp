@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/meta/GlobalInfo.hpp>
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/meta/ReservedIDs.hpp>
 
 namespace yq {

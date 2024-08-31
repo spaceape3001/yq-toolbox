@@ -28,7 +28,7 @@
 #include <0/math/vector/Vector3.hpp>
 #include <0/math/vector/Vector4.hpp>
 
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 

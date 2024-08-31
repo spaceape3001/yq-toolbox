@@ -20,8 +20,9 @@ namespace yq {
     using xml_attribute_t  = rapidxml::xml_attribute<char>;
     using xml_document_t   = rapidxml::xml_document<char>;
 
-    using XmlBase       [[deprecated]] = rapidxml::xml_base<char>;
-    using XmlNode       [[deprecated]] = rapidxml::xml_node<char>;
-    using XmlAttribute  [[deprecated]] = rapidxml::xml_attribute<char>;
-    using XmlDocument   [[deprecated]] = rapidxml::xml_document<char>;
+    //  will be adding [[deprecated]] to these (later)...
+    using XmlBase       = rapidxml::xml_base<char>;
+    using XmlNode       = rapidxml::xml_node<char>;
+    using XmlAttribute  = rapidxml::xml_attribute<char>;
+    using XmlDocument   = rapidxml::xml_document<char>;
 }

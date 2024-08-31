@@ -6,6 +6,7 @@
 
 #include <yq/basic/ErrorDB.hpp>
 #include <atomic>
+#include <map>
 #include <mutex>
 
 namespace yq {

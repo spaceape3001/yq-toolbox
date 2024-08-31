@@ -8,8 +8,8 @@
 
 #include "DuplicateInstruction.hpp"
 
-#include <0/basic/errors.hpp>
-#include <0/basic/Stack.hpp>
+#include <yq/basic/errors.hpp>
+#include <yq/basic/Stack.hpp>
 
 namespace yq::expr {
     DuplicateInstruction::DuplicateInstruction(const string_t s) : Instruction(s)

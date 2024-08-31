@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/basic/XmlObject.hpp>
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/meta/ObjectInfoWriter.hpp>
 
 namespace yq {

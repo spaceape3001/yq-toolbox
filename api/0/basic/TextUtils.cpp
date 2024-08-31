@@ -10,13 +10,13 @@
 
 #include <0/basic/Compare.hpp>
 #include <yq/basic/Comma.hpp>
-#include <0/basic/IterUtf8.hpp>
-#include <0/basic/Iter32.hpp>
-#include <0/basic/IterW.hpp>
+#include <yq/basic/IterUtf8.hpp>
+#include <yq/basic/Iter32.hpp>
+#include <yq/basic/IterW.hpp>
 #include <0/basic/List.hpp>
 #include <0/basic/Map.hpp>
 #include <0/basic/MultiMap.hpp>
-#include <0/basic/Result.hpp>
+#include <yq/basic/Result.hpp>
 #include <0/basic/Set.hpp>
 #include <0/basic/TextUtils32.hpp>
 

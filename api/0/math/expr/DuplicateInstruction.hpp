@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <0/basic/errors.hpp>
-#include <0/basic/Stack.hpp>
 #include <0/math/expr/Instruction.hpp>
 
 namespace yq::expr {

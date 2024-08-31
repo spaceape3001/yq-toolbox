@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MetaObject.hpp"
-#include "DelayInit.hpp"
+#include <yq/basic/DelayInit.hpp>
 
 namespace yq {
     MetaObjectInfo::MetaObjectInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) : 

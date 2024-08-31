@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <0/basic/DelayInit.hpp>
-#include <0/basic/ThreadId.hpp>
+#include <yq/basic/DelayInit.hpp>
+#include <yq/basic/ThreadId.hpp>
 #include <0/meta/Meta.hpp>
 #include <0/meta/MetaRepo.hpp>
 #include <0/meta/ReservedIDs.hpp>

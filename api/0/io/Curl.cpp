@@ -8,7 +8,7 @@
 #include <0/basic/ByteArray.hpp>
 #include <0/basic/Url.hpp>
 #include <curl/curl.h>
-#include <nlohmann/json.hpp>
+#include <yq/config/json.hpp>
 #include <0/io/preamble.hpp>
 
 namespace yq {

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/graph/Graph.hpp>
-#include <0/basic/errors.hpp>
+#include <yq/basic/errors.hpp>
 #include <0/io/errors.hpp>
 #include <0/io/XmlUtils.hpp>
 

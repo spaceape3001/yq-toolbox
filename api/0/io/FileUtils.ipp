@@ -9,12 +9,12 @@
 //#include "AbstractFile.ipp"
 
 #include <0/io/FileUtils.hpp>
-#include <0/basic/Safety.hpp>
+#include <yq/basic/Safety.hpp>
 #include <0/basic/Vector.hpp>
-#include <0/basic/IterUtf8.hpp>
+#include <yq/basic/IterUtf8.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/ByteArray.hpp>
-#include <0/basic/Result.hpp>
+#include <yq/basic/Result.hpp>
 
 
 #include <fcntl.h>

@@ -342,7 +342,7 @@ namespace yq {
     }
     
     //! Used for detection of overrides
-    [[deprecated]] struct disabled {};
+    struct disabled {};
     struct disabled_t {};
 
     //! creates a span from an initializer list

@@ -6,7 +6,7 @@
 
 #include "ContentType.hpp"
 
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/basic/EnumMap.hpp>
 
 namespace yq {

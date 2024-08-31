@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/HttpStatus.hpp>
-#include <nlohmann/json_fwd.hpp>
+#include <yq/config/json_fwd.hpp>
 
 namespace yq {
 
@@ -32,7 +32,7 @@ namespace yq {
         
         const Vector<uint8_t>&      rx() const { return m_rx; }
         ByteArray                   rx_bytes() const;
-        nlohmann::json              rx_json() const;
+        json                        rx_json() const;
         
     private:
         Curl(const Curl&) = delete;

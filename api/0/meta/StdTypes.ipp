@@ -10,7 +10,7 @@
 #include <0/meta/ReservedIDs.hpp>
 #include <0/meta/Init.hpp>
 
-#include <0/basic/DelayInit.hpp>
+#include <yq/basic/DelayInit.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/Any.hpp>
 
