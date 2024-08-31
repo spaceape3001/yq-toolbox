@@ -8,7 +8,7 @@
 
 #include <0/math/expr/preamble.hpp>
 #include <0/meta/CompoundInfo.hpp>
-#include <0/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoStatic.hpp>
 #include <0/meta/MetaLookup.hpp>
 

@@ -7,10 +7,10 @@
 project(yqtoolbox)
 
 set(TOOLBOX_API_DIR ${CMAKE_CURRENT_LIST_DIR})
+set(TOOLBOX_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
 add_subdirectory(yq)
 
-add_subdirectory(0)
-option(Feature_GLM "Add GLM Bindings" ON)
 
 find_package(CURL REQUIRED)
 if(Feature_GLM)
@@ -166,9 +166,8 @@ target_link_libraries(${PROJECT_NAME}
         RapidXml
         json
         tbbmalloc_proxy
-        yqtrait 
-        yqconfig
-        yqbasic
+        yqtoolbox2
+        
      PRIVATE
         pstreams
 )
@@ -180,7 +179,6 @@ target_include_directories(${PROJECT_NAME}
         ${TBB_INCLUDE_DIR}
         ${LOG4CPP_INCLUDE_DIR}
         ${SQLite3_INCLUDE_DIRS}
-        ${glm_INCLUDE_DIR}
 )
 
 

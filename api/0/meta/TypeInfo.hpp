@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <0/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfo.hpp>
 #include <0/meta/MetaLookup.hpp>
 #include <0/meta/OperatorInfo.hpp>

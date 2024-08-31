@@ -1,4 +1,182 @@
-add_subdirectory(trait)
-add_subdirectory(config)
-add_subdirectory(basic)
+project(yqtoolbox2)
+
+option(Feature_GLM "Add GLM Bindings" ON)
+
+if(Feature_GLM)
+    find_package(glm REQUIRED)
+endif()
+
+find_package(Log4cpp REQUIRED)
+find_package(TBB REQUIRED)
+find_package(CURL REQUIRED)
+find_package(SQLite3 REQUIRED)
+
+#   This is a testing file, excluded from GIT, used for quick test compilation 
+#   of code before sliding it into the appropriate spot of the build.
+#   (ie.  prototyping goes here, but do not commit/push test.cpp.)
+if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
+    set(core_test_source ./test.cpp)
+endif()
+
+add_library(${PROJECT_NAME} SHARED
+    ${core_test_source}
+
+    basic/128-bit.hpp
+    basic/AutoReset.hpp
+    basic/BinaryBucket.hpp
+    basic/Comma.hpp
+    basic/Concat.hpp
+    basic/Created.hpp
+    basic/DbgRel.hpp
+    basic/DelayInit.hpp
+    basic/DelayInit.cpp
+    basic/ErrorDB.hpp
+    basic/ErrorDB.cpp
+    basic/errors.hpp
+    basic/Expect.hpp
+    basic/Flags.hpp
+    basic/FowlerNollVo.hpp
+    basic/Future.hpp
+    basic/Future.cpp
+    basic/Guarded.hpp
+    basic/IntRange.hpp
+    basic/Iter32.hpp
+    basic/IterUtf8.hpp
+    basic/IterUtf8.cpp
+    basic/IterW.hpp
+    basic/MD5.hpp
+    basic/MD5.cpp
+    basic/MinMaxDef.hpp
+    basic/Mutable.hpp
+    basic/Random.hpp
+    basic/Random.cpp
+    basic/Ref.hpp
+    basic/Ref.cpp
+    basic/Result.hpp
+    basic/Revision.hpp
+    basic/Revision.cpp
+    basic/Signal.hpp
+    basic/SizeTimestamp.hpp
+    basic/Stack.hpp
+    basic/StringLiteral.hpp
+    basic/ThreadId.hpp
+    basic/ThreadId.cpp
+    basic/UniqueID.hpp
+    basic/UniqueID.cpp
+
+    config/keywords.hpp
+    config/json.hpp
+    config/json_fwd.hpp
+    config/string.hpp
+    config/xml.hpp
+    config/xml_fwd.hpp
+
+    trait/always_false.hpp
+    trait/always_true.hpp
+    trait/argument_type.hpp
+    trait/can_add.hpp
+    trait/can_affirm.hpp
+    trait/can_divide.hpp
+    trait/can_multiply.hpp
+    trait/can_negate.hpp
+    trait/can_subtract.hpp
+    trait/can_two_add.hpp
+    trait/can_two_divide.hpp
+    trait/can_two_multiply.hpp
+    trait/can_two_subtract.hpp
+    trait/function_arguments.hpp
+    trait/has_abs.hpp
+    trait/has_addition.hpp
+    trait/has_copysign.hpp
+    trait/has_equality.hpp
+    trait/has_half.hpp
+    trait/has_identity.hpp
+    trait/has_inequality.hpp
+    trait/has_is_finite.hpp
+    trait/has_less.hpp
+    trait/has_nan.hpp
+    trait/has_one.hpp
+    trait/has_sqrt.hpp
+    trait/has_subtraction.hpp
+    trait/has_zero.hpp
+    trait/ieee754.hpp
+    trait/indices.hpp
+    trait/integer.hpp
+    trait/is_arithmetic.hpp
+    trait/is_floating_point.hpp
+    trait/is_integral.hpp
+    trait/is_stdarray.hpp
+    trait/is_stdspan.hpp
+    trait/is_stdvector.hpp
+    trait/is_template.hpp
+    trait/not_copyable.hpp
+    trait/not_moveable.hpp
+    trait/return_type.hpp
+    trait/sink.hpp
+    trait/weak.hpp
+)
+
+##########################
+##  COMPILER DEFINITIONS
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE 
+        YQ__CORE__OVERRIDE 
+)
+
+if(Feature_GLM)
+    target_compile_definitions(${PROJECT_NAME}
+        PUBLIC
+            YQ_FEATURE_GLM=1
+    )
+endif()
+
+##########################
+##  INCLUDE DIRECTORIES
+
+target_include_directories(${PROJECT_NAME} 
+    PUBLIC 
+        ${TOOLBOX_BIN_DIR}
+        ${TOOLBOX_API_DIR}
+        ${TBB_INCLUDE_DIR}
+        ${LOG4CPP_INCLUDE_DIR}
+        ${SQLite3_INCLUDE_DIRS}
+)
+
+if(Feature_GLM)
+    target_include_directories(${PROJECT_NAME} INTERFACE
+        ${glm_INCLUDE_DIR}
+    )
+endif()
+
+
+##########################
+##  OTHER LIBRARIES
+
+target_link_libraries(${PROJECT_NAME} PUBLIC 
+    ${LOG4CPP_LIBRARIES} 
+    ${TBB_LIBRARIES}
+    ${CURL_LIBRARIES}
+    ${SQLite3_LIBRARY}
+
+    json
+    RapidXml
+    tbbmalloc_proxy
+
+     PRIVATE
+        pstreams
+)
+
+IF(GCC)
+    target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+            stdc++fs
+            stdc++exp
+    )
+ENDIF()
+
+##########################
+##  LINK TEST
+
+LinkTest(${PROJECT_NAME})
 

@@ -7,12 +7,12 @@
 #pragma once
 
 #include <0/meta/MetaRepo.hpp>
-#include <0/meta/ReservedIDs.hpp>
+#include <yq/meta/ReservedIDs.hpp>
 
 namespace yq {
     Meta::Repo::Repo()
     {
-        all.reserve(8192);      // adjust as necessary, performance tradeoff, basically
+        all.reserve(16384);      // adjust as necessary, performance tradeoff, basically
         all.resize(M_USER, nullptr);
     }
     

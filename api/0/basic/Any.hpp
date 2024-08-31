@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/meta/AnyDef.hpp>
-#include <0/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <0/meta/TypeInfo.hpp>
 #include <0/meta/AnyImpl.hpp>
 

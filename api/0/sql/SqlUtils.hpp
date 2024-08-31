@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include <0/sql/preamble.hpp>
+#include <yq/sql/preamble.hpp>
+#include <filesystem>
 
 namespace yq {
     /*! \brief Runs the specified script against the database

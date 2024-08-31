@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <0/meta/CompoundInfoDynamic.hpp>
 #include <0/meta/CompoundInfoStatic.hpp>
 #include <0/meta/GlobalInfo.hpp>

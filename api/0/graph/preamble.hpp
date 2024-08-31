@@ -7,8 +7,8 @@
 #pragma once
 
 #include <0/basic/Enum.hpp>
-#include <0/basic/preamble.hpp>
-#include <0/meta/InfoBinder.hpp>
+//#include <0/basic/preamble.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief Generic graph namespace

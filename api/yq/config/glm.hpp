@@ -6,11 +6,4 @@
 
 #pragma once
 
-#include <0/basic/ErrorDB.hpp>
-
-namespace yq {
-    namespace errors {
-
-
-    }
-}
+#include <glm/glm.hpp>

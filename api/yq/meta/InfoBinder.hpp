@@ -5,8 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <0/basic/preamble.hpp>
 #include <type_traits>
+#include <cstdint>
+#include <string>
 
 namespace yq {
     class TypeInfo;
