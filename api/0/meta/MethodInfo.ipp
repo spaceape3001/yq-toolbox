@@ -12,7 +12,7 @@
 #include <0/meta/ObjectInfo.hpp>
 #include <0/meta/TypeInfo.hpp>
 #include <0/basic/Any.hpp>
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <0/basic/Logging.hpp>
 #include "AnyArgHelper.hpp"
 

@@ -9,7 +9,7 @@
 #include <yq/trait/can_add.hpp>
 #include <yq/trait/can_two_multiply.hpp>
 #include "preamble.hpp"
-#include "Coords.hpp"
+#include <yq/basic/Coords.hpp>
 #include <yq/basic/IntRange.hpp>
 #include <vector>
 #include <span>

@@ -6,9 +6,10 @@
 
 #pragma once
 
-#include "Coord.hpp"
+#include <yq/coord/forward.hpp>
 #include <yq/trait/has_zero.hpp>
-#include <yq/config/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
 
 namespace yq {
 
@@ -66,6 +67,17 @@ namespace yq {
         {
             i = j = k = l = v;
             return *this;
+        }
+
+        constexpr Coord operator+() const noexcept
+        {
+            return *this;
+        }
+        
+        //! Negate the coordinate
+        constexpr Coord operator-() const noexcept
+        {
+            return { -i, -j, -k, -l };
         }
     };
 

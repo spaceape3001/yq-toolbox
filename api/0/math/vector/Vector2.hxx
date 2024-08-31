@@ -16,9 +16,9 @@
 
 #include <0/math/vector/Vector2.hpp>
 
-#include <0/math/Absolute.hpp>
-#include <0/math/AllComponents.hpp>
-#include <0/math/AnyComponents.hpp>
+#include <yq/math/tolerance/Absolute.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 #include <0/math/trig.hpp>
 #include <0/math/utility.hpp>

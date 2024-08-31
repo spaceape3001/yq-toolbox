@@ -9,7 +9,7 @@
 #include <0/io/stream/Bytes.hpp>
 #include <0/basic/ByteArray.hpp>
 #include <0/io/errors.hpp>
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <fstream>
 
 namespace yq {

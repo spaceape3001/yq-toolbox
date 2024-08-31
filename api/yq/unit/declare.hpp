@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <yq/unit/dims.hpp>
+
 namespace yq {
 
     template <typename> struct Tensor33;

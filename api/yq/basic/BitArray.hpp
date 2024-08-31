@@ -7,7 +7,7 @@
 #pragma once
 
 #include <cstddef>
-#include <0/math/integer.hpp>
+#include <yq/math/integer.hpp>
 
 namespace yq {
     template <typename T, size_t N>

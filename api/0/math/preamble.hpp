@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-
+#include <yq/basic/CoordFwd.hpp>
 #include <0/io/StreamOps.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/always_false.hpp>
@@ -27,8 +27,8 @@
 #include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/is_integral.hpp>
 
-#include <0/math/unit/dims.hpp>
-#include <0/math/unit/declare.hpp>
+#include <yq/math/unit/dims.hpp>
+#include <yq/math/unit/declare.hpp>
 
 #include <algorithm>
 #include <cmath>
@@ -149,10 +149,6 @@ namespace yq {
     
         //  Some types/constants to work the constructors in magical ways :)
     
-    template <typename> struct LatLon;
-    template <typename, typename> struct LatLonAlt;
-    template <typename, typename> struct Polar2;
-    template <typename, typename> struct Cylindrical3;
     
     template <typename> struct PolygonData;
     template <typename> struct PolylineData;
@@ -260,16 +256,6 @@ namespace yq {
     
     //  ------------------------------------------------
     //  Coordinates
-    
-    using LL                    = LatLon<Radian>;
-    using LLH                   = LatLonAlt<Radian,double>;
-    using LLM                   = LatLonAlt<Radian,Meter>;
-    
-    using Polar2D               = Polar2<Radian,double>;
-    using Polar2M               = Polar2<Radian,Meter>;
-    
-    using Cylindrical3D         = Cylindrical3<Radian,double>;
-    using Cylindrical3M         = Cylindrical3<Radian,Meter>;
     
 
     //  ------------------------------------------------
@@ -440,24 +426,6 @@ namespace yq {
     using Circle2F                  = Circle2<float>;
     using Circle2I                  = Circle2<int>;
     using Circle2U                  = Circle2<unsigned>;
-
-    using Coord1D                   = Coord1<double>;
-    using Coord1F                   = Coord1<float>;
-
-    using Coord2D                   = Coord2<double>;
-    using Coord2F                   = Coord2<float>;
-
-    using Coord3D                   = Coord3<double>;
-    using Coord3F                   = Coord3<float>;
-
-    using Coord4D                   = Coord4<double>;
-    using Coord4F                   = Coord4<float>;
-
-    using Coord5D                   = Coord5<double>;
-    using Coord5F                   = Coord5<float>;
-
-    using Coord6D                   = Coord6<double>;
-    using Coord6F                   = Coord6<float>;
 
     using FractionI                 = Fraction<int>;
     //using Fraction8      = Fraction<int8_t>;

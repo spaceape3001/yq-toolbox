@@ -6,90 +6,88 @@
 
 #pragma once
 
-#include "Coord.hpp"
+#include <yq/coord/forward.hpp>
 #include <yq/trait/has_zero.hpp>
-#include <yq/config/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
 
 namespace yq {
 
-    /*! \brief Six dimensional coordinate
+    /*! \brief Three dimensional coordinate
     
-        This is expanded in six diemnsions for the six-dimensional coordinate.
+        This is expanded in three diemnsions for the three-dimensional coordinate.
     */
     template <typename T>
-    struct Coord<T,6> {
-        //! Component Type
+    struct Coord<T,3> {
+    
+        //! Component type
         using component_type    = T;
         
         //! Number of dimensions
-        static constexpr const uint8_t  DIMS    = 6;
-
+        static constexpr const uint8_t  DIMS    = 3;
+        
         //! Coordinate in I
-        T   i;
+        T       i;
 
         //! Coordinate in J
-        T   j;
+        T       j;
 
         //! Coordinate in K
-        T   k;
+        T       k;
 
-        //! Coordinate in L
-        T   l;
-
-        //! Coordinate in M
-        T   m;
-        
-        //! Coordinate in N
-        T       n;
-        
         //! Default constructor
         constexpr Coord() noexcept = default;
-
-        //! Component wise constructor
-        constexpr Coord(T _i, T _j, T _k, T _l, T _m, T _n) noexcept : 
-            i(_i), j(_j), k(_k), l(_l), m(_m), n(_n) {}
-
-        //! Construct all components to same value
-        constexpr Coord(all_t, T _v) noexcept : Coord<T,6>(_v, _v, _v, _v, _v, _v) {}
-
-        //! Zero initializing constructor
-        constexpr Coord(zero_t) noexcept : Coord<T,6>(ALL, zero_v<T>) {}
         
+        //! Initializing constructor
+        constexpr Coord(T _i, T _j, T _k) noexcept : 
+            i(_i), j(_j), k(_k) {}
+            
+        //! Constructs all elements to same value
+        constexpr Coord(all_t, T _v) noexcept : Coord<T,3>(_v, _v, _v) {}
+        
+        //! Zero constructor
+        constexpr Coord(zero_t) noexcept : Coord<T,3>(ALL, zero_v<T>) {}
+
         //! Defaulted equality  operator
         constexpr bool operator==(const Coord&) const noexcept = default;
-        
-        //! Conversion operator to other 6-dimensional coordinates
+
+        //! Conversion operator to other 3-dimensional coordinates
         template <typename U>
         requires (!std::is_same_v<T,U>)
-        explicit constexpr operator Coord<U,6>() const noexcept
+        explicit constexpr operator Coord<U,3>() const noexcept
         {
-            return { (U) i, (U) j, (U) k, (U) l, (U) m, (U) n };
+            return { (U) i, (U) j, (U) k };
         }
-        
+
         //! Allows for uniform coordinate assignments.
         Coord& operator=(T v)
         {
-            i = j = k = l = m = n = v;
+            i = j = k = v;
             return *this;
         }
+
+        constexpr Coord operator+() const noexcept;
+        
+        //! Negate the coordinate
+        constexpr Coord operator-() const noexcept;
     };
 
 
     //  --------------------------------------------------------
     //  COMPOSITION
 
-    /*! \brief Composes a six dimensional coordinate from arguments */
+    /*! \brief Composes a three dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord6<T>    coord(T i, std::type_identity_t<T> j, std::type_identity_t<T> k, std::type_identity_t<T> l, std::type_identity_t<T> m, std::type_identity_t<T> n) noexcept
+    constexpr Coord3<T>    coord(T i, std::type_identity_t<T> j, std::type_identity_t<T> k) noexcept
     {
-        return { i, j, k, l, m, n };
+        return { i, j, k};
     }
     
-    /*! \brief Construct a uniform 6-dimensional coordinate */
+    /*! \brief Construct a uniform 3-dimensional coordinate */
     template <typename T>
-    constexpr Coord6<T>    coord6(T i)
+    constexpr Coord3<T>    coord3(T i)
     {
-        return { i, i, i, i, i, i };
+        return { i, i, i };
     }
 
 
@@ -98,59 +96,40 @@ namespace yq {
 
     /*! \brief Max of two coordinates, done by element */
     template <typename T>
-    constexpr Coord6<T> max(const Coord6<T>&a, const Coord6<T>& b)
+    constexpr Coord3<T> max(const Coord3<T>&a, const Coord3<T>& b)
     {
         return { 
             max(a.i, b.i), 
             max(a.j, b.j), 
-            max(a.k, b.k), 
-            max(a.l, b.l), 
-            max(a.m, b.m), 
-            max(a.n, b.n)
+            max(a.k, b.k)
         };
     }
 
     /*! \brief Min of two coordinates, done by element */
     template <typename T>
-    constexpr Coord6<T> min(const Coord6<T>&a, const Coord6<T>& b)
+    constexpr Coord3<T> min(const Coord3<T>&a, const Coord3<T>& b)
     {
         return { 
             min(a.i, b.i), 
             min(a.j, b.j), 
-            min(a.k, b.k), 
-            min(a.l, b.l), 
-            min(a.m, b.m), 
-            min(a.n, b.n)
+            min(a.k, b.k)
         };
     }
 
     /*! \brief Product of the components */
     template <typename T>
-    constexpr auto product(const Coord6<T>& a)
+    constexpr auto product(const Coord3<T>& a)
     {
-        return a.i*a.j*a.k*a.l*a.m*a.n;
+        return a.i*a.j*a.k;
     }
 
     /*! \brief Sum of the components */
     template <typename T>
-    constexpr T sum(const Coord6<T>& a)
+    constexpr T sum(const Coord3<T>& a)
     {
-        return a.i+a.j+a.k+a.l+a.m+a.n;
+        return a.i+a.j+a.k;
     }
-    
-    //  --------------------------------------------------------
-    //  POSITIVE
 
-
-    //  --------------------------------------------------------
-    //  NEGATIVE
-
-    //! Negate the coordinate
-    template <typename T>
-    constexpr Coord6<T>    operator-(const Coord6<T>& a)
-    {
-        return { -a.i, -a.j, -a.k, -a.l, -a.m, -a.n };
-    }
 
 
     //  --------------------------------------------------------
@@ -162,21 +141,18 @@ namespace yq {
     
     //! Add two coordinates together
     template <typename T>
-    constexpr Coord6<T> operator+(const Coord6<T>&a, const Coord6<T>&b)
+    constexpr Coord3<T> operator+(const Coord3<T>&a, const Coord3<T>&b)
     {
-        return { a.i+b.i, a.j+b.j, a.k+b.k, a.l+b.l, a.m+b.m, a.n+b.n };
+        return { a.i+b.i, a.j+b.j, a.k+b.k };
     }
     
     //! Increment left coordinate with right
     template <typename T>
-    Coord6<T>&  operator+=(Coord6<T>& a, const Coord6<T>& b)
+    Coord3<T>&  operator+=(Coord3<T>& a, const Coord3<T>& b)
     {
         a.i += b.i;
         a.j += b.j;
         a.k += b.k;
-        a.l += b.l;
-        a.m += b.m;
-        a.n += b.n;
         return a;
     }
 
@@ -186,21 +162,18 @@ namespace yq {
 
     //! Subtract two coordinates
     template <typename T>
-    constexpr Coord6<T> operator-(const Coord6<T>&a, const Coord6<T>&b)
+    constexpr Coord3<T> operator-(const Coord3<T>&a, const Coord3<T>&b)
     {
-        return { a.i-b.i, a.j-b.j, a.k-b.k, a.l-b.l, a.m-b.m, a.n-b.n };
+        return { a.i-b.i, a.j-b.j, a.k-b.k };
     }
     
     //! Decrement the left coordinate with right
     template <typename T>
-    Coord6<T>&  operator-=(Coord6<T>& a, const Coord6<T>& b)
+    Coord3<T>&  operator-=(Coord3<T>& a, const Coord3<T>& b)
     {
         a.i -= b.i;
         a.j -= b.j;
         a.k -= b.k;
-        a.l -= b.l;
-        a.m -= b.m;
-        a.n -= b.n;
         return a;
     }
 
@@ -211,51 +184,45 @@ namespace yq {
     //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr Coord6<decltype(T()*U())> operator*(T a, const Coord6<U>&b)
+    constexpr Coord3<decltype(T()*U())> operator*(T a, const Coord3<U>&b)
     {
-        return { a*b.i, a*b.j, a*b.k, a*b.l, a*b.m, a*b.n };
+        return { a*b.i, a*b.j, a*b.k };
     }
     
     //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr Coord6<decltype(T()*U())> operator*(const Coord6<T>& a, U b)
+    constexpr Coord3<decltype(T()*U())> operator*(const Coord3<T>& a, U b)
     {
-        return { a.i*b,  a.j*b, a.k*b, a.l*b, a.m*b, a.n*b };
+        return { a.i*b, a.j*b, a.k*b };
     }
 
-    //! Self-scale the coordinate
+    //! Self-scale the left coordinate with the right
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
-    Coord6<T>& operator*=(Coord6<T>& a, U b)
+    Coord3<T>& operator*=(Coord3<T>& a, U b)
     {
         a.i *= b;
         a.j *= b;
         a.k *= b;
-        a.l *= b;
-        a.m *= b;
-        a.n *= b;
         return a;
     }
 
     //! Multiplies two coordinates together, term by term
     template <typename T, typename U>
-    constexpr Coord6<decltype(T()*U())> operator*(const Coord6<T>& a, const Coord6<U>& b)
+    constexpr Coord3<decltype(T()*U())> operator*(const Coord3<T>& a, const Coord3<U>& b)
     {
-        return { a.i*b.i, a.j*b.j, a.k*b.k, a.l*b.l, a.m*b.m, a.n*b.n };
+        return { a.i*b.i, a.j*b.j, a.k*b.k };
     }
     
     //! Self-Multiplies left coordinate with right, term by term
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()*U())>)
-    Coord6<T>& operator*=(Coord6<T>&a, const Coord6<U>& b)
+    Coord3<T>& operator*=(Coord3<T>&a, const Coord3<U>& b)
     {
         a.i *= b.i;
         a.j *= b.j;
         a.k *= b.k;
-        a.l *= b.l;
-        a.m *= b.m;
-        a.n *= b.n;
         return a;
     }
     
@@ -266,43 +233,37 @@ namespace yq {
     //! Reduces the cooordinate, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr Coord6<decltype(T()/U())> operator/(const Coord6<T>& a, U b)
+    constexpr Coord3<decltype(T()/U())> operator/(const Coord3<T>& a, U b)
     {
-        return { a.i/b,  a.j/b, a.k/b, a.l/b, a.m/b, a.n/b };
+        return { a.i/b, a.j/b, a.k/b };
     }
 
     //! Reduces the cooordinate in place, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()/U())>)
-    Coord6<T>& operator/=(Coord6<T>& a, U b)
+    Coord3<T>& operator/=(Coord3<T>& a, U b)
     {
         a.i /= b;
         a.j /= b;
         a.k /= b;
-        a.l /= b;
-        a.m /= b;
-        a.n /= b;
         return a;
     }
 
     //! Divides two coordinates, term by term
     template <typename T, typename U>
-    constexpr Coord6<decltype(T()/U())> operator/(const Coord6<T>& a, const Coord6<U>& b)
+    constexpr Coord3<decltype(T()/U())> operator/(const Coord3<T>& a, const Coord3<U>& b)
     {
-        return { a.i/b.i, a.j/b.j, a.k/b.k, a.l/b.l, a.m/b.m, a.n/b.n };
+        return { a.i/b.i, a.j/b.j, a.k/b.k };
     }
 
     //! Self divides left coordinate by right
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()/U())>)
-    Coord6<T>& operator/=(Coord6<T>& a, const Coord6<U>& b)
+    Coord3<T>& operator/=(Coord3<T>& a, const Coord3<U>& b)
     {
         a.i /= b.i;
         a.j /= b.j;
         a.k /= b.k;
-        a.l /= b.l;
-        a.m /= b.m;
-        a.n /= b.n;
         return a;
     }
 
@@ -328,27 +289,26 @@ namespace yq {
     //  ADVANCED FUNCTIONS
 
 
-
     //  --------------------------------------------------------
     //  CONDITIONAL INCLUDES
 
     //! Helper to stream out a coordinate
     template <typename S, typename I>
-    S&  as_stream(S& s, const Coord6<I>& v)
+    S&  as_stream(S& s, const Coord3<I>& v)
     {
-        return s << "[" << v.i << "," << v.j << "," << v.k << "," << v.l << "," << v.m << "," << v.n << "]";
+        return s << "[" << v.i << "," << v.j << "," << v.k << "]";
     }
     
     //! Helper to stream out a coordinate
     template <typename T>
-    Stream& operator<<(Stream&s, const Coord6<T>& v)
+    Stream& operator<<(Stream&s, const Coord3<T>& v)
     {
         return as_stream(s, v);
     }
 
     //! Helper to log out a coordinate
     template <typename T>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord6<T>& v)
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord3<T>& v)
     {
         return as_stream(s, v);
     }

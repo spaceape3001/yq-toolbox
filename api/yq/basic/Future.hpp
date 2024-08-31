@@ -10,7 +10,7 @@
 #include <system_error>
 #include <exception>
 #include <type_traits>
-#include <yq/config/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/basic/Ref.hpp>
 
 namespace yq {

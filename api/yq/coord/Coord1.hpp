@@ -6,85 +6,81 @@
 
 #pragma once
 
-#include "Coord.hpp"
+#include <yq/coord/forward.hpp>
 #include <yq/trait/has_zero.hpp>
-#include <yq/config/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
 
 namespace yq {
 
-    /*! \brief Two dimensional coordinate
+    /*! \brief One dimensional coordinate
     
-        This is expanded in two diemnsions for the two-dimensional coordinate.
+        This is expanded in one diemnsion for the one-dimensional coordinate.
     */
     template <typename T>
-    struct Coord<T,2> {
+    struct Coord<T,1> {
     
         //! Component type
         using component_type    = T;
         
-        //! Number of dimensions;
-        static constexpr const uint8_t  DIMS    = 2;
+        //! Number of dimensions
+        static constexpr const uint8_t  DIMS    = 1;
         
-        //! Coordinate in I
+        //! Data (I-value)
         T       i;
-        
-        //! Coordinate in J
-        T       j;
 
         //! Default constructor
         constexpr Coord() noexcept = default;
         
-        //! Initializing constructor (by components)
-        constexpr Coord(T _i, T _j) noexcept : 
-            i(_i), j(_j) {}
+        //! Initializing constructor
+        constexpr Coord(T _i) noexcept : 
+            i(_i)  {}
             
-        //! Constructs all elements from single value
-        constexpr Coord(all_t, T _v) noexcept : Coord<T,2>(_v, _v) {}
+        //! All components to given value
+        constexpr Coord(all_t, T _v) noexcept : Coord<T,1>(_v) {}
         
-        //! Constructs as a zero value for all components
-        constexpr Coord(zero_t) noexcept : Coord<T,2>(ALL, zero_v<T>) {}
+        //! Zero initializes
+        constexpr Coord(zero_t) noexcept : Coord<T,1>(ALL, zero_v<T>) {}
 
-        //! Defaulted equality  operator
-        constexpr bool operator==(const Coord&) const noexcept = default;
+        //! Defaulted spaceship  operator
+        constexpr auto operator<=>(const Coord&) const noexcept = default;
 
-        //! Conversion operator to other 2-dimensional coordinates
+        //! Conversion operator to other 1-dimensional coordinates
         template <typename U>
         requires (!std::is_same_v<T,U>)
-        explicit constexpr operator Coord<U,2>() const noexcept
+        explicit constexpr operator Coord<U,1>() const noexcept
         {
-            return { (U) i, (U) j };
+            return { (U) i };
         }
 
-        //! Allows for uniform coordinate assignments.
+        //! Allows for uniform coordinate assignment.
         Coord& operator=(T v)
         {
-            i = j = v;
+            i = v;
             return *this;
         }
         
-        //! Alias for row index (matrix-style)
-        constexpr const T&    row() const noexcept { return i; }
-        
-        //! Alias for column index (matrix-style)
-        constexpr const T&    column() const noexcept { return j; }
+        constexpr Coord     operator-() const noexcept;
+        constexpr Coord     operator+() const noexcept;
+        constexpr Coord     operator+(const Coord& b) const noexcept;
     };
 
 
     //  --------------------------------------------------------
     //  COMPOSITION
 
-    /*! \brief Composes a two dimensional coordinate from arguments */
+    /*! \brief Composes a one dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord2<T>    coord(T i, std::type_identity_t<T> j) noexcept
+    constexpr Coord1<T>    coord(T i) noexcept
     {
-        return { i, j };
+        return { i };
     }
     
-    /*! \brief Construct a uniform 2-dimensional coordinate */
+    /*! \brief Construct a uniform 1-dimensional coordinate */
     template <typename T>
-    constexpr Coord2<T>    coord2(T i)
+    constexpr Coord1<T>    coord1(T i)
     {
-        return { i, i };
+        return { i };
     }
 
 
@@ -93,51 +89,34 @@ namespace yq {
 
     /*! \brief Max of two coordinates, done by element */
     template <typename T>
-    constexpr Coord2<T> max(const Coord2<T>&a, const Coord2<T>& b)
+    constexpr Coord1<T> max(const Coord1<T>&a, const Coord1<T>& b)
     {
         return { 
-            max(a.i, b.i), 
-            max(a.j, b.j)
+            max(a.i, b.i)
         };
     }
 
     /*! \brief Min of two coordinates, done by element */
     template <typename T>
-    constexpr Coord2<T> min(const Coord2<T>&a, const Coord2<T>& b)
+    constexpr Coord1<T> min(const Coord1<T>&a, const Coord1<T>& b)
     {
         return { 
-            min(a.i, b.i), 
-            min(a.j, b.j)
+            min(a.i, b.i)
         };
     }
 
     /*! \brief Product of the components */
     template <typename T>
-    constexpr auto product(const Coord2<T>& a)
+    constexpr T product(const Coord1<T>& a)
     {
-        return a.i*a.j;
+        return a.i;
     }
 
     /*! \brief Sum of the components */
     template <typename T>
-    constexpr T sum(const Coord2<T>& a)
+    constexpr T sum(const Coord1<T>& a)
     {
-        return a.i+a.j;
-    }
-
-
-    //  --------------------------------------------------------
-    //  POSITIVE
-
-
-    //  --------------------------------------------------------
-    //  NEGATIVE
-
-    //! Negate the coordinate
-    template <typename T>
-    constexpr Coord2<T>    operator-(const Coord2<T>& a)
-    {
-        return { -a.i, -a.j };
+        return a.i;
     }
 
 
@@ -150,17 +129,16 @@ namespace yq {
     
     //! Add two coordinates together
     template <typename T>
-    constexpr Coord2<T> operator+(const Coord2<T>&a, const Coord2<T>&b)
+    constexpr Coord1<T> operator+(const Coord1<T>&a, const Coord1<T>&b)
     {
-        return { a.i+b.i, a.j+b.j };
+        return { a.i+b.i };
     }
     
     //! Increment left coordinate with right
     template <typename T>
-    Coord2<T>&  operator+=(Coord2<T>& a, const Coord2<T>& b)
+    Coord1<T>&  operator+=(Coord1<T>& a, const Coord1<T>& b)
     {
         a.i += b.i;
-        a.j += b.j;
         return a;
     }
 
@@ -171,17 +149,16 @@ namespace yq {
     
     //! Subtract two coordinates
     template <typename T>
-    constexpr Coord2<T> operator-(const Coord2<T>&a, const Coord2<T>&b)
+    constexpr Coord1<T> operator-(const Coord1<T>&a, const Coord1<T>&b)
     {
-        return { a.i-b.i, a.j-b.j };
+        return { a.i-b.i };
     }
     
     //! Decrement the left coordinate with right
     template <typename T>
-    Coord2<T>&  operator-=(Coord2<T>& a, const Coord2<T>& b)
+    Coord1<T>&  operator-=(Coord1<T>& a, const Coord1<T>& b)
     {
         a.i -= b.i;
-        a.j -= b.j;
         return a;
     }
 
@@ -192,43 +169,41 @@ namespace yq {
     //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<T>)
-    constexpr Coord2<decltype(T()*U())> operator*(T a, const Coord2<U>&b)
+    constexpr Coord1<decltype(T()*U())> operator*(T a, const Coord1<U>&b)
     {
-        return { a*b.i, a*b.j };
+        return { a*b.i };
     }
     
     //! Scale the coordinate
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr Coord2<decltype(T()*U())> operator*(const Coord2<T>& a, U b)
+    constexpr Coord1<decltype(T()*U())> operator*(const Coord1<T>& a, U b)
     {
-        return { a.i*b, a.j*b };
+        return { a.i*b };
     }
 
     //! Self-scale the left coordinate with the right
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
-    Coord2<T>& operator*=(Coord2<T>& a, U b)
+    Coord1<T>& operator*=(Coord1<T>& a, U b)
     {
         a.i *= b;
-        a.j *= b;
         return a;
     }
 
     //! Multiplies two coordinates together, term by term
     template <typename T, typename U>
-    constexpr Coord2<decltype(T()*U())> operator*(const Coord2<T>& a, const Coord2<U>& b)
+    constexpr Coord1<decltype(T()*U())> operator*(const Coord1<T>& a, const Coord1<U>& b)
     {
-        return { a.i*b.i, a.j*b.j };
+        return { a.i*b.i };
     }
     
     //! Self-Multiplies left coordinate with right, term by term
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()*U())>)
-    Coord2<T>& operator*=(Coord2<T>&a, const Coord2<U>& b)
+    Coord1<T>& operator*=(Coord1<T>&a, const Coord1<U>& b)
     {
         a.i *= b.i;
-        a.j *= b.j;
         return a;
     }
     
@@ -239,35 +214,33 @@ namespace yq {
     //! Reduces the cooordinate, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U>)
-    constexpr Coord2<decltype(T()/U())> operator/(const Coord2<T>& a, U b)
+    constexpr Coord1<decltype(T()/U())> operator/(const Coord1<T>& a, U b)
     {
-        return { a.i/b, a.j/b };
+        return { a.i/b };
     }
 
     //! Reduces the cooordinate in place, returns result
     template <typename T, typename U>
     requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()/U())>)
-    Coord2<T>& operator/=(Coord2<T>& a, U b)
+    Coord1<T>& operator/=(Coord1<T>& a, U b)
     {
         a.i /= b;
-        a.j /= b;
         return a;
     }
 
     //! Divides two coordinates, term by term
     template <typename T, typename U>
-    constexpr Coord2<decltype(T()/U())> operator/(const Coord2<T>& a, const Coord2<U>& b)
+    constexpr Coord1<decltype(T()/U())> operator/(const Coord1<T>& a, const Coord1<U>& b)
     {
-        return { a.i/b.i, a.j/b.j };
+        return { a.i/b.i };
     }
 
     //! Self divides left coordinate by right
     template <typename T, typename U>
     requires (std::is_same_v<T, decltype(T()/U())>)
-    Coord2<T>& operator/=(Coord2<T>& a, const Coord2<U>& b)
+    Coord1<T>& operator/=(Coord1<T>& a, const Coord1<U>& b)
     {
         a.i /= b.i;
-        a.j /= b.j;
         return a;
     }
 
@@ -298,23 +271,29 @@ namespace yq {
 
     //! Helper to stream out a coordinate
     template <typename S, typename I>
-    S&  as_stream(S& s, const Coord2<I>& v)
+    S&  as_stream(S& s, const Coord1<I>& v)
     {
-        return s << "[" << v.i << "," << v.j << "]";
+        return s << "[" << v.i << "]";
     }
     
     //! Helper to stream out a coordinate
     template <typename T>
-    Stream& operator<<(Stream&s, const Coord2<T>& v)
+    Stream& operator<<(Stream&s, const Coord1<T>& v)
     {
         return as_stream(s, v);
     }
 
     //! Helper to log out a coordinate
     template <typename T>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord2<T>& v)
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord1<T>& v)
     {
         return as_stream(s, v);
     }
-    
 }
+
+YQ_TYPE_DECLARE(yq::Coord1D);
+YQ_TYPE_DECLARE(yq::Coord1F);
+YQ_TYPE_DECLARE(yq::Coord1I);
+YQ_TYPE_DECLARE(yq::Coord1U);
+YQ_TYPE_DECLARE(yq::Coord1Z);
+

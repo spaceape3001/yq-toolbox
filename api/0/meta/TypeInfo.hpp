@@ -9,7 +9,7 @@
 #include <0/meta/CompoundInfo.hpp>
 #include <0/meta/MetaLookup.hpp>
 #include <0/meta/OperatorInfo.hpp>
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <0/basic/preamble.hpp>
 #include <unordered_map>
 

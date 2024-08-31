@@ -9,8 +9,8 @@
 #include <0/math/vector/Tensor42.hpp>
 #include <0/math/utility.hpp>
 
-#include <0/math/AllComponents.hpp>
-#include <0/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the tensor42 code.  Include this

@@ -15,8 +15,8 @@
 
 #include <0/math/shape/Size2.hpp>
 
-#include <0/math/AllComponents.hpp>
-#include <0/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 namespace yq {
 

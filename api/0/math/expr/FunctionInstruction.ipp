@@ -8,7 +8,7 @@
 
 #include "FunctionInstruction.hpp"
 
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <0/basic/Any.hpp>
 #include <0/basic/Logging.hpp>
 #include <yq/basic/Stack.hpp>

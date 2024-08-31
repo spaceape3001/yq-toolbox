@@ -14,7 +14,7 @@
 
 #include <0/math/shape/AxBox3.hpp>
 #include <0/math/utility.hpp>
-#include <0/math/errors.hpp>
+#include <yq/math/errors.hpp>
 
 namespace yq {
     template <typename T>

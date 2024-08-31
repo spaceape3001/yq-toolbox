@@ -8,7 +8,7 @@
 
 #include "DuplicateInstruction.hpp"
 
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <yq/basic/Stack.hpp>
 
 namespace yq::expr {

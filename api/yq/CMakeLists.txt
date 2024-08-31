@@ -21,10 +21,12 @@ endif()
 add_library(${PROJECT_NAME} SHARED
     ${core_test_source}
 
+    errors.hpp
+    keywords.hpp
+
     basic/128-bit.hpp
     basic/AutoReset.hpp
     basic/BinaryBucket.hpp
-    basic/Comma.hpp
     basic/Concat.hpp
     basic/Created.hpp
     basic/DbgRel.hpp
@@ -32,7 +34,6 @@ add_library(${PROJECT_NAME} SHARED
     basic/DelayInit.cpp
     basic/ErrorDB.hpp
     basic/ErrorDB.cpp
-    basic/errors.hpp
     basic/Expect.hpp
     basic/Flags.hpp
     basic/FowlerNollVo.hpp
@@ -40,10 +41,6 @@ add_library(${PROJECT_NAME} SHARED
     basic/Future.cpp
     basic/Guarded.hpp
     basic/IntRange.hpp
-    basic/Iter32.hpp
-    basic/IterUtf8.hpp
-    basic/IterUtf8.cpp
-    basic/IterW.hpp
     basic/MD5.hpp
     basic/MD5.cpp
     basic/MinMaxDef.hpp
@@ -57,19 +54,53 @@ add_library(${PROJECT_NAME} SHARED
     basic/Revision.cpp
     basic/Signal.hpp
     basic/SizeTimestamp.hpp
-    basic/Stack.hpp
     basic/StringLiteral.hpp
     basic/ThreadId.hpp
     basic/ThreadId.cpp
     basic/UniqueID.hpp
     basic/UniqueID.cpp
 
-    config/keywords.hpp
     config/json.hpp
     config/json_fwd.hpp
     config/string.hpp
     config/xml.hpp
     config/xml_fwd.hpp
+    
+    container/Deque.hpp
+    container/List.hpp
+    container/Stack.hpp
+    
+    coord/Coord1.hpp
+    coord/Coord1.hxx
+    coord/Coord1.cpp
+    coord/Coord2.hpp
+    coord/Coord2.hxx
+    coord/Coord2.cpp
+    coord/Coord3.hpp
+    coord/Coord3.hxx
+    coord/Coord3.cpp
+    coord/Coord4.hpp
+    coord/Coord4.hxx
+    coord/Coord4.cpp
+    coord/Coord5.hpp
+    coord/Coord5.hxx
+    coord/Coord5.cpp
+    coord/Coord6.hpp
+    coord/Coord6.hxx
+    coord/Coord6.cpp
+    coord/forward.hpp
+    
+    io/Stream.hpp
+    io/Stream.cpp
+    
+    text/Comma.hpp
+    text/IgCase.hpp
+    text/Iter32.hpp
+    text/IterUtf8.hpp
+    text/IterUtf8.cpp
+    text/IterW.hpp
+    text/MaybeCase.hpp
+    text/RevIgCase.hpp
 
     trait/always_false.hpp
     trait/always_true.hpp

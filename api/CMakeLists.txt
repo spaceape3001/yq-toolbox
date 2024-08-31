@@ -35,21 +35,11 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/BasicApp.hpp
     0/basic/BasicApp.cpp
     0/basic/BasicBuffer.hpp
-    0/basic/BitArray.hpp
     0/basic/ByteArray.hpp
     0/basic/CollectionUtils.hpp
     0/basic/Compare.hpp
     0/basic/ContentType.hpp
     0/basic/ContentType.cpp
-    0/basic/Coord1.hpp
-    0/basic/Coord2.hpp
-    0/basic/Coord3.hpp
-    0/basic/Coord4.hpp
-    0/basic/Coord5.hpp
-    0/basic/Coord6.hpp
-    0/basic/Coord.hpp
-    0/basic/Coords.hpp
-    0/basic/Deque.hpp
     0/basic/DiffEngine.hpp
     0/basic/Encode64.hpp
     0/basic/Encode64.cpp
@@ -75,7 +65,6 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/HttpParser.cpp
     0/basic/HttpStatus.hpp
     0/basic/HttpStatus.cpp
-    0/basic/IgCase.hpp
     0/basic/IgCase.cpp
     0/basic/Logging.cpp
     0/basic/MaybeCase.cpp

@@ -9,7 +9,7 @@
 #include <0/basic/preamble.hpp>
 #include <yq/trait/not_copyable.hpp>
 #include <yq/trait/not_moveable.hpp>
-#include <0/basic/BitArray.hpp>
+#include <yq/basic/BitArray.hpp>
 #include <0/basic/Hash.hpp>
 #include <0/basic/Map.hpp>
 #include <0/basic/MultiMap.hpp>

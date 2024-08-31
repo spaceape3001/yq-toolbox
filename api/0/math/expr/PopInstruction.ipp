@@ -8,7 +8,7 @@
 
 #include "PopInstruction.hpp"
 #include <0/basic/Any.hpp>
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <yq/basic/Stack.hpp>
 
 namespace yq::expr {

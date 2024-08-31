@@ -14,7 +14,7 @@
 
 #include <0/math/shape/AxBox1.hpp>
 #include <0/math/utility.hpp>
-#include <0/math/errors.hpp>
+#include <yq/math/errors.hpp>
 #include <0/math/Range.hpp>
 
 namespace yq {

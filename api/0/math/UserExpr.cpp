@@ -27,7 +27,7 @@
 
 #include "UserExprImpl.hpp"
 
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <yq/basic/DelayInit.hpp>
 #include <0/math/expr/OpData.hpp>
 

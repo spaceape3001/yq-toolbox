@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "preamble.hpp"
 #include <yq/basic/IntRange.hpp>
+#include <yq/coord/forward.hpp>
 #include <cassert>
 #include <type_traits>
 #include <algorithm>

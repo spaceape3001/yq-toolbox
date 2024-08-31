@@ -11,7 +11,7 @@
 #include <0/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
-#include <0/math/glm_types.hpp>
+#include <yq/math/glm_types.hpp>
 
 using namespace yq;
 

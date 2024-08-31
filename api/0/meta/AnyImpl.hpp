@@ -7,7 +7,7 @@
 #pragma once
 
 #include <cassert>
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <yq/basic/Result.hpp>
 #include <0/meta/AnyDef.hpp>
 

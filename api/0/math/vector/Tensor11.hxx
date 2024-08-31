@@ -16,8 +16,8 @@
 #include <0/math/vector/Tensor11.hpp>
 #include <0/math/utility.hpp>
 
-#include <0/math/AllComponents.hpp>
-#include <0/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 namespace yq {
     #ifdef YQ_USE_GLM

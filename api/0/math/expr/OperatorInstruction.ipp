@@ -8,7 +8,7 @@
 
 #include "OperatorInstruction.hpp"
 
-#include <yq/basic/errors.hpp>
+#include <yq/errors.hpp>
 #include <yq/basic/Stack.hpp>
 #include <0/math/expr/SymData.hpp>
 
