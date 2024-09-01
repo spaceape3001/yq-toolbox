@@ -10,6 +10,12 @@
 #include <yq/trait/can_two_multiply.hpp>
 #include <yq/container/forward.hpp>
 #include <yq/coord/Coords.hpp>
+#include <yq/coord/Coord1.hxx>
+#include <yq/coord/Coord2.hxx>
+#include <yq/coord/Coord3.hxx>
+#include <yq/coord/Coord4.hxx>
+#include <yq/coord/Coord5.hxx>
+#include <yq/coord/Coord6.hxx>
 #include <yq/basic/IntRange.hpp>
 #include <vector>
 #include <span>
