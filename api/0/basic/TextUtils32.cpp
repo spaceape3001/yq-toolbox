@@ -75,7 +75,7 @@ namespace yq {
         template <typename T>
         Expect<T>   int_from_chars(const char32_t*s, size_t n, int base=10)
         {
-            char    buf[kStdTextBuf+1];
+            char    buf[kStdTextBuf+1]{};
             size_t  k   = std::min(n,kStdTextBuf);
             for(size_t i=0;i<k;++i)
                 buf[i]  = (char) std::min((char32_t) 127, s[i]);
@@ -90,7 +90,7 @@ namespace yq {
         template <typename T>
         char32_t*  int_to_chars(T v, char32_t* s, size_t n, int base=10)
         {
-            char    buf[kStdTextBuf+1];
+            char    buf[kStdTextBuf+1]{};
             auto [p,ec] = std::to_chars(buf, buf+kStdTextBuf, v, base);
             size_t  cnt = std::min<size_t>(p - buf, n);
             for(size_t i = 0;i<cnt; ++i)
@@ -101,7 +101,7 @@ namespace yq {
         template <typename T>
         char32_t*  float_to_chars(T v, char32_t* s, size_t n)
         {
-            char    buf[kStdTextBuf+1];
+            char    buf[kStdTextBuf+1]{};
             auto [p,ec] = std::to_chars(buf, buf+kStdTextBuf, v);
             size_t  cnt = std::min<size_t>(p - buf, n);
             for(size_t i = 0;i<cnt; ++i)
