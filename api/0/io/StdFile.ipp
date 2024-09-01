@@ -9,8 +9,9 @@
 #include "StdFile.hpp"
 
 #include <0/io/errors.hpp>
-#include <0/io/KeyValue.hpp>
+#include <yq/io/KeyValue.hpp>
 #include <yq/io/stream/Text.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <yq/container/ByteArray.hpp>
 
 #include <rapidxml.hpp>

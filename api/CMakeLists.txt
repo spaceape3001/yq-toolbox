@@ -46,7 +46,6 @@ add_library(${PROJECT_NAME} SHARED
     0/io/AbstractFile.cpp
     0/io/Curl.cpp
     0/io/DirUtils.cpp
-    0/io/Execute.cpp
     0/io/io.cpp
     0/math/math.cpp
     0/math/Complex.cpp

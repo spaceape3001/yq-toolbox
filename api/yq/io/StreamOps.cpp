@@ -4,32 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
 #include <yq/io/Stream.hpp>
-#include <0/io/StreamOps.hpp>
-#include <0/basic/TextUtils.hpp>
-
-//#include "Bytes.hpp"
-//#include "File.hpp"
-//#include "First.hpp"
-//#include "LineCol.hpp"
-//#include "OSFile.hpp"
-//#include "Ops.hpp"
-//#include "Text.hpp"
-
-//#include <0/basic/FileUtils.hpp>
-//#include <yq/container/ByteArray.hpp>
-
-//#include <cstring>
-
-//#include <fcntl.h>
-//#include <unistd.h>
-
+#include <yq/io/StreamOps.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq {
-    static constexpr const size_t   kStdBuf = 63;
-
     Stream&     operator<<(Stream&str, std::string_view v)
     {
         str.write(v.data(), v.size());

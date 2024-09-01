@@ -12,7 +12,7 @@
 #include <yq/basic/Ref.hpp>
 #include <yq/text/MaybeCase.hpp>
 #include <0/math/preamble.hpp>
-#include <0/math/Operator.hpp>
+#include <yq/math/Operator.hpp>
 
 #include <iosfwd>
 #include <set>

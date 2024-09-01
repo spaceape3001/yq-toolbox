@@ -7,7 +7,7 @@
 #include "OSFile.hpp"
 
 #include <0/io/FileUtils.hpp>
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <yq/container/ByteArray.hpp>
 
 #include <cstring>

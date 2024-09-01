@@ -27,7 +27,7 @@
 #include <yq/trait/is_template.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
-#include <0/io/StreamOps.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <expected>
 #include <list>
 #include <map>

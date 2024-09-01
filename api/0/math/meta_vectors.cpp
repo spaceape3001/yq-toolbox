@@ -29,7 +29,7 @@
 #include <0/math/vector/Vector4.hpp>
 
 #include <yq/basic/DelayInit.hpp>
-#include <0/io/StreamOps.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <0/meta/Init.hpp>
 
 #include <0/math/unit/literals.hpp>

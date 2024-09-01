@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <0/math/Operator.hpp>
+#include <yq/math/Operator.hpp>
 #include <0/meta/MethodInfo.hpp>
 
 namespace yq {

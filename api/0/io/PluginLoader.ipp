@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include "PluginLoader.hpp"
+#include <yq/io/PluginLoader.hpp>
 
 #include <0/io/DirUtils.hpp>
 #include <yq/basic/Logging.hpp>
 #include <yq/basic/ThreadId.hpp>
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 
 #include <dlfcn.h>
 

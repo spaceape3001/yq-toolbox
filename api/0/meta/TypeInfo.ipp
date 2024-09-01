@@ -8,7 +8,7 @@
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/basic/Logging.hpp>
-#include <0/io/StreamOps.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <0/meta/MetaRepo.hpp>
 #include <0/meta/TypeInfo.hpp>
 #include <yq/meta/ReservedIDs.hpp>

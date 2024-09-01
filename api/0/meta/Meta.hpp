@@ -7,8 +7,6 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-#include <yq/trait/not_copyable.hpp>
-#include <yq/trait/not_moveable.hpp>
 #include <yq/container/BitArray.hpp>
 #include <yq/container/Hash.hpp>
 #include <yq/container/Map.hpp>
@@ -69,7 +67,7 @@ namespace yq {
     
         \note We will ASSUME SINGLE THREADED until AFTER freeze is called, so that no mutex locking is required.
     */
-    class Meta : not_copyable, not_moveable {
+    class Meta {
     public:
     
         /*! \brief Meta flags
@@ -372,6 +370,11 @@ namespace yq {
         std::source_location                    m_source;
         BitArray<uint64_t, 2>                   m_flags;
         id_t                                    m_id        = AUTO_ID;
+        
+        Meta(const Meta&) = delete;
+        Meta(Meta&&) = delete;
+        Meta& operator=(const Meta&) = delete;
+        Meta& operator=(Meta&&) = delete;
         
         struct Repo;
         static Repo&    repo();

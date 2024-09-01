@@ -8,7 +8,7 @@
 
 #include <0/basic/preamble.hpp>
 #include <yq/coord/forward.hpp>
-#include <0/io/StreamOps.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/always_false.hpp>
 

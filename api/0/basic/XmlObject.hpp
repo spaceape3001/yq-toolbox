@@ -8,7 +8,7 @@
 
 #include <yq/config/xml_fwd.hpp>
 #include <0/basic/Object.hpp>
-#include <0/io/XmlSerialize.hpp>
+#include <yq/io/XmlSerialize.hpp>
 
 namespace yq {
     class XmlObject : public Object, public XmlSerialize {

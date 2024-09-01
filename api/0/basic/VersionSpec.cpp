@@ -10,7 +10,7 @@
 
 #include <yq/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
-#include <0/io/StreamOps.hpp>
+#include <yq/io/StreamOps.hpp>
 
 namespace yq {
     Stream& operator<<(Stream&s, const VersionSpec&v)

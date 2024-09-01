@@ -136,9 +136,16 @@ add_library(${PROJECT_NAME} SHARED
     coord/Coord6.cpp
     coord/forward.hpp
     
+    io/Execute.hpp
+    io/Execute.cpp
+    io/FileResolver.hpp
     io/FixedBuffer.hpp
+    io/KeyValue.hpp
+    io/KeyValue.cpp
     io/Stream.hpp
     io/Stream.cpp
+    io/StreamOps.hpp
+    io/StreamOps.cpp
     
     io/stream/Bytes.hpp
     io/stream/Bytes.cpp
