@@ -6,9 +6,10 @@
 
 #pragma once
 
-#include <0/basic/preamble.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Vector.hpp>
+#include <yq/macro/cppstring.hpp>
+#include <yq/text/IgCase.hpp>
 
 /*
     JAVA has a really nice enumeration technique that C++ unfortunately lacks.  

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
+#include <yq/typedef/string.hpp>
 #include <functional>
 #include <vector>
 

@@ -31,13 +31,9 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/Any.hpp
     0/basic/Any.cpp
     0/basic/BasicApp.cpp
-    0/basic/ContentType.cpp
-    0/basic/Enum.cpp
     0/basic/Exception.cpp
-    0/basic/Flag.cpp
     0/basic/Global.cpp
     0/basic/HttpParser.cpp
-    0/basic/HttpStatus.cpp
     0/basic/Logging.cpp
     0/basic/MetaObject.cpp
     0/basic/Object.cpp

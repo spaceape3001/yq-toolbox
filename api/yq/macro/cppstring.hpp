@@ -6,10 +6,4 @@
 
 #pragma once
 
-#include <0/math/preamble.hpp>
-#include <yq/basic/Enum.hpp>
-#include <yq/meta/InfoBinder.hpp>
-
-namespace yq::physics {
-}
-
+#define YQ_CPPSTRING(...) #__VA_ARGS__

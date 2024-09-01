@@ -30,13 +30,13 @@
 #include <yq/typedef/string_pairs.hpp>
 #include <yq/typedef/string_sets.hpp>
 #include <yq/typedef/string_vectors.hpp>
+#include <yq/macro/cppstring.hpp>
 #include <yq/trait/numbers.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/config/string.hpp>
 #include <yq/container/forward.hpp>
 
-#define YQ_CPPSTRING(...) #__VA_ARGS__
 
 using namespace std::literals::chrono_literals;
 

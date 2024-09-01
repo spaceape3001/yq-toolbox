@@ -5,7 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Flag.hpp"
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/text/vsplit.hpp>
 
 namespace yq {
     std::string     flag_string(const EnumDef* def, uint64_t values, std::string_view sep)

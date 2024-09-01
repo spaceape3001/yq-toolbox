@@ -10,6 +10,7 @@
 #include <0/sql/SqlLite.hpp>
 #include <0/sql/SqlQuery.hpp>
 #include <0/basic/TextUtils.hpp>
+#include <yq/typedef/string.hpp>
 
 using namespace yq;
 

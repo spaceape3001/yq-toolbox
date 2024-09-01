@@ -4,6 +4,7 @@
 #include <0/basic/TextUtils.hpp>
 #include <yq/basic/Url.hpp>
 #include <yq/basic/VersionSpec.hpp>
+#include <yq/typedef/string.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

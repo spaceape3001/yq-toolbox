@@ -5,10 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Enum.hpp"
-#include <0/basic/TextUtils.hpp>
-//#include <0/basic/errors.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/counts.hpp>
+#include <yq/text/join.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/text/vsplit.hpp>
 #include <cassert>
-//#include <optional>
 
 namespace yq {
     

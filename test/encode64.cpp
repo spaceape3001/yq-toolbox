@@ -7,8 +7,8 @@
 #include <boost/ut.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/basic/Encode64.hpp>
+#include <yq/typedef/string.hpp>
 #include <0/basic/Logging.hpp>
-#include <0/basic/TextUtils.hpp>
 #include <cstring>
 
 namespace ut = boost::ut;

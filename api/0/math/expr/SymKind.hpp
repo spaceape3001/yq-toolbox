@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/Enum.hpp>
+#include <yq/basic/Enum.hpp>
 #include <0/math/Operator.hpp>
 
 namespace yq::expr {

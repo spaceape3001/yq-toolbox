@@ -27,17 +27,21 @@ add_library(${PROJECT_NAME} SHARED
     basic/128-bit.hpp
     basic/AutoReset.hpp
     basic/BinaryBucket.hpp
-    basic/Concat.hpp
+    basic/ContentType.hpp
+    basic/ContentType.cpp
     basic/Compare.hpp
     basic/Created.hpp
-    basic/DbgRel.hpp
     basic/DelayInit.hpp
     basic/DelayInit.cpp
     basic/Encode64.hpp
     basic/Encode64.cpp
+    basic/Enum.hpp
+    basic/Enum.cpp
     basic/ErrorDB.hpp
     basic/ErrorDB.cpp
     basic/Expect.hpp
+    basic/Flag.hpp
+    basic/Flag.cpp
     basic/Flags.hpp
     basic/Format.hpp
     basic/Format.cpp
@@ -46,6 +50,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/Future.cpp
     basic/Guarded.hpp
     basic/IntRange.hpp
+    basic/HttpStatus.hpp
+    basic/HttpStatus.cpp
     basic/MD5.hpp
     basic/MD5.cpp
     basic/MinMaxDef.hpp
@@ -81,6 +87,7 @@ add_library(${PROJECT_NAME} SHARED
     container/ByteArray.hpp
     container/ByteArray.cpp
     container/Deque.hpp
+    container/EnumMap.hpp
     container/Hash.hpp
     container/HashListImpl.hxx
     container/HashMapImpl.hxx
@@ -146,6 +153,10 @@ add_library(${PROJECT_NAME} SHARED
     io/stream/StdStream.cpp
     io/stream/Text.hpp
     io/stream/Text.cpp
+
+    macro/cppstring.hpp
+    macro/concat.hpp
+    macro/debugrel.hpp
 
     math/AllComponents.hpp
     math/AnyComponents.hpp

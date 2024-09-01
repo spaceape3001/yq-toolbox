@@ -6,15 +6,16 @@
 
 #pragma once
 
-#include <yq/basic/DbgRel.hpp>
-#include <0/basic/Enum.hpp>
-#include <0/basic/Flag.hpp>
+#include <yq/macro/debugrel.hpp>
+#include <yq/basic/Enum.hpp>
+#include <yq/basic/Flag.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
 #include <log4cpp/Priority.hh>
 #include <optional>
 #include <string_view>
 #include <system_error>
+#include <filesystem>
 
 namespace yq {
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/math/preamble.hpp>
-#include <0/basic/Enum.hpp>
+#include <yq/basic/Enum.hpp>
 #include <yq/meta/InfoBinder.hpp>
 
 namespace yq::chemistry {

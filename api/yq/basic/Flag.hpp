@@ -5,8 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "Enum.hpp"
-#include <assert.h>
+#include <yq/keywords.hpp>
+#include <yq/basic/Enum.hpp>
+#include <cassert>
 
 namespace yq {
 

@@ -9,8 +9,8 @@
 #include <0/graph/preamble.hpp>
 
 #include <0/basic/Any.hpp>
-#include <0/basic/Enum.hpp>
-#include <0/basic/Flag.hpp>
+#include <yq/basic/Enum.hpp>
+#include <yq/basic/Flag.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/basic/MinMaxDef.hpp>
 

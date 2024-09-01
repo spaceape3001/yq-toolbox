@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "BitArray.hpp"
-#include "utilities.hpp"
 
 #include "Array.hpp"
+#include "BitArray.hpp"
 #include "Deque.hpp"
+#include "EnumMap.hpp"
 #include "Hash.hpp"
 #include "List.hpp"
 #include "Map.hpp"
@@ -16,6 +16,8 @@
 #include "Set.hpp"
 #include "Stack.hpp"
 #include "Vector.hpp"
+
+#include "utilities.hpp"
 
 /*
     This file is here to syntax check
