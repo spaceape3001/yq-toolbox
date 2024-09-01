@@ -167,6 +167,37 @@ add_library(${PROJECT_NAME} SHARED
     text/IterW.hpp
     text/MaybeCase.hpp
     text/RevIgCase.hpp
+    
+    text/basics.hpp
+    text/basics.cpp
+    text/basics32.hpp
+    text/basics32.cpp
+    text/chars.hpp
+    text/chars.cpp
+    text/chars32.hpp
+    text/chars32.cpp
+    text/format.hpp
+    text/format.cpp
+    text/format32.hpp
+    text/format32.cpp
+    text/parse.hpp
+    text/parse.cpp
+    text/parse32.hpp
+    text/parse32.cpp
+    text/split.hpp
+    text/split.cpp
+    text/split32.hpp
+    text/split32.cpp
+    text/starts.hpp
+    text/starts.cpp
+    text/starts32.hpp
+    text/starts32.cpp
+    text/utilities.hpp
+    text/utilities.cpp
+    text/utilities32.hpp
+    text/utilities32.cpp
+    text/vsplit.hpp
+    text/vsplit32.hpp
 
     trait/always_false.hpp
     trait/always_true.hpp
