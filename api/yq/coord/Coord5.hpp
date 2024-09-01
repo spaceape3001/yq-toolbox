@@ -6,10 +6,15 @@
 
 #pragma once
 
-#include <yq/coord/forward.hpp>
-#include <yq/trait/has_zero.hpp>
-#include <yq/meta/InfoBinder.hpp>
 #include <yq/keywords.hpp>
+#include <yq/coord/forward.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 namespace yq {
 
@@ -71,16 +76,54 @@ namespace yq {
             return *this;
         }
 
-        constexpr Coord operator+() const noexcept
-        {
-            return *this;
-        }
+        constexpr Coord operator+() const noexcept;
+        constexpr Coord operator-() const noexcept;
+        constexpr Coord operator+(const Coord& b) const noexcept;
+        constexpr Coord operator-(const Coord& b) const noexcept;
+
+        Coord& operator+=(const Coord&) noexcept;
+        Coord& operator-=(const Coord&) noexcept;
+
+        //! Scales the coordinate
+        template <typename U>
+            requires is_arithmetic_v<U>
+        constexpr Coord5<product_t<T,U>> operator*(U b) const noexcept;
         
-        //! Negate the coordinate
-        constexpr Coord operator-() const noexcept
-        {
-            return { -i, -j, -k, -l, -m };
-        }
+        //! Self-scale the coordinate
+        template <typename U>
+            requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
+        Coord& operator*=(U b) noexcept;
+
+        //! Multiplies two coordinates together, term by term
+        template <typename U>
+        constexpr Coord5<product_t<T,U>> operator*(const Coord5<U>& b) const noexcept;
+        
+        //! Self-Multiplies left coordinate with right, term by term
+        template <typename U>
+            requires self_multiply_v<T,U>
+        Coord& operator*=(const Coord5<U>& b) noexcept;
+
+        //! Reduces the cooordinate, returns result
+        template <typename U>
+            requires is_arithmetic_v<U>
+        constexpr Coord5<quotient_t<T,U>> operator/(U b) const noexcept;
+
+        //! Reduces the cooordinate in place, returns result
+        template <typename U>
+            requires (is_arithmetic_v<U> && self_divide_v<T,U>)
+        Coord& operator/=(U b) noexcept;
+
+        //! Divides two coordinates, term by term
+        template <typename U>
+        constexpr Coord5<quotient_t<T,U>> operator/(const Coord5<U>& b) const noexcept;
+
+        //! Self divides left coordinate by right
+        template <typename U>
+            requires self_divide_v<T,U>
+        Coord& operator/=(const Coord5<U>& b) noexcept;
+
+        template <typename S>
+        S&  stream(S&) const;
     };
 
 
@@ -107,252 +150,40 @@ namespace yq {
 
     /*! \brief Max of two coordinates, done by element */
     template <typename T>
-    constexpr Coord5<T> max(const Coord5<T>&a, const Coord5<T>& b)
-    {
-        return { 
-            max(a.i, b.i), 
-            max(a.j, b.j), 
-            max(a.k, b.k), 
-            max(a.l, b.l), 
-            max(a.m, b.m)
-        };
-    }
+    constexpr Coord5<T> max(const Coord5<T>&a, const Coord5<T>& b);
 
     /*! \brief Min of two coordinates, done by element */
     template <typename T>
-    constexpr Coord5<T> min(const Coord5<T>&a, const Coord5<T>& b)
-    {
-        return { 
-            min(a.i, b.i), 
-            min(a.j, b.j), 
-            min(a.k, b.k), 
-            min(a.l, b.l), 
-            min(a.m, b.m)
-        };
-    }
+    constexpr Coord5<T> min(const Coord5<T>&a, const Coord5<T>& b);
 
     /*! \brief Product of the components */
     template <typename T>
-    constexpr auto product(const Coord5<T>& a)
-    {
-        return a.i*a.j*a.k*a.l*a.m;
-    }
+    constexpr auto product(const Coord5<T>& a);
 
     /*! \brief Sum of the components */
     template <typename T>
-    constexpr T sum(const Coord5<T>& a)
-    {
-        return a.i+a.j+a.k+a.l+a.m;
-    }
-
+    constexpr T sum(const Coord5<T>& a);
 
     //  --------------------------------------------------------
-    //  POSITIVE
-
-
-    //  --------------------------------------------------------
-    //  NEGATIVE
-
-    //! Negate the coordinate
-    template <typename T>
-    constexpr Coord5<T>    operator-(const Coord5<T>& a)
-    {
-        return { -a.i, -a.j, -a.k, -a.l, -a.m };
-    }
-
-
-    //  --------------------------------------------------------
-    //  NORMALIZATION
-
-
-    //  --------------------------------------------------------
-    //  ADDITION
-    
-    //! Add two coordinates together
-    template <typename T>
-    constexpr Coord5<T> operator+(const Coord5<T>&a, const Coord5<T>&b)
-    {
-        return { a.i+b.i, a.j+b.j, a.k+b.k, a.l+b.l, a.m+b.m };
-    }
-    
-    //! Increment left coordinate with right
-    template <typename T>
-    Coord5<T>&  operator+=(Coord5<T>& a, const Coord5<T>& b)
-    {
-        a.i += b.i;
-        a.j += b.j;
-        a.k += b.k;
-        a.l += b.l;
-        a.m += b.m;
-        return a;
-    }
-
-
-    //  --------------------------------------------------------
-    //  SUBTRACTION
-
-    
-    //! Subtract two coordinates
-    template <typename T>
-    constexpr Coord5<T> operator-(const Coord5<T>&a, const Coord5<T>&b)
-    {
-        return { a.i-b.i, a.j-b.j, a.k-b.k, a.l-b.l, a.m-b.m };
-    }
-    
-    //! Decrement the left coordinate with right
-    template <typename T>
-    Coord5<T>&  operator-=(Coord5<T>& a, const Coord5<T>& b)
-    {
-        a.i -= b.i;
-        a.j -= b.j;
-        a.k -= b.k;
-        a.l -= b.l;
-        a.m -= b.m;
-        return a;
-    }
-
-
-    //  --------------------------------------------------------
-    //  MULTIPLICATION
 
     //! Scale the coordinate
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<T>)
-    constexpr Coord5<decltype(T()*U())> operator*(T a, const Coord5<U>&b)
-    {
-        return { a*b.i, a*b.j, a*b.k, a*b.l, a*b.m };
-    }
-    
-    //! Scale the coordinate
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U>)
-    constexpr Coord5<decltype(T()*U())> operator*(const Coord5<T>& a, U b)
-    {
-        return { a.i*b,  a.j*b, a.k*b, a.l*b, a.m*b };
-    }
-
-    //! Self-scale the coordinate
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()*U())>)
-    Coord5<T>& operator*=(Coord5<T>& a, U b)
-    {
-        a.i *= b;
-        a.j *= b;
-        a.k *= b;
-        a.l *= b;
-        a.m *= b;
-        return a;
-    }
-
-    //! Multiplies two coordinates together, term by term
-    template <typename T, typename U>
-    constexpr Coord5<decltype(T()*U())> operator*(const Coord5<T>& a, const Coord5<U>& b)
-    {
-        return { a.i*b.i, a.j*b.j, a.k*b.k, a.l*b.l, a.m*b.m };
-    }
-
-    //! Self-Multiplies left coordinate with right, term by term
-    template <typename T, typename U>
-    requires (std::is_same_v<T, decltype(T()*U())>)
-    Coord5<T>& operator*=(Coord5<T>&a, const Coord5<U>& b)
-    {
-        a.i *= b.i;
-        a.j *= b.j;
-        a.k *= b.k;
-        a.l *= b.l;
-        a.m *= b.m;
-        return a;
-    }
-    
-    
-    //  --------------------------------------------------------
-    //  DIVISION
-
-    //! Reduces the cooordinate, returns result
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U>)
-    constexpr Coord5<decltype(T()/U())> operator/(const Coord5<T>& a, U b)
-    {
-        return { a.i/b, a.j/b, a.k/b, a.l/b, a.m/b };
-    }
-
-    //! Reduces the cooordinate in place, returns result
-    template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && std::is_same_v<T, decltype(T()/U())>)
-    Coord5<T>& operator/=(Coord5<T>& a, U b)
-    {
-        a.i /= b;
-        a.j /= b;
-        a.k /= b;
-        a.l /= b;
-        a.m /= b;
-        return a;
-    }
-
-    //! Divides two coordinates, term by term
-    template <typename T, typename U>
-    constexpr Coord5<decltype(T()/U())> operator/(const Coord5<T>& a, const Coord5<U>& b)
-    {
-        return { a.i/b.i, a.j/b.j, a.k/b.k, a.l/b.l, a.m/b.m };
-    }
-
-    //! Self divides left coordinate by right
-    template <typename T, typename U>
-    requires (std::is_same_v<T, decltype(T()/U())>)
-    Coord5<T>& operator/=(Coord5<T>& a, const Coord5<U>& b)
-    {
-        a.i /= b.i;
-        a.j /= b.j;
-        a.k /= b.k;
-        a.l /= b.l;
-        a.m /= b.m;
-        return a;
-    }
-
-    //  --------------------------------------------------------
-    //  DOT PRODUCT
-
-
-    //  --------------------------------------------------------
-    //  INNER PRODUCT
-
-
-    //  --------------------------------------------------------
-    //  OUTER PRODUCT
-
-
-    ///  --------------------------------------------------------
-    //  OTIMES PRODUCT
-
-    //  --------------------------------------------------------
-    //  PROJECTIONS
-
-    //  --------------------------------------------------------
-    //  ADVANCED FUNCTIONS
-
-
-    //  --------------------------------------------------------
-    //  CONDITIONAL INCLUDES
-
-    //! Helper to stream out a coordinate
-    template <typename S, typename I>
-    S&  as_stream(S& s, const Coord5<I>& v)
-    {
-        return s << "[" << v.i << "," << v.j << "," << v.k << "," << v.l << "," << v.m << "]";
-    }
+        requires is_arithmetic_v<T>
+    constexpr Coord5<product_t<T,U>> operator*(T a, const Coord5<U>&b);
     
     //! Helper to stream out a coordinate
     template <typename T>
-    Stream& operator<<(Stream&s, const Coord5<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    Stream& operator<<(Stream&, const Coord5<T>&);
 
     //! Helper to log out a coordinate
     template <typename T>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Coord5<T>& v)
-    {
-        return as_stream(s, v);
-    }
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const Coord5<T>&);
     
 }
+
+YQ_TYPE_DECLARE(yq::Coord5D);
+YQ_TYPE_DECLARE(yq::Coord5F);
+YQ_TYPE_DECLARE(yq::Coord5I);
+YQ_TYPE_DECLARE(yq::Coord5U);
+YQ_TYPE_DECLARE(yq::Coord5Z);
+
