@@ -8,7 +8,7 @@
 
 #include <0/io/FileUtils.hpp>
 #include <0/basic/TextUtils.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 
 #include <cstring>
 

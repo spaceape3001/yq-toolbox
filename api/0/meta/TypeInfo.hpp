@@ -11,6 +11,7 @@
 #include <0/meta/OperatorInfo.hpp>
 #include <yq/errors.hpp>
 #include <0/basic/preamble.hpp>
+#include <yq/config/xml_fwd.hpp>
 #include <unordered_map>
 
 namespace yq {

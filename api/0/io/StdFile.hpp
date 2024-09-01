@@ -8,6 +8,7 @@
 
 #include <0/io/AbstractFile.hpp>
 #include <0/basic/preamble.hpp>
+#include <yq/config/xml_fwd.hpp>
 
 namespace yq {
     class Stream;

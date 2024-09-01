@@ -30,32 +30,15 @@ add_library(${PROJECT_NAME} SHARED
     ${core_test_source}
     0/basic/Any.hpp
     0/basic/Any.cpp
-    0/basic/BasicApp.hpp
     0/basic/BasicApp.cpp
-    0/basic/BasicBuffer.hpp
-    0/basic/Compare.hpp
-    0/basic/ContentType.hpp
     0/basic/ContentType.cpp
-    0/basic/DiffEngine.hpp
-    0/basic/Encode64.hpp
     0/basic/Encode64.cpp
-    0/basic/Enum.hpp
     0/basic/Enum.cpp
-    0/basic/EnumMap.hpp
-    0/basic/Exception.hpp
-    0/basic/Exception.hxx
     0/basic/Exception.cpp
-    0/basic/Flag.hpp
     0/basic/Flag.cpp
-    0/basic/Format.hpp
     0/basic/Format.cpp
-    0/basic/Global.hpp
     0/basic/Global.cpp
-    0/basic/Http.hpp
-    0/basic/HttpOp.hpp
-    0/basic/HttpParser.hpp
     0/basic/HttpParser.cpp
-    0/basic/HttpStatus.hpp
     0/basic/HttpStatus.cpp
     0/basic/IgCase.cpp
     0/basic/Logging.cpp
@@ -65,7 +48,6 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/RevIgCase.cpp
     0/basic/TextUtils.cpp
     0/basic/TextUtils32.cpp
-    0/basic/Url.hpp
     0/basic/Url.cpp
     0/basic/VersionSpec.cpp
     0/basic/XmlObject.cpp
@@ -79,9 +61,7 @@ add_library(${PROJECT_NAME} SHARED
     0/io/Execute.cpp
     0/io/io.cpp
     0/math/math.cpp
-    0/math/Complex.hpp
     0/math/Complex.cpp
-    0/math/Fraction.hpp
     0/math/Fraction.cpp
     0/math/Pose2.hpp
     0/math/Pose2.hxx

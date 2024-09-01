@@ -15,6 +15,7 @@
 #include <0/math/shape/Polyline4.hpp>
 #include <0/math/shape/PolylineData.hpp>
 #include <0/math/utility.hpp>
+#include <yq/container/vector_utils.hpp>
 
 namespace yq {
     template <typename T> Polyline4<T>::Polyline4(const std::vector<Vector4<T>>&pts) : vertex(pts) {}

@@ -16,6 +16,7 @@
 #include <0/math/utility.hpp>
 #include <yq/math/errors.hpp>
 #include <0/math/Range.hpp>
+#include <yq/container/initlist_utils.hpp>
 
 namespace yq {
     template <typename T>

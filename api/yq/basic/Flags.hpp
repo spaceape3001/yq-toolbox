@@ -6,7 +6,7 @@
 
 #pragma once
 #include <cstdint>
-#include <yq/config/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <initializer_list>
 
 namespace yq {

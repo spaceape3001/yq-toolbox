@@ -4,14 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <0/io/stream/StdStream.hpp>
+#include "StdError.hpp"
+#include <iostream>
 
 namespace yq::stream {
-    class StdError : public StdStream {
-    public:
-        explicit StdError();
-        ~StdError();
-    };
+    StdError::StdError() : StdStream(std::cerr)
+    {
+    }
+    
+    StdError::~StdError()
+    {
+    }
 }

@@ -8,7 +8,7 @@
 
 #include <0/meta/Meta.hpp>
 #include <0/meta/MetaLookup.hpp>
-#include <0/basic/Vector.hpp>
+#include <yq/container/Vector.hpp>
 
 namespace yq {
     struct Meta::Repo {

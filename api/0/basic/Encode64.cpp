@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/basic/Encode64.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <cassert>
 
 namespace yq {

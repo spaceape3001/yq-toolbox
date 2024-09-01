@@ -10,8 +10,8 @@
 
 #include <0/io/errors.hpp>
 #include <0/io/KeyValue.hpp>
-#include <0/io/stream/Text.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/io/stream/Text.hpp>
+#include <yq/container/ByteArray.hpp>
 
 #include <rapidxml.hpp>
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/io/Stream.hpp>
+#include <yq/io/Stream.hpp>
 #include <string>
 
 namespace yq::stream {

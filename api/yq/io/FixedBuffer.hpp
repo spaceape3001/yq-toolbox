@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <0/basic/BasicBuffer.hpp>
-#include <0/io/Stream.hpp>
+#include <yq/container/BasicBuffer.hpp>
+#include <yq/io/Stream.hpp>
 
 namespace yq {
 

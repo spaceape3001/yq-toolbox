@@ -25,6 +25,8 @@
 #include <yq/trait/can_two_subtract.hpp>
 #include <yq/trait/has_less.hpp>
 #include <yq/trait/is_template.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
 #include <0/io/StreamOps.hpp>
 #include <expected>
 #include <list>

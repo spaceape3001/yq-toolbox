@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/math/preamble.hpp>
-#include <yq/basic/Coord5.hpp>
+#include <yq/coord/Coord5.hpp>
 
 namespace yq {
     YQ_NAN_1(Coord5, Coord5<T>(ALL, nan_v<T>))
@@ -15,9 +15,3 @@ namespace yq {
     YQ_IS_FINITE_1(Coord5, is_finite(v.i) && is_finite(v.j) && is_finite(v.k) && is_finite(v.l) && is_finite(v.m))
     YQ_ZERO_1(Coord5, Coord5<T>( ZERO ))
 }
-
-YQ_TYPE_DECLARE(yq::Coord5D)
-YQ_TYPE_DECLARE(yq::Coord5F)
-YQ_TYPE_DECLARE(yq::Coord5I)
-YQ_TYPE_DECLARE(yq::Coord5U)
-

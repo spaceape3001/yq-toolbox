@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/io/Stream.hpp>
+#include <yq/io/Stream.hpp>
 #include <0/io/StreamOps.hpp>
 #include <0/basic/TextUtils.hpp>
 
@@ -19,7 +19,7 @@
 //#include "Text.hpp"
 
 //#include <0/basic/FileUtils.hpp>
-//#include <0/basic/ByteArray.hpp>
+//#include <yq/container/ByteArray.hpp>
 
 //#include <cstring>
 

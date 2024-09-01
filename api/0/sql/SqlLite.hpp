@@ -10,6 +10,7 @@
 #include <yq/trait/not_moveable.hpp>
 #include <yq/trait/not_copyable.hpp>
 #include <filesystem>
+#include <0/basic/preamble.hpp>
 
 struct sqlite3;
 

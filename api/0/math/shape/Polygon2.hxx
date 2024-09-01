@@ -14,6 +14,7 @@
 
 #include <0/math/shape/PolygonData.hpp>
 #include <0/math/shape/Polygon2.hpp>
+#include <yq/container/vector_utils.hpp>
 
 namespace yq {
     template <typename T> Polygon2<T>::Polygon2(const std::vector<Vector2<T>>&pts) : vertex(pts) {}

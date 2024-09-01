@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "IgCase.hpp"
+#include <yq/text/IgCase.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
 

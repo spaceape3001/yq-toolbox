@@ -14,6 +14,7 @@
 
 #include <0/math/shape/PolygonData.hpp>
 #include <0/math/shape/Polygon3.hpp>
+#include <yq/container/vector_utils.hpp>
 
 namespace yq {
     template <typename T> Polygon3<T>::Polygon3(const std::vector<Vector3<T>>&pts) : vertex(pts) {}

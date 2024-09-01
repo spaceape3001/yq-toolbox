@@ -9,12 +9,12 @@
 #include <0/basic/preamble.hpp>
 #include <yq/trait/not_copyable.hpp>
 #include <yq/trait/not_moveable.hpp>
-#include <yq/basic/BitArray.hpp>
-#include <0/basic/Hash.hpp>
-#include <0/basic/Map.hpp>
-#include <0/basic/MultiMap.hpp>
-#include <0/basic/Set.hpp>
-#include <0/basic/Vector.hpp>
+#include <yq/container/BitArray.hpp>
+#include <yq/container/Hash.hpp>
+#include <yq/container/Map.hpp>
+#include <yq/container/MultiMap.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/container/Vector.hpp>
 
 #include <0/meta/AnyDef.hpp>
 

@@ -8,7 +8,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <yq/unit/declare.hpp>
+#include <yq/math/unit/declare.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

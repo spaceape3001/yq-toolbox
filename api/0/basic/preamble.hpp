@@ -22,30 +22,21 @@
 
 #include <yq/basic/128-bit.hpp>
 #include <yq/basic/Expect.hpp>
-#include <0/basic/IgCase.hpp>
+#include <yq/text/IgCase.hpp>
 #include <0/basic/LogFwd.hpp>
-#include <0/basic/RevIgCase.hpp>
+#include <yq/text/RevIgCase.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/config/string.hpp>
-#include <yq/config/json_fwd.hpp>
-#include <yq/config/xml_fwd.hpp>
 #include <yq/container/forward.hpp>
-#include <yq/trait/product.hpp>
-#include <yq/trait/quotient.hpp>
 
 #define YQ_CPPSTRING(...) #__VA_ARGS__
 
 using namespace std::literals::chrono_literals;
 
 namespace yq {
-    // switching to u32-strings (eventually)
-    using string_t      = std::u32string;
-    using string_view_t = std::u32string_view;
-    
 
     class Any;
-    class ByteArray;
     class BasicApp;
     class DelayInit;
     class Global;       //  a global property ... effectively
@@ -227,16 +218,6 @@ namespace yq {
     using url_r         = Result<Url>;
     using url_view_r    = Result<UrlView>;
 
-    
-
-    template<class T, typename U>
-    size_t member_offset(U T::* member)
-    {
-        //  UGLY hack to get an offset for a member pointer
-        //  credit to https://stackoverflow.com/questions/5617251/offset-of-pointer-to-member
-        //  top answer
-        return reinterpret_cast<size_t>(&(reinterpret_cast<T*>((void*) 0)->*member));
-    }    
 
     #define YQ_MAKE_VERSION(major, minor, patch) ((((uint32_t)(major)) << 22) | (((uint32_t)(minor)) << 12) | ((uint32_t)(patch)))
     
@@ -251,36 +232,7 @@ namespace yq {
     struct disabled {};
     struct disabled_t {};
 
-    //! creates a span from an initializer list
-    template <typename T>
-    constexpr std::span<const T> span(const std::initializer_list<T>& data) noexcept
-    {
-        return std::span<const T>(data.begin(), data.end());
-    }
-
-    template <typename T>
-    constexpr std::span<const T> span(const std::initializer_list<const T>& data) noexcept
-    {
-        return std::span<const T>(data.begin(), data.end());
-    }
-
-    template <typename T, typename Allocator>
-    constexpr std::span<const T> span(const std::vector<T,Allocator>& data) noexcept
-    {
-        return data;
-    }
-
-    template <typename T, size_t N>
-    constexpr std::span<const T> span(const std::array<T, N>& data) noexcept
-    {
-        return std::span<const T>(data.data(), N);
-    }
 
     class Stream;
-
-
-    //! The reasonable maximum for a raw null terminated string... anything else should be in a string view (at least)
-    static constexpr const uint64_t         MAX_NULL_TERM       = 8192;
-
 }
 

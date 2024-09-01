@@ -8,7 +8,7 @@
 
 #include "AssignInstruction.hpp"
 
-#include <yq/basic/Stack.hpp>
+#include <yq/container/Stack.hpp>
 #include <0/math/expr/Context.hpp>
 
 namespace yq::expr {

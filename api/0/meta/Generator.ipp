@@ -9,7 +9,8 @@
 #include "Generator.hpp"
 #include "GeneratorImpl.hpp"
 #include "AnyArgHelper.hpp"
-#include <0/basic/IgCase.hpp>
+#include <yq/container/vector_utils.hpp>
+#include <yq/text/IgCase.hpp>
 #include <0/basic/Logging.hpp>
 
 namespace yq {

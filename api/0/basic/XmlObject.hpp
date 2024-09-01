@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/config/xml_fwd.hpp>
 #include <0/basic/Object.hpp>
 #include <0/io/XmlSerialize.hpp>
 

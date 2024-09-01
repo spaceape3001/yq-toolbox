@@ -8,7 +8,7 @@
 
 #include <yq/basic/Result.hpp>
 #include <0/io/StreamOps.hpp>
-#include <0/io/stream/Text.hpp>
+#include <yq/io/stream/Text.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
 

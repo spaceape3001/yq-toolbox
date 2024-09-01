@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <0/sql/SqlError.hpp>
 #include <0/sql/SqlLite.hpp>
 #include <0/sql/SqlLogging.hpp>

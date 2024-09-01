@@ -9,15 +9,15 @@
 #include <0/basic/TextUtils.hpp>
 
 #include <0/basic/Compare.hpp>
-#include <yq/basic/Comma.hpp>
-#include <yq/basic/IterUtf8.hpp>
-#include <yq/basic/Iter32.hpp>
-#include <yq/basic/IterW.hpp>
-#include <0/basic/List.hpp>
-#include <0/basic/Map.hpp>
-#include <0/basic/MultiMap.hpp>
+#include <yq/text/Comma.hpp>
+#include <yq/text/IterUtf8.hpp>
+#include <yq/text/Iter32.hpp>
+#include <yq/text/IterW.hpp>
+#include <yq/container/List.hpp>
+#include <yq/container/Map.hpp>
+#include <yq/container/MultiMap.hpp>
 #include <yq/basic/Result.hpp>
-#include <0/basic/Set.hpp>
+#include <yq/container/Set.hpp>
 #include <0/basic/TextUtils32.hpp>
 
 #include <bitset>
@@ -1680,7 +1680,7 @@ namespace yq {
     {
         if(!z)
             return std::string();
-        return cvt_u32string(z, strnlen(z, MAX_NULL_TERM));
+        return cvt_u32string(z, strnlen(z, MAX_NULL_TERM_STRING));
     }
 
     std::string to_string(const std::u32string&s)

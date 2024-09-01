@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <0/basic/Encode64.hpp>
 #include <0/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>

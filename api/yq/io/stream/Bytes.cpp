@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <0/io/stream/StdStream.hpp>
+#include "Bytes.hpp"
+#include <yq/container/ByteArray.hpp>
 
 namespace yq::stream {
-    class StdOutput : public StdStream {
-    public:
-        explicit StdOutput();
-        ~StdOutput();
-    };
+    bool Bytes::write(const char* buf, size_t cb)
+    {
+        m_bytes.append(buf, cb);
+        return true;
+    }
 }
+

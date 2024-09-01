@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <0/basic/Vector.hpp>
-#include <yq/basic/IterUtf8.hpp>
+#include <yq/container/Vector.hpp>
+#include <yq/text/IterUtf8.hpp>
 #include <0/basic/TextUtils.hpp>
 
 namespace ut = boost::ut;

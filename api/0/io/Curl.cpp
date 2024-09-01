@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Curl.hpp"
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <0/basic/Url.hpp>
 #include <curl/curl.h>
 #include <yq/config/json.hpp>

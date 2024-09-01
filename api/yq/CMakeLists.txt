@@ -68,6 +68,7 @@ add_library(${PROJECT_NAME} SHARED
     
     container/Array.hpp
     container/ArrayX.hpp
+    container/BasicBuffer.hpp
     container/BitArray.hpp
     container/ByteArray.hpp
     container/ByteArray.cpp
@@ -116,8 +117,47 @@ add_library(${PROJECT_NAME} SHARED
     coord/Coord6.cpp
     coord/forward.hpp
     
+    io/FixedBuffer.hpp
     io/Stream.hpp
     io/Stream.cpp
+    
+    io/stream/Bytes.hpp
+    io/stream/Bytes.cpp
+    io/stream/File.hpp
+    io/stream/File.cpp
+    io/stream/First.hpp
+    io/stream/First.cpp
+    io/stream/LineCol.hpp
+    io/stream/LineCol.cpp
+    io/stream/QBytes.hpp
+    io/stream/StdError.hpp
+    io/stream/StdError.cpp
+    io/stream/StdOutput.hpp
+    io/stream/StdOutput.cpp
+    io/stream/StdStream.hpp
+    io/stream/StdStream.cpp
+    io/stream/Text.hpp
+    io/stream/Text.cpp
+
+    math/AllComponents.hpp
+    math/AnyComponents.hpp
+    math/Data1.hpp
+    math/Data2.hpp
+    math/Data3.hpp
+    math/Data4.hpp
+    math/gcd.hpp
+    math/glm.hpp
+    math/glm_types.hpp
+    math/integer.hpp
+    
+    math/template/fraction.hpp
+    math/template/gcd.hpp
+    
+    math/tolerance/Absolute.hpp
+    math/tolerance/Relative.hpp
+    
+    math/unit/declare.hpp
+    math/unit/dims.hpp
     
     text/Comma.hpp
     text/IgCase.hpp

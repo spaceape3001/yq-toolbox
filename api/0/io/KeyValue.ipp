@@ -8,10 +8,10 @@
 
 #include "KeyValue.hpp"
 #include <0/basic/Logging.hpp>
-#include <0/io/stream/LineCol.hpp>
+#include <yq/io/stream/LineCol.hpp>
 #include <0/io/StreamOps.hpp>
 #include <0/basic/TextUtils.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 
 namespace yq {
 #if 0

@@ -7,14 +7,14 @@
 #include <0/basic/TextUtils32.hpp>
 
 #include <0/basic/Compare.hpp>
-#include <yq/basic/Comma.hpp>
-#include <yq/basic/IterUtf8.hpp>
-#include <yq/basic/Iter32.hpp>
-#include <yq/basic/IterW.hpp>
-#include <0/basic/List.hpp>
-#include <0/basic/Map.hpp>
-#include <0/basic/MultiMap.hpp>
-#include <0/basic/Set.hpp>
+#include <yq/text/Comma.hpp>
+#include <yq/text/IterUtf8.hpp>
+#include <yq/text/Iter32.hpp>
+#include <yq/text/IterW.hpp>
+#include <yq/container//List.hpp>
+#include <yq/container/Map.hpp>
+#include <yq/container/MultiMap.hpp>
+#include <yq/container/Set.hpp>
 #include <0/basic/TextUtils.hpp>
 
 #include <bitset>

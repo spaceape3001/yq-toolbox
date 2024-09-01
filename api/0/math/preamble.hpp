@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-#include <yq/basic/CoordFwd.hpp>
+#include <yq/coord/forward.hpp>
 #include <0/io/StreamOps.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/always_false.hpp>
@@ -26,6 +26,8 @@
 #include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/is_integral.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
 
 #include <yq/math/unit/dims.hpp>
 #include <yq/math/unit/declare.hpp>

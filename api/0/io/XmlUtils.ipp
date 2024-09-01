@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/errors.hpp>
-#include <0/basic/ByteArray.hpp>
-#include <0/basic/Set.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/container/Set.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/io/errors.hpp>
 #include <0/io/FileUtils.hpp>

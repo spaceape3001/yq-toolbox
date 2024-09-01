@@ -11,8 +11,8 @@
 */
 
 #include <0/math/unit/Dimension.hpp>
-#include <yq/unit/dims.hpp>
-#include <yq/unit/declare.hpp>
+#include <yq/math/unit/dims.hpp>
+#include <yq/math/unit/declare.hpp>
 #include <0/math/unit/MKS.hpp>
 #include <0/math/unit/SCALED.hpp>
 #include <0/math/unit/literals.hpp>

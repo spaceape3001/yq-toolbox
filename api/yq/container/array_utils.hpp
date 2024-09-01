@@ -6,15 +6,13 @@
 
 #pragma once
 
-#include "StdOutput.hpp"
-#include <iostream>
+#include <array>
+#include <span>
 
-namespace yq::stream {
-    StdOutput::StdOutput() : StdStream(std::cout)
+namespace yq {
+    template <typename T, size_t N>
+    constexpr std::span<const T> span(const std::array<T, N>& data) noexcept
     {
-    }
-    
-    StdOutput::~StdOutput()
-    {
+        return std::span<const T>(data.data(), N);
     }
 }

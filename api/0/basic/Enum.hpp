@@ -7,8 +7,8 @@
 #pragma once
 
 #include <0/basic/preamble.hpp>
-#include <0/basic/Map.hpp>
-#include <0/basic/Vector.hpp>
+#include <yq/container/Map.hpp>
+#include <yq/container/Vector.hpp>
 
 /*
     JAVA has a really nice enumeration technique that C++ unfortunately lacks.  

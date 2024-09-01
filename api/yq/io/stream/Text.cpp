@@ -4,17 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include "StdError.hpp"
-#include <iostream>
+#include "Text.hpp"
 
 namespace yq::stream {
-    StdError::StdError() : StdStream(std::cerr)
+    bool Text::write(const char* buf, size_t cb) 
     {
-    }
-    
-    StdError::~StdError()
-    {
+        if(buf && cb)
+            m_bytes.append(buf, cb);
+        return true;
     }
 }
+

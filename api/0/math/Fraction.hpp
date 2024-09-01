@@ -9,7 +9,7 @@
 #define YQ_MATH_FRACTION_HPP 1
 
 #include <0/math/preamble.hpp>
-#include <0/math/gcd.hpp>
+#include <yq/math/gcd.hpp>
 
 namespace yq {
 

@@ -9,7 +9,7 @@
 #include "OperatorInstruction.hpp"
 
 #include <yq/errors.hpp>
-#include <yq/basic/Stack.hpp>
+#include <yq/container/Stack.hpp>
 #include <0/math/expr/SymData.hpp>
 
 namespace yq::expr {

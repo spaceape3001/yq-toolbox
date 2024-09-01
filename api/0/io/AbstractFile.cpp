@@ -6,8 +6,8 @@
 
 #include "AbstractFile.hpp"
 #include <0/io/FileUtils.hpp>
-#include <0/io/stream/Bytes.hpp>
-#include <0/basic/ByteArray.hpp>
+#include <yq/io/stream/Bytes.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <0/io/errors.hpp>
 #include <yq/errors.hpp>
 #include <fstream>

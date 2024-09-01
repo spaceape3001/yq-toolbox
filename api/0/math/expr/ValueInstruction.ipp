@@ -7,7 +7,7 @@
 #pragma once
 
 #include "ValueInstruction.hpp"
-#include <yq/basic/Stack.hpp>
+#include <yq/container/Stack.hpp>
 #include <0/basic/Any.hpp>
 
 namespace yq::expr {

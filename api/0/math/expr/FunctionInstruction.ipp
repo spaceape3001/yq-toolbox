@@ -9,9 +9,10 @@
 #include "FunctionInstruction.hpp"
 
 #include <yq/errors.hpp>
+#include <yq/container/Stack.hpp>
+
 #include <0/basic/Any.hpp>
 #include <0/basic/Logging.hpp>
-#include <yq/basic/Stack.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/TextUtils32.hpp>
 #include <0/math/expr/Analysis.hpp>
