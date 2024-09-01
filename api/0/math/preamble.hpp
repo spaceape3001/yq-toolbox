@@ -26,6 +26,7 @@
 #include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/is_integral.hpp>
+#include <yq/trait/numbers.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 
@@ -142,12 +143,6 @@ namespace std {
 
 namespace yq {
     
-
-    static constexpr const double   pi      = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862;
-    static constexpr const double   sqrt2   = 1.4142135623730950488016887242096980785696718753769480731766797379907324784621;
-    static constexpr const double   sqrt3   = 1.7320508075688772935274463415058723669428052538103806280558069794519330169088;
-    static constexpr const int64_t  max64   = std::numeric_limits<int64_t>::max();
-    static constexpr const uint64_t maxu64  = std::numeric_limits<uint64_t>::max();
     
         //  Some types/constants to work the constructors in magical ways :)
     

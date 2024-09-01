@@ -7,7 +7,10 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include <string_view>
+#include <vector>
+#include <yq/typedef/string_sets.hpp>
 
 namespace yq {
     /*! \brief Formats the given number as hexadecimal
@@ -146,6 +149,52 @@ namespace yq {
     std::u32string  fmt_scientific32(float v, int digits=-1);
 #endif
 
+    std::u32string      to_u32string(std::string_view);
+
+    /*! Converts the u32string view to u32string u32string view
+    
+        Yes, there's a constructor, however, this is for the template (below);  Copy 
+    */
+    inline std::u32string  to_u32string(std::u32string_view s)
+    {
+        return std::u32string(s);
+    }
+
+    /*! No-op u32string to u32string, for templates
+    
+        Yes, there's a constructor, however, this is for the template (below);
+    */
+    inline const std::u32string&  to_u32string(const std::u32string& s)
+    {
+        return s;
+    }
+
+    /*! \brief Concatenates vector of T to std::u32string
+    */
+    template <typename T>
+    auto  to_u32string(const std::vector<T>& input)
+    {
+        using ret_t  = decltype(to_u32string(T()));
+        std::vector<ret_t>   ret;
+        ret.reserve(input.size());
+        for(auto& i : input)
+            ret.psuh_back(to_u32string(i));
+        return ret;
+    }
+
+
+
+    /*! \brief Returns the character-array as a u32string.
+    */
+    inline std::u32string_view  to_u32string_view(const char32_t*z)
+    {
+        return std::u32string_view(z);
+    }
+
+
+    std::u32string      to_u32string(std::u32string_view);
+
+
     /*! \brief Returns the boolean as a u32string (view)
     */
     inline std::u32string_view     to_u32string_view(bool f, std::u32string_view kFalse = U"false", std::u32string_view kTrue= U"true")
@@ -220,4 +269,46 @@ namespace yq {
         \note Returns a REFERENCE to a thread-local buffer, copy off before next call, if retention is important.
     */
     std::u32string_view    to_u32string_view(uint64_t);
+
+
+    //! Simple to-string-view for a u32string
+    //!
+    //! Yes, it's defined on the class, however, this allows for templated "T" expectations to work
+    inline std::u32string_view to_u32string_view( const std::u32string& sv)
+    {
+        return sv;
+    }
+
+    //! Simple to-string-view for a u32string_view
+    //!
+    //! Yes, it's a noop, however, this allows for templated "T" expectations to work
+    inline std::u32string_view to_u32string_view( std::u32string_view sv)
+    {
+        return sv;
+    }
+    
+    /*! \brief Converts to std::u32string_view
+    */
+    std::u32string_view    to_u32string_view(const std::u8string_view&s);
+
+    
+    /*! \brief Converts the u32string set to a u32string view set
+        \note Contents of the return set are REFERENCES to the original set data
+    */
+    u32string_view_set_t   to_u32string_view_set(const u32string_set_t&);
+
+    template <typename T>
+    static constexpr const bool     has_to_u32string_view_v    = std::is_same_v<std::u32string_view, decltype(to_u32string_view(T()))>;
+
+    template <typename T>
+    static constexpr const bool     has_to_u32string_v    = std::is_same_v<std::u32string, decltype(to_u32string(T()))>;
+
+    /*! \brief Tou32string when we have a to-string-view function
+    */
+    template <typename T>
+    //requires has_to_u32string_view_v<T>
+    std::u32string    to_u32string(const T& v)
+    {
+        return std::u32string(to_u32string_view(v));
+    }
 }

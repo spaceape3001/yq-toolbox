@@ -38,14 +38,9 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/Global.cpp
     0/basic/HttpParser.cpp
     0/basic/HttpStatus.cpp
-    0/basic/IgCase.cpp
     0/basic/Logging.cpp
-    0/basic/MaybeCase.cpp
     0/basic/MetaObject.cpp
     0/basic/Object.cpp
-    0/basic/RevIgCase.cpp
-    0/basic/TextUtils.cpp
-    0/basic/TextUtils32.cpp
     0/basic/Url.cpp
     0/basic/VersionSpec.cpp
     0/basic/XmlObject.cpp

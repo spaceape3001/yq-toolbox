@@ -10,8 +10,24 @@
 #include <yq/errors.hpp>
 #include <yq/config/string.hpp>
 #include <yq/text/chars32.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
 
 namespace yq {
+    //! Checks for equality by assuming left may vary in case, the right will be lower case.
+    bool    is_same(const char32_t*a, size_t n, const char32_t *b)
+    {
+        if(a && b){
+            for(;*a && *b && n; ++a, ++b, --n){
+                if(to_lower(*a) != *b)
+                    return false;
+            }
+            return !(*b || n);
+        }
+        return false;
+    }
+    
+
     //! Trims a string's leading/trailing whitespace by altering parameters
     void    trim_ws(const char32_t*& s, size_t& n)
     {
@@ -35,6 +51,129 @@ namespace yq {
         return res;
     }
 
+    boolean_x to_boolean(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        trim_ws(s, n);
+        if(!n)
+            return errors::empty_string();
+        switch(*s){
+        case '0':
+            if(is_same(s,n,U"0"))
+                return false;
+            break;
+        case '1':
+            if(is_same(s, n, U"1"))
+                return true;
+            break;
+        case 'y':
+        case 'Y':
+            if(n == 1)
+                return true;
+            if(is_same(s, n, U"yes"))
+                return true;
+            break;
+        case 'n':
+        case 'N':
+            if(n == 1)
+                return false;
+            if(is_same(s, n, U"no"))
+                return false;
+            break;
+        case 't':
+        case 'T':
+            if(n == 1)
+                return true;
+            if(is_same(s, n, U"true"))
+                return true;
+            break;
+        case 'f':
+        case 'F':
+            if(n==1)
+                return false;
+            if(is_same(s, n, U"false"))
+                return false;
+            break;
+        default:
+            break;
+        }
+        
+        return errors::bad_argument();
+    }
+
+    boolean_x to_boolean(std::u32string_view s)
+    {
+        return to_boolean(s.data(), s.size());
+    }
+
+    double_x to_double(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        std::string tmp   = to_string(std::u32string_view(s,n));
+        return to_double(tmp);
+
+        #if 0
+        trim_ws(s, n);
+        switch(n){
+        case 0:
+            return 0.;
+        case 3:
+            if(strncasecmp(s, U"nan", 3) == 0)
+                return NaN;
+            if(strncasecmp(s, U"inf", 3) == 0)
+                return INF;
+            break;
+        }
+        
+
+        double  result = NaN;
+        auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
+        if(ec != std::errc())
+            return std::unexpected(std::make_error_code(ec));
+        return result;
+        #endif
+    }
+
+    double_x to_double(std::u32string_view s)
+    {
+        return to_double(s.data(), s.size());
+    }
+
+    float_x to_float(const char32_t*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        return to_float(to_string(std::u32string_view(s,n)));
+
+        #if 0
+        trim_ws(s, n);
+
+        switch(n){
+        case 0:
+            return 0.f;
+        case 3:
+            if(strncasecmp(s, "nan", 3) == 0)
+                return NaNf;
+            if(strncasecmp(s, "inf", 3) == 0)
+                return INFf;
+            break;
+        }
+        
+        float  result = NaNf;
+        auto [p,ec] = std::from_char32_ts(s, s+n, result, std::char32_ts_format::general);
+        if(ec != std::errc())
+            return std::unexpected(std::make_error_code(ec));
+        return result;
+        #endif
+    }
+
+    float_x to_float(std::u32string_view s)
+    {
+        return to_float(s.data(), s.size());
+    }
+    
     unsigned_x  to_hex(const char32_t*s, size_t n)
     {
         if(!s)

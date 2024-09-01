@@ -6,6 +6,8 @@
 
 #include "format32.hpp"
 #include <yq/config/string.hpp>
+#include <yq/text/IgCase.hpp>
+#include <yq/text/Iter32.hpp>
 #include <charconv>
 
 namespace yq {
@@ -142,6 +144,14 @@ namespace yq {
         return as_octal32(n,f);
     }
     
+    std::u32string      to_u32string(std::string_view in)
+    {
+        std::u32string      ret;
+        Iter32  input(in);
+        while(input.more())
+            ret.push_back(input.next());
+        return ret;
+    }
 
     std::u32string_view  to_u32string_view(char8_t ch)
     {
@@ -227,4 +237,20 @@ namespace yq {
         auto p = int_to_chars(v, buf, kMaxFormattingBuffer);
         return std::u32string_view(buf, (p-buf));
     }    
+
+
+    std::u32string_view  to_u32string_view(const std::u8string_view&s)
+    {
+        return std::u32string_view((const char32_t*) s.data(), s.size());
+    }
+
+
+    u32string_view_set_t  to_u32string_view_set(const u32string_set_t& vals)
+    {
+        u32string_view_set_t  ret;
+        for(const std::u32string& v : vals)
+            ret.insert(v);
+        return ret;
+    }
+
 }

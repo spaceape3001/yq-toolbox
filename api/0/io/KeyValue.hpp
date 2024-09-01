@@ -6,19 +6,25 @@
 
 #pragma once
 
-//#include <0/basic/CollectionUtils.hpp>
 #include <yq/container/reverse.hpp>
 #include <yq/container/set_utils.hpp>
 #include <yq/container/vector_utils.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/container/Vector.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/IgCase.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/typedef/string_sets.hpp>
+#include <yq/typedef/string_vectors.hpp>
 #include <set>
+#include <system_error>
 
 //#include <0/basic/Logging.hpp>
 
 namespace yq {
     struct KeyValue;
+    class Stream;
 
 
     /*! \brief Collection of key-value pairs

@@ -7,9 +7,24 @@
 #include "parse.hpp"
 #include "chars.hpp"
 #include <charconv>
+#include <strings.h>
 #include <yq/errors.hpp>
+#include <yq/trait/numbers.hpp>
 
 namespace yq {
+    //! Checks for equality by assuming left may vary in case, the right will be lower case.
+    bool    is_same(const char*a, size_t n, const char *b)
+    {
+        if(a && b){
+            for(;*a && *b && n; ++a, ++b, --n){
+                if(::tolower(*a) != *b)
+                    return false;
+            }
+            return !(*b || n);
+        }
+        return false;
+    }
+
     template <typename T>
     Expect<T>   int_from_chars(const char*s, size_t n, int base=10)
     {
@@ -29,7 +44,122 @@ namespace yq {
             --n;
     }
 
+    boolean_x       to_boolean(const char*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+        trim_ws(s, n);
+        if(!n)
+            return errors::empty_string();
+        switch(*s){
+        case '0':
+            if(is_same(s,n,"0"))
+                return false;
+            break;
+        case '1':
+            if(is_same(s, n, "1"))
+                return true;
+            break;
+        case 'y':
+        case 'Y':
+            if(n == 1)
+                return true;
+            if(is_same(s, n, "yes"))
+                return true;
+            break;
+        case 'n':
+        case 'N':
+            if(n == 1)
+                return false;
+            if(is_same(s, n, "no"))
+                return false;
+            break;
+        case 't':
+        case 'T':
+            if(n == 1)
+                return true;
+            if(is_same(s, n, "true"))
+                return true;
+            break;
+        case 'f':
+        case 'F':
+            if(n==1)
+                return false;
+            if(is_same(s, n, "false"))
+                return false;
+            break;
+        default:
+            break;
+        }
+        
+        return errors::bad_argument();
+    }
 
+    boolean_x       to_boolean(std::string_view s)
+    {
+        return to_boolean(s.data(), s.size());
+    }
+
+    double_x        to_double(const char*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+
+        trim_ws(s, n);
+        switch(n){
+        case 0:
+            return 0.;
+        case 3:
+            if(strncasecmp(s, "nan", 3) == 0)
+                return NaN;
+            if(strncasecmp(s, "inf", 3) == 0)
+                return INF;
+            break;
+        }
+        
+
+        double  result = NaN;
+        auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
+        if(ec != std::errc())
+            return std::unexpected(std::make_error_code(ec));
+        return result;
+    }
+
+    double_x        to_double(std::string_view s)
+    {
+        return to_double(s.data(), s.size());
+    }
+
+    float_x         to_float(const char*s, size_t n)
+    {
+        if(!s)
+            return errors::null_pointer();
+
+        trim_ws(s, n);
+
+        switch(n){
+        case 0:
+            return 0.f;
+        case 3:
+            if(strncasecmp(s, "nan", 3) == 0)
+                return NaNf;
+            if(strncasecmp(s, "inf", 3) == 0)
+                return INFf;
+            break;
+        }
+        
+        float  result = NaNf;
+        auto [p,ec] = std::from_chars(s, s+n, result, std::chars_format::general);
+        if(ec != std::errc())
+            return std::unexpected(std::make_error_code(ec));
+        return result;
+    }
+
+    float_x     to_float(std::string_view s)
+    {
+        return to_float(s.data(), s.size());
+    }
+    
     unsigned_x  to_hex(const char*s, size_t n)
     {
         if(!s)

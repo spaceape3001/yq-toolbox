@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <string_view>
 #include <ctime>
+#include <vector>
+#include <yq/typedef/string_sets.hpp>
 
 namespace yq {
 
@@ -149,6 +151,89 @@ namespace yq {
 #endif    
     
 
+    
+    /*! Converts the string view to string string view
+    
+        Yes, there's a constructor, however, this is for the template (below);  Copy 
+    */
+    inline std::string_view  to_string(std::string_view s)
+    {
+        return s;
+    }
+
+    /*! No-op string to string, for templates
+    
+        Yes, there's a constructor, however, this is for the template (below);
+    */
+    inline const std::string&  to_string(const std::string& s)
+    {
+        return s;
+    }
+
+    /*! \brief Converts u32string to std::string
+    */
+    std::string         to_string(const std::u32string&s);
+    
+    /*! \brief Converts to std::string
+    */
+    std::string         to_string(const std::u32string_view&s);
+
+    /*! \brief Converts wstring to std::string
+    */
+    std::string         to_string(const std::wstring&);
+
+    /*! \brief Converts wstring_view to std::string
+    */
+    std::string         to_string(const std::wstring_view&);
+
+
+    /*! \brief Concatenates vector of T to std::string
+    */
+    template <typename T>
+    auto  to_string(const std::vector<T>& input)
+    {
+        using ret_t  = decltype(to_string(T()));
+        std::vector<ret_t>   ret;
+        ret.reserve(input.size());
+        for(auto& i : input)
+            ret.push_back(to_string(i));
+        return ret;
+    }
+
+    /*! \brief Returns the character-array as a string.
+    */
+    std::string   to_string(const char32_t*);
+
+
+    /*! \brief Returns the character-array as a string.
+    */
+    inline std::string_view  to_string_view(const char*z)
+    {
+        return std::string_view(z);
+    }
+
+
+    //! Simple to-string-view for a string
+    //!
+    //! Yes, it's defined on the class, however, this allows for templated "T" expectations to work
+    inline std::string_view to_string_view( const std::string& sv)
+    {
+        return sv;
+    }
+
+    //! Simple to-string-view for a string_view
+    //!
+    //! Yes, it's a noop, however, this allows for templated "T" expectations to work
+    inline std::string_view to_string_view( std::string_view sv)
+    {
+        return sv;
+    }
+    
+    /*! \brief Converts to std::string_view
+    */
+    std::string_view    to_string_view(const std::u8string_view&s);
+    
+    
     /*! \brief Returns the boolean as a string (view)
     */
     inline std::string_view     to_string_view(bool f, std::string_view kFalse = "false", std::string_view kTrue="true")
@@ -224,7 +309,29 @@ namespace yq {
     */
     std::string_view    to_string_view(uint64_t);
     
+    /*! \brief Converts the string set to a string view set
+        \note Contents of the return set are REFERENCES to the original set data
+    */
+    string_view_set_t   to_string_view_set(const string_set_t&);
+
+    
     /*! \brief Formats a time to a string
     */
     std::string_view    to_time_string(std::time_t, const char* fmt="yyyy-MM-dd HH:mm:ss");
+
+
+    template <typename T>
+    static constexpr const bool     has_to_string_view_v    = std::is_same_v<std::string_view, decltype(to_string_view(T()))>;
+
+    template <typename T>
+    static constexpr const bool     has_to_string_v         = std::is_same_v<std::string, decltype(to_string(T()))>;
+
+    /*! \brief To string when we have a to-string-view function
+    */
+    template <typename T>
+    //requires has_to_string_view_v<T> //(std::is_same_v<std::string_view, to_string_view(T())>)
+    std::string    to_string(const T& v)
+    {
+        return std::string(to_string_view(v));
+    }
 }

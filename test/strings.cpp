@@ -7,7 +7,12 @@
 #include <boost/ut.hpp>
 #include <yq/container/Vector.hpp>
 #include <yq/text/IterUtf8.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/IgCase.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/split.hpp>
+#include <yq/text/vsplit.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

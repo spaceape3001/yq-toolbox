@@ -5,8 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/text/IgCase.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/chars32.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/match32.hpp>
 
 namespace yq {
 

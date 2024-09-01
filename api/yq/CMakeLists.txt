@@ -28,6 +28,7 @@ add_library(${PROJECT_NAME} SHARED
     basic/AutoReset.hpp
     basic/BinaryBucket.hpp
     basic/Concat.hpp
+    basic/Compare.hpp
     basic/Created.hpp
     basic/DbgRel.hpp
     basic/DelayInit.hpp
@@ -168,12 +169,15 @@ add_library(${PROJECT_NAME} SHARED
     
     text/Comma.hpp
     text/IgCase.hpp
+    text/IgCase.cpp
     text/Iter32.hpp
     text/IterUtf8.hpp
     text/IterUtf8.cpp
     text/IterW.hpp
     text/MaybeCase.hpp
+    text/MaybeCase.cpp
     text/RevIgCase.hpp
+    text/RevIgCase.cpp
     
     text/basics.hpp
     text/basics.cpp
@@ -183,10 +187,34 @@ add_library(${PROJECT_NAME} SHARED
     text/chars.cpp
     text/chars32.hpp
     text/chars32.cpp
+    text/copy.hpp
+    text/copy.cpp
+    text/copy32.hpp
+    text/copy32.cpp
+    text/counts.hpp
+    text/counts.cpp
+    text/counts32.hpp
+    text/counts32.cpp
     text/format.hpp
     text/format.cpp
     text/format32.hpp
     text/format32.cpp
+    text/ios.hpp
+    text/ios.cpp
+    text/ios32.hpp
+    text/ios32.cpp
+    text/join.hpp
+    text/join.cpp
+    text/join32.hpp
+    text/join32.cpp
+    text/match.hpp
+    text/match.cpp
+    text/match32.hpp
+    text/match32.cpp
+    text/misc.hpp
+    text/misc.cpp
+    text/misc32.hpp
+    text/misc32.cpp
     text/parse.hpp
     text/parse.cpp
     text/parse32.hpp
@@ -195,14 +223,10 @@ add_library(${PROJECT_NAME} SHARED
     text/split.cpp
     text/split32.hpp
     text/split32.cpp
-    text/starts.hpp
-    text/starts.cpp
-    text/starts32.hpp
-    text/starts32.cpp
-    text/utilities.hpp
-    text/utilities.cpp
-    text/utilities32.hpp
-    text/utilities32.cpp
+    text/transform.hpp
+    text/transform.cpp
+    text/transform32.hpp
+    text/transform32.cpp
     text/vsplit.hpp
     text/vsplit32.hpp
 
@@ -246,6 +270,7 @@ add_library(${PROJECT_NAME} SHARED
     trait/is_template.hpp
     trait/not_copyable.hpp
     trait/not_moveable.hpp
+    trait/numbers.hpp
     trait/return_type.hpp
     trait/sink.hpp
     trait/weak.hpp

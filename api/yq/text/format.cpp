@@ -6,10 +6,42 @@
 
 #include "format.hpp"
 #include <yq/config/string.hpp>
+#include <yq/text/basics32.hpp>
+#include <yq/text/IgCase.hpp>
 #include <charconv>
 #include <cuchar>
 
 namespace yq {
+    std::string     cvt_u32string(const char32_t *z, size_t n)
+    {
+        std::string ret;
+        ret.resize((std::max<size_t>(64, n*4)));    // approx guess
+        std::mbstate_t  state{};
+        size_t          m   = 0;
+        for(size_t i=0;i<n;++i){
+            if(ret.size() - m < 6)
+                ret.resize(ret.size() * 2);
+            m += c32rtomb(ret.data()+m, z[i], &state);
+        }
+        ret.resize(m);
+        return ret;
+    }
+
+    std::string     cvt_wstring(const wchar_t *z, size_t n)
+    {
+        std::string ret;
+        ret.resize((std::max<size_t>(64, n*4)));    // approx guess
+        std::mbstate_t  state{};
+        size_t          m   = 0;
+        for(size_t i=0;i<n;++i){
+            if(ret.size() - m < 6)
+                ret.resize(ret.size() * 2);
+            m += wcrtomb(ret.data()+m, z[i], &state);
+        }
+        ret.resize(m);
+        return ret;
+    }
+
     std::string_view fmt_hex(uint8_t n, char f)
     {
         static thread_local char    buf[kMaxFormattingBuffer+1];
@@ -120,6 +152,49 @@ namespace yq {
     }
 
 
+    std::string   to_string(const char32_t*z)
+    {
+        if(!z)
+            return std::string();
+        return cvt_u32string(z, strnlen(z, kMaxNullTermString));
+    }
+
+    std::string to_string(const std::u32string&s)
+    {
+        return cvt_u32string(s.data(), s.size());
+    }
+    
+
+    std::string to_string(const std::u32string_view&s)
+    {
+        return cvt_u32string(s.data(), s.size());
+    }
+
+    std::string to_string(const std::wstring&s)
+    {
+        return cvt_wstring(s.data(), s.size());
+    }
+
+
+    std::string to_string(const std::wstring_view&s)
+    {
+        return cvt_wstring(s.data(), s.size());
+    }
+
+
+    std::string_view  to_string_view(const std::u8string_view&s)
+    {
+        return std::string_view((const char*) s.data(), s.size());
+    }
+
+    string_view_set_t  to_string_view_set(const string_set_t& vals)
+    {
+        string_view_set_t  ret;
+        for(const std::string& v : vals)
+            ret.insert(v);
+        return ret;
+    }
+    
     std::string_view  to_string_view(char ch)
     {
         static thread_local char    buf[kMaxFormattingBuffer+1];

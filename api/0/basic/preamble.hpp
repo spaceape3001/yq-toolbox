@@ -26,6 +26,11 @@
 #include <0/basic/LogFwd.hpp>
 #include <yq/text/RevIgCase.hpp>
 #include <yq/typedef/expected.hpp>
+#include <yq/typedef/string_maps.hpp>
+#include <yq/typedef/string_pairs.hpp>
+#include <yq/typedef/string_sets.hpp>
+#include <yq/typedef/string_vectors.hpp>
+#include <yq/trait/numbers.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/config/string.hpp>
@@ -110,12 +115,6 @@ namespace yq {
     using CharPSeq          = std::initializer_list<const char*>;
 
         // NOT A NUMBER
-    static constexpr double   NaN     = std::numeric_limits<double>::quiet_NaN();
-    static constexpr float    NaNf    = std::numeric_limits<float>::quiet_NaN();
-
-    static constexpr double   INF     = std::numeric_limits<double>::infinity();
-    static constexpr float    INFf    = std::numeric_limits<float>::infinity();
-
 
     using any_error_t           = std::pair<Any, std::error_code>;
     using any_span_t            = std::span<Any>;
@@ -123,54 +122,20 @@ namespace yq {
 
 
         //  Common permutations (Qt will go away...eventually)
-    using StringMap             = Map<std::string,std::string,IgCase>;
-    using StringViewMap         = Map<std::string_view,std::string_view,IgCase>;
-    using StringMultiMap        = MultiMap<std::string,std::string,IgCase>;
-    using StringSet             = Set<std::string,IgCase>;
-    using StringViewSet         = Set<std::string_view,IgCase>;
-    using StringPair            = std::pair<std::string,std::string>;
-    using StringIntPair         = std::pair<std::string,int>;
-    using StringViewMultiMap    = MultiMap<std::string_view,std::string_view,IgCase>;
-    using StringViewVector      = Vector<std::string_view>;
     using PathVector            = Vector<std::filesystem::path>;
 
-    using StringAnyMap          = Map<std::string,Any,IgCase>;
-    using StringAnyMultiMap     = MultiMap<std::string,Any,IgCase>;
 
-    using string_pair_t         = std::pair<std::string,std::string>;
-    using string_int_pair_t     = std::pair<std::string,int>;
 
-    using string_any_map_t      = std::map<std::string,Any,IgCase>;
-    using string_any_pair_t     = std::pair<std::string,Any>;
-
-    using string_map_t          = std::map<std::string,std::string,IgCase>;
-    using string_set_t          = std::set<std::string,IgCase>;
-    using string_vector_t       = std::vector<std::string>;
-    
-    using string_view_pair_t    = std::pair<std::string_view,std::string_view>;
-    using string_view_set_t     = std::set<std::string_view,IgCase>;
-    using string_view_vector_t  = std::vector<std::string_view>;
     using path_vector_t         = std::vector<std::filesystem::path>;
 
     using string_view_initializer_list_t       = std::initializer_list<std::string_view>;
 
-    using U32StringViewSet      = Set<std::u32string_view, IgCase>;
     
     using char32_set_t				= std::unordered_set<char32_t>;
 
-    using u32string_pair_t         = std::pair<std::u32string,std::u32string>;
-    using u32string_int_pair_t     = std::pair<std::u32string,int>;
 
-    using u32string_any_map_t      = std::map<std::u32string,Any,IgCase>;
-    using u32string_any_pair_t     = std::pair<std::u32string,Any>;
 
-    using u32string_map_t          = std::map<std::u32string,std::u32string,IgCase>;
-    using u32string_set_t          = std::set<std::u32string,IgCase>;
-    using u32string_vector_t       = std::vector<std::u32string>;
 
-    using u32string_view_pair_t    = std::pair<std::u32string_view,std::u32string_view>;
-    using u32string_view_set_t     = std::set<std::u32string_view,IgCase>;
-    using u32string_view_vector_t  = std::vector<std::u32string_view>;
 
     using u32string_view_initializer_list_t       = std::initializer_list<std::u32string_view>;
 

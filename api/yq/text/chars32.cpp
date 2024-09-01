@@ -4,8 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/text/utilities32.hpp>
+#include <yq/text/chars32.hpp>
 #include <cwctype>
+#include <string>
 
 namespace yq {
 
@@ -77,7 +78,7 @@ namespace yq {
 
     bool  is_lower(char32_t ch)
     {
-        return ::islower(ch);
+        return ::iswlower(ch);
     }
     
     bool    is_newline(char32_t ch)

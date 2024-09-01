@@ -5,11 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/text/RevIgCase.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/chars32.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/match32.hpp>
 
 namespace yq {
 
     bool    RevIgCase::operator()(const std::string_view&a, const std::string_view&b) const
+    {
+        return is_greater_igCase(a,b);
+    }
+
+    bool    RevIgCase::operator()(const std::u32string_view&a, const std::u32string_view&b) const
     {
         return is_greater_igCase(a,b);
     }
