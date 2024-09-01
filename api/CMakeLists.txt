@@ -30,13 +30,9 @@ add_library(${PROJECT_NAME} SHARED
     ${core_test_source}
     0/basic/Any.hpp
     0/basic/Any.cpp
-    0/basic/Array.hpp
-    0/basic/ArrayX.hpp
     0/basic/BasicApp.hpp
     0/basic/BasicApp.cpp
     0/basic/BasicBuffer.hpp
-    0/basic/ByteArray.hpp
-    0/basic/CollectionUtils.hpp
     0/basic/Compare.hpp
     0/basic/ContentType.hpp
     0/basic/ContentType.cpp
@@ -55,10 +51,6 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/Format.cpp
     0/basic/Global.hpp
     0/basic/Global.cpp
-    0/basic/Hash.hpp
-    0/basic/HashListImpl.hxx
-    0/basic/HashMapImpl.hxx
-    0/basic/HashVectorImpl.hxx
     0/basic/Http.hpp
     0/basic/HttpOp.hpp
     0/basic/HttpParser.hpp

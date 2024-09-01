@@ -8,14 +8,13 @@
 #include <concepts>
 #include <yq/trait/can_add.hpp>
 #include <yq/trait/can_two_multiply.hpp>
-#include "preamble.hpp"
-#include <yq/basic/Coords.hpp>
+#include <yq/container/forward.hpp>
+#include <yq/coord/Coords.hpp>
 #include <yq/basic/IntRange.hpp>
 #include <vector>
 #include <span>
 
 namespace yq {
-    
     namespace impl {
     
         /*! \brief Ascending coordinate

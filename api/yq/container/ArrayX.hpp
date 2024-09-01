@@ -7,8 +7,13 @@
 #pragma once
 #include <vector>
 
-namespace yq {
+/*
+    2024 SEP 01 -- CSA
 
+        I think this is a stub/prototype, yet to fleshed out idea
+*/
+
+namespace yq {
     template <typename Value, typename ... Indices >
     class ArrayXView {
     public:
@@ -18,6 +23,5 @@ namespace yq {
         Value*      m_data  = nullptr;
         size_t      m_dims[DIMS];
         ssize_t     m_zero[DIMS];
-    
     };
 }

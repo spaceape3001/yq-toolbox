@@ -32,6 +32,7 @@ namespace yq::errors {
     using internal_error            = error_db::entry<"Internal consistency error">;
     using invalid_conversion        = error_db::entry<"Cannot convert invalid to anything else">;
     using key_not_found             = error_db::entry<"Key not found">;
+    using memory_allocation_failed  = error_db::entry<"Memory allocation failed">;
     using mulitple_values           = error_db::entry<"Multiple values remain">;
     using name_lookup_failed        = error_db::entry<"Name Lookup Failed" >;
     using no_file_name              = error_db::entry<"No filename specified">;

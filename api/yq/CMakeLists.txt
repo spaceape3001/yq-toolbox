@@ -66,9 +66,35 @@ add_library(${PROJECT_NAME} SHARED
     config/xml.hpp
     config/xml_fwd.hpp
     
+    container/Array.hpp
+    container/ArrayX.hpp
+    container/BitArray.hpp
+    container/ByteArray.hpp
+    container/ByteArray.cpp
     container/Deque.hpp
+    container/Hash.hpp
+    container/HashListImpl.hxx
+    container/HashMapImpl.hxx
+    container/HashVectorImpl.hxx
     container/List.hpp
+    container/ListSetImpl.hxx
+    container/ListVectorImpl.hxx
+    container/Map.hpp
+    container/MapListImpl.hxx
+    container/MapVectorImpl.hxx
+    container/MultiMap.hpp
+    container/MultiMapVectorImpl.hxx
+    container/Set.hpp
+    container/SetVectorImpl.hxx
     container/Stack.hpp
+    container/Vector.hpp
+    
+    container/initlist_utils.hpp
+    container/map_utils.hpp
+    container/reverse.hpp
+    container/set_utils.hpp
+    container/vector_utils.hpp
+    container/container.cpp
     
     coord/Coord1.hpp
     coord/Coord1.hxx

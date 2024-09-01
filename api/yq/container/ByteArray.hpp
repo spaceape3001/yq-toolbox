@@ -5,8 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <0/basic/Vector.hpp>
+#include <yq/container/Vector.hpp>
 #include <string_view>
+#include <system_error>
 
 namespace yq {
 
@@ -15,49 +16,41 @@ namespace yq {
     class ByteArray {
     public:
 
-        //! Defaulted constructor
-        ByteArray() = default;
+        //! Default constructor
+        ByteArray();
         
-        //! Defaulted copy constructor
-        ByteArray(const ByteArray&) = default;
+        //! Copy constructor
+        ByteArray(const ByteArray&);
         
-        //! Defaulted move constructor
-        ByteArray(ByteArray&&) = default;
+        //! Move constructor
+        ByteArray(ByteArray&&);
         
         //! Create with string & size
-        ByteArray(const char*z, size_t cb) : m_data(z, cb) {}
+        ByteArray(const char*z, size_t cb);
         
         //! Create by copy in vector of data
-        ByteArray(const Vector<char>&dat) : m_data(dat) {}
+        ByteArray(const Vector<char>&dat);
         
         //! Create by move in vector of data
-        ByteArray(Vector<char>&&dat) : m_data(std::move(dat)) {}
+        ByteArray(Vector<char>&&dat);
         
         //! Create by a fixed byte array sequence
-        ByteArray(std::initializer_list<uint8_t> d) : m_data((const char*) std::data(d), d.size())
-        {
-        }
+        ByteArray(std::initializer_list<uint8_t> d);
         
-        //! Defaulted copy operator
-        ByteArray&  operator=(const ByteArray&) = default;
+        //! Copy operator
+        ByteArray&  operator=(const ByteArray&);
 
-        //! Defaulted move operator
-        ByteArray&  operator=(ByteArray&&) = default;
+        //! Move operator
+        ByteArray&  operator=(ByteArray&&);
         
-        //! Defaulted destructor
-        ~ByteArray() = default;
+        //! Destructor
+        ~ByteArray();
         
         //! Get byte (reference)
-        char&           operator[](size_t n) 
-        { 
-            return m_data[n]; 
-        }
+        char&           operator[](size_t n);
 
         //! Get byte
-        char            operator[](size_t n) const 
-        { 
-            return m_data[n]; 
-        }
+        char            operator[](size_t n) const;
         
         //! Begin iterator
         auto    begin() { return m_data.begin(); }
@@ -96,75 +89,40 @@ namespace yq {
         auto    crend() { return m_data.cend(); }
 
         //! Appends to a byte array
-        ByteArray&      append(const char* z, size_t cb)
-        {
-            m_data.append(z, cb);
-            return *this;
-        }
+        std::error_code  append(const char* z, size_t cb);
 
         //! Byte array as a string view
-        std::string_view    as_view() const 
-        { 
-            return std::string_view(m_data.data(), m_data.size()); 
-        }
+        std::string_view    as_view() const;
         
         //! Pointer to first byte
-        char*           data() 
-        { 
-            return m_data.data(); 
-        }
+        char*           data();
         
         //! Pointer to first byte
-        const char*     data() const 
-        { 
-            return m_data.data(); 
-        }
+        const char*     data() const;
         
         //! Checks for empty buffer
-        bool            empty() const 
-        { 
-            return m_data.empty(); 
-        }
+        bool            empty() const;
         
         //! Reserves capacity
-        void            reserve(size_t z) 
-        { 
-            m_data.reserve(z); 
-        }
+        std::error_code reserve(size_t z);
 
         //! Resizes the data
-        void            resize(size_t z)
-        {
-            m_data.resize(z);
-        }
+        std::error_code resize(size_t z);
         
         //! Resizes the data with specified character
-        void            resize(size_t z, char ch)
-        {
-            m_data.resize(z, ch);
-        }
+        std::error_code resize(size_t z, char ch);
 
         //! Sets the data
-        void            setData(Vector<char>&&dat)
-        {
-            m_data  = std::move(dat);
-        }
+        void            setData(Vector<char>&&dat);
         
         //! Size of the data
-        size_t          size() const 
-        { 
-            return m_data.size(); 
-        }
+        size_t          size() const;
         
         //! Concatenates byte onto back of byte array
-        ByteArray&  operator<<(char ch)
-        {
-            m_data.push_back(ch);
-            return *this;
-        }
+        ByteArray&  operator<<(char ch);
         
         //! Defaulted comparison operator
-        bool    operator==(const ByteArray&) const = default;
+        bool    operator==(const ByteArray&) const;
         
         
     //private:
