@@ -6,15 +6,11 @@
 
 //#pragma once
 
-#include "VersionSpec.hpp"
+#include <yq/basic/VersionSpec.hpp>
 
-//#include <0/basic/DelayInit.hpp>
-//#include <0/basic/EnumMap.hpp>
 #include <0/basic/Logging.hpp>
-//#include <0/basic/stream/Text.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/io/StreamOps.hpp>
-//#include <stdio.h>
 
 namespace yq {
     Stream& operator<<(Stream&s, const VersionSpec&v)

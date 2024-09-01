@@ -8,7 +8,6 @@
 
 #include <string>
 #include <vector>
-#include <yq/trait/not_copyable.hpp>
 
 
 /*! Lightly formatting string
@@ -24,7 +23,7 @@ namespace yq {
         This is a simple formatter, where the input string is parsed ONCE, stored for
         Further use (or use std::format... which will become the preferred TBH)
     */
-    class Format : not_copyable {
+    class Format {
     public:
 
         class Args;
@@ -65,6 +64,9 @@ namespace yq {
         unsigned int                m_max   = 0;
         
         void parse(const char*, size_t);
+        
+        Format(const Format&) = delete;
+        Format& operator=(const Format&) = delete;
     };
 
     Format operator ""_fmt(const char* z) { return Format(std::string_view(z)); }

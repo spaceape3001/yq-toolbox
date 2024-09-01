@@ -32,10 +32,14 @@ add_library(${PROJECT_NAME} SHARED
     basic/DbgRel.hpp
     basic/DelayInit.hpp
     basic/DelayInit.cpp
+    basic/Encode64.hpp
+    basic/Encode64.cpp
     basic/ErrorDB.hpp
     basic/ErrorDB.cpp
     basic/Expect.hpp
     basic/Flags.hpp
+    basic/Format.hpp
+    basic/Format.cpp
     basic/FowlerNollVo.hpp
     basic/Future.hpp
     basic/Future.cpp
@@ -59,6 +63,9 @@ add_library(${PROJECT_NAME} SHARED
     basic/ThreadId.cpp
     basic/UniqueID.hpp
     basic/UniqueID.cpp
+    basic/Url.hpp
+    # basic/Url.cpp
+    basic/VersionSpec.hpp
 
     config/json.hpp
     config/json_fwd.hpp

@@ -32,11 +32,9 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/Any.cpp
     0/basic/BasicApp.cpp
     0/basic/ContentType.cpp
-    0/basic/Encode64.cpp
     0/basic/Enum.cpp
     0/basic/Exception.cpp
     0/basic/Flag.cpp
-    0/basic/Format.cpp
     0/basic/Global.cpp
     0/basic/HttpParser.cpp
     0/basic/HttpStatus.cpp

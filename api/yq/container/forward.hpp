@@ -68,4 +68,5 @@ namespace yq {
     template <typename T> struct Span;
     template <typename T> class Stack;
     template <typename T> class Vector;
+    template <typename T> class PVector;
 }
