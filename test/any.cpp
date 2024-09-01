@@ -7,7 +7,7 @@
 #include <boost/ut.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/basic/Any.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -5,8 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "BasicApp.hpp"
-#include "Logging.hpp"
-#include "TextUtils.hpp"
+#include <yq/basic/Logging.hpp>
+//#include "TextUtils.hpp"
+#include <yq/text/vsplit.hpp>
 #include <yq/basic/ThreadId.hpp>
 
 #include <0/meta/Meta.hpp>

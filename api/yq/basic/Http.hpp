@@ -6,6 +6,6 @@
 
 #pragma once
 
-#include "ContentType.hpp"
-#include "HttpOp.hpp"
-#include "HttpStatus.hpp"
+#include <yq/basic/ContentType.hpp>
+#include <yq/basic/HttpOp.hpp>
+#include <yq/basic/HttpStatus.hpp>

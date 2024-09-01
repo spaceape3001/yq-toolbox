@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/container/ByteArray.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 #include <yq/io/Stream.hpp>
 #include <0/io/XmlFile.hpp>
 

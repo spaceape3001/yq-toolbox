@@ -17,7 +17,7 @@
 #include <0/meta/PropertyInfoWriter.hpp>
 #include <0/meta/TypeInfoWriter.hpp>
 
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 
 
 #define YQ_TYPE_IMPLEMENT( ... )                                                                            \

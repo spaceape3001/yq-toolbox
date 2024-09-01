@@ -8,7 +8,7 @@
 
 #include <0/meta/MetaRepo.hpp>
 #include <0/meta/ObjectInfo.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 #include <0/basic/Object.hpp>
 
 namespace yq {

@@ -50,8 +50,12 @@ add_library(${PROJECT_NAME} SHARED
     basic/Future.cpp
     basic/Guarded.hpp
     basic/IntRange.hpp
+    basic/Http.hpp
+    basic/HttpOp.hpp
     basic/HttpStatus.hpp
     basic/HttpStatus.cpp
+    basic/Logging.hpp
+    basic/Logging.cpp
     basic/MD5.hpp
     basic/MD5.cpp
     basic/MinMaxDef.hpp

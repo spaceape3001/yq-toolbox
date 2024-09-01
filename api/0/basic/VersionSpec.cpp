@@ -8,7 +8,7 @@
 
 #include <yq/basic/VersionSpec.hpp>
 
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 #include <0/basic/TextUtils.hpp>
 #include <0/io/StreamOps.hpp>
 

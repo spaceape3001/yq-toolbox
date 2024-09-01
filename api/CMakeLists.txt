@@ -34,7 +34,6 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/Exception.cpp
     0/basic/Global.cpp
     0/basic/HttpParser.cpp
-    0/basic/Logging.cpp
     0/basic/MetaObject.cpp
     0/basic/Object.cpp
     0/basic/Url.cpp

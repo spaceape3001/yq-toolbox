@@ -9,7 +9,7 @@
 #include "PluginLoader.hpp"
 
 #include <0/io/DirUtils.hpp>
-#include <0/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 #include <yq/basic/ThreadId.hpp>
 #include <0/basic/TextUtils.hpp>
 
