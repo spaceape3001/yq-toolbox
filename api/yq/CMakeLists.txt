@@ -28,6 +28,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/Any.hpp
     basic/Any.cpp
     basic/AutoReset.hpp
+    basic/BasicApp.hpp
+    basic/BasicApp.cpp
     basic/BinaryBucket.hpp
     basic/ContentType.hpp
     basic/ContentType.cpp
@@ -42,6 +44,9 @@ add_library(${PROJECT_NAME} SHARED
     basic/Enum.cpp
     basic/ErrorDB.hpp
     basic/ErrorDB.cpp
+    basic/Exception.hpp
+    basic/Exception.hxx
+    basic/Exception.cpp
     basic/Expect.hpp
     basic/Flag.hpp
     basic/Flag.cpp
@@ -65,6 +70,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/Logging.cpp
     basic/MD5.hpp
     basic/MD5.cpp
+    basic/MetaObject.hpp
+    basic/MetaObject.cpp
     basic/MinMaxDef.hpp
     basic/Mutable.hpp
     basic/Object.hpp
@@ -87,6 +94,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/Url.cpp
     basic/VersionSpec.hpp
     basic/VersionSpec.cpp
+    basic/XmlObject.hpp
+    basic/XmlObject.cpp
 
     config/string.hpp
     

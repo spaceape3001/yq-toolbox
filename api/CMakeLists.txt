@@ -28,10 +28,6 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED 
     ${core_test_source}
-    0/basic/BasicApp.cpp
-    0/basic/Exception.cpp
-    0/basic/MetaObject.cpp
-    0/basic/XmlObject.cpp
     0/chemistry/chemistry.cpp
     0/gis/gis.cpp
     0/graph/graph.cpp
