@@ -10,6 +10,13 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
+
 namespace yq {
 
     /*! \brief 3D Bivector
@@ -135,7 +142,7 @@ namespace yq {
         
         //! Self multiplies this bivector with the given scalar
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Bivector3<product_t<T,U>>& operator*=(U b) noexcept;
         
         //! Divides this bivector with the given scalar
@@ -145,7 +152,7 @@ namespace yq {
         
         //! Self divides this bivector with the given scalar
         template <typename U>
-        requires (is_arithmetic_v<T> && self_div_v<T,U>)
+        requires (is_arithmetic_v<T> && self_divide_v<T,U>)
         Bivector3& operator/=(U b) noexcept;
 
     };

@@ -12,6 +12,12 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector2.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief Structure for polygon data
@@ -90,7 +96,7 @@ namespace yq {
         
         //! Scales this polygon by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Polygon2& operator*=(U);
 
         //! Projects this polygon to another two dimension space
@@ -107,7 +113,7 @@ namespace yq {
         
         //! Self-projects this polygon
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Polygon2&  operator*=(const Tensor22<U>&);
         
         
@@ -118,7 +124,7 @@ namespace yq {
         
         //! Divides every element by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Polygon2& operator/=(U);
 
         

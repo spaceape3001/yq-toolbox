@@ -10,6 +10,15 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/inverse.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
+#include <yq/trait/unity.hpp>
+
 namespace yq {
 
     /*! \brief Quaternion (3D)
@@ -110,14 +119,14 @@ namespace yq {
         constexpr Quaternion3<product_t<T,U>>  operator* (U b) const noexcept;
 
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Quaternion3& operator*=(U b) noexcept;
 
         template <typename U>
         constexpr Quaternion3<product_t<T,U>>  operator* (const Quaternion3<U>&b) const noexcept;
 
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Quaternion3<T>& operator*=(const Quaternion3<U>&b) noexcept;
 
         template <typename U>
@@ -125,7 +134,7 @@ namespace yq {
         constexpr Vector3<product_t<T,U>>   operator* (const Vector3<U>&b) const noexcept;
 
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Quaternion3<T>& operator/=(U b) noexcept;
 
         template <typename U>

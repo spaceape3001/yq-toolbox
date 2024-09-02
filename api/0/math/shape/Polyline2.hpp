@@ -11,6 +11,12 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector2.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief Structure for polyline data
@@ -77,7 +83,7 @@ namespace yq {
         
         //! Scales this polyline by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Polyline2& operator*=(U);
 
         
@@ -95,7 +101,7 @@ namespace yq {
         
         //! Self-projects this polyline
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Polyline2&  operator*=(const Tensor22<U>&);
 
         //! Returns a polyline with every element divided by the given amount
@@ -105,7 +111,7 @@ namespace yq {
         
         //! Divides every element by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Polyline2& operator/=(U);
 
         //! Addsa a point to the polyline

@@ -12,6 +12,12 @@
 #include <0/math/vector/Vector2.hpp>
 #include <0/math/vector/Bivector2.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief Two dimensional multivector

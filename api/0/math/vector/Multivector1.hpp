@@ -12,6 +12,13 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector1.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/unity.hpp>
+
 namespace yq {
 
     /*! \brief One dimensional multivector
@@ -81,21 +88,21 @@ namespace yq {
         constexpr Multivector1<product_t<T,U>> operator*(U b) const noexcept;
         
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Multivector1& operator*=(U b) noexcept;
 
         template <typename U>
         constexpr Multivector1<product_t<T,U>> operator*(const Multivector1<U>& b) const noexcept;
 
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Multivector1<T>& operator*=(const Multivector1<U>& b) noexcept;
         
         template <typename U>
         constexpr Multivector1<product_t<T,U>> operator*(const Vector1<U>& b) const noexcept;
         
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Multivector1<T>& operator*=(const Vector1<U>& b) noexcept;
 
         template <typename U>
@@ -109,7 +116,7 @@ namespace yq {
         constexpr Multivector1<quotient_t<T,U>> operator/(U b) const noexcept;
 
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Multivector1<T>& operator/=(U b) noexcept;
 
         constexpr Vector1<T>  vector() const noexcept;

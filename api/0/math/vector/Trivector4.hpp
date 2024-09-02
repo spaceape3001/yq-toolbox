@@ -11,6 +11,12 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
     /*! \brief 4D Tri-vector */
     template <typename T>
@@ -152,7 +158,7 @@ namespace yq {
 
 		//! Scaling self mulitplication of trivector by right hand term, returns reference
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Trivector4& operator*=(U b) noexcept;
 
 		//! Divides the trivector by the given factor, returns the trivector result
@@ -162,7 +168,7 @@ namespace yq {
 
 		//! Self divides this trivector by the given factor, returns the trivector result
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Trivector4& operator/=(U b) noexcept;
     };
 

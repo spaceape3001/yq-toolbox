@@ -113,7 +113,7 @@ namespace yq {
     
     template <typename A, typename L>
     template <typename L2>
-    requires (is_arithmetic_v<L2> && self_mul_v<L,L2>)
+    requires (is_arithmetic_v<L2> && self_multiply_v<L,L2>)
     Cylindrical3<A,L>& Cylindrical3<A,L>::operator *= (L2 b)
     {
         *this = *this * b;
@@ -135,7 +135,7 @@ namespace yq {
 
     template <typename A, typename L>
     template <typename L2>
-    requires (is_arithmetic_v<L2> && self_div_v<L,L2>)
+    requires (is_arithmetic_v<L2> && self_divide_v<L,L2>)
     Cylindrical3<A,L>& Cylindrical3<A,L>::operator /= (L2 b)
     {
         *this = *this / b;

@@ -16,6 +16,8 @@
 #include <0/math/shape/Triangle3.hpp>
 #include <0/math/shape/TriangleData.hpp>
 
+#include <yq/trait/fourth.hpp>
+#include <yq/trait/has_sqrt.hpp>
 
 namespace yq {
     #ifdef YQ_MATH_SEGMENT3_HPP
@@ -83,7 +85,7 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
     Triangle3<T>& Triangle3<T>::operator*=(U rhs) noexcept
     {
         a *= rhs;
@@ -122,7 +124,7 @@ namespace yq {
     #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename U>
-    requires self_mul_v<T,U>
+    requires self_multiply_v<T,U>
     Triangle3<T>&   Triangle3<T>::operator*=(const Tensor33<U>&rhs) noexcept
     {
         a *= rhs;
@@ -142,7 +144,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_divide_v<T,U>)
     Triangle3<T>& Triangle3<T>::operator/=(U rhs) noexcept
     {
         a /= rhs;

@@ -10,6 +10,12 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief Four dimensional quadvector
@@ -125,7 +131,7 @@ namespace yq {
 
         //! Self-multiplies this quadvector by the given scalar, returns reference to this quadvector
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Quadvector4& operator*=(U b) noexcept;
 
         //! Divides this quadvector by the given scalar, returns quadvector result
@@ -135,7 +141,7 @@ namespace yq {
 
         //! Self-divides this quadvector by the given scalar, returns reference to this quadvector
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Quadvector4& operator/=(U b) noexcept;
     };
 

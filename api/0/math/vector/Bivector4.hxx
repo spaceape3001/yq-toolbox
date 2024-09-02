@@ -205,7 +205,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
     Bivector4<T>& Bivector4<T>::operator*=(U b) noexcept
     {
         xy*=b, yz*=b, zw*=b, wx*=b, xz*=b, yw*=b;
@@ -222,7 +222,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_divide_v<T,U>)
     Bivector4<T>& Bivector4<T>::operator/=(U b) noexcept
     {
         xy/=b, yz/=b, zw/=b, wx/=b, xz/=b, yw/=b;

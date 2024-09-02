@@ -11,6 +11,13 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector4.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/unity.hpp>
+
 namespace yq {
 
 
@@ -88,7 +95,7 @@ namespace yq {
         
         //! Self-scaling for the segment
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Segment4<T>&                operator*=(U)  noexcept;
         
         //! Projects segment into one dimension
@@ -109,7 +116,7 @@ namespace yq {
         
         //! Self-projection of segment with tensor
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Segment4&                   operator*=(const Tensor44<U>&) noexcept;
 
         //! Returns a scaled down the segment by the specified amount
@@ -119,7 +126,7 @@ namespace yq {
         
         //! Self-scaling down this segment by the specified amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Segment4<T>&                operator/=(U)  noexcept;
 
         //! Bounding box to this segment

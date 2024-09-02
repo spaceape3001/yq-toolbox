@@ -495,7 +495,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (std::is_arithmetic_v<U> && trait::self_multiply_v<T,U>)
     %(vector)s<T>& operator*=(%(vector)s<T>& a, T b)
     {
 """ % v.args)
@@ -549,7 +549,7 @@ namespace yq {
     }
 
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (std::is_arithmetic_v<U> && trait::self_divide_v<T,U>)
     %(vector)s<T>& operator/=(%(vector)s<T>& a, U b)
     {
 """ % v.args)
@@ -1210,7 +1210,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_mul_v<T,U>)
+    requires (std::is_arithmetic_v<U> && trait::self_multiply_v<T,U>)
     %(tensor)s<product_t<T,U>>  operator*=(const %(tensor)s<T>& a, U b)
     {""" % t.args)
 
@@ -1264,7 +1264,7 @@ namespace yq {
                 t.args['t2'] = T2
                 tout.write("""
     template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
+    requires trait::self_multiply_v<T,U>
     %(tensor)s<T>& operator*=(%(tensor)s<T>&a, const %(t2)s<U>& b)
     {
         a = a * b;
@@ -1313,7 +1313,7 @@ namespace yq {
         if t.m == t.n:
             f.write("""
     template <typename T, typename U>
-    requires trait::self_mul_v<T,U>
+    requires trait::self_multiply_v<T,U>
     %(rowv)s<T>& operator*=(%(rowv)s<T>&a, const %(tensor)s<U>& b)
     {
         a = a * b;
@@ -1348,7 +1348,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && trait::self_div_v<T,U>)
+    requires (std::is_arithmetic_v<U> && trait::self_divide_v<T,U>)
     %(tensor)s<quotient_t<T,U>>  operator/=(const %(tensor)s<T>& a, U b)
     {""" % t.args)
 

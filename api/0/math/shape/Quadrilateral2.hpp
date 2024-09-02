@@ -11,6 +11,12 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector2.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
     /*! \brief Quadrilateral in two dimensions
     */
@@ -105,7 +111,7 @@ namespace yq {
 
         //! Scales this quadrilateral by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Quadrilateral2<T>& operator*=(U) noexcept;
 
         //! Projects this quadrilateral to another two dimension space
@@ -114,7 +120,7 @@ namespace yq {
 
         //! Self-projects this quadrilateral
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Quadrilateral2<T>& operator*=(const Tensor22<U>&) noexcept;
 
         //! Returns a reduced quadrilateral by this amount (applied to each point)
@@ -124,7 +130,7 @@ namespace yq {
 
         //! Reduces *THIS* quadrilateral by this amount (each point self-divided by this value)
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Quadrilateral2<T>& operator/=(U) noexcept;
 
         //! The point "area" (not the actual area, but a component of it)

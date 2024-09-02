@@ -82,7 +82,7 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
     Triangle2<T>& Triangle2<T>::operator*=(U rhs) noexcept
     {
         a *= rhs;
@@ -121,7 +121,7 @@ namespace yq {
     #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename U>
-    requires self_mul_v<T,U>
+    requires self_multiply_v<T,U>
     Triangle2<T>&   Triangle2<T>::operator*=(const Tensor22<U>&rhs) noexcept
     {
         a *= rhs;
@@ -141,7 +141,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_divide_v<T,U>)
     Triangle2<T>& Triangle2<T>::operator/=(U rhs) noexcept
     {
         a /= rhs;

@@ -10,6 +10,12 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief A "Ranged" object with a low and a high value
@@ -114,7 +120,7 @@ namespace yq {
 
         //! Self-multiplication with value
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>) 
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>) 
         Range<T>&           operator*=(U b) noexcept;
 
         //! Multiples range with range
@@ -123,7 +129,7 @@ namespace yq {
         
         //! Self-multiplication with range
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Range<T>&    operator*=(const Range<U>& b) noexcept;
 
         //! Division of range with value
@@ -133,7 +139,7 @@ namespace yq {
 
         //! Self-Division of range with value
         template <typename U>
-        requires (std::is_arithmetic_v<U> && self_div_v<T,U>) 
+        requires (std::is_arithmetic_v<U> && self_divide_v<T,U>) 
         Range<T>&    operator/=(U b) noexcept;
 
         //! Divdes one range by another
@@ -142,7 +148,7 @@ namespace yq {
 
         //! Self-division of one range with another
         template <typename U>
-        requires self_div_v<T,U>
+        requires self_divide_v<T,U>
         Range<T>&    operator/=(const Range<U>& b) noexcept;
 
         //! Unions range with value

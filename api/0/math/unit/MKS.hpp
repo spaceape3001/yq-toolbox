@@ -10,6 +10,14 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/cube.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
+
 namespace yq {
     template <typename T, typename DIM>
     struct MKS {

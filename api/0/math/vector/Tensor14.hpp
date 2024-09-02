@@ -11,6 +11,12 @@
 #include <0/math/vector/Vector1.hpp>
 #include <0/math/vector/Vector4.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
     /*! \brief 1x4 second order tensor (ie a matrix)
     
@@ -88,7 +94,7 @@ namespace yq {
         constexpr Tensor14<product_t<T,U>>  operator*(U b) const noexcept;
         
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Tensor14&  operator*=(U b) noexcept;
 
         template <typename U>
@@ -104,7 +110,7 @@ namespace yq {
         constexpr Tensor14<product_t<T,U>> operator*(const Tensor44<U>& b) const noexcept;
 
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Tensor14<T>& operator*=(const Tensor44<U>& b) noexcept;
 
         template <typename U>
@@ -118,7 +124,7 @@ namespace yq {
         constexpr Tensor14<quotient_t<T,U>>  operator/(U b) const noexcept;
         
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Tensor14<T>&  operator/=(U b) noexcept;
 
         constexpr Tensor41<T>   transpose() const noexcept;

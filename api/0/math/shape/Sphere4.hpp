@@ -11,6 +11,12 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector4.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief Hypersphere in four dimensions
@@ -94,7 +100,7 @@ namespace yq {
         
         //! Scales this sphere by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Sphere4<T>& operator*=(U) noexcept;
             
         //! Returns a reduced sphere by the given term
@@ -104,7 +110,7 @@ namespace yq {
         
         //! Reduces this sphere by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Sphere4<T>& operator/=(U) noexcept;
         
                 //! Returns the bounding box for this sphere

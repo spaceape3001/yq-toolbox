@@ -9,6 +9,14 @@
 #define YQ_MATH_VECTOR_1_HPP 1
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/macro/operators.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
+
 namespace yq {
     /*! \brief Vector of 1 dimension
     
@@ -138,7 +146,7 @@ namespace yq {
         
         //! Self-multiplication with scalar
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Vector1<T>& operator*=(U b) noexcept;
 
         template <typename U>
@@ -162,7 +170,7 @@ namespace yq {
         
         //! Vector/tensor self-multiplication
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Vector1&  operator*=(const Tensor11<U>&) noexcept;
 
         //! Geometric product (scalar in 1D)
@@ -200,7 +208,7 @@ namespace yq {
 
         //! Self-division with scalar
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Vector1<T>& operator/=(U b) noexcept;
 
         //! Division with vector

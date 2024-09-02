@@ -8,6 +8,15 @@
 
 #define YQ_MATH_VECTOR_4_HPP 1
 #include <0/math/preamble.hpp>
+#include <yq/macro/operators.hpp>
+
+#include <yq/keywords.hpp>
+#include <yq/trait/fourth.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
 
 namespace yq {
     
@@ -198,7 +207,7 @@ namespace yq {
 
         //! Self-multiplication with scalar
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Vector4<T>& operator*=(U b) noexcept;
 
         //! Multiplication with tensor41
@@ -219,7 +228,7 @@ namespace yq {
 
         //! Self-multiplication with tensor44
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Vector4<T>& operator*=(const Tensor44<U>& b) noexcept;
 
         //! Geometric product
@@ -262,7 +271,7 @@ namespace yq {
         
         //! Self-division
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Vector4<T>& operator/=(U b) noexcept;
         
         template <typename U>

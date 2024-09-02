@@ -10,6 +10,12 @@
 
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
     /*! \brief Cylindrical coordinates
     
@@ -85,7 +91,7 @@ namespace yq {
         Cylindrical3<A, product_t<L,L2>> operator*(L2) const;
         
         template <typename L2>
-        requires (is_arithmetic_v<L2> && self_mul_v<L,L2>)
+        requires (is_arithmetic_v<L2> && self_multiply_v<L,L2>)
         Cylindrical3& operator *= (L2);
 
         template <typename L2>
@@ -93,7 +99,7 @@ namespace yq {
         Cylindrical3<A,quotient_t<L,L2>> operator/(L2) const;
 
         template <typename L2>
-        requires (is_arithmetic_v<L2> && self_div_v<L,L2>)
+        requires (is_arithmetic_v<L2> && self_divide_v<L,L2>)
         Cylindrical3& operator /= (L2);
     };
     

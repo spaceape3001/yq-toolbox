@@ -12,6 +12,12 @@
 #include <0/math/vector/Vector4.hpp>
 #include <0/math/shape/TriangleData.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
     /*! \brief 3D triangle
@@ -97,7 +103,7 @@ namespace yq {
         
         //! Scales this triangle
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Triangle4& operator*=(U) noexcept;
 
         //! Projects into two dimensions
@@ -114,7 +120,7 @@ namespace yq {
 
         //! Self-projects using the tensor
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Triangle4&   operator*=(const Tensor44<U>&) noexcept;
 
         //! Returns a reduced triangle
@@ -124,7 +130,7 @@ namespace yq {
 
         //! Self-reduces this triangle
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Triangle4& operator/=(U) noexcept;
         
         //! Area of this triangle

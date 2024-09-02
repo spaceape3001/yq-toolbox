@@ -13,6 +13,7 @@
 
 #include <0/math/preamble.hpp>
 #include <yq/trait/can_add.hpp>
+#include <yq/trait/square.hpp>
 
 namespace yq {
 

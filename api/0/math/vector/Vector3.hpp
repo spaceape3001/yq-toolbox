@@ -9,6 +9,15 @@
 #define YQ_MATH_VECTOR_3_HPP 1
 #include <0/math/preamble.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/macro/operators.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/cube.hpp>
+#include <yq/trait/square.hpp>
+
 namespace yq {
 
     /*! \brief Vector of 3 dimensions
@@ -185,7 +194,7 @@ namespace yq {
 
         //! Self-multiplication
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Vector3<T>& operator*=(U b) noexcept;
 
         //! Vector/tensor multiplication
@@ -202,7 +211,7 @@ namespace yq {
         constexpr Vector4<product_t<T,U>> operator*(const Tensor34<U>&b) const noexcept;
         //! Vector/tensor self multiplication
         template <typename U>
-        requires (self_mul_v<T,U>)
+        requires (self_multiply_v<T,U>)
         Vector3& operator*=(const Tensor33<U>&b) noexcept;
 
         //! Geometric product
@@ -245,7 +254,7 @@ namespace yq {
 
         //! Self-division
         template <typename U>
-        requires (std::is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (std::is_arithmetic_v<U> && self_divide_v<T,U>)
         Vector3<T>& operator/=(U b) noexcept;
 
         template <typename U>

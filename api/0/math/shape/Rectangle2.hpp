@@ -10,6 +10,10 @@
 
 #include <0/math/vector/Vector2.hpp>
 #include <0/math/shape/Size2.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 namespace yq {
 
@@ -78,14 +82,14 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Rectangle2<product_t<T,U>>  operator*(U) const noexcept;
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Rectangle2&  operator*=(U) noexcept;
         
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Rectangle2<quotient_t<T,U>>  operator/(U) const noexcept;
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Rectangle2&  operator/=(U) noexcept;
 
 

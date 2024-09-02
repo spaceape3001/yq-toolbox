@@ -11,6 +11,13 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector4.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/unity.hpp>
+
 namespace yq {
 
     /*! \brief Axially aligned box in 4 dimension(s).
@@ -172,7 +179,7 @@ namespace yq {
 
         //! Scales this box by the given factor
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         AxBox4& operator*=(U) noexcept;
         
         //! Returns a box reduced by the given divisor
@@ -182,7 +189,7 @@ namespace yq {
 
         //! Reduces this box by the given divisor
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         AxBox4& operator/=(U) noexcept;
         
         

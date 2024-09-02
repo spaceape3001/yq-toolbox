@@ -11,6 +11,12 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector4.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
 
 
@@ -81,7 +87,7 @@ namespace yq {
         
         //! Scales this polygon by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Polygon4& operator*=(U);
 
         //! Projects this polygon into two dimensions
@@ -98,7 +104,7 @@ namespace yq {
         
         //! Self-projects this polygon
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Polygon4&  operator*=(const Tensor44<U>&);
         
         //! Returns a polygon with every element divided by the given amount
@@ -108,7 +114,7 @@ namespace yq {
         
         //! Divides every element by the given amount
         template <typename U>
-        requires (is_arithmetic_v<U> && self_div_v<T,U>)
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Polygon4& operator/=(U);
 
         /*! \brief Computes the axially aligned bounding box of this polygon

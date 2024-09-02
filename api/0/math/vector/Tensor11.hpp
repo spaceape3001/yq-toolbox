@@ -10,6 +10,13 @@
 #include <0/math/preamble.hpp>
 #include <0/math/vector/Vector1.hpp>
 
+#include <yq/keywords.hpp>
+#include <yq/trait/inverse.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+
 namespace yq {
     /*! \brief 1x1 second order tensor (ie a matrix)
     
@@ -61,7 +68,7 @@ namespace yq {
         constexpr Tensor11<product_t<T,U>>  operator*(U b) const noexcept;
 
         template <typename U>
-        requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+        requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Tensor11<product_t<T,U>>  operator*=(U b) noexcept;
 
         template <typename U>
@@ -77,7 +84,7 @@ namespace yq {
         constexpr Tensor14<product_t<T,U>> operator*(const Tensor14<U>& b) const noexcept;
 
         template <typename U>
-        requires self_mul_v<T,U>
+        requires self_multiply_v<T,U>
         Tensor11<T>& operator*=(const Tensor11<U>& b) const noexcept;
 
         template <typename U>
@@ -337,7 +344,7 @@ namespace yq {
     }
     
     template <typename T, typename U>
-    requires (std::is_arithmetic_v<U> && self_div_v<T,U>)
+    requires (std::is_arithmetic_v<U> && self_divide_v<T,U>)
     Tensor11<quotient_t<T,U>>  operator/=(const Tensor11<T>& a, U b)
     {
         a.xx/=b;        

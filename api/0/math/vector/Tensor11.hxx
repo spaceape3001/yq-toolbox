@@ -95,7 +95,7 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
     Tensor11<product_t<T,U>>  Tensor11<T>::operator*=(U b) noexcept
     {
         xx*=b;        
@@ -122,7 +122,7 @@ namespace yq {
     
     template <typename T>
         template <typename U>
-    requires self_mul_v<T,U>
+    requires self_multiply_v<T,U>
     Tensor11<T>& Tensor11<T>::operator*=(const Tensor11<U>& b) const noexcept
     {
         *this = *this * b;

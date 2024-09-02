@@ -205,7 +205,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
     Quaternion3<T>& Quaternion3<T>::operator*=(U b) noexcept
     {
         w *= b;
@@ -230,7 +230,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires self_mul_v<T,U>
+    requires self_multiply_v<T,U>
     Quaternion3<T>& Quaternion3<T>::operator*=(const Quaternion3<U>&b) noexcept
     {
         if constexpr (std::is_floating_point_v<T>){
@@ -280,7 +280,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_divide_v<T,U>)
     Quaternion3<T>& Quaternion3<T>::operator/=(U b) noexcept
     {
         w /= b;

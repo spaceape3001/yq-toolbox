@@ -182,7 +182,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_mul_v<T,U>)
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
     Vector1<T>& Vector1<T>::operator*=(U b) noexcept
     {
         x *= b;
@@ -251,7 +251,7 @@ namespace yq {
     #ifdef YQ_MATH_TENSOR_1_1_HPP
     template <typename T>
         template <typename U>
-    requires self_mul_v<T,U>
+    requires self_multiply_v<T,U>
     Vector1<T>&  Vector1<T>::operator*=(const Tensor11<U>&b) noexcept
     {
         *this = *this * b;
@@ -343,7 +343,7 @@ namespace yq {
 
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_div_v<T,U>)
+    requires (is_arithmetic_v<U> && self_divide_v<T,U>)
     Vector1<T>& Vector1<T>::operator/=(U b) noexcept
     {
         x /= b;
