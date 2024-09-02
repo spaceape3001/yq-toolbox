@@ -26,11 +26,14 @@
 #include <yq/basic/LogFwd.hpp>
 #include <yq/text/RevIgCase.hpp>
 #include <yq/typedef/expected.hpp>
+#include <yq/typedef/result.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/string_pairs.hpp>
 #include <yq/typedef/string_sets.hpp>
 #include <yq/typedef/string_vectors.hpp>
+#include <yq/typedef/url.hpp>
 #include <yq/macro/cppstring.hpp>
+#include <yq/macro/make_version.hpp>
 #include <yq/trait/numbers.hpp>
 
 #include <yq/keywords.hpp>
@@ -75,37 +78,10 @@ namespace yq {
         // TEMPLATE STRUCTS
     template <typename> struct Created;
     template <typename> struct IntRange;
-    template <typename> struct Result;
     template <typename> struct Span;
 
         // RESULTS
     
-    using any_r             = Result<Any>;
-    using boolean_r         = Result<bool>;
-    using double_r          = Result<double>;
-    using float_r           = Result<float>;
-    using int_r             = Result<int>;
-    using integer_r         = Result<int>;
-    using int8_r            = Result<int8_t>;
-    using int16_r           = Result<int16_t>;
-    using int32_r           = Result<int32_t>;
-    using int64_r           = Result<int64_t>;
-    using int128_r          = Result<int128_t>;
-    using short_r           = Result<short>;
-    using size_r            = Result<size_t>;
-    using string_r          = Result<std::string>;
-    using string_view_r     = Result<std::string_view>;
-    //using string_map_r      = Result<StringMap>;
-    //using string_set_r      = Result<StringSet>;
-    using uint8_r           = Result<uint8_t>;
-    using uint16_r          = Result<uint16_t>;
-    using uint32_r          = Result<uint32_t>;
-    using uint64_r          = Result<uint64_t>;
-    using uint128_r         = Result<uint128_t>;
-    using unsigned_r        = Result<unsigned int>;
-    using ushort_r          = Result<unsigned short>;
-    using u32string_r       = Result<std::u32string>;
-    using wstring_r         = Result<std::wstring>;
 
         // INT RANGES
     using SSizeRange        = IntRange<ssize_t>;
@@ -122,19 +98,10 @@ namespace yq {
 
 
         //  Common permutations (Qt will go away...eventually)
-    using PathVector            = Vector<std::filesystem::path>;
-
-
-
-    using path_vector_t         = std::vector<std::filesystem::path>;
-
     using string_view_initializer_list_t       = std::initializer_list<std::string_view>;
 
     
     using char32_set_t				= std::unordered_set<char32_t>;
-
-
-
 
 
     using u32string_view_initializer_list_t       = std::initializer_list<std::u32string_view>;
@@ -148,17 +115,7 @@ namespace yq {
         using PathSet   = Set<std::string>;
     #endif
     
-    template <typename T> struct BasicUrl;
-    using UrlView       = BasicUrl<std::string_view>;
-    using Url           = BasicUrl<std::string>;
-    using Url32         = BasicUrl<std::u32string>;
-    using Url32View     = BasicUrl<std::u32string_view>;
     
-    using url_r         = Result<Url>;
-    using url_view_r    = Result<UrlView>;
-
-
-    #define YQ_MAKE_VERSION(major, minor, patch) ((((uint32_t)(major)) << 22) | (((uint32_t)(minor)) << 12) | ((uint32_t)(patch)))
     
     template <typename T>
     void    steal(T*& ptr, T*& other)

@@ -6,7 +6,10 @@
 
 #pragma once
 
-#include <0/basic/preamble.hpp>
+#include <yq/typedef/url.hpp>
+#include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/result.hpp>
+#include <yq/typedef/expected.hpp>
 
 namespace yq {
     class Stream;
@@ -43,7 +46,7 @@ namespace yq {
     url_view_r      to_url_view(const char*, size_t);
     url_view_r      to_url_view(const char*);
     url_view_r      to_url_view(std::string_view);
-    Url             to_url(const std::filesystem::path&);
+    Url             to_url(const filesystem_path_t&);
     
     
     url_view_r      as_host_port(const char*, size_t);

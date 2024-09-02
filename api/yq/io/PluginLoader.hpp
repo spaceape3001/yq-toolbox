@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <filesystem>
+#include <yq/typedef/filesystem_path.hpp>
 
 namespace yq {
 
@@ -18,7 +18,7 @@ namespace yq {
         \return TRUE if successful, FALSE otherwise
         \note Release builds will swallow exceptions, while Debug builds will let them propagate.
     */
-    bool        load_plugin(const std::filesystem::path& plugFile);
+    bool        load_plugin(const filesystem_path_t& plugFile);
     
     /*! \brief Loads a directory of plugins
     
@@ -28,5 +28,5 @@ namespace yq {
         \return Number of successful plugin loads
         \note Release builds will swallow exceptions, while Debug builds will let them propagate.
     */
-    size_t      load_plugin_dir(const std::filesystem::path& plugDir);
+    size_t      load_plugin_dir(const filesystem_path_t& plugDir);
 }

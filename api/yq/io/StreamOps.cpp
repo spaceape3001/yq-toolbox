@@ -96,7 +96,7 @@ namespace yq {
     }
 
 
-    Stream&     operator<<(Stream&str, const std::filesystem::path&v)
+    Stream&     operator<<(Stream&str, const filesystem_path_t&v)
     {
         return str << v.c_str();
     }

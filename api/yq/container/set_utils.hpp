@@ -9,6 +9,7 @@
 #include <yq/container/SetChanges.hpp>
 
 #include <algorithm>
+#include <set>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -339,6 +340,12 @@ namespace yq {
     template <typename T, typename C, typename A>
     std::set<T,C,A>      make_set(const std::vector<T, A>& data, const C& lesser)
     {
-        return std::set<T,C>(data.begin(), data.end(), lesser, data.get_allocator());
+        return std::set<T,C,A>(data.begin(), data.end(), lesser, data.get_allocator());
+    }
+    
+    template <typename T, typename C, typename C2, typename A>
+    std::set<T,C2,A>    make_set(const std::set<T,C,A>& data, const C2& lesser)
+    {
+        return std::set<T,C2,A>(data.begin(), data.end(), lesser, data.get_allocator());
     }
 }

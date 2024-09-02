@@ -54,6 +54,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/HttpOp.hpp
     basic/HttpStatus.hpp
     basic/HttpStatus.cpp
+    basic/HttpParser.hpp
+    basic/HttpParser.cpp
     basic/Logging.hpp
     basic/Logging.cpp
     basic/MD5.hpp
@@ -136,16 +138,31 @@ add_library(${PROJECT_NAME} SHARED
     coord/Coord6.cpp
     coord/forward.hpp
     
+    io/AbstractFile.hpp
+    io/AbstractFile.cpp
+    io/DirUtils.hpp
+    io/DirUtils.cpp
     io/Execute.hpp
     io/Execute.cpp
     io/FileResolver.hpp
+    io/FileResolver.cpp
     io/FixedBuffer.hpp
+    io/FileUtils.hpp
+    io/FileUtils.cpp
     io/KeyValue.hpp
     io/KeyValue.cpp
+    io/PluginLoader.hpp
+    io/PluginLoader.cpp
+    io/StdFile.hpp
+    io/StdFile.cpp
     io/Stream.hpp
     io/Stream.cpp
     io/StreamOps.hpp
     io/StreamOps.cpp
+    io/XmlFile.hpp
+    io/XmlFile.cpp
+    io/XmlUtils.hpp
+    io/XmlUtils.cpp
     
     io/stream/Bytes.hpp
     io/stream/Bytes.cpp
@@ -155,6 +172,8 @@ add_library(${PROJECT_NAME} SHARED
     io/stream/First.cpp
     io/stream/LineCol.hpp
     io/stream/LineCol.cpp
+    io/stream/OSFile.hpp
+    io/stream/OSFile.cpp
     io/stream/QBytes.hpp
     io/stream/StdError.hpp
     io/stream/StdError.cpp
@@ -165,9 +184,10 @@ add_library(${PROJECT_NAME} SHARED
     io/stream/Text.hpp
     io/stream/Text.cpp
 
-    macro/cppstring.hpp
     macro/concat.hpp
+    macro/cppstring.hpp
     macro/debugrel.hpp
+    macro/make_version.hpp
 
     math/AllComponents.hpp
     math/AnyComponents.hpp
@@ -188,6 +208,20 @@ add_library(${PROJECT_NAME} SHARED
     
     math/unit/declare.hpp
     math/unit/dims.hpp
+    
+    sql/forward.hpp
+    sql/QueryUrl.hpp
+    sql/SqlError.hpp
+    sql/SqlError.cpp
+    sql/SqlLite.hpp
+    sql/SqlLite.cpp
+    sql/SqlLogging.hpp
+    sql/SqlQuery.hpp
+    sql/SqlQueryMap.hpp
+    sql/SqlStatement.hpp
+    sql/SqlStatement.cpp
+    sql/SqlUtils.hpp
+    sql/SqlUtils.cpp
     
     text/Comma.hpp
     text/IgCase.hpp
@@ -296,6 +330,16 @@ add_library(${PROJECT_NAME} SHARED
     trait/return_type.hpp
     trait/sink.hpp
     trait/weak.hpp
+    
+    typedef/expected.hpp
+    typedef/filesystem_path.hpp
+    typedef/result.hpp
+    typedef/string.hpp
+    typedef/string_maps.hpp
+    typedef/string_pairs.hpp
+    typedef/string_sets.hpp
+    typedef/string_vectors.hpp
+    typedef/url.hpp
 )
 
 ##########################

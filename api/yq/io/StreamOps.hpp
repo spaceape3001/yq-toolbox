@@ -8,8 +8,8 @@
 
 #include <yq/basic/Enum.hpp>
 #include <yq/basic/Flag.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 
-#include <filesystem>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -38,7 +38,7 @@ namespace yq {
     Stream&     operator<<(Stream&, uint32_t);
     Stream&     operator<<(Stream&, uint64_t);
 
-    Stream&     operator<<(Stream&, const std::filesystem::path&);
+    Stream&     operator<<(Stream&, const filesystem_path_t&);
 
     template <typename E>
     Stream&     operator<<(Stream& str, EnumImpl<E> val)

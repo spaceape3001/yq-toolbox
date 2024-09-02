@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <filesystem>
+#include <yq/typedef/filesystem_path.hpp>
 #include <vector>
 
 namespace yq {
@@ -22,18 +22,18 @@ namespace yq {
         ~FileResolver();
 
         
-        void    add_path(const std::filesystem::path&);
+        void    add_path(const filesystem_path_t&);
         
         //! Resolves a file to an existing file with a FULL relative path
-        std::filesystem::path       resolve(std::string_view) const;
+        filesystem_path_t       resolve(std::string_view) const;
 
         //! Resolves a file to an existing file with a partial path
         //! \note This implies recursive
-        std::filesystem::path       partial(std::string_view) const;
+        filesystem_path_t       partial(std::string_view) const;
         
-        std::vector<std::filesystem::path>  all_partial(std::string_view) const;
+        std::vector<filesystem_path_t>  all_partial(std::string_view) const;
         
-        const std::vector<std::filesystem::path>& paths() const { return m_paths; }
+        const std::vector<filesystem_path_t>& paths() const { return m_paths; }
         
         FileResolver& operator=(const FileResolver&);
         FileResolver& operator=(FileResolver&&);
@@ -41,7 +41,7 @@ namespace yq {
         
     private:
     
-        std::vector<std::filesystem::path>  m_paths;
+        std::vector<filesystem_path_t>  m_paths;
     
     };
 }

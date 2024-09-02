@@ -33,7 +33,6 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/BasicApp.cpp
     0/basic/Exception.cpp
     0/basic/Global.cpp
-    0/basic/HttpParser.cpp
     0/basic/MetaObject.cpp
     0/basic/Object.cpp
     0/basic/Url.cpp
@@ -43,10 +42,7 @@ add_library(${PROJECT_NAME} SHARED
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
-    0/io/AbstractFile.cpp
     0/io/Curl.cpp
-    0/io/DirUtils.cpp
-    0/io/io.cpp
     0/math/math.cpp
     0/math/Complex.cpp
     0/math/Fraction.cpp
@@ -79,7 +75,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/color/RGB.cpp
     0/math/color/RGBA.cpp
     0/meta/meta.cpp
-    0/sql/sql.cpp
     0/physics/physics.cpp
 )
 

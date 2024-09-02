@@ -11,6 +11,7 @@
 #include <string_view>
 #include <yq/basic/128-bit.hpp>
 #include <yq/basic/Expect.hpp>
+#include <yq/typedef/url.hpp>
 
 namespace yq {
     class Any;
@@ -40,5 +41,7 @@ namespace yq {
     using unsigned_x        = Expect<unsigned int>;
     using ushort_x          = Expect<unsigned short>;
     using u32string_x       = Expect<std::u32string>;
+    using url_x             = Expect<Url>;
+    using url_view_x        = Expect<UrlView>;
     using wstring_x         = Expect<std::wstring>;
 }

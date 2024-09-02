@@ -7,8 +7,8 @@
 #include <iostream>
 #include <yq/container/Vector.hpp>
 #include <yq/basic/Logging.hpp>
-#include <0/sql/SqlLite.hpp>
-#include <0/sql/SqlQuery.hpp>
+#include <yq/sql/SqlLite.hpp>
+#include <yq/sql/SqlQuery.hpp>
 //#include <0/basic/TextUtils.hpp>
 #include <yq/text/copy.hpp>
 #include <yq/text/transform.hpp>

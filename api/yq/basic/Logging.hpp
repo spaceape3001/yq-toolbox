@@ -9,13 +9,13 @@
 #include <yq/macro/debugrel.hpp>
 #include <yq/basic/Enum.hpp>
 #include <yq/basic/Flag.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
 #include <log4cpp/Priority.hh>
 #include <optional>
 #include <string_view>
 #include <system_error>
-#include <filesystem>
 
 namespace yq {
 
@@ -110,7 +110,7 @@ namespace yq {
     //! Enable logging to a file
     //! \param[in] fp   Filepath to log to
     //! \param[in] p    Minimum logging threshhold to actually report
-    void                        log_to_file(const std::filesystem::path& fp, LogPriority p = LogPriority());
+    void                        log_to_file(const filesystem_path_t& fp, LogPriority p = LogPriority());
 
     //void                        log_freeze();
 

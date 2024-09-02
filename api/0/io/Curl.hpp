@@ -8,9 +8,11 @@
 
 #include <yq/basic/HttpStatus.hpp>
 #include <yq/config/json_fwd.hpp>
-#include <0/basic/preamble.hpp>
+#include <yq/container/Vector.hpp>
+#include <yq/typedef/url.hpp>
 
 namespace yq {
+    class ByteArray;
 
     class Curl {
     public:
@@ -31,9 +33,9 @@ namespace yq {
         
         HttpStatus          exec();
         
-        const Vector<uint8_t>&      rx() const { return m_rx; }
-        ByteArray                   rx_bytes() const;
-        json                        rx_json() const;
+        const Vector<uint8_t>&  rx() const { return m_rx; }
+        ByteArray               rx_bytes() const;
+        json                    rx_json() const;
         
     private:
         Curl(const Curl&) = delete;
@@ -41,7 +43,7 @@ namespace yq {
         Curl& operator=(const Curl&) = delete;
         Curl& operator=(Curl&&) = delete;
         
-        void*               m_curl;
+        void*                   m_curl;
         Vector<uint8_t>     m_rx;
         
         static size_t   rx_bytes_impl(char*, size_t, size_t, Curl*);

@@ -163,7 +163,7 @@ namespace yq {
         }
     }
 
-    void                        log_to_file(const std::filesystem::path&file, LogPriority p)
+    void                        log_to_file(const filesystem_path_t&file, LogPriority p)
     {
         log4cpp::FileAppender* f    = new log4cpp::FileAppender(file.string(), file.string());
         if(p != LogPriority())
