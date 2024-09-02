@@ -11,7 +11,12 @@
 #include "SqlLogging.hpp"
 #include "SqlQuery.hpp"
 #include <0/io/FileUtils.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/copy.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/split.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/text/vsplit.hpp>
 
 namespace yq {
     bool    db_run_script(std::string_view script, SqlLite& db)

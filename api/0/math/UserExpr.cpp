@@ -31,7 +31,7 @@
 #include <yq/basic/DelayInit.hpp>
 #include <yq/container/Stack.hpp>
 #include <0/math/expr/OpData.hpp>
-
+#include <yq/text/parse32.hpp>
 
 namespace yq::expr {
 

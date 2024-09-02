@@ -7,8 +7,9 @@
 #include <boost/ut.hpp>
 //#include <0/basic/CollectionUtils.hpp>
 #include <yq/basic/Logging.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
+#include <yq/text/match.hpp>
+//#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils32.hpp>
 #include <0/math/expr/Repo.hpp>
 #include <0/math/expr/Token.hpp>
 #include <0/math/expr/Tokenize.hpp>

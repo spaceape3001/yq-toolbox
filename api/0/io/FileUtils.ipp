@@ -11,8 +11,9 @@
 #include <0/io/FileUtils.hpp>
 #include <yq/basic/Safety.hpp>
 #include <yq/container/Vector.hpp>
+#include <yq/text/chars.hpp>
 #include <yq/text/IterUtf8.hpp>
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/basic/Result.hpp>
 

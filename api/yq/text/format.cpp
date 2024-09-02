@@ -6,7 +6,7 @@
 
 #include "format.hpp"
 #include <yq/config/string.hpp>
-#include <yq/text/basics32.hpp>
+#include <yq/text/basic32.hpp>
 #include <yq/text/IgCase.hpp>
 #include <charconv>
 #include <cuchar>

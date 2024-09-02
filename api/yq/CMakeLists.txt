@@ -201,10 +201,10 @@ add_library(${PROJECT_NAME} SHARED
     text/RevIgCase.hpp
     text/RevIgCase.cpp
     
-    text/basics.hpp
-    text/basics.cpp
-    text/basics32.hpp
-    text/basics32.cpp
+    text/basic.hpp
+    text/basic.cpp
+    text/basic32.hpp
+    text/basic32.cpp
     text/chars.hpp
     text/chars.cpp
     text/chars32.hpp
@@ -213,10 +213,10 @@ add_library(${PROJECT_NAME} SHARED
     text/copy.cpp
     text/copy32.hpp
     text/copy32.cpp
-    text/counts.hpp
-    text/counts.cpp
-    text/counts32.hpp
-    text/counts32.cpp
+    text/count.hpp
+    text/count.cpp
+    text/count32.hpp
+    text/count32.cpp
     text/format.hpp
     text/format.cpp
     text/format32.hpp

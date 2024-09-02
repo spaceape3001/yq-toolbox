@@ -9,6 +9,8 @@
 #include "Symbol.hpp"
 
 #include <yq/basic/Logging.hpp>
+#include <yq/text/ios32.hpp>
+#include <ostream>
 
 namespace yq::expr {
     template <typename S>   void stream_out(S& out, const Symbol& sym)

@@ -5,9 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <0/basic/preamble.hpp>
+
+#include <string>
+#include <string_view>
+#include <yq/container/forward.hpp>
 
 namespace yq {
+    struct IgCase;
 
     /*! \brief Light weight Key-Value structure
     */

@@ -6,9 +6,10 @@
 
 #pragma once
 
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <yq/basic/Enum.hpp>
 #include <yq/basic/Flag.hpp>
+#include <yq/text/vsplit.hpp>
 #include <yq/typedef/string.hpp>
 
 #include "rapidxml.hpp"

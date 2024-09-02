@@ -5,9 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <0/basic/Any.hpp>
 #include <yq/basic/Logging.hpp>
+#include <yq/text/format.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

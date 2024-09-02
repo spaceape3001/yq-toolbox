@@ -8,7 +8,7 @@
 #include <yq/text/chars.hpp>
 #include <yq/text/chars32.hpp>
 #include <yq/text/copy.hpp>
-#include <yq/text/counts.hpp>
+#include <yq/text/count.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/text/IterUtf8.hpp>

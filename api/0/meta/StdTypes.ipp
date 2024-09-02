@@ -11,7 +11,8 @@
 #include <0/meta/Init.hpp>
 
 #include <yq/basic/DelayInit.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/parse.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <0/basic/Any.hpp>
 
 #include <cmath>

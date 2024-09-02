@@ -6,12 +6,14 @@
 
 #pragma once
 
-#include <0/io/preamble.hpp>
+#include <yq/typedef/filesystem.hpp>
 #include <yq/basic/SizeTimestamp.hpp>
-#include <iosfwd>
+//#include <iosfwd>
+#include <vector>
 
 namespace yq {
     class ByteArray;
+    struct SizeTimestamp;
     
     #if 0
     namespace file {
@@ -81,6 +83,5 @@ namespace yq {
     //! Returns the LAST file extension (no leading '.') or empty if none
     std::string_view    file_extension(std::string_view);
     
-    inline std::filesystem::path   operator "" _fp(const char* z) { return std::filesystem::path(z); }
     
 }

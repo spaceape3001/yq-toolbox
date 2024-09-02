@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "match32.hpp"
-#include <yq/text/basics32.hpp>
+#include <yq/text/basic32.hpp>
 #include <yq/text/chars32.hpp>
 #include <yq/text/IgCase.hpp>
 #include <string>

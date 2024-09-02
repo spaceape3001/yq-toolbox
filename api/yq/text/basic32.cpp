@@ -4,23 +4,57 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "basics.hpp"
-#include <yq/text/chars.hpp>
+#include "basic32.hpp"
+
 #include <yq/text/chars32.hpp>
-#include <yq/text/IterUtf8.hpp>
-#include <cstdint>
 
 namespace yq {
-    const char*         strany(std::string_view haystack, std::string_view needle)
+    const char32_t*         strany(std::u32string_view haystack, std::u32string_view needle)
     {
-        for(const char* z = haystack.begin(); z != haystack.end(); ++z){
+        for(const char32_t* z = haystack.begin(); z != haystack.end(); ++z){
             if(strnchr(needle, *z))
                 return z;
         }
         return nullptr;
     }
 
-    const char*  strnchr(const char*s, size_t n, char ch)
+
+    size_t strlen(const char32_t* s)
+    {
+        if(!s)
+            return 0;
+        size_t  cnt = 0;
+        for(;*s;++cnt)
+            ;
+        return cnt;
+    }
+
+    int     strncasecmp(const char32_t*a, const char32_t*b, size_t n)
+    {
+        if(!a && b)
+            return -1;
+        if(a && !b)
+            return 1;
+            
+        for(size_t i=0;i<n;++i){
+            if(!a[i]){
+                if(!b[i]){
+                    return 0;
+                }
+                return -1;
+            } else if(!b[i]){
+                return 1;
+            }
+        
+            int d   = to_lower(a[i]) - to_lower(b[i]);
+            if(d)
+                return d;
+        }
+        return 0;
+    }
+    
+
+    const char32_t*  strnchr(const char32_t*s, size_t n, char32_t ch)
     {
         if(!s || !n)
             return nullptr;
@@ -30,19 +64,12 @@ namespace yq {
         return nullptr;
     }
 
-    const char*  strnchr(const char*s, size_t n, char32_t ch)
-    {
-        return iter_utf8_find(s, n, [&](char32_t c) -> bool {
-            return ch == c;
-        });
-    }
-
-    const char*  strnchr(std::string_view s, char ch)
+    const char32_t*  strnchr(std::u32string_view s, char32_t ch)
     {
         return strnchr(s.data(), s.size(), ch);
     }
 
-    const char*  strnchr_igCase(const char*s, size_t n, char ch)
+    const char32_t*  strnchr_igCase(const char32_t*s, size_t n, char32_t ch)
     {
         ch      = to_lower(ch);
         if(!s || !n)
@@ -53,15 +80,15 @@ namespace yq {
         return nullptr;
     }
     
-    const char*  strnchr_igCase(const char*s, size_t n, char32_t ch)
-    {   
-        ch  = to_lower(ch);
-        return iter_utf8_find(s, n, [&](char32_t c) -> bool {
-            return ch == to_lower(c);
-        });
+    size_t       strnlen(const char32_t* z, size_t cb)
+    { 
+        size_t  n   = 0;
+        for(; z && *z && cb; --cb, ++z, ++n)
+            ;
+        return n;
     }
 
-    const char*  strnstr(const char* haystack, size_t nHay, const char* needle, size_t nNeedle)
+    const char32_t*  strnstr(const char32_t* haystack, size_t nHay, const char32_t* needle, size_t nNeedle)
     {
         //  weed outs
         if(!haystack || !needle || !nHay || (nHay < nNeedle)) 
@@ -70,6 +97,8 @@ namespace yq {
         if(nNeedle == 1)    
             return strnchr(haystack, nHay, *needle);
 
+        #if 0
+            //  clever... but in the 8-bit realm
         if(nNeedle <= 8){
             uint64_t    mask    = 0ULL;
             uint64_t    pattern = 0ULL;
@@ -93,6 +122,7 @@ namespace yq {
                     return haystack + i - nNeedle;
             }
         } else {
+        #endif
             size_t      i   = 0;
             size_t      j   = 0;
             for(i=0;i<nHay - nNeedle; ++i){
@@ -106,11 +136,13 @@ namespace yq {
                         return haystack+i;
                 }
             }
+        #if 0
         }
+        #endif
         return nullptr;
     }
 
-    const char*  strnstr_igCase(const char* haystack, size_t nHay, const char* needle, size_t nNeedle)
+    const char32_t*  strnstr_igCase(const char32_t* haystack, size_t nHay, const char32_t* needle, size_t nNeedle)
     {
         //  weed outs
         if(!haystack || !needle || !nHay || (nHay < nNeedle)) 
@@ -119,6 +151,7 @@ namespace yq {
         if(nNeedle == 1)    
             return strnchr_igCase(haystack, nHay, *needle);
 
+        #if 0
         if(nNeedle <= 8){
             uint64_t    mask    = 0ULL;
             uint64_t    pattern = 0ULL;
@@ -142,6 +175,7 @@ namespace yq {
                     return haystack + i - nNeedle;
             }
         } else {
+        #endif
             size_t      i   = 0;
             size_t      j   = 0;
             for(i=0;i<nHay - nNeedle; ++i){
@@ -155,7 +189,9 @@ namespace yq {
                         return haystack+i;
                 }
             }
+        #if 0
         }
+        #endif
         return nullptr;
     }
 }

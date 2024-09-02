@@ -12,8 +12,9 @@
 #include <0/meta/MetaRepo.hpp>
 #include <yq/meta/ReservedIDs.hpp>
 #include <0/basic/Any.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
+#include <yq/text/match.hpp>
+//#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils32.hpp>
 #include <cassert>
 
 namespace yq {

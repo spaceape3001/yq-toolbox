@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "counts.hpp"
+#include "count.hpp"
 #include <yq/text/chars.hpp>
 #include <yq/text/chars32.hpp>
 #include <yq/text/IterUtf8.hpp>

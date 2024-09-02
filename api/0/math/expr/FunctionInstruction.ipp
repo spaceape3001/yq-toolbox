@@ -13,8 +13,8 @@
 
 #include <0/basic/Any.hpp>
 #include <yq/basic/Logging.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
+//#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils32.hpp>
 #include <0/math/expr/Analysis.hpp>
 #include <0/math/expr/Repo.hpp>
 #include <0/math/expr/SymData.hpp>

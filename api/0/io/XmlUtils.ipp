@@ -9,8 +9,10 @@
 #include <yq/errors.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/container/Set.hpp>
-#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils.hpp>
 #include <0/io/FileUtils.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
 #include <0/io/XmlUtils.hpp>
 
 #include "rapidxml.hpp"

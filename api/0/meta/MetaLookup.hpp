@@ -8,8 +8,10 @@
 
 #include <0/meta/Meta.hpp>
 #include <yq/container/MultiMap.hpp>
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/format32.hpp>
+//#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils32.hpp>
 
 namespace yq {
     template <typename MT>

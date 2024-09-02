@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "match.hpp"
-#include <yq/text/basics.hpp>
+#include <yq/text/basic.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/text/IterUtf8.hpp>

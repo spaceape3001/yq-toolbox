@@ -11,6 +11,7 @@
 #include <0/io/DirUtils.hpp>
 #include <yq/basic/Logging.hpp>
 #include <yq/basic/ThreadId.hpp>
+#include <yq/text/match.hpp>
 //#include <0/basic/TextUtils.hpp>
 
 #include <dlfcn.h>

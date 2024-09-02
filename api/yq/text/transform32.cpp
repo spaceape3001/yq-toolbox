@@ -7,7 +7,7 @@
 #include "transform32.hpp"
 #include <yq/text/chars32.hpp>
 #include <yq/text/copy32.hpp>
-#include <yq/text/counts32.hpp>
+#include <yq/text/count32.hpp>
 #include <yq/text/IgCase.hpp>
 
 namespace yq {

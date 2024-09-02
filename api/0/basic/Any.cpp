@@ -10,7 +10,9 @@
 #include <yq/io/stream/StdError.hpp>
 #include <yq/io/stream/StdOutput.hpp>
 #include <yq/io/stream/Text.hpp>
-#include <0/basic/TextUtils.hpp>
+#include <yq/text/copy.hpp>
+#include <yq/text/parse.hpp>
+//#include <0/basic/TextUtils.hpp>
 
 
 namespace yq {

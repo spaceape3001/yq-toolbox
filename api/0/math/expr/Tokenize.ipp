@@ -8,8 +8,11 @@
 
 #include "Tokenize.hpp"
 
-#include <0/basic/TextUtils.hpp>
-#include <0/basic/TextUtils32.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/format32.hpp>
+
+//#include <0/basic/TextUtils.hpp>
+//#include <0/basic/TextUtils32.hpp>
 #include <0/math/expr/OpData.hpp>
 #include <0/math/expr/Repo.hpp>
 #include <0/math/expr/Symbol.hpp>

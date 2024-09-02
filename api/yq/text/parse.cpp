@@ -5,11 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "parse.hpp"
-#include "chars.hpp"
+#include <yq/errors.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/trait/numbers.hpp>
+
 #include <charconv>
 #include <strings.h>
-#include <yq/errors.hpp>
-#include <yq/trait/numbers.hpp>
 
 namespace yq {
     //! Checks for equality by assuming left may vary in case, the right will be lower case.

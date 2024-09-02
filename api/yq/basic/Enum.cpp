@@ -6,7 +6,7 @@
 
 #include "Enum.hpp"
 #include <yq/text/chars.hpp>
-#include <yq/text/counts.hpp>
+#include <yq/text/count.hpp>
 #include <yq/text/join.hpp>
 #include <yq/text/match.hpp>
 #include <yq/text/parse.hpp>
