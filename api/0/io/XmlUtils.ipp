@@ -10,7 +10,6 @@
 #include <yq/container/ByteArray.hpp>
 #include <yq/container/Set.hpp>
 #include <0/basic/TextUtils.hpp>
-#include <0/io/errors.hpp>
 #include <0/io/FileUtils.hpp>
 #include <0/io/XmlUtils.hpp>
 

@@ -12,9 +12,9 @@
     template instantiation.  
 */
 
+#include <yq/errors.hpp>
 #include <0/math/shape/Segment4.hpp>
 #include <0/math/shape/SegmentData.hpp>
-#include <yq/math/errors.hpp>
 
 namespace yq {
 

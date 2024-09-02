@@ -13,9 +13,9 @@
 */
 
 
+#include <yq/errors.hpp>
 #include <0/math/shape/Segment1.hpp>
 #include <0/math/shape/SegmentData.hpp>
-#include <yq/math/errors.hpp>
 
 namespace yq {
     template <typename T>

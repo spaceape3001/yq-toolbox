@@ -8,7 +8,7 @@
 
 #include "StdFile.hpp"
 
-#include <0/io/errors.hpp>
+#include <yq/errors.hpp>
 #include <yq/io/KeyValue.hpp>
 #include <yq/io/stream/Text.hpp>
 #include <yq/io/StreamOps.hpp>

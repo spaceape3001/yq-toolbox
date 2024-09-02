@@ -12,9 +12,9 @@
     template instantiation.  
 */
 
+#include <yq/errors.hpp>
 #include <0/math/shape/AxBox4.hpp>
 #include <0/math/utility.hpp>
-#include <yq/math/errors.hpp>
 #include <yq/container/initlist_utils.hpp>
 
 namespace yq {
