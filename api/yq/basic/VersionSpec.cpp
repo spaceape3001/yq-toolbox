@@ -4,16 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//#pragma once
-
-#include <yq/basic/VersionSpec.hpp>
-
+#include "VersionSpec.hpp"
 #include <yq/basic/Logging.hpp>
+#include <yq/io/StreamOps.hpp>
 #include <yq/text/basic.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/match.hpp>
-//#include <0/basic/TextUtils.hpp>
-#include <yq/io/StreamOps.hpp>
 
 namespace yq {
     Stream& operator<<(Stream&s, const VersionSpec&v)

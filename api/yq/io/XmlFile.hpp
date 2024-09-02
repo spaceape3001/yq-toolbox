@@ -6,9 +6,8 @@
 
 #pragma once
 #include <yq/basic/Enum.hpp>
-#include <yq/config/xml_fwd.hpp>
 #include <yq/io/AbstractFile.hpp>
-#include <initializer_list>
+#include <yq/typedef/xml.hpp>
 
 namespace yq {
 

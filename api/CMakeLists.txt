@@ -35,14 +35,11 @@ add_library(${PROJECT_NAME} SHARED
     0/basic/Global.cpp
     0/basic/MetaObject.cpp
     0/basic/Object.cpp
-    0/basic/Url.cpp
-    0/basic/VersionSpec.cpp
     0/basic/XmlObject.cpp
     0/chemistry/chemistry.cpp
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
-    0/io/Curl.cpp
     0/math/math.cpp
     0/math/Complex.cpp
     0/math/Fraction.cpp

@@ -6,9 +6,10 @@
 
 #pragma once
 
-#include <yq/config/json.hpp>
-#include <0/basic/preamble.hpp>
-#include <filesystem>
+#include <cstddef>
 
 namespace yq {
+    template <typename> struct IntRange;
+    using SSizeRange        = IntRange<ssize_t>;
+    using SizeRange         = IntRange<size_t>;
 }

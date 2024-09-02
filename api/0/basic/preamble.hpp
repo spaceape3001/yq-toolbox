@@ -26,6 +26,7 @@
 #include <yq/basic/LogFwd.hpp>
 #include <yq/text/RevIgCase.hpp>
 #include <yq/typedef/expected.hpp>
+#include <yq/typedef/int_range.hpp>
 #include <yq/typedef/result.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/string_pairs.hpp>
@@ -84,8 +85,6 @@ namespace yq {
     
 
         // INT RANGES
-    using SSizeRange        = IntRange<ssize_t>;
-    using SizeRange         = IntRange<size_t>;
 
         // CHARACTER SEQUQNCE
     using CharPSeq          = std::initializer_list<const char*>;

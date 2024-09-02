@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/basic/HttpStatus.hpp>
-#include <yq/config/json_fwd.hpp>
 #include <yq/container/Vector.hpp>
+#include <yq/typedef/json.hpp>
 #include <yq/typedef/url.hpp>
 
 namespace yq {

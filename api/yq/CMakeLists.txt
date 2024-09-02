@@ -33,6 +33,7 @@ add_library(${PROJECT_NAME} SHARED
     basic/Created.hpp
     basic/DelayInit.hpp
     basic/DelayInit.cpp
+    basic/DiffEngine.hpp
     basic/Encode64.hpp
     basic/Encode64.cpp
     basic/Enum.hpp
@@ -77,14 +78,11 @@ add_library(${PROJECT_NAME} SHARED
     basic/UniqueID.hpp
     basic/UniqueID.cpp
     basic/Url.hpp
-    # basic/Url.cpp
+    basic/Url.cpp
     basic/VersionSpec.hpp
+    basic/VersionSpec.cpp
 
-    config/json.hpp
-    config/json_fwd.hpp
     config/string.hpp
-    config/xml.hpp
-    config/xml_fwd.hpp
     
     container/Array.hpp
     container/ArrayX.hpp
@@ -140,6 +138,8 @@ add_library(${PROJECT_NAME} SHARED
     
     io/AbstractFile.hpp
     io/AbstractFile.cpp
+    io/Curl.hpp
+    io/Curl.cpp
     io/DirUtils.hpp
     io/DirUtils.cpp
     io/Execute.hpp
@@ -333,6 +333,8 @@ add_library(${PROJECT_NAME} SHARED
     
     typedef/expected.hpp
     typedef/filesystem_path.hpp
+    typedef/int_range.hpp
+    typedef/json.hpp
     typedef/result.hpp
     typedef/string.hpp
     typedef/string_maps.hpp
@@ -340,6 +342,7 @@ add_library(${PROJECT_NAME} SHARED
     typedef/string_sets.hpp
     typedef/string_vectors.hpp
     typedef/url.hpp
+    typedef/xml.hpp
 )
 
 ##########################

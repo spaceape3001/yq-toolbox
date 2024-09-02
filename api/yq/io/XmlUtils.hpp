@@ -9,11 +9,11 @@
 //#include <0/basic/TextUtils.hpp>
 #include <yq/basic/Enum.hpp>
 #include <yq/basic/Flag.hpp>
-#include <yq/config/xml_fwd.hpp>
 #include <yq/text/vsplit.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/string.hpp>
+#include <yq/typedef/xml.hpp>
 
 #include "rapidxml.hpp"
 #include <type_traits>
