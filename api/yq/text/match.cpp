@@ -7,6 +7,7 @@
 #include "match.hpp"
 #include <yq/text/basic.hpp>
 #include <yq/text/chars.hpp>
+#include <yq/text/chars32.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/text/IterUtf8.hpp>
 #include <yq/text/Iter32.hpp>

@@ -312,7 +312,7 @@ CREATE TABLE CTags (\n\
         expect( true == (a != b ));
     };
     
-    "equal_isCase"_test = [](){
+    "lessl_isCase"_test = [](){
         
         std::string_view    a   = "unit::Centimeter";
         std::string_view    b   = "unit::Centimeter²";
