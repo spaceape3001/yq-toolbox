@@ -7,10 +7,11 @@
 #pragma once
 
 #include <0/math/expr/preamble.hpp>
-#include <0/meta/CompoundInfo.hpp>
+#include <yq/basic/Any.hpp>
+#include <yq/meta/CompoundInfo.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <0/meta/CompoundInfoStatic.hpp>
-#include <0/meta/MetaLookup.hpp>
+#include <yq/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/MetaLookup.hpp>
 
 namespace yq::expr {
 
@@ -27,8 +28,8 @@ namespace yq::expr {
         static Repo& instance();
         
         
-        Expect<Any>     constant(std::string_view) const;
-        Expect<Any>     constant(std::u32string_view) const;
+        any_x     constant(std::string_view) const;
+        any_x     constant(std::u32string_view) const;
         
         const TypeInfo* constant_type(string_view_t) const;
 
@@ -44,8 +45,8 @@ namespace yq::expr {
         bool            has_variable(std::string_view) const;
         bool            has_variable(std::u32string_view) const;
 
-        Expect<Any>     variable(std::string_view) const;
-        Expect<Any>     variable(std::u32string_view) const;
+        any_x     variable(std::string_view) const;
+        any_x     variable(std::u32string_view) const;
         
         template <typename Pred>
         auto            all_functions(std::u32string_view, Pred) const;

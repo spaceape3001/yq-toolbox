@@ -28,6 +28,7 @@
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/int_range.hpp>
 #include <yq/typedef/result.hpp>
+#include <yq/typedef/string_initlists.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/string_pairs.hpp>
 #include <yq/typedef/string_sets.hpp>
@@ -36,31 +37,20 @@
 #include <yq/macro/cppstring.hpp>
 #include <yq/macro/make_version.hpp>
 #include <yq/trait/numbers.hpp>
+#include <yq/typedef/any.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/config/string.hpp>
 #include <yq/container/forward.hpp>
+#include <yq/meta/forward.hpp>
 
 
 using namespace std::literals::chrono_literals;
 
 namespace yq {
 
-    class Any;
     class BasicApp;
     class DelayInit;
-    class Global;       //  a global property ... effectively
-    
-    class ArgInfo;
-    class ConstructorInfo;
-    class GlobalInfo;   // Meta for global
-    class Meta;         // base meta 
-    class MethodInfo;   // Function call
-    class ObjectInfo;   // Obtrusive data type
-    class OperatorInfo;
-    class PropertyInfo; // a object property
-    class CompoundInfo; // CompoundInfo type (with properties & methods)   
-    class TypeInfo;     // Unobtrusive data type
     
     class MetaObject;   // object with meta
     struct Parsed;
@@ -91,21 +81,15 @@ namespace yq {
 
         // NOT A NUMBER
 
-    using any_error_t           = std::pair<Any, std::error_code>;
-    using any_span_t            = std::span<Any>;
-    using const_any_span_t      = std::span<const Any>;
 
 
         //  Common permutations (Qt will go away...eventually)
-    using string_view_initializer_list_t       = std::initializer_list<std::string_view>;
 
     
     using char32_set_t				= std::unordered_set<char32_t>;
 
 
-    using u32string_view_initializer_list_t       = std::initializer_list<std::u32string_view>;
 
-    using any_stack_t               = Stack<Any>;
 
         // TODO move these to use std::filesystem::path
     #if defined(__APPLE__) || defined(WIN32)

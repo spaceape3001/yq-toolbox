@@ -98,7 +98,7 @@ namespace yq::expr {
         if(!op)
             return create_error<"bad user expression (unable to find operator)">();
     
-        Expect<Any>     res = op->invoke(args);
+        any_x     res = op->invoke(args);
         if(!res)
             return res.error();
         
@@ -124,7 +124,7 @@ namespace yq::expr {
             return errors::insufficient_arguments();
         }
         
-        Expect<Any>   res = m_opInfo->invoke(values.top_cspan(m_args));
+        any_x   res = m_opInfo->invoke(values.top_cspan(m_args));
         if(!res)
             return res.error();
         values.pop_last(m_args);

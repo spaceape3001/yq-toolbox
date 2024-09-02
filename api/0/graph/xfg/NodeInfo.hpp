@@ -7,8 +7,8 @@
 #pragma once
 
 #include <0/graph/xfg/preamble.hpp>
-#include <0/meta/ObjectInfo.hpp>
-#include <0/meta/MetaLookup.hpp>
+#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/MetaLookup.hpp>
 
 namespace yq::xfg {
     class NodeInfo : public ObjectInfo {

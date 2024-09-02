@@ -10,7 +10,7 @@
 #include <yq/text/vsplit.hpp>
 #include <yq/basic/ThreadId.hpp>
 
-#include <0/meta/Meta.hpp>
+#include <yq/meta/Meta.hpp>
 
 #include <span>
 #include <string_view>

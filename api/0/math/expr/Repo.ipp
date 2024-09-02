@@ -297,13 +297,13 @@ namespace yq::expr {
         }
     }
     
-    Expect<Any>     Repo::constant(std::string_view k) const
+    any_x     Repo::constant(std::string_view k) const
     {
         std::u32string  k32 = to_u32string(k);
         return constant(k32);
     }
     
-    Expect<Any>     Repo::constant(std::u32string_view k) const
+    any_x     Repo::constant(std::u32string_view k) const
     {
         auto i = m_constants.find(std::u32string(k));
         if(i != m_constants.end())
@@ -374,7 +374,7 @@ namespace yq::expr {
 		return nullptr;
 	}
 
-    Expect<Any>     Repo::variable(std::string_view k) const
+    any_x     Repo::variable(std::string_view k) const
     {
         auto i = m_variables.lut.find(k);
         if(i != m_variables.lut.end() && i->second)
@@ -382,7 +382,7 @@ namespace yq::expr {
         return errors::bad_argument();
     }
     
-    Expect<Any>     Repo::variable(std::u32string_view k) const
+    any_x     Repo::variable(std::u32string_view k) const
     {
         auto i = m_variables.lut32.find(k);
         if(i != m_variables.lut32.end() && i->second)

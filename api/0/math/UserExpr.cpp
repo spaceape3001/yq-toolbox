@@ -438,13 +438,13 @@ namespace yq {
         return {};
 	}
 
-    Expect<Any>     UserExpr::evaluate() const
+    any_x     UserExpr::evaluate() const
     {
         expr::Context     context;
         return evaluate(context);
     }
 
-    Expect<Any>     UserExpr::evaluate(expr::Context&ctx) const
+    any_x     UserExpr::evaluate(expr::Context&ctx) const
     {
         if(!m_machine.valid())
             return errors::bad_userexpr();

@@ -25,6 +25,8 @@ add_library(${PROJECT_NAME} SHARED
     keywords.hpp
 
     basic/128-bit.hpp
+    basic/Any.hpp
+    basic/Any.cpp
     basic/AutoReset.hpp
     basic/BinaryBucket.hpp
     basic/ContentType.hpp
@@ -49,6 +51,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/FowlerNollVo.hpp
     basic/Future.hpp
     basic/Future.cpp
+    basic/Global.hpp
+    basic/Global.cpp
     basic/Guarded.hpp
     basic/IntRange.hpp
     basic/Http.hpp
@@ -63,6 +67,8 @@ add_library(${PROJECT_NAME} SHARED
     basic/MD5.cpp
     basic/MinMaxDef.hpp
     basic/Mutable.hpp
+    basic/Object.hpp
+    basic/Object.cpp
     basic/Random.hpp
     basic/Random.cpp
     basic/Ref.hpp
@@ -208,6 +214,64 @@ add_library(${PROJECT_NAME} SHARED
     
     math/unit/declare.hpp
     math/unit/dims.hpp
+    
+    meta/forward.hpp
+    meta/AnyArgHelper.hpp
+    meta/AnyArgHelper.cpp
+    meta/AnyDef.hpp
+    meta/AnyImpl.hpp
+    meta/ArgInfo.hpp
+    meta/ArgInfo.cpp
+    meta/CompoundInfo.hpp
+    meta/CompoundInfo.cpp
+    meta/CompoundInfoDynamic.hpp
+    meta/CompoundInfoStatic.hpp
+    meta/ConstructorInfo.hpp
+    meta/ConstructorInfo.cpp
+    meta/ConstructorInfoImpl.hpp
+    meta/ConstructorInfoWriter.hpp
+    meta/DataBlock.hpp
+    meta/DynamicPropGetter.hpp
+    meta/DynamicPropSetter.hpp
+    meta/Generator.hpp
+    meta/Generator.cpp
+    meta/GeneratorImpl.hpp
+    meta/GlobalInfo.hpp
+    meta/GlobalInfo.cpp
+    meta/GlobalInfoWriter.hpp
+    meta/InfoBinder.hpp
+    meta/Init.hpp
+    meta/Meta.hpp
+    meta/Meta.cpp
+    meta/MetaLookup.hpp
+    meta/MetaRepo.hpp
+    meta/MetaWriter.cpp
+    meta/MethodInfo.hpp
+    meta/MethodInfo.cpp
+    meta/MethodInfoImpl.hpp
+    meta/MethodInfoWriter.hpp
+    meta/ObjectInfo.hpp
+    meta/ObjectInfo.cpp
+    meta/ObjectInfoWriter.hpp
+    meta/OperatorInfo.hpp
+    meta/OperatorInfo.cpp
+    meta/OperatorInfoImpl.hpp
+    meta/OperatorInfoWriter.hpp
+    meta/PropertyInfo.hpp
+    meta/PropertyInfo.cpp
+    meta/PropertyInfoWriter.hpp
+    meta/PropGetter.hpp
+    meta/PropGetter.cpp
+    meta/PropSetter.hpp
+    meta/PropSetter.cpp
+    meta/ReservedIDs.hpp
+    meta/StaticPropGetter.hpp
+    meta/StaticPropSetter.hpp
+    meta/StdTypes.cpp
+    meta/TypedArgInfo.hpp
+    meta/TypeInfo.hpp
+    meta/TypeInfo.cpp
+    meta/TypeInfoWriter.hpp
     
     sql/forward.hpp
     sql/QueryUrl.hpp

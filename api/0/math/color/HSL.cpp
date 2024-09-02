@@ -7,7 +7,7 @@
 #include "HSL.hpp"
 #include <0/math/strings.hpp>
 #include <yq/basic/DelayInit.hpp>
-#include <0/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 using namespace yq;
 
