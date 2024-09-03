@@ -12,6 +12,7 @@
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/meta/CompoundInfoStatic.hpp>
 #include <yq/meta/MetaLookup.hpp>
+#include <yq/userexpr/impl/OpData.hpp>
 #include <unordered_set>
 
 namespace yq::expr {
@@ -27,7 +28,6 @@ namespace yq::expr {
         template <typename> class Writer;
     
         static Repo& instance();
-        
         
         any_x     constant(std::string_view) const;
         any_x     constant(std::u32string_view) const;
@@ -72,12 +72,10 @@ namespace yq::expr {
         Repo& operator=(Repo&&) = delete;
         
         
-        using op_data_map_t     = std::map<std::u32string_view, const OpData*>;
+        using op_data_map_t     = std::map<std::u32string_view, OpData>;
         using char32_set_t      = std::unordered_set<char32_t>;
         
         void    sweep_impl() override;
-        
-        static const OpData             kStandardOperators[];
         
         u32string_any_map_t             m_constants;
         MetaLookup<PropertyInfo>        m_variables;
@@ -97,31 +95,61 @@ namespace yq::expr {
         {
         }
 
-        void set_constant(std::string_view k, const Any& cp)
+        void constant(std::string_view k, const Any& cp)
         {
             if(thread_safe_write()){
                 m_repo.m_constants[to_u32string(k)] = cp;
             }
         }
 
-        void set_constant(std::string_view k, Any&& mv)
+        void constant(std::string_view k, Any&& mv)
         {
             if(thread_safe_write()){
                 m_repo.m_constants[to_u32string(k)] = std::move(mv);
             }
         }
 
-        void set_constant(std::u32string_view k, const Any& cp)
+        void constant(std::u32string_view k, const Any& cp)
         {
             if(thread_safe_write()){
                 m_repo.m_constants[std::u32string(k)] = cp;
             }
         }
 
-        void set_constant(std::u32string_view k, Any&&mv)
+        void constant(std::u32string_view k, Any&&mv)
         {
             if(thread_safe_write()){
                 m_repo.m_constants[std::u32string(k)] = std::move(mv);
+            }
+        }
+        
+        void    operand(const OpData& op)
+        {
+            if(thread_safe_write()){
+                m_repo.m_operators[op.text] = op;
+            }
+        }
+
+        void    operand(OpData&& op)
+        {
+            if(thread_safe_write()){
+                m_repo.m_operators[op.text] = std::move(op);
+            }
+        }
+        
+        void    operands(const std::span<const OpData>& ops)
+        {
+            if(thread_safe_write()){
+                for(const OpData& d : ops){
+                    m_repo.m_operators[d.text] = d;
+                }
+            }
+        }
+        
+        void    punct2text(char32_t ch)
+        {
+            if(thread_safe_write()){
+                m_repo.m_punctText.insert(ch);
             }
         }
         

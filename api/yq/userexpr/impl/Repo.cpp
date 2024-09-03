@@ -5,259 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/basic/DelayInit.hpp>
-#include <yq/userexpr/impl/OpData.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
 
-// temporary until moved
-#include <0/math/trig.hpp>
-
 namespace yq::expr {
-
-    namespace {
-		enum : uint8_t {
-			PCompare    = 1,
-			PLogic,
-			PAddSub,
-			PMulDiv,
-			PPower
-		};
-
-    }
-
-    // Table of known operators (this *WILL* grow)
-    const OpData             Repo::kStandardOperators[] = {
-        { 
-			.text 		= U",",  
-			.type		= OperatorType::Comma,
-			.category 	= SymCategory::Special,
-			.kind		= SymKind::Comma
-		},
-        { 
-			.text 		= U":=", 
-			.type 		= OperatorType::Set, 
-			.category 	= SymCategory::Special,
-			.kind		= SymKind::Assign,
-			.self 		= true 
-		},
-		{ 
-			.text 		= U"+",  
-			.code		= Operator::Add,        
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::Add,
-			.priority	= PAddSub,
-            .args       = 2
-		},
-        { 
-			.text 		= U"-",  
-			.code 		= Operator::Subtract,   
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::Subtract,
-			.priority   = PAddSub,
-            .args       = 2 
-		},
-        {
-            .text       = U"negate",
-            .code       = Operator::Negate,
-            .type       = OperatorType::Left,
-            .category   = SymCategory::Operator,
-            .kind       = SymKind::Negate,
-            .priority   = PMulDiv,
-            .args       = 1
-        },
-        {
-            .text       = U"affirm",
-            .code       = Operator::Affirm,
-            .type       = OperatorType::Left,
-            .category   = SymCategory::Operator,
-            .kind       = SymKind::Affirm,
-            .priority   = PMulDiv,
-            .args       = 1
-        },
-        { 
-			.text 		= U"*",  
-			.code		= Operator::Multiply,   
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::Multiply,
-			.priority	= PMulDiv,
-            .args       = 2
-		},
-        { 
-			.text 		= U"/",  
-			.code		= Operator::Divide,     
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::Divide,
-			.priority	= PMulDiv,
-            .args       = 2 
-		},
-        { 
-			.text 		= U"^",  
-			.code		= Operator::Power,      
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::Power,
-			.priority 	= PPower,
-            .args       = 2
-		},
-        { 
-			.text 		= U"\u2297",  
-			.code 		= Operator::TensorProduct, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::TensorProduct,
-			.priority	= PMulDiv,
-            .args       = 2
-		},
-        { 
-			.text 		= U"\u221a",  
-			.code		= Operator::SquareRoot, 
-			.type		= OperatorType::Left, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::SquareRoot,
-			.priority	= PPower,
-            .args       = 1
-		},
-        { 
-			.text 		= U"\u221b",  
-			.code		= Operator::CubeRoot,   
-			.type		= OperatorType::Left, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::CubeRoot,
-			.priority	= PPower 
-		},
-        { 
-			.text 		= U"\u221c",  
-			.code 		= Operator::FourthRoot, 
-			.type		= OperatorType::Left, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::FourthRoot,
-			.priority	= PPower 
-		},
-        { 
-			.text 		= U"!=", 
-			.code		= Operator::NotEqual, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::NotEqual,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"<>", 
-			.code		= Operator::NotEqual, 
-			.type 		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::NotEqual,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"\u2260",  
-			.code 		= Operator::NotEqual, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::NotEqual,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"<",  
-			.code		= Operator::Less, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::NotEqual,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"<=", 
-			.code 		= Operator::LessEqual, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::LessEqual,
-			.priority 	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"\u2264",  
-			.code		= Operator::LessEqual, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.kind		= SymKind::LessEqual,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U">",  
-			.code		= Operator::Greater, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U">=", 
-			.code		= Operator::GreaterEqual, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"\u2265",  
-			.code		= Operator::GreaterEqual, 
-			.type		= OperatorType::Binary, 
-			.category	= SymCategory::Operator,
-			.priority	= PCompare,
-            .args       = 2
-		},
-        { 
-			.text 		= U"(",  
-			.type 		= OperatorType::Open, 
-			.category	= SymCategory::Open,
-			.kind		= SymKind::Generic,
-			.other 		= U")" 
-		},
-        { 
-			.text 		= U")",  
-			.type 		= OperatorType::Close, 
-			.category	= SymCategory::Close,
-			.kind		= SymKind::Generic,
-			.other 		= U"(" 
-		},
-        { 
-			.text 		= U"[",  
-			.type 		= OperatorType::Open, 
-			.category	= SymCategory::Open,
-			.kind		= SymKind::Array,
-			.other 		= U"]" 
-		},
-        { 
-			.text 		= U"]",  
-			.type 		= OperatorType::Close, 
-			.category	= SymCategory::Close,
-			.kind		= SymKind::Array,
-			.other 		= U"[" 
-		},
-        { 
-			.text 		= U"{",  
-			.type 		= OperatorType::Open, 
-			.category	= SymCategory::Open,
-			.kind		= SymKind::Tuple,
-			.other 		= U"}" 
-		},
-        { 
-			.text 		= U"}",  
-			.type 		= OperatorType::Close, 
-			.category	= SymCategory::Close,
-			.kind		= SymKind::Tuple,
-			.other 		= U"{" 
-		}
-    };
-
     Repo& Repo::instance()
     {   
         static Repo *s_repo = new Repo;
@@ -266,24 +16,12 @@ namespace yq::expr {
     
     Repo::Repo() : CompoundInfo("yq::expr::Repo", std::source_location::current())
     {
-        m_constants[U"pi"]     = std::numbers::pi_v<double>;
-        m_constants[U"sqrt2"]  = std::numbers::sqrt2_v<double>;
-        m_constants[U"sqrt3"]  = std::numbers::sqrt3_v<double>;
-        m_constants[U"e"]      = std::numbers::e_v<double>;
-        m_constants[U"ln2"]    = std::numbers::ln2_v<double>;
-        m_constants[U"ln10"]   = std::numbers::ln10_v<double>;
-        m_constants[U"egamma"] = std::numbers::egamma_v<double>;
-        m_punctText.insert(U'_');
-
-        for(const OpData& d : kStandardOperators){
-            m_operators[d.text] = &d;
-        }
     }
     
     Repo::~Repo()
     {
     }
-    
+
     void    Repo::sweep_impl()
     {
         for(const Meta* m : children()){
@@ -369,7 +107,7 @@ namespace yq::expr {
 	{
 		auto itr = m_operators.find(k);
 		if(itr != m_operators.end())
-			return (itr->second);
+			return &(itr->second);
 		return nullptr;
 	}
 
@@ -409,65 +147,5 @@ namespace yq {
     expr::Repo&       InfoBinder<expr::Repo>::edit()
     {
         return expr::Repo::instance();
-    }
-
-
-    namespace {
-        double  fn_time() 
-        {
-            time_t  now;
-            time(&now);
-            return (double) now;
-        }
-    
-        double  fn_sqrt(double x)
-        {
-            return ::sqrt(x);
-        }
-        
-        double    fn_atan2(double y, double x)
-        {
-            return atan(y,x).value;
-        }
-    
-        double    fn_atan2d(double y, double x)
-        {
-            return Degree(atan(y,x)).value;
-        }
-        
-        double fn_cos(double v)
-        {
-            return cos(Radian(v));
-        }
-        
-        double fn_cosd(double v)
-        {
-            return cos(Degree(v));
-        }
-
-        double  fn_sin(double v)
-        {
-            return sin(Radian(v));
-        }
-    
-        double  fn_sind(double v)
-        {
-            return sin(Degree(v));
-        }
-
-        void    init_repo()
-        {
-            auto w = writer<expr::Repo>();
-            w.function("atan2", fn_atan2);
-            w.function("atan2d", fn_atan2d);
-            w.function("cos", fn_cos);
-            w.function("cosd", fn_cosd);
-            w.function("sin", fn_sin);
-            w.function("sind", fn_sind);
-            w.function("sqrt", fn_sqrt);
-            w.function("time", fn_time);
-        }
-    
-        YQ_INVOKE( init_repo(); )
     }
 }

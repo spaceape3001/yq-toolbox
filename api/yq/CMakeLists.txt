@@ -420,6 +420,7 @@ add_library(${PROJECT_NAME} SHARED
     userexpr/forward.hpp
     userexpr/Analysis.hpp
     userexpr/Context.hpp
+    userexpr/RepoConfig.cpp
     userexpr/UserExpr.hpp
     userexpr/UserExpr.cpp
 
