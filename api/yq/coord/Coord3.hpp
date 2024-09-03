@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <yq/coord/forward.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/trait/is_arithmetic.hpp>
@@ -15,8 +14,12 @@
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/typedef/coord3.hpp>
+
+namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    class Stream;
 
     /*! \brief Three dimensional coordinate
     

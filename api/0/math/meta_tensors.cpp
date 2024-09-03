@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <0/math/strings.hpp>
+#include <yq/strings.hpp>
 
 
 #include <0/math/vector/Tensor11.hpp>

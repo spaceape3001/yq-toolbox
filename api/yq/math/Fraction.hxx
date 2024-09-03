@@ -6,7 +6,9 @@
 
 #pragma once
 
-#include <0/math/Fraction.hpp>
+#include "Fraction.hpp"
+#include <yq/basic/Logging.hpp>
+#include <yq/io/StreamOps.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the fraction code.  Include this
@@ -133,18 +135,19 @@ namespace yq {
         return result;
     }
 
-    template <typename S, typename I>
-    S&  as_stream(S& s, Fraction<I> f)
+    template <typename I>
+        template <typename S>
+    S&  Fraction<I>::stream(S& s) const
     {
-        switch(f.den){
+        switch(den){
         case I{0}:
-            s << f.num << "/ZERO";
+            s << num << "/ZERO";
             break;
         case I{1}:
-            s << f.num;
+            s << num;
             break;
         default:
-            s << f.num << '/' << f.den;
+            s << num << '/' << den;
             break;
         }
         return s;
@@ -154,14 +157,14 @@ namespace yq {
     template <typename I>
     Stream&     operator<<(Stream& s, Fraction<I> f)
     {
-        return as_stream(s, f);
+        return f.stream(s);
     }
    
     /*! \brief Streams to the given logger */
     template <typename I>
     log4cpp::CategoryStream&     operator<<(log4cpp::CategoryStream& s, Fraction<I> f)
     {
-        return as_stream(s, f);
+        return f.stream(s);
     }
     
 }

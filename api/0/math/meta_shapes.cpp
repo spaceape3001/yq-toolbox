@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <0/math/strings.hpp>
+#include <yq/strings.hpp>
 
 #include <0/math/shape/AxBox1.hpp>
 #include <0/math/shape/AxBox2.hpp>

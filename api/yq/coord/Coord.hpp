@@ -6,7 +6,6 @@
 
 #pragma once
 #include <yq/basic/IntRange.hpp>
-#include <yq/coord/forward.hpp>
 #include <cassert>
 #include <type_traits>
 #include <algorithm>
@@ -14,6 +13,8 @@
 namespace yq {
     using std::min;
     using std::max;
+
+    template <typename T, uint8_t N> struct Coord;
     
     /*! \brief Gets the specified coordinate dimension index
     

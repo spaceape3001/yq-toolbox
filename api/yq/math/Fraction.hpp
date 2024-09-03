@@ -8,10 +8,20 @@
 
 #define YQ_MATH_FRACTION_HPP 1
 
-#include <0/math/preamble.hpp>
+#include <yq/keywords.hpp>
 #include <yq/math/gcd.hpp>
+#include <yq/math/template/fraction.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/typedef/fraction.hpp>
+#include <compare>
+#include <type_traits>
+
+namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    class Stream;
 
     /*! \brief Simple fraction
     
@@ -96,6 +106,9 @@ namespace yq {
         
         //! Validity test (ie, denominator is not zero)
         constexpr bool    valid() const noexcept;
+        
+        template <typename S>
+        S&  stream(S&) const;
     };
 
 
@@ -138,15 +151,6 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
    
-    /*! \brief Streaming fraction to the given stream like object
-    
-        \tparam S   type of the stream
-        \param[s]   Stream
-        \param[f]   Fraction
-    */
-    template <typename S, typename I>
-    S&  as_stream(S& s, Fraction<I> f);
-    
     /*! \brief Streams to the given stream */
     template <typename I>
     Stream&     operator<<(Stream& s, Fraction<I> f);

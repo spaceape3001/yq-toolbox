@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/math/Fraction.hpp>
+#include <yq/math/Fraction.hpp>
 #include <yq/math/unit/dims.hpp>
 
 namespace yq {

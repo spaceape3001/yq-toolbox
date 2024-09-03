@@ -6,7 +6,7 @@
 
 #include "Pose2.hpp"
 #include <yq/basic/DelayInit.hpp>
-#include <0/math/strings.hpp>
+#include <yq/strings.hpp>
 #include <0/math/units.hpp>
 #include <yq/meta/Init.hpp>
 

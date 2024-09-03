@@ -9,10 +9,8 @@
 #include <0/basic/preamble.hpp>
 #include <yq/coord/forward.hpp>
 #include <yq/io/StreamOps.hpp>
-
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/always_false.hpp>
-
 #include <yq/trait/has_abs.hpp>
 #include <yq/trait/has_copysign.hpp>
 #include <yq/trait/has_half.hpp>
@@ -25,11 +23,16 @@
 #include <yq/trait/ieee754.hpp>
 #include <yq/trait/integer.hpp>
 #include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_basic_float.hpp>
 #include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/is_integral.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
+#include <yq/typedef/axbox1.hpp>
+#include <yq/typedef/axbox2.hpp>
+#include <yq/typedef/axbox3.hpp>
+#include <yq/typedef/axbox4.hpp>
 
 #include <yq/math/unit/dims.hpp>
 #include <yq/math/unit/declare.hpp>
@@ -86,10 +89,6 @@ namespace yq {
     template <typename> struct Absolute;
     template <typename> struct AllComponents;
     template <typename> struct AnyComponents;
-    template <typename> struct AxBox1;
-    template <typename> struct AxBox2;
-    template <typename> struct AxBox3;
-    template <typename> struct AxBox4;
     template <typename> struct AxCorners1;
     template <typename> struct AxCorners2;
     template <typename> struct AxCorners3;
@@ -103,7 +102,6 @@ namespace yq {
     template <typename> struct Data3;
     template <typename> struct Data4;
     template <typename> struct ElemComponents;
-    template <typename> struct Fraction;
     template <typename> struct HSL;
     template <typename> struct HSV;
     template <typename> struct Multivector1;
@@ -325,39 +323,11 @@ namespace yq {
     //  ------------------------------------------------
     //  FORWARD DECLARE SHAPES
 
-
-    using AxBox1D                   = AxBox1<double>;
-    using AxBox1F                   = AxBox1<float>;
-    using AxBox1I                   = AxBox1<int>;
-    using AxBox1U                   = AxBox1<unsigned>;
-
-    using AxBox2D                   = AxBox2<double>;
-    using AxBox2F                   = AxBox2<float>;
-    using AxBox2I                   = AxBox2<int>;
-    using AxBox2U                   = AxBox2<unsigned>;
-    using AxBox2M                   = AxBox2<Meter>;
-
-    using AxBox3D                   = AxBox3<double>;
-    using AxBox3F                   = AxBox3<float>;
-    using AxBox3I                   = AxBox3<int>;
-    using AxBox3U                   = AxBox3<unsigned>;
-    using AxBox3M                   = AxBox3<Meter>;
-
-    using AxBox4D                   = AxBox4<double>;
-    using AxBox4F                   = AxBox4<float>;
-    using AxBox4I                   = AxBox4<int>;
-    using AxBox4U                   = AxBox4<unsigned>;
-
     using Circle2D                  = Circle2<double>;
     using Circle2F                  = Circle2<float>;
     using Circle2I                  = Circle2<int>;
     using Circle2U                  = Circle2<unsigned>;
 
-    using FractionI                 = Fraction<int>;
-    //using Fraction8      = Fraction<int8_t>;
-    //using Fraction16     = Fraction<int16_t>;
-    //using Fraction32     = Fraction<int32_t>;
-    //using Fraction64     = Fraction<int64_t>;
     
     using Normal2D                  = Normal2<double>;
     using Normal2F                  = Normal2<float>;
@@ -635,8 +605,6 @@ namespace yq {
     using std::min;
     using std::abs;
     
-    
-    template <typename T> static constexpr const bool is_basic_v = std::is_floating_point_v<T>;
     
     //! Fast way to what something's sign is
     enum class Sign : signed {

@@ -34,7 +34,6 @@ add_library(${PROJECT_NAME} SHARED
     0/graph/xfg/xfg.cpp
     0/math/math.cpp
     0/math/Complex.cpp
-    0/math/Fraction.cpp
     0/math/Pose2.hpp
     0/math/Pose2.hxx
     0/math/Pose2.cpp
@@ -53,7 +52,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/meta_tensors.cpp
     0/math/meta_units.cpp
     0/math/meta_vectors.cpp
-    0/math/strings.cpp
     0/math/color/HSL.hpp
     0/math/color/HSL.hxx
     0/math/color/HSL.cpp

@@ -23,6 +23,8 @@ add_library(${PROJECT_NAME} SHARED
 
     errors.hpp
     keywords.hpp
+    strings.hpp
+    strings.cpp
 
     basic/128-bit.hpp
     basic/Any.hpp
@@ -210,6 +212,9 @@ add_library(${PROJECT_NAME} SHARED
     math/Data2.hpp
     math/Data3.hpp
     math/Data4.hpp
+    math/Fraction.hpp
+    math/Fraction.hxx
+    math/Fraction.cpp
     math/gcd.hpp
     math/glm.hpp
     math/glm_types.hpp

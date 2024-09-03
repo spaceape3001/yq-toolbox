@@ -7,16 +7,21 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <yq/coord/forward.hpp>
 #include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/typedef/coord1.hpp>
+
+namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    class Stream;
 
     /*! \brief One dimensional coordinate
     
@@ -115,6 +120,10 @@ namespace yq {
         S&  stream(S&) const;
     };
 
+    YQ_NAN_1(Coord1, Coord1<T>( nan_v<T> ))
+    YQ_IS_NAN_1(Coord1, is_nan(v.i) )
+    YQ_IS_FINITE_1(Coord1, is_finite(v.i) )
+    YQ_ZERO_1(Coord1, Coord1<T>( zero_v<T> ))
 
     //  --------------------------------------------------------
     //  COMPOSITION
@@ -132,7 +141,6 @@ namespace yq {
     {
         return { i };
     }
-
 
     //  --------------------------------------------------------
     //  BASIC FUNCTIONS

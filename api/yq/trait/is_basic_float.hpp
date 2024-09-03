@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <0/math/preamble.hpp>
-#include <yq/coord/Coord1.hpp>
+#include <type_traits>
 
 namespace yq {
+    template <typename T> static constexpr const bool is_basic_float_v = std::is_floating_point_v<T>;
 }

@@ -224,21 +224,21 @@ namespace yq {
 //  MULTIPLICATION
 
     template <typename T, typename DIM>
-    requires is_basic_v<T>
+    requires is_basic_float_v<T>
     MKS<T,DIM> operator*(T a, const MKS<T,DIM>& b)
     {
         return { a * b.value };
     }
     
     template <typename T, typename DIM>
-    requires is_basic_v<T>
+    requires is_basic_float_v<T>
     MKS<T,DIM> operator*(const MKS<T,DIM>& a, T  b)
     {
         return { a.value * b };
     }
     
     template <typename T, typename DIM>
-    requires is_basic_v<T>
+    requires is_basic_float_v<T>
     MKS<T,DIM>& operator*=(MKS<T,DIM>& a, T  b)
     {
         a.value *= b;
@@ -256,21 +256,21 @@ namespace yq {
 //  DIVISION
 
     template <typename T, typename DIM>
-    requires is_basic_v<T>
+    requires is_basic_float_v<T>
     MKS<T,typename DIM::template _pow_<-1,1>> operator/(T a, const MKS<T,DIM>& b)
     {
         return { a / b.value };
     }
     
     template <typename T, typename DIM>
-    requires is_basic_v<T>
+    requires is_basic_float_v<T>
     MKS<T,DIM> operator/(const MKS<T,DIM>& a, T  b)
     {
         return { a.value / b };
     }
     
     template <typename T, typename DIM>
-    requires is_basic_v<T>
+    requires is_basic_float_v<T>
     MKS<T,DIM>& operator/=(MKS<T,DIM>& a, T  b)
     {
         a.value /= b;
