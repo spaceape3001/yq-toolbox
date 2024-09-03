@@ -416,6 +416,51 @@ add_library(${PROJECT_NAME} SHARED
     typedef/string_vectors.hpp
     typedef/url.hpp
     typedef/xml.hpp
+    
+    userexpr/forward.hpp
+    userexpr/Analysis.hpp
+    userexpr/Context.hpp
+    userexpr/UserExpr.hpp
+    userexpr/UserExpr.cpp
+
+    userexpr/impl/Compiler.hpp
+    userexpr/impl/Compiler.cpp
+    userexpr/impl/Instruction.hpp
+    userexpr/impl/Instruction.cpp
+    userexpr/impl/OpData.hpp
+    userexpr/impl/Repo.hpp
+    userexpr/impl/Repo.cpp
+    userexpr/impl/Streamline.hpp
+    userexpr/impl/Streamline.cpp
+    userexpr/impl/Symbol.hpp
+    userexpr/impl/Symbol.cpp
+    userexpr/impl/SymCategory.hpp
+    userexpr/impl/SymData.hpp
+    userexpr/impl/SymKind.hpp
+    userexpr/impl/Token.hpp
+    userexpr/impl/Token.cpp
+    userexpr/impl/Tokenize.hpp
+    userexpr/impl/Tokenize.cpp
+    userexpr/impl/VirtualMachine.hpp
+    userexpr/impl/VirtualMachine.cpp
+    
+    userexpr/opcode/AssignInstruction.hpp
+    userexpr/opcode/AssignInstruction.cpp
+    userexpr/opcode/ConstantInstruction.hpp
+    userexpr/opcode/ConstantInstruction.cpp
+    userexpr/opcode/DuplicateInstruction.hpp
+    userexpr/opcode/DuplicateInstruction.cpp
+    userexpr/opcode/FunctionInstruction.hpp
+    userexpr/opcode/FunctionInstruction.cpp
+    userexpr/opcode/NullInstruction.hpp
+    userexpr/opcode/OperatorInstruction.hpp
+    userexpr/opcode/OperatorInstruction.cpp
+    userexpr/opcode/PopInstruction.hpp
+    userexpr/opcode/PopInstruction.cpp
+    userexpr/opcode/ValueInstruction.hpp
+    userexpr/opcode/ValueInstruction.cpp
+    userexpr/opcode/VariableInstruction.hpp
+    userexpr/opcode/VariableInstruction.cpp
 )
 
 ##########################

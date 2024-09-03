@@ -54,7 +54,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/meta_units.cpp
     0/math/meta_vectors.cpp
     0/math/strings.cpp
-    0/math/UserExpr.cpp
     0/math/color/HSL.hpp
     0/math/color/HSL.hxx
     0/math/color/HSL.cpp
