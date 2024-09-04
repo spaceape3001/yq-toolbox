@@ -18,6 +18,8 @@ if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/test.cpp)
     set(core_test_source ./test.cpp)
 endif()
 
+#   Headers are being listed for anybody using an IDE (unnecessary for pure commandline)
+
 add_library(${PROJECT_NAME} SHARED
     ${core_test_source}
 
@@ -206,6 +208,7 @@ add_library(${PROJECT_NAME} SHARED
     macro/debugrel.hpp
     macro/make_version.hpp
 
+    math/algorithm.hpp
     math/AllComponents.hpp
     math/AnyComponents.hpp
     math/Data1.hpp
@@ -219,6 +222,13 @@ add_library(${PROJECT_NAME} SHARED
     math/glm.hpp
     math/glm_types.hpp
     math/integer.hpp
+    math/initialize.hpp
+    math/initialize.cpp
+    math/Sign.hpp
+    math/units.hpp
+    math/units.cpp
+    math/UV.hpp
+    math/UVW.hpp
     
     math/template/fraction.hpp
     math/template/gcd.hpp
@@ -228,6 +238,13 @@ add_library(${PROJECT_NAME} SHARED
     
     math/unit/declare.hpp
     math/unit/dims.hpp
+    math/unit/Dimension.hpp
+    math/unit/Dimension.cpp
+    math/unit/literals.hpp
+    math/unit/MKS.hpp
+    math/unit/MKS.hxx
+    math/unit/SCALED.hpp
+    math/unit/SCALED.hxx
     
     meta/forward.hpp
     meta/AnyArgHelper.hpp
@@ -414,12 +431,18 @@ add_library(${PROJECT_NAME} SHARED
     typedef/axbox2.hpp
     typedef/axbox3.hpp
     typedef/axbox4.hpp
+    typedef/bivector2.hpp
+    typedef/bivector3.hpp
+    typedef/bivector4.hpp
+    typedef/circle2.hpp
+    typedef/complex.hpp
     typedef/coord1.hpp
     typedef/coord2.hpp
     typedef/coord3.hpp
     typedef/coord4.hpp
     typedef/coord5.hpp
     typedef/coord6.hpp
+    typedef/counter.hpp
     typedef/expected.hpp
     typedef/filesystem_path.hpp
     typedef/fraction.hpp
@@ -427,15 +450,76 @@ add_library(${PROJECT_NAME} SHARED
     typedef/hsv.hpp
     typedef/int_range.hpp
     typedef/json.hpp
+    typedef/multivector1.hpp
+    typedef/multivector2.hpp
+    typedef/multivector3.hpp
+    typedef/multivector4.hpp
+    typedef/normal2.hpp
+    typedef/normal3.hpp
+    typedef/plane3.hpp
+    typedef/polygon2.hpp
+    typedef/polygon3.hpp
+    typedef/polygon4.hpp
+    typedef/polyline2.hpp
+    typedef/polyline3.hpp
+    typedef/polyline4.hpp
+    typedef/pose2.hpp
+    typedef/pose3.hpp
+    typedef/quadrilateral2.hpp
+    typedef/quadvector4.hpp
+    typedef/quaternion3.hpp
+    typedef/range.hpp
+    typedef/ray2.hpp
+    typedef/ray3.hpp
+    typedef/ray4.hpp
+    typedef/rectangle2.hpp
+    typedef/result.hpp
     typedef/rgb.hpp
     typedef/rgba.hpp
     typedef/result.hpp
+    typedef/segment1.hpp
+    typedef/segment2.hpp
+    typedef/segment3.hpp
+    typedef/segment4.hpp
+    typedef/size1.hpp
+    typedef/size2.hpp
+    typedef/size3.hpp
+    typedef/size4.hpp
+    typedef/sphere3.hpp
+    typedef/sphere4.hpp
     typedef/string.hpp
+    typedef/string_initlists.hpp
     typedef/string_maps.hpp
     typedef/string_pairs.hpp
     typedef/string_sets.hpp
     typedef/string_vectors.hpp
+    typedef/tensor11.hpp
+    typedef/tensor12.hpp
+    typedef/tensor13.hpp
+    typedef/tensor14.hpp
+    typedef/tensor21.hpp
+    typedef/tensor22.hpp
+    typedef/tensor23.hpp
+    typedef/tensor24.hpp
+    typedef/tensor31.hpp
+    typedef/tensor32.hpp
+    typedef/tensor33.hpp
+    typedef/tensor34.hpp
+    typedef/tensor41.hpp
+    typedef/tensor42.hpp
+    typedef/tensor43.hpp
+    typedef/tensor44.hpp
+    typedef/tetrahedron3.hpp
+    typedef/triangle2.hpp
+    typedef/triangle3.hpp
+    typedef/triangle4.hpp
+    typedef/trivector3.hpp
+    typedef/trivector4.hpp
     typedef/url.hpp
+    typedef/vector1.hpp
+    typedef/vector2.hpp
+    typedef/vector3.hpp
+    typedef/vector4.hpp
     typedef/xml.hpp
     
     userexpr/forward.hpp

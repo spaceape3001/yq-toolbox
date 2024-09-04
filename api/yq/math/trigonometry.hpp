@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/math/units.hpp>
+#include <yq/math/units.hpp>
 
 namespace yq {
 
@@ -109,5 +109,4 @@ namespace yq {
     {
         return std::tan(r.value);
     }
-    
 }

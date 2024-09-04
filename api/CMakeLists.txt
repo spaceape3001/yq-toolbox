@@ -32,7 +32,6 @@ add_library(${PROJECT_NAME} SHARED
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
-    0/math/math.cpp
     0/math/Complex.cpp
     0/math/Pose2.hpp
     0/math/Pose2.hxx
@@ -50,7 +49,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/meta_glm.cpp
     0/math/meta_shapes.cpp
     0/math/meta_tensors.cpp
-    0/math/meta_units.cpp
     0/math/meta_vectors.cpp
     0/math/color/HSL.hpp
     0/math/color/HSL.hxx

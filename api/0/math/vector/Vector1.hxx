@@ -19,7 +19,7 @@
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>
 
-#include <0/math/utility.hpp>
+#include <yq/math/utility.hpp>
 
 namespace yq {
     #ifdef YQ_MATH_SIZE1_HPP

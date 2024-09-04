@@ -6,7 +6,7 @@
 
 #include <boost/ut.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
-#include <0/math/utility.hpp>
+#include <yq/math/utility.hpp>
 #include <0/math/shape/Polyline2.hpp>
 #include <0/math/vector/Vector2.hpp>
 

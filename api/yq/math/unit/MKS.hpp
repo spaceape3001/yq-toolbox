@@ -8,15 +8,18 @@
 
 #define YQ_MATH_MKS_HPP 1
 
-#include <0/math/preamble.hpp>
-
 #include <yq/keywords.hpp>
 #include <yq/trait/cube.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_sqrt.hpp>
+#include <yq/trait/is_basic_float.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
+
+#include <type_traits>
 
 namespace yq {
     template <typename T, typename DIM>

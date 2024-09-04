@@ -9,6 +9,8 @@
 #include <0/basic/preamble.hpp>
 #include <yq/coord/forward.hpp>
 #include <yq/io/StreamOps.hpp>
+#include <yq/math/algorithm.hpp>
+#include <yq/math/initialize.hpp>
 #include <yq/math/Sign.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/always_false.hpp>
@@ -174,14 +176,8 @@ namespace yq {
     struct SimpleSpace;
     
 
-
     //! Call this if math isn't getting startup-initialized 
-    void        initialize_math();
 
-    using std::max;
-    using std::min;
-    using std::abs;
-    
     
     
     struct Side;

@@ -53,6 +53,7 @@ namespace yq {
     const std::string_view     szContains_Box_Box          = "Tests if other box is inside/touching this box";
     const std::string_view     szContains_Box_Pt           = "Tests if point is inside/touching the box";
     const std::string_view     szCtr                       = "ctr";
+    const std::string_view     szCurrent                   = "current";
     const std::string_view     szD                         = "d";
     const std::string_view     szD_Quadrilateral           = "Fourth point 'D' of the quadrilateral";
     const std::string_view     szD_Tetrahedron             = "Fourth point 'D' of the tetrahedron";
@@ -72,10 +73,12 @@ namespace yq {
     const std::string_view     szDirection_Ray             = "Direction of the ray";
     const std::string_view     szDist                      = "dist";
     const std::string_view     szDistance                  = "distance";
+    const std::string_view     szE                         = "e";
     const std::string_view     szEclipses                  = "eclipses";
     const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
     const std::string_view     szEclipses_Box_Circle       = "Tests if circle is inside/touching this box";
     const std::string_view     szEclipses_Box_Pt           = "Tests if point is inside/touching the box";
+    const std::string_view     szF                         = "f";
     const std::string_view     szG                         = "g";
     const std::string_view     szGreen                     = "green";
     const std::string_view     szGreen_Color               = "Green channel of the color";
@@ -99,6 +102,7 @@ namespace yq {
     const std::string_view     szImaginary_Complex         = "Imaginary component of the complex number";
     const std::string_view     szIncircle                  = "incircle";
     const std::string_view     szIncircle_Box              = "Incircle of the box";
+    const std::string_view     szIntensity                 = "intensity";
     const std::string_view     szJ                         = "j";
     const std::string_view     szJ_Coord                   = "J-component of the coordinate";
     const std::string_view     szK                         = "k";
@@ -122,6 +126,8 @@ namespace yq {
     const std::string_view     szMag                       = "mag";
     const std::string_view     szMagnitude                 = "magnitude";
     const std::string_view     szMagnitude_Complex         = "Magnitude of the complex number";
+    const std::string_view     szMass                      = "mass";
+    const std::string_view     szMatter                    = "matter";
     const std::string_view     szN                         = "n";
     const std::string_view     szN_Coord                   = "N-component of the coordinate";
     const std::string_view     szNE                        = "ne";
@@ -133,11 +139,13 @@ namespace yq {
     const std::string_view     szNumerator                 = "numerator";
     const std::string_view     szNumerator_Fraction        = "Numerator of the fraction";
     const std::string_view     szNW                        = "nw";
+    const std::string_view     szO                         = "o";
     const std::string_view     szOri                       = "ori";
     const std::string_view     szOrientation               = "orientation";
     const std::string_view     szOrientation_Pose          = "Orientation of the pose";
     const std::string_view     szOverlaps                  = "overlaps";
     const std::string_view     szOverlaps_Box_Box          = "Tests if other box overlaps this box";
+    const std::string_view     szP                         = "p";
     const std::string_view     szPeri                      = "peri";
     const std::string_view     szPerimeter                 = "perimeter";
     const std::string_view     szPerimeter_Box             = "Perimeter of the box";
@@ -151,6 +159,7 @@ namespace yq {
     const std::string_view     szProject                   = "global";
     const std::string_view     szProject_Box               = "Project local point (u/v/w) to real space (x/y/z)";
     const std::string_view     szPt                        = "pt";
+    const std::string_view     szQ                         = "q";
     const std::string_view     szR                         = "r";
     const std::string_view     szRad                       = "rad";
     const std::string_view     szRadius                    = "radius";
@@ -178,8 +187,12 @@ namespace yq {
     const std::string_view     szSurfaceArea               = "surface_area";
     const std::string_view     szSurfaceArea_Box3          = "Surface area of the box";
     const std::string_view     szSW                        = "sw";
+    const std::string_view     szT                         = "t";
+    const std::string_view     szTemperature               = "temperature";
+    const std::string_view     szTime                      = "time";
     const std::string_view     szUnproject                 = "local";
     const std::string_view     szUnproject_Box             = "Project global point (x/y/z) to local space (u/v/w)";
+    const std::string_view     szU                         = "u";
     const std::string_view     szValid                     = "valid";
     const std::string_view     szValid_Box                 = "Tests if the box is valid (ie, lo < hi)";
     const std::string_view     szValid_Circle              = "Tests if the circle is valid (ie, radius >= 0)";

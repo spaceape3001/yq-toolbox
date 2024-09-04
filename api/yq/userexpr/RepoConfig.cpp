@@ -6,9 +6,7 @@
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
-
-// temporary until moved
-#include <0/math/trig.hpp>
+#include <yq/math/trigonometry.hpp>
 
 using namespace yq;
 using namespace yq::expr;

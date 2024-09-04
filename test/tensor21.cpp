@@ -6,7 +6,7 @@
 
 #include <boost/ut.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
-#include <0/math/utility.hpp>
+#include <yq/math/utility.hpp>
 #include <0/math/vector/Tensor21.hxx>
 
 namespace ut = boost::ut;

@@ -8,10 +8,8 @@
 
 #define YQ_MATH_SCALED_HPP 1
 
-#include <0/math/unit/MKS.hpp>
-
-
 #include <yq/keywords.hpp>
+#include <yq/math/unit/MKS.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>

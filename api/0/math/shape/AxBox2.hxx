@@ -14,7 +14,7 @@
 
 #include <yq/errors.hpp>
 #include <0/math/shape/AxBox2.hpp>
-#include <0/math/utility.hpp>
+#include <yq/math/utility.hpp>
 #include <0/math/Range.hpp>
 #include <yq/container/initlist_utils.hpp>
 

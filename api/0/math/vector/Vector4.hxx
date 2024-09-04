@@ -15,8 +15,8 @@
 */
 
 #include <0/math/vector/Vector4.hpp>
-#include <0/math/trig.hpp>
-#include <0/math/utility.hpp>
+#include <yq/math/trigonometry.hpp>
+#include <yq/math/utility.hpp>
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>
 

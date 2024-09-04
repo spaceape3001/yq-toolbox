@@ -8,6 +8,11 @@
 
 #include <string_view>
 
+/*
+    Header of shared strings in the codebase, particularly with the meta
+    system (for consistency, and for compiler assisted spell checking)
+*/
+
 namespace yq {
     extern const std::string_view     szA;
     extern const std::string_view     szA_Multivector;
@@ -55,6 +60,7 @@ namespace yq {
     extern const std::string_view     szContains_Box_Box;
     extern const std::string_view     szContains_Box_Pt;
     extern const std::string_view     szCtr;
+    extern const std::string_view     szCurrent;
     extern const std::string_view     szD;
     extern const std::string_view     szD_Quadrilateral;
     extern const std::string_view     szD_Tetrahedron;
@@ -74,10 +80,12 @@ namespace yq {
     extern const std::string_view     szDirection_Ray;
     extern const std::string_view     szDist;
     extern const std::string_view     szDistance;
+    extern const std::string_view     szE;
     extern const std::string_view     szEclipses;
     extern const std::string_view     szEclipses_Box_Box;
     extern const std::string_view     szEclipses_Box_Circle;
     extern const std::string_view     szEclipses_Box_Pt;
+    extern const std::string_view     szF;
     extern const std::string_view     szG;
     extern const std::string_view     szGreen;
     extern const std::string_view     szGreen_Color;
@@ -101,6 +109,7 @@ namespace yq {
     extern const std::string_view     szImaginary_Complex;
     extern const std::string_view     szIncircle;
     extern const std::string_view     szIncircle_Box;
+    extern const std::string_view     szIntensity;
     extern const std::string_view     szJ;
     extern const std::string_view     szJ_Coord;
     extern const std::string_view     szK;
@@ -124,6 +133,8 @@ namespace yq {
     extern const std::string_view     szMag;
     extern const std::string_view     szMagnitude;
     extern const std::string_view     szMagnitude_Complex;
+    extern const std::string_view     szMass;
+    extern const std::string_view     szMatter;
     extern const std::string_view     szN;
     extern const std::string_view     szN_Coord;
     extern const std::string_view     szNE;
@@ -135,11 +146,13 @@ namespace yq {
     extern const std::string_view     szNumerator;
     extern const std::string_view     szNumerator_Fraction;
     extern const std::string_view     szNW;
+    extern const std::string_view     szO;
     extern const std::string_view     szOri;
     extern const std::string_view     szOrientation;
     extern const std::string_view     szOrientation_Pose;
     extern const std::string_view     szOverlaps;
     extern const std::string_view     szOverlaps_Box_Box;
+    extern const std::string_view     szP;
     extern const std::string_view     szPeri;
     extern const std::string_view     szPerimeter;
     extern const std::string_view     szPerimeter_Box;
@@ -153,6 +166,7 @@ namespace yq {
     extern const std::string_view     szProject;
     extern const std::string_view     szProject_Box;
     extern const std::string_view     szPt;
+    extern const std::string_view     szQ;
     extern const std::string_view     szR;
     extern const std::string_view     szRad;
     extern const std::string_view     szRadius;
@@ -180,6 +194,10 @@ namespace yq {
     extern const std::string_view     szSurfaceArea;
     extern const std::string_view     szSurfaceArea_Box3;
     extern const std::string_view     szSW;
+    extern const std::string_view     szT;
+    extern const std::string_view     szTemperature;
+    extern const std::string_view     szTime;
+    extern const std::string_view     szU;
     extern const std::string_view     szUnproject;
     extern const std::string_view     szUnproject_Box;
     extern const std::string_view     szV;

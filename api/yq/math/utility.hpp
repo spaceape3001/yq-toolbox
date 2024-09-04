@@ -11,9 +11,14 @@
     into preamble.hpp but shouldn't...
 */
 
-#include <0/math/preamble.hpp>
+#include <yq/keywords.hpp>
 #include <yq/trait/can_add.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/square.hpp>
+#include <cmath>
+#include <utility>
 
 namespace yq {
 

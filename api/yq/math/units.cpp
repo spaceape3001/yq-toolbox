@@ -4,10 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <0/math/preamble.hpp>
+#include "units.hpp"
+
 #include <yq/strings.hpp>
-#include <0/math/unit/Dimension.hpp>
-#include <0/math/unit/MKS.hpp>
+
+//  temporary until moved
 #include <0/math/vector/Tensor33.hpp>
 #include <0/math/vector/Vector3.hpp>
 
@@ -16,11 +17,9 @@
 #include <yq/meta/Init.hpp>
 
 #include <yq/basic/StringLiteral.hpp>
-#include <0/math/units.hpp>
 
 using namespace yq;
 
-YQ_TYPE_IMPLEMENT(yq::Dimension)
 
 YQ_TYPE_IMPLEMENT(yq::unit::Acre)
 YQ_TYPE_IMPLEMENT(yq::unit::Ampere)

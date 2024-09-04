@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/math/vector/Tensor42.hpp>
-#include <0/math/utility.hpp>
+#include <yq/math/utility.hpp>
 
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>

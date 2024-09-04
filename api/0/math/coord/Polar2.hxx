@@ -8,7 +8,7 @@
 
 #include <0/math/coord/Polar2.hpp>
 #include <0/math/vector/Vector2.hpp>
-#include <0/math/trig.hpp>
+#include <yq/math/trigonometry.hpp>
 
 namespace yq {
 
