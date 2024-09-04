@@ -5,11 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <0/math/Coord2.hpp>
-#include <0/math/Coord3.hpp>
-#include <0/math/Coord4.hpp>
-#include <0/math/Coord5.hpp>
-#include <0/math/Coord6.hpp>
 #include <yq/strings.hpp>
 
 #include <0/math/coord/LatLon.hpp>

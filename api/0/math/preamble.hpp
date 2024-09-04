@@ -167,8 +167,6 @@ namespace yq {
     template <typename> struct Data3;
     template <typename> struct Data4;
     template <typename> struct ElemComponents;
-    template <typename> struct UV;
-    template <typename> struct UVW;
     
     //  ------------------------------------------------
     //  Miscellaneous

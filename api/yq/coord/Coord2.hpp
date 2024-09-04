@@ -8,6 +8,8 @@
 
 #include <yq/keywords.hpp>
 #include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/product.hpp>
@@ -127,6 +129,10 @@ namespace yq {
         S&  stream(S&) const;
     };
 
+    YQ_NAN_1(Coord2, Coord2<T>( nan_v<T>, nan_v<T> ))
+    YQ_IS_NAN_1(Coord2, is_nan(v.i) || is_nan(v.j) )
+    YQ_IS_FINITE_1(Coord2, is_finite(v.i) && is_finite(v.j) )
+    YQ_ZERO_1(Coord2, Coord2<T>( zero_v<T>, zero_v<T> ))
 
     //  --------------------------------------------------------
     //  COMPOSITION
