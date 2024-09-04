@@ -1088,7 +1088,7 @@ static void reg_shape_math () {
 
 YQ_INVOKE(reg_shape_math();)
 
-#include "Range.hxx"
+#include <yq/math/Range.hxx>
 
 #include "shape/AxBox1.hxx"
 #include "shape/AxBox2.hxx"

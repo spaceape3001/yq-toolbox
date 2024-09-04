@@ -12,8 +12,10 @@
     template instantiation.  
 */
 
-#include <0/math/Range.hpp>
-#include <0/math/Side.hpp>
+#include "Range.hpp"
+
+#include <yq/math/Side.hpp>
+#include <yq/trait/has_one.hpp>
 
 namespace yq {
     template <typename T>

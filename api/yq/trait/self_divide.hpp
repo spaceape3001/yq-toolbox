@@ -5,7 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
 #include <yq/trait/quotient.hpp>
+#include <type_traits>
 
 namespace yq {
     template <typename T, typename U>  using self_divide                        = std::is_same<T,quotient_t<T,U>>;

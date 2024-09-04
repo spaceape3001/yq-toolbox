@@ -39,9 +39,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/Pose3.hpp
     0/math/Pose3.hxx
     0/math/Pose3.cpp
-    0/math/Range.hpp
-    0/math/Range.hxx
-    0/math/Range.cpp
     0/math/SimpleSpace.hpp
     0/math/SimpleSpace.cpp
     0/math/meta_coords.cpp

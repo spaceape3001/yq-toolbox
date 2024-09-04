@@ -224,6 +224,10 @@ add_library(${PROJECT_NAME} SHARED
     math/integer.hpp
     math/initialize.hpp
     math/initialize.cpp
+    math/Range.hpp
+    math/Range.hxx
+    math/Range.cpp
+    math/Side.hpp
     math/Sign.hpp
     math/units.hpp
     math/units.cpp

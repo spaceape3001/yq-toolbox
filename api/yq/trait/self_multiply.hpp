@@ -5,7 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
 #include <yq/trait/product.hpp>
+#include <type_traits>
 
 namespace yq {
     template <typename T, typename U>  using self_multiply                      = std::is_same<T,product_t<T,U>>;

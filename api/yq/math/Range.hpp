@@ -8,15 +8,28 @@
 
 #define YQ_MATH_RANGE_HPP 1
 
-#include <0/math/preamble.hpp>
-
 #include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_floating_point.hpp>
+#include <yq/trait/is_integral.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/typedef/range.hpp>
+
+#include <initializer_list>
+#include <span>
 
 namespace yq {
+    struct Side;
+
 
     /*! \brief A "Ranged" object with a low and a high value
     
