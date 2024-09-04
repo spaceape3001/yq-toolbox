@@ -223,6 +223,8 @@ add_library(${PROJECT_NAME} SHARED
     math/algorithm.hpp
     math/AllComponents.hpp
     math/AnyComponents.hpp
+    math/Complex.hpp
+    math/Complex.cpp
     math/Data1.hpp
     math/Data2.hpp
     math/Data3.hpp

@@ -6,8 +6,18 @@
 
 #pragma once
 
+#include <yq/typedef/complex.hpp>
+
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_abs.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_sqrt.hpp>
+#include <yq/trait/has_zero.hpp>
+
 #include <complex>
-#include <0/math/preamble.hpp>
 
 namespace yq {
     using namespace std::complex_literals;

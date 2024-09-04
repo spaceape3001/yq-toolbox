@@ -32,7 +32,6 @@ add_library(${PROJECT_NAME} SHARED
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
-    0/math/Complex.cpp
     0/math/Pose2.hpp
     0/math/Pose2.hxx
     0/math/Pose2.cpp

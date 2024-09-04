@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <yq/typedef/coord4.hpp>
+
 #include <yq/keywords.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_is_finite.hpp>
@@ -16,7 +18,6 @@
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
-#include <yq/typedef/coord4.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
