@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename> struct Range;
+
+    using RangeD = Range<double>;
+    using RangeF = Range<float>;
+    using RangeI = Range<int>;
+    using RangeU = Range<unsigned>;
+}

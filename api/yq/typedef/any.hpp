@@ -14,8 +14,8 @@
 namespace yq {
     class Any;
 
-    using any_error_t           = std::pair<Any, std::error_code>;
-    using any_span_t            = std::span<Any>;
-    using const_any_span_t      = std::span<const Any>;
-    using any_stack_t           = Stack<Any>;
+    using any_error_t       = std::pair<Any, std::error_code>;
+    using any_span_t        = std::span<Any>;
+    using const_any_span_t  = std::span<const Any>;
+    using any_stack_t       = Stack<Any>;
 }

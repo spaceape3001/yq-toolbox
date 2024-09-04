@@ -409,10 +409,26 @@ add_library(${PROJECT_NAME} SHARED
     trait/sink.hpp
     trait/weak.hpp
     
+    typedef/any.hpp
+    typedef/axbox1.hpp
+    typedef/axbox2.hpp
+    typedef/axbox3.hpp
+    typedef/axbox4.hpp
+    typedef/coord1.hpp
+    typedef/coord2.hpp
+    typedef/coord3.hpp
+    typedef/coord4.hpp
+    typedef/coord5.hpp
+    typedef/coord6.hpp
     typedef/expected.hpp
     typedef/filesystem_path.hpp
+    typedef/fraction.hpp
+    typedef/hsl.hpp
+    typedef/hsv.hpp
     typedef/int_range.hpp
     typedef/json.hpp
+    typedef/rgb.hpp
+    typedef/rgba.hpp
     typedef/result.hpp
     typedef/string.hpp
     typedef/string_maps.hpp
