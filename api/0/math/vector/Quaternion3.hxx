@@ -13,7 +13,7 @@
 */
 
 #include <0/math/vector/Quaternion3.hpp>
-#include <yq/math/unit/literals.hpp>
+#include <yq/unit/literals.hpp>
 #include <yq/math/trigonometry.hpp>
 
 namespace yq {

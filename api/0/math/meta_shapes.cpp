@@ -53,7 +53,7 @@
 #include <yq/meta/Init.hpp>
 
 #include <0/math/shape/shape_utils.hpp>
-#include <yq/math/unit/literals.hpp>
+#include <yq/unit/literals.hpp>
 
 using namespace yq;
 

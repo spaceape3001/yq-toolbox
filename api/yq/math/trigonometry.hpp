@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/math/units.hpp>
+#include <yq/units.hpp>
 
 namespace yq {
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/math/unit/declare.hpp>
+#include <yq/unit/declare.hpp>
 #include <yq/meta/InfoBinder.hpp>
 
 

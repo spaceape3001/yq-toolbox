@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/math/Fraction.hpp>
-#include <yq/math/unit/dims.hpp>
+#include <yq/unit/dims.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <string_view>
 #include <vector>

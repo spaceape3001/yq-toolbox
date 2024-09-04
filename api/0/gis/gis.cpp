@@ -11,8 +11,8 @@
 #include "Time.ipp"
 #include "Geodetic2.hpp"
 #include "Geodetic3.hpp"
-#include <yq/math/unit/MKS.hpp>
-#include <yq/math/unit/SCALED.hpp>
+#include <yq/unit/MKS.hpp>
+#include <yq/unit/SCALED.hpp>
 
 
 //#include "EarthDate.ipp"

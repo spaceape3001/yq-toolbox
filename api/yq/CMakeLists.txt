@@ -27,6 +27,8 @@ add_library(${PROJECT_NAME} SHARED
     keywords.hpp
     strings.hpp
     strings.cpp
+    units.hpp
+    units.cpp
 
     basic/128-bit.hpp
     basic/Any.hpp
@@ -229,8 +231,6 @@ add_library(${PROJECT_NAME} SHARED
     math/Range.cpp
     math/Side.hpp
     math/Sign.hpp
-    math/units.hpp
-    math/units.cpp
     math/UV.hpp
     math/UVW.hpp
     
@@ -240,15 +240,6 @@ add_library(${PROJECT_NAME} SHARED
     math/tolerance/Absolute.hpp
     math/tolerance/Relative.hpp
     
-    math/unit/declare.hpp
-    math/unit/dims.hpp
-    math/unit/Dimension.hpp
-    math/unit/Dimension.cpp
-    math/unit/literals.hpp
-    math/unit/MKS.hpp
-    math/unit/MKS.hxx
-    math/unit/SCALED.hpp
-    math/unit/SCALED.hxx
     
     meta/forward.hpp
     meta/AnyArgHelper.hpp
@@ -525,6 +516,16 @@ add_library(${PROJECT_NAME} SHARED
     typedef/vector3.hpp
     typedef/vector4.hpp
     typedef/xml.hpp
+
+    unit/declare.hpp
+    unit/dims.hpp
+    unit/Dimension.hpp
+    unit/Dimension.cpp
+    unit/literals.hpp
+    unit/MKS.hpp
+    unit/MKS.hxx
+    unit/SCALED.hpp
+    unit/SCALED.hxx
     
     userexpr/forward.hpp
     userexpr/Analysis.hpp

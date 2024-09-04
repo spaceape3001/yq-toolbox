@@ -11,8 +11,8 @@
 
 #include <0/math/vector/Vector2.hpp>
 #include <0/math/vector/Tensor22.hpp>
-#include <yq/math/unit/MKS.hpp>
-#include <yq/math/unit/SCALED.hpp>
+#include <yq/unit/MKS.hpp>
+#include <yq/unit/SCALED.hpp>
 
 namespace yq {
 

@@ -32,7 +32,7 @@
 #include <yq/io/StreamOps.hpp>
 #include <yq/meta/Init.hpp>
 
-#include <yq/math/unit/literals.hpp>
+#include <yq/unit/literals.hpp>
 
 using namespace yq;
 

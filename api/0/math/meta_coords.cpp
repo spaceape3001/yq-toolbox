@@ -17,7 +17,7 @@
 #include <0/math/coord/Polar2.hpp>
 #include <0/math/coord/Cylindrical3.hpp>
 
-#include <yq/math/unit/MKS.hpp>
+#include <yq/unit/MKS.hpp>
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/io/StreamOps.hpp>

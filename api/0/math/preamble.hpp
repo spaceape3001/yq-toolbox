@@ -106,8 +106,8 @@
 #include <yq/typedef/vector3.hpp>
 #include <yq/typedef/vector4.hpp>
 
-#include <yq/math/unit/dims.hpp>
-#include <yq/math/unit/declare.hpp>
+#include <yq/unit/dims.hpp>
+#include <yq/unit/declare.hpp>
 
 #include <algorithm>
 #include <cmath>
