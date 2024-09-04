@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <0/math/preamble.hpp>
-#include <0/math/color/RGB.hpp>
+#include <yq/color/RGB.hpp>
 
 namespace yq::color {
     //  https://www.colorhexa.com/color-names

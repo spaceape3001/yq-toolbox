@@ -31,8 +31,8 @@
 #include <0/math/shape/Ray2.hpp>
 #include <0/math/shape/Ray3.hpp>
 #include <0/math/shape/Ray4.hpp>
-#include <0/math/color/RGB.hpp>
-#include <0/math/color/RGBA.hpp>
+#include <yq/color/RGB.hpp>
+#include <yq/color/RGBA.hpp>
 #include <0/math/shape/Segment1.hpp>
 #include <0/math/shape/Segment2.hpp>
 #include <0/math/shape/Segment3.hpp>

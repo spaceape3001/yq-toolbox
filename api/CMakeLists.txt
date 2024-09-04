@@ -47,14 +47,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/meta_shapes.cpp
     0/math/meta_tensors.cpp
     0/math/meta_vectors.cpp
-    0/math/color/HSL.hpp
-    0/math/color/HSL.hxx
-    0/math/color/HSL.cpp
-    0/math/color/HSV.hpp
-    0/math/color/HSV.hxx
-    0/math/color/HSV.cpp
-    0/math/color/RGB.cpp
-    0/math/color/RGBA.cpp
     0/physics/physics.cpp
 )
 

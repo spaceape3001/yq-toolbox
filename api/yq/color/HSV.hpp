@@ -6,7 +6,11 @@
 
 #pragma once
 
-#include <0/math/preamble.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/typedef/hsv.hpp>
 
 namespace yq {
 

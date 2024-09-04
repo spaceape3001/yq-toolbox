@@ -103,6 +103,16 @@ add_library(${PROJECT_NAME} SHARED
     basic/XmlObject.hpp
     basic/XmlObject.cpp
 
+    color/Colors.hpp
+    color/HSL.hpp
+    color/HSL.hxx
+    color/HSL.cpp
+    color/HSV.hpp
+    color/HSV.hxx
+    color/HSV.cpp
+    color/RGB.cpp
+    color/RGBA.cpp
+
     config/string.hpp
     
     container/Array.hpp
