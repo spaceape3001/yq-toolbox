@@ -8,6 +8,8 @@
 
 #define YQ_MATH_NORMAL2_HPP 1
 
+#include <yq/typedef/normal2.hpp>
+
 
 #include <yq/vector/Vector2.hpp>
 

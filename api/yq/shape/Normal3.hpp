@@ -8,6 +8,7 @@
 
 #define YQ_MATH_NORMAL3_HPP 1
 
+#include <yq/typedef/normal3.hpp>
 
 #include <yq/vector/Vector3.hpp>
 

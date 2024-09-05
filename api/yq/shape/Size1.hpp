@@ -8,9 +8,18 @@
 
 #define YQ_MATH_SIZE1_HPP 1
 
-
+#include <yq/typedef/size1.hpp>
 
 #include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_integral.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
@@ -19,6 +28,11 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    struct Stream;
+
+    template <typename> struct AllComponents;
+    template <typename> struct AnyComponents;
+    template <typename> struct Vector1;
 
     /*! Size object to hold a simple x/y dimensions
     
@@ -243,7 +257,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires is_arithmetic_v<T>
-    constexpr Size2<product_t<T,U>> operator*(T a, const Size1<U>& b) noexcept;
+    constexpr Size1<product_t<T,U>> operator*(T a, const Size1<U>& b) noexcept;
 
     template <typename T>
     constexpr T       length(const Size1<T>&) noexcept;

@@ -9,18 +9,23 @@
 
 #include <yq/typedef/axbox2.hpp>
 
-#include <yq/vector/Vector2.hpp>
-
 #include <yq/keywords.hpp>
+#include <yq/basic/Expect.hpp>
+#include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/unity.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    struct Side;
+    template <typename> struct AxCorners2;
+    template <typename> struct Data2;
+    template <typename> struct Range;
 
     /*! \brief Axially aligned box in 2 dimension(s).
     

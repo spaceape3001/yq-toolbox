@@ -12,6 +12,15 @@
 
 
 #include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_integral.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
@@ -20,6 +29,11 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename> struct Multivector4;
+    template <typename> struct Quadvector4;
+    template <typename> struct Trivector4;
+    template <typename> struct Vector4;
+
     /*! \brief Four dimensional bivector
     
         Bivector for four dimensions.

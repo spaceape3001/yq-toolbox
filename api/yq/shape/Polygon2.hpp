@@ -8,7 +8,7 @@
 
 #define YQ_MATH_POLYGON2_HPP 1
 
-
+#include <yq/typedef/polygon2.hpp>
 
 #include <yq/vector/Vector2.hpp>
 
@@ -21,6 +21,12 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename> struct Polygon3;
+    template <typename> struct Polygon4;
+    template <typename> struct PolygonData;
+    template <typename> struct Tensor22;
+    template <typename> struct Tensor23;
+    template <typename> struct Tensor24;
 
     /*! \brief Structure for polygon data
     */

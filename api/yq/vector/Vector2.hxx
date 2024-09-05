@@ -19,7 +19,6 @@
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>
-
 #include <yq/math/trigonometry.hpp>
 #include <yq/math/utility.hpp>
 

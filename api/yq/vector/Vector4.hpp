@@ -8,11 +8,10 @@
 
 #define YQ_MATH_VECTOR_4_HPP 1
 
-#include <yq/typedef/vector3.hpp>
-
-#include <yq/macro/operators.hpp>
+#include <yq/typedef/vector4.hpp>
 
 #include <yq/keywords.hpp>
+#include <yq/macro/operators.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/fourth.hpp>
@@ -30,6 +29,7 @@
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
+#include <yq/unit/declare.hpp>
 
 #include <span>
 #include <vector>

@@ -8,18 +8,27 @@
 
 #define YQ_MATH_TRIANGLE3_HPP 1
 
-
-#include <yq/vector/Vector3.hpp>
+#include <yq/typedef/triangle3.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    struct Stream;
+    
+    template <typename> struct Tensor22;
+    template <typename> struct Tensor23;
+    template <typename> struct Tensor24;
+    template <typename> struct Triangle2;
+    template <typename> struct Triangle4;
+    template <typename> struct TriangleData;
+
     /*! \brief 3D triangle
     */
     template <typename T>

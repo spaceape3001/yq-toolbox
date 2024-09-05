@@ -8,6 +8,7 @@
 
 #define YQ_MATH_RAY4_HPP 1
 
+#include <yq/typedef/ray4.hpp>
 
 #include <yq/vector/Vector4.hpp>
 

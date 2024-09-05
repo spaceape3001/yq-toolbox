@@ -8,6 +8,7 @@
 
 #define YQ_MATH_QUADRILATERAL2_HPP 1
 
+#include <yq/typedef/quadrilateral2.hpp>
 
 #include <yq/vector/Vector2.hpp>
 
@@ -20,6 +21,8 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename> struct QuadrilateralData;
+    
     /*! \brief Quadrilateral in two dimensions
     */
     template <typename T>

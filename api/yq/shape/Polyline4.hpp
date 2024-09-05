@@ -8,6 +8,7 @@
 
 #define YQ_MATH_POLYLINE4_HPP 1
 
+#include <yq/typedef/polyline4.hpp>
 
 #include <yq/vector/Vector4.hpp>
 
@@ -20,6 +21,13 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename> struct Polyline2;
+    template <typename> struct Polyline3;
+    template <typename> struct PolylineData;
+    template <typename> struct Tensor42;
+    template <typename> struct Tensor43;
+    template <typename> struct Tensor44;
+
 
     /*! \brief Structure for polyline data
     */

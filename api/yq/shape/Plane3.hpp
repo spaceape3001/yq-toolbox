@@ -8,6 +8,8 @@
 
 #define YQ_MATH_PLANE3_HPP 1
 
+#include <yq/typedef/plane3.hpp>
+
 #include <yq/shape/Normal3.hpp>
 
 namespace log4cpp { class CategoryStream; }

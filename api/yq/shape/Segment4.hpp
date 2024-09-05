@@ -8,20 +8,29 @@
 
 #define YQ_MATH_SEGMENT4_HPP 1
 
-
-#include <yq/vector/Vector4.hpp>
+#include <yq/typedef/segment4.hpp>
 
 #include <yq/keywords.hpp>
+#include <yq/basic/Expect.hpp>
+#include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/unity.hpp>
+#include <yq/vector/Vector4.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
-
+    template <typename> struct Segment1;
+    template <typename> struct Segment2;
+    template <typename> struct Segment3;
+    template <typename> struct SegmentData;
+    template <typename> struct Tensor41;
+    template <typename> struct Tensor42;
+    template <typename> struct Tensor43;
+    template <typename> struct Tensor44;
 
     /*! \brief Segment in 4D
     */

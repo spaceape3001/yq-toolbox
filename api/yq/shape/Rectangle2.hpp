@@ -8,6 +8,8 @@
 
 #define YQ_MATH_RECTANGLE2_HPP 1
 
+#include <yq/typedef/rectangle2.hpp>
+
 #include <yq/vector/Vector2.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/trait/product.hpp>
@@ -18,6 +20,7 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename> struct AxCorners2;
 
     /*! \brief Rectangle in two dimensions
     */

@@ -8,14 +8,14 @@
 
 #define YQ_MATH_SPHERE4_HPP 1
 
-
-#include <yq/vector/Vector4.hpp>
+#include <yq/typedef/sphere4.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/vector/Vector4.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

@@ -8,19 +8,20 @@
 
 #define YQ_MATH_TETRAHEDRON_HPP 1
 
-
-
-#include <yq/vector/Vector3.hpp>
+#include <yq/typedef/tetrahedron3.hpp>
 
 #include <yq/keywords.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+
+    template <typename> struct TetrahedronData;
 
     /*! \brief Tetrahedron
     

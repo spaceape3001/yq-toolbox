@@ -29,6 +29,7 @@
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
+#include <yq/unit/declare.hpp>
 
 #include <span>
 #include <vector>

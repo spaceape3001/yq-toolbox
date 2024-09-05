@@ -7,20 +7,25 @@
 
 #define YQ_MATH_AXBOX3_HPP 1
 
-#include <yq/typedef/axbox1.hpp>
-
-#include <yq/vector/Vector3.hpp>
+#include <yq/typedef/axbox3.hpp>
 
 #include <yq/keywords.hpp>
+#include <yq/basic/Expect.hpp>
+#include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/unity.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    struct Side;
+    template <typename> struct AxCorners3;
+    template <typename> struct Data3;
+    template <typename> struct Range;
 
     /*! \brief Axially aligned box in 3 dimension(s).
 

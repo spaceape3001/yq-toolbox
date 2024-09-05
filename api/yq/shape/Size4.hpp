@@ -8,10 +8,19 @@
 
 #define YQ_MATH_SIZE4_HPP 1
 
-
+#include <yq/typedef/size4.hpp>
 
 #include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/fourth.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_integral.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
@@ -20,6 +29,11 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    struct Stream;
+
+    template <typename> struct AllComponents;
+    template <typename> struct AnyComponents;
+    template <typename> struct Vector4;
 
     /*! Size object
     */
