@@ -11,6 +11,14 @@
 #include <yq/typedef/quaternion3.hpp>
 
 #include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/inverse.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
@@ -18,10 +26,14 @@
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
 #include <yq/trait/unity.hpp>
+#include <yq/unit/dims.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename, typename> struct MKS;
+    template <typename> struct Tensor33;
+    template <typename> struct Vector3;
 
     /*! \brief Quaternion (3D)
     */

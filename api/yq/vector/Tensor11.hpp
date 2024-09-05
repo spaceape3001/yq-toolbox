@@ -10,14 +10,15 @@
 
 #include <yq/typedef/tensor11.hpp>
 
-#include <yq/vector/Vector1.hpp>
-
 #include <yq/keywords.hpp>
+#include <yq/trait/has_identity.hpp>
 #include <yq/trait/inverse.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+
+#include <yq/vector/Vector1.hpp>
 
 namespace log4cpp { class CategoryStream; }
 
