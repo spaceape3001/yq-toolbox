@@ -22,6 +22,8 @@
 #include <yq-toolbox/math/trigonometry.hpp>
 #include <yq-toolbox/math/utility.hpp>
 
+#include <algorithm>
+#include <cmath>
 
 namespace yq {
     #ifdef YQ_MATH_SIZE2_HPP
@@ -31,13 +33,6 @@ namespace yq {
     }
     #endif
 
-    #ifdef YQ_USE_GLM
-    template <typename T>
-    constexpr Vector2<T>::operator glm::vec<2, T, glm::defaultp>() const noexcept
-    {
-        return glm::vec<2, T, glm::defaultp>( x, y );
-    }
-    #endif
 
     //! Negation (negative) operator
     template <typename T>
@@ -670,11 +665,13 @@ namespace yq {
         return {};
     }
 
+    #ifdef YQ_MATH_VECTOR_3_HPP
     template <typename T>
     constexpr Vector3<T> Vector2<T>::z(T _z) const noexcept
     {
         return Vector3<T>( x, y, _z );
     }
+    #endif
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

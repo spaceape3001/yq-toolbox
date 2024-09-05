@@ -14,26 +14,21 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Vector1.hpp>
 #include <yq-toolbox/math/tolerance/Absolute.hpp>
 #include <yq-toolbox/math/AllComponents.hpp>
 #include <yq-toolbox/math/AnyComponents.hpp>
-
 #include <yq-toolbox/math/utility.hpp>
+#include <yq-toolbox/trait/has_abs.hpp>
+#include <yq-toolbox/trait/has_copysign.hpp>
+#include <yq-toolbox/vector/Vector1.hpp>
+
+#include <algorithm>
 
 namespace yq {
     #ifdef YQ_MATH_SIZE1_HPP
     template <typename T>
     constexpr Vector1<T>::Vector1(const Size1<T>&v) noexcept : Vector1(v.x)
     {
-    }
-    #endif
-
-    #ifdef YQ_FEATURE_GLM
-    template <typename T>
-    constexpr Vector1<T>::operator glm::vec<1, T, glm::defaultp>() const noexcept
-    {
-        return glm::vec<1, T, glm::defaultp>(x);
     }
     #endif
 

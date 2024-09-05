@@ -150,7 +150,7 @@ namespace yq {
     template <typename T>
         template <typename U>
     requires is_arithmetic_v<T>
-    constexpr Bivector2<quotient_t<T,U>> Bivector2<T>::operator/(U b) noexcept
+    constexpr Bivector2<quotient_t<T,U>> Bivector2<T>::operator/(U b) const noexcept
     {
         return Bivector2<quotient_t<T,U>>( xy/b );
     }

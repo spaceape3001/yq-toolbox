@@ -449,7 +449,56 @@ add_library(${PROJECT_NAME} SHARED
     sql/SqlStatement.cpp
     sql/SqlUtils.hpp
     sql/SqlUtils.cpp
-    
+
+    tensor/Tensor11.cpp
+    tensor/Tensor11.hpp
+    tensor/Tensor11.hxx
+    tensor/Tensor12.cpp
+    tensor/Tensor12.hpp
+    tensor/Tensor12.hxx
+    tensor/Tensor13.cpp
+    tensor/Tensor13.hpp
+    tensor/Tensor13.hxx
+    tensor/Tensor14.cpp
+    tensor/Tensor14.hpp
+    tensor/Tensor14.hxx
+    tensor/Tensor21.cpp
+    tensor/Tensor21.hpp
+    tensor/Tensor21.hxx
+    tensor/Tensor22.cpp
+    tensor/Tensor22.hpp
+    tensor/Tensor22.hxx
+    tensor/Tensor23.cpp
+    tensor/Tensor23.hpp
+    tensor/Tensor23.hxx
+    tensor/Tensor24.cpp
+    tensor/Tensor24.hpp
+    tensor/Tensor24.hxx
+    tensor/Tensor31.cpp
+    tensor/Tensor31.hpp
+    tensor/Tensor31.hxx
+    tensor/Tensor32.cpp
+    tensor/Tensor32.hpp
+    tensor/Tensor32.hxx
+    tensor/Tensor33.cpp
+    tensor/Tensor33.hpp
+    tensor/Tensor33.hxx
+    tensor/Tensor34.cpp
+    tensor/Tensor34.hpp
+    tensor/Tensor34.hxx
+    tensor/Tensor41.cpp
+    tensor/Tensor41.hpp
+    tensor/Tensor41.hxx
+    tensor/Tensor42.cpp
+    tensor/Tensor42.hpp
+    tensor/Tensor42.hxx
+    tensor/Tensor43.cpp
+    tensor/Tensor43.hpp
+    tensor/Tensor43.hxx
+    tensor/Tensor44.cpp
+    tensor/Tensor44.hpp
+    tensor/Tensor44.hxx
+        
     text/Comma.hpp
     text/IgCase.hpp
     text/IgCase.cpp
@@ -737,54 +786,6 @@ add_library(${PROJECT_NAME} SHARED
     vector/Quaternion3.cpp
     vector/Quaternion3.hpp
     vector/Quaternion3.hxx
-    vector/Tensor11.cpp
-    vector/Tensor11.hpp
-    vector/Tensor11.hxx
-    vector/Tensor12.cpp
-    vector/Tensor12.hpp
-    vector/Tensor12.hxx
-    vector/Tensor13.cpp
-    vector/Tensor13.hpp
-    vector/Tensor13.hxx
-    vector/Tensor14.cpp
-    vector/Tensor14.hpp
-    vector/Tensor14.hxx
-    vector/Tensor21.cpp
-    vector/Tensor21.hpp
-    vector/Tensor21.hxx
-    vector/Tensor22.cpp
-    vector/Tensor22.hpp
-    vector/Tensor22.hxx
-    vector/Tensor23.cpp
-    vector/Tensor23.hpp
-    vector/Tensor23.hxx
-    vector/Tensor24.cpp
-    vector/Tensor24.hpp
-    vector/Tensor24.hxx
-    vector/Tensor31.cpp
-    vector/Tensor31.hpp
-    vector/Tensor31.hxx
-    vector/Tensor32.cpp
-    vector/Tensor32.hpp
-    vector/Tensor32.hxx
-    vector/Tensor33.cpp
-    vector/Tensor33.hpp
-    vector/Tensor33.hxx
-    vector/Tensor34.cpp
-    vector/Tensor34.hpp
-    vector/Tensor34.hxx
-    vector/Tensor41.cpp
-    vector/Tensor41.hpp
-    vector/Tensor41.hxx
-    vector/Tensor42.cpp
-    vector/Tensor42.hpp
-    vector/Tensor42.hxx
-    vector/Tensor43.cpp
-    vector/Tensor43.hpp
-    vector/Tensor43.hxx
-    vector/Tensor44.cpp
-    vector/Tensor44.hpp
-    vector/Tensor44.hxx
     vector/Trivector3.cpp
     vector/Trivector3.hpp
     vector/Trivector3.hxx

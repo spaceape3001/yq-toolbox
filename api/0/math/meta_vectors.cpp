@@ -36,11 +36,6 @@
 
 using namespace yq;
 
-YQ_TYPE_IMPLEMENT(yq::Bivector2D)
-YQ_TYPE_IMPLEMENT(yq::Bivector2F)
-
-YQ_TYPE_IMPLEMENT(yq::Bivector3D)
-YQ_TYPE_IMPLEMENT(yq::Bivector3F)
 
 YQ_TYPE_IMPLEMENT(yq::Bivector4D)
 YQ_TYPE_IMPLEMENT(yq::Bivector4F)
@@ -71,25 +66,8 @@ YQ_TYPE_IMPLEMENT(yq::Trivector4D)
 YQ_TYPE_IMPLEMENT(yq::Trivector4F)
 
 
-YQ_TYPE_IMPLEMENT(yq::Vector1D)
-YQ_TYPE_IMPLEMENT(yq::Vector1F)
-YQ_TYPE_IMPLEMENT(yq::Vector1I)
-YQ_TYPE_IMPLEMENT(yq::Vector1U)
 
-YQ_TYPE_IMPLEMENT(yq::Vector2D)
-YQ_TYPE_IMPLEMENT(yq::Vector2F)
-YQ_TYPE_IMPLEMENT(yq::Vector2I)
-YQ_TYPE_IMPLEMENT(yq::Vector2U)
 
-YQ_TYPE_IMPLEMENT(yq::Vector3D)
-YQ_TYPE_IMPLEMENT(yq::Vector3F)
-YQ_TYPE_IMPLEMENT(yq::Vector3I)
-YQ_TYPE_IMPLEMENT(yq::Vector3U)
-
-YQ_TYPE_IMPLEMENT(yq::Vector4D)
-YQ_TYPE_IMPLEMENT(yq::Vector4F)
-YQ_TYPE_IMPLEMENT(yq::Vector4I)
-YQ_TYPE_IMPLEMENT(yq::Vector4U)
 
 
 
@@ -103,29 +81,8 @@ namespace {
         str << "(" << v.w << "," << v.x << "," << v.y << "," << v.z << ")";
     }
 
-    template <typename T>
-    void    print_vector1(Stream& str, const Vector1<T>& v)
-    {
-        str << "(" << v.x << ")";
-    }
 
-    template <typename T>
-    void    print_vector2(Stream& str, const Vector2<T>& v)
-    {
-        str << "(" << v.x << "," << v.y << ")";
-    }
 
-    template <typename T>
-    void    print_vector3(Stream& str, const Vector3<T>& v)
-    {
-        str << "(" << v.x << "," << v.y << "," << v.z << ")";
-    }
-
-    template <typename T>
-    void    print_vector4(Stream& str, const Vector4<T>& v)
-    {
-        str << "(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")";
-    }
 }
     
 //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -141,17 +98,6 @@ static void reg_vector_math () {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Bivectors
     
-    {
-        auto w = writer<Bivector2D>();
-        w.description("2D Bivector in double");
-        w.property(szXY, &Bivector2D::xy).description(szXY_Bivector);
-    }
-
-    {
-        auto w = writer<Bivector2F>();
-        w.description("2D Bivector in float");
-        w.property(szXY, &Bivector2F::xy).description(szXY_Bivector);
-    }
 
     {
         auto w = writer<Bivector3D>();
@@ -370,177 +316,6 @@ static void reg_vector_math () {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Vector
 
-    {
-        auto w = writer<Vector1D>();
-        w.description("1D vector in double");
-        w.property(szLength, &Vector1D::length).description(szLength_Vector).alias(szLen);
-        w.property(szLength², &Vector1D::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1D::x).description(szX_Vector);
-        w.operate_self({ Operator::Add, Operator::Subtract });
-        w.operate_with<double>();
-        w.print<print_vector1<double>>();
-    }
-
-    {
-        auto w = writer<Vector1F>();
-        w.description("1D vector in float");
-        w.property(szLength, &Vector1F::length).description(szLength_Vector).alias(szLen);
-        w.property(szLength², &Vector1F::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1F::x).description(szX_Vector);
-        w.print<print_vector1<float>>();
-    }
-
-    {
-        auto w = writer<Vector1I>();
-        w.description("1D vector in integer");
-        w.property(szLength², &Vector1I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1I::x).description(szX_Vector);
-        w.print<print_vector1<int>>();
-    }
-
-    {
-        auto w = writer<Vector1U>();
-        w.description("1D vector in unsigned integer");
-        w.property(szLength², &Vector1U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1U::x).description(szX_Vector);
-        w.print<print_vector1<unsigned>>();
-    }
-
-    {
-        auto w = writer<Vector2D>();
-        w.description("2D vector in double");
-        w.property(szLength², &Vector2D::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szLength, &Vector2D::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector2D::x).description(szX_Vector);
-        w.property(szY, &Vector2D::y).description(szY_Vector);
-        w.method(szZ, &Vector2D::z).description(szZ_Vector2);
-        w.operate_self({ Operator::Add, Operator::Subtract });
-        w.operate_with<double>();
-        w.print<print_vector2<double>>();
-    }
-
-    {
-        auto w = writer<Vector2F>();
-        w.description("2D vector in float");
-        w.property(szLength², &Vector2F::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szLength, &Vector2F::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector2F::x).description(szX_Vector);
-        w.property(szY, &Vector2F::y).description(szY_Vector);
-        w.method(szZ, &Vector2F::z).description(szZ_Vector2);
-        w.print<print_vector2<float>>();
-    }
-
-    {
-        auto w = writer<Vector2I>();
-        w.description("2D vector in integer");
-        w.property(szLength², &Vector2I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector2I::x).description(szX_Vector);
-        w.property(szY, &Vector2I::y).description(szY_Vector);
-        w.method(szZ, &Vector2I::z).description(szZ_Vector2);
-        w.print<print_vector2<int>>();
-    }
-
-    {
-        auto w = writer<Vector2U>();
-        w.description("2D vector in unsigned integer");
-        w.property(szLength², &Vector2U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector2U::x).description(szX_Vector);
-        w.property(szY, &Vector2U::y).description(szY_Vector);
-        w.method(szZ, &Vector2U::z).description(szZ_Vector2);
-        w.print<print_vector2<unsigned>>();
-    }
-
-    {
-        auto w = writer<Vector3D>();
-        w.description("3D vector in double");
-        w.property(szLength², &Vector3D::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szLength, &Vector3D::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector3D::x).description(szX_Vector);
-        w.property(szY, &Vector3D::y).description(szY_Vector);
-        w.property(szZ, &Vector3D::z).description(szZ_Vector);
-        w.operate_self({ Operator::Add, Operator::Subtract });
-        w.operate_with<double>();
-        w.print<print_vector3<double>>();
-    }
-
-    {
-        auto w = writer<Vector3F>();
-        w.description("3D vector in float");
-        w.property(szLength², &Vector3F::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szLength, &Vector3F::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector3F::x).description(szX_Vector);
-        w.property(szY, &Vector3F::y).description(szY_Vector);
-        w.property(szZ, &Vector3F::z).description(szZ_Vector);
-        w.print<print_vector3<float>>();
-    }
-
-    {
-        auto w = writer<Vector3I>();
-        w.description("3D vector in integer");
-        w.property(szLength², &Vector3I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector3I::x).description(szX_Vector);
-        w.property(szY, &Vector3I::y).description(szY_Vector);
-        w.property(szZ, &Vector3I::z).description(szZ_Vector);
-        w.print<print_vector3<int>>();
-    }
-
-    {
-        auto w = writer<Vector3U>();
-        w.description("3D vector in unsigned integer");
-        w.property(szLength², &Vector3U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector3U::x).description(szX_Vector);
-        w.property(szY, &Vector3U::y).description(szY_Vector);
-        w.property(szZ, &Vector3U::z).description(szZ_Vector);
-        w.print<print_vector3<unsigned>>();
-    }
-
-    {
-        auto w = writer<Vector4D>();
-        w.description("4D vector in double");
-        w.property(szLength², &Vector4D::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szLength, &Vector4D::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector4D::x).description(szX_Vector);
-        w.property(szY, &Vector4D::y).description(szY_Vector);
-        w.property(szZ, &Vector4D::z).description(szZ_Vector);
-        w.property(szW, &Vector4D::w).description(szW_Vector);
-        w.operate_self({ Operator::Add, Operator::Subtract });
-        w.operate_with<double>();
-        w.print<print_vector4<double>>();
-    }
-
-    {
-        auto w = writer<Vector4F>();
-        w.description("4D vector in float");
-        w.property(szLength², &Vector4F::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szLength, &Vector4F::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector4F::x).description(szX_Vector);
-        w.property(szY, &Vector4F::y).description(szY_Vector);
-        w.property(szZ, &Vector4F::z).description(szZ_Vector);
-        w.property(szW, &Vector4F::w).description(szW_Vector);
-        w.print<print_vector4<float>>();
-    }
-
-    {
-        auto w = writer<Vector4I>();
-        w.description("4D vector in integer");
-        w.property(szLength², &Vector4I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector4I::x).description(szX_Vector);
-        w.property(szY, &Vector4I::y).description(szY_Vector);
-        w.property(szZ, &Vector4I::z).description(szZ_Vector);
-        w.property(szW, &Vector4I::w).description(szW_Vector);
-        w.print<print_vector4<int>>();
-    }
-
-    {
-        auto w = writer<Vector4U>();
-        w.description("4D vector in unsigned integer");
-        w.property(szLength², &Vector4U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector4U::x).description(szX_Vector);
-        w.property(szY, &Vector4U::y).description(szY_Vector);
-        w.property(szZ, &Vector4U::z).description(szZ_Vector);
-        w.property(szW, &Vector4U::w).description(szW_Vector);
-        w.print<print_vector4<unsigned>>();
-    }
 }
 
 YQ_INVOKE(reg_vector_math();)

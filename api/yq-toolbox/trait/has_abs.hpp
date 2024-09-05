@@ -7,6 +7,7 @@
 #pragma once
 
 #include <type_traits>
+#include <cstdint>
 #include <cstdlib>
 #include <cmath>
 

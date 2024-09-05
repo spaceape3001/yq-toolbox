@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq-toolbox/vector/Quaternion3.hpp>
-#include <yq-toolbox/vector/Tensor33.hpp>
-#include <yq-toolbox/vector/Tensor44.hpp>
+#include <yq-toolbox/tensor/Tensor33.hpp>
+#include <yq-toolbox/tensor/Tensor44.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
 
 namespace yq {

@@ -8,25 +8,25 @@
 #include <yq-toolbox/strings.hpp>
 
 
-#include <yq-toolbox/vector/Tensor11.hpp>
-#include <yq-toolbox/vector/Tensor12.hpp>
-#include <yq-toolbox/vector/Tensor13.hpp>
-#include <yq-toolbox/vector/Tensor14.hpp>
+#include <yq-toolbox/tensor/Tensor11.hpp>
+#include <yq-toolbox/tensor/Tensor12.hpp>
+#include <yq-toolbox/tensor/Tensor13.hpp>
+#include <yq-toolbox/tensor/Tensor14.hpp>
 
-#include <yq-toolbox/vector/Tensor21.hpp>
-#include <yq-toolbox/vector/Tensor22.hpp>
-#include <yq-toolbox/vector/Tensor23.hpp>
-#include <yq-toolbox/vector/Tensor24.hpp>
+#include <yq-toolbox/tensor/Tensor21.hpp>
+#include <yq-toolbox/tensor/Tensor22.hpp>
+#include <yq-toolbox/tensor/Tensor23.hpp>
+#include <yq-toolbox/tensor/Tensor24.hpp>
 
-#include <yq-toolbox/vector/Tensor31.hpp>
-#include <yq-toolbox/vector/Tensor32.hpp>
-#include <yq-toolbox/vector/Tensor33.hpp>
-#include <yq-toolbox/vector/Tensor34.hpp>
+#include <yq-toolbox/tensor/Tensor31.hpp>
+#include <yq-toolbox/tensor/Tensor32.hpp>
+#include <yq-toolbox/tensor/Tensor33.hpp>
+#include <yq-toolbox/tensor/Tensor34.hpp>
 
-#include <yq-toolbox/vector/Tensor41.hpp>
-#include <yq-toolbox/vector/Tensor42.hpp>
-#include <yq-toolbox/vector/Tensor43.hpp>
-#include <yq-toolbox/vector/Tensor44.hpp>
+#include <yq-toolbox/tensor/Tensor41.hpp>
+#include <yq-toolbox/tensor/Tensor42.hpp>
+#include <yq-toolbox/tensor/Tensor43.hpp>
+#include <yq-toolbox/tensor/Tensor44.hpp>
 
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>

@@ -12,7 +12,7 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Tensor33.hpp>
+#include <yq-toolbox/tensor/Tensor33.hpp>
 #include <yq-toolbox/math/trigonometry.hpp>
 #include <yq-toolbox/units.hpp>
 #include <yq-toolbox/math/utility.hpp>

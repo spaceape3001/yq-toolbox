@@ -13,7 +13,7 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Tensor22.hpp>
+#include <yq-toolbox/tensor/Tensor22.hpp>
 #include <yq-toolbox/math/trigonometry.hpp>
 #include <yq-toolbox/math/utility.hpp>
 

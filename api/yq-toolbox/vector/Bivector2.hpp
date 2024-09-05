@@ -140,7 +140,7 @@ namespace yq {
         //! Divides a bivector by the given divisor, returns the result
         template <typename U>
         requires is_arithmetic_v<T>
-        constexpr Bivector2<quotient_t<T,U>> operator/(U b) noexcept;
+        constexpr Bivector2<quotient_t<T,U>> operator/(U b) const noexcept;
 
         //! Self-divides this bivector by the given factor
         template <typename U>

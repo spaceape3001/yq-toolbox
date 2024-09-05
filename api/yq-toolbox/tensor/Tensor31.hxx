@@ -11,7 +11,7 @@
     *IF* you need the operator and it's not yet available as explicit 
     template instantiation.  
 */
-#include <yq-toolbox/vector/Tensor31.hpp>
+#include <yq-toolbox/tensor/Tensor31.hpp>
 #include <yq-toolbox/math/utility.hpp>
 
 #include <yq-toolbox/math/AllComponents.hpp>

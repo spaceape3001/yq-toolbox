@@ -109,7 +109,11 @@ namespace yq {
 
         #ifdef YQ_USE_GLM
         //! Implicit conversion to GLM vector
-        constexpr operator glm::vec<1, T, glm::defaultp>() const noexcept;
+        template <glm::qualifier Q>
+        constexpr operator glm::vec<1, T, Q>() const noexcept
+        {
+            return glm::vec<1, T, Q>(x);
+        }
         #endif
         
         //! Explicit conversion operator

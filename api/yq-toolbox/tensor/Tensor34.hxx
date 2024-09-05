@@ -12,7 +12,7 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Tensor34.hpp>
+#include <yq-toolbox/tensor/Tensor34.hpp>
 #include <yq-toolbox/math/utility.hpp>
 
 #include <yq-toolbox/math/AllComponents.hpp>

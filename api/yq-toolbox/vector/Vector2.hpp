@@ -125,7 +125,11 @@ namespace yq {
         constexpr bool operator==(const Vector2&) const noexcept = default;
 
         #ifdef YQ_USE_GLM
-        constexpr operator glm::vec<2, T, glm::defaultp>() const noexcept;
+        template <glm::qualifier Q>
+        constexpr operator glm::vec<2, T, Q>() const noexcept
+        {
+            return glm::vec<2, T, Q>( x, y );
+        }
         #endif
 
         //! Explicit conversion operator

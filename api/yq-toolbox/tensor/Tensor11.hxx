@@ -13,7 +13,7 @@
 */
 
 
-#include <yq-toolbox/vector/Tensor11.hpp>
+#include <yq-toolbox/tensor/Tensor11.hpp>
 #include <yq-toolbox/math/utility.hpp>
 
 #include <yq-toolbox/math/AllComponents.hpp>

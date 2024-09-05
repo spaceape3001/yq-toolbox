@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/vector/Tensor42.hpp>
+#include <yq-toolbox/tensor/Tensor42.hpp>
 #include <yq-toolbox/math/utility.hpp>
 
 #include <yq-toolbox/math/AllComponents.hpp>

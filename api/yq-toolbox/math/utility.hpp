@@ -18,7 +18,9 @@
 #include <yq-toolbox/trait/is_arithmetic.hpp>
 #include <yq-toolbox/trait/square.hpp>
 #include <cmath>
+#include <span>
 #include <utility>
+#include <vector>
 
 namespace yq {
 

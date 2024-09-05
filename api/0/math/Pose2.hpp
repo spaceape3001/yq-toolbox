@@ -10,7 +10,7 @@
 
 
 #include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/vector/Tensor22.hpp>
+#include <yq-toolbox/tensor/Tensor22.hpp>
 #include <yq-toolbox/unit/MKS.hpp>
 #include <yq-toolbox/unit/SCALED.hpp>
 

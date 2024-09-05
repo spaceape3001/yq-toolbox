@@ -7,7 +7,7 @@
 #include <boost/ut.hpp>
 #include <yq-toolbox/math/tolerance/Absolute.hpp>
 #include <yq-toolbox/math/utility.hpp>
-#include <yq-toolbox/vector/Tensor34.hxx>
+#include <yq-toolbox/tensor/Tensor34.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -8,15 +8,12 @@
 
 #include <yq-toolbox/strings.hpp>
 
-//  temporary until moved
-#include <yq-toolbox/vector/Tensor33.hpp>
-#include <yq-toolbox/vector/Vector3.hpp>
-
 #include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/basic/StringLiteral.hpp>
 #include <yq-toolbox/io/StreamOps.hpp>
 #include <yq-toolbox/meta/Init.hpp>
-
-#include <yq-toolbox/basic/StringLiteral.hpp>
+#include <yq-toolbox/tensor/Tensor33.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
 
 using namespace yq;
 
