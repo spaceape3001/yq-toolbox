@@ -7,7 +7,7 @@
 #pragma once
 
 #include <0/graph/xfg/preamble.hpp>
-#include <yq/meta/Meta.hpp>
+#include <yq-toolbox/meta/Meta.hpp>
 
 namespace yq::xfg {
     class PinInfo : public Meta {

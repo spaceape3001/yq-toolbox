@@ -12,7 +12,7 @@
 #include <cstdio>
 #include <log4cpp/CategoryStream.hh>
 #include <iostream>
-#include <yq/io/Stream.hpp>
+#include <yq-toolbox/io/Stream.hpp>
 
 namespace yq {
     Date::Date(today_t) : Date()

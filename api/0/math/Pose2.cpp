@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Pose2.hpp"
-#include <yq/basic/DelayInit.hpp>
-#include <yq/strings.hpp>
-#include <yq/units.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/strings.hpp>
+#include <yq-toolbox/units.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
 using namespace yq;
 

@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <yq/strings.hpp>
+#include <yq-toolbox/strings.hpp>
 
-#include <yq/basic/DelayInit.hpp>
-#include <yq/io/StreamOps.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
-#include <yq/math/glm_types.hpp>
+#include <yq-toolbox/math/glm_types.hpp>
 
 using namespace yq;
 

@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/math/tolerance/Absolute.hpp>
-#include <yq/math/utility.hpp>
-#include <yq/shape/Segment2.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq-toolbox/math/tolerance/Absolute.hpp>
+#include <yq-toolbox/math/utility.hpp>
+#include <yq-toolbox/shape/Segment2.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
 
-#include <yq/shape/Segment2.hxx>
-#include <yq/vector/Vector2.hxx>
+#include <yq-toolbox/shape/Segment2.hxx>
+#include <yq-toolbox/vector/Vector2.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

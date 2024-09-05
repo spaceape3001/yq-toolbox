@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/shape/Size2.hxx>
-#include <yq/vector/Vector2.hxx>
-#include <yq/basic/Logging.hpp>
+#include <yq-toolbox/shape/Size2.hxx>
+#include <yq-toolbox/vector/Vector2.hxx>
+#include <yq-toolbox/basic/Logging.hpp>
 
 #include <iostream>
 

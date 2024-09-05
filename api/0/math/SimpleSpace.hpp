@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/vector/Quaternion3.hpp>
-#include <yq/vector/Tensor33.hpp>
-#include <yq/vector/Tensor44.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq-toolbox/vector/Quaternion3.hpp>
+#include <yq-toolbox/vector/Tensor33.hpp>
+#include <yq-toolbox/vector/Tensor44.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
 
 namespace yq {
     /*! \brief Simple space reference frame

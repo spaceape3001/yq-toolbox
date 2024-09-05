@@ -5,55 +5,55 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <yq/strings.hpp>
+#include <yq-toolbox/strings.hpp>
 
-#include <yq/shape/AxBox1.hpp>
-#include <yq/shape/AxBox2.hpp>
-#include <yq/shape/AxBox3.hpp>
-#include <yq/shape/AxBox4.hpp>
-
-
-#include <yq/shape/Circle2.hpp>
-
-#include <yq/shape/Normal2.hpp>
-#include <yq/shape/Normal3.hpp>
-
-#include <yq/shape/Plane3.hpp>
-
-#include <yq/shape/Ray2.hpp>
-#include <yq/shape/Ray3.hpp>
-#include <yq/shape/Ray4.hpp>
+#include <yq-toolbox/shape/AxBox1.hpp>
+#include <yq-toolbox/shape/AxBox2.hpp>
+#include <yq-toolbox/shape/AxBox3.hpp>
+#include <yq-toolbox/shape/AxBox4.hpp>
 
 
-#include <yq/shape/Rectangle2.hpp>
+#include <yq-toolbox/shape/Circle2.hpp>
 
-#include <yq/shape/Segment1.hpp>
-#include <yq/shape/Segment2.hpp>
-#include <yq/shape/Segment3.hpp>
-#include <yq/shape/Segment4.hpp>
+#include <yq-toolbox/shape/Normal2.hpp>
+#include <yq-toolbox/shape/Normal3.hpp>
 
-#include <yq/shape/Size1.hpp>
-#include <yq/shape/Size2.hpp>
-#include <yq/shape/Size3.hpp>
-#include <yq/shape/Size4.hpp>
+#include <yq-toolbox/shape/Plane3.hpp>
 
-#include <yq/shape/Sphere3.hpp>
-#include <yq/shape/Sphere4.hpp>
+#include <yq-toolbox/shape/Ray2.hpp>
+#include <yq-toolbox/shape/Ray3.hpp>
+#include <yq-toolbox/shape/Ray4.hpp>
 
-#include <yq/shape/Tetrahedron3.hpp>
 
-#include <yq/shape/Triangle2.hpp>
-#include <yq/shape/Triangle3.hpp>
-#include <yq/shape/Triangle4.hpp>
+#include <yq-toolbox/shape/Rectangle2.hpp>
 
-#include <yq/shape/Quadrilateral2.hpp>
+#include <yq-toolbox/shape/Segment1.hpp>
+#include <yq-toolbox/shape/Segment2.hpp>
+#include <yq-toolbox/shape/Segment3.hpp>
+#include <yq-toolbox/shape/Segment4.hpp>
 
-#include <yq/basic/DelayInit.hpp>
-#include <yq/io/StreamOps.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/shape/Size1.hpp>
+#include <yq-toolbox/shape/Size2.hpp>
+#include <yq-toolbox/shape/Size3.hpp>
+#include <yq-toolbox/shape/Size4.hpp>
 
-#include <yq/shape/shape_utils.hpp>
-#include <yq/unit/literals.hpp>
+#include <yq-toolbox/shape/Sphere3.hpp>
+#include <yq-toolbox/shape/Sphere4.hpp>
+
+#include <yq-toolbox/shape/Tetrahedron3.hpp>
+
+#include <yq-toolbox/shape/Triangle2.hpp>
+#include <yq-toolbox/shape/Triangle3.hpp>
+#include <yq-toolbox/shape/Triangle4.hpp>
+
+#include <yq-toolbox/shape/Quadrilateral2.hpp>
+
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/meta/Init.hpp>
+
+#include <yq-toolbox/shape/shape_utils.hpp>
+#include <yq-toolbox/unit/literals.hpp>
 
 using namespace yq;
 
@@ -1088,7 +1088,7 @@ static void reg_shape_math () {
 
 YQ_INVOKE(reg_shape_math();)
 
-#include <yq/math/Range.hxx>
+#include <yq-toolbox/math/Range.hxx>
 
 #include "shape/AxBox1.hxx"
 #include "shape/AxBox2.hxx"

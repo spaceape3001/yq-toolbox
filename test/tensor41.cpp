@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/math/tolerance/Absolute.hpp>
-#include <yq/math/utility.hpp>
-#include <yq/vector/Tensor41.hxx>
+#include <yq-toolbox/math/tolerance/Absolute.hpp>
+#include <yq-toolbox/math/utility.hpp>
+#include <yq-toolbox/vector/Tensor41.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

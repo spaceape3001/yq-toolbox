@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/container/Vector.hpp>
-#include <yq/text/IterUtf8.hpp>
-#include <yq/text/IgCase.hpp>
-#include <yq/text/chars.hpp>
-#include <yq/text/parse.hpp>
-#include <yq/text/match.hpp>
-#include <yq/text/split.hpp>
-#include <yq/text/vsplit.hpp>
+#include <yq-toolbox/container/Vector.hpp>
+#include <yq-toolbox/text/IterUtf8.hpp>
+#include <yq-toolbox/text/IgCase.hpp>
+#include <yq-toolbox/text/chars.hpp>
+#include <yq-toolbox/text/parse.hpp>
+#include <yq-toolbox/text/match.hpp>
+#include <yq-toolbox/text/split.hpp>
+#include <yq-toolbox/text/vsplit.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -8,13 +8,13 @@
 
 #include <0/graph/preamble.hpp>
 
-#include <yq/basic/Any.hpp>
-#include <yq/basic/Enum.hpp>
-#include <yq/basic/Flag.hpp>
-#include <yq/container/Map.hpp>
-#include <yq/basic/MinMaxDef.hpp>
-#include <yq/typedef/filesystem_path.hpp>
-#include <yq/typedef/string_vectors.hpp>
+#include <yq-toolbox/basic/Any.hpp>
+#include <yq-toolbox/basic/Enum.hpp>
+#include <yq-toolbox/basic/Flag.hpp>
+#include <yq-toolbox/container/Map.hpp>
+#include <yq-toolbox/basic/MinMaxDef.hpp>
+#include <yq-toolbox/typedef/filesystem_path.hpp>
+#include <yq-toolbox/typedef/string_vectors.hpp>
 
 namespace yq {
     /*! \brief Graph Descriptor Language

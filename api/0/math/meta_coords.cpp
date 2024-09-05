@@ -5,18 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <yq/strings.hpp>
+#include <yq-toolbox/strings.hpp>
 
 #include <0/math/coord/LatLon.hpp>
 #include <0/math/coord/LatLonAlt.hpp>
 #include <0/math/coord/Polar2.hpp>
 #include <0/math/coord/Cylindrical3.hpp>
 
-#include <yq/unit/MKS.hpp>
+#include <yq-toolbox/unit/MKS.hpp>
 
-#include <yq/basic/DelayInit.hpp>
-#include <yq/io/StreamOps.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::Cylindrical3D)
 YQ_TYPE_IMPLEMENT(yq::Cylindrical3M)

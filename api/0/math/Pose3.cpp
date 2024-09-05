@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Pose3.hpp"
-#include <yq/strings.hpp>
-#include <yq/basic/DelayInit.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/strings.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
 using namespace yq;
 

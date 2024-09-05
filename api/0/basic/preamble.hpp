@@ -20,29 +20,29 @@
 #include <unordered_set>
 #include <vector>
 
-#include <yq/basic/128-bit.hpp>
-#include <yq/basic/Expect.hpp>
-#include <yq/text/IgCase.hpp>
-#include <yq/basic/LogFwd.hpp>
-#include <yq/text/RevIgCase.hpp>
-#include <yq/typedef/expected.hpp>
-#include <yq/typedef/int_range.hpp>
-#include <yq/typedef/result.hpp>
-#include <yq/typedef/string_initlists.hpp>
-#include <yq/typedef/string_maps.hpp>
-#include <yq/typedef/string_pairs.hpp>
-#include <yq/typedef/string_sets.hpp>
-#include <yq/typedef/string_vectors.hpp>
-#include <yq/typedef/url.hpp>
-#include <yq/macro/cppstring.hpp>
-#include <yq/macro/make_version.hpp>
-#include <yq/trait/numbers.hpp>
-#include <yq/typedef/any.hpp>
+#include <yq-toolbox/basic/128-bit.hpp>
+#include <yq-toolbox/basic/Expect.hpp>
+#include <yq-toolbox/text/IgCase.hpp>
+#include <yq-toolbox/basic/LogFwd.hpp>
+#include <yq-toolbox/text/RevIgCase.hpp>
+#include <yq-toolbox/typedef/expected.hpp>
+#include <yq-toolbox/typedef/int_range.hpp>
+#include <yq-toolbox/typedef/result.hpp>
+#include <yq-toolbox/typedef/string_initlists.hpp>
+#include <yq-toolbox/typedef/string_maps.hpp>
+#include <yq-toolbox/typedef/string_pairs.hpp>
+#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq-toolbox/typedef/string_vectors.hpp>
+#include <yq-toolbox/typedef/url.hpp>
+#include <yq-toolbox/macro/cppstring.hpp>
+#include <yq-toolbox/macro/make_version.hpp>
+#include <yq-toolbox/trait/numbers.hpp>
+#include <yq-toolbox/typedef/any.hpp>
 
-#include <yq/keywords.hpp>
-#include <yq/config/string.hpp>
-#include <yq/container/forward.hpp>
-#include <yq/meta/forward.hpp>
+#include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/config/string.hpp>
+#include <yq-toolbox/container/forward.hpp>
+#include <yq-toolbox/meta/forward.hpp>
 
 
 using namespace std::literals::chrono_literals;

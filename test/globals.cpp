@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/meta/Init.hpp>
-#include <yq/basic/Any.hpp>
-#include <yq/basic/Global.hpp>
+#include <yq-toolbox/meta/Init.hpp>
+#include <yq-toolbox/basic/Any.hpp>
+#include <yq-toolbox/basic/Global.hpp>
 #include <iostream>
 
 namespace ut = boost::ut;

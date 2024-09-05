@@ -6,12 +6,12 @@
 
 #include <boost/ut.hpp>
 
-#include <yq/shape/AxBox2.hpp>
-#include <yq/shape/Circle2.hpp>
-#include <yq/basic/Logging.hpp>
+#include <yq-toolbox/shape/AxBox2.hpp>
+#include <yq-toolbox/shape/Circle2.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
 
-#include <yq/shape/AxBox2.hxx>
-#include <yq/vector/Vector2.hxx>
+#include <yq-toolbox/shape/AxBox2.hxx>
+#include <yq-toolbox/vector/Vector2.hxx>
 
 #include <iostream>
 

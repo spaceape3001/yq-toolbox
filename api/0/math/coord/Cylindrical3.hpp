@@ -10,11 +10,11 @@
 
 #include <0/math/preamble.hpp>
 
-#include <yq/keywords.hpp>
-#include <yq/trait/product.hpp>
-#include <yq/trait/quotient.hpp>
-#include <yq/trait/self_divide.hpp>
-#include <yq/trait/self_multiply.hpp>
+#include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/trait/product.hpp>
+#include <yq-toolbox/trait/quotient.hpp>
+#include <yq-toolbox/trait/self_divide.hpp>
+#include <yq-toolbox/trait/self_multiply.hpp>
 
 namespace yq {
     /*! \brief Cylindrical coordinates

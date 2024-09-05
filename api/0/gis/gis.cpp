@@ -11,8 +11,8 @@
 #include "Time.ipp"
 #include "Geodetic2.hpp"
 #include "Geodetic3.hpp"
-#include <yq/unit/MKS.hpp>
-#include <yq/unit/SCALED.hpp>
+#include <yq-toolbox/unit/MKS.hpp>
+#include <yq-toolbox/unit/SCALED.hpp>
 
 
 //#include "EarthDate.ipp"
@@ -20,7 +20,7 @@
 #include "enum/Calendar.hpp"
 #include "enum/Weekday.hpp"
 
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::Calendar)
 YQ_TYPE_IMPLEMENT(yq::Date)

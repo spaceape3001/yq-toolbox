@@ -7,7 +7,7 @@
 #include "GraphIO.ipp"
 #include "GraphTraits.hpp"
 #include <cstdint>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
 
 #ifndef NDEBUG

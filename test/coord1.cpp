@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/coord/Coord1.hpp>
-#include <yq/coord/Coord1.hxx>
+#include <yq-toolbox/coord/Coord1.hpp>
+#include <yq-toolbox/coord/Coord1.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

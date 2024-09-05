@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq-toolbox/io/stream/StdStream.hpp>
+
+namespace yq::stream {
+    class StdOutput : public StdStream {
+    public:
+        explicit StdOutput();
+        ~StdOutput();
+    };
+}

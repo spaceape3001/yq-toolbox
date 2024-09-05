@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/math/tolerance/Absolute.hpp>
-#include <yq/units.hpp>
+#include <yq-toolbox/math/tolerance/Absolute.hpp>
+#include <yq-toolbox/units.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

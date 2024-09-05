@@ -7,8 +7,8 @@
 #pragma once
 
 #include <0/math/preamble.hpp>
-#include <yq/basic/Enum.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq-toolbox/basic/Enum.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq::chemistry {
     YQ_ENUM( Phase, ,

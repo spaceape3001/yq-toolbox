@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/math/tolerance/Absolute.hpp>
-#include <yq/math/utility.hpp>
-#include <yq/shape/Polyline3.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq-toolbox/math/tolerance/Absolute.hpp>
+#include <yq-toolbox/math/utility.hpp>
+#include <yq-toolbox/shape/Polyline3.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
 
-#include <yq/shape/Polyline3.hxx>
-#include <yq/vector/Vector3.hxx>
+#include <yq-toolbox/shape/Polyline3.hxx>
+#include <yq-toolbox/vector/Vector3.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

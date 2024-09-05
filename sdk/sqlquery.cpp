@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
-#include <yq/container/Vector.hpp>
-#include <yq/basic/Logging.hpp>
-#include <yq/sql/SqlLite.hpp>
-#include <yq/sql/SqlQuery.hpp>
+#include <yq-toolbox/container/Vector.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
+#include <yq-toolbox/sql/SqlLite.hpp>
+#include <yq-toolbox/sql/SqlQuery.hpp>
 //#include <0/basic/TextUtils.hpp>
-#include <yq/text/copy.hpp>
-#include <yq/text/transform.hpp>
-#include <yq/typedef/string.hpp>
+#include <yq-toolbox/text/copy.hpp>
+#include <yq-toolbox/text/transform.hpp>
+#include <yq-toolbox/typedef/string.hpp>
 
 using namespace yq;
 

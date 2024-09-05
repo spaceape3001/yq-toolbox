@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/basic/Enum.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq-toolbox/basic/Enum.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {
     YQ_ENUM( Weekday, ,

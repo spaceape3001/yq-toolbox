@@ -5,34 +5,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <0/math/preamble.hpp>
-#include <yq/strings.hpp>
+#include <yq-toolbox/strings.hpp>
 
 
-#include <yq/vector/Bivector2.hpp>
-#include <yq/vector/Bivector3.hpp>
-#include <yq/vector/Bivector4.hpp>
+#include <yq-toolbox/vector/Bivector2.hpp>
+#include <yq-toolbox/vector/Bivector3.hpp>
+#include <yq-toolbox/vector/Bivector4.hpp>
 
-#include <yq/vector/Multivector1.hpp>
-#include <yq/vector/Multivector2.hpp>
-#include <yq/vector/Multivector3.hpp>
-#include <yq/vector/Multivector4.hpp>
+#include <yq-toolbox/vector/Multivector1.hpp>
+#include <yq-toolbox/vector/Multivector2.hpp>
+#include <yq-toolbox/vector/Multivector3.hpp>
+#include <yq-toolbox/vector/Multivector4.hpp>
 
-#include <yq/vector/Quadvector4.hpp>
-#include <yq/vector/Quaternion3.hpp>
+#include <yq-toolbox/vector/Quadvector4.hpp>
+#include <yq-toolbox/vector/Quaternion3.hpp>
 
-#include <yq/vector/Trivector3.hpp>
-#include <yq/vector/Trivector4.hpp>
+#include <yq-toolbox/vector/Trivector3.hpp>
+#include <yq-toolbox/vector/Trivector4.hpp>
 
-#include <yq/vector/Vector1.hpp>
-#include <yq/vector/Vector2.hpp>
-#include <yq/vector/Vector3.hpp>
-#include <yq/vector/Vector4.hpp>
+#include <yq-toolbox/vector/Vector1.hpp>
+#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq-toolbox/vector/Vector4.hpp>
 
-#include <yq/basic/DelayInit.hpp>
-#include <yq/io/StreamOps.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
-#include <yq/unit/literals.hpp>
+#include <yq-toolbox/unit/literals.hpp>
 
 using namespace yq;
 

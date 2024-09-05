@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/io/KeyValue.hpp>
-#include <yq/io/FileUtils.hpp>
-#include <yq/basic/Logging.hpp>
-#include <yq/text/match.hpp>
-#include <yq/container/ByteArray.hpp>
+#include <yq-toolbox/io/KeyValue.hpp>
+#include <yq-toolbox/io/FileUtils.hpp>
+#include <yq-toolbox/basic/Logging.hpp>
+#include <yq-toolbox/text/match.hpp>
+#include <yq-toolbox/container/ByteArray.hpp>
 
 using namespace yq;
 

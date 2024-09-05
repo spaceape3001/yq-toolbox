@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/math/tolerance/Absolute.hpp>
-#include <yq/math/utility.hpp>
+#include <yq-toolbox/math/tolerance/Absolute.hpp>
+#include <yq-toolbox/math/utility.hpp>
 
-#include <yq/shape/AxBox3.hpp>
-#include <yq/shape/Sphere3.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq-toolbox/shape/AxBox3.hpp>
+#include <yq-toolbox/shape/Sphere3.hpp>
+#include <yq-toolbox/vector/Vector3.hpp>
 
-#include <yq/shape/AxBox3.hxx>
-#include <yq/shape/Sphere3.hxx>
-#include <yq/vector/Vector3.hxx>
+#include <yq-toolbox/shape/AxBox3.hxx>
+#include <yq-toolbox/shape/Sphere3.hxx>
+#include <yq-toolbox/vector/Vector3.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;
