@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <0/math/vector/Vector2.hxx>
+#include <yq/vector/Vector2.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

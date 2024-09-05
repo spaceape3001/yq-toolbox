@@ -7,8 +7,8 @@
 #include <boost/ut.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/math/utility.hpp>
-#include <0/math/shape/Sphere4.hxx>
-#include <0/math/vector/Vector4.hxx>
+#include <yq/shape/Sphere4.hxx>
+#include <yq/vector/Vector4.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

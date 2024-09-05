@@ -8,25 +8,25 @@
 #include <yq/strings.hpp>
 
 
-#include <0/math/vector/Bivector2.hpp>
-#include <0/math/vector/Bivector3.hpp>
-#include <0/math/vector/Bivector4.hpp>
+#include <yq/vector/Bivector2.hpp>
+#include <yq/vector/Bivector3.hpp>
+#include <yq/vector/Bivector4.hpp>
 
-#include <0/math/vector/Multivector1.hpp>
-#include <0/math/vector/Multivector2.hpp>
-#include <0/math/vector/Multivector3.hpp>
-#include <0/math/vector/Multivector4.hpp>
+#include <yq/vector/Multivector1.hpp>
+#include <yq/vector/Multivector2.hpp>
+#include <yq/vector/Multivector3.hpp>
+#include <yq/vector/Multivector4.hpp>
 
-#include <0/math/vector/Quadvector4.hpp>
-#include <0/math/vector/Quaternion3.hpp>
+#include <yq/vector/Quadvector4.hpp>
+#include <yq/vector/Quaternion3.hpp>
 
-#include <0/math/vector/Trivector3.hpp>
-#include <0/math/vector/Trivector4.hpp>
+#include <yq/vector/Trivector3.hpp>
+#include <yq/vector/Trivector4.hpp>
 
-#include <0/math/vector/Vector1.hpp>
-#include <0/math/vector/Vector2.hpp>
-#include <0/math/vector/Vector3.hpp>
-#include <0/math/vector/Vector4.hpp>
+#include <yq/vector/Vector1.hpp>
+#include <yq/vector/Vector2.hpp>
+#include <yq/vector/Vector3.hpp>
+#include <yq/vector/Vector4.hpp>
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/io/StreamOps.hpp>

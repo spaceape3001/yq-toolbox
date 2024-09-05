@@ -9,10 +9,10 @@
 #define YQ_MATH_POSE3_HPP 1
 
 
-#include <0/math/vector/Quaternion3.hpp>
-#include <0/math/vector/Vector3.hpp>
-#include <0/math/vector/Tensor33.hpp>
-#include <0/math/vector/Tensor44.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Vector3.hpp>
+#include <yq/vector/Tensor33.hpp>
+#include <yq/vector/Tensor44.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/unit/SCALED.hpp>
 

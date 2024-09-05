@@ -8,13 +8,13 @@
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/math/utility.hpp>
 
-#include <0/math/shape/AxBox2.hpp>
-#include <0/math/shape/Circle2.hpp>
-#include <0/math/vector/Vector2.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/Circle2.hpp>
+#include <yq/vector/Vector2.hpp>
 
-#include <0/math/shape/AxBox2.hxx>
-#include <0/math/shape/Circle2.hxx>
-#include <0/math/vector/Vector2.hxx>
+#include <yq/shape/AxBox2.hxx>
+#include <yq/shape/Circle2.hxx>
+#include <yq/vector/Vector2.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

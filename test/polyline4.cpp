@@ -7,11 +7,11 @@
 #include <boost/ut.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/math/utility.hpp>
-#include <0/math/shape/Polyline4.hpp>
-#include <0/math/vector/Vector4.hpp>
+#include <yq/shape/Polyline4.hpp>
+#include <yq/vector/Vector4.hpp>
 
-#include <0/math/shape/Polyline4.hxx>
-#include <0/math/vector/Vector4.hxx>
+#include <yq/shape/Polyline4.hxx>
+#include <yq/vector/Vector4.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

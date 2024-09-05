@@ -7,52 +7,52 @@
 #include <0/math/preamble.hpp>
 #include <yq/strings.hpp>
 
-#include <0/math/shape/AxBox1.hpp>
-#include <0/math/shape/AxBox2.hpp>
-#include <0/math/shape/AxBox3.hpp>
-#include <0/math/shape/AxBox4.hpp>
+#include <yq/shape/AxBox1.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/AxBox3.hpp>
+#include <yq/shape/AxBox4.hpp>
 
 
-#include <0/math/shape/Circle2.hpp>
+#include <yq/shape/Circle2.hpp>
 
-#include <0/math/shape/Normal2.hpp>
-#include <0/math/shape/Normal3.hpp>
+#include <yq/shape/Normal2.hpp>
+#include <yq/shape/Normal3.hpp>
 
-#include <0/math/shape/Plane3.hpp>
+#include <yq/shape/Plane3.hpp>
 
-#include <0/math/shape/Ray2.hpp>
-#include <0/math/shape/Ray3.hpp>
-#include <0/math/shape/Ray4.hpp>
+#include <yq/shape/Ray2.hpp>
+#include <yq/shape/Ray3.hpp>
+#include <yq/shape/Ray4.hpp>
 
 
-#include <0/math/shape/Rectangle2.hpp>
+#include <yq/shape/Rectangle2.hpp>
 
-#include <0/math/shape/Segment1.hpp>
-#include <0/math/shape/Segment2.hpp>
-#include <0/math/shape/Segment3.hpp>
-#include <0/math/shape/Segment4.hpp>
+#include <yq/shape/Segment1.hpp>
+#include <yq/shape/Segment2.hpp>
+#include <yq/shape/Segment3.hpp>
+#include <yq/shape/Segment4.hpp>
 
-#include <0/math/shape/Size1.hpp>
-#include <0/math/shape/Size2.hpp>
-#include <0/math/shape/Size3.hpp>
-#include <0/math/shape/Size4.hpp>
+#include <yq/shape/Size1.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/shape/Size3.hpp>
+#include <yq/shape/Size4.hpp>
 
-#include <0/math/shape/Sphere3.hpp>
-#include <0/math/shape/Sphere4.hpp>
+#include <yq/shape/Sphere3.hpp>
+#include <yq/shape/Sphere4.hpp>
 
-#include <0/math/shape/Tetrahedron3.hpp>
+#include <yq/shape/Tetrahedron3.hpp>
 
-#include <0/math/shape/Triangle2.hpp>
-#include <0/math/shape/Triangle3.hpp>
-#include <0/math/shape/Triangle4.hpp>
+#include <yq/shape/Triangle2.hpp>
+#include <yq/shape/Triangle3.hpp>
+#include <yq/shape/Triangle4.hpp>
 
-#include <0/math/shape/Quadrilateral2.hpp>
+#include <yq/shape/Quadrilateral2.hpp>
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/io/StreamOps.hpp>
 #include <yq/meta/Init.hpp>
 
-#include <0/math/shape/shape_utils.hpp>
+#include <yq/shape/shape_utils.hpp>
 #include <yq/unit/literals.hpp>
 
 using namespace yq;

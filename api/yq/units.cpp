@@ -9,8 +9,8 @@
 #include <yq/strings.hpp>
 
 //  temporary until moved
-#include <0/math/vector/Tensor33.hpp>
-#include <0/math/vector/Vector3.hpp>
+#include <yq/vector/Tensor33.hpp>
+#include <yq/vector/Vector3.hpp>
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/io/StreamOps.hpp>

@@ -8,25 +8,25 @@
 #include <yq/strings.hpp>
 
 
-#include <0/math/vector/Tensor11.hpp>
-#include <0/math/vector/Tensor12.hpp>
-#include <0/math/vector/Tensor13.hpp>
-#include <0/math/vector/Tensor14.hpp>
+#include <yq/vector/Tensor11.hpp>
+#include <yq/vector/Tensor12.hpp>
+#include <yq/vector/Tensor13.hpp>
+#include <yq/vector/Tensor14.hpp>
 
-#include <0/math/vector/Tensor21.hpp>
-#include <0/math/vector/Tensor22.hpp>
-#include <0/math/vector/Tensor23.hpp>
-#include <0/math/vector/Tensor24.hpp>
+#include <yq/vector/Tensor21.hpp>
+#include <yq/vector/Tensor22.hpp>
+#include <yq/vector/Tensor23.hpp>
+#include <yq/vector/Tensor24.hpp>
 
-#include <0/math/vector/Tensor31.hpp>
-#include <0/math/vector/Tensor32.hpp>
-#include <0/math/vector/Tensor33.hpp>
-#include <0/math/vector/Tensor34.hpp>
+#include <yq/vector/Tensor31.hpp>
+#include <yq/vector/Tensor32.hpp>
+#include <yq/vector/Tensor33.hpp>
+#include <yq/vector/Tensor34.hpp>
 
-#include <0/math/vector/Tensor41.hpp>
-#include <0/math/vector/Tensor42.hpp>
-#include <0/math/vector/Tensor43.hpp>
-#include <0/math/vector/Tensor44.hpp>
+#include <yq/vector/Tensor41.hpp>
+#include <yq/vector/Tensor42.hpp>
+#include <yq/vector/Tensor43.hpp>
+#include <yq/vector/Tensor44.hpp>
 
 #include <yq/basic/DelayInit.hpp>
 #include <yq/meta/Init.hpp>

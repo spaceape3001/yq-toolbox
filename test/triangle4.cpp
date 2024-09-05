@@ -7,13 +7,13 @@
 #include <boost/ut.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/math/utility.hpp>
-#include <0/math/shape/Triangle4.hpp>
-#include <0/math/vector/Vector4.hpp>
-#include <0/math/shape/AxBox4.hpp>
+#include <yq/shape/Triangle4.hpp>
+#include <yq/vector/Vector4.hpp>
+#include <yq/shape/AxBox4.hpp>
 
-#include <0/math/shape/Triangle4.hxx>
-#include <0/math/vector/Vector4.hxx>
-#include <0/math/shape/AxBox4.hxx>
+#include <yq/shape/Triangle4.hxx>
+#include <yq/vector/Vector4.hxx>
+#include <yq/shape/AxBox4.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;

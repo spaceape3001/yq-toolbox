@@ -43,9 +43,6 @@ add_library(${PROJECT_NAME} SHARED
     0/math/meta_coords.cpp
     0/math/meta_general.cpp
     0/math/meta_glm.cpp
-    0/math/meta_shapes.cpp
-    0/math/meta_tensors.cpp
-    0/math/meta_vectors.cpp
     0/physics/physics.cpp
 )
 
