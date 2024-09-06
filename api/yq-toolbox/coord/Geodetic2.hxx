@@ -6,12 +6,9 @@
 
 #pragma once
 
-#include <cstdint>
-//#include <0/math/preamble.hpp>
+#include "Geodetic2.hpp"
+
+#include <yq-toolbox/units.hpp>
 
 namespace yq {
-    struct Date;
-    struct Time;
-    struct JDay;
 }
-

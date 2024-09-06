@@ -6,17 +6,11 @@
 
 #pragma once
 
-#include <0/gis/preamble.hpp>
-#include <0/gis/enum/Calendar.hpp>
-#include <iosfwd>
+#include <yq-toolbox/unit/declare.hpp>
 
 namespace yq {
-
-    class Stream;
-
-
-    
+    template <typename, typename> struct Polar2;
+    using Polar2D               = Polar2<unit::Radian,double>;
+    using Polar2M               = Polar2<unit::Radian,unit::Meter>;
     
 }
-
-

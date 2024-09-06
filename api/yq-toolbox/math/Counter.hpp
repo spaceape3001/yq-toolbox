@@ -6,10 +6,8 @@
 
 #pragma once
 
-#include <0/math/preamble.hpp>
-
-#include <cstdint>
-#include <limits>
+#include <yq-toolbox/typedef/counter.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {
 

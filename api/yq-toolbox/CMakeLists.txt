@@ -103,6 +103,9 @@ add_library(${PROJECT_NAME} SHARED
     basic/XmlObject.hpp
     basic/XmlObject.cpp
 
+    chemistry/Phase.hpp
+    chemistry/Phase.cpp
+
     color/Colors.hpp
     color/HSL.hpp
     color/HSL.hxx
@@ -165,7 +168,40 @@ add_library(${PROJECT_NAME} SHARED
     coord/Coord6.hpp
     coord/Coord6.hxx
     coord/Coord6.cpp
-    coord/forward.hpp
+    coord/Cylindrical3.hpp
+    coord/Cylindrical3.hxx
+    coord/Cylindrical3.cpp
+    coord/Geodetic2.hpp
+    coord/Geodetic2.hxx
+    coord/Geodetic2.cpp
+    coord/Geodetic3.hpp
+    coord/Geodetic3.hxx
+    coord/Geodetic3.cpp
+    coord/LatLon.hpp
+    coord/LatLon.hxx
+    coord/LatLon.cpp
+    coord/LatLonAlt.hpp
+    coord/LatLonAlt.hxx
+    coord/LatLonAlt.cpp
+    coord/Polar2.hpp
+    coord/Polar2.hxx
+    coord/Polar2.cpp
+    
+    date/CalendarType.hpp
+    date/CalendarType.cpp
+    date/Date.hpp
+    date/Date.cpp
+    date/JulianDay.hpp
+    date/JulianDay.cpp
+    date/Time.hpp
+    date/Time.cpp
+    date/Weekday.hpp
+    date/Weekday.cpp
+
+    gis/CubeSide.hpp
+    
+    graph/PinFlow.hpp
+    graph/PinFlow.cpp
     
     io/AbstractFile.hpp
     io/AbstractFile.cpp
@@ -262,7 +298,6 @@ add_library(${PROJECT_NAME} SHARED
     
     math/tolerance/Absolute.hpp
     math/tolerance/Relative.hpp
-    
     
     meta/forward.hpp
     meta/AnyArgHelper.hpp
@@ -635,6 +670,7 @@ add_library(${PROJECT_NAME} SHARED
     typedef/coord5.hpp
     typedef/coord6.hpp
     typedef/counter.hpp
+    typedef/cylindrical3.hpp
     typedef/expected.hpp
     typedef/filesystem_path.hpp
     typedef/fraction.hpp
@@ -642,6 +678,8 @@ add_library(${PROJECT_NAME} SHARED
     typedef/hsv.hpp
     typedef/int_range.hpp
     typedef/json.hpp
+    typedef/latlon.hpp
+    typedef/latlonalt.hpp
     typedef/multivector1.hpp
     typedef/multivector2.hpp
     typedef/multivector3.hpp
@@ -649,6 +687,7 @@ add_library(${PROJECT_NAME} SHARED
     typedef/normal2.hpp
     typedef/normal3.hpp
     typedef/plane3.hpp
+    typedef/polar2.hpp
     typedef/polygon2.hpp
     typedef/polygon3.hpp
     typedef/polygon4.hpp

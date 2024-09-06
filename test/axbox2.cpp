@@ -24,6 +24,10 @@ static constexpr const AxBox2<T> unitBox(-Vector2<T>(ONE), Vector2<T>(ONE));
 
 static constexpr const AxBox2I stepBox(Vector2I(-1,-2), Vector2I(1,2));
 
+#ifdef NAN
+#undef NAN
+#endif
+
 int main()
 {
     "zero is zero"_test = []{

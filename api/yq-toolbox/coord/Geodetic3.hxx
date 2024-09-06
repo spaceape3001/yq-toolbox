@@ -6,15 +6,9 @@
 
 #pragma once
 
+#include "Geodetic3.hpp"
+
+#include <yq-toolbox/units.hpp>
+
 namespace yq {
-    enum class CubeSide {
-        None = 0,
-        XPositive,
-        YPositive,
-        ZPositive,
-        XNegative,
-        YNegative,
-        ZNegative
-    };
-    
 }

@@ -6,7 +6,9 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
+#include <limits>
 
 namespace yq {
     template <typename T, T> struct Counter;

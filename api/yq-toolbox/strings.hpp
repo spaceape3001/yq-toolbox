@@ -22,6 +22,10 @@ namespace yq {
     extern const std::string_view     szA_Triangle;
     extern const std::string_view     szAlpha;
     extern const std::string_view     szAlpha_Color;
+    extern const std::string_view     szAlt;
+    extern const std::string_view     szAltitude;
+    extern const std::string_view     szAltitude_Geodetic;
+    extern const std::string_view     szAltitude_LatLonAlt;
     extern const std::string_view     szAng;
     extern const std::string_view     szAngle;
     extern const std::string_view     szAngle_Cylindrical;
@@ -66,6 +70,8 @@ namespace yq {
     extern const std::string_view     szD;
     extern const std::string_view     szD_Quadrilateral;
     extern const std::string_view     szD_Tetrahedron;
+    extern const std::string_view     szDay;
+    extern const std::string_view     szDays;
     extern const std::string_view     szDen;
     extern const std::string_view     szDenominator;
     extern const std::string_view     szDenominator_Fraction;
@@ -99,6 +105,8 @@ namespace yq {
     extern const std::string_view     szHigh;
     extern const std::string_view     szHigh_Box;
     extern const std::string_view     szHigh_Range;
+    extern const std::string_view     szHour;
+    extern const std::string_view     szHours;
     extern const std::string_view     szHue;
     extern const std::string_view     szHue_Color;
     extern const std::string_view     szHypervolume;
@@ -120,6 +128,11 @@ namespace yq {
     extern const std::string_view     szK_Coord;
     extern const std::string_view     szL;
     extern const std::string_view     szL_Coord;
+    extern const std::string_view     szLat;
+    extern const std::string_view     szLatitude;
+    extern const std::string_view     szLatitude_Geodetic;
+    extern const std::string_view     szLatitude_LatLon;
+    extern const std::string_view     szLatitude_LatLonAlt;
     extern const std::string_view     szLen;
     extern const std::string_view     szLen²;
     extern const std::string_view     szLength;
@@ -129,6 +142,11 @@ namespace yq {
     extern const std::string_view     szLightness;
     extern const std::string_view     szLightness_Color;
     extern const std::string_view     szLo;
+    extern const std::string_view     szLon;
+    extern const std::string_view     szLongitude;
+    extern const std::string_view     szLongitude_Geodetic;
+    extern const std::string_view     szLongitude_LatLon;
+    extern const std::string_view     szLongitude_LatLonAlt;
     extern const std::string_view     szLow;
     extern const std::string_view     szLow_Box;
     extern const std::string_view     szLow_Range;
@@ -139,6 +157,11 @@ namespace yq {
     extern const std::string_view     szMagnitude_Complex;
     extern const std::string_view     szMass;
     extern const std::string_view     szMatter;
+    extern const std::string_view     szMin;
+    extern const std::string_view     szMinute;
+    extern const std::string_view     szMinutes;
+    extern const std::string_view     szMonth;
+    extern const std::string_view     szMonths;
     extern const std::string_view     szN;
     extern const std::string_view     szN_Coord;
     extern const std::string_view     szNE;
@@ -159,6 +182,7 @@ namespace yq {
     extern const std::string_view     szOverlaps;
     extern const std::string_view     szOverlaps_Box_Box;
     extern const std::string_view     szP;
+    extern const std::string_view     szPercent;
     extern const std::string_view     szPeri;
     extern const std::string_view     szPerimeter;
     extern const std::string_view     szPerimeter_Box;
@@ -190,6 +214,9 @@ namespace yq {
     extern const std::string_view     szSaturation;
     extern const std::string_view     szSaturation_Color;
     extern const std::string_view     szSE;
+    extern const std::string_view     szSec;
+    extern const std::string_view     szSecond;
+    extern const std::string_view     szSeconds;
     extern const std::string_view     szSize;
     extern const std::string_view     szSize_Box;
     extern const std::string_view     szSize_Rectangle;
@@ -266,6 +293,8 @@ namespace yq {
     extern const std::string_view     szY_Quaternion;
     extern const std::string_view     szY_Size;
     extern const std::string_view     szY_Vector;
+    extern const std::string_view     szYear;
+    extern const std::string_view     szYears;
     extern const std::string_view     szYW;
     extern const std::string_view     szYW_Bivector;
     extern const std::string_view     szYW_Multivector;

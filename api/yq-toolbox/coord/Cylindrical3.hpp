@@ -6,17 +6,24 @@
 
 #pragma once
 
-#define YQ_MATH_POLAR2_HPP 1
-
-#include <0/math/preamble.hpp>
+#define YQ_MATH_CYLINDRICAL3_HPP 1
 
 #include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq-toolbox/trait/has_nan.hpp>
+#include <yq-toolbox/trait/has_one.hpp>
+#include <yq-toolbox/trait/has_zero.hpp>
+#include <yq-toolbox/trait/is_arithmetic.hpp>
+#include <yq-toolbox/trait/is_floating_point.hpp>
 #include <yq-toolbox/trait/product.hpp>
 #include <yq-toolbox/trait/quotient.hpp>
 #include <yq-toolbox/trait/self_divide.hpp>
 #include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq-toolbox/typedef/cylindrical3.hpp>
 
 namespace yq {
+    template <typename> struct Vector3;
+
     /*! \brief Cylindrical coordinates
     
         This is a polar coordinate container, assumes the rotation is 

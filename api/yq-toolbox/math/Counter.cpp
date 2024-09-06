@@ -10,7 +10,6 @@
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
 
-
 YQ_TYPE_IMPLEMENT(yq::CountI8)
 YQ_TYPE_IMPLEMENT(yq::CountI16)
 YQ_TYPE_IMPLEMENT(yq::CountI32)
@@ -20,8 +19,6 @@ YQ_TYPE_IMPLEMENT(yq::CountU8)
 YQ_TYPE_IMPLEMENT(yq::CountU16)
 YQ_TYPE_IMPLEMENT(yq::CountU32)
 YQ_TYPE_IMPLEMENT(yq::CountU64)
-
-
 
 YQ_TYPE_IMPLEMENT(yq::HCountI8)
 YQ_TYPE_IMPLEMENT(yq::HCountI16)

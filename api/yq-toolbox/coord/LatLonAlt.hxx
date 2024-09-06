@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <0/math/coord/LatLon.hpp>
-#include <0/math/coord/LatLonAlt.hpp>
+#include <yq-toolbox/coord/LatLon.hpp>
+#include <yq-toolbox/coord/LatLonAlt.hpp>
 
 namespace yq {
     template <typename A, typename L>

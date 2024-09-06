@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "PinFlow.hpp"
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/meta/Init.hpp>
+
+YQ_TYPE_IMPLEMENT(yq::graph::PinFlow)
+
+using namespace yq;
+
+YQ_INVOKE(
+    writer<graph::PinFlow>();
+)

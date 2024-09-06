@@ -6,19 +6,22 @@
 
 #pragma once
 
-#include <0/gis/preamble.hpp>
+#include <yq-toolbox/typedef/geodetic3.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief General purpose geodetic-style structure
     */
-    template <typename A>
-    struct Geodetic2 {
+    template <typename A, typename L>
+    struct Geodetic3 {
         A       latitude, longitude;
-        
-        constexpr bool operator==(const Geodetic2&) const noexcept = default;
+        L       altitude;
+
+        constexpr bool operator==(const Geodetic3&) const noexcept = default;
     };
 }
 
-YQ_TYPE_DECLARE(yq::Geodetic2D)
-YQ_TYPE_DECLARE(yq::Geodetic2R)
+YQ_TYPE_DECLARE(yq::Geodetic3DF)
+YQ_TYPE_DECLARE(yq::Geodetic3DM)
+YQ_TYPE_DECLARE(yq::Geodetic3RF)
+YQ_TYPE_DECLARE(yq::Geodetic3RM)

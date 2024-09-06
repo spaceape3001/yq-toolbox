@@ -11,7 +11,9 @@
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/trait/cube.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
+#include <yq-toolbox/trait/has_one.hpp>
 #include <yq-toolbox/trait/has_sqrt.hpp>
+#include <yq-toolbox/trait/has_zero.hpp>
 #include <yq-toolbox/trait/is_basic_float.hpp>
 #include <yq-toolbox/trait/product.hpp>
 #include <yq-toolbox/trait/quotient.hpp>

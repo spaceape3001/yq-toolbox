@@ -28,11 +28,8 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED 
     ${core_test_source}
-    0/chemistry/chemistry.cpp
-    0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
-    0/math/meta_coords.cpp
 )
 
 if(Feature_GLM)

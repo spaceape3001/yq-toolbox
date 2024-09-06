@@ -15,6 +15,10 @@ namespace yq {
     const std::string_view     szA_Triangle                = "First point 'A' of the triangle";
     const std::string_view     szAlpha                     = "alpha";
     const std::string_view     szAlpha_Color               = "Alpha channel of the color";
+    const std::string_view     szAlt                       = "alt";
+    const std::string_view     szAltitude                  = "altitude";
+    const std::string_view     szAltitude_Geodetic         = "Altitude of the Geodetic";
+    const std::string_view     szAltitude_LatLonAlt        = "Altitude of the LatLonAlt";
     const std::string_view     szAng                       = "ang";
     const std::string_view     szAngle                     = "angle";
     const std::string_view     szAngle_Cylindrical         = "Angle of the cylindrical coordinate";
@@ -59,6 +63,8 @@ namespace yq {
     const std::string_view     szD                         = "d";
     const std::string_view     szD_Quadrilateral           = "Fourth point 'D' of the quadrilateral";
     const std::string_view     szD_Tetrahedron             = "Fourth point 'D' of the tetrahedron";
+    const std::string_view     szDay                       = "day";
+    const std::string_view     szDays                      = "days";
     const std::string_view     szDen                       = "den";
     const std::string_view     szDenominator               = "denominator";
     const std::string_view     szDenominator_Fraction      = "Denominator of the fraction";
@@ -92,6 +98,8 @@ namespace yq {
     const std::string_view     szHigh                      = "high";
     const std::string_view     szHigh_Box                  = "High-corner of the box";
     const std::string_view     szHigh_Range                = "High-value of the range";
+    const std::string_view     szHour                      = "hour";
+    const std::string_view     szHours                     = "hours";
     const std::string_view     szHue                       = "hue";
     const std::string_view     szHue_Color                 = "Hue component of the color";
     const std::string_view     szHypervolume               = "hypervolume";
@@ -113,6 +121,11 @@ namespace yq {
     const std::string_view     szK_Coord                   = "K-component of the coordinate";
     const std::string_view     szL                         = "l";
     const std::string_view     szL_Coord                   = "L-component of the coordinate";
+    const std::string_view     szLat                       = "lat";
+    const std::string_view     szLatitude                  = "latitude";
+    const std::string_view     szLatitude_Geodetic         = "Latitude of the Geodetic";
+    const std::string_view     szLatitude_LatLon           = "Latitude of the LatLon";
+    const std::string_view     szLatitude_LatLonAlt        = "Latitude of the LatLonAlt";
     const std::string_view     szLen                       = "len";
     const std::string_view     szLen²                      = "len2";
     const std::string_view     szLength                    = "length";
@@ -122,6 +135,11 @@ namespace yq {
     const std::string_view     szLightness                 = "lightness";
     const std::string_view     szLightness_Color           = "Lightness component of the color";
     const std::string_view     szLo                        = "lo";
+    const std::string_view     szLon                       = "lon";
+    const std::string_view     szLongitude                 = "longitude";
+    const std::string_view     szLongitude_Geodetic        = "Longitude of the Geodetic";
+    const std::string_view     szLongitude_LatLon          = "Longitude of the LatLon";
+    const std::string_view     szLongitude_LatLonAlt       = "Longitude of the LatLonAlt";
     const std::string_view     szLow                       = "low";
     const std::string_view     szLow_Box                   = "Low-corner of the box";
     const std::string_view     szLow_Range                 = "Low-value of the range";
@@ -132,6 +150,11 @@ namespace yq {
     const std::string_view     szMagnitude_Complex         = "Magnitude of the complex number";
     const std::string_view     szMass                      = "mass";
     const std::string_view     szMatter                    = "matter";
+    const std::string_view     szMin                       = "min";
+    const std::string_view     szMinute                    = "minute";
+    const std::string_view     szMinutes                   = "minutes";
+    const std::string_view     szMonth                     = "month";
+    const std::string_view     szMonths                    = "months";
     const std::string_view     szN                         = "n";
     const std::string_view     szN_Coord                   = "N-component of the coordinate";
     const std::string_view     szNE                        = "ne";
@@ -152,6 +175,7 @@ namespace yq {
     const std::string_view     szOverlaps                  = "overlaps";
     const std::string_view     szOverlaps_Box_Box          = "Tests if other box overlaps this box";
     const std::string_view     szP                         = "p";
+    const std::string_view     szPercent                   = "percent";
     const std::string_view     szPeri                      = "peri";
     const std::string_view     szPerimeter                 = "perimeter";
     const std::string_view     szPerimeter_Box             = "Perimeter of the box";
@@ -183,6 +207,9 @@ namespace yq {
     const std::string_view     szSaturation                = "saturation";
     const std::string_view     szSaturation_Color          = "Saturation component of the color";
     const std::string_view     szSE                        = "se";
+    const std::string_view     szSec                       = "sec";
+    const std::string_view     szSecond                    = "second";
+    const std::string_view     szSeconds                   = "seconds";
     const std::string_view     szSize                      = "size";
     const std::string_view     szSize_Box                  = "Size of the box";
     const std::string_view     szSize_Rectangle            = "Size of the rectangle";
@@ -259,6 +286,8 @@ namespace yq {
     const std::string_view     szY_Quaternion              = "Y component of the quaternion";
     const std::string_view     szY_Size                    = "Y component of the size, commonly referred to as the height";
     const std::string_view     szY_Vector                  = "Y component of the vector";
+    const std::string_view     szYear                      = "year";
+    const std::string_view     szYears                     = "years";
     const std::string_view     szYW                        = "yw";
     const std::string_view     szYW_Bivector               = "YW component of the bivector";
     const std::string_view     szYW_Multivector            = "YW component of the Multivector";

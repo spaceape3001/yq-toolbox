@@ -10,16 +10,10 @@
 #include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {
-    YQ_ENUM( Weekday, ,
-        Sunday  = 1,
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday
-    );
-    
+    YQ_ENUM( CalendarType, ,
+        None        = 0,
+        Julian,
+        Gregorian
+    )
 }
-
-YQ_TYPE_DECLARE(yq::Weekday)
+YQ_TYPE_DECLARE(yq::CalendarType)

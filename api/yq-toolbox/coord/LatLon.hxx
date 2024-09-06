@@ -4,7 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "preamble.hpp"
-#include <yq-toolbox/meta/Init.hpp>
+#pragma once
 
-YQ_TYPE_IMPLEMENT(yq::chemistry::Phase)
+#include <yq-toolbox/coord/LatLon.hpp>
+
+namespace yq {
+}

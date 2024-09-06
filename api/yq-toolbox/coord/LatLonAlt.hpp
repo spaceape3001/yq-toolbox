@@ -8,9 +8,12 @@
 
 #define YQ_MATH_LATLONALT_HPP 1
 
-#include <0/math/preamble.hpp>
+#include <yq-toolbox/typedef/latlonalt.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {
+    template <typename A> struct LatLon;
+
     /*! \brief Latitude, Longitude, Altitude tuple
     
         \tparam A   Angle type
@@ -55,4 +58,7 @@ namespace yq {
     };
 
 }
+
+YQ_TYPE_DECLARE(yq::LLH)
+YQ_TYPE_DECLARE(yq::LLM)
 

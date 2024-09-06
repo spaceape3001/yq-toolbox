@@ -19,6 +19,10 @@ template <typename T>
 static constexpr const AxBox4<T> unitBox(-Vector4<T>(ONE), Vector4<T>(ONE));
 static constexpr const AxBox4I stepBox(Vector4I(-1,-2,-3,-4), Vector4I(1,2,3,4));
 
+#ifdef NAN
+#undef NAN
+#endif
+
 int main()
 {
     "zero is zero"_test = []{

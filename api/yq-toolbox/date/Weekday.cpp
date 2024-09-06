@@ -4,19 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include "Weekday.hpp"
 
-#include <0/gis/preamble.hpp>
-#include <0/gis/enum/Calendar.hpp>
-#include <iosfwd>
+#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
-namespace yq {
+YQ_TYPE_IMPLEMENT(yq::Weekday)
 
-    class Stream;
+using namespace yq;
 
-
-    
-    
-}
-
-
+YQ_INVOKE(
+    writer<Weekday>();
+)

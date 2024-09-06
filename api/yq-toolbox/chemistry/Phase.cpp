@@ -4,14 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include <yq-toolbox/chemistry/Phase.hpp>
+#include <yq-toolbox/meta/Init.hpp>
 
-#include <cstdint>
-//#include <0/math/preamble.hpp>
-
-namespace yq {
-    struct Date;
-    struct Time;
-    struct JDay;
-}
-
+YQ_TYPE_IMPLEMENT(yq::chemistry::Phase)

@@ -6,12 +6,9 @@
 
 #pragma once
 
-#include <cstdint>
-//#include <0/math/preamble.hpp>
+#include <yq-toolbox/unit/declare.hpp>
 
 namespace yq {
-    struct Date;
-    struct Time;
-    struct JDay;
+    template <typename> struct LatLon;
+    using LL                    = LatLon<unit::Radian>;
 }
-

@@ -6,16 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq-toolbox/unit/declare.hpp>
 
 namespace yq {
-    YQ_ENUM( Calendar, ,
-        None        = 0,
-        Julian,
-        Gregorian
-    )
-    
+    template <typename, typename> struct LatLonAlt;
+    using LLH   = LatLonAlt<unit::Radian,double>;
+    using LLM   = LatLonAlt<unit::Radian,unit::Meter>;
 }
-
-YQ_TYPE_DECLARE(yq::Calendar)

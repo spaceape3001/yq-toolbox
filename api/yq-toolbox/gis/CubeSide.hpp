@@ -6,12 +6,15 @@
 
 #pragma once
 
-#include <cstdint>
-//#include <0/math/preamble.hpp>
-
-namespace yq {
-    struct Date;
-    struct Time;
-    struct JDay;
+namespace yq::gis {
+    enum class CubeSide {
+        None = 0,
+        XPositive,
+        YPositive,
+        ZPositive,
+        XNegative,
+        YNegative,
+        ZNegative
+    };
+    
 }
-

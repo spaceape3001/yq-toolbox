@@ -8,15 +8,23 @@
 
 #define YQ_MATH_POLAR2_HPP 1
 
-#include <0/math/preamble.hpp>
+#include <yq-toolbox/typedef/polar2.hpp>
 
 #include <yq-toolbox/keywords.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq-toolbox/trait/has_nan.hpp>
+#include <yq-toolbox/trait/has_one.hpp>
+#include <yq-toolbox/trait/has_zero.hpp>
+#include <yq-toolbox/trait/is_arithmetic.hpp>
+#include <yq-toolbox/trait/is_floating_point.hpp>
 #include <yq-toolbox/trait/product.hpp>
 #include <yq-toolbox/trait/quotient.hpp>
 #include <yq-toolbox/trait/self_divide.hpp>
 #include <yq-toolbox/trait/self_multiply.hpp>
 
 namespace yq {
+    template <typename> struct Vector2;
+
     /*! \brief Polar coordinates
     
         This is a polar coordinate container, assumes the rotation is 
@@ -108,5 +116,4 @@ namespace yq {
 
 YQ_TYPE_DECLARE(yq::Polar2D)
 YQ_TYPE_DECLARE(yq::Polar2M)
-
 

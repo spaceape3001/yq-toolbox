@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq-toolbox/basic/Enum.hpp>
+#include <yq-toolbox/meta/InfoBinder.hpp>
+
+namespace yq::graph {
+    YQ_ENUM(PinFlow, ,
+        Dead,
+        Input,
+        Output
+    )
+}
+
+YQ_TYPE_DECLARE(yq::graph::PinFlow)

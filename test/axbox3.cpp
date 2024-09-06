@@ -20,6 +20,10 @@ static constexpr const AxBox3<T> unitBox(-Vector3<T>(ONE), Vector3<T>(ONE));
 
 static constexpr const AxBox3I stepBox(Vector3I(-1,-2,-3), Vector3I(1,2,3));
 
+#ifdef NAN
+#undef NAN
+#endif
+
 int main()
 {
     "zero is zero"_test = []{
