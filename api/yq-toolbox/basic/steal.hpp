@@ -6,12 +6,11 @@
 
 #pragma once
 
-#include <cstdint>
-//#include <0/math/preamble.hpp>
-
 namespace yq {
-    struct Date;
-    struct Time;
-    struct JDay;
+    template <typename T>
+    void    steal(T*& ptr, T*& other)
+    {
+        ptr     = other;
+        other   = nullptr;
+    }
 }
-

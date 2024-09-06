@@ -3,6 +3,7 @@
 //  YOUR QUILL
 //
 ////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 
 #define YQ_MATH_AXBOX3_HPP 1
@@ -20,6 +21,11 @@
 #include <yq-toolbox/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }
+
+#ifdef NAN
+#undef NAN
+#endif
+
 
 namespace yq {
     struct Side;

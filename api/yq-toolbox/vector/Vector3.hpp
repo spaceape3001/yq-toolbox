@@ -31,6 +31,10 @@
 #include <yq-toolbox/trait/square.hpp>
 #include <yq-toolbox/unit/declare.hpp>
 
+#if YQ_USE_GLM
+    #include <yq-toolbox/math/glm.hpp>
+#endif
+
 #include <span>
 #include <vector>
 

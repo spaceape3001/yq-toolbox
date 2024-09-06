@@ -5,18 +5,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <0/gis/Date.hpp>
-#include <0/gis/JDay.hpp>
+#include <yq-toolbox/date/Date.hpp>
+#include <yq-toolbox/date/JulianDay.hpp>
 #include <yq-toolbox/basic/Logging.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
-bool    jday_test(Date d, JDay j)
+bool    jday_test(Date d, JulianDay j)
 {
     Date        d2  = date(j);
-    JDay        j2  = jday(d);
+    JulianDay   j2  = julian_day(d);
     return (d == d2) && (j == j2);
 }
 

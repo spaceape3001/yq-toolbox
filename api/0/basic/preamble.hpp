@@ -100,18 +100,9 @@ namespace yq {
     
     
     
-    template <typename T>
-    void    steal(T*& ptr, T*& other)
-    {
-        ptr     = other;
-        other   = nullptr;
-    }
-    
     //! Used for detection of overrides
     struct disabled {};
     struct disabled_t {};
 
-
-    class Stream;
 }
 

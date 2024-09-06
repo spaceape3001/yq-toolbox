@@ -28,6 +28,10 @@
 #include <yq-toolbox/trait/self_multiply.hpp>
 #include <yq-toolbox/trait/square.hpp>
 
+#if YQ_USE_GLM
+    #include <yq-toolbox/math/glm.hpp>
+#endif
+
 #include <span>
 #include <vector>
 
@@ -74,7 +78,7 @@ namespace yq {
         consteval Vector1(x_t) noexcept : x(one_v<T>) {}
         consteval Vector1(zero_t) noexcept : Vector1(ALL, zero_v<T>) {}
 
-        #ifdef YQ_FEATURE_GLM
+        #if YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Vector1(const glm::vec<1, T, Q>& v) : x(v.x) {}
         #endif

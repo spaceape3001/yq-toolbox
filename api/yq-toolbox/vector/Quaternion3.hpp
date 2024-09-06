@@ -28,6 +28,10 @@
 #include <yq-toolbox/trait/unity.hpp>
 #include <yq-toolbox/unit/dims.hpp>
 
+#if YQ_USE_GLM
+    #include <yq-toolbox/math/glm.hpp>
+#endif
+
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
@@ -59,7 +63,7 @@ namespace yq {
         constexpr Quaternion3(z_t, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Quaternion3(zero_t) : Quaternion3(ALL, zero_v<T>) {}
         
-        #ifdef YQ_USE_GLM
+        #if YQ_USE_GLM
         template <glm::qualifier Q>
         explicit constexpr Quaternion3(const glm::qua<T, Q>& q) : w(q.w), x(q.x), y(q.y), z(q.z) {}
         #endif
@@ -110,8 +114,12 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Quaternion3&) const noexcept = default;
         
-        #ifdef YQ_USE_GLM
-        constexpr operator glm::qua<T,glm::defaultp>() const noexcept ;
+        #if YQ_USE_GLM
+        template <glm::qualifier Q>
+        constexpr operator glm::qua<T,Q>() const noexcept 
+        {
+            return glm::qua<T,Q>(w,x,y,z);
+        }
         #endif
 
         Quaternion3             operator+() const;
