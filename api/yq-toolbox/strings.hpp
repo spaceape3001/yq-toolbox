@@ -80,6 +80,7 @@ namespace yq {
     extern const std::string_view     szDirection_Ray;
     extern const std::string_view     szDist;
     extern const std::string_view     szDistance;
+    extern const std::string_view     szDistance_Plane;
     extern const std::string_view     szE;
     extern const std::string_view     szEclipses;
     extern const std::string_view     szEclipses_Box_Box;
@@ -138,6 +139,8 @@ namespace yq {
     extern const std::string_view     szN;
     extern const std::string_view     szN_Coord;
     extern const std::string_view     szNE;
+    extern const std::string_view     szNormal;
+    extern const std::string_view     szNormal_Plane;
     extern const std::string_view     szNortheast;
     extern const std::string_view     szNortheast_Box;
     extern const std::string_view     szNorthwest;

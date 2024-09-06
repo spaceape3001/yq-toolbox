@@ -14,8 +14,15 @@
 
 #include <yq-toolbox/errors.hpp>
 #include <yq-toolbox/shape/AxBox4.hpp>
+#include <yq-toolbox/math/AllComponents.hpp>
+#include <yq-toolbox/math/AnyComponents.hpp>
 #include <yq-toolbox/math/utility.hpp>
 #include <yq-toolbox/container/initlist_utils.hpp>
+#include <yq-toolbox/trait/has_abs.hpp>
+#include <yq-toolbox/trait/has_sqrt.hpp>
+#include <yq-toolbox/vector/Vector4.hxx>
+
+#include <yq-toolbox/math/Range.hxx>
 
 namespace yq {
     template <typename T>

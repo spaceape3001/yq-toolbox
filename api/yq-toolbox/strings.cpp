@@ -73,6 +73,7 @@ namespace yq {
     const std::string_view     szDirection_Ray             = "Direction of the ray";
     const std::string_view     szDist                      = "dist";
     const std::string_view     szDistance                  = "distance";
+    const std::string_view     szDistance_Plane            = "Distance from origin, along normal, for plane";
     const std::string_view     szE                         = "e";
     const std::string_view     szEclipses                  = "eclipses";
     const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
@@ -131,6 +132,8 @@ namespace yq {
     const std::string_view     szN                         = "n";
     const std::string_view     szN_Coord                   = "N-component of the coordinate";
     const std::string_view     szNE                        = "ne";
+    const std::string_view     szNormal                    = "normal";
+    const std::string_view     szNormal_Plane              = "Normal to the plane";
     const std::string_view     szNortheast                 = "northeast";
     const std::string_view     szNortheast_Box             = "North-east corner of the box";
     const std::string_view     szNorthwest                 = "northwest";

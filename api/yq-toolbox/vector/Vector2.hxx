@@ -16,13 +16,13 @@
 
 #include <yq-toolbox/vector/Vector2.hpp>
 
-#include <yq-toolbox/math/tolerance/Absolute.hpp>
+#include <yq-toolbox/math/algorithm.hpp>
 #include <yq-toolbox/math/AllComponents.hpp>
 #include <yq-toolbox/math/AnyComponents.hpp>
 #include <yq-toolbox/math/trigonometry.hpp>
 #include <yq-toolbox/math/utility.hpp>
+#include <yq-toolbox/math/tolerance/Absolute.hpp>
 
-#include <algorithm>
 #include <cmath>
 
 namespace yq {

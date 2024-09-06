@@ -7,6 +7,9 @@
 #pragma once
 
 #include <yq-toolbox/shape/Circle2.hpp>
+#include <yq-toolbox/math/AllComponents.hpp>
+#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq-toolbox/trait/has_abs.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the circle2 code.  Include this

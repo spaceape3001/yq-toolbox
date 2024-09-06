@@ -11,5 +11,5 @@
 namespace yq {
     using std::max;
     using std::min;
-    using std::abs;
+    //using std::abs;
 }
