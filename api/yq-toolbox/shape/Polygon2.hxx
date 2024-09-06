@@ -15,6 +15,7 @@
 #include <yq-toolbox/shape/PolygonData.hpp>
 #include <yq-toolbox/shape/Polygon2.hpp>
 #include <yq-toolbox/container/vector_utils.hpp>
+#include <yq-toolbox/trait/is_floating_point.hpp>
 
 namespace yq {
     template <typename T> Polygon2<T>::Polygon2(const std::vector<Vector2<T>>&pts) : vertex(pts) {}

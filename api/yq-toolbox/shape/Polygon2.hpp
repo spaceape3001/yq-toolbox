@@ -171,6 +171,8 @@ namespace yq {
         
         //! Segments of this polygon
         std::vector<Segment2<T>>    segments() const;
+        
+        size_t  count() const { return vertex.size(); }
     };
 
 
@@ -333,4 +335,6 @@ namespace yq {
 
 YQ_TYPE_DECLARE(yq::Polygon2D)
 YQ_TYPE_DECLARE(yq::Polygon2F)
+YQ_TYPE_DECLARE(yq::Polygon2I)
+YQ_TYPE_DECLARE(yq::Polygon2U)
 

@@ -56,6 +56,8 @@ namespace yq {
     extern const std::string_view     szCorner;
     extern const std::string_view     szCount;
     extern const std::string_view     szCount_Count;
+    extern const std::string_view     szCount_Polygon;
+    extern const std::string_view     szCount_Polyline;
     extern const std::string_view     szContains;
     extern const std::string_view     szContains_Box_Box;
     extern const std::string_view     szContains_Box_Pt;
@@ -81,6 +83,7 @@ namespace yq {
     extern const std::string_view     szDist;
     extern const std::string_view     szDistance;
     extern const std::string_view     szDistance_Plane;
+    extern const std::string_view     szDuration;
     extern const std::string_view     szE;
     extern const std::string_view     szEclipses;
     extern const std::string_view     szEclipses_Box_Box;

@@ -139,6 +139,8 @@ namespace yq {
 
         //! Segments of this polyline
         std::vector<Segment4<T>>    segments() const;
+
+        size_t  count() const { return vertex.size(); }
     };
 
     /*! \brief Creates a polyline from a box
@@ -206,4 +208,10 @@ namespace yq {
     template <typename T>
     T       length(const Polyline4<T>& poly);
 }
+
+YQ_TYPE_DECLARE(yq::Polyline4D)
+YQ_TYPE_DECLARE(yq::Polyline4F)
+YQ_TYPE_DECLARE(yq::Polyline4I)
+YQ_TYPE_DECLARE(yq::Polyline4U)
+
 

@@ -49,6 +49,8 @@ namespace yq {
     const std::string_view     szCorner                    = "corner";
     const std::string_view     szCount                     = "count";
     const std::string_view     szCount_Count               = "Count of the counter";
+    const std::string_view     szCount_Polygon             = "Count of points of the polygon";
+    const std::string_view     szCount_Polyline            = "Count of points of the polyline";
     const std::string_view     szContains                  = "contains";
     const std::string_view     szContains_Box_Box          = "Tests if other box is inside/touching this box";
     const std::string_view     szContains_Box_Pt           = "Tests if point is inside/touching the box";
@@ -74,6 +76,7 @@ namespace yq {
     const std::string_view     szDist                      = "dist";
     const std::string_view     szDistance                  = "distance";
     const std::string_view     szDistance_Plane            = "Distance from origin, along normal, for plane";
+    const std::string_view     szDuration                  = "duration";
     const std::string_view     szE                         = "e";
     const std::string_view     szEclipses                  = "eclipses";
     const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";

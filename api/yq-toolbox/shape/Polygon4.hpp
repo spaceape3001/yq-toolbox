@@ -142,6 +142,8 @@ namespace yq {
         
         //! Converts the polygon to segments
         std::vector<Segment4<T>>    segments() const;
+
+        size_t  count() const { return vertex.size(); }
     };
     
 
@@ -213,4 +215,5 @@ namespace yq {
 
 YQ_TYPE_DECLARE(yq::Polygon4D)
 YQ_TYPE_DECLARE(yq::Polygon4F)
-
+YQ_TYPE_DECLARE(yq::Polygon4I)
+YQ_TYPE_DECLARE(yq::Polygon4U)
