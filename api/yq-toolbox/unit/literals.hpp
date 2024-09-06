@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq-toolbox/unit/declare.hpp>
 #include <yq-toolbox/unit/MKS.hpp>
 #include <yq-toolbox/unit/SCALED.hpp>
 

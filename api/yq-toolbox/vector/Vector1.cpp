@@ -9,7 +9,12 @@
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
+#include <yq-toolbox/tensor/Tensor11.hpp>
+#include <yq-toolbox/tensor/Tensor12.hpp>
+#include <yq-toolbox/tensor/Tensor13.hpp>
+#include <yq-toolbox/tensor/Tensor14.hpp>
 #include <yq-toolbox/vector/Multivector1.hpp>
+#include <yq-toolbox/vector/Vector1.hpp>
 
 #include "Vector1.hxx"
 
@@ -38,6 +43,10 @@ static void reg_vector1()
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Multivector1D>();
+        w.operate_with<Tensor11D>(Operator::Multiply);
+        w.operate_with<Tensor12D>(Operator::Multiply);
+        w.operate_with<Tensor13D>(Operator::Multiply);
+        w.operate_with<Tensor14D>(Operator::Multiply);
         w.print<print_vector1<double>>();
     }
     
@@ -55,6 +64,10 @@ static void reg_vector1()
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Multivector1F>();
+        w.operate_with<Tensor11F>(Operator::Multiply);
+        w.operate_with<Tensor12F>(Operator::Multiply);
+        w.operate_with<Tensor13F>(Operator::Multiply);
+        w.operate_with<Tensor14F>(Operator::Multiply);
         w.print<print_vector1<float>>();
     }
     

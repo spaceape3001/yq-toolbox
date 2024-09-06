@@ -9,8 +9,13 @@
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
+#include <yq-toolbox/tensor/Tensor31.hpp>
+#include <yq-toolbox/tensor/Tensor32.hpp>
+#include <yq-toolbox/tensor/Tensor33.hpp>
+#include <yq-toolbox/tensor/Tensor34.hpp>
 #include <yq-toolbox/vector/Bivector3.hpp>
 #include <yq-toolbox/vector/Multivector3.hpp>
+#include <yq-toolbox/vector/Quaternion3.hpp>
 #include <yq-toolbox/vector/Trivector3.hpp>
 
 #include "Vector3.hxx"
@@ -43,7 +48,12 @@ static void reg_vector3()
         w.operate_with<double>();
         w.operate_with<Bivector3D>();
         w.operate_with<Multivector3D>();
+        w.operate_with<Quaternion3D>();
         w.operate_with<Trivector3D>();
+        w.operate_with<Tensor31D>(Operator::Multiply);
+        w.operate_with<Tensor32D>(Operator::Multiply);
+        w.operate_with<Tensor33D>(Operator::Multiply);
+        w.operate_with<Tensor34D>(Operator::Multiply);
         w.print<print_vector3<double>>();
     }
     
@@ -64,7 +74,12 @@ static void reg_vector3()
         w.operate_with<float>();
         w.operate_with<Bivector3F>();
         w.operate_with<Multivector3F>();
+        w.operate_with<Quaternion3F>();
         w.operate_with<Trivector3F>();
+        w.operate_with<Tensor31F>(Operator::Multiply);
+        w.operate_with<Tensor32F>(Operator::Multiply);
+        w.operate_with<Tensor33F>(Operator::Multiply);
+        w.operate_with<Tensor34F>(Operator::Multiply);
         w.print<print_vector3<float>>();
     }
     

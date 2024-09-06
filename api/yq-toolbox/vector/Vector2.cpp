@@ -9,6 +9,10 @@
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
+#include <yq-toolbox/tensor/Tensor21.hpp>
+#include <yq-toolbox/tensor/Tensor22.hpp>
+#include <yq-toolbox/tensor/Tensor23.hpp>
+#include <yq-toolbox/tensor/Tensor24.hpp>
 #include <yq-toolbox/vector/Bivector2.hpp>
 #include <yq-toolbox/vector/Multivector2.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
@@ -43,6 +47,10 @@ static void reg_vector2()
         w.operate_with<double>();
         w.operate_with<Bivector2D>();
         w.operate_with<Multivector2D>();
+        w.operate_with<Tensor21D>(Operator::Multiply);
+        w.operate_with<Tensor22D>(Operator::Multiply);
+        w.operate_with<Tensor23D>(Operator::Multiply);
+        w.operate_with<Tensor24D>(Operator::Multiply);
         w.print<print_vector2<double>>();
     }
     
@@ -63,6 +71,10 @@ static void reg_vector2()
         w.operate_with<float>();
         w.operate_with<Bivector2F>();
         w.operate_with<Multivector2F>();
+        w.operate_with<Tensor21F>(Operator::Multiply);
+        w.operate_with<Tensor22F>(Operator::Multiply);
+        w.operate_with<Tensor23F>(Operator::Multiply);
+        w.operate_with<Tensor24F>(Operator::Multiply);
         w.print<print_vector2<float>>();
     }
     

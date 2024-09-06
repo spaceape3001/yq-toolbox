@@ -9,6 +9,10 @@
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
+#include <yq-toolbox/tensor/Tensor41.hpp>
+#include <yq-toolbox/tensor/Tensor42.hpp>
+#include <yq-toolbox/tensor/Tensor43.hpp>
+#include <yq-toolbox/tensor/Tensor44.hpp>
 #include <yq-toolbox/vector/Bivector4.hpp>
 #include <yq-toolbox/vector/Multivector4.hpp>
 #include <yq-toolbox/vector/Quadvector4.hpp>
@@ -47,6 +51,10 @@ static void reg_vector4()
         w.operate_with<Multivector4D>();
         w.operate_with<Quadvector4D>();
         w.operate_with<Trivector4D>();
+        w.operate_with<Tensor41D>(Operator::Multiply);
+        w.operate_with<Tensor42D>(Operator::Multiply);
+        w.operate_with<Tensor43D>(Operator::Multiply);
+        w.operate_with<Tensor44D>(Operator::Multiply);
         w.print<print_vector4<double>>();
     }
     
@@ -68,6 +76,10 @@ static void reg_vector4()
         w.operate_with<Multivector4F>();
         w.operate_with<Quadvector4F>();
         w.operate_with<Trivector4F>();
+        w.operate_with<Tensor41F>(Operator::Multiply);
+        w.operate_with<Tensor42F>(Operator::Multiply);
+        w.operate_with<Tensor43F>(Operator::Multiply);
+        w.operate_with<Tensor44F>(Operator::Multiply);
         w.print<print_vector4<float>>();
     }
     

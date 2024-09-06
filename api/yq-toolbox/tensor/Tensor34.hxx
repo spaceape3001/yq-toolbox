@@ -187,7 +187,7 @@ namespace yq {
         template <typename U>
     constexpr Tensor33<product_t<T,U>> Tensor34<T>::operator*(const Tensor43<U>& b) const noexcept
     {
-        return Tensor32<product_t<T,U>>(
+        return Tensor33<product_t<T,U>>(
             xx*b.xx + xy*b.yx + xz*b.zx + xw*b.wx,
             xx*b.xy + xy*b.yy + xz*b.zy + xw*b.wy,
             xx*b.xz + xy*b.yz + xz*b.zz + xw*b.wz,
