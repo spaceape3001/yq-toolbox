@@ -225,6 +225,8 @@ add_library(${PROJECT_NAME} SHARED
     math/AnyComponents.hpp
     math/Complex.hpp
     math/Complex.cpp
+    math/Counter.hpp
+    math/Counter.cpp
     math/Data1.hpp
     math/Data2.hpp
     math/Data3.hpp
@@ -234,15 +236,24 @@ add_library(${PROJECT_NAME} SHARED
     math/Fraction.cpp
     math/gcd.hpp
     math/glm.hpp
+    math/glm.cpp
     math/glm_types.hpp
     math/integer.hpp
     math/initialize.hpp
     math/initialize.cpp
+    math/Pose2.hpp
+    math/Pose2.hxx
+    math/Pose2.cpp
+    math/Pose3.hpp
+    math/Pose3.hxx
+    math/Pose3.cpp
     math/Range.hpp
     math/Range.hxx
     math/Range.cpp
     math/Side.hpp
     math/Sign.hpp
+    math/SimpleSpace.hpp
+    math/SimpleSpace.cpp
     math/UV.hpp
     math/UVW.hpp
     

@@ -32,18 +32,7 @@ add_library(${PROJECT_NAME} SHARED
     0/gis/gis.cpp
     0/graph/graph.cpp
     0/graph/xfg/xfg.cpp
-    0/math/Pose2.hpp
-    0/math/Pose2.hxx
-    0/math/Pose2.cpp
-    0/math/Pose3.hpp
-    0/math/Pose3.hxx
-    0/math/Pose3.cpp
-    0/math/SimpleSpace.hpp
-    0/math/SimpleSpace.cpp
     0/math/meta_coords.cpp
-    0/math/meta_general.cpp
-    0/math/meta_glm.cpp
-    0/physics/physics.cpp
 )
 
 if(Feature_GLM)

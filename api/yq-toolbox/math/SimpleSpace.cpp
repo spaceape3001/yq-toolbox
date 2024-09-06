@@ -31,6 +31,5 @@ namespace yq {
     }
 }
 
-#include "vector/Quaternion3.hxx"
-#include "vector/Tensor33.hxx"
-
+#include <yq-toolbox/vector/Quaternion3.hxx>
+#include <yq-toolbox/tensor/Tensor33.hxx>

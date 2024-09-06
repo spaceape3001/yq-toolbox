@@ -5,10 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Pose2.hpp"
-#include <yq-toolbox/basic/DelayInit.hpp>
+
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/units.hpp>
+#include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
+
+#include "Pose2.hxx"
 
 using namespace yq;
 
@@ -34,4 +37,3 @@ static void reg_pose2_math()
 
 YQ_INVOKE(reg_pose2_math();)
 
-#include "Pose2.hxx"

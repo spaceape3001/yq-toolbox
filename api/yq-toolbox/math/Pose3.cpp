@@ -5,14 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Pose3.hpp"
+
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
 #include <yq-toolbox/meta/Init.hpp>
 
-using namespace yq;
+#include "Pose3.hxx"
 
 YQ_TYPE_IMPLEMENT(yq::Pose3D)
 YQ_TYPE_IMPLEMENT(yq::Pose3F)
+
+using namespace yq;
 
 static void reg_pose3_math()
 {
@@ -33,4 +36,3 @@ static void reg_pose3_math()
 
 YQ_INVOKE(reg_pose3_math();)
 
-#include "Pose3.hxx"
