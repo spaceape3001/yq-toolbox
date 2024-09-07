@@ -1,4 +1,4 @@
-project(yqtoolbox2)
+project(yqtoolbox)
 
 option(Feature_GLM "Add GLM Bindings" ON)
 
@@ -202,6 +202,8 @@ add_library(${PROJECT_NAME} SHARED
     
     graph/PinFlow.hpp
     graph/PinFlow.cpp
+    
+    #   Rest of graph to come
     
     io/AbstractFile.hpp
     io/AbstractFile.cpp
@@ -867,7 +869,9 @@ target_compile_definitions(${PROJECT_NAME}
 if(Feature_GLM)
     target_compile_definitions(${PROJECT_NAME}
         PUBLIC
+            #   These have been mixed/scattered, use both
             YQ_FEATURE_GLM=1
+            YQ_USE_GLM=1
     )
 endif()
 
@@ -893,18 +897,19 @@ endif()
 ##########################
 ##  OTHER LIBRARIES
 
-target_link_libraries(${PROJECT_NAME} PUBLIC 
-    ${LOG4CPP_LIBRARIES} 
-    ${TBB_LIBRARIES}
-    ${CURL_LIBRARIES}
-    ${SQLite3_LIBRARY}
+target_link_libraries(${PROJECT_NAME} 
+    PUBLIC 
+        ${LOG4CPP_LIBRARIES} 
+        ${TBB_LIBRARIES}
+        ${CURL_LIBRARIES}
+        ${SQLite3_LIBRARY}
 
-    json
-    RapidXml
-    tbbmalloc_proxy
+        json
+        RapidXml
+        tbbmalloc_proxy
 
-     PRIVATE
-        pstreams
+        PRIVATE
+            pstreams
 )
 
 IF(GCC)

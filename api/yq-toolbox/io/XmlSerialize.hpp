@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <0/basic/preamble.hpp>
+#include <yq-toolbox/typedef/xml.hpp>
 
 namespace yq {
 
