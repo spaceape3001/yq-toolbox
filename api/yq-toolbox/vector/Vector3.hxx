@@ -31,14 +31,6 @@ namespace yq {
     }
     #endif
 
-    #ifdef YQ_USE_GLM
-    template <typename T>
-    constexpr Vector3<T>::operator glm::vec<3, T, glm::defaultp>() const noexcept
-    {
-        return glm::vec<3, T, glm::defaultp>( x, y, z );
-    }
-    #endif
-
     template <typename T>
     constexpr Vector3<T> Vector3<T>::operator-() const noexcept
     {

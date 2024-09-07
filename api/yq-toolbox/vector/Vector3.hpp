@@ -31,7 +31,7 @@
 #include <yq-toolbox/trait/square.hpp>
 #include <yq-toolbox/unit/declare.hpp>
 
-#if YQ_USE_GLM
+#if YQ_USE_GLM || defined(YQ_FEATURE_GLM)
     #include <yq-toolbox/math/glm.hpp>
 #endif
 
@@ -95,7 +95,7 @@ namespace yq {
         constexpr Vector3(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Vector3(zero_t) noexcept : Vector3(ALL, zero_v<T>) {}
 
-        #ifdef YQ_USE_GLM
+        #if YQ_USE_GLM || defined(YQ_FEATURE_GLM)
         template <glm::qualifier Q>
         explicit constexpr Vector3(const glm::vec<3, T, Q>& v) : x(v.x), y(v.y), z(v.z) {}
         #endif
@@ -141,8 +141,12 @@ namespace yq {
         //! Equality operator (using default)
         constexpr bool operator==(const Vector3&) const noexcept = default;
 
-        #ifdef YQ_USE_GLM
-        constexpr operator glm::vec<3, T, glm::defaultp>() const noexcept;
+        #if YQ_USE_GLM || defined(YQ_FEATURE_GLM)
+        template <glm::qualifier Q>
+        constexpr operator glm::vec<3, T, Q>() const noexcept
+        {
+            return glm::vec<3, T, Q>( x, y, z );
+        }
         #endif
 
         //! Explicit conversion operator
