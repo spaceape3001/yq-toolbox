@@ -239,15 +239,21 @@ namespace yq {
         bool                            is_collection() const;
 
         bool                            is_compound() const;
+        
+        bool                            is_command() const;
 
         //! TRUE if this is a const method/property/etc
         bool                            is_const() const;
+
+        bool                            is_editor() const;
 
         bool                            is_execute() const;
 
         bool                            is_expansion_disabled() const;
 
         bool                            is_global() const;
+        
+        bool                            is_event() const;
         
         bool                            is_imgui() const;
         
@@ -257,8 +263,9 @@ namespace yq {
         
         bool                            is_login_required() const;
         
-        bool                            is_method() const;
+        bool                            is_manipulator() const;
         
+        bool                            is_method() const;
         
         bool                            is_node() const;
 
@@ -300,6 +307,9 @@ namespace yq {
 
         //! \brief Marked as "TODO" on this object (reminder for future work)
         bool                            is_todo() const;
+        
+        bool                            is_tool() const;
+        
         bool                            is_type() const;
         
         bool                            is_vulkan() const;

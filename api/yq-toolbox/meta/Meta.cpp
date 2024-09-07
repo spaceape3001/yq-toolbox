@@ -202,6 +202,11 @@ namespace yq {
         return has(Flag::COLLECTION);
     }
 
+    bool  Meta::is_command() const
+    {
+        return has(Flag::COMMAND);
+    }
+
     bool  Meta::is_compound() const
     {
         return has(Flag::COMPOUND);
@@ -210,6 +215,16 @@ namespace yq {
     bool  Meta::is_const() const 
     { 
         return has(Flag::CONST); 
+    }
+
+    bool  Meta::is_editor() const
+    {
+        return has(Flag::EDITOR);
+    }
+
+    bool  Meta::is_event() const
+    {
+        return has(Flag::EVENT);
     }
 
     bool  Meta::is_execute() const
@@ -246,6 +261,11 @@ namespace yq {
     bool  Meta::is_login_required() const
     {
         return has(Flag::LOGIN_REQ);
+    }
+
+    bool  Meta::is_manipulator() const
+    {
+        return has(Flag::MANIPULATOR);
     }
 
     bool  Meta::is_method() const
@@ -332,6 +352,11 @@ namespace yq {
     { 
         return has(Flag::TODO);
     }
+
+    bool  Meta::is_tool() const
+    {
+        return has(Flag::TOOL);
+    }
     
     bool  Meta::is_type() const 
     { 
@@ -345,7 +370,7 @@ namespace yq {
 
     bool  Meta::is_widget() const
     {
-        return has(Flag::WIDGET);
+        return has(Flag::WIDGET) && !has(Flag::EVENT);
     }
 
     bool  Meta::is_xfg() const
