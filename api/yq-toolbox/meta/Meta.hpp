@@ -116,6 +116,7 @@ namespace yq {
             MANIPULATOR,    //!< It's a manipulator
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
+            MONITOR,        //!< Monitor involved
             MOTION,         //!< It's a motion item
             MOUSE,          //!< Mouse related
             NODE,           //!< It's a node
