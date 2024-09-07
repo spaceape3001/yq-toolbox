@@ -95,6 +95,7 @@ namespace yq {
             D6,             //!< Item has/supports six dimensional attributes (or is a 6-dimensional object)
             DISABLE_REG,    
             DOODLE,         //!< It's a doodle object
+            EDITOR,         //!< It's an editor
             ENUM,           //!< It's an enumeration (Enum)
             EVENT,          //!< It's an event
             EXECUTE,        //!< Execute permission/capabilty
@@ -103,12 +104,13 @@ namespace yq {
             GLOBAL,         //!< It's a global (GlobalInfo)
             HAS_SUBS,       
             IMGUI,          //!< ImGUI api enabled/similar usage
-            INPUT,          //!< It's flagged as input (graphs)
+            INPUT,          //!< It's flagged as input (graphs/events/etc)
             LESS,           //!< Can compare
             LIGHT,          //!< A light source
             LOADER,         //!< A loader
             LOCAL_ONLY,     //!< Local only permission
             LOGIN_REQ,      //!< Login required
+            MANIPULATOR,    //!< It's a manipulator
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
             MOTION,         //!< It's a motion item
@@ -138,6 +140,7 @@ namespace yq {
             TEXTURE,        //!< Meta has TextureInfo
             TLS,            //!< Thread local storage
             TODO,           //!< It's "TODO" later
+            TOOL,           //!< It's a Tool
             TYPE,           //!< Meta has TypeInfo
             VULKAN,         //!< Vulkan api enabled
             WEB,            //!< Web related
