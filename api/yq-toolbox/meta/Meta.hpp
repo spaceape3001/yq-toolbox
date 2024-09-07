@@ -81,6 +81,7 @@ namespace yq {
             CAMERA,         //!< It's a camera (CameraInfo)
             CACHE,          //!< It's a cache
             COLLECTION,     //!< It's a collection (TypeInfo)
+            COMMAND,        //!< It's a command
             COMPILER,       //!< It's a compiler
             COMPOUND,       //!< It's a compound/struct (CompoundInfo)
             CONST,          //!< Method/property is CONSTANT/READONLY
@@ -145,6 +146,7 @@ namespace yq {
             VULKAN,         //!< Vulkan api enabled
             WEB,            //!< Web related
             WIDGET,         //!< It's a widget (WidgetInfo)
+            WINDOW,         //!< Window related (could be event)
             XFG,            //!< Executive Flow Graph
 
             NEXT_DEFINED_FLAG     //<! Use for custom flag values after this
