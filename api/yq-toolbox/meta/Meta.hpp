@@ -106,6 +106,8 @@ namespace yq {
             HAS_SUBS,       
             IMGUI,          //!< ImGUI api enabled/similar usage
             INPUT,          //!< It's flagged as input (graphs/events/etc)
+            JOYSTICK,       //!< Joystick related
+            KEYBOARD,       //!< Keyboard related
             LESS,           //!< Can compare
             LIGHT,          //!< A light source
             LOADER,         //!< A loader
@@ -115,6 +117,7 @@ namespace yq {
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
             MOTION,         //!< It's a motion item
+            MOUSE,          //!< Mouse related
             NODE,           //!< It's a node
             NO_EXPAND,      //!< Do not expand
             OBJECT,         //!< Meta has ObjectInfo
@@ -371,7 +374,7 @@ namespace yq {
         std::vector<const Meta*>                m_children;
         const Meta*                             m_parent    = nullptr;
         std::source_location                    m_source;
-        BitArray<uint64_t, 2>                   m_flags;
+        BitArray<uint64_t, 4>                   m_flags;
         id_t                                    m_id        = AUTO_ID;
         
         Meta(const Meta&) = delete;
