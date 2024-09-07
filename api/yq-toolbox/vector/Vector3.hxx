@@ -21,6 +21,7 @@
 #include <yq-toolbox/math/AllComponents.hpp>
 #include <yq-toolbox/math/AnyComponents.hpp>
 
+#include <algorithm>
 
 namespace yq {
     #ifdef YQ_MATH_SIZE3_HPP
