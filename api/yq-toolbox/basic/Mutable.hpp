@@ -8,6 +8,7 @@
 
 #include <yq-toolbox/basic/Revision.hpp>
 #include <type_traits>
+#include <utility>
 
 namespace yq {
     template <typename T>
