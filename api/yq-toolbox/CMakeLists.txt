@@ -200,6 +200,8 @@ add_library(${PROJECT_NAME} SHARED
 
     gis/CubeSide.hpp
     
+    # The rest of the old... refactored later
+    graph/graph.cpp
     graph/PinFlow.hpp
     graph/PinFlow.cpp
     

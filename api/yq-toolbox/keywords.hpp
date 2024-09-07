@@ -42,6 +42,7 @@ namespace yq {
     struct default_t {};
     struct diagonal_t {};
     struct diameter_t {};
+    struct disabled_t {};
     struct done_t {};
     struct down_t {};
     struct easter_t {};
@@ -133,6 +134,7 @@ namespace yq {
     static constexpr const default_t        DEFAULT;
     static constexpr const diagonal_t       DIAGONAL;
     static constexpr const diameter_t       DIAMETER;
+    static constexpr const disabled_t       DISABLED;
     static constexpr const done_t           DONE;
     static constexpr const down_t           DOWN;
     static constexpr const easter_t         EASTER;
