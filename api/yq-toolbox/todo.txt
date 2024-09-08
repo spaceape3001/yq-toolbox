@@ -1,0 +1,8 @@
+1. yq/ rename
+2. Meta IDs to hashes?
+3.  yq      -> yq-toolbox (to keep libraries separate) 
+4.  tachyon -> yq-tachyon
+5.  gluon   -> yq-gluon
+6.  mithril -> yq-mithril
+
+

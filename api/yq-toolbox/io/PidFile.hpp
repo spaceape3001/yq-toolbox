@@ -6,10 +6,9 @@
 
 #pragma once
 
-#include <filesystem>
+#include <yq-toolbox/typedef/filesystem_path.hpp>
 
 namespace yq {
-
     class PidFile {
     public:
 
