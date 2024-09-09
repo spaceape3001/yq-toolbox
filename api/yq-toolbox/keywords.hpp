@@ -73,6 +73,7 @@ namespace yq {
     struct once_t {};
     struct one_t {};
     struct opposite_t {};
+    struct optional_t {};
     struct parse_t {};
     struct read_only_t {};
     struct recursive_t {};
@@ -169,6 +170,7 @@ namespace yq {
     static constexpr const once_t           ONCE;
     static constexpr const one_t            ONE;
     static constexpr const opposite_t       OPPOSITE; 
+    static constexpr const optional_t       OPTIONAL;
     static constexpr const parse_t          PARSE;
     static constexpr const read_only_t      READ_ONLY;
     static constexpr const recursive_t      RECURSIVE;
