@@ -62,8 +62,10 @@ namespace yq {
     struct interval_t {};
     struct json_t {};
     struct julian_t {};
+    struct maybe_t {};
     struct move_t {};
     struct nan_t {};
+    struct no_t {};
     struct no_throw_t {};
     struct node_t {};
     struct normal_t {};
@@ -76,6 +78,7 @@ namespace yq {
     struct recursive_t {};
     struct ref_t {};
     struct repo_t {};
+    struct required_t {};
     struct rotor_t {};
     struct rows_t {};
     struct set_t {};
@@ -106,6 +109,7 @@ namespace yq {
     struct xyzw_t {};
     struct xz_t {};
     struct y_t {};
+    struct yes_t {};
     struct yw_t {};
     struct yx_t {};
     struct yy_t {};
@@ -154,8 +158,10 @@ namespace yq {
     static constexpr const interval_t       INTERVAL;
     static constexpr const json_t           JSON;
     static constexpr const julian_t         JULIAN;
+    static constexpr const maybe_t          MAYBE;
     static constexpr const move_t           MOVE;
     static constexpr const nan_t            NAN;
+    static constexpr const no_t             NO;
     static constexpr const no_throw_t       NO_THROW;
     static constexpr const node_t           NODE;
     static constexpr const normal_t         NORMAL;
@@ -168,6 +174,7 @@ namespace yq {
     static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;
     static constexpr const repo_t           REPO;
+    static constexpr const required_t       REQUIRED;
     static constexpr const rotor_t          ROTOR;
     static constexpr const rows_t           ROWS;
     static constexpr const set_t            SET;
@@ -198,6 +205,7 @@ namespace yq {
     static constexpr const xyzw_t           XYZW;
     static constexpr const xz_t             XZ;
     static constexpr const y_t              Y;
+    static constexpr const yes_t            YES;
     static constexpr const yw_t             YW;
     static constexpr const yx_t             YX;
     static constexpr const yy_t             YY;
