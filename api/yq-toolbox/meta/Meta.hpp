@@ -104,6 +104,7 @@ namespace yq {
             GENERATOR,      //!< It's a generator (GeneratorInfo)
             GLOBAL,         //!< It's a global (GlobalInfo)
             HAS_SUBS,       
+            IMAGE,          //!< It's an image
             IMGUI,          //!< ImGUI api enabled/similar usage
             INPUT,          //!< It's flagged as input (graphs/events/etc)
             JOYSTICK,       //!< Joystick related
@@ -133,6 +134,7 @@ namespace yq {
             PROPERTY,       //!< Meta has PropertyInfo
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
+            SAMPLER,        //!< It's a sampler (in vulqan)
             SEALED,         //!< Registration sealed (WebPage)
             SELF,           //!< Self-modifying (operator)
             SHADER,         //!< Meta has ShaderInfo
@@ -256,6 +258,8 @@ namespace yq {
         
         bool                            is_event() const;
         
+        bool                            is_image() const;
+        
         bool                            is_imgui() const;
         
         bool                            is_input() const;
@@ -285,6 +289,8 @@ namespace yq {
         bool                            is_render3d() const;
 
         bool                            is_rendered() const;
+        
+        bool                            is_sampler() const;
 
         bool                            is_sealed() const;
 
@@ -305,6 +311,8 @@ namespace yq {
         bool                            is_static() const;
         
         bool                            is_template() const;
+        
+        bool                            is_texture() const;
 
         //! \brief Marked as "TODO" on this object (reminder for future work)
         bool                            is_todo() const;

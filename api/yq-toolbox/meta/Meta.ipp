@@ -242,11 +242,15 @@ namespace yq {
         return has(Flag::GLOBAL);
     }
 
+    bool  Meta::is_image() const
+    {
+        return has(Flag::IMAGE);
+    }
+
     bool  Meta::is_imgui() const
     {
         return has(Flag::IMGUI);
     }
-
 
     bool  Meta::is_input() const 
     { 
@@ -318,6 +322,11 @@ namespace yq {
         return has(Flag::RENDERED);
     }
 
+    bool  Meta::is_sampler() const
+    {
+        return has(Flag::SAMPLER);
+    }
+
     bool  Meta::is_sealed() const
     {
         return has(Flag::SEALED);
@@ -348,6 +357,11 @@ namespace yq {
         return has(Flag::TEMPLATE);
     }
 
+    bool  Meta::is_texture() const
+    {
+        return has(Flag::TEXTURE);
+    }
+    
     bool  Meta::is_todo() const 
     { 
         return has(Flag::TODO);
