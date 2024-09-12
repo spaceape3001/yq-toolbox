@@ -119,6 +119,7 @@ namespace yq {
     */
     std::string  strip_spaces(std::string_view);
     
+    std::vector<std::string_view>&  trim_all(std::vector<std::string_view>&);
 
     /*! \brief String not starting/ending with spaces
     */
@@ -128,6 +129,7 @@ namespace yq {
     
     */
     std::string_view    trimmed(std::string_view, char);
+    
 
     /*! \brief String not ending with whitespaces
     */

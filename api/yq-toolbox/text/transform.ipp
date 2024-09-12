@@ -253,7 +253,13 @@ namespace yq {
         return strip_spaces(s.data(), s.size());
     }
 
-
+    std::vector<std::string_view>&  trim_all(std::vector<std::string_view>& values)
+    {
+        for(std::string_view& v : values){
+            v   = trimmed(v);
+        }
+        return values;
+    }
 
     std::string_view    trimmed(std::string_view sv)
     {
