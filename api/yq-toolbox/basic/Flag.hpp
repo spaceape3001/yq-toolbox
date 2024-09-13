@@ -8,6 +8,7 @@
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/basic/Enum.hpp>
 #include <cassert>
+#include <span>
 
 namespace yq {
 
@@ -24,6 +25,9 @@ namespace yq {
     
     template <typename T>
     T               flag_decode(const EnumDef* def, std::string_view keys, std::string_view sep=",");
+
+    template <typename T>
+    T               flag_decode(const EnumDef* def, std::span<const std::string_view> keys);
 
     template <typename T> concept Enumerable = requires {
         typename T::enum_t;
@@ -102,6 +106,11 @@ namespace yq {
         {
         }
         
+        explicit Flag(std::span<const std::string_view> keys) : 
+            m_value(flag_decode<T>(E::staticEnumInfo(), keys))
+        {
+        }
+
         //! Our value
         constexpr T value() const noexcept { return m_value; }
         

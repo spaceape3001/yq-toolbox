@@ -49,4 +49,20 @@ namespace yq {
         });
         return ret;
     }
+
+    template <>
+    uint64_t    flag_decode<uint64_t>(const EnumDef* def, std::span<const std::string_view> keys)
+    {
+        if(!def)
+            return 0ULL;
+            
+        uint64_t    ret = 0ULL;
+        for(auto k : keys){
+            auto r = def->value_of(k);
+            if(!r)
+                continue;
+            ret |= (1ULL << *r);
+        }
+        return ret;
+    }
 }
