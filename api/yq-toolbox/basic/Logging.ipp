@@ -72,6 +72,7 @@ namespace yq {
                         m_err(nullptr)
             {
                 //root.removeAllAppenders();
+                log4cpp::Category::setRootPriority(log4cpp::Priority::DEBUG);
             }
             
             log4cpp::Category*  make(const char* z)
@@ -102,16 +103,14 @@ namespace yq {
     bool                        is_log_std_error_enabled()
     {
         LOCK
-        return _r.m_err ? true : false;
+        return static_cast<bool>(_r.m_err);
     }
 
     bool                        is_log_std_output_enabled()
     {
         LOCK
-        return _r.m_out ? true : false;
+        return static_cast<bool>(_r.m_out);
     }
-
-
 
     log4cpp::Category&          log_category(const char* z)
     {
