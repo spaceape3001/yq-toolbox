@@ -39,6 +39,7 @@ namespace yq {
         //! X
         T           x;
 
+        //! Default constructor
         constexpr Multivector1() noexcept = default;
         constexpr Multivector1(T _a, T _x) noexcept : a(_a), x(_x) {}
         constexpr Multivector1(T _a, const Vector1<T>& v) noexcept : a(_a), x(v.x) {}
