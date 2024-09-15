@@ -62,6 +62,7 @@ namespace yq {
     struct interval_t {};
     struct json_t {};
     struct julian_t {};
+    struct layout_t {};
     struct maybe_t {};
     struct move_t {};
     struct nan_t {};
@@ -159,6 +160,7 @@ namespace yq {
     static constexpr const interval_t       INTERVAL;
     static constexpr const json_t           JSON;
     static constexpr const julian_t         JULIAN;
+    static constexpr const layout_t         LAYOUT;
     static constexpr const maybe_t          MAYBE;
     static constexpr const move_t           MOVE;
     static constexpr const nan_t            NAN;
