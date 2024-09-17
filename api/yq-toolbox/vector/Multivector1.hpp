@@ -42,8 +42,10 @@ namespace yq {
         //! Default constructor
         constexpr Multivector1() noexcept = default;
         
-        //! Constructs by values
+        //! Componentwise constructor
         constexpr Multivector1(T _a, T _x) noexcept : a(_a), x(_x) {}
+        
+        //! Constructs by values (scalar & vector)
         constexpr Multivector1(T _a, const Vector1<T>& v) noexcept : a(_a), x(v.x) {}
         constexpr Multivector1(all_t, T v) noexcept : a(v), x(v) {}
         template <typename=void> requires has_nan_v<T>
