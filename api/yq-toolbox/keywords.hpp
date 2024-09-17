@@ -28,6 +28,7 @@ namespace yq {
 
         //  keywords
     struct all_t {};
+    struct allocate_t {};
     struct always_t {};
     struct cache_t {};
     struct cancel_t {};
@@ -126,6 +127,7 @@ namespace yq {
     struct zz_t {};
 
     static constexpr const all_t            ALL;
+    static constexpr const allocate_t       ALLOCATE;
     static constexpr const always_t         ALWAYS;
     static constexpr const cache_t          CACHE;
     static constexpr const cancel_t         CANCEL;
