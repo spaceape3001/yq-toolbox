@@ -50,6 +50,8 @@ namespace yq {
         
         //! Constructs all components to same value
         constexpr Multivector1(all_t, T v) noexcept : a(v), x(v) {}
+        
+        //! Constructs to all NaN
         template <typename=void> requires has_nan_v<T>
         consteval Multivector1(nan_t) noexcept : Multivector1(ALL, nan_v<T>) {}
         consteval Multivector1(one_t) noexcept : Multivector1(ALL, one_v<T>) {}
