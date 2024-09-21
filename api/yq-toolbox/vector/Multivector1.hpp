@@ -57,6 +57,8 @@ namespace yq {
         
         //! Constructs to all ones
         consteval Multivector1(one_t) noexcept : Multivector1(ALL, one_v<T>) {}
+        
+        //! Constructs to all zeros
         consteval Multivector1(zero_t) noexcept : Multivector1(ALL, zero_v<T>) {}
         
         template <typename U>
