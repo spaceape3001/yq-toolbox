@@ -61,6 +61,7 @@ namespace yq {
         //! Constructs to all zeros
         consteval Multivector1(zero_t) noexcept : Multivector1(ALL, zero_v<T>) {}
         
+        //! Casting operator, to another multivector type of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Multivector1<U>() const noexcept
