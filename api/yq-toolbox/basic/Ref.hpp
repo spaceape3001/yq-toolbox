@@ -243,7 +243,7 @@ namespace yq {
         }
         
         template <typename=void>
-        requires std::is_const_v<T>
+        requires (!std::is_const_v<T>)
         operator Ref<const T>() const noexcept
         {
             return Ref<const T>(m_ptr);
