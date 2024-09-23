@@ -239,14 +239,8 @@ namespace yq {
         requires std::is_base_of_v<U,T>
         operator Ref<U>() const noexcept
         {
+            static_assert(std::is_const_v<U> || !std::is_const_v<T>, "Const cast required!");
             return Ref<U>(static_cast<U*>(m_ptr));
-        }
-        
-        template <typename=void>
-        requires (!std::is_const_v<T>)
-        operator Ref<const T>() const noexcept
-        {
-            return Ref<const T>(m_ptr);
         }
         
     private:
