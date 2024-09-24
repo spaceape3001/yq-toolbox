@@ -86,6 +86,7 @@ namespace yq {
         //! Defaulted equality
         constexpr bool operator==(const Multivector1&) const noexcept = default;
 
+        //! Positive operator
         constexpr Multivector1 operator+() const noexcept;
         constexpr Multivector1 operator-() const noexcept;
         
