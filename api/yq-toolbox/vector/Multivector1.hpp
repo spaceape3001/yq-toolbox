@@ -88,6 +88,8 @@ namespace yq {
 
         //! Positive operator
         constexpr Multivector1 operator+() const noexcept;
+        
+        //! Negation operator
         constexpr Multivector1 operator-() const noexcept;
         
         constexpr Multivector1 operator+(T  b) const noexcept;
