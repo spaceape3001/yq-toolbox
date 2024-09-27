@@ -10,6 +10,7 @@
 #include "File.ipp"
 #include "First.ipp"
 #include "LineCol.ipp"
+#include "Logger.ipp"
 #include "OSFile.ipp"
 #include "StdError.ipp"
 #include "StdOutput.ipp"
