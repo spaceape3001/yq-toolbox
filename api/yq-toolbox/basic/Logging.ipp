@@ -30,34 +30,6 @@
 namespace yq {
 
     namespace {
-        
-        int							log_priority(LogPriority p)
-        {
-            switch(p){
-            case LogPriority::NotSet:
-            case LogPriority::All:
-                return log4cpp::Priority::NOTSET;
-            case LogPriority::Debug:
-                return log4cpp::Priority::DEBUG;
-            case LogPriority::Info:
-                return log4cpp::Priority::INFO;
-            case LogPriority::Notice:
-                return log4cpp::Priority::NOTICE;
-            case LogPriority::Warning:
-                return log4cpp::Priority::WARN;
-            case LogPriority::Error:
-                return log4cpp::Priority::ERROR;
-            case LogPriority::Critical:
-                return log4cpp::Priority::CRIT;
-            case LogPriority::Alert:
-                return log4cpp::Priority::ALERT;
-            case LogPriority::Fatal:
-                return log4cpp::Priority::FATAL;
-            case LogPriority::Emergency:
-            default:
-                return log4cpp::Priority::EMERG;
-            }
-        }
 
         struct LogRepo {
             log4cpp::Category&                                  m_root;
@@ -144,7 +116,7 @@ namespace yq {
         }
         if(lp != LogPriority()){
             _r.m_errPri = lp;
-            _r.m_err -> setThreshold(log_priority(lp));
+            _r.m_err -> setThreshold(log4cpp_priority(lp));
         }
     }
 
@@ -158,7 +130,7 @@ namespace yq {
         }
         if(lp != LogPriority()){
             _r.m_outPri = lp;
-            _r.m_out -> setThreshold(log_priority(lp));
+            _r.m_out -> setThreshold(log4cpp_priority(lp));
         }
     }
 
@@ -166,7 +138,7 @@ namespace yq {
     {
         log4cpp::FileAppender* f    = new log4cpp::FileAppender(file.string(), file.string());
         if(p != LogPriority())
-            f -> setThreshold(log_priority(p));
+            f -> setThreshold(log4cpp_priority(p));
         WLOCK
         _r.m_root.addAppender(f);
     }

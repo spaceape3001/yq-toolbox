@@ -6,60 +6,19 @@
 
 #pragma once
 
+#include <yq-toolbox/logging/LogPriority.hpp>
 #include <yq-toolbox/macro/debugrel.hpp>
-#include <yq-toolbox/basic/Enum.hpp>
 #include <yq-toolbox/basic/Flag.hpp>
 #include <yq-toolbox/typedef/filesystem_path.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
 #include <log4cpp/Priority.hh>
 #include <optional>
+#include <source_location>
 #include <string_view>
 #include <system_error>
 
 namespace yq {
-
-    //! Basic logging priority
-    YQ_ENUM(LogPriority, , 
-        //! No logging priority set
-        NotSet,
-        //! ALL logging levels
-        All,
-        //!     Debug messages and above
-        //! 
-        //!     Debug messages tend to be diagnositic and routine in nature, delving into the nitty gritty
-        Debug,
-        //! Informational messages and above
-        //! 
-        //! Informational messages are routine in natur
-        Info,
-        //! Notice messages and above
-        //!
-        //! Notice will be out-of-ordinary (but not hard to deal with) type of messages
-        Notice,
-        //! Warning messages and above
-        //!
-        //! Something is out of place, program can proceed with caution
-        Warning,
-        
-        //! Error messages and above
-        //!
-        //! Program is unable to do something.  Anticipated/tolerable errors may be here or warnings.
-        Error,
-        
-        //! Something is wrong, heading in the wrong direction, not dire (yet)
-        Critical,
-        
-        //! Likely a coding error, this is more extreme
-        Alert,
-        
-        //! Cannot continue, exiting in a more graceful manner
-        Fatal,
-        
-        //! All hell has broken loose... adios and good luck!
-        Emergency
-    )
-
 
     //class String;
 
