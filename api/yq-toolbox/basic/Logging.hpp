@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/logging/LogPriority.hpp>
-#include <yq-toolbox/macro/debugrel.hpp>
+#include <yq-toolbox/basic/LogPriority.hpp>
 #include <yq-toolbox/basic/Flag.hpp>
+#include <yq-toolbox/macro/debugrel.hpp>
 #include <yq-toolbox/typedef/filesystem_path.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
