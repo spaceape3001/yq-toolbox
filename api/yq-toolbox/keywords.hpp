@@ -37,6 +37,7 @@ namespace yq {
     struct class_t {};
     struct clock_arg_t {};
     struct clockwise_t {};
+    struct clear_t {};
     struct columns_t {};
     struct copy_t {};
     struct cout_t {};
@@ -134,6 +135,7 @@ namespace yq {
     static constexpr const ccw_t            CCW;
     static constexpr const cerr_t           CERR;
     static constexpr const class_t          CLASS;
+    static constexpr const clear_t          CLEAR;
     static constexpr const clock_arg_t      CLOCK;
     static constexpr const clockwise_t      CLOCKWISE;
     static constexpr const columns_t        COLUMNS;
