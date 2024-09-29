@@ -262,9 +262,11 @@ namespace yq {
         EnumImpl() : E(default_value()) {}
         
         //! Assignment constructor, by value
-        EnumImpl(const E& base) : E(base) {}
+        constexpr EnumImpl(const E& base) : E(base) {}
+        
         //! Assignment constructor, by value
         constexpr EnumImpl(typename E::enum_t value) : E(value) {}
+        
         //! Assignment constructor, value is filtered to be valid or default is used
         EnumImpl(int value) : E( has_value(value) ? (typename E::enum_t) value : default_value()) {}
         
