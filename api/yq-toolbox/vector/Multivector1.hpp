@@ -98,8 +98,10 @@ namespace yq {
         //! Self-adds scalar to THIS multivector, returns reference
         Multivector1& operator+=(T  b) noexcept;
         
-        //! Adds vector to multivector, returns result
+        //! Adds multivector to multivector, returns result
         constexpr Multivector1 operator+(const Multivector1&  b) const noexcept;
+        
+        //! Self-adds multivector to THIS multivector, returns reference
         Multivector1& operator+=(const Multivector1& b) noexcept;
         constexpr Multivector1 operator+(const Vector1<T>&  b) const noexcept;
         Multivector1& operator+=(const Vector1<T>& b) noexcept;
