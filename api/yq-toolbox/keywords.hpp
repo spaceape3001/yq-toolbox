@@ -54,6 +54,7 @@ namespace yq {
     struct every_t {};
     struct focus_t {};
     struct frequency_t {};
+    struct full_t {};
     struct global_t {};
     struct graph_t {};
     struct gregorian_t {};
@@ -78,6 +79,7 @@ namespace yq {
     struct opposite_t {};
     struct optional_t {};
     struct parse_t {};
+    struct partial_t {};
     struct read_only_t {};
     struct recursive_t {};
     struct ref_t {};
@@ -154,6 +156,7 @@ namespace yq {
     static constexpr const every_t          EVERY;
     static constexpr const focus_t          FOCUS;
     static constexpr const frequency_t      FREQUENCY;
+    static constexpr const full_t           FULL;
     static constexpr const global_t         GLOBAL;
     static constexpr const graph_t          GRAPH;
     static constexpr const gregorian_t      GREGORIAN;
@@ -178,6 +181,7 @@ namespace yq {
     static constexpr const opposite_t       OPPOSITE; 
     static constexpr const optional_t       OPTIONAL;
     static constexpr const parse_t          PARSE;
+    static constexpr const partial_t        PARTIAL;
     static constexpr const read_only_t      READ_ONLY;
     static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;

@@ -76,4 +76,19 @@ namespace yq {
         }
         return ret;
     }
+
+    filesystem_path_t       FileResolver::operator()(std::string_view x) const
+    {
+        return resolve(x);
+    }
+    
+    filesystem_path_t       FileResolver::operator()(full_t, std::string_view x) const
+    {
+        return resolve(x);
+    }
+    
+    filesystem_path_t       FileResolver::operator()(partial_t, std::string_view x) const
+    {
+        return partial(x);
+    }
 }

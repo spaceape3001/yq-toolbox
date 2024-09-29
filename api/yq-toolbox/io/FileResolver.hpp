@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/typedef/filesystem_path.hpp>
 #include <vector>
 
@@ -38,7 +39,12 @@ namespace yq {
         FileResolver& operator=(const FileResolver&);
         FileResolver& operator=(FileResolver&&);
         bool    operator==(const FileResolver&) const;
-        
+
+        //! Full resolution (by default)
+        filesystem_path_t       operator()(std::string_view) const;
+        filesystem_path_t       operator()(full_t, std::string_view) const;
+        filesystem_path_t       operator()(partial_t, std::string_view) const;
+
     private:
     
         std::vector<filesystem_path_t>  m_paths;
