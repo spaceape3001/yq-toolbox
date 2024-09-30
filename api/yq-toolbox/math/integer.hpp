@@ -28,4 +28,21 @@ namespace yq {
             v >>= 1;
         return n;
     }
+    
+        // This routine taken from ImGui, see their MIT license 
+    template <typename T>
+    requires std::is_integral_v<T>
+    constexpr T two_alignment(T size, T align)
+    {
+        return (size + align - 1) & ~(align - 1);
+    }
+    
+        //! Rounds up to the nearest power of two
+    template <typename T>
+    requires std::is_integral_v<T>
+    constexpr T round_up_power_two(T n)
+    {
+        return 1 << (log_two_approximate(n)+1);
+    }
+    
 }
