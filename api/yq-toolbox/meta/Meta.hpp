@@ -128,6 +128,7 @@ namespace yq {
             PAGE,           //!< A (web) page
             PIN,            //!< It's a pin
             PIPELINE,       //!< It's a pipeline (PipelineInfo)
+            PIXMAP,         //!< It's a pixmap (vulqan)
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
             PHYSICAL,       //!< Physical doodle item
             PROJECT,        //!< A project type of object
@@ -283,6 +284,8 @@ namespace yq {
         bool                            is_pin() const;
         
         bool                            is_pipeline() const;
+        
+        bool                            is_pixmap() const;
         
         bool                            is_property() const;
         

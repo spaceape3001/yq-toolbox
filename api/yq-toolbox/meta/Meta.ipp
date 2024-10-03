@@ -307,6 +307,11 @@ namespace yq {
         return has(Flag::PIPELINE);
     }
 
+    bool  Meta::is_pixmap() const
+    {
+        return has(Flag::PIXMAP);
+    }
+
     bool  Meta::is_property() const
     {
         return has(Flag::PROPERTY);
