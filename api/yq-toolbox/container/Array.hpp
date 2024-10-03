@@ -6,9 +6,8 @@
 
 #pragma once
 #include <concepts>
-#include <yq-toolbox/trait/can_add.hpp>
-#include <yq-toolbox/trait/can_two_multiply.hpp>
-#include <yq-toolbox/container/forward.hpp>
+#include <yq-toolbox/typedef/array.hpp>
+#include <yq-toolbox/basic/IntRange.hpp>
 #include <yq-toolbox/coord/Coords.hpp>
 #include <yq-toolbox/coord/Coord1.hxx>
 #include <yq-toolbox/coord/Coord2.hxx>
@@ -16,7 +15,8 @@
 #include <yq-toolbox/coord/Coord4.hxx>
 #include <yq-toolbox/coord/Coord5.hxx>
 #include <yq-toolbox/coord/Coord6.hxx>
-#include <yq-toolbox/basic/IntRange.hpp>
+#include <yq-toolbox/trait/can_add.hpp>
+#include <yq-toolbox/trait/can_two_multiply.hpp>
 #include <vector>
 #include <span>
 
