@@ -27,6 +27,7 @@ namespace yq {
     #endif
 
         //  keywords
+    struct absolute_t {};
     struct all_t {};
     struct allocate_t {};
     struct always_t {};
@@ -69,10 +70,12 @@ namespace yq {
     struct maybe_t {};
     struct move_t {};
     struct nan_t {};
+    struct negative_t {};
     struct no_t {};
     struct no_throw_t {};
     struct node_t {};
     struct normal_t {};
+    struct normalized_t {};
     struct odd_t {};
     struct once_t {};
     struct one_t {};
@@ -80,6 +83,7 @@ namespace yq {
     struct optional_t {};
     struct parse_t {};
     struct partial_t {};
+    struct positive_t {};
     struct read_only_t {};
     struct recursive_t {};
     struct ref_t {};
@@ -129,6 +133,7 @@ namespace yq {
     struct zy_t {};
     struct zz_t {};
 
+    static constexpr const absolute_t       ABSOLUTE;
     static constexpr const all_t            ALL;
     static constexpr const allocate_t       ALLOCATE;
     static constexpr const always_t         ALWAYS;
@@ -171,10 +176,12 @@ namespace yq {
     static constexpr const maybe_t          MAYBE;
     static constexpr const move_t           MOVE;
     static constexpr const nan_t            NAN;
+    static constexpr const negative_t       NEGATIVE;
     static constexpr const no_t             NO;
     static constexpr const no_throw_t       NO_THROW;
     static constexpr const node_t           NODE;
     static constexpr const normal_t         NORMAL;
+    static constexpr const normalized_t     NORMALIZED;
     static constexpr const odd_t            ODD;
     static constexpr const once_t           ONCE;
     static constexpr const one_t            ONE;
@@ -182,6 +189,7 @@ namespace yq {
     static constexpr const optional_t       OPTIONAL;
     static constexpr const parse_t          PARSE;
     static constexpr const partial_t        PARTIAL;
+    static constexpr const positive_t       POSITIVE;
     static constexpr const read_only_t      READ_ONLY;
     static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;
