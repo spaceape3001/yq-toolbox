@@ -42,6 +42,7 @@ namespace yq {
     struct columns_t {};
     struct copy_t {};
     struct cout_t {};
+    struct count_t {};
     struct default_t {};
     struct diagonal_t {};
     struct diameter_t {};
@@ -147,6 +148,7 @@ namespace yq {
     static constexpr const clockwise_t      CLOCKWISE;
     static constexpr const columns_t        COLUMNS;
     static constexpr const copy_t           COPY;
+    static constexpr const count_t          COUNT;
     static constexpr const cout_t           COUT;
     static constexpr const default_t        DEFAULT;
     static constexpr const diagonal_t       DIAGONAL;
