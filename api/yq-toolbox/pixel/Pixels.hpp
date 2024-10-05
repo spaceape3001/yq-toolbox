@@ -26,6 +26,8 @@ namespace yq::pixel {
         static coord_t  coord(index_span_t pix);
         
         Pixels();
+        Pixels(coord_t, const C& def={});
+        Pixels(coord_t, copy_t, const C*);
         ~Pixels();
         
         size_t          bytes(pixel_t) const override;
@@ -46,7 +48,7 @@ namespace yq::pixel {
         Any             get(const coord_t& cc) const override;
         Any             get(index_span_t pix) const override;
 
-        size_t          index(index_span_t&) const override;
+        size_t          index(index_span_t) const override;
         size_t          index(const coord_t&) const override;
 
         bool            inside(const coord_t&) const override;

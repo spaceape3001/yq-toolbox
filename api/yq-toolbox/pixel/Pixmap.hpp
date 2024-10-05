@@ -107,9 +107,11 @@ namespace yq::pixel {
         using coord_t                           = Coord<index_t, DIMS>;
 
         using Pixmap::get;
-      
+        
         //! Getter using specific coord type
         virtual Any     get(const coord_t&) const = 0;
+        
+        using Pixmap::index;
         
         /*! \brief Computes the linear index of the specified coordinate
         */

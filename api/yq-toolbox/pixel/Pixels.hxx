@@ -26,12 +26,32 @@ namespace yq::pixel {
         coord_t ret;
         for(uint8_t n=0;n<kDimensions;++n){
             if(pix.size() > n){
-                set(ret, n, pix[n]);
+                yq::set(ret, n, pix[n]);
             } else {
-                set(ret, n, 0);
+                yq::set(ret, n, 0);
             }
         }
         return ret;
+    }
+
+    template <uint8_t DIMS, class C>
+    Pixels<DIMS,C>::Pixels()
+    {
+    }
+    
+    template <uint8_t DIMS, class C>
+    Pixels<DIMS,C>::Pixels(coord_t cc, const C& def) : array_t(cc, def)
+    {
+    }
+    
+    template <uint8_t DIMS, class C>
+    Pixels<DIMS,C>::Pixels(coord_t cc, copy_t, const C* pValues) : array_t(cc, COPY, pValues)
+    {
+    }
+    
+    template <uint8_t DIMS, class C>
+    Pixels<DIMS,C>::~Pixels()
+    {
     }
 
     template <uint8_t DIMS, class C>
@@ -138,7 +158,7 @@ namespace yq::pixel {
         static thread_local index_t ret[kDimensions];
         coord_t             cc  = count();
         for(uint8_t n=0;n<kDimensions;++n){
-            ret[n] = get(cc, n);
+            ret[n] = yq::get(cc, n);
         }
         return ret;
     }
@@ -156,13 +176,13 @@ namespace yq::pixel {
     }
     
     template <uint8_t DIMS, class C>
-    Any     Pixels<DIMS,C>::get(std::span<const index_t> pix) const 
+    Any     Pixels<DIMS,C>::get(index_span_t pix) const 
     {
         return Any(pixel(coord(pix)));
     }
 
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::index(index_span_t& pix) const 
+    size_t  Pixels<DIMS,C>::index(index_span_t pix) const 
     {
         return index(coord(pix));
     }
@@ -211,7 +231,7 @@ namespace yq::pixel {
     }
 
     template <uint8_t DIMS, class C>
-    bool    Pixels<DIMS,C>::set(std::span<const index_t> pix, const Any& val) 
+    bool    Pixels<DIMS,C>::set(index_span_t pix, const Any& val) 
     {
         return set(coord(pix), val);
     }

@@ -7,6 +7,7 @@
 #pragma once
 #include <concepts>
 #include <yq-toolbox/typedef/array.hpp>
+#include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/basic/IntRange.hpp>
 #include <yq-toolbox/coord/Coords.hpp>
 #include <yq-toolbox/coord/Coord1.hxx>
@@ -237,6 +238,25 @@ namespace yq {
             build(v);
         }
 
+        template <typename=void>
+        requires (!ORIGIN && !GHOST)
+        Array(const coord_type& c, copy_t, const value_type* pValue)
+        {
+            assert(pValue);
+            if(pValue){
+                set_count(c);
+                compute();
+                try {
+                    m_vector.insert(m_vector.begin(), pValue, pValue+m_calc.total);
+                } 
+                catch(std::bad_alloc&)
+                {
+                    m_calc   = {};
+                }
+                
+                m_data  = m_vector;
+            }
+        }
 
         /*! \brief Builds up the vector
         
@@ -1017,6 +1037,7 @@ namespace yq {
         constexpr auto crend() const noexcept { return m_data.cend(); }
 
         Array() = default;
+        
         Array(const std::vector<value_type>& cp) : m_vector(cp)
         {
             m_data  = m_vector;
