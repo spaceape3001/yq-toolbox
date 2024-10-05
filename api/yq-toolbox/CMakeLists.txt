@@ -56,6 +56,9 @@ add_library(${PROJECT_NAME} SHARED
     
     math/math.cpp
     meta/meta.cpp
+    
+    pixel/Pixmap.cpp
+    
     shape/shape.cpp
     sql/sql.cpp
     tensor/tensor.cpp
