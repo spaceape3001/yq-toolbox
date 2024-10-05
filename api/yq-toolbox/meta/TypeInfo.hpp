@@ -157,32 +157,6 @@ namespace yq {
         template <typename Pred>
         auto            all_functions(std::string_view k, Pred pred) const;
 
-    protected:
-    
-        friend class PropertyInfo;
-        friend class MethodInfo;
-        friend class OperatorInfo;
-        friend class ConstructorInfo;
-
-        /*! \brief Constructor 
-        
-            \note Only used this if you know what you're up to
-            
-            \param[in] zName        the type's name [note this is NOT copied, so needs to remain valid]
-            \param[in] sl           Source location it's being done
-            \param[in] i            Any assigned ID override
-        */
-        TypeInfo(std::string_view zName, const std::source_location& sl, id_t i=AUTO_ID);
-        
-        //! Destructor that should never fire
-        virtual ~TypeInfo();
-
-        //! Adds an alias to the type (note view is NOT copied, so should come from program strings "" )
-        virtual void    add_alias(std::string_view) override;
-
-        //! Sweeps on the type (ie gathers properties/methdos)
-        virtual void    sweep_impl() override;
-
         //! Function to convert between types
         typedef std::error_code  (*FNConvert)(void*, const void*);
         
@@ -230,6 +204,37 @@ namespace yq {
         //! Function to read from XML Node
         typedef std::error_code (*FNXmlNodeRead)(void*, const XmlNode*);
 
+        
+        FNConvert           converter(const TypeInfo&) const;
+
+
+    protected:
+    
+        friend class PropertyInfo;
+        friend class MethodInfo;
+        friend class OperatorInfo;
+        friend class ConstructorInfo;
+
+        /*! \brief Constructor 
+        
+            \note Only used this if you know what you're up to
+            
+            \param[in] zName        the type's name [note this is NOT copied, so needs to remain valid]
+            \param[in] sl           Source location it's being done
+            \param[in] i            Any assigned ID override
+        */
+        TypeInfo(std::string_view zName, const std::source_location& sl, id_t i=AUTO_ID);
+        
+        //! Destructor that should never fire
+        virtual ~TypeInfo();
+
+        //! Adds an alias to the type (note view is NOT copied, so should come from program strings "" )
+        virtual void    add_alias(std::string_view) override;
+
+        //! Sweeps on the type (ie gathers properties/methdos)
+        virtual void    sweep_impl() override;
+
+
         //! Converter hash
         using ConvertHash   = Hash<const TypeInfo*, FNConvert>;
         
@@ -238,7 +243,6 @@ namespace yq {
 
         //! Default for this type
         DataBlock                   m_default;
-
         
         //! Method for this type
         MethodLUC                   m_methods;
@@ -257,7 +261,7 @@ namespace yq {
             
             //!  total number of parameters (typed or not)
             unsigned                params          = 0;
-        }                           m_template;
+        }                       m_template;
 
         //! Size of this type
         size_t                  m_size              = 0;

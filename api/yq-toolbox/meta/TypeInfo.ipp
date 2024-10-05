@@ -133,6 +133,11 @@ namespace yq {
         return static_cast<bool>(m_convert.get(&otherType, nullptr));
     }
     
+    TypeInfo::FNConvert           TypeInfo::converter(const TypeInfo& otherType) const
+    {
+        return m_convert.get(&otherType, nullptr);
+    }
+
     std::error_code        TypeInfo::copy(void*dst, const void*src) const
     {
         if(!m_copyRR)
