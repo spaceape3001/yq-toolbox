@@ -485,6 +485,10 @@ namespace yq {
             return m_calc.softLo;
         }
         
+        /*! \brief Linear interpolation
+        
+            Linear interpolation between the points, based in the number of dimensions
+        */
         template <typename F>
         requires (std::is_floating_point_v<F> && can_add_v<value_type> && can_two_multiply_v<value_type,F>)
         value_type  linear(const coord_type& c, const Coord<F,DIMS>& frac) const
@@ -880,6 +884,25 @@ namespace yq {
                 return impl::thread_safe_bad_data<value_type>();
             return m_data[idx];
         }
+
+        const value_type&    get( const coord_type& c) const 
+        {
+            size_t  idx = index(c);
+            if(idx >= m_data.size()) [[unlikely]]
+                return impl::thread_safe_bad_data<value_type>();
+            return m_data[idx];
+        }
+        
+        template <typename=void>
+        requires is_mutable
+        value_type&         edit( const coord_type& c)
+        {
+            size_t  idx = index(c);
+            if(idx >= m_data.size()) [[unlikely]]
+                return impl::thread_safe_bad_data<value_type>();
+            return m_data[idx];
+        }
+
 
         template <typename=void>
         requires (DIMS==1)
