@@ -192,13 +192,25 @@ namespace yq::pixel {
     {
         return array_t::index(c);
     }
+
+    template <uint8_t DIMS, class C>
+    bool    Pixels<DIMS,C>::inside(const coord_t&cc) const 
+    {
+        return all(cc) < count();
+    }
     
     template <uint8_t DIMS, class C>
-    C       Pixels<DIMS,C>::pixel(const coord_t& coord) const 
+    bool    Pixels<DIMS,C>::inside(index_span_t pix) const
     {
-        if(any(coord) >= count())
+        return inside(coord(pix));
+    }
+    
+    template <uint8_t DIMS, class C>
+    C       Pixels<DIMS,C>::pixel(const coord_t& cc) const 
+    {
+        if(any(cc) >= count())
             return C{};
-        return array_t::get(coord);
+        return array_t::get(cc);
     }
     
     template <uint8_t DIMS, class C>
