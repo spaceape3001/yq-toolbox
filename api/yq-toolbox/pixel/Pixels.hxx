@@ -28,7 +28,7 @@ namespace yq::pixel {
             if(pix.size() > n){
                 yq::set(ret, n, pix[n]);
             } else {
-                yq::set(ret, n, 0);
+                yq::set(ret, n, (index_t) 0);
             }
         }
         return ret;
@@ -220,12 +220,12 @@ namespace yq::pixel {
         const void*         ptr     = val.raw_ptr();
         
         if(type.id() == kId){
-            edit(cc) = *(const C*) ptr;
+            array_t::edit(cc) = *(const C*) ptr;
         } else {
             TypeInfo::FNConvert   cvt = type.converter(kMeta);
             if(!cvt)
                 return false;
-            cvt(&edit(cc), ptr);
+            cvt(&array_t::edit(cc), ptr);
         }
         return true;
     }
@@ -241,7 +241,7 @@ namespace yq::pixel {
     {
         if(any(cc) >= count())
             return false;
-        edit(cc) = val;
+        array_t::edit(cc) = val;
         return true;
     }
 

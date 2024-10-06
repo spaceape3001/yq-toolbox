@@ -43,7 +43,7 @@ namespace yq {
     constexpr T&  edit(Coord<T,N>& c, uint8_t i)
     {
         assert(i<N);
-        return ((const T*)&c)[i];
+        return ((T*)&c)[i];
     }
 
     /*! \brief Sets the specified coordinate value
