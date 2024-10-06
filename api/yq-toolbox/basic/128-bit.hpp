@@ -7,15 +7,7 @@
 #pragma once
 
 #include <cstdint>
-
-namespace yq { struct UInt128; }
-
-//  Linux suppourts int128
-//! 128 bit unsigned integer (gcc native)
-using uint128_t = unsigned __int128;
-
-//! 128 bit signed integer (gcc native)
-using int128_t  = __int128;
+#include <yq-toolbox/typedef/128.hpp>
 
 namespace yq {
     //!  128 bit integer adapter
