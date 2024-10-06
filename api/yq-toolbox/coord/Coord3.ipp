@@ -32,6 +32,7 @@ static void reg_coord3()
         w.property(szK, &Coord3D::k).description(szK_Coord);
         w.print<print_coord3<double>>();
         w.operate_self();
+        w.operate_with<double>();
     }
 
     {
@@ -42,6 +43,7 @@ static void reg_coord3()
         w.property(szK, &Coord3F::k).description(szK_Coord);
         w.print<print_coord3<float>>();
         w.operate_self();
+        w.operate_with<float>();
     }
 
     {
@@ -52,6 +54,7 @@ static void reg_coord3()
         w.property(szK, &Coord3I::k).description(szK_Coord);
         w.print<print_coord3<int>>();
         w.operate_self();
+        w.operate_with<int>();
     }
 
     {
@@ -62,6 +65,7 @@ static void reg_coord3()
         w.property(szK, &Coord3U::k).description(szK_Coord);
         w.print<print_coord3<unsigned>>();
         w.operate_self();
+        w.operate_with<unsigned>();
     }
 }
 

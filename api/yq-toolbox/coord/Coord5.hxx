@@ -8,6 +8,8 @@
 
 #include <yq-toolbox/coord/Coord5.hpp>
 #include <yq-toolbox/coord/Coord.hpp>
+#include <yq-toolbox/math/AllComponents.hpp>
+#include <yq-toolbox/math/AnyComponents.hpp>
 
 namespace yq {
     template <typename T>
@@ -139,6 +141,82 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Coord5<T> Coord5<T>::all_add(T b) const noexcept
+    {
+        return Coord5( i+b, j+b, k+b, l+b, m+b );
+    }
+
+    template <typename T>
+    Coord5<T>&    Coord5<T>::all_decrement(T b) noexcept
+    {
+        i -= b;
+        j -= b;
+        k -= b;
+        l -= b;
+        m -= b;
+        return *this;
+    }
+
+    template <typename T>
+    Coord5<T>&    Coord5<T>::all_increment(T b) noexcept
+    {
+        i += b;
+        j += b;
+        k += b;
+        l += b;
+        m += b;
+        return *this;
+    }
+    
+    template <typename T>
+    constexpr Coord5<T> Coord5<T>::all_subtract(T b) const noexcept
+    {
+        return Coord5( i-b, j-b, k-b, l-b, m-b );
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Coord5<T>::all_test(Pred pred) const noexcept
+    {
+        return pred(i) && pred(j) && pred(k) && pred(l) && pred(m);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Coord5<T>::all_test(T b, Pred pred) const noexcept
+    {
+        return pred(i, b) && pred(j, b) && pred(k, b) && pred(l, b) && pred(m, b);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Coord5<T>::all_test(const Coord5<T>& b, Pred pred) const noexcept
+    {
+        return pred(i, b.i) && pred(j, b.j) && pred(k, b.k) && pred(l, b.l) && pred(m, b.m);
+    }
+
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Coord5<T>::any_test(Pred pred) const noexcept
+    {
+        return pred(i) || pred(j) || pred(k) || pred(l) || pred(m);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Coord5<T>::any_test(const Coord5<T>& b, Pred pred) const noexcept
+    {
+        return pred(i, b.i) || pred(j, b.j) || pred(k, b.k) || pred(l, b.l) || pred(m, b.m);
+    }
+    
+    template <typename T>
+        template <typename Pred>
+    constexpr bool Coord5<T>::any_test(T b, Pred pred) const noexcept
+    {
+        return pred(i, b) || pred(j, b) || pred(k, b) || pred(l, b) || pred(m, b);
+    }
+
+    template <typename T>
         template <typename S>
     S&  Coord5<T>::stream(S&s) const
     {
@@ -152,6 +230,30 @@ namespace yq {
     constexpr Coord5<product_t<T,U>> operator*(T a, const Coord5<U>&b)
     {
         return { a*b.i, a*b.j, a*b.k, a*b.l, a*b.m };
+    }
+
+    template <typename T>
+    AllComponents<Coord5<T>>   all(Coord5<T>& val)
+    {
+        return { val };
+    }
+
+    template <typename T>
+    AllComponents<const Coord5<T>>   all(const Coord5<T>& val)
+    {
+        return { val };
+    }
+    
+    template <typename T>
+    AnyComponents<Coord5<T>>   any(Coord5<T>& val)
+    {
+        return { val };
+    }
+     
+    template <typename T>
+    AnyComponents<const Coord5<T>>   any(const Coord5<T>& val)
+    {
+        return { val };
     }
 
     template <typename T>

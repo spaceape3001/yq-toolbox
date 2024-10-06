@@ -31,6 +31,7 @@ static void reg_coord1()
         w.property(szI, &Coord1D::i).description(szI_Coord);
         w.print<print_coord1<double>>();
         w.operate_self();
+        w.operate_with<double>();
     }
 
     {
@@ -39,6 +40,7 @@ static void reg_coord1()
         w.property(szI, &Coord1F::i).description(szI_Coord);
         w.print<print_coord1<float>>();
         w.operate_self();
+        w.operate_with<float>();
     }
 
     {
@@ -47,6 +49,7 @@ static void reg_coord1()
         w.property(szI, &Coord1I::i).description(szI_Coord);
         w.print<print_coord1<int>>();
         w.operate_self();
+        w.operate_with<int>();
     }
 
     {
@@ -55,6 +58,7 @@ static void reg_coord1()
         w.property(szI, &Coord1U::i).description(szI_Coord);
         w.print<print_coord1<unsigned>>();
         w.operate_self();
+        w.operate_with<unsigned>();
     }
 
 }

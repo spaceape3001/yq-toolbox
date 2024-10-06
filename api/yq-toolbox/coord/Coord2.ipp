@@ -31,6 +31,7 @@ static void reg_coord2()
         w.property(szJ, &Coord2D::j).description(szJ_Coord);
         w.print<print_coord2<double>>();
         w.operate_self();
+        w.operate_with<double>();
     }
 
     {
@@ -40,6 +41,7 @@ static void reg_coord2()
         w.property(szJ, &Coord2F::j).description(szJ_Coord);
         w.print<print_coord2<float>>();
         w.operate_self();
+        w.operate_with<float>();
     }
 
     {
@@ -49,6 +51,7 @@ static void reg_coord2()
         w.property(szJ, &Coord2I::j).description(szJ_Coord);
         w.print<print_coord2<int>>();
         w.operate_self();
+        w.operate_with<int>();
     }
 
     {
@@ -58,6 +61,7 @@ static void reg_coord2()
         w.property(szJ, &Coord2U::j).description(szJ_Coord);
         w.print<print_coord2<unsigned>>();
         w.operate_self();
+        w.operate_with<unsigned>();
     }
 }
 
