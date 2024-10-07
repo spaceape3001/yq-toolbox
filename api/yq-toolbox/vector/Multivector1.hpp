@@ -126,6 +126,7 @@ namespace yq {
         constexpr Multivector1 operator-(const Vector1<T>&  b) const noexcept;
         Multivector1& operator-=(const Vector1<T>& b) noexcept;
         
+        //! Multiplies the multivector by the given scalar, returns the result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector1<product_t<T,U>> operator*(U b) const noexcept;
