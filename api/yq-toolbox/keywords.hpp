@@ -32,10 +32,12 @@ namespace yq {
     struct allocate_t {};
     struct always_t {};
     struct any_t {};
+    struct box_t {};
     struct cache_t {};
     struct cancel_t {};
     struct ccw_t {};
     struct cerr_t {};
+    struct circle_t {};
     struct class_t {};
     struct clock_arg_t {};
     struct clockwise_t {};
@@ -54,6 +56,7 @@ namespace yq {
     struct down_t {};
     struct easter_t {};
     struct edge_t {};
+    struct ellipse_t {};
     struct euler_t {};
     struct even_t {};
     struct every_t {};
@@ -74,8 +77,9 @@ namespace yq {
     struct json_t {};
     struct julian_t {};
     struct k_t {};
-    struct layout_t {};
     struct l_t {};
+    struct layout_t {};
+    struct line_t {};
     struct m_t {};
     struct maybe_t {};
     struct move_t {};
@@ -99,6 +103,7 @@ namespace yq {
     struct positive_t {};
     struct read_only_t {};
     struct recursive_t {};
+    struct rectangle_t {};
     struct ref_t {};
     struct repo_t {};
     struct required_t {};
@@ -112,6 +117,7 @@ namespace yq {
     struct three_t {};
     struct throw_t {};
     struct ticks_t {};
+    struct triangle_t {};
     struct today_t {};
     struct total_t {};
     struct two_t {};
@@ -152,10 +158,12 @@ namespace yq {
     static constexpr const allocate_t       ALLOCATE;
     static constexpr const always_t         ALWAYS;
     static constexpr const any_t            ANY;
+    static constexpr const box_t            BOX;
     static constexpr const cache_t          CACHE;
     static constexpr const cancel_t         CANCEL;
     static constexpr const ccw_t            CCW;
     static constexpr const cerr_t           CERR;
+    struct constexpr const circle_t         CIRCLE;
     static constexpr const class_t          CLASS;
     static constexpr const clear_t          CLEAR;
     static constexpr const clock_arg_t      CLOCK;
@@ -174,6 +182,7 @@ namespace yq {
     static constexpr const down_t           DOWN;
     static constexpr const easter_t         EASTER;
     static constexpr const edge_t           EDGE;
+    static constexpr const ellipse_t        ELLIPSE;
     static constexpr const euler_t          EULER;
     static constexpr const even_t           EVEN;
     static constexpr const every_t          EVERY;
@@ -196,6 +205,7 @@ namespace yq {
     static constexpr const k_t              K;
     static constexpr const l_t              L;
     static constexpr const layout_t         LAYOUT;
+    static constexpr const line_t           LINE;
     static constexpr const m_t              M;
     static constexpr const maybe_t          MAYBE;
     static constexpr const move_t           MOVE;
@@ -218,6 +228,7 @@ namespace yq {
     static constexpr const pixels_t         PIXELS;
     static constexpr const positive_t       POSITIVE;
     static constexpr const read_only_t      READ_ONLY;
+    static constexpr const rectangle_t      RECTANGLE;
     static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;
     static constexpr const repo_t           REPO;
@@ -234,6 +245,7 @@ namespace yq {
     static constexpr const ticks_t          TICKS;
     static constexpr const today_t          TODAY;
     static constexpr const total_t          TOTAL;
+    static constexpr const triangle_t       TRIANGLE;
     static constexpr const two_t            TWO;
     static constexpr const union_t          UNION;
     static constexpr const unit_t           UNIT;
