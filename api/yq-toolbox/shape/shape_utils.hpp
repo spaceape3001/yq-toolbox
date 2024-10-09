@@ -12,6 +12,8 @@
     inclusion path.
 */
 
+#include <yq/color/RGB.hpp>
+#include <yq/color/RGBA.hpp>
 #include <yq-toolbox/shape/AxBox1.hpp>
 #include <yq-toolbox/shape/AxBox2.hpp>
 #include <yq-toolbox/shape/AxBox3.hpp>
@@ -31,8 +33,6 @@
 #include <yq-toolbox/shape/Ray2.hpp>
 #include <yq-toolbox/shape/Ray3.hpp>
 #include <yq-toolbox/shape/Ray4.hpp>
-#include <yq-toolbox/color/RGB.hpp>
-#include <yq-toolbox/color/RGBA.hpp>
 #include <yq-toolbox/shape/Segment1.hpp>
 #include <yq-toolbox/shape/Segment2.hpp>
 #include <yq-toolbox/shape/Segment3.hpp>
