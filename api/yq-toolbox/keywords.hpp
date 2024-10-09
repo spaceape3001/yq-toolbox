@@ -163,7 +163,7 @@ namespace yq {
     static constexpr const cancel_t         CANCEL;
     static constexpr const ccw_t            CCW;
     static constexpr const cerr_t           CERR;
-    struct constexpr const circle_t         CIRCLE;
+    static constexpr const circle_t         CIRCLE;
     static constexpr const class_t          CLASS;
     static constexpr const clear_t          CLEAR;
     static constexpr const clock_arg_t      CLOCK;

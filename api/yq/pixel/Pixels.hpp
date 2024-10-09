@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-graphics/pixel/Pixmap.hpp>
+#include <yq/pixel/Pixmap.hpp>
 #include <yq-toolbox/coord/Coord.hpp>
 
 namespace yq::pixel {

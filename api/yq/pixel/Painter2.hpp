@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq-vulqan/pixel/Painter.hpp>
-namespace yq::tachyon {
+#include <yq/pixel/Painter.hpp>
 
-    using Pixel2 = pixel::Pixel2;
-    
+namespace yq::pixel {
+
     class Painter2 : public Painter {
     public:
     

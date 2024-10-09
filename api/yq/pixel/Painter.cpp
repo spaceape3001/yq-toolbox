@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Painter.hpp"
-#include <yq-graphics/pixel/Pixmap.hpp>
+#include <yq/pixel/Pixmap.hpp>
 #include <yq-toolbox/basic/Any.hpp>
 
-namespace yq::tachyon {
+namespace yq::pixel {
     Painter::Painter()
     {
     }

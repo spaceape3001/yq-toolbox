@@ -6,13 +6,15 @@
 
 #pragma once
 
-#include <yq-graphics/typedef/pixels.hpp>
-#include <yq-vulqan/data/DataFormat.hpp>
+#include <yq/pixel/pixels_fwd.hpp>
+//#include <yq-vulqan/data/DataFormat.hpp>
 
-namespace yq::tachyon {
+namespace yq {
+    class Any;
+}
 
-    using Pixmap = pixel::Pixmap;
-    
+namespace yq::pixel {
+
 
     class Painter {
     public:
@@ -20,7 +22,10 @@ namespace yq::tachyon {
         using index_span_t = pixel::index_span_t;
     
         Painter();
-        Painter(DataFormat, std::initializer_list<uint32_t> dims);
+        
+        // Disabled until we determine how to address data format
+        // Painter(DataFormat, std::initializer_list<uint32_t> dims);
+        
         Painter(std::shared_ptr<Pixmap>);
         Painter(Pixmap&);
         ~Painter();
