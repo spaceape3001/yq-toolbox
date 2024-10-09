@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/container/Map.hpp>
 #include <yq-toolbox/container/Vector.hpp>
-#include <yq-toolbox/macro/cppstring.hpp>
+#include <yq/macro/cppstring.hpp>
 #include <yq-toolbox/text/IgCase.hpp>
 
 /*

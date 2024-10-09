@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/macro/concat.hpp>
+#include <yq/macro/concat.hpp>
 
 namespace yq {
 

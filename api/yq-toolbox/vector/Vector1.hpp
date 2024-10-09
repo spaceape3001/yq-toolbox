@@ -11,7 +11,7 @@
 #include <yq-toolbox/typedef/vector1.hpp>
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/macro/operators.hpp>
+#include <yq/macro/operators.hpp>
 #include <yq-toolbox/math/glm.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
