@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/quotient.hpp>
+#include <yq/trait/quotient.hpp>
 #include <type_traits>
 
 namespace yq {

@@ -8,7 +8,7 @@
 
 #define YQ_MATH_POSE3_HPP 1
 
-#include <yq-toolbox/typedef/pose3.hpp>
+#include <yq/typedef/pose3.hpp>
 #include <yq-toolbox/tensor/Tensor33.hpp>
 #include <yq-toolbox/tensor/Tensor44.hpp>
 #include <yq-toolbox/unit/MKS.hpp>

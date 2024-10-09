@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/string.hpp>
-#include <yq-toolbox/typedef/string_initlists.hpp>
+#include <yq/typedef/string.hpp>
+#include <yq/typedef/string_initlists.hpp>
 
 /*
     Header of shared strings in the codebase, particularly with the meta

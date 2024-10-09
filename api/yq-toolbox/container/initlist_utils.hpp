@@ -8,7 +8,7 @@
 
 #include <initializer_list>
 #include <span>
-#include <yq-toolbox/trait/has_equality.hpp>
+#include <yq/trait/has_equality.hpp>
 
 namespace yq {
     template <typename T>

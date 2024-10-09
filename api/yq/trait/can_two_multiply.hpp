@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/sink.hpp>
+#include <yq/trait/sink.hpp>
 
 namespace yq {
     template <typename T, typename U> auto generic_two_multiply(const T& a, const U& b) { return a*b; }

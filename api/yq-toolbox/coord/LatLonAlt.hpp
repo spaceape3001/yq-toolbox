@@ -8,7 +8,7 @@
 
 #define YQ_MATH_LATLONALT_HPP 1
 
-#include <yq-toolbox/typedef/latlonalt.hpp>
+#include <yq/typedef/latlonalt.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {

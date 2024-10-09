@@ -18,8 +18,8 @@
 #include <yq-toolbox/math/AllComponents.hpp>
 #include <yq-toolbox/math/AnyComponents.hpp>
 #include <yq-toolbox/math/utility.hpp>
-#include <yq-toolbox/trait/has_abs.hpp>
-#include <yq-toolbox/trait/has_copysign.hpp>
+#include <yq/trait/has_abs.hpp>
+#include <yq/trait/has_copysign.hpp>
 #include <yq-toolbox/vector/Vector1.hpp>
 
 #include <algorithm>

@@ -8,7 +8,7 @@
 
 #define YQ_MATH_LATLON_HPP 1
 
-#include <yq-toolbox/typedef/latlon.hpp>
+#include <yq/typedef/latlon.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {

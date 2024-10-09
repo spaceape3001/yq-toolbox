@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/text/format32.hpp>
-#include <yq-toolbox/trait/always_false.hpp>
+#include <yq/trait/always_false.hpp>
 
 namespace yq {
 

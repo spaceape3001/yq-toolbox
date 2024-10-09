@@ -7,7 +7,7 @@
 #include <boost/ut.hpp>
 #include <yq-toolbox/container/ByteArray.hpp>
 #include <yq-toolbox/basic/Encode64.hpp>
-#include <yq-toolbox/typedef/string.hpp>
+#include <yq/typedef/string.hpp>
 #include <yq-toolbox/basic/Logging.hpp>
 #include <cstring>
 

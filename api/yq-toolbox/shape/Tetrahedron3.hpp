@@ -8,13 +8,13 @@
 
 #define YQ_MATH_TETRAHEDRON_HPP 1
 
-#include <yq-toolbox/typedef/tetrahedron3.hpp>
+#include <yq/typedef/tetrahedron3.hpp>
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }

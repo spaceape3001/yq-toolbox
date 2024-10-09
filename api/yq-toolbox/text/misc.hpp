@@ -8,7 +8,7 @@
 
 #include <string>
 #include <string_view>
-#include <yq-toolbox/typedef/string_maps.hpp>
+#include <yq/typedef/string_maps.hpp>
 
 namespace yq {
     //! Concatenates the given 32-bit UTF character on to the string as UTF-8

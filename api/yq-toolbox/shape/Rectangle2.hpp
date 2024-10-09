@@ -8,14 +8,14 @@
 
 #define YQ_MATH_RECTANGLE2_HPP 1
 
-#include <yq-toolbox/typedef/rectangle2.hpp>
+#include <yq/typedef/rectangle2.hpp>
 
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <yq-toolbox/shape/Size2.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

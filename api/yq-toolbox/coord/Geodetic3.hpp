@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/geodetic3.hpp>
+#include <yq/typedef/geodetic3.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
 
 namespace yq {

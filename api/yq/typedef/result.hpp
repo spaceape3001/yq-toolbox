@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 #include <yq-toolbox/basic/128-bit.hpp>
-#include <yq-toolbox/typedef/url.hpp>
+#include <yq/typedef/url.hpp>
 
 namespace yq {
     class Any;

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/square.hpp>
+#include <yq/trait/square.hpp>
 
 namespace yq {
     template <typename T> using inverse_t = decltype(T()/square_t<T>());

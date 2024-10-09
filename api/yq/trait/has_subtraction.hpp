@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/sink.hpp>
+#include <yq/trait/sink.hpp>
 
 namespace yq {
     //! Tests for subtraction operator on type

@@ -8,15 +8,15 @@
 
 #define YQ_MATH_TENSOR_1_1_HPP 1
 
-#include <yq-toolbox/typedef/tensor11.hpp>
+#include <yq/typedef/tensor11.hpp>
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/trait/has_identity.hpp>
-#include <yq-toolbox/trait/inverse.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/inverse.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 #include <yq-toolbox/vector/Vector1.hpp>
 

@@ -4,7 +4,7 @@
 #include <yq-toolbox/basic/Url.hpp>
 #include <yq-toolbox/basic/VersionSpec.hpp>
 #include <yq-toolbox/text/misc.hpp>
-#include <yq-toolbox/typedef/string.hpp>
+#include <yq/typedef/string.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

@@ -8,7 +8,7 @@
 
 #define YQ_MATH_MULTIVECTOR4_HPP 1
 
-#include <yq-toolbox/typedef/multivector4.hpp>
+#include <yq/typedef/multivector4.hpp>
 
 #include <yq-toolbox/vector/Vector4.hpp>
 #include <yq-toolbox/vector/Bivector4.hpp>
@@ -16,10 +16,10 @@
 #include <yq-toolbox/vector/Quadvector4.hpp>
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

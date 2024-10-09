@@ -8,7 +8,7 @@
 
 #define YQ_MATH_RAY2_HPP 1
 
-#include <yq-toolbox/typedef/ray2.hpp>
+#include <yq/typedef/ray2.hpp>
 
 #include <yq-toolbox/vector/Vector2.hpp>
 

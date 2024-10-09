@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/array.hpp>
+#include <yq/typedef/array.hpp>
 
 #include <cstddef>
 #include <cstdint>

@@ -12,11 +12,11 @@
 */
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/trait/can_add.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/trait/ieee754.hpp>
-#include <yq-toolbox/trait/is_arithmetic.hpp>
-#include <yq-toolbox/trait/square.hpp>
+#include <yq/trait/can_add.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/square.hpp>
 #include <cmath>
 #include <span>
 #include <utility>

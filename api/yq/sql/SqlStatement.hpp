@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/sql/forward.hpp>
-#include <yq-toolbox/typedef/filesystem_path.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 #include <span>
 #include <string>
 

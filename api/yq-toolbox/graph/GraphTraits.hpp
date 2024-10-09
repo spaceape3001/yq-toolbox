@@ -8,10 +8,10 @@
 
 //#include <yq-0/graph/preamble.hpp>
 
-#include <yq-toolbox/trait/always_false.hpp>
-#include <yq-toolbox/trait/argument_type.hpp>
-#include <yq-toolbox/trait/function_arguments.hpp>
-#include <yq-toolbox/trait/return_type.hpp>
+#include <yq/trait/always_false.hpp>
+#include <yq/trait/argument_type.hpp>
+#include <yq/trait/function_arguments.hpp>
+#include <yq/trait/return_type.hpp>
 
 namespace yq {
     /*

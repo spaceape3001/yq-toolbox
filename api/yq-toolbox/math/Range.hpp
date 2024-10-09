@@ -10,19 +10,19 @@
 
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/has_is_finite.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/trait/ieee754.hpp>
-#include <yq-toolbox/trait/integer.hpp>
-#include <yq-toolbox/trait/is_arithmetic.hpp>
-#include <yq-toolbox/trait/is_floating_point.hpp>
-#include <yq-toolbox/trait/is_integral.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
-#include <yq-toolbox/typedef/range.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_floating_point.hpp>
+#include <yq/trait/is_integral.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/typedef/range.hpp>
 
 #include <initializer_list>
 #include <span>

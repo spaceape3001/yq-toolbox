@@ -15,7 +15,7 @@
 #include <yq-toolbox/shape/Polygon4.hpp>
 #include <yq-toolbox/shape/PolygonData.hpp>
 #include <yq-toolbox/container/vector_utils.hpp>
-#include <yq-toolbox/trait/is_floating_point.hpp>
+#include <yq/trait/is_floating_point.hpp>
 
 namespace yq {
     template <typename T> Polygon4<T>::Polygon4(const std::vector<Vector4<T>>&pts) : vertex(pts) {}

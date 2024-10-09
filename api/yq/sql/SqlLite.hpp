@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/sql/forward.hpp>
-#include <yq-toolbox/typedef/filesystem_path.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/string_sets.hpp>
 
 struct sqlite3;
 

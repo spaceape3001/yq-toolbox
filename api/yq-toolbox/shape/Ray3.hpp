@@ -8,7 +8,7 @@
 
 #define YQ_MATH_RAY3_HPP 1
 
-#include <yq-toolbox/typedef/ray3.hpp>
+#include <yq/typedef/ray3.hpp>
 
 #include <yq-toolbox/vector/Vector3.hpp>
 

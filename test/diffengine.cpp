@@ -7,8 +7,8 @@
 #include <boost/ut.hpp>
 #include <yq-toolbox/basic/DiffEngine.hpp>
 #include <yq-toolbox/container/Vector.hpp>
-#include <yq-toolbox/typedef/string.hpp>
-#include <yq-toolbox/typedef/string_vectors.hpp>
+#include <yq/typedef/string.hpp>
+#include <yq/typedef/string_vectors.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

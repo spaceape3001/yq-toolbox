@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/complex.hpp>
+#include <yq/typedef/complex.hpp>
 
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/has_abs.hpp>
-#include <yq-toolbox/trait/has_identity.hpp>
-#include <yq-toolbox/trait/has_is_finite.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
-#include <yq-toolbox/trait/has_one.hpp>
-#include <yq-toolbox/trait/has_sqrt.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
+#include <yq/trait/has_abs.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_sqrt.hpp>
+#include <yq/trait/has_zero.hpp>
 
 #include <complex>
 

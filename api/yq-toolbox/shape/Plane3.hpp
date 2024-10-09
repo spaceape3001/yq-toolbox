@@ -8,7 +8,7 @@
 
 #define YQ_MATH_PLANE3_HPP 1
 
-#include <yq-toolbox/typedef/plane3.hpp>
+#include <yq/typedef/plane3.hpp>
 
 #include <yq-toolbox/shape/Normal3.hpp>
 

@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/shape/Tetrahedron3.hpp>
 #include <yq-toolbox/shape/TetrahedronData.hpp>
-#include <yq-toolbox/trait/is_floating_point.hpp>
+#include <yq/trait/is_floating_point.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the tetrahedron3 code.  Include this

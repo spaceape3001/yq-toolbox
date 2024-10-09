@@ -14,8 +14,8 @@
 #include <yq-toolbox/container/Vector.hpp>
 #include <yq-toolbox/meta/forward.hpp>
 #include <yq-toolbox/text/IgCase.hpp>
-#include <yq-toolbox/typedef/string_maps.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq/typedef/string_maps.hpp>
+#include <yq/typedef/string_sets.hpp>
 
 #include <source_location>
 #include <concepts>

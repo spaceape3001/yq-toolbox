@@ -16,8 +16,8 @@
 #include <yq-toolbox/text/parse.hpp>
 #include <yq-toolbox/text/transform.hpp>
 #include <yq-toolbox/text/vsplit.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
-#include <yq-toolbox/typedef/string_vectors.hpp>
+#include <yq/typedef/string_sets.hpp>
+#include <yq/typedef/string_vectors.hpp>
 #include <set>
 #include <system_error>
 

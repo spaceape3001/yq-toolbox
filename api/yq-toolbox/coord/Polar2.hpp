@@ -8,19 +8,19 @@
 
 #define YQ_MATH_POLAR2_HPP 1
 
-#include <yq-toolbox/typedef/polar2.hpp>
+#include <yq/typedef/polar2.hpp>
 
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
-#include <yq-toolbox/trait/has_one.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/trait/is_arithmetic.hpp>
-#include <yq-toolbox/trait/is_floating_point.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_floating_point.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 namespace yq {
     template <typename> struct Vector2;

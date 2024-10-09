@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/text/IgCase.hpp>
-#include <yq-toolbox/typedef/string_maps.hpp>
+#include <yq/typedef/string_maps.hpp>
 
 namespace yq {
     /*! \brief Url with query parameter map (instead of pure string)

@@ -8,7 +8,7 @@
 
 #include <functional>
 #include <cstdint>
-#include <yq-toolbox/typedef/array.hpp>
+#include <yq/typedef/array.hpp>
 
 namespace yq {
     template <typename T, size_t N> class BitArray;

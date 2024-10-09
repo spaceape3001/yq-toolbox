@@ -7,7 +7,7 @@
 #pragma once
 
 #include <cstdint>
-#include <yq-toolbox/typedef/128.hpp>
+#include <yq/typedef/128.hpp>
 
 namespace yq {
     //!  128 bit integer adapter

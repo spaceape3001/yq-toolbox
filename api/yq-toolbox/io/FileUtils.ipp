@@ -12,7 +12,7 @@
 #include <yq-toolbox/text/chars.hpp>
 #include <yq-toolbox/text/IterUtf8.hpp>
 //#include <0/basic/TextUtils.hpp>
-#include <yq-toolbox/typedef/result.hpp>
+#include <yq/typedef/result.hpp>
 
 
 #include <fcntl.h>

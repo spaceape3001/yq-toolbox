@@ -9,7 +9,7 @@
 #include <yq-toolbox/basic/LogPriority.hpp>
 #include <yq-toolbox/basic/Flag.hpp>
 #include <yq/macro/debugrel.hpp>
-#include <yq-toolbox/typedef/filesystem_path.hpp>
+#include <yq/typedef/filesystem_path.hpp>
 #include <log4cpp/Category.hh>
 #include <log4cpp/CategoryStream.hh>
 #include <log4cpp/Priority.hh>

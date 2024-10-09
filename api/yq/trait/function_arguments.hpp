@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/argument_type.hpp>
+#include <yq/trait/argument_type.hpp>
     
 namespace yq {
 

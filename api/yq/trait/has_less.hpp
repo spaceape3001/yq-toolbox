@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/sink.hpp>
+#include <yq/trait/sink.hpp>
 
 namespace yq {
     //! Tests for the presence of "less-than" capability for a type

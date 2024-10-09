@@ -9,7 +9,7 @@
 #include <yq-toolbox/basic/Logging.hpp>
 #include <yq-toolbox/container/PVector.hpp>
 #include <yq-toolbox/container/Array.hpp>
-#include <yq-toolbox/typedef/int_range.hpp>
+#include <yq/typedef/int_range.hpp>
 #include <vector>
 
 

@@ -8,7 +8,7 @@
 
 #include <map>
 #include <vector>
-#include <yq-toolbox/trait/has_inequality.hpp>
+#include <yq/trait/has_inequality.hpp>
 
 namespace yq {
     template <typename K, typename V, typename C, typename A>

@@ -12,7 +12,7 @@
 //#include <0/basic/TextUtils.hpp>
 #include <yq-toolbox/text/copy.hpp>
 #include <yq-toolbox/text/transform.hpp>
-#include <yq-toolbox/typedef/string.hpp>
+#include <yq/typedef/string.hpp>
 
 using namespace yq;
 

@@ -11,8 +11,8 @@
 #include <yq-toolbox/meta/MetaLookup.hpp>
 #include <yq-toolbox/meta/OperatorInfo.hpp>
 #include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/typedef/string_initlists.hpp>
-#include <yq-toolbox/typedef/xml.hpp>
+#include <yq/typedef/string_initlists.hpp>
+#include <yq/typedef/xml.hpp>
 #include <unordered_map>
 #include <span>
 

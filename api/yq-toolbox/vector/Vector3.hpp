@@ -8,27 +8,27 @@
 
 #define YQ_MATH_VECTOR_3_HPP 1
 
-#include <yq-toolbox/typedef/vector3.hpp>
+#include <yq/typedef/vector3.hpp>
 
 #include <yq-toolbox/keywords.hpp>
 #include <yq/macro/operators.hpp>
 #include <yq-toolbox/math/glm.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/cube.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
-#include <yq-toolbox/trait/has_is_finite.hpp>
-#include <yq-toolbox/trait/has_one.hpp>
-#include <yq-toolbox/trait/has_sqrt.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/trait/ieee754.hpp>
-#include <yq-toolbox/trait/integer.hpp>
-#include <yq-toolbox/trait/is_arithmetic.hpp>
-#include <yq-toolbox/trait/is_integral.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
-#include <yq-toolbox/trait/square.hpp>
+#include <yq/trait/cube.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_sqrt.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_integral.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
 #include <yq-toolbox/unit/declare.hpp>
 
 #if YQ_USE_GLM || defined(YQ_FEATURE_GLM)

@@ -15,7 +15,7 @@
 #include "Range.hpp"
 
 #include <yq-toolbox/math/Side.hpp>
-#include <yq-toolbox/trait/has_one.hpp>
+#include <yq/trait/has_one.hpp>
 
 namespace yq {
     template <typename T>

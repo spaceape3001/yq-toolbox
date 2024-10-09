@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/product.hpp>
+#include <yq/trait/product.hpp>
 #include <type_traits>
 
 namespace yq {

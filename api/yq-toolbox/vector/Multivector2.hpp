@@ -9,15 +9,15 @@
 #define YQ_MATH_MULTIVECTOR2_HPP 1
 
 
-#include <yq-toolbox/typedef/multivector2.hpp>
+#include <yq/typedef/multivector2.hpp>
 #include <yq-toolbox/vector/Vector2.hpp>
 #include <yq-toolbox/vector/Bivector2.hpp>
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

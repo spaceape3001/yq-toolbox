@@ -7,7 +7,7 @@
 #include "parse.hpp"
 #include <yq-toolbox/errors.hpp>
 #include <yq-toolbox/text/chars.hpp>
-#include <yq-toolbox/trait/numbers.hpp>
+#include <yq/trait/numbers.hpp>
 
 #include <charconv>
 #include <strings.h>

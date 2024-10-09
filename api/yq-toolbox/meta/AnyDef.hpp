@@ -14,9 +14,9 @@
 #include <yq-toolbox/meta/forward.hpp>
 #include <yq-toolbox/meta/DataBlock.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/typedef/any.hpp>
-#include <yq-toolbox/typedef/expected.hpp>
-#include <yq-toolbox/typedef/string_initlists.hpp>
+#include <yq/typedef/any.hpp>
+#include <yq/typedef/expected.hpp>
+#include <yq/typedef/string_initlists.hpp>
 
 namespace yq {
     class Stream;

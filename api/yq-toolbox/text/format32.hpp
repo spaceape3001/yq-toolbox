@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
-#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq/typedef/string_sets.hpp>
 
 namespace yq {
     /*! \brief Formats the given number as hexadecimal

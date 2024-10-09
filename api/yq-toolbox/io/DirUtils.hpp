@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/filesystem_path.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
-#include <yq-toolbox/typedef/string_vectors.hpp>
+#include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/string_sets.hpp>
+#include <yq/typedef/string_vectors.hpp>
 #include <filesystem>
 
 namespace yq {

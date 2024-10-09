@@ -10,8 +10,8 @@
 #include <string_view>
 #include <vector>
 #include <yq-toolbox/basic/Compare.hpp>
-#include <yq-toolbox/typedef/string_pairs.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq/typedef/string_pairs.hpp>
+#include <yq/typedef/string_sets.hpp>
 
 namespace yq {
     //! Checks to see if ANY string in the left starts with the right

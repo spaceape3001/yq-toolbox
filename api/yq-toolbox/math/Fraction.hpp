@@ -12,9 +12,9 @@
 #include <yq-toolbox/math/gcd.hpp>
 #include <yq-toolbox/math/template/fraction.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/has_one.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/typedef/fraction.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/typedef/fraction.hpp>
 #include <compare>
 #include <type_traits>
 

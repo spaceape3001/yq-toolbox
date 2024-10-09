@@ -8,16 +8,16 @@
 
 #define YQ_MATH_AXBOX3_HPP 1
 
-#include <yq-toolbox/typedef/axbox3.hpp>
+#include <yq/typedef/axbox3.hpp>
 
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/basic/Expect.hpp>
-#include <yq-toolbox/trait/is_floating_point.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
-#include <yq-toolbox/trait/unity.hpp>
+#include <yq/trait/is_floating_point.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/unity.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }

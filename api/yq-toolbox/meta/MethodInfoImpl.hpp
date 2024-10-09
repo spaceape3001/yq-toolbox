@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/meta/MethodInfo.hpp>
 #include <yq-toolbox/meta/TypedArgInfo.hpp>
-#include <yq-toolbox/trait/indices.hpp>
+#include <yq/trait/indices.hpp>
 #include <yq-toolbox/errors.hpp>
 #include <type_traits>
 

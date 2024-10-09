@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/expected.hpp>
+#include <yq/typedef/expected.hpp>
 
 namespace yq {
 

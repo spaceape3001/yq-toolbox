@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq-toolbox/math/Operator.hpp>
-#include <yq-toolbox/typedef/string.hpp>
+#include <yq/typedef/string.hpp>
 #include <yq-toolbox/userexpr/impl/SymCategory.hpp>
 #include <yq-toolbox/userexpr/impl/SymKind.hpp>
 

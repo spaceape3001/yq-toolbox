@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/has_is_finite.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_zero.hpp>
 #include <yq/typedef/hsl.hpp>
 
 #include <limits>

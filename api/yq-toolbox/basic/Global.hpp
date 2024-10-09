@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq-toolbox/meta/forward.hpp>
-#include <yq-toolbox/typedef/expected.hpp>
-#include <yq-toolbox/typedef/string_sets.hpp>
+#include <yq/typedef/expected.hpp>
+#include <yq/typedef/string_sets.hpp>
 
 #include <initializer_list>
 #include <system_error>

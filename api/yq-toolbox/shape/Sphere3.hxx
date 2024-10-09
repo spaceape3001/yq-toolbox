@@ -14,8 +14,8 @@
 
 #include <yq-toolbox/shape/AxBox3.hpp>
 #include <yq-toolbox/shape/Sphere3.hpp>
-#include <yq-toolbox/trait/has_half.hpp>
-#include <yq-toolbox/trait/numbers.hpp>
+#include <yq/trait/has_half.hpp>
+#include <yq/trait/numbers.hpp>
 
 namespace yq {
     template <typename T>

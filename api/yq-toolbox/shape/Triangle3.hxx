@@ -16,8 +16,8 @@
 #include <yq-toolbox/shape/Triangle3.hpp>
 #include <yq-toolbox/shape/TriangleData.hpp>
 
-#include <yq-toolbox/trait/fourth.hpp>
-#include <yq-toolbox/trait/has_sqrt.hpp>
+#include <yq/trait/fourth.hpp>
+#include <yq/trait/has_sqrt.hpp>
 
 namespace yq {
     #ifdef YQ_MATH_SEGMENT3_HPP

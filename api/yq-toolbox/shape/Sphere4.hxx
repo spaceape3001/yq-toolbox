@@ -14,7 +14,7 @@
 
 #include <yq-toolbox/shape/AxBox4.hpp>
 #include <yq-toolbox/shape/Sphere4.hpp>
-#include <yq-toolbox/trait/numbers.hpp>
+#include <yq/trait/numbers.hpp>
 
 namespace yq {
     template <typename T>

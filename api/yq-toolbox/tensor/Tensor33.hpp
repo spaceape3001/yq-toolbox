@@ -8,19 +8,19 @@
 
 #define YQ_MATH_TENSOR_3_3_HPP 1
 
-#include <yq-toolbox/typedef/tensor33.hpp>
+#include <yq/typedef/tensor33.hpp>
 
 #include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/trait/has_identity.hpp>
-#include <yq-toolbox/trait/has_is_finite.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/trait/ieee754.hpp>
-#include <yq-toolbox/trait/integer.hpp>
-#include <yq-toolbox/trait/inverse.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/integer.hpp>
+#include <yq/trait/inverse.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
 #include <yq-toolbox/vector/Vector3.hpp>
 
 #include <span>

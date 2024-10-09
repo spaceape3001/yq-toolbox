@@ -8,8 +8,8 @@
 
 #include <yq-toolbox/basic/HttpStatus.hpp>
 #include <yq-toolbox/container/Vector.hpp>
-#include <yq-toolbox/typedef/json.hpp>
-#include <yq-toolbox/typedef/url.hpp>
+#include <yq/typedef/json.hpp>
+#include <yq/typedef/url.hpp>
 
 namespace yq {
     class ByteArray;

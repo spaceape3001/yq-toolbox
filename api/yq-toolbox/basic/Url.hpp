@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/typedef/url.hpp>
-#include <yq-toolbox/typedef/filesystem_path.hpp>
-#include <yq-toolbox/typedef/result.hpp>
-#include <yq-toolbox/typedef/expected.hpp>
+#include <yq/typedef/url.hpp>
+#include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/result.hpp>
+#include <yq/typedef/expected.hpp>
 
 namespace yq {
     class Stream;

@@ -8,24 +8,24 @@
 
 #define YQ_MATH_QUATERNION3_HPP 1
 
-#include <yq-toolbox/typedef/quaternion3.hpp>
+#include <yq/typedef/quaternion3.hpp>
 
 #include <yq-toolbox/keywords.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/trait/has_identity.hpp>
-#include <yq-toolbox/trait/has_is_finite.hpp>
-#include <yq-toolbox/trait/has_nan.hpp>
-#include <yq-toolbox/trait/has_one.hpp>
-#include <yq-toolbox/trait/has_zero.hpp>
-#include <yq-toolbox/trait/ieee754.hpp>
-#include <yq-toolbox/trait/is_arithmetic.hpp>
-#include <yq-toolbox/trait/inverse.hpp>
-#include <yq-toolbox/trait/product.hpp>
-#include <yq-toolbox/trait/quotient.hpp>
-#include <yq-toolbox/trait/self_divide.hpp>
-#include <yq-toolbox/trait/self_multiply.hpp>
-#include <yq-toolbox/trait/square.hpp>
-#include <yq-toolbox/trait/unity.hpp>
+#include <yq/trait/has_identity.hpp>
+#include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_nan.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
+#include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/inverse.hpp>
+#include <yq/trait/product.hpp>
+#include <yq/trait/quotient.hpp>
+#include <yq/trait/self_divide.hpp>
+#include <yq/trait/self_multiply.hpp>
+#include <yq/trait/square.hpp>
+#include <yq/trait/unity.hpp>
 #include <yq-toolbox/unit/dims.hpp>
 
 #if YQ_USE_GLM

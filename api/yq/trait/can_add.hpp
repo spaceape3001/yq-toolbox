@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/trait/sink.hpp>
+#include <yq/trait/sink.hpp>
 
 namespace yq {
     template <typename T> auto generic_add(const T& a, const T& b) { return a+b; }
