@@ -8,7 +8,7 @@
 
 #include <yq-toolbox/strings.hpp>
 #include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/date/JulianDay.hpp>
+#include <yq/date/JulianDay.hpp>
 #include <yq-toolbox/io/StreamOps.hpp>
 #include <yq-toolbox/meta/Init.hpp>
 

@@ -73,6 +73,8 @@ toolbox_test(vector2)
 toolbox_test(vector3)
 toolbox_test(vector4)
 
-toolbox_test(earthdates)
+add_executable(test_earthdates earthdates.cpp)
+target_link_libraries(test_earthdates PRIVATE yqtoolbox yq_date BoostUT)
+add_test(NAME earthdates COMMAND test_earthdates)
 
 

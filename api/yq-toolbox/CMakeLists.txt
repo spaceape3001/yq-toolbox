@@ -31,8 +31,6 @@ add_library(${PROJECT_NAME} SHARED
     container/container.cpp
     coord/coord.cpp
 
-    date/date.cpp
-
     gis/CubeSide.hpp
     
     # The rest of the old... refactored later
