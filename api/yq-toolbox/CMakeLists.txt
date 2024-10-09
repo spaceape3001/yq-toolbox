@@ -49,9 +49,6 @@ add_library(${PROJECT_NAME} SHARED
     tensor/tensor.cpp
     text/text.cpp
     unit/Dimension.cpp
-    userexpr/userexpr.cpp
-    userexpr/impl/impl.cpp
-    userexpr/opcode/opcode.cpp
     vector/vector.cpp
 )
 

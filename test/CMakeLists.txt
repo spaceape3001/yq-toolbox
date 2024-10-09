@@ -67,7 +67,11 @@ toolbox_test(triangle2)
 toolbox_test(triangle3)
 toolbox_test(triangle4)
 toolbox_test(units)
-toolbox_test(userexpr)
+
+add_executable(test_userexpr userexpr.cpp)
+target_link_libraries(test_userexpr PRIVATE yqtoolbox yq_userexpr BoostUT)
+add_test(NAME test_userexpr COMMAND test_userexpr)
+
 toolbox_test(vector1)
 toolbox_test(vector2)
 toolbox_test(vector3)
