@@ -29,9 +29,6 @@ add_library(${PROJECT_NAME} SHARED
     basic/basic.cpp
     basic/MD5.cpp
 
-    chemistry/Phase.hpp
-    chemistry/Phase.cpp
-
     color/color.cpp
     container/container.cpp
     coord/coord.cpp

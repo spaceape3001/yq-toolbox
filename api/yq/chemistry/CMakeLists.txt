@@ -1,8 +1,7 @@
-project(yq_pixel)
+project(yq_chemistry)
 
 add_library(${PROJECT_NAME} SHARED
-    Painter.cpp
-    Pixmap.cpp
+    Phase.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

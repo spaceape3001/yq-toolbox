@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/chemistry/Phase.hpp>
+#include <yq/chemistry/Phase.hpp>
 #include <yq-toolbox/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::chemistry::Phase)
