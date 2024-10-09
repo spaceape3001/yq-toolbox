@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/graph/preamble.hpp>
+#include <yq/graph/preamble.hpp>
 
 #include <yq-toolbox/basic/Any.hpp>
 #include <yq-toolbox/basic/Enum.hpp>

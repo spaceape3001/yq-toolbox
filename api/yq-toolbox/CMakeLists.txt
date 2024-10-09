@@ -31,13 +31,6 @@ add_library(${PROJECT_NAME} SHARED
     container/container.cpp
     coord/coord.cpp
 
-    gis/CubeSide.hpp
-    
-    # The rest of the old... refactored later
-    graph/graph.cpp
-    graph/PinFlow.hpp
-    graph/PinFlow.cpp
-    
     #   Rest of graph to come
     io/io.cpp
     io/stream/stream.cpp
