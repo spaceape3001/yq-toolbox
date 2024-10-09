@@ -6,9 +6,9 @@
 
 #include "SqlLite.hpp"
 #include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/sql/SqlError.hpp>
-#include <yq-toolbox/sql/SqlLogging.hpp>
-#include <yq-toolbox/sql/SqlQuery.hpp>
+#include <yq/sql/SqlError.hpp>
+#include <yq/sql/SqlLogging.hpp>
+#include <yq/sql/SqlQuery.hpp>
 #include <sqlite3.h>
 
 namespace yq {

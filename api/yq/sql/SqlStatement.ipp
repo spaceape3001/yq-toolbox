@@ -7,9 +7,9 @@
 #include "SqlStatement.hpp"
 
 #include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/sql/SqlError.hpp>
-#include <yq-toolbox/sql/SqlLite.hpp>
-#include <yq-toolbox/sql/SqlLogging.hpp>
+#include <yq/sql/SqlError.hpp>
+#include <yq/sql/SqlLite.hpp>
+#include <yq/sql/SqlLogging.hpp>
 #include <sqlite3.h>
 
 namespace yq {

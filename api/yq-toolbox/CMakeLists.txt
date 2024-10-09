@@ -9,7 +9,6 @@ endif()
 find_package(Log4cpp REQUIRED)
 find_package(TBB REQUIRED)
 find_package(CURL REQUIRED)
-find_package(SQLite3 REQUIRED)
 
 #   This is a testing file, excluded from GIT, used for quick test compilation 
 #   of code before sliding it into the appropriate spot of the build.
@@ -55,7 +54,6 @@ add_library(${PROJECT_NAME} SHARED
     meta/meta.cpp
     
     shape/shape.cpp
-    sql/sql.cpp
     tensor/tensor.cpp
     text/text.cpp
     unit/Dimension.cpp
@@ -91,7 +89,6 @@ target_include_directories(${PROJECT_NAME}
         ${TOOLBOX_API_DIR}
         ${TBB_INCLUDE_DIR}
         ${LOG4CPP_INCLUDE_DIR}
-        ${SQLite3_INCLUDE_DIRS}
 )
 
 if(Feature_GLM)
@@ -109,7 +106,6 @@ target_link_libraries(${PROJECT_NAME}
         ${LOG4CPP_LIBRARIES} 
         ${TBB_LIBRARIES}
         ${CURL_LIBRARIES}
-        ${SQLite3_LIBRARY}
 
         json
         RapidXml

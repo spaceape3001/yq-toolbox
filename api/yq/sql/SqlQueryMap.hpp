@@ -7,7 +7,7 @@
 #pragma once
 
 #include <functional>
-#include <yq-toolbox/sql/SqlStatement.hpp>
+#include <yq/sql/SqlStatement.hpp>
 #include <type_traits>
 #include <map>
 #include <tuple>

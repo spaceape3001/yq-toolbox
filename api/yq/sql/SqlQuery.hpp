@@ -7,8 +7,8 @@
 #pragma once
 
 #include <span>
-#include <yq-toolbox/sql/forward.hpp>
-#include <yq-toolbox/sql/SqlStatement.hpp>
+#include <yq/sql/forward.hpp>
+#include <yq/sql/SqlStatement.hpp>
 
 namespace yq {
     

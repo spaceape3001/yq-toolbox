@@ -6,9 +6,9 @@
 
 #include "SqlUtils.hpp"
 #include <yq-toolbox/io/FileUtils.hpp>
-#include <yq-toolbox/sql/SqlLite.hpp>
-#include <yq-toolbox/sql/SqlLogging.hpp>
-#include <yq-toolbox/sql/SqlQuery.hpp>
+#include <yq/sql/SqlLite.hpp>
+#include <yq/sql/SqlLogging.hpp>
+#include <yq/sql/SqlQuery.hpp>
 #include <yq-toolbox/text/chars.hpp>
 #include <yq-toolbox/text/copy.hpp>
 #include <yq-toolbox/text/match.hpp>
