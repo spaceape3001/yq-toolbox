@@ -28,7 +28,6 @@ add_library(${PROJECT_NAME} SHARED
     basic/basic.cpp
     basic/MD5.cpp
 
-    color/color.cpp
     container/container.cpp
     coord/coord.cpp
 
@@ -44,11 +43,6 @@ add_library(${PROJECT_NAME} SHARED
     #   Rest of graph to come
     io/io.cpp
     io/stream/stream.cpp
-    
-    macro/concat.hpp
-    macro/cppstring.hpp
-    macro/debugrel.hpp
-    macro/make_version.hpp
     
     math/math.cpp
     meta/meta.cpp

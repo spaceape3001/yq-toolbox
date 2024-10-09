@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/color/RGB.hpp>
+#include <yq/color/rgb.hpp>
 
 namespace yq::color {
     //  https://www.colorhexa.com/color-names

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include "HSL.hxx"
-
+#include "hsl.ipp"
+#include "hsv.ipp"
+#include "rgb.ipp"
+#include "rgba.ipp"

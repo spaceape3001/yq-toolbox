@@ -4,9 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Auto-generated file
+#pragma once
 
-#include "HSL.ipp"
-#include "HSV.ipp"
-#include "RGB.ipp"
-#include "RGBA.ipp"
+#include "hsv.hxx"
+

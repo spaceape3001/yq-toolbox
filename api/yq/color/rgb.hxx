@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "RGB.hpp"
+#include "rgb.hpp"
 
 /* 
     This is the template IMPLEMENTATION of the RGB code.  Include this
