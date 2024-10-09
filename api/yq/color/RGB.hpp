@@ -11,7 +11,7 @@
 #include <yq-toolbox/trait/has_is_finite.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
 #include <yq-toolbox/trait/has_zero.hpp>
-#include <yq/color/rgb_fwd.hpp>
+#include <yq/typedef/rgb.hpp>
 
 namespace yq {
 

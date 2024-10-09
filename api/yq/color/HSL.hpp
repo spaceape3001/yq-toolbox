@@ -10,36 +10,39 @@
 #include <yq-toolbox/trait/has_is_finite.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
 #include <yq-toolbox/trait/has_zero.hpp>
-#include <yq/color/hsv_fwd.hpp>
+#include <yq/typedef/hsl.hpp>
+
+#include <limits>
+#include <type_traits>
 
 namespace yq {
 
     template <typename T>
-    struct HSV {
+    struct HSL {
         T       hue;
         T       saturation;
-        T       value;
+        T       lightness;
 
         //! Equality operator
-        constexpr bool    operator==(const HSV&) const noexcept = default;
+        constexpr bool    operator==(const HSL&) const noexcept = default;
 
-        //! Conversion of normalized floating (scaling) HSV to integer HSV
+        //! Conversion of normalized floating (scaling) HSL to integer HSL
         template <typename U>
         requires (std::is_floating_point_v<T> && std::is_integral_v<U>)
-        constexpr explicit operator HSV<U>() const noexcept
+        constexpr explicit operator HSL<U>() const noexcept
         {
             static constexpr const U    mx  = std::numeric_limits<U>::max();
             static constexpr const T    half    = T(0.5);
-            return { (U)((hue + half) * mx), (U)((saturation + half) * mx), (U)((value + half) * mx) };
+            return { (U)((hue + half) * mx), (U)((saturation + half) * mx), (U)((lightness + half) * mx) };
         }
         
-        //! Conversion of integer HSV to normalized floating HSV
+        //! Conversion of integer HSL to normalized floating HSL
         template <typename U>
         requires (std::is_integral_v<T> && std::is_floating_point_v<U>)
-        constexpr explicit operator HSV<U>() const noexcept
+        constexpr explicit operator HSL<U>() const noexcept
         {
             static constexpr const U    mx  = U(std::numeric_limits<T>::max());
-            return { U(hue) / mx, U(saturation) / mx, U(value) / mx };
+            return { U(hue) / mx, U(saturation) / mx, U(lightness) / mx };
         }
     };
 
@@ -49,27 +52,27 @@ namespace yq {
 
     /*! \brief Creates a color
     
-        Helper function to create a HSV color where the component type is deduced from
+        Helper function to create a HSL color where the component type is deduced from
         the first argument.
     */
     template <typename T>
-    constexpr HSV<T> hsl(T h, std::type_identity_t<T> s, std::type_identity_t<T> l)
+    constexpr HSL<T> hsl(T h, std::type_identity_t<T> s, std::type_identity_t<T> l)
     {
         return {h,s,l};
     }
     
-    YQ_NAN_1(HSV, {nan_v<T>, nan_v<T>, nan_v<T>})
-    YQ_ZERO_1(HSV, {zero_v<T>, zero_v<T>, zero_v<T>})
+    YQ_NAN_1(HSL, {nan_v<T>, nan_v<T>, nan_v<T>})
+    YQ_ZERO_1(HSL, {zero_v<T>, zero_v<T>, zero_v<T>})
     
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
-    YQ_IS_NAN_1(HSV, is_nan(v.hue) || is_nan(v.saturation) || is_nan(v.value))
-    YQ_IS_FINITE_1(HSV, is_finite(v.hue) && is_finite(v.saturation) && is_finite(v.value))
+    YQ_IS_NAN_1(HSL, is_nan(v.hue) || is_nan(v.saturation) || is_nan(v.lightness))
+    YQ_IS_FINITE_1(HSL, is_finite(v.hue) && is_finite(v.saturation) && is_finite(v.lightness))
     
 }
 
-YQ_TYPE_DECLARE(yq::HSV3D)
-YQ_TYPE_DECLARE(yq::HSV3F)
-YQ_TYPE_DECLARE(yq::HSV3U8)
-YQ_TYPE_DECLARE(yq::HSV3U16)
+YQ_TYPE_DECLARE(yq::HSL3D)
+YQ_TYPE_DECLARE(yq::HSL3F)
+YQ_TYPE_DECLARE(yq::HSL3U8)
+YQ_TYPE_DECLARE(yq::HSL3U16)

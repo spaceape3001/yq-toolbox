@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq/color/rgb.hpp>
+#include <yq/color/RGB.hpp>
 #include <yq-toolbox/math/glm.hpp>
 #include <yq-toolbox/meta/InfoBinder.hpp>
 #include <yq-toolbox/trait/has_is_finite.hpp>
 #include <yq-toolbox/trait/has_nan.hpp>
 #include <yq-toolbox/trait/has_one.hpp>
 #include <yq-toolbox/trait/has_zero.hpp>
-#include <yq/color/rgba_fwd.hpp>
+#include <yq/typedef/rgba.hpp>
 
 namespace yq {
 

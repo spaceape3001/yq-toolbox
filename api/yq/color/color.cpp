@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "hsl.ipp"
-#include "hsv.ipp"
-#include "rgb.ipp"
-#include "rgba.ipp"
+#include "HSL.ipp"
+#include "HSV.ipp"
+#include "RGB.ipp"
+#include "RGBA.ipp"

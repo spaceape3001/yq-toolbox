@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "rgba.hpp"
+#include "RGBA.hpp"
 
 /* 
     This is the template IMPLEMENTATION of the RGBA code.  Include this
