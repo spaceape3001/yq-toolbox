@@ -136,6 +136,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Multivector1& operator*=(U b) noexcept;
 
+        //! Multiplies the multivector with another multivector, returns the result
         template <typename U>
         constexpr Multivector1<product_t<T,U>> operator*(const Multivector1<U>& b) const noexcept;
 
