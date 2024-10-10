@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/container/set_utils.hpp>
+#include <yq/errors.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/container/set_utils.hpp>
+#include <yq/core/Logging.hpp>
 //#include <0/basic/TextUtils.hpp>
-#include <yq-toolbox/io/FileUtils.hpp>
-#include <yq-toolbox/text/format.hpp>
-#include <yq-toolbox/text/parse.hpp>
-#include <yq-toolbox/io/XmlUtils.hpp>
+#include <yq/file/FileUtils.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/xml/XmlUtils.hpp>
 
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"

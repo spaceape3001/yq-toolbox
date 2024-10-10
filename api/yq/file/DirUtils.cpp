@@ -4,11 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/io/DirUtils.hpp>
-#include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/container/Vector.hpp>
-#include <yq-toolbox/text/match.hpp>
-//#include <0/basic/TextUtils.hpp>
+#include "DirUtils.hpp"
+#include <yq/container/Set.hpp>
+#include <yq/container/Vector.hpp>
+#include <yq/text/match.hpp>
 
 #include <sys/stat.h>
 #include <dirent.h>

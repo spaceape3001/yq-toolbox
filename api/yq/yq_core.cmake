@@ -53,7 +53,6 @@ add_library(yq_core SHARED
     stream/First.cpp
     stream/LineCol.cpp
     stream/Logger.cpp
-    #stream/OSFile.cpp
     stream/Null.cpp
     stream/StdError.cpp
     stream/StdOutput.cpp

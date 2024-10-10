@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/typedef/xml.hpp>
-#include <yq-toolbox/basic/Object.hpp>
-#include <yq-toolbox/io/XmlSerialize.hpp>
+#include <yq/core/Object.hpp>
+#include <yq/xml/XmlSerialize.hpp>
 
 namespace yq {
     class XmlObject : public Object, public XmlSerialize {

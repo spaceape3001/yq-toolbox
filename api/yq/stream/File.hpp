@@ -13,6 +13,8 @@
 namespace yq::stream {
 
     /*! \brief Stream based on C++ ofstream
+    
+        \note This stream is part of the yq_file library, link appropriately.
     */
     class File : public Stream {
     public:

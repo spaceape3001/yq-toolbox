@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/date/CalendarType.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <iosfwd>
 
 namespace log4cpp { class CategoryStream; }

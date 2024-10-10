@@ -6,12 +6,12 @@
 
 #include "StdFile.hpp"
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/io/KeyValue.hpp>
-#include <yq-toolbox/io/stream/Text.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq/errors.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/keyv/KeyValue.hpp>
+#include <yq/stream/Text.hpp>
 
 #include <rapidxml.hpp>
 

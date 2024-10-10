@@ -2,10 +2,10 @@ add_executable(calc calc.cpp)
 target_link_libraries(calc yq_userexpr)
 
 add_executable(easter easter.cpp)
-target_link_libraries(easter yqtoolbox yq_date)
+target_link_libraries(easter yq_date)
 
 add_executable(kvtree kvtree.cpp)
-target_link_libraries(kvtree yqtoolbox)
+target_link_libraries(kvtree yq_keyv)
 
 add_executable(sqlquery sqlquery.cpp)
-target_link_libraries(sqlquery yqtoolbox yq_sql)
+target_link_libraries(sqlquery yq_sql)

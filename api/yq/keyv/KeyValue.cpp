@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "KeyValue.hpp"
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/io/stream/LineCol.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/container/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/stream/LineCol.hpp>
 
 namespace yq {
 #if 0

@@ -6,22 +6,22 @@
 
 #pragma once
 
-#include <yq-toolbox/container/reverse.hpp>
-#include <yq-toolbox/container/set_utils.hpp>
-#include <yq-toolbox/container/vector_utils.hpp>
-#include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/container/Vector.hpp>
-#include <yq-toolbox/text/IgCase.hpp>
-#include <yq-toolbox/text/match.hpp>
-#include <yq-toolbox/text/parse.hpp>
-#include <yq-toolbox/text/transform.hpp>
-#include <yq-toolbox/text/vsplit.hpp>
+#include <yq/container/reverse.hpp>
+#include <yq/container/set_utils.hpp>
+#include <yq/container/vector_utils.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/container/Vector.hpp>
+#include <yq/text/IgCase.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/text/vsplit.hpp>
 #include <yq/typedef/string_sets.hpp>
 #include <yq/typedef/string_vectors.hpp>
 #include <set>
 #include <system_error>
 
-//#include <yq-toolbox/basic/Logging.hpp>
+//#include <yq/core/Logging.hpp>
 
 namespace yq {
     struct KeyValue;

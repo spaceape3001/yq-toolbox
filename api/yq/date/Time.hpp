@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <span>
 
 namespace log4cpp { class CategoryStream; }

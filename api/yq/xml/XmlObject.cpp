@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/basic/XmlObject.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/xml/XmlObject.hpp>
 
 namespace yq {
 

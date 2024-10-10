@@ -6,7 +6,6 @@
 
 #include "File.hpp"
 
-
 namespace yq::stream {
     File::File()
     {

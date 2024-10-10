@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/io/AbstractFile.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/file/AbstractFile.hpp>
 #include <yq/typedef/xml.hpp>
 
 namespace yq {

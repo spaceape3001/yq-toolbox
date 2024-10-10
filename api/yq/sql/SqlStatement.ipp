@@ -6,7 +6,7 @@
 
 #include "SqlStatement.hpp"
 
-#include <yq-toolbox/container/ByteArray.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <yq/sql/SqlError.hpp>
 #include <yq/sql/SqlLite.hpp>
 #include <yq/sql/SqlLogging.hpp>

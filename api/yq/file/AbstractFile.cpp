@@ -4,11 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/io/AbstractFile.hpp>
-#include <yq-toolbox/io/FileUtils.hpp>
-#include <yq-toolbox/io/stream/Bytes.hpp>
-#include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/errors.hpp>
+#include "AbstractFile.hpp"
+
+#include <yq/errors.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/file/FileUtils.hpp>
+#include <yq/stream/Bytes.hpp>
 #include <fstream>
 #include <filesystem>
 

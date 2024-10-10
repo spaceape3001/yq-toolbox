@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/basic/Flag.hpp>
-#include <yq-toolbox/text/vsplit.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/core/Flag.hpp>
+#include <yq/text/vsplit.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/string.hpp>

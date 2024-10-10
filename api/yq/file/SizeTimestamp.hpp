@@ -6,10 +6,10 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 namespace yq {
-
     struct SizeTimestamp {
         size_t          size   = 0;
         uint64_t        time   = 0;

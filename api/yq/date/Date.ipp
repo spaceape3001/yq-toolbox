@@ -6,11 +6,11 @@
 
 #include "Date.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/StreamOps.hpp>
 #include <yq/date/JulianDay.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 #include <ctime>
 #include <log4cpp/CategoryStream.hh>

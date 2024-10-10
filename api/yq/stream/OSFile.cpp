@@ -6,7 +6,7 @@
 
 #include "OSFile.hpp"
 
-#include <yq/io/FileUtils.hpp>
+#include <yq/file/FileUtils.hpp>
 #include <yq/container/ByteArray.hpp>
 
 #include <cstring>

@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "JulianDay.hpp"
-#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq/core/DelayInit.hpp>
 #include <yq/date/Date.hpp>
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/meta/Init.hpp>
 
 
 namespace yq {

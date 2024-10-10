@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/text/IgCase.hpp>
+#include <yq/text/IgCase.hpp>
 #include <yq/typedef/string_maps.hpp>
 
 namespace yq {

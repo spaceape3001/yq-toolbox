@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/io/Stream.hpp>
-#include <yq-toolbox/io/XmlFile.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/Stream.hpp>
+#include <yq/xml/XmlFile.hpp>
 
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
