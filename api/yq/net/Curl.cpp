@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Curl.hpp"
-#include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/basic/Url.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/net/Url.hpp>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 //#include <0/io/preamble.hpp>

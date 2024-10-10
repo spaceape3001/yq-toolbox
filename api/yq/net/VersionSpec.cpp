@@ -5,11 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "VersionSpec.hpp"
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/text/basic.hpp>
-#include <yq-toolbox/text/chars.hpp>
-#include <yq-toolbox/text/match.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/text/basic.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/match.hpp>
 
 namespace yq {
     Stream& operator<<(Stream&s, const VersionSpec&v)

@@ -17,7 +17,7 @@
 #include <0/graph/xfg/VectorInputPin.hpp>
 #include <0/graph/xfg/VectorOutputPin.hpp>
 
-#include <yq-toolbox/basic/Object.hpp>
+#include <yq/core/Object.hpp>
 
 
 namespace yq::xfg {

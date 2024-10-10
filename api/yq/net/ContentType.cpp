@@ -6,8 +6,8 @@
 
 #include "ContentType.hpp"
 
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/container/EnumMap.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/container/EnumMap.hpp>
 
 namespace yq {
 

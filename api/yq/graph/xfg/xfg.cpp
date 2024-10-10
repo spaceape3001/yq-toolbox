@@ -13,8 +13,8 @@
 #include "NodeInfo.ipp"
 #include "OutputPin.ipp"
 
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::xfg::Execute)
 

@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/graph/Graph.hpp>
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/io/XmlUtils.hpp>
+#include <yq/errors.hpp>
+#include <yq/xml/XmlUtils.hpp>
 
 namespace yq::g {
     using yq::write_x;

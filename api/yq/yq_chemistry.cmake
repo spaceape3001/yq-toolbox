@@ -4,14 +4,13 @@
 ##
 ################################################################################
 
-add_library(yq_graph SHARED
-    graph/graph.cpp
-    graph/PinFlow.cpp
+add_library(yq_chemistry SHARED
+    chemistry/Phase.cpp
 )
 
-target_link_libraries(yq_graph PUBLIC
-    yq_core yq_xml
+target_link_libraries(yq_chemistry PUBLIC
+    yq_core
 )
 
-LinkTest(yq_graph)
+LinkTest(yq_chemistry)
 

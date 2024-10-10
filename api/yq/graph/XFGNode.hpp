@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Object.hpp>
+#include <yq/core/Object.hpp>
 
 namespace yq::xfg {
 

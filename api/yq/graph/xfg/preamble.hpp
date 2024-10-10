@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief Executive Flow Graph Namespace

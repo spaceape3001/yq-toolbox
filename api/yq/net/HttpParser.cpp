@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/basic/HttpParser.hpp>
-#include <yq-toolbox/container/MultiMap.hpp>
-#include <yq-toolbox/text/basic.hpp>
-#include <yq-toolbox/text/transform.hpp>
-#include <yq-toolbox/text/basic.hpp>
-#include <yq-toolbox/text/chars.hpp>
-#include <yq-toolbox/text/match.hpp>
-#include <yq-toolbox/text/misc.hpp>
-#include <yq-toolbox/text/vsplit.hpp>
-#include <yq-toolbox/text/IgCase.hpp>
+#include <yq/container/MultiMap.hpp>
+#include <yq/net/HttpParser.hpp>
+#include <yq/text/basic.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/text/basic.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/misc.hpp>
+#include <yq/text/vsplit.hpp>
+#include <yq/text/IgCase.hpp>
 
 namespace yq {
     StringViewMultiMap     parse_cookie(std::string_view cs)

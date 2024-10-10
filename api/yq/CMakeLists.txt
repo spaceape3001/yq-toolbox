@@ -4,32 +4,26 @@
 ##
 ################################################################################
 
-#   Goes first... everybody relies on this
+#   CORE
 include(yq_core.cmake)
 
-#   Things that rely on core only
+#   FIRST STEP
 include(yq_date.cmake)
 include(yq_math.cmake)
 include(yq_file.cmake)
+include(yq_network.cmake)
 
-
-##  Other things...
+#   SECOND STEP
+include(yq_chemistry.cmake)
 include(yq_color.cmake)
-include(yq_xml.cmake)
-include(yq_keyv.cmake)
 include(yq_sql.cmake)
 include(yq_userexpr.cmake)
+include(yq_xml.cmake)
+
+#   REMAINDER
+include(yq_graph.cmake)
+include(yq_keyv.cmake)
 
 
-# add_subdirectory(core)
-
-#add_subdirectory(random)
-
-#add_subdirectory(chemistry)
-#add_subdirectory(color)
-#add_subdirectory(date)
-#add_subdirectory(graph)
 #add_subdirectory(pixel)
-#add_subdirectory(sql)
-#add_subdirectory(userexpr)
 

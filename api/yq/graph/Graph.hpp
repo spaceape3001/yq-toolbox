@@ -8,11 +8,11 @@
 
 #include <yq/graph/preamble.hpp>
 
-#include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/basic/Flag.hpp>
-#include <yq-toolbox/container/Map.hpp>
-#include <yq-toolbox/basic/MinMaxDef.hpp>
+#include <yq/core/Any.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/core/Flag.hpp>
+#include <yq/container/Map.hpp>
+#include <yq/core/MinMaxDef.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/string_vectors.hpp>
 

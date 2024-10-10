@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Version.hpp>
+#include <yq/core/Version.hpp>
 #include <string_view>
 
 namespace log4cpp { class CategoryStream; }

@@ -6,12 +6,12 @@
 
 #include "Url.hpp"
 #include "Url.hxx"
-#include <yq-toolbox/basic/Result.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/io/stream/Text.hpp>
-#include <yq-toolbox/text/copy.hpp>
-#include <yq-toolbox/text/parse.hpp>
-#include <yq-toolbox/text/chars.hpp>
+#include <yq/core/Result.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/stream/Text.hpp>
+#include <yq/text/copy.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/chars.hpp>
 
 namespace yq {
     url_view_r      as_host_port(const char*sz, size_t cb)

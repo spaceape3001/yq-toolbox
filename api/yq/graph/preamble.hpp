@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Enum.hpp>
+#include <yq/core/Enum.hpp>
 //#include <0/basic/preamble.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief Generic graph namespace

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/HttpStatus.hpp>
-#include <yq-toolbox/container/Vector.hpp>
+#include <yq/net/HttpStatus.hpp>
+#include <yq/container/Vector.hpp>
 #include <yq/typedef/json.hpp>
 #include <yq/typedef/url.hpp>
 
