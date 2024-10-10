@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/color/RGB.hpp>
-#include <yq-toolbox/math/glm.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/math/glm.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_one.hpp>

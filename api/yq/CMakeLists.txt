@@ -6,6 +6,7 @@
 
 include(yq_core.cmake)
 include(yq_math.cmake)
+include(yq_color.cmake)
 include(yq_userexpr.cmake)
 
 

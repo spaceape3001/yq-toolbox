@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
