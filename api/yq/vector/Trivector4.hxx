@@ -12,7 +12,7 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Trivector4.hpp>
+#include <yq/vector/Trivector4.hpp>
 
 
 namespace yq {

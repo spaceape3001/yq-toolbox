@@ -12,10 +12,10 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Polyline3.hpp>
-#include <yq-toolbox/shape/PolylineData.hpp>
-#include <yq-toolbox/math/utility.hpp>
-#include <yq-toolbox/container/vector_utils.hpp>
+#include <yq/shape/Polyline3.hpp>
+#include <yq/shape/PolylineData.hpp>
+#include <yq/math/utility.hpp>
+#include <yq/container/vector_utils.hpp>
 
 namespace yq {
     template <typename T> Polyline3<T>::Polyline3(const std::vector<Vector3<T>>&pts) : vertex(pts) {}

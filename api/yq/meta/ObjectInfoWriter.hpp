@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/ObjectInfo.hpp>
-#include <yq-toolbox/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/CompoundInfoDynamic.hpp>
 
 namespace yq {
     template <typename C>

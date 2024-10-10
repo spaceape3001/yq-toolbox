@@ -12,9 +12,9 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/PolygonData.hpp>
-#include <yq-toolbox/shape/Polygon3.hpp>
-#include <yq-toolbox/container/vector_utils.hpp>
+#include <yq/shape/PolygonData.hpp>
+#include <yq/shape/Polygon3.hpp>
+#include <yq/container/vector_utils.hpp>
 #include <yq/trait/is_floating_point.hpp>
 
 namespace yq {

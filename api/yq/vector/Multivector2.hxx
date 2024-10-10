@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/vector/Bivector2.hpp>
-#include <yq-toolbox/vector/Multivector2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/vector/Bivector2.hpp>
+#include <yq/vector/Multivector2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the multivector2 code.  Include this

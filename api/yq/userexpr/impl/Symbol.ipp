@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Symbol.hpp"
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/text/ios32.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/text/ios32.hpp>
 #include <ostream>
 
 namespace yq::expr {

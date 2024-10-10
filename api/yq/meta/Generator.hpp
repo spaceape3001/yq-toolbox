@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/Meta.hpp>
+#include <yq/meta/Meta.hpp>
 #include <vector>
 #include <span>
 #include <typeinfo>

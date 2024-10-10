@@ -10,10 +10,10 @@
 
 #include <yq/typedef/vector3.hpp>
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/macro/operators.hpp>
-#include <yq-toolbox/math/glm.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/math/glm.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/cube.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_is_finite.hpp>
@@ -29,10 +29,10 @@
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
-#include <yq-toolbox/unit/declare.hpp>
+#include <yq/unit/declare.hpp>
 
 #if YQ_USE_GLM || defined(YQ_FEATURE_GLM)
-    #include <yq-toolbox/math/glm.hpp>
+    #include <yq/math/glm.hpp>
 #endif
 
 #include <span>

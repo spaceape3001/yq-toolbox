@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq/core/DelayInit.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
-#include <yq-toolbox/math/trigonometry.hpp>
+#include <yq/math/trigonometry.hpp>
 
 using namespace yq;
 using namespace yq::expr;

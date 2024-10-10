@@ -12,9 +12,9 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Quaternion3.hpp>
-#include <yq-toolbox/unit/literals.hpp>
-#include <yq-toolbox/math/trigonometry.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yq/unit/literals.hpp>
+#include <yq/math/trigonometry.hpp>
 
 namespace yq {
 

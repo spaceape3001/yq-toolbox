@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq-toolbox/container/BitArray.hpp>
-#include <yq-toolbox/container/Hash.hpp>
-#include <yq-toolbox/container/Map.hpp>
-#include <yq-toolbox/container/MultiMap.hpp>
-#include <yq-toolbox/container/Set.hpp>
-#include <yq-toolbox/container/Vector.hpp>
-#include <yq-toolbox/meta/forward.hpp>
-#include <yq-toolbox/text/IgCase.hpp>
+#include <yq/container/BitArray.hpp>
+#include <yq/container/Hash.hpp>
+#include <yq/container/Map.hpp>
+#include <yq/container/MultiMap.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/container/Vector.hpp>
+#include <yq/meta/forward.hpp>
+#include <yq/text/IgCase.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/string_sets.hpp>
 

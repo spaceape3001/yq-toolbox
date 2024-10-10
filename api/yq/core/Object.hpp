@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/ObjectInfo.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/ObjectInfo.hpp>
+#include <yq/core/DelayInit.hpp>
 
 namespace yq {
 

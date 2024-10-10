@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/meta/MethodInfo.hpp>
+#include <yq/meta/MethodInfo.hpp>
 
 namespace yq {
     class ConstructorInfo : public MethodInfo {

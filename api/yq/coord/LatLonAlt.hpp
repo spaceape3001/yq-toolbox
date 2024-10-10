@@ -9,7 +9,7 @@
 #define YQ_MATH_LATLONALT_HPP 1
 
 #include <yq/typedef/latlonalt.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     template <typename A> struct LatLon;

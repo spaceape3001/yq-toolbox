@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/unit/declare.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/unit/declare.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 
 YQ_TYPE_DECLARE(yq::unit::Acre)

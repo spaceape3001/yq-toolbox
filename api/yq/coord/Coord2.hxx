@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/coord/Coord2.hpp>
-#include <yq-toolbox/coord/Coord.hpp>
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/coord/Coord2.hpp>
+#include <yq/coord/Coord.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 namespace yq {
     template <typename T>

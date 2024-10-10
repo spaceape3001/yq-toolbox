@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PopInstruction.hpp"
-#include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/container/Stack.hpp>
+#include <yq/core/Any.hpp>
+#include <yq/errors.hpp>
+#include <yq/container/Stack.hpp>
 
 namespace yq::expr {
     PopInstruction::PopInstruction(const string_t&s) : Instruction(s) 

@@ -6,17 +6,17 @@
 
 #include "Vector3.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/tensor/Tensor31.hpp>
-#include <yq-toolbox/tensor/Tensor32.hpp>
-#include <yq-toolbox/tensor/Tensor33.hpp>
-#include <yq-toolbox/tensor/Tensor34.hpp>
-#include <yq-toolbox/vector/Bivector3.hpp>
-#include <yq-toolbox/vector/Multivector3.hpp>
-#include <yq-toolbox/vector/Quaternion3.hpp>
-#include <yq-toolbox/vector/Trivector3.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tensor/Tensor31.hpp>
+#include <yq/tensor/Tensor32.hpp>
+#include <yq/tensor/Tensor33.hpp>
+#include <yq/tensor/Tensor34.hpp>
+#include <yq/vector/Bivector3.hpp>
+#include <yq/vector/Multivector3.hpp>
+#include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Trivector3.hpp>
 
 #include "Vector3.hxx"
 #include "Multivector3.hxx"

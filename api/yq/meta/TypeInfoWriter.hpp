@@ -6,14 +6,15 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Result.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/CompoundInfoDynamic.hpp>
-#include <yq-toolbox/meta/ConstructorInfoImpl.hpp>
-#include <yq-toolbox/meta/ConstructorInfoWriter.hpp>
-#include <yq-toolbox/meta/OperatorInfoImpl.hpp>
-#include <yq-toolbox/meta/OperatorInfoWriter.hpp>
+#include <yq/core/Result.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/ConstructorInfoImpl.hpp>
+#include <yq/meta/ConstructorInfoWriter.hpp>
+#include <yq/meta/OperatorInfoImpl.hpp>
+#include <yq/meta/OperatorInfoWriter.hpp>
 #include <yq/trait/can_add.hpp>
 #include <yq/trait/can_affirm.hpp>
 #include <yq/trait/can_divide.hpp>
@@ -28,7 +29,6 @@
 #include <yq/trait/is_template.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
 #include <expected>
 #include <list>
 #include <map>

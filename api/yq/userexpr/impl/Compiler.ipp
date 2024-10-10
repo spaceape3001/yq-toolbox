@@ -6,9 +6,9 @@
 
 #include "Compiler.hpp"
 
-#include <yq-toolbox/basic/Any.hpp>
+#include <yq/core/Any.hpp>
 
-#include <yq-toolbox/text/parse32.hpp>
+#include <yq/text/parse32.hpp>
 
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/Context.hpp>

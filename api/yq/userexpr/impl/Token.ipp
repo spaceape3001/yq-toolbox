@@ -6,7 +6,7 @@
 
 #include "Token.hpp"
 
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/core/Logging.hpp>
 
 namespace yq::expr {
     template <typename S> void stream_out(S&out, const Token& tok)

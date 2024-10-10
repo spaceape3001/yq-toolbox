@@ -12,10 +12,10 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Size4.hpp>
+#include <yq/shape/Size4.hpp>
 
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 namespace yq {
     #ifdef YQ_MATH_VECTOR_4_HPP

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Ref.hpp>
-#include <yq-toolbox/container/Stack.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/container/Stack.hpp>
 #include <yq/userexpr/forward.hpp>
 
 namespace yq::expr {

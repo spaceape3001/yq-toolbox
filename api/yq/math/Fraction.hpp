@@ -8,10 +8,10 @@
 
 #define YQ_MATH_FRACTION_HPP 1
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/math/gcd.hpp>
-#include <yq-toolbox/math/template/fraction.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
+#include <yq/math/gcd.hpp>
+#include <yq/math/template/fraction.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_one.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/typedef/fraction.hpp>

@@ -12,8 +12,8 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/AxBox4.hpp>
-#include <yq-toolbox/shape/Sphere4.hpp>
+#include <yq/shape/AxBox4.hpp>
+#include <yq/shape/Sphere4.hpp>
 #include <yq/trait/numbers.hpp>
 
 namespace yq {

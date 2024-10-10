@@ -7,10 +7,10 @@
 #pragma once
 
 #include <cassert>
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/basic/Result.hpp>
-#include <yq-toolbox/meta/AnyDef.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
+#include <yq/errors.hpp>
+#include <yq/core/Result.hpp>
+#include <yq/meta/AnyDef.hpp>
+#include <yq/meta/TypeInfo.hpp>
 
     //  SKIPPING INCLUDES... done in order by others
 

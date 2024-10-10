@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/coord/Polar2.hpp>
-#include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/math/trigonometry.hpp>
+#include <yq/coord/Polar2.hpp>
+#include <yq/vector/Vector2.hpp>
+#include <yq/math/trigonometry.hpp>
 
 namespace yq {
 

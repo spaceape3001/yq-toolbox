@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/MethodInfo.hpp>
+#include <yq/meta/MethodInfo.hpp>
 #include "MetaWriter.hpp"
 
 namespace yq {

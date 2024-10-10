@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/forward.hpp>
+#include <yq/meta/forward.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_sets.hpp>
 

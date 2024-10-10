@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/GlobalInfo.hpp>
-#include <yq-toolbox/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/GlobalInfo.hpp>
+#include <yq/meta/CompoundInfoStatic.hpp>
 
 namespace yq {
     template <typename T>

@@ -10,7 +10,7 @@
 
 #include <yq/typedef/normal3.hpp>
 
-#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

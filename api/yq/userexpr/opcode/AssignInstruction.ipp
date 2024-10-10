@@ -6,7 +6,7 @@
 
 #include "AssignInstruction.hpp"
 
-#include <yq-toolbox/container/Stack.hpp>
+#include <yq/container/Stack.hpp>
 #include <yq/userexpr/Context.hpp>
 
 namespace yq::expr {

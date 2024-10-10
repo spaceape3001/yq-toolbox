@@ -12,7 +12,7 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Bivector2.hpp>
+#include <yq/vector/Bivector2.hpp>
 
 namespace yq {
     template <typename T>

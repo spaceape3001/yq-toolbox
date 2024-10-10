@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/typedef/counter.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
 

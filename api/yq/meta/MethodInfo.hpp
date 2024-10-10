@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/meta/ArgInfo.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/meta/ArgInfo.hpp>
 #include <span>
 
 namespace yq {

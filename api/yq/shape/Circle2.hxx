@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/shape/Circle2.hpp>
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/shape/Circle2.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 #include <yq/trait/has_abs.hpp>
 
 /* 

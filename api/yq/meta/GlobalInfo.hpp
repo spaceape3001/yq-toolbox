@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/CompoundInfo.hpp>
-#include <yq-toolbox/meta/MetaLookup.hpp>
-#include <yq-toolbox/meta/MethodInfo.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/MetaLookup.hpp>
+#include <yq/meta/MethodInfo.hpp>
 
 namespace yq {
 

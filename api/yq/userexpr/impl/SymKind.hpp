@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/math/Operator.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/math/Operator.hpp>
 
 namespace yq::expr {
     YQ_ENUM(SymKind,, 

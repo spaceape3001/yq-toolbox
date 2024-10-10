@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/math/Operator.hpp>
-#include <yq-toolbox/meta/MethodInfo.hpp>
+#include <yq/math/Operator.hpp>
+#include <yq/meta/MethodInfo.hpp>
 
 namespace yq {
     class OperatorInfo : public MethodInfo {

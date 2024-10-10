@@ -6,7 +6,7 @@
 
 #include "Logging.hpp"
 
-#include <yq-toolbox/text/format.hpp>
+#include <yq/text/format.hpp>
 
 #include <log4cpp/OstreamAppender.hh>
 #include <log4cpp/FileAppender.hh>

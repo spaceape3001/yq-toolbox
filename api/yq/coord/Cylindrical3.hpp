@@ -8,8 +8,8 @@
 
 #define YQ_MATH_CYLINDRICAL3_HPP 1
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_one.hpp>
 #include <yq/trait/has_zero.hpp>

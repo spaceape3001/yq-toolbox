@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/math/Ax.hpp>
+#include <yq/math/Ax.hpp>
 
 namespace yq {
     template <typename I>

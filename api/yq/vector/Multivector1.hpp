@@ -11,9 +11,9 @@
 
 #include <yq/typedef/multivector1.hpp>
 
-#include <yq-toolbox/vector/Vector1.hpp>
+#include <yq/vector/Vector1.hpp>
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>

@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Stream.hpp"
-#include <yq/stream/NullStream.hpp>
+#include <yq/stream/Null.hpp>
 
 namespace yq {
     Stream&  Stream::null()
     {
-        static NullStream   ret;
+        static stream::Null   ret;
         return ret;
     }
 }

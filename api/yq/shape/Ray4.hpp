@@ -10,7 +10,7 @@
 
 #include <yq/typedef/ray4.hpp>
 
-#include <yq-toolbox/vector/Vector4.hpp>
+#include <yq/vector/Vector4.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

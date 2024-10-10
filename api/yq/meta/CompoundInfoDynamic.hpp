@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/CompoundInfoStatic.hpp>
-#include <yq-toolbox/meta/DynamicPropGetter.hpp>
-#include <yq-toolbox/meta/DynamicPropSetter.hpp>
-#include <yq-toolbox/meta/PropertyInfoWriter.hpp>
+#include <yq/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/DynamicPropGetter.hpp>
+#include <yq/meta/DynamicPropSetter.hpp>
+#include <yq/meta/PropertyInfoWriter.hpp>
 
 namespace yq {
     template <typename C>

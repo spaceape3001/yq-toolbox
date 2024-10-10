@@ -8,7 +8,7 @@
 
 #include "Geodetic3.hpp"
 
-#include <yq-toolbox/units.hpp>
+#include <yq/units.hpp>
 
 namespace yq {
 }

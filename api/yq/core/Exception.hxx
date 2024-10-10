@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Exception.hpp>
+#include <yq/core/Exception.hpp>
 
 namespace yq {
     template <typename Pred>

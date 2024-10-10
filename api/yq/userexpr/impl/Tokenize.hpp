@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Expect.hpp>
+#include <yq/core/Expect.hpp>
 #include <yq/userexpr/forward.hpp>
 
 namespace yq::expr {

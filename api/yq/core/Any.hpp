@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/AnyDef.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
-#include <yq-toolbox/meta/AnyImpl.hpp>
+#include <yq/meta/AnyDef.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/AnyImpl.hpp>
 #include <yq/typedef/expected.hpp>
 
 namespace yq {

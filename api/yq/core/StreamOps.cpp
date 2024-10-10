@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/io/Stream.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/text/format.hpp>
+#include <yq/core/Stream.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq {
     Stream&     operator<<(Stream&str, std::string_view v)

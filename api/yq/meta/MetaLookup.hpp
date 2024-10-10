@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/container/MultiMap.hpp>
-#include <yq-toolbox/text/format.hpp>
-#include <yq-toolbox/text/format32.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/container/MultiMap.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/format32.hpp>
 
 namespace yq {
     template <typename MT>

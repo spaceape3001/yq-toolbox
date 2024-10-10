@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/basic/IntRange.hpp>
+#include <yq/core/IntRange.hpp>
 #include <cassert>
 #include <type_traits>
 #include <algorithm>

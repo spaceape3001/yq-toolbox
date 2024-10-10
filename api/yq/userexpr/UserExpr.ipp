@@ -6,10 +6,10 @@
 
 #include "UserExpr.hpp"
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/container/Stack.hpp>
-#include <yq-toolbox/text/format32.hpp>
+#include <yq/errors.hpp>
+#include <yq/core/Any.hpp>
+#include <yq/container/Stack.hpp>
+#include <yq/text/format32.hpp>
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/Context.hpp>
 #include <yq/userexpr/impl/Compiler.hpp>

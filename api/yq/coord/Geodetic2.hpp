@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/typedef/geodetic2.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/units.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/units.hpp>
 
 namespace yq {
     /*! \brief General purpose geodetic-style structure

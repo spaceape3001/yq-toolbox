@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/MethodInfo.hpp>
-#include <yq-toolbox/meta/TypedArgInfo.hpp>
+#include <yq/meta/MethodInfo.hpp>
+#include <yq/meta/TypedArgInfo.hpp>
 #include <yq/trait/indices.hpp>
-#include <yq-toolbox/errors.hpp>
+#include <yq/errors.hpp>
 #include <type_traits>
 
 namespace yq {

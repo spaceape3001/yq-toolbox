@@ -12,8 +12,8 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Triangle4.hpp>
-#include <yq-toolbox/shape/TriangleData.hpp>
+#include <yq/shape/Triangle4.hpp>
+#include <yq/shape/TriangleData.hpp>
 
 
 namespace yq {

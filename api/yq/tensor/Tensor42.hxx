@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq-toolbox/tensor/Tensor42.hpp>
-#include <yq-toolbox/math/utility.hpp>
+#include <yq/tensor/Tensor42.hpp>
+#include <yq/math/utility.hpp>
 
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the tensor42 code.  Include this

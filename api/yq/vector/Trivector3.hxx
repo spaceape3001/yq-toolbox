@@ -12,7 +12,7 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Trivector3.hpp>
+#include <yq/vector/Trivector3.hpp>
 
 namespace yq {
     template <typename T>

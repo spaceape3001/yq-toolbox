@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/ArgInfo.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/meta/ArgInfo.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief Information about an argument

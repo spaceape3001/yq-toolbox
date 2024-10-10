@@ -11,7 +11,7 @@
 #include <yq/typedef/normal2.hpp>
 
 
-#include <yq-toolbox/vector/Vector2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

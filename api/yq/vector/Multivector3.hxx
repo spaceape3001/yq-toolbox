@@ -12,10 +12,10 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Bivector3.hpp>
-#include <yq-toolbox/vector/Multivector3.hpp>
-#include <yq-toolbox/vector/Trivector3.hpp>
-#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq/vector/Bivector3.hpp>
+#include <yq/vector/Multivector3.hpp>
+#include <yq/vector/Trivector3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 
 namespace yq {

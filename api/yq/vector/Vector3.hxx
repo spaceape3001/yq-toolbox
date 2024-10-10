@@ -14,12 +14,12 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq/vector/Vector3.hpp>
 
-#include <yq-toolbox/math/trigonometry.hpp>
-#include <yq-toolbox/math/utility.hpp>
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/math/trigonometry.hpp>
+#include <yq/math/utility.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 #include <algorithm>
 

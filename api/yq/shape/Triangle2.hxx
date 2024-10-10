@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/shape/Triangle2.hpp>
-#include <yq-toolbox/shape/TriangleData.hpp>
+#include <yq/shape/Triangle2.hpp>
+#include <yq/shape/TriangleData.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the triangle2 code.  Include this

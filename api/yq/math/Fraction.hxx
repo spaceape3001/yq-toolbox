@@ -7,8 +7,8 @@
 #pragma once
 
 #include "Fraction.hpp"
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/StreamOps.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the fraction code.  Include this

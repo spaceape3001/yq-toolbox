@@ -5,11 +5,13 @@
 ################################################################################
 
 include(yq_core.cmake)
+include(yq_math.cmake)
+include(yq_userexpr.cmake)
 
 
 # add_subdirectory(core)
 
-add_subdirectory(random)
+#add_subdirectory(random)
 
 #add_subdirectory(chemistry)
 #add_subdirectory(color)

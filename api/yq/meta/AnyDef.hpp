@@ -10,10 +10,10 @@
 
 
 //#include <0/basic/preamble.hpp>
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/meta/forward.hpp>
-#include <yq-toolbox/meta/DataBlock.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
+#include <yq/meta/forward.hpp>
+#include <yq/meta/DataBlock.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/typedef/any.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_initlists.hpp>

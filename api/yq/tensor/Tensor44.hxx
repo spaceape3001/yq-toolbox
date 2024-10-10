@@ -12,11 +12,11 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/tensor/Tensor44.hpp>
-#include <yq-toolbox/math/utility.hpp>
+#include <yq/tensor/Tensor44.hpp>
+#include <yq/math/utility.hpp>
 
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 namespace yq {
 

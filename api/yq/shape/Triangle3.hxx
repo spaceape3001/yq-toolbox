@@ -13,8 +13,8 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Triangle3.hpp>
-#include <yq-toolbox/shape/TriangleData.hpp>
+#include <yq/shape/Triangle3.hpp>
+#include <yq/shape/TriangleData.hpp>
 
 #include <yq/trait/fourth.hpp>
 #include <yq/trait/has_sqrt.hpp>

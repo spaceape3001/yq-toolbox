@@ -6,12 +6,12 @@
 
 #include "Tensor22.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/tensor/Tensor21.hpp>
-#include <yq-toolbox/tensor/Tensor23.hpp>
-#include <yq-toolbox/tensor/Tensor24.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tensor/Tensor21.hpp>
+#include <yq/tensor/Tensor23.hpp>
+#include <yq/tensor/Tensor24.hpp>
 
 #include "Tensor22.hxx"
 

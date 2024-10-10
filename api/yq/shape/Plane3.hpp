@@ -10,7 +10,7 @@
 
 #include <yq/typedef/plane3.hpp>
 
-#include <yq-toolbox/shape/Normal3.hpp>
+#include <yq/shape/Normal3.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

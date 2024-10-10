@@ -4,13 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/basic/ThreadId.hpp>
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/meta/MetaRepo.hpp>
-#include <yq-toolbox/meta/ReservedIDs.hpp>
-#include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/text/match.hpp>
+#include "Meta.hpp"
+
+#include <yq/core/Any.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/ThreadId.hpp>
+#include <yq/meta/MetaRepo.hpp>
+#include <yq/meta/ReservedIDs.hpp>
+#include <yq/text/match.hpp>
 #include <cassert>
 
 namespace yq {

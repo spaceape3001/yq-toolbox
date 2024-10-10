@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ConstantInstruction.hpp"
-#include <yq-toolbox/container/Stack.hpp>
+#include <yq/container/Stack.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
 
 namespace yq::expr {

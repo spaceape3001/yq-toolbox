@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/PropSetter.hpp>
+#include <yq/meta/PropSetter.hpp>
 
 namespace yq {
 

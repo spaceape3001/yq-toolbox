@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/io/Stream.hpp>
+#include <yq/core/Stream.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 
 namespace yq::stream {

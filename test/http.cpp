@@ -1,9 +1,9 @@
 #include <boost/ut.hpp>
-#include <yq-toolbox/basic/HttpParser.hpp>
-#include <yq-toolbox/basic/Result.hpp>
-#include <yq-toolbox/basic/Url.hpp>
-#include <yq-toolbox/basic/VersionSpec.hpp>
-#include <yq-toolbox/text/misc.hpp>
+#include <yq/core/HttpParser.hpp>
+#include <yq/core/Result.hpp>
+#include <yq/core/Url.hpp>
+#include <yq/core/VersionSpec.hpp>
+#include <yq/text/misc.hpp>
 #include <yq/typedef/string.hpp>
 
 namespace ut = boost::ut;

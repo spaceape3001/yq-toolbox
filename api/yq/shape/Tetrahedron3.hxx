@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/shape/Tetrahedron3.hpp>
-#include <yq-toolbox/shape/TetrahedronData.hpp>
+#include <yq/shape/Tetrahedron3.hpp>
+#include <yq/shape/TetrahedronData.hpp>
 #include <yq/trait/is_floating_point.hpp>
 
 /* 

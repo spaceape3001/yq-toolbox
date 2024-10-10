@@ -8,9 +8,9 @@
     Silly little program to drive the user expression evaluator
 */
 
-#include <yq/basic/Any.hpp>
-#include <yq/basic/Logging.hpp>
-#include <yq/io/stream/StdOutput.hpp>
+#include <yq/core/Any.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/stream/StdOutput.hpp>
 #include <yq/userexpr/Context.hpp>
 #include <yq/userexpr/UserExpr.hpp>
 

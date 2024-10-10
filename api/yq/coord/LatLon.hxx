@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/coord/LatLon.hpp>
+#include <yq/coord/LatLon.hpp>
 
 namespace yq {
 }

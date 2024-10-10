@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/LogPriority.hpp>
-#include <yq-toolbox/basic/Flag.hpp>
+#include <yq/core/LogPriority.hpp>
+#include <yq/core/Flag.hpp>
 #include <yq/macro/debugrel.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <log4cpp/Category.hh>

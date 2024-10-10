@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/math/template/gcd.hpp>
+#include <yq/math/template/gcd.hpp>
 
 namespace yq {
 

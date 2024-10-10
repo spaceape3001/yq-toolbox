@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/meta/DataBlock.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/meta/DataBlock.hpp>
 
 namespace yq {
 

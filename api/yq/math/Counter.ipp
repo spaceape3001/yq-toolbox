@@ -6,9 +6,9 @@
 
 #include "Counter.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::CountI8)
 YQ_TYPE_IMPLEMENT(yq::CountI16)

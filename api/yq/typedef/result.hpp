@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
-#include <yq/basic/128-bit.hpp>
+#include <yq/core/128-bit.hpp>
 #include <yq/typedef/url.hpp>
 
 namespace yq {

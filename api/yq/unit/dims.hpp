@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/math/template/fraction.hpp>
+#include <yq/math/template/fraction.hpp>
 
 namespace yq::dim {
     template <typename T>

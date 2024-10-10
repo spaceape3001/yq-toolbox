@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/PropertyInfo.hpp>
-#include <yq-toolbox/meta/MetaWriter.hpp>
-#include <yq-toolbox/meta/DynamicPropSetter.hpp>
-#include <yq-toolbox/meta/StaticPropSetter.hpp>
+#include <yq/meta/PropertyInfo.hpp>
+#include <yq/meta/MetaWriter.hpp>
+#include <yq/meta/DynamicPropSetter.hpp>
+#include <yq/meta/StaticPropSetter.hpp>
 
 namespace yq {
 

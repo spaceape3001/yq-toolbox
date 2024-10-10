@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/OperatorInfo.hpp>
-#include <yq-toolbox/meta/MethodInfoImpl.hpp>
+#include <yq/meta/OperatorInfo.hpp>
+#include <yq/meta/MethodInfoImpl.hpp>
 
 namespace yq {
     template <typename R, typename... Args>

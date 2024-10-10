@@ -10,12 +10,12 @@
 
 #include <yq/typedef/triangle3.hpp>
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
-#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 namespace log4cpp { class CategoryStream; }
 

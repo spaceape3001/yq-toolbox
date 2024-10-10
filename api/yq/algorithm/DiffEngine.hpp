@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/container/PVector.hpp>
-#include <yq-toolbox/container/Array.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/container/PVector.hpp>
+#include <yq/container/Array.hpp>
 #include <yq/typedef/int_range.hpp>
 #include <vector>
 

@@ -10,12 +10,12 @@
 
 #include <yq/typedef/multivector4.hpp>
 
-#include <yq-toolbox/vector/Vector4.hpp>
-#include <yq-toolbox/vector/Bivector4.hpp>
-#include <yq-toolbox/vector/Trivector4.hpp>
-#include <yq-toolbox/vector/Quadvector4.hpp>
+#include <yq/vector/Vector4.hpp>
+#include <yq/vector/Bivector4.hpp>
+#include <yq/vector/Trivector4.hpp>
+#include <yq/vector/Quadvector4.hpp>
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>

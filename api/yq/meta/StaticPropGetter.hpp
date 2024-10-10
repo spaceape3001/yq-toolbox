@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/PropGetter.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
+#include <yq/meta/PropGetter.hpp>
+#include <yq/meta/TypeInfo.hpp>
+#include <yq/core/StreamOps.hpp>
 
 namespace yq {
 

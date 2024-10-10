@@ -7,7 +7,7 @@
 #pragma once
 
 #include "MethodInfoWriter.hpp"
-#include <yq-toolbox/meta/ConstructorInfo.hpp>
+#include <yq/meta/ConstructorInfo.hpp>
 
 namespace yq {
     template <typename R, typename... Args> 

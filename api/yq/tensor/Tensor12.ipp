@@ -6,17 +6,17 @@
 
 #include "Tensor12.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
 
-#include <yq-toolbox/tensor/Tensor11.hpp>
-#include <yq-toolbox/tensor/Tensor13.hpp>
-#include <yq-toolbox/tensor/Tensor14.hpp>
-#include <yq-toolbox/tensor/Tensor21.hpp>
-#include <yq-toolbox/tensor/Tensor22.hpp>
-#include <yq-toolbox/tensor/Tensor23.hpp>
-#include <yq-toolbox/tensor/Tensor24.hpp>
+#include <yq/tensor/Tensor11.hpp>
+#include <yq/tensor/Tensor13.hpp>
+#include <yq/tensor/Tensor14.hpp>
+#include <yq/tensor/Tensor21.hpp>
+#include <yq/tensor/Tensor22.hpp>
+#include <yq/tensor/Tensor23.hpp>
+#include <yq/tensor/Tensor24.hpp>
 
 #include "Tensor12.hxx"
 

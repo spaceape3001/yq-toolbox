@@ -6,11 +6,11 @@
 
 #include "Polar2.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/unit/MKS.hpp>
-#include <yq-toolbox/unit/metatype.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/unit/MKS.hpp>
+#include <yq/unit/metatype.hpp>
 
 #include "Polar2.hxx"
 

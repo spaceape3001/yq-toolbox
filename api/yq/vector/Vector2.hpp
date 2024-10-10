@@ -10,10 +10,10 @@
 
 #include <yq/typedef/vector2.hpp>
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/macro/operators.hpp>
-#include <yq-toolbox/math/glm.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/math/glm.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_one.hpp>
@@ -28,7 +28,7 @@
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
-#include <yq-toolbox/unit/declare.hpp>
+#include <yq/unit/declare.hpp>
 
 #include <span>
 #include <vector>

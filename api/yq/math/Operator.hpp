@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Enum.hpp>
-#include <yq-toolbox/basic/Flags.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/core/Flags.hpp>
 
 namespace yq {
 

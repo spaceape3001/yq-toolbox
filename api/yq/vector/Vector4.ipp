@@ -6,17 +6,17 @@
 
 #include "Vector4.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/tensor/Tensor41.hpp>
-#include <yq-toolbox/tensor/Tensor42.hpp>
-#include <yq-toolbox/tensor/Tensor43.hpp>
-#include <yq-toolbox/tensor/Tensor44.hpp>
-#include <yq-toolbox/vector/Bivector4.hpp>
-#include <yq-toolbox/vector/Multivector4.hpp>
-#include <yq-toolbox/vector/Quadvector4.hpp>
-#include <yq-toolbox/vector/Trivector4.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tensor/Tensor41.hpp>
+#include <yq/tensor/Tensor42.hpp>
+#include <yq/tensor/Tensor43.hpp>
+#include <yq/tensor/Tensor44.hpp>
+#include <yq/vector/Bivector4.hpp>
+#include <yq/vector/Multivector4.hpp>
+#include <yq/vector/Quadvector4.hpp>
+#include <yq/vector/Trivector4.hpp>
 
 #include "Vector4.hxx"
 #include "Multivector4.hxx"

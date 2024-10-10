@@ -8,7 +8,7 @@
 
 #define YQ_MATH_MKS_HPP 1
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/trait/cube.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_one.hpp>

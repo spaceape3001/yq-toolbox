@@ -6,10 +6,10 @@
 
 #include "AxBox2.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/shape/Circle2.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/shape/Circle2.hpp>
 
 #include "AxBox2.hxx"
 #include "Circle2.hxx"

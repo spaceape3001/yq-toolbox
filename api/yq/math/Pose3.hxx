@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/math/Pose3.hpp>
+#include <yq/math/Pose3.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the pose3 code.  Include this

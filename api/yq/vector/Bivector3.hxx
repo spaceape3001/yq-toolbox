@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/vector/Bivector3.hpp>
+#include <yq/vector/Bivector3.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the bivector3 code.  Include this

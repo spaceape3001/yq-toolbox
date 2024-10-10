@@ -12,8 +12,8 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/vector/Multivector1.hpp>
-#include <yq-toolbox/vector/Vector1.hpp>
+#include <yq/vector/Multivector1.hpp>
+#include <yq/vector/Vector1.hpp>
 
 namespace yq {
     template <typename T>

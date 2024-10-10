@@ -10,8 +10,8 @@
 
 #include <yq/typedef/quaternion3.hpp>
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_identity.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_nan.hpp>
@@ -26,10 +26,10 @@
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
 #include <yq/trait/unity.hpp>
-#include <yq-toolbox/unit/dims.hpp>
+#include <yq/unit/dims.hpp>
 
 #if YQ_USE_GLM
-    #include <yq-toolbox/math/glm.hpp>
+    #include <yq/math/glm.hpp>
 #endif
 
 namespace log4cpp { class CategoryStream; }

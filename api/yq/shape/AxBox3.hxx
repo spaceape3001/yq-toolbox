@@ -12,18 +12,18 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/shape/AxBox3.hpp>
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
-#include <yq-toolbox/math/utility.hpp>
-#include <yq-toolbox/container/initlist_utils.hpp>
+#include <yq/errors.hpp>
+#include <yq/shape/AxBox3.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
+#include <yq/math/utility.hpp>
+#include <yq/container/initlist_utils.hpp>
 #include <yq/trait/has_abs.hpp>
 #include <yq/trait/has_half.hpp>
 #include <yq/trait/has_sqrt.hpp>
 
-#include <yq-toolbox/math/Range.hxx>
-#include <yq-toolbox/vector/Vector3.hxx>
+#include <yq/math/Range.hxx>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq {
     template <typename T>

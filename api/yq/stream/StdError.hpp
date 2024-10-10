@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/io/stream/StdStream.hpp>
+#include <yq/stream/StdStream.hpp>
 
 namespace yq::stream {
     class StdError : public StdStream {

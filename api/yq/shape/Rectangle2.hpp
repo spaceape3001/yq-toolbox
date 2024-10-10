@@ -10,8 +10,8 @@
 
 #include <yq/typedef/rectangle2.hpp>
 
-#include <yq-toolbox/vector/Vector2.hpp>
-#include <yq-toolbox/shape/Size2.hpp>
+#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>

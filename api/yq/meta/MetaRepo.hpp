@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/forward.hpp>
-#include <yq-toolbox/meta/Meta.hpp>
-#include <yq-toolbox/meta/MetaLookup.hpp>
-#include <yq-toolbox/container/Vector.hpp>
+#include <yq/meta/forward.hpp>
+#include <yq/meta/Meta.hpp>
+#include <yq/meta/MetaLookup.hpp>
+#include <yq/container/Vector.hpp>
 
 namespace yq {
     struct Meta::Repo {

@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/CompoundInfo.hpp>
-#include <yq-toolbox/meta/MetaLookup.hpp>
-#include <yq-toolbox/meta/OperatorInfo.hpp>
-#include <yq-toolbox/errors.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/MetaLookup.hpp>
+#include <yq/meta/OperatorInfo.hpp>
+#include <yq/errors.hpp>
 #include <yq/typedef/string_initlists.hpp>
 #include <yq/typedef/xml.hpp>
 #include <unordered_map>

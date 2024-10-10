@@ -7,7 +7,7 @@
 #pragma once
 
 #include "MethodInfoWriter.hpp"
-#include <yq-toolbox/meta/OperatorInfo.hpp>
+#include <yq/meta/OperatorInfo.hpp>
 
 namespace yq {
     template <typename R, typename... Args> 

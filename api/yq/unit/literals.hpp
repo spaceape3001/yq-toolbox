@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/unit/declare.hpp>
-#include <yq-toolbox/unit/MKS.hpp>
-#include <yq-toolbox/unit/SCALED.hpp>
+#include <yq/unit/declare.hpp>
+#include <yq/unit/MKS.hpp>
+#include <yq/unit/SCALED.hpp>
 
 namespace yq {
 

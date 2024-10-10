@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/Revision.hpp>
+#include <yq/core/Revision.hpp>
 #include <type_traits>
 #include <utility>
 

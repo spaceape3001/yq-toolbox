@@ -14,7 +14,7 @@
 
 #include "Range.hpp"
 
-#include <yq-toolbox/math/Side.hpp>
+#include <yq/math/Side.hpp>
 #include <yq/trait/has_one.hpp>
 
 namespace yq {

@@ -14,13 +14,13 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/math/tolerance/Absolute.hpp>
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
-#include <yq-toolbox/math/utility.hpp>
+#include <yq/math/tolerance/Absolute.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
+#include <yq/math/utility.hpp>
 #include <yq/trait/has_abs.hpp>
 #include <yq/trait/has_copysign.hpp>
-#include <yq-toolbox/vector/Vector1.hpp>
+#include <yq/vector/Vector1.hpp>
 
 #include <algorithm>
 

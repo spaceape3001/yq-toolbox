@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/PropSetter.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
+#include <yq/meta/PropSetter.hpp>
+#include <yq/meta/TypeInfo.hpp>
 
 namespace yq {
 

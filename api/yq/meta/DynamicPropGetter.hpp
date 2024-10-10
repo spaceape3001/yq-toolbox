@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/PropGetter.hpp>
+#include <yq/meta/PropGetter.hpp>
 
 namespace yq {
     /*! \brief Abstract getter of type on class/struct

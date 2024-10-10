@@ -13,8 +13,8 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Quadrilateral2.hpp>
-#include <yq-toolbox/shape/QuadrilateralData.hpp>
+#include <yq/shape/Quadrilateral2.hpp>
+#include <yq/shape/QuadrilateralData.hpp>
 
 namespace yq {
     #ifdef YQ_MATH_AXBOX2_HPP

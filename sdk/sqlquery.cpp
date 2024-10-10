@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include <yq/container/Vector.hpp>
-#include <yq/basic/Logging.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/sql/SqlLite.hpp>
 #include <yq/sql/SqlQuery.hpp>
 //#include <0/basic/TextUtils.hpp>

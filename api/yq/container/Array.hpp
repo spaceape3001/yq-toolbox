@@ -8,7 +8,7 @@
 #include <concepts>
 #include <yq/typedef/array.hpp>
 #include <yq/keywords.hpp>
-#include <yq/basic/IntRange.hpp>
+#include <yq/core/IntRange.hpp>
 #include <yq/coord/Coords.hpp>
 #include <yq/coord/Coord1.hxx>
 #include <yq/coord/Coord2.hxx>

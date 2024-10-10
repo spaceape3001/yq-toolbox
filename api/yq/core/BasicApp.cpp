@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "BasicApp.hpp"
-#include <yq/basic/Logging.hpp>
+#include <yq/core/Logging.hpp>
 //#include "TextUtils.hpp"
 #include <yq/text/vsplit.hpp>
-#include <yq/basic/ThreadId.hpp>
+#include <yq/core/ThreadId.hpp>
 
 #include <yq/meta/Meta.hpp>
 

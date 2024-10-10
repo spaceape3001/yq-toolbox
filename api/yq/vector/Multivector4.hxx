@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/vector/Multivector4.hpp>
+#include <yq/vector/Multivector4.hpp>
 
 /* 
     This is the template IMPLEMENTATION of the multivector4 code.  Include this

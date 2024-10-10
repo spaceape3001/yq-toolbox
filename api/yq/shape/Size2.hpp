@@ -10,8 +10,8 @@
 
 #include <yq/typedef/size2.hpp>
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/keywords.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_one.hpp>

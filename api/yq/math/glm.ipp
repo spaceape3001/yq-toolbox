@@ -6,10 +6,10 @@
 
 #include "glm_types.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/meta/Init.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/meta/Init.hpp>
 
 using namespace yq;
 

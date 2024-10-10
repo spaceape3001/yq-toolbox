@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/CompoundInfo.hpp>
-#include <yq-toolbox/meta/MetaWriter.hpp>
-#include <yq-toolbox/meta/MethodInfoImpl.hpp>
-#include <yq-toolbox/meta/MethodInfoWriter.hpp>
-#include <yq-toolbox/meta/StaticPropGetter.hpp>
-#include <yq-toolbox/meta/StaticPropSetter.hpp>
-#include <yq-toolbox/meta/PropertyInfo.hpp>
-#include <yq-toolbox/meta/PropertyInfoWriter.hpp>
+#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/MetaWriter.hpp>
+#include <yq/meta/MethodInfoImpl.hpp>
+#include <yq/meta/MethodInfoWriter.hpp>
+#include <yq/meta/StaticPropGetter.hpp>
+#include <yq/meta/StaticPropSetter.hpp>
+#include <yq/meta/PropertyInfo.hpp>
+#include <yq/meta/PropertyInfoWriter.hpp>
 
 namespace yq {
 

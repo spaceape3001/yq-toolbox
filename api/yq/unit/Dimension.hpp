@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/math/Fraction.hpp>
-#include <yq-toolbox/unit/dims.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
+#include <yq/math/Fraction.hpp>
+#include <yq/unit/dims.hpp>
+#include <yq/meta/InfoBinder.hpp>
 #include <string_view>
 #include <vector>
 

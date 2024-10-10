@@ -10,7 +10,7 @@
 
 #include <yq/typedef/tensor33.hpp>
 
-#include <yq-toolbox/keywords.hpp>
+#include <yq/keywords.hpp>
 #include <yq/trait/has_identity.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_zero.hpp>
@@ -21,7 +21,7 @@
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
-#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq/vector/Vector3.hpp>
 
 #include <span>
 #include <vector>

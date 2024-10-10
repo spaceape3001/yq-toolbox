@@ -6,18 +6,18 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/CompoundInfoDynamic.hpp>
-#include <yq-toolbox/meta/CompoundInfoStatic.hpp>
-#include <yq-toolbox/meta/GlobalInfo.hpp>
-#include <yq-toolbox/meta/GlobalInfoWriter.hpp>
-#include <yq-toolbox/meta/MetaWriter.hpp>
-#include <yq-toolbox/meta/MethodInfoWriter.hpp>
-#include <yq-toolbox/meta/ObjectInfoWriter.hpp>
-#include <yq-toolbox/meta/PropertyInfoWriter.hpp>
-#include <yq-toolbox/meta/TypeInfoWriter.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/GlobalInfo.hpp>
+#include <yq/meta/GlobalInfoWriter.hpp>
+#include <yq/meta/MetaWriter.hpp>
+#include <yq/meta/MethodInfoWriter.hpp>
+#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/PropertyInfoWriter.hpp>
+#include <yq/meta/TypeInfoWriter.hpp>
 
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/core/Logging.hpp>
 
 
 #define YQ_TYPE_IMPLEMENT( ... )                                                                            \

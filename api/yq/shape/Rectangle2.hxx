@@ -12,9 +12,9 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Rectangle2.hpp>
-#include <yq-toolbox/shape/AxBox2.hpp>
-#include <yq-toolbox/shape/AxCorners2.hpp>
+#include <yq/shape/Rectangle2.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/AxCorners2.hpp>
 
 namespace yq {
     template <typename T>

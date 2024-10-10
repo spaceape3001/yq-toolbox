@@ -6,8 +6,8 @@
 
 #include "Tokenize.hpp"
 
-#include <yq-toolbox/text/chars.hpp>
-#include <yq-toolbox/text/format32.hpp>
+#include <yq/text/chars.hpp>
+#include <yq/text/format32.hpp>
 
 //#include <0/basic/TextUtils.hpp>
 //#include <0/basic/TextUtils32.hpp>

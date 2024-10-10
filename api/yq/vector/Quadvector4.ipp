@@ -6,13 +6,13 @@
 
 #include "Quadvector4.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/vector/Bivector4.hpp>
-#include <yq-toolbox/vector/Multivector4.hpp>
-#include <yq-toolbox/vector/Trivector4.hpp>
-#include <yq-toolbox/vector/Vector4.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/vector/Bivector4.hpp>
+#include <yq/vector/Multivector4.hpp>
+#include <yq/vector/Trivector4.hpp>
+#include <yq/vector/Vector4.hpp>
 
 #include "Quadvector4.hxx"
 

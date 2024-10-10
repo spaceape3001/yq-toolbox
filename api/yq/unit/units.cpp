@@ -4,16 +4,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "units.hpp"
+#include <yq/units.hpp>
 
-#include <yq-toolbox/strings.hpp>
+#include <yq/strings.hpp>
 
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/basic/StringLiteral.hpp>
-#include <yq-toolbox/io/StreamOps.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/tensor/Tensor33.hpp>
-#include <yq-toolbox/vector/Vector3.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/core/StringLiteral.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tensor/Tensor33.hpp>
+#include <yq/vector/Vector3.hpp>
 
 using namespace yq;
 
@@ -1578,5 +1578,5 @@ static void reg_units_math () {
 
 YQ_INVOKE(reg_units_math();)
 
-#include "unit/MKS.hxx"
-#include "unit/SCALED.hxx"
+#include "MKS.hxx"
+#include "SCALED.hxx"

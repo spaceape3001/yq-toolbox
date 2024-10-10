@@ -7,11 +7,11 @@
 #pragma once
 
 #include <yq/userexpr/forward.hpp>
-#include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/meta/CompoundInfo.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/CompoundInfoStatic.hpp>
-#include <yq-toolbox/meta/MetaLookup.hpp>
+#include <yq/core/Any.hpp>
+#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/MetaLookup.hpp>
 #include <yq/userexpr/impl/OpData.hpp>
 #include <unordered_set>
 

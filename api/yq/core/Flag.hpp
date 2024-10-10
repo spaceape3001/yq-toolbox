@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/basic/Enum.hpp>
+#include <yq/keywords.hpp>
+#include <yq/core/Enum.hpp>
 #include <cassert>
 #include <span>
 

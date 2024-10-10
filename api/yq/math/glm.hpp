@@ -6,4 +6,4 @@
 
 #pragma once
 
-#include <yq-toolbox/config/glm.hpp>
+#include <yq/config/glm.hpp>

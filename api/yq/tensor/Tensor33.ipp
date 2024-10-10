@@ -6,12 +6,12 @@
 
 #include "Tensor33.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/tensor/Tensor31.hpp>
-#include <yq-toolbox/tensor/Tensor32.hpp>
-#include <yq-toolbox/tensor/Tensor34.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tensor/Tensor31.hpp>
+#include <yq/tensor/Tensor32.hpp>
+#include <yq/tensor/Tensor34.hpp>
 
 #include "Tensor33.hxx"
 

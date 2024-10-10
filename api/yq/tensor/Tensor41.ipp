@@ -6,16 +6,16 @@
 
 #include "Tensor41.hpp"
 
-#include <yq-toolbox/strings.hpp>
-#include <yq-toolbox/basic/DelayInit.hpp>
-#include <yq-toolbox/meta/Init.hpp>
-#include <yq-toolbox/tensor/Tensor11.hpp>
-#include <yq-toolbox/tensor/Tensor12.hpp>
-#include <yq-toolbox/tensor/Tensor13.hpp>
-#include <yq-toolbox/tensor/Tensor14.hpp>
-#include <yq-toolbox/tensor/Tensor42.hpp>
-#include <yq-toolbox/tensor/Tensor43.hpp>
-#include <yq-toolbox/tensor/Tensor44.hpp>
+#include <yq/strings.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tensor/Tensor11.hpp>
+#include <yq/tensor/Tensor12.hpp>
+#include <yq/tensor/Tensor13.hpp>
+#include <yq/tensor/Tensor14.hpp>
+#include <yq/tensor/Tensor42.hpp>
+#include <yq/tensor/Tensor43.hpp>
+#include <yq/tensor/Tensor44.hpp>
 
 #include "Tensor41.hxx"
 

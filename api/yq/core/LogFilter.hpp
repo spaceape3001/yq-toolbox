@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq-toolbox/basic/FirstSeen.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/basic/StringLiteral.hpp>
+#include <yq/core/FirstSeen.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/StringLiteral.hpp>
 #include <tuple>
 #include <atomic>
 

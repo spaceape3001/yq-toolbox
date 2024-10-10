@@ -7,8 +7,8 @@
 
 #include "OperatorInstruction.hpp"
 
-#include <yq-toolbox/errors.hpp>
-#include <yq-toolbox/container/Stack.hpp>
+#include <yq/errors.hpp>
+#include <yq/container/Stack.hpp>
 #include <yq/userexpr/impl/SymData.hpp>
 
 namespace yq::expr {

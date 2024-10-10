@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/meta/CompoundInfo.hpp>
-#include <yq-toolbox/meta/MetaLookup.hpp>
+#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/MetaLookup.hpp>
 
 namespace yq {
 

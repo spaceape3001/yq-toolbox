@@ -13,10 +13,10 @@
     template instantiation.  
 */
 
-#include <yq-toolbox/shape/Size2.hpp>
+#include <yq/shape/Size2.hpp>
 
-#include <yq-toolbox/math/AllComponents.hpp>
-#include <yq-toolbox/math/AnyComponents.hpp>
+#include <yq/math/AllComponents.hpp>
+#include <yq/math/AnyComponents.hpp>
 
 namespace yq {
 
