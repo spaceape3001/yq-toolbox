@@ -6,10 +6,7 @@
 
 #pragma once
 
-#include <type_traits>
-
 namespace yq {
-
 
     /*!  Basis for SFINAE trait detection
         

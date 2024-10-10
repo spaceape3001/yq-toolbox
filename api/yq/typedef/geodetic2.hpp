@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/unit/declare.hpp>
+#include <yq/unit/declare.hpp>
 
 namespace yq {
     template <typename A> struct Geodetic2;

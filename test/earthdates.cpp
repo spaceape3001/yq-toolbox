@@ -7,7 +7,7 @@
 #include <boost/ut.hpp>
 #include <yq/date/Date.hpp>
 #include <yq/date/JulianDay.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/basic/Logging.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;

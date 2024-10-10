@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/io/FileResolver.hpp>
-#include <yq-toolbox/io/DirUtils.hpp>
+#include "FileResolver.hpp"
+#include <yq/file/DirUtils.hpp>
 #include <yq-toolbox/basic/Logging.hpp>
 
 namespace yq {

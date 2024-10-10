@@ -9,8 +9,8 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
-#include <yq-toolbox/basic/128-bit.hpp>
-#include <yq-toolbox/basic/Expect.hpp>
+#include <yq/core/Expect.hpp>
+#include <yq/typedef/128.hpp>
 #include <yq/typedef/url.hpp>
 
 namespace yq {
