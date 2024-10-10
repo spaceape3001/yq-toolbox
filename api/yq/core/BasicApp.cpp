@@ -12,6 +12,7 @@
 
 #include <yq/meta/Meta.hpp>
 
+#include <filesystem>
 #include <span>
 #include <string_view>
 #include <cstdlib>

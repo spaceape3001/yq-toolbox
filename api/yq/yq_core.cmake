@@ -13,6 +13,7 @@ add_library(yq_core SHARED
     container/ByteArray.cpp
 
     core/Any.cpp
+    core/BasicApp.cpp
     core/DelayInit.cpp
     core/Enum.cpp
     core/ErrorDB.cpp
