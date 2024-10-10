@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq-toolbox/io/PluginLoader.hpp>
+#include "PluginLoader.hpp"
 
-#include <yq-toolbox/io/DirUtils.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
-#include <yq-toolbox/basic/ThreadId.hpp>
-#include <yq-toolbox/text/match.hpp>
+#include <yq/core/Logging.hpp>
+#include <yq/core/ThreadId.hpp>
+#include <yq/file/DirUtils.hpp>
+#include <yq/text/match.hpp>
 
 #include <dlfcn.h>
 

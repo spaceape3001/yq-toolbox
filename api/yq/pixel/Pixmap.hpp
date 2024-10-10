@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq-toolbox/keywords.hpp>
-#include <yq-toolbox/container/Array.hpp>
+#include <yq/keywords.hpp>
+#include <yq/container/Array.hpp>
 #include <yq/pixel/pixels_fwd.hpp>
 
 namespace yq {

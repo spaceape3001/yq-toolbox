@@ -8,16 +8,16 @@
 
 #include "Pixels.hpp"
 
-#include <yq-toolbox/basic/Any.hpp>
-#include <yq-toolbox/coord/Coord.hpp>
-#include <yq-toolbox/coord/Coord1.hpp>
-#include <yq-toolbox/coord/Coord2.hpp>
-#include <yq-toolbox/coord/Coord3.hpp>
-#include <yq-toolbox/coord/Coord4.hpp>
-#include <yq-toolbox/coord/Coord5.hpp>
-#include <yq-toolbox/coord/Coord6.hpp>
-#include <yq-toolbox/meta/InfoBinder.hpp>
-#include <yq-toolbox/meta/TypeInfo.hpp>
+#include <yq/core/Any.hpp>
+#include <yq/coord/Coord.hpp>
+#include <yq/coord/Coord1.hpp>
+#include <yq/coord/Coord2.hpp>
+#include <yq/coord/Coord3.hpp>
+#include <yq/coord/Coord4.hpp>
+#include <yq/coord/Coord5.hpp>
+#include <yq/coord/Coord6.hpp>
+#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/TypeInfo.hpp>
 
 namespace yq::pixel {
     template <uint8_t DIMS, class C>

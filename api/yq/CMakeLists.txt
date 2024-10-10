@@ -16,6 +16,7 @@ include(yq_network.cmake)
 #   SECOND STEP
 include(yq_chemistry.cmake)
 include(yq_color.cmake)
+include(yq_process.cmake)
 include(yq_sql.cmake)
 include(yq_userexpr.cmake)
 include(yq_xml.cmake)
@@ -23,7 +24,4 @@ include(yq_xml.cmake)
 #   REMAINDER
 include(yq_graph.cmake)
 include(yq_keyv.cmake)
-
-
-#add_subdirectory(pixel)
-
+include(yq_pixel.cmake)

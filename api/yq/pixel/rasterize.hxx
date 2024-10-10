@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq-toolbox/shape/ScanLine2.hpp>
+#include <yq/shape/ScanLine2.hpp>
 #include <type_traits>
 
 namespace yq::pixel {

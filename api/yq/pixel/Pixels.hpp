@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/pixel/Pixmap.hpp>
-#include <yq-toolbox/coord/Coord.hpp>
+#include <yq/coord/Coord.hpp>
 
 namespace yq::pixel {
     template <uint8_t DIMS, class C>

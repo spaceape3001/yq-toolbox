@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Execute.hpp"
-#include <yq-toolbox/container/ByteArray.hpp>
-#include <yq-toolbox/basic/Logging.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/core/Logging.hpp>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-enum-enum-conversion"
