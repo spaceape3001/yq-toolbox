@@ -1,8 +1,8 @@
 #include <boost/ut.hpp>
-#include <yq/core/HttpParser.hpp>
 #include <yq/core/Result.hpp>
-#include <yq/core/Url.hpp>
-#include <yq/core/VersionSpec.hpp>
+#include <yq/net/HttpParser.hpp>
+#include <yq/net/Url.hpp>
+#include <yq/net/VersionSpec.hpp>
 #include <yq/text/misc.hpp>
 #include <yq/typedef/string.hpp>
 
