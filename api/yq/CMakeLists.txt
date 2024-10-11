@@ -11,7 +11,7 @@ include(yq_core.cmake)
 include(yq_date.cmake)
 include(yq_math.cmake)
 include(yq_file.cmake)
-include(yq_network.cmake)
+include(yq_net.cmake)
 
 #   SECOND STEP
 include(yq_asset.cmake)

@@ -15,7 +15,7 @@ target_link_libraries(yq_process
         yq_core 
     PRIVATE
         yq_file
-        pstreams
+        yq_pstreams
 )
 
 LinkTest(yq_process)

@@ -11,8 +11,9 @@ add_library(yq_xml SHARED
 )
 
 target_link_libraries(yq_xml PUBLIC
-    yq_core yq_file
-    RapidXml
+    yq_core 
+    yq_file
+    yq_rapidxml
 )
 
 LinkTest(yq_xml)

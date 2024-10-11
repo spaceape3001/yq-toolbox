@@ -6,7 +6,7 @@
 
 find_package(CURL REQUIRED)
 
-add_library(yq_network SHARED
+add_library(yq_net SHARED
     net/ContentType.cpp
     net/Curl.cpp
     net/HttpParser.cpp
@@ -15,19 +15,19 @@ add_library(yq_network SHARED
     net/VersionSpec.cpp
 )
 
-target_include_directories(yq_network
+target_include_directories(yq_net
     PRIVATE
         ${CURL_INCLUDE_DIR}
 )
 
-target_link_libraries(yq_network 
+target_link_libraries(yq_net 
     PUBLIC
         yq_core
 
     PRIVATE
         ${CURL_LIBRARIES}
-        json
+        yq_json
 )
 
-LinkTest(yq_network)
+LinkTest(yq_net)
 
