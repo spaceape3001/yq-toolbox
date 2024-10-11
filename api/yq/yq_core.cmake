@@ -21,6 +21,7 @@ add_library(yq_core SHARED
     core/Future.cpp
     core/Global.cpp
     core/Logging.cpp
+    core/Memory.cpp
     core/MetaObject.cpp
     core/Object.cpp
     core/Ref.cpp
