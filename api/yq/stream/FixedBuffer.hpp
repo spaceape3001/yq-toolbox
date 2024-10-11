@@ -9,7 +9,7 @@
 #include <yq/container/BasicBuffer.hpp>
 #include <yq/core/Stream.hpp>
 
-namespace yq {
+namespace yq::stream {
 
     template <size_t N>
     class FixedBuffer : public BasicBuffer<N>, public Stream {

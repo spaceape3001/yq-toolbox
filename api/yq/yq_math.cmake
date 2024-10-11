@@ -13,7 +13,7 @@ endif()
 add_library(yq_math SHARED
     coord/coord.cpp
     math/math.cpp
-    random/Random.cpp
+    math/Random.cpp
     shape/shape.cpp
     tensor/tensor.cpp
     unit/Dimension.cpp
