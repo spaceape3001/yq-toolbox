@@ -22,8 +22,11 @@ namespace yq {
 
         ~FileResolver();
 
-        
+        //! Adds the specified path
         void    add_path(const filesystem_path_t&);
+        
+        //! Tests to see if this path is *IN* the path vector
+        bool    has_path(const filesystem_path_t&) const;
         
         //! Resolves a file to an existing file with a FULL relative path
         filesystem_path_t       resolve(std::string_view) const;

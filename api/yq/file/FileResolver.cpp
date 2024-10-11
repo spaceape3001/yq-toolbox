@@ -30,7 +30,18 @@ namespace yq {
 
     void    FileResolver::add_path(const filesystem_path_t& p)
     {
-        m_paths.push_back(p);
+        if(!has_path(p)){
+            m_paths.push_back(p);
+        }
+    }
+
+    bool    FileResolver::has_path(const filesystem_path_t& p) const
+    {
+        for(auto& fp : m_paths){
+            if(std::filesystem::equivalent(fp, p))
+                return true;
+        }
+        return false;
     }
     
     filesystem_path_t       FileResolver::resolve(std::string_view x) const
