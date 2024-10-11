@@ -7,3 +7,6 @@
 [submodule "3rd/rapidxml"]
 	path = 3rd/rapidxml
 	url = https://github.com/spaceape3001/rapidxml.git
+[submodule "3rd/asio"]
+	path = 3rd/asio
+	url = https://github.com/chriskohlhoff/asio.git

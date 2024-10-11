@@ -1,3 +1,9 @@
+################################################################################
+##
+##  YOUR QUILL
+##
+################################################################################
+
 #   Simple cmake to configure rapid XML as an "interface" library
 if(NOT TARGET yq_rapidxml)
     set(rapidxml_dir ${CMAKE_CURRENT_LIST_DIR}/rapidxml)

@@ -6,8 +6,7 @@
 
 option(Feature_GLM "Add GLM Bindings" ON)
 
-if(Feature_GLM)
-    find_package(glm REQUIRED)
+if(Build_GLM)
 endif()
 
 add_library(yq_math SHARED

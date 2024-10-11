@@ -1,3 +1,9 @@
+################################################################################
+##
+##  YOUR QUILL
+##
+################################################################################
+
 cmake_minimum_required(VERSION 3.26.0)
 
 if("${PROJECT_NAME}" STREQUAL "")
@@ -7,7 +13,11 @@ include(configure.cmake)
 
 add_subdirectory(3rd)
 add_subdirectory(api)
-add_subdirectory(test)
-add_subdirectory(sdk)
+if(Build_UnitTests)
+    add_subdirectory(test)
+endif()
+if(Build_SDK)
+    add_subdirectory(sdk)
+endif()
 add_subdirectory(tool)
 

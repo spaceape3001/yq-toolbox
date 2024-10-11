@@ -6,6 +6,3 @@ target_link_libraries(easter yq_date)
 
 add_executable(kvtree kvtree.cpp)
 target_link_libraries(kvtree yq_keyv)
-
-add_executable(sqlquery sqlquery.cpp)
-target_link_libraries(sqlquery yq_sql)

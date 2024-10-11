@@ -18,7 +18,11 @@ include(yq_asset.cmake)
 include(yq_chemistry.cmake)
 include(yq_color.cmake)
 include(yq_process.cmake)
-include(yq_sql.cmake)
+
+if(Build_SQL)
+    include(yq_sql.cmake)
+endif()
+
 include(yq_userexpr.cmake)
 include(yq_xml.cmake)
 

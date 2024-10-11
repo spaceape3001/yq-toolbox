@@ -4,7 +4,6 @@
 ##
 ################################################################################
 
-find_package(SQLite3 REQUIRED)
 
 add_library(yq_sql SHARED
     sql/sql.cpp
