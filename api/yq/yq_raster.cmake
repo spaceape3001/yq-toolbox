@@ -4,16 +4,16 @@
 ##
 ################################################################################
 
-add_library(yq_pixel SHARED
-    pixel/Painter.cpp
-    pixel/Pixmap.cpp
+add_library(yq_raster SHARED
+    raster/Painter.cpp
+    raster/Pixmap.cpp
 )
 
-target_link_libraries(yq_pixel 
+target_link_libraries(yq_raster 
     PUBLIC
         yq_core 
         yq_color
 )
 
-LinkTest(yq_pixel)
+LinkTest(yq_raster)
 

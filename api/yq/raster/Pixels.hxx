@@ -19,7 +19,7 @@
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/meta/TypeInfo.hpp>
 
-namespace yq::pixel {
+namespace yq::raster {
     template <uint8_t DIMS, class C>
     typename Pixels<DIMS,C>::coord_t     Pixels<DIMS,C>::coord(std::span<const index_t> pix) 
     {

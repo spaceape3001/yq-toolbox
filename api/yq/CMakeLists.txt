@@ -25,4 +25,4 @@ include(yq_xml.cmake)
 #   REMAINDER
 include(yq_graph.cmake)
 include(yq_keyv.cmake)
-include(yq_pixel.cmake)
+include(yq_raster.cmake)

@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Painter.hpp"
-#include <yq/pixel/Pixmap.hpp>
+#include <yq/raster/Pixmap.hpp>
 #include <yq/core/Any.hpp>
 
-namespace yq::pixel {
+namespace yq::raster {
     Painter::Painter()
     {
     }

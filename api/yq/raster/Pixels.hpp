@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/pixel/Pixmap.hpp>
+#include <yq/raster/Pixmap.hpp>
 #include <yq/coord/Coord.hpp>
 
-namespace yq::pixel {
+namespace yq::raster {
     template <uint8_t DIMS, class C>
     struct Pixels : public PixmapN<DIMS>, public array<DIMS,C> {
     

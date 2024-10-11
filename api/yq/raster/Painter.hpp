@@ -6,21 +6,18 @@
 
 #pragma once
 
-#include <yq/pixel/pixels_fwd.hpp>
+#include <yq/raster/forward.hpp>
 //#include <yq-vulqan/data/DataFormat.hpp>
 
 namespace yq {
     class Any;
 }
 
-namespace yq::pixel {
+namespace yq::raster {
 
 
     class Painter {
     public:
-        
-        using index_span_t = pixel::index_span_t;
-    
         Painter();
         
         // Disabled until we determine how to address data format

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/pixel/Painter.hpp>
+#include <yq/raster/Painter.hpp>
 
-namespace yq::pixel {
+namespace yq::raster {
 
     class Painter2 : public Painter {
     public:

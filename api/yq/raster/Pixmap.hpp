@@ -8,14 +8,14 @@
 
 #include <yq/keywords.hpp>
 #include <yq/container/Array.hpp>
-#include <yq/pixel/pixels_fwd.hpp>
+#include <yq/raster/forward.hpp>
 
 namespace yq {
     class Any;
     class TypeInfo;
 }
 
-namespace yq::pixel {
+namespace yq::raster {
 
     //! Root for generic pixel data handling (note, *ANYTHING* can be used here for pixels)
     class Pixmap {

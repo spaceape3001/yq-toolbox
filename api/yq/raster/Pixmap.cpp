@@ -7,7 +7,7 @@
 #include "Pixels.hxx"
 #include "Pixmap.hpp"
 
-namespace yq::pixel {
+namespace yq::raster {
     Pixmap::Pixmap()
     {
     }
