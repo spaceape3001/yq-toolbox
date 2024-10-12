@@ -70,6 +70,7 @@ namespace yq {
     struct hpr_t {};
     struct i_t {};
     struct identity_t {};
+    struct igcase_t {};
     struct individual_t {};
     struct intersect_t {};
     struct interval_t {};
@@ -196,6 +197,7 @@ namespace yq {
     static constexpr const hpr_t            HPR;
     static constexpr const i_t              I;
     static constexpr const identity_t       IDENTITY;
+    static constexpr const igcase_t         IGCASE;
     static constexpr const individual_t     INDIVIDUAL;
     static constexpr const intersect_t      INTERSECT;
     static constexpr const interval_t       INTERVAL;

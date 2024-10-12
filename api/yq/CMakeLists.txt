@@ -5,6 +5,7 @@
 ################################################################################
 
 #   CORE
+include(yq_text.cmake)
 include(yq_core.cmake)
 
 #   FIRST STEP
