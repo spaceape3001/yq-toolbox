@@ -82,6 +82,12 @@ namespace yq::raster {
         //! TRUE if the given coordinate is inside the box of the pixel data
         virtual bool                inside(index_span_t) const = 0;
 
+        //! Gets a memory compatible object, bound in reference
+        virtual Memory              memory(ref_t) const = 0;
+        
+        //! Gets a memory compatible object, a copy of the data
+        virtual Memory              memory(copy_t) const = 0;
+
         //! Data pointer (warning, can be null if empty)
         virtual const void*         pointer(data_t) const = 0;
         
@@ -93,6 +99,7 @@ namespace yq::raster {
         virtual const TypeInfo&     type(pixel_t) const = 0;
         
         virtual ~Pixmap();
+        
         
     protected:
         Pixmap();

@@ -116,6 +116,16 @@ namespace yq {
             template <typename T>
             void    copy(std::span<const T> data);
 
+            /*! \brief Sets a COPY of the data
+            
+                This routine copies the data from the span into a 
+                separate buffer.
+
+                \tparam T           data type (normally deduced)
+                \param[in] data     Span of data items (in T)
+            */
+            template <typename T>
+            void    copy(std::span<T> data);
 
             /*! \brief Sets a COPY of the data
 
@@ -172,6 +182,17 @@ namespace yq {
             */
             template <typename T>
             void    ref(std::span<const T> data); 
+
+            /*! \brief Sets a REFERENCE to the data
+
+                This routine creates a REFERENCE to the data in the argument,
+                and this data MUST remain valid for the duration of the usage.
+
+                \tparam T           data type (normally deduced)
+                \param[in] data     Span of data items (in T)
+            */
+            template <typename T>
+            void    ref(std::span<T> data); 
 
             /*! \brief Sets a REFERENCE to the data
 
@@ -320,6 +341,12 @@ namespace yq {
             copy(data);
         }
 
+        template <typename T>
+        Memory(copy_t, std::span<T> data) : Memory()
+        {
+            copy(data);
+        }
+
         template <typename T, size_t N>
         Memory(copy_t, const T (&ptr)[N]) : Memory()
         {
@@ -343,6 +370,12 @@ namespace yq {
         Memory(ref_t, const std::vector<T, A>& data)
         {
             ref(data.data(), data.size());
+        }
+
+        template <typename T>
+        Memory(ref_t, std::span<T> data) : Memory()
+        {
+            ref(data);
         }
 
         template <typename T>
@@ -446,6 +479,12 @@ namespace yq {
     }
 
     template <typename T>
+    void    Memory::copy(std::span<T> d)
+    {
+        copy(d.data(), d.size());
+    }
+
+    template <typename T>
     void    Memory::copy(std::span<const T> d)
     {
         copy(d.data(), d.size());
@@ -476,6 +515,12 @@ namespace yq {
 
     template <typename T>
     void    Memory::ref(std::span<const T>sp)
+    {
+        ref(sp.data(), sp.size());
+    }
+
+    template <typename T>
+    void    Memory::ref(std::span<T>sp)
     {
         ref(sp.data(), sp.size());
     }

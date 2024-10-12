@@ -9,6 +9,7 @@
 #include <yq/typedef/array.hpp>
 #include <yq/keywords.hpp>
 #include <yq/core/IntRange.hpp>
+#include <yq/core/Memory.hpp>
 #include <yq/coord/Coords.hpp>
 #include <yq/coord/Coord1.hxx>
 #include <yq/coord/Coord2.hxx>
@@ -520,6 +521,16 @@ namespace yq {
             return ret;
         }
         
+
+        Memory          memory(ref_t) const 
+        {
+            return Memory(REF, m_data);
+        }
+        
+        Memory          memory(copy_t) const 
+        {
+            return Memory(COPY, m_data);
+        }
 
         /*! \brief Needs a compute() call
         

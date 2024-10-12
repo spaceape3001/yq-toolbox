@@ -206,6 +206,18 @@ namespace yq::raster {
     }
     
     template <uint8_t DIMS, class C>
+    Memory  Pixels<DIMS,C>::memory(ref_t) const
+    {
+        return array_t::memory(REF);
+    }
+
+    template <uint8_t DIMS, class C>
+    Memory  Pixels<DIMS,C>::memory(copy_t) const 
+    {
+        return array_t::memory(COPY);
+    }
+
+    template <uint8_t DIMS, class C>
     C       Pixels<DIMS,C>::pixel(const coord_t& cc) const 
     {
         if(any(cc) >= count())

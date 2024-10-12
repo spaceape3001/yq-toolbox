@@ -54,6 +54,10 @@ namespace yq::raster {
         bool            inside(const coord_t&) const override;
         bool            inside(index_span_t) const override;
 
+        Memory          memory(ref_t) const override;
+        Memory          memory(copy_t) const override;
+
+
         C               pixel(const coord_t& coord) const;
         const void*     pointer(data_t) const override;
         virtual bool    set(const coord_t& cc, const Any& val) override;
