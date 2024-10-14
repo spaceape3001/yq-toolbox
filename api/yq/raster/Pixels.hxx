@@ -19,9 +19,9 @@
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/meta/TypeInfo.hpp>
 
-namespace yq::raster {
+namespace yq {
     template <uint8_t DIMS, class C>
-    typename Pixels<DIMS,C>::coord_t     Pixels<DIMS,C>::coord(std::span<const index_t> pix) 
+    typename Pixels<DIMS,C>::coord_t     Pixels<DIMS,C>::coord(index_span_t pix) 
     {
         coord_t ret;
         for(uint8_t n=0;n<kDimensions;++n){
@@ -153,7 +153,7 @@ namespace yq::raster {
     }
 
     template <uint8_t DIMS, class C>
-    index_span_t  Pixels<DIMS,C>::dimensions() const 
+    raster::index_span_t  Pixels<DIMS,C>::dimensions() const 
     {
         static thread_local index_t ret[kDimensions];
         coord_t             cc  = count();

@@ -13,13 +13,13 @@
 namespace yq {
     class Any;
     class TypeInfo;
-}
-
-namespace yq::raster {
 
     //! Root for generic pixel data handling (note, *ANYTHING* can be used here for pixels)
     class Pixmap {
     public:
+    
+        using index_t       = raster::index_t;
+        using index_span_t  = raster::index_span_t;
     
         //! Bytes per pixel
         virtual size_t              bytes(pixel_t) const = 0;

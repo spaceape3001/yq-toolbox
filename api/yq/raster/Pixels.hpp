@@ -9,16 +9,18 @@
 #include <yq/raster/Pixmap.hpp>
 #include <yq/coord/Coord.hpp>
 
-namespace yq::raster {
+namespace yq {
     template <uint8_t DIMS, class C>
-    struct Pixels : public PixmapN<DIMS>, public array<DIMS,C> {
+    struct Pixels : public PixmapN<DIMS>, public raster::array<DIMS,C> {
     
         static_assert(DIMS && (DIMS<=6), "Pixel dimensions limited 1 to 6");
         static_assert(is_type_v<C>, "Pixel data must be meta-capable!  (Missing a declare macro?)");
     
         using base_t                            = PixmapN<DIMS>;
+        using index_t                           = raster::index_t;
+        using index_span_t                      = raster::index_span_t;
         using coord_t                           = Coord<index_t, DIMS>;
-        using array_t                           = array<DIMS,C>;
+        using array_t                           = raster::array<DIMS,C>;
         using color_t                           = C;
         static constexpr uint8_t  kDimensions   = DIMS;
         using array_t::count;

@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Painter.hpp"
-#include <yq/raster/Pixmap.hpp>
-#include <yq/core/Any.hpp>
+//#include <yq/raster/Pixmap.hpp>
+//#include <yq/core/Any.hpp>
 
 namespace yq::raster {
     Painter::Painter()
@@ -19,6 +19,7 @@ namespace yq::raster {
     }
     #endif
     
+    #if 0
     Painter::Painter(std::shared_ptr<Pixmap> p) : m_pixmap(p.get()), m_shared(p)
     {
     }
@@ -26,11 +27,13 @@ namespace yq::raster {
     Painter::Painter(Pixmap& p) : m_pixmap(&p)
     {
     }
+    #endif
     
     Painter::~Painter()
     {
     }
     
+    #if 0
     Any     Painter::get_pixel(index_span_t coords) const
     {
         if(m_pixmap)
@@ -44,4 +47,5 @@ namespace yq::raster {
             return false;
         return m_pixmap->set(coords, val);
     }
+    #endif
 }

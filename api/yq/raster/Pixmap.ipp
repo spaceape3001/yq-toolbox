@@ -4,10 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Pixels.hxx"
 #include "Pixmap.hpp"
 
-namespace yq::raster {
+namespace yq {
     Pixmap::Pixmap()
     {
     }

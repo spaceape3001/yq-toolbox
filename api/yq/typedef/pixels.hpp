@@ -8,7 +8,7 @@
 
 #include <cstdint>
 
-namespace yq::raster {
+namespace yq {
     template <uint8_t, class> struct Pixels;
     
     template <class C> using Pixels1 = Pixels<1,C>;

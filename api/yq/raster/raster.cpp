@@ -4,7 +4,5 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include "Painter2.hpp"
-#include <yq/raster/bresenham_line_algorithm.hpp>
+#include "Pixmap.ipp"
+#include "Pixels.hxx"

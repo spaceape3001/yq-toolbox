@@ -13,7 +13,7 @@
 #include <memory>
 #include <span>
 
-namespace yq::raster {
+namespace yq {
     class Pixmap;
     using PixmapUPtr        = std::unique_ptr<Pixmap>;
     using PixmapSPtr        = std::shared_ptr<Pixmap>;

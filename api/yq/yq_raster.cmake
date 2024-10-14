@@ -5,8 +5,7 @@
 ################################################################################
 
 add_library(yq_raster SHARED
-    raster/Painter.cpp
-    raster/Pixmap.cpp
+    raster/raster.cpp
 )
 
 target_link_libraries(yq_raster 
