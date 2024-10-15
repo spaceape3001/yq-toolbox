@@ -87,6 +87,7 @@ namespace yq {
             CONST,          //!< Method/property is CONSTANT/READONLY
             CONSTRAINT,     //!< It's a constraint
             CONSTRUCTOR,    //!< It's a constructor
+            CURSOR,         //!< It's cursor related
             D0,             //!< Item has/supports zero dimensional attributes (or is a 0-dimensional object)
             D1,             //!< Item has/supports one dimensional attributes (or is a 1-dimensional object)
             D2,             //!< Item has/supports two dimensional attributes (or is a 2-dimensional object)
