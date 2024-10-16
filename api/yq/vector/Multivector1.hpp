@@ -154,6 +154,7 @@ namespace yq {
         requires self_multiply_v<T,U>
         Multivector1<T>& operator*=(const Vector1<U>& b) noexcept;
 
+        //! Inner product with another multivector, returns the result
         template <typename U>
         constexpr product_t<T,U>   operator INNER(const Multivector1<U>&b)  const noexcept;
 
