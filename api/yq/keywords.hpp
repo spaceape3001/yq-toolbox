@@ -90,6 +90,7 @@ namespace yq {
     struct no_t {};
     struct no_throw_t {};
     struct node_t {};
+    struct none_t {};
     struct normal_t {};
     struct normalized_t {};
     struct odd_t {};
@@ -217,6 +218,7 @@ namespace yq {
     static constexpr const no_t             NO;
     static constexpr const no_throw_t       NO_THROW;
     static constexpr const node_t           NODE;
+    static constexpr const none_t           NONE;
     static constexpr const normal_t         NORMAL;
     static constexpr const normalized_t     NORMALIZED;
     static constexpr const odd_t            ODD;
