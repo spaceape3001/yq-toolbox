@@ -115,6 +115,7 @@ namespace yq {
             LOADER,         //!< A loader
             LOCAL_ONLY,     //!< Local only permission
             LOGIN_REQ,      //!< Login required
+            MANAGER,        //!< We're a manager
             MANIPULATOR,    //!< It's a manipulator
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
@@ -130,6 +131,7 @@ namespace yq {
             PIN,            //!< It's a pin
             PIPELINE,       //!< It's a pipeline (PipelineInfo)
             PIXMAP,         //!< It's a pixmap (vulqan)
+            POLL,           //!< Supports poll operations
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
             PHYSICAL,       //!< Physical doodle item
             PROJECT,        //!< A project type of object
