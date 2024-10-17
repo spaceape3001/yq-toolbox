@@ -33,22 +33,7 @@ add_library(yq_core SHARED
     
     hash/MD5.cpp
     
-    meta/AnyArgHelper.cpp
-    meta/ArgInfo.cpp
-    meta/CompoundInfo.cpp
-    meta/ConstructorInfo.cpp
-    meta/Generator.cpp
-    meta/GlobalInfo.cpp
-    meta/Meta.cpp
-    meta/MetaWriter.cpp
-    meta/MethodInfo.cpp
-    meta/ObjectInfo.cpp
-    meta/OperatorInfo.cpp
-    meta/PropertyInfo.cpp
-    meta/PropGetter.cpp
-    meta/PropSetter.cpp
-    meta/StdTypes.cpp
-    meta/TypeInfo.cpp
+    meta/meta.cpp
     
     stream/Bytes.cpp
     stream/File.cpp

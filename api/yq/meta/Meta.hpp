@@ -78,8 +78,8 @@ namespace yq {
             ARG,            //!< It's an argument (ArgInfo)
             ASSET,          //!< It's an asset (AssetInfo)
             ASSOCIATION,    //!< It's an association
-            CAMERA,         //!< It's a camera (CameraInfo)
             CACHE,          //!< It's a cache
+            CAMERA,         //!< It's a camera (CameraInfo)
             COLLECTION,     //!< It's a collection (TypeInfo)
             COMMAND,        //!< It's a command
             COMPILER,       //!< It's a compiler
@@ -240,8 +240,16 @@ namespace yq {
         bool                            is_argument() const;
         
         bool                            is_asset() const;
+        
+        bool                            is_association() const;
+
+        bool                            is_cache() const;
 
         bool                            is_camera() const;
+        
+        bool                            is_camera_command() const;
+
+        bool                            is_camera_event() const;
 
         bool                            is_collection() const;
 
@@ -251,6 +259,10 @@ namespace yq {
 
         //! TRUE if this is a const method/property/etc
         bool                            is_const() const;
+
+        bool                            is_constraint() const;
+
+        bool                            is_cursor() const;
 
         bool                            is_editor() const;
 
@@ -267,6 +279,8 @@ namespace yq {
         bool                            is_imgui() const;
         
         bool                            is_input() const;
+        
+        bool                            is_input_event() const;
         
         bool                            is_loader() const;
         
@@ -330,6 +344,9 @@ namespace yq {
         bool                            is_vulkan() const;
         
         bool                            is_widget() const;
+        
+        bool                            is_widget_event() const;
+        
         bool                            is_xfg() const;
         
         std::string_view                label() const { return m_label; }

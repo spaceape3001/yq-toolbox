@@ -192,10 +192,30 @@ namespace yq {
     {
         return has(Flag::ASSET);
     }
+    
+    bool Meta::is_association() const
+    {
+        return has(Flag::ASSOCIATION);
+    }
+    
+    bool  Meta::is_cache() const
+    {
+        return has(Flag::CACHE);
+    }
 
     bool  Meta::is_camera() const
     {
-        return has(Flag::CAMERA);
+        return has(Flag::CAMERA) && !has(Flag::EVENT);
+    }
+    
+    bool  Meta::is_camera_command() const
+    {
+        return has(Flag::CAMERA) && has(Flag::EVENT) && has(Flag::COMMAND);
+    }
+
+    bool  Meta::is_camera_event() const
+    {
+        return has(Flag::CAMERA) && has(Flag::EVENT) && !has(Flag::COMMAND);
     }
 
     bool  Meta::is_collection() const
@@ -216,6 +236,16 @@ namespace yq {
     bool  Meta::is_const() const 
     { 
         return has(Flag::CONST); 
+    }
+    
+    bool  Meta::is_constraint() const
+    {
+        return has(Flag::CONSTRAINT);
+    }
+
+    bool  Meta::is_cursor() const
+    {
+        return has(Flag::CURSOR);
     }
 
     bool  Meta::is_editor() const
@@ -255,7 +285,12 @@ namespace yq {
 
     bool  Meta::is_input() const 
     { 
-        return has(Flag::INPUT); 
+        return has(Flag::INPUT) && !has(Flag::EVENT); 
+    }
+
+    bool  Meta::is_input_event() const 
+    { 
+        return has(Flag::INPUT) && has(Flag::EVENT); 
     }
 
     bool  Meta::is_loader() const
@@ -391,6 +426,11 @@ namespace yq {
     bool  Meta::is_widget() const
     {
         return has(Flag::WIDGET) && !has(Flag::EVENT);
+    }
+    
+    bool  Meta::is_widget_event() const
+    {
+        return has(Flag::WIDGET) && has(Flag::EVENT);
     }
 
     bool  Meta::is_xfg() const
