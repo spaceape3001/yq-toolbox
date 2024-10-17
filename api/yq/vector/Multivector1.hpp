@@ -158,6 +158,7 @@ namespace yq {
         template <typename U>
         constexpr product_t<T,U>   operator INNER(const Multivector1<U>&b)  const noexcept;
 
+        //! Inner product with a vector, returns the result
         template <typename U>
         constexpr product_t<T,U>   operator INNER(const Vector1<U>&b) const noexcept;
 
