@@ -162,6 +162,7 @@ namespace yq {
         template <typename U>
         constexpr product_t<T,U>   operator INNER(const Vector1<U>&b) const noexcept;
 
+        //! Divides multivector by scalar, returns the result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector1<quotient_t<T,U>> operator/(U b) const noexcept;
