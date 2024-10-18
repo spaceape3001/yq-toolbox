@@ -109,6 +109,7 @@ namespace yq {
     struct ref_t {};
     struct repo_t {};
     struct required_t {};
+    struct return_t {};
     struct rotor_t {};
     struct rows_t {};
     struct set_t {};
@@ -237,6 +238,7 @@ namespace yq {
     static constexpr const ref_t            REF;
     static constexpr const repo_t           REPO;
     static constexpr const required_t       REQUIRED;
+    static constexpr const return_t         RETURN;
     static constexpr const rotor_t          ROTOR;
     static constexpr const rows_t           ROWS;
     static constexpr const set_t            SET;
