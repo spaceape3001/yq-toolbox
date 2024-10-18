@@ -14,6 +14,7 @@ add_library(yq_core SHARED
 
     core/Any.cpp
     core/BasicApp.cpp
+    core/Cleanup.cpp
     core/DelayInit.cpp
     core/Enum.cpp
     core/ErrorDB.cpp
