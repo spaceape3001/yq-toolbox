@@ -46,6 +46,7 @@ namespace yq {
     struct copy_t {};
     struct cout_t {};
     struct count_t {};
+    struct cursor_t {};
     struct data_t {};
     struct default_t {};
     struct diagonal_t {};
@@ -177,6 +178,7 @@ namespace yq {
     static constexpr const copy_t           COPY;
     static constexpr const count_t          COUNT;
     static constexpr const cout_t           COUT;
+    static constexpr const cursor_t         CURSOR;
     static constexpr const data_t           DATA;
     static constexpr const default_t        DEFAULT;
     static constexpr const diagonal_t       DIAGONAL;
