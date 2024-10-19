@@ -167,6 +167,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Multivector1<quotient_t<T,U>> operator/(U b) const noexcept;
 
+        //! Self-divides this multivector by scalar, returns the result
         template <typename U>
         requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Multivector1<T>& operator/=(U b) noexcept;
