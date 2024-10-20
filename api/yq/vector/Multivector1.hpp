@@ -172,6 +172,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Multivector1<T>& operator/=(U b) noexcept;
 
+        //! Extracts the vector component to this multivector
         constexpr Vector1<T>  vector() const noexcept;
     };
 
