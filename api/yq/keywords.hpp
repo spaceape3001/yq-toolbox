@@ -106,6 +106,8 @@ namespace yq {
     struct pixels_t {};
     struct pointer_t {};
     struct positive_t {};
+    struct pull_t {};
+    struct push_t {};
     struct read_only_t {};
     struct recursive_t {};
     struct rectangle_t {};
@@ -242,6 +244,8 @@ namespace yq {
     static constexpr const pixels_t         PIXELS;
     static constexpr const pointer_t        POINTER;
     static constexpr const positive_t       POSITIVE;
+    static constexpr const pull_t           PULL;
+    static constexpr const push_t           PUSH;
     static constexpr const read_only_t      READ_ONLY;
     static constexpr const rectangle_t      RECTANGLE;
     static constexpr const recursive_t      RECURSIVE;
