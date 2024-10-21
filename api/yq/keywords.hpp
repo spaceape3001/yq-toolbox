@@ -64,6 +64,7 @@ namespace yq {
     struct focus_t {};
     struct frequency_t {};
     struct full_t {};
+    struct from_t {};
     struct global_t {};
     struct graph_t {};
     struct gregorian_t {};
@@ -115,6 +116,7 @@ namespace yq {
     struct return_t {};
     struct rotor_t {};
     struct rows_t {};
+    struct rx_t {};
     struct set_t {};
     struct skip_t {};
     struct sort_t {};
@@ -124,9 +126,11 @@ namespace yq {
     struct throw_t {};
     struct ticks_t {};
     struct triangle_t {};
+    struct to_t {};
     struct today_t {};
     struct total_t {};
     struct two_t {};
+    struct tx_t {};
     struct union_t {};
     struct unit_t {};
     struct up_t {};
@@ -196,6 +200,7 @@ namespace yq {
     static constexpr const focus_t          FOCUS;
     static constexpr const frequency_t      FREQUENCY;
     static constexpr const full_t           FULL;
+    static constexpr const from_t           FROM;
     static constexpr const global_t         GLOBAL;
     static constexpr const graph_t          GRAPH;
     static constexpr const gregorian_t      GREGORIAN;
@@ -247,6 +252,7 @@ namespace yq {
     static constexpr const return_t         RETURN;
     static constexpr const rotor_t          ROTOR;
     static constexpr const rows_t           ROWS;
+    static constexpr const rx_t             RX;
     static constexpr const set_t            SET;
     static constexpr const skip_t           SKIP;
     static constexpr const sort_t           SORT;
@@ -255,10 +261,12 @@ namespace yq {
     static constexpr const three_t          THREE;
     static constexpr const throw_t          THROW;
     static constexpr const ticks_t          TICKS;
+    static constexpr const to_t             TO;
     static constexpr const today_t          TODAY;
     static constexpr const total_t          TOTAL;
     static constexpr const triangle_t       TRIANGLE;
     static constexpr const two_t            TWO;
+    static constexpr const tx_t             TX;
     static constexpr const union_t          UNION;
     static constexpr const unit_t           UNIT;
     static constexpr const up_t             UP;
