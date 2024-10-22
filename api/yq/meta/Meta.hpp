@@ -153,6 +153,7 @@ namespace yq {
             TODO,           //!< It's "TODO" later
             TOOL,           //!< It's a Tool
             TYPE,           //!< Meta has TypeInfo
+            VIEWER,         //!< Viewer related (tachyon library)
             VULKAN,         //!< Vulkan api enabled
             WEB,            //!< Web related
             WIDGET,         //!< It's a widget (WidgetInfo)
