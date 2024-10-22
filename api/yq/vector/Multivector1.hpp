@@ -210,6 +210,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector1<T> operator-(T a, const Multivector1<T>& b) noexcept;
 
+    //! Multiplies left scalar with right multivector, returns the result
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr Multivector1<product_t<T,U>> operator*(T a, const Multivector1<U>&b) noexcept;
