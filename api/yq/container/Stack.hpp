@@ -30,6 +30,7 @@ namespace yq {
         Stack&     operator>>(T&);
 
         T           pop(const T& def={});
+        T&          top();
         const T&    top() const;
         
         /*! \brief Pops the stack until the size is beneath the argument */
@@ -180,6 +181,15 @@ namespace yq {
     const T&    Stack<T>::top() const
     {
         static const T  s_def{};
+        if(base_stack::empty())
+            return s_def;
+        return base_stack::back();
+    }
+
+    template <typename T>
+    T&    Stack<T>::top() 
+    {
+        static thread_local T  s_def{};
         if(base_stack::empty())
             return s_def;
         return base_stack::back();

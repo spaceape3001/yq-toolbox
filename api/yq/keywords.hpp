@@ -72,6 +72,7 @@ namespace yq {
     struct hpr_t {};
     struct i_t {};
     struct identity_t {};
+    struct if_t {};
     struct igcase_t {};
     struct individual_t {};
     struct intersect_t {};
@@ -99,6 +100,7 @@ namespace yq {
     struct odd_t {};
     struct once_t {};
     struct one_t {};
+    struct only_t {};
     struct opposite_t {};
     struct optional_t {};
     struct parse_t {};
@@ -134,6 +136,7 @@ namespace yq {
     struct total_t {};
     struct two_t {};
     struct tx_t {};
+    struct type_t {};
     struct union_t {};
     struct unit_t {};
     struct up_t {};
@@ -211,6 +214,7 @@ namespace yq {
     static constexpr const hpr_t            HPR;
     static constexpr const i_t              I;
     static constexpr const identity_t       IDENTITY;
+    static constexpr const if_t             IF;
     static constexpr const igcase_t         IGCASE;
     static constexpr const individual_t     INDIVIDUAL;
     static constexpr const intersect_t      INTERSECT;
@@ -238,6 +242,7 @@ namespace yq {
     static constexpr const odd_t            ODD;
     static constexpr const once_t           ONCE;
     static constexpr const one_t            ONE;
+    static constexpr const only_t           ONLY;
     static constexpr const opposite_t       OPPOSITE; 
     static constexpr const optional_t       OPTIONAL;
     static constexpr const parse_t          PARSE;
@@ -273,6 +278,7 @@ namespace yq {
     static constexpr const triangle_t       TRIANGLE;
     static constexpr const two_t            TWO;
     static constexpr const tx_t             TX;
+    static constexpr const type_t           TYPE;
     static constexpr const union_t          UNION;
     static constexpr const unit_t           UNIT;
     static constexpr const up_t             UP;

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/keywords.hpp>
 #include <yq/container/BitArray.hpp>
 #include <yq/container/Hash.hpp>
 #include <yq/container/Map.hpp>
@@ -107,6 +108,7 @@ namespace yq {
             HAS_SUBS,       
             IMAGE,          //!< It's an image
             IMGUI,          //!< ImGUI api enabled/similar usage
+            INFORMATION,    //!< Information post class
             INPUT,          //!< It's flagged as input (graphs/events/etc)
             JOYSTICK,       //!< Joystick related
             KEYBOARD,       //!< Keyboard related
@@ -119,6 +121,7 @@ namespace yq {
             MANIPULATOR,    //!< It's a manipulator
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
             METHOD,         //!< It's a method/function (MethodInfo)
+            MESSAGE,        //!< Tachyon's way of communicating
             MONITOR,        //!< Monitor involved
             MOTION,         //!< It's a motion item
             MOUSE,          //!< Mouse related
@@ -132,12 +135,15 @@ namespace yq {
             PIPELINE,       //!< It's a pipeline (PipelineInfo)
             PIXMAP,         //!< It's a pixmap (vulqan)
             POLL,           //!< Supports poll operations
+            POST,           //!< Post (post library)
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
             PHYSICAL,       //!< Physical doodle item
             PROJECT,        //!< A project type of object
             PROPERTY,       //!< Meta has PropertyInfo
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
+            REPLY,          //!< It's a reply (message API)
+            REQUEST,        //!< A request of some sort (message API)
             SAMPLER,        //!< It's a sampler (in vulqan)
             SEALED,         //!< Registration sealed (WebPage)
             SELF,           //!< Self-modifying (operator)
@@ -222,6 +228,15 @@ namespace yq {
         virtual const char*             generic() const { return "Meta"; }
 
         bool                            has(Flag) const;
+
+        //! Detects for all flags being set
+        //! \note an empty list will return TRUE
+        bool                            has(all_t, std::initializer_list<Flag>) const;
+
+        //! Detects for any flag being set
+        //! \note an empty list will return FALSE
+        bool                            has(any_t, std::initializer_list<Flag>) const;
+
         //  TODO
         bool                            has_tag(std::string_view) const;
 
@@ -288,6 +303,8 @@ namespace yq {
         bool                            is_login_required() const;
         
         bool                            is_manipulator() const;
+        
+        bool                            is_message() const;
         
         bool                            is_method() const;
         

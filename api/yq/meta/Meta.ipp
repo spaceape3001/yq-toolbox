@@ -143,6 +143,24 @@ namespace yq {
         return m_flags[(size_t) f];
     }
 
+    bool    Meta::has(any_t, std::initializer_list<Flag> flags) const
+    {
+        for(Flag f : flags){
+            if(has(f))
+                return true;
+        }
+        return false;
+    }
+    
+    bool    Meta::has(all_t, std::initializer_list<Flag> flags) const
+    {
+        for(Flag f : flags){
+            if(!has(f))
+                return false;
+        }
+        return true;
+    }
+
     bool  Meta::has_tag(std::string_view k) const
     {
         return m_tags.contains(k);
@@ -308,6 +326,11 @@ namespace yq {
         return has(Flag::MANIPULATOR);
     }
 
+    bool  Meta::is_message() const
+    {
+        return has(Flag::MESSAGE);
+    }
+    
     bool  Meta::is_method() const
     {
         return has(Flag::METHOD);
