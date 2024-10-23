@@ -95,6 +95,7 @@ namespace yq {
     struct none_t {};
     struct normal_t {};
     struct normalized_t {};
+    struct not_t {};
     struct odd_t {};
     struct once_t {};
     struct one_t {};
@@ -233,6 +234,7 @@ namespace yq {
     static constexpr const none_t           NONE;
     static constexpr const normal_t         NORMAL;
     static constexpr const normalized_t     NORMALIZED;
+    static constexpr const not_t            NOT;
     static constexpr const odd_t            ODD;
     static constexpr const once_t           ONCE;
     static constexpr const one_t            ONE;
