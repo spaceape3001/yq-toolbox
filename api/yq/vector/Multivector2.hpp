@@ -43,6 +43,7 @@ namespace yq {
         //! XY (bivector component)
         T               xy;
         
+        //! Default constructor
         constexpr Multivector2() noexcept = default;
         constexpr Multivector2(T _a, T _x, T _y, T _xy) noexcept : a(_a), x(_x), y(_y), xy(_xy) {}
         constexpr Multivector2(T _a, const Vector2<T>& v, const Bivector2<T>& b) noexcept : a(_a), x(v.x), y(v.y), xy(b.xy) {}
