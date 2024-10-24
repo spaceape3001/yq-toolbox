@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/typedef/event.hpp>
 #include <yq/post/Post.hpp>
 
 namespace yq::post {

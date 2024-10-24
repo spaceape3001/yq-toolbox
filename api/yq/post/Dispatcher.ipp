@@ -552,6 +552,23 @@ namespace yq::post {
     {
         return disconnect(ALL, *this, k);
     }
+    
+#if 0
+        //! Installs a global snoop (good for event logging)
+        //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
+        static void install(global_t, SnoopFN&&);
+        
+        //! Installs a global filter
+        //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
+        static void install(global_t, FilterFN&&);
+        
+        void install(SnoopFN&&);
+        void install(sender_k, SnoopFN&&);
+        void install(receiver_k, SnoopFN&&);
+        void install(FilterFN&&);
+        void install(sender_k, FilterFN&&);
+        void install(receiver_k, FilterFN&&);
+#endif
 
     std::string_view    Dispatcher::name() const
     {

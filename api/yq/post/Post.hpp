@@ -10,7 +10,7 @@
 #include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
-#include <yq/typedef/post.hpp>
+#include <yq/post/forward.hpp>
 #include <atomic>
 #include <chrono>
 #include <concepts>
