@@ -16,7 +16,7 @@
 #include <concepts>
 
 namespace yq::post {
-    class Mailer;
+    class Dispatcher;
     
     class PostInfo : public ObjectInfo {
     public:
@@ -35,12 +35,20 @@ namespace yq::post {
         YQ_OBJECT_DECLARE(Post, Object)
     public:
     
-        //! allow for message flags... not yet determined
+        /*! Post flag type
+        
+            Exact ranges TBD... let the fight begin!
+            
+            | range | reserver     |
+            | ----- | ------------ |
+            | 000X  | post library |
+            
+        */
         using flag_t        = uint16_t;
         
-        //! all flags 
+        //! All flags 
+        //! \note Number may be bumped in the future to keep at least one 64-bit range free
         using flags_t       = BitArray<uint64_t,4>;
-    
     
         /*! \brief Parameter structure
         
@@ -51,54 +59,66 @@ namespace yq::post {
         struct Param {
             flags_t         flags;
         };
+        
+        /*! 
+            If set, means this post came in via public API to the originating dispatcher.
+        */
+        static constexpr flag_t     kFlag_Public        = 0x0001;
+        
+        using flag_initlist_t   = std::initializer_list<flag_t>;
     
     
-        using time_point_t  = std::chrono::high_resolution_clock::time_point;
+        using clock_t  = std::chrono::high_resolution_clock;
+    
+        //! Our time point
+        using time_point_t  = clock_t::time_point;
     
         virtual ~Post();
         
-        // Invalid reference until published
-        Mailer&                originator() const { return *m_originator; }
+        // Invalid reference until dispatched
+        Dispatcher&  originator() const { return *m_originator; }
         
         //! TRUE if somebody's "dealt" with the message
-        bool                handled() const;
+        bool  handled() const;
         
-        //! TRUE if this has been published
-        bool                published() const { return static_cast<bool>(m_originator); }
+        //! TRUE if this has been dispatched
+        bool  dispatched() const { return static_cast<bool>(m_originator); }
         
         //! Marks the message as handled (unconditional)
-        bool                mark() const;
+        bool  mark() const;
         
         //! Resets the message handled flag
-        void                reset() const;
+        void  reset() const;
         
         //! Time of message creation
         const time_point_t& time() const { return m_time; }
         
         //! Post identifier (executable-unique)
-        uint64_t            id() const { return m_id; }
+        uint64_t  id() const { return m_id; }
         
-        bool                has(flag_t f) const;
+        //! Detects for specified flag on the post
+        bool  has(flag_t f) const;
         
         //! Detects for all flags being set
         //! \note an empty list will return TRUE
-        bool                has(all_t, std::initializer_list<flag_t>) const;
+        bool  has(all_t, std::initializer_list<flag_t>) const;
 
         //! Detects for any flag being set
         //! \note an empty list will return FALSE
-        bool                has(any_t, std::initializer_list<flag_t>) const;
+        bool  has(any_t, std::initializer_list<flag_t>) const;
         
     protected:
 
+        //! Constructs a post, parameters are required!
         Post(const Param&);
         
     private:
-        friend class Mailer;
+        friend class Dispatcher;
         
         const uint64_t              m_id;
         const time_point_t          m_time;
         flags_t                     m_flags;
-        Mailer*                        m_originator    = nullptr;
+        Dispatcher*                 m_originator    = nullptr;
         mutable std::atomic_flag    m_handled;
         
         Post(const Post&) = delete;

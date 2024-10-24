@@ -59,6 +59,26 @@ namespace yq {
         return a;
     }
     
+    /*! \brief Erases by conditional, calling callback if erased */
+    template <typename T, typename A, typename Check, typename Erased>
+    auto eraser_if(std::vector<T,A>& vec, Check check, Erased erased)
+    {
+        typename std::vector<T, A>::iterator  a, b;
+        for(a = b = vec.begin(); a != vec.end(); ++a){
+            if(check(*a)){
+                erased(*a);
+                // being erased
+            } else {
+                if(a != b)
+                    *b  = std::move(*a);
+                ++b;
+            }
+        }
+        auto sz = vec.end() - b;
+        vec.erase(b, vec.end());
+        return sz;
+    }
+    
     template <typename T, typename C, typename A>
     std::vector<T,A>    make_vector(const std::set<T,C,A>& data)
     {

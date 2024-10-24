@@ -6,7 +6,7 @@
 
 #include "Command.ipp"
 #include "Event.ipp"
-#include "Mailer.ipp"
+#include "Dispatcher.ipp"
 #include "Message.ipp"
 #include "Post.ipp"
 #include "Request.ipp"

@@ -6,7 +6,7 @@
 
 #include "Post.hpp"
 #include "PostInfoWriter.hpp"
-#include <yq/post/Mailer.hpp>
+#include <yq/post/Dispatcher.hpp>
 #include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Post)
@@ -24,7 +24,7 @@ namespace yq::post {
 
     Post::Post(const Param& p) : 
         m_id(++s_lastId), 
-        m_time(std::chrono::high_resolution_clock::now()), 
+        m_time(clock_t::now()), 
         m_flags(p.flags)
     {
     }

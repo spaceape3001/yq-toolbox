@@ -112,6 +112,8 @@ namespace yq {
     struct pull_t {};
     struct push_t {};
     struct read_only_t {};
+    struct receiver_t {};
+    struct recipient_t {};
     struct recursive_t {};
     struct rectangle_t {};
     struct ref_t {};
@@ -122,11 +124,13 @@ namespace yq {
     struct rotor_t {};
     struct rows_t {};
     struct rx_t {};
+    struct sender_t {};
     struct set_t {};
     struct skip_t {};
     struct sort_t {};
     struct span_t {};
     struct stem_t {};
+    struct thread_t {};
     struct three_t {};
     struct throw_t {};
     struct ticks_t {};
@@ -254,6 +258,8 @@ namespace yq {
     static constexpr const pull_t           PULL;
     static constexpr const push_t           PUSH;
     static constexpr const read_only_t      READ_ONLY;
+    static constexpr const receiver_t       RECEIVER;
+    static constexpr const recipient_t      RECIPIENT;
     static constexpr const rectangle_t      RECTANGLE;
     static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;
@@ -264,11 +270,13 @@ namespace yq {
     static constexpr const rotor_t          ROTOR;
     static constexpr const rows_t           ROWS;
     static constexpr const rx_t             RX;
+    static constexpr const sender_t         SENDER;
     static constexpr const set_t            SET;
     static constexpr const skip_t           SKIP;
     static constexpr const sort_t           SORT;
     static constexpr const span_t           SPAN;
     static constexpr const stem_t           STEM;
+    static constexpr const thread_t         THREAD;
     static constexpr const three_t          THREE;
     static constexpr const throw_t          THROW;
     static constexpr const ticks_t          TICKS;
