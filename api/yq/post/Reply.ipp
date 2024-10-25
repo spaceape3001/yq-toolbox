@@ -20,7 +20,7 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Reply::Reply(RequestCPtr req, const Param& p) : Post(p), m_request(req)
+    Reply::Reply(const RequestCPtr& req, const Param& p) : Post(p), m_request(req)
     {
     }
     
@@ -35,11 +35,11 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_request()
+    static void reg_reply()
     {
         auto w = writer<Reply>();
         w.description("Abstract Reply Class");
     }
     
-    YQ_INVOKE(reg_request();)
+    YQ_INVOKE(reg_reply();)
 }

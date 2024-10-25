@@ -9,12 +9,12 @@
 #include <yq/core/Logging.hpp>
 #include <yq/meta/Meta.hpp>
 
-#include <yq/post/box/MailBox.hpp>
-#include <yq/post/box/PostBox.hpp>
-#include <yq/post/box/SimpleBox.hpp>
-#include <yq/post/testing/AnyPost.hpp>
-#include <yq/post/testing/EmptyPost.hpp>
-#include <yq/post/testing/StringPost.hpp>
+#include <yq/post/boxes/MailBox.hpp>
+#include <yq/post/boxes/PostBox.hpp>
+#include <yq/post/boxes/SimpleBox.hpp>
+#include <yq/post/posts/AnyPost.hpp>
+#include <yq/post/posts/EmptyPost.hpp>
+#include <yq/post/posts/StringPost.hpp>
 
 #include <iostream>
 

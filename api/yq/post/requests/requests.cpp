@@ -4,10 +4,4 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Command.ipp"
-#include "Event.ipp"
-#include "Dispatcher.ipp"
-#include "Message.ipp"
-#include "Post.ipp"
-#include "Reply.ipp"
-#include "Request.ipp"
+#include "EmptyRequest.ipp"

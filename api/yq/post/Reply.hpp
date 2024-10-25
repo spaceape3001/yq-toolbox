@@ -29,7 +29,7 @@ namespace yq::post {
         const Request*  request() const;
         
     protected:
-        Reply(RequestCPtr, const Param&);
+        Reply(const RequestCPtr&, const Param&);
         
     private:
         RequestCPtr     m_request;
