@@ -6,7 +6,8 @@
 
 add_library(yq_post SHARED
     post/post.cpp
-    post/test/test.cpp
+    post/box/box.cpp
+    post/testing/testing.cpp
 )
 
 target_link_libraries(yq_post PUBLIC

@@ -17,8 +17,6 @@ namespace yq::post {
         YQ_OBJECT_DECLARE(AnyPost, Post)
     public:
     
-        static void init_info();
-        
         using Post::Param;
         
         AnyPost(const Any& val, const Param&p={});

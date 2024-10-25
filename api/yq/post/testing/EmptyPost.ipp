@@ -9,12 +9,6 @@
 #include <yq/post/PostInfoWriter.hpp>
 
 namespace yq::post {
-    void EmptyPost::init_info()
-    {
-        auto w = writer<EmptyPost>();
-        w.description("Empty Post");
-    }
-
     EmptyPost::EmptyPost(const Param& p) : Post(p) 
     {
     }
@@ -23,8 +17,14 @@ namespace yq::post {
     {
     }
     
+    static void reg_empty_post()
+    {
+        auto w = writer<EmptyPost>();
+        w.description("Empty Post");
+    }
+    
     YQ_INVOKE(
-        EmptyPost::init_info();
+        reg_empty_post();
     );
 }
 

@@ -17,8 +17,6 @@ namespace yq::post {
         YQ_OBJECT_DECLARE(StringPost, Post)
     public:
     
-        static void init_info();
-        
         using text_t    = std::variant<std::monostate, const char*, std::string_view, std::string>;
         
         using Post::Param;

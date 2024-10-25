@@ -30,12 +30,12 @@ namespace yq::post {
 
     //  Used to keep track of messages en-route to stop circular dependencies
     struct Dispatcher::Postage {
-        Post*                           msg     = nullptr;
+        const Post*                     msg     = nullptr;
         std::set<const Dispatcher*>     senders;
         std::set<const Dispatcher*>     recipients;
         
         Postage() {}
-        Postage(Post* m, const Dispatcher* b) : msg(m)
+        Postage(const Post* m, const Dispatcher* b) : msg(m)
         {
             senders.insert(b);
         }
@@ -306,7 +306,7 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Dispatcher::Dispatcher()
+    Dispatcher::Dispatcher(const Param& p)
     {
     }
     
@@ -344,7 +344,7 @@ namespace yq::post {
         return true;
     }
 
-    void    Dispatcher::_dispatch(PostPtr msg)
+    void    Dispatcher::_dispatch(const PostCPtr& msg)
     {
         static Common& g = common();
         
@@ -385,7 +385,7 @@ namespace yq::post {
         ++(m_tx.usage);
     }
 
-    void    Dispatcher::_receive(PostPtr msg)
+    void    Dispatcher::_receive(const PostCPtr& msg)
     {
         receive(msg);
         ++(m_rx.usage);
@@ -422,51 +422,6 @@ namespace yq::post {
         return Capture(this);
     }
 
-    std::string_view    Dispatcher::description() const
-    {
-        if(!m_description.empty())
-            return m_description;
-            
-        if(const Object* obj = dynamic_cast<const Object*>(this)){
-            return obj -> metaInfo().description();
-        }
-        
-        return "Generic Post Dispatcher";
-    }
-
-    void        Dispatcher::description(std::string_view k)
-    {
-        m_description = std::string(k);
-    }
-
-    void        Dispatcher::dispatch(PostPtr msg, Post::flag_initlist_t auxFlags)
-    {
-        if(!msg.valid())
-            return ;
-            
-        auto& t = thread();
-        bool    pushed  = false;
-
-        // Claim ownership if unassigned
-        if(!msg->m_originator){
-            ++m_balance;
-            for(Post::flag_t f : auxFlags)
-                msg->m_flags.set(f);
-            msg->m_originator   = this;
-        }
-        
-        // Check for circular sending loops
-        if(t.postage.empty() || (t.postage.top().msg != msg.ptr())){
-            t.postage << Postage(msg.ptr(), this);
-            pushed  = true;
-        }
-
-        _dispatch(msg);
-        
-        if(pushed){
-            t.postage.pop();
-        }
-    }
 
     Dispatcher::Binding&     Dispatcher::connect(sender_k, Dispatcher& sender)
     {
@@ -493,6 +448,23 @@ namespace yq::post {
         return m_rx.connections.size();
     }
 
+    std::string_view    Dispatcher::description() const
+    {
+        if(!m_description.empty())
+            return m_description;
+            
+        if(const Object* obj = dynamic_cast<const Object*>(this)){
+            return obj -> metaInfo().description();
+        }
+        
+        return "Generic Post Dispatcher";
+    }
+
+    void    Dispatcher::description(std::string_view k)
+    {
+        m_description   = k;
+    }
+    
     size_t  Dispatcher::disconnect(Dispatcher& other)
     {
         return disconnect(other, *this) + disconnect(*this, other);
@@ -553,7 +525,38 @@ namespace yq::post {
         return disconnect(ALL, *this, k);
     }
     
-#if 0
+
+    void        Dispatcher::dispatch(const PostCPtr& msg, Post::flag_initlist_t auxFlags)
+    {
+        if(!msg.valid())
+            return ;
+            
+        auto& t = thread();
+        bool    pushed  = false;
+
+        // Claim ownership if unassigned
+        if(!msg->m_originator){
+            ++m_balance;
+            Post*   p   = const_cast<Post*>(msg.ptr());
+            for(Post::flag_t f : auxFlags)
+                p->m_flags.set(f);
+            p->m_originator   = this;
+        }
+        
+        // Check for circular sending loops
+        if(t.postage.empty() || (t.postage.top().msg != msg.ptr())){
+            t.postage << Postage(msg.ptr(), this);
+            pushed  = true;
+        }
+
+        _dispatch(msg);
+        
+        if(pushed){
+            t.postage.pop();
+        }
+    }
+    
+    #if 0
         //! Installs a global snoop (good for event logging)
         //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
         static void install(global_t, SnoopFN&&);
@@ -582,9 +585,8 @@ namespace yq::post {
         return "post::Dispatcher";
     }
 
-    void        Dispatcher::name(std::string_view k)
+    void    Dispatcher::name(std::string_view k)
     {
-        m_name = std::string(k);
+        m_name      = k;
     }
-    
 }
