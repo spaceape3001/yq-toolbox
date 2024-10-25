@@ -103,6 +103,7 @@ namespace yq {
             EVENT,          //!< It's an event
             EXECUTE,        //!< Execute permission/capabilty
             EXPLICIT,       //!< Must be explicitly invoked
+            FILTER,         //!< It's a filter
             GENERATOR,      //!< It's a generator (GeneratorInfo)
             GLOBAL,         //!< It's a global (GlobalInfo)
             HAS_SUBS,       
@@ -321,6 +322,10 @@ namespace yq {
         bool                            is_pipeline() const;
         
         bool                            is_pixmap() const;
+        
+        bool                            is_post() const;
+        
+        bool                            is_post_filter() const;
         
         bool                            is_property() const;
         

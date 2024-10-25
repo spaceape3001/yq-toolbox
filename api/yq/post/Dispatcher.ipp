@@ -10,6 +10,7 @@
 #include <yq/container/Stack.hpp>
 #include <yq/container/vector_utils.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/post/Filter.hpp>
 #include <yq/post/logging.hpp>
 #include <stack>
 
@@ -17,7 +18,7 @@ namespace yq::post {
 
     struct Dispatcher::Common {
         std::vector<SnoopFN>        snoops;
-        std::vector<FilterFN>       filters;
+        std::vector<FilterCPtr>     filters;
         std::vector<Dispatcher*>    sockets;
     };
     
@@ -132,37 +133,37 @@ namespace yq::post {
         return *this;
     }
     
-    Dispatcher::Binding&    Dispatcher::Binding::operator<<(FilterFN&&fn)
+    Dispatcher::Binding&    Dispatcher::Binding::operator<<(const FilterCPtr& fn)
     {
-        m_filters.push_back(std::move(fn));
+        m_filters.push_back(fn);
         return *this;
     }
     
     bool    Dispatcher::Binding::accept(const Post&p) const
     {
         static Common& g    = common();
-        for(const FilterFN& f : m_filters){
-            if(!f(m_sender, m_recipient, p))
+        for(const FilterCPtr& f : m_filters){
+            if(!f->accept(m_sender, m_recipient, p))
                 return false;
         }
-        for(const FilterFN& f : m_sender.m_tx.filters){
-            if(!f(m_sender, m_recipient, p))
+        for(const FilterCPtr& f : m_sender.m_tx.filters){
+            if(!f->accept(m_sender, m_recipient, p))
                 return false;
         }
-        for(const FilterFN& f : m_recipient.m_rx.filters){
-            if(!f(m_sender, m_recipient, p))
+        for(const FilterCPtr& f : m_recipient.m_rx.filters){
+            if(!f->accept(m_sender, m_recipient, p))
                 return false;
         }
-        for(const FilterFN& f : m_sender.m_filters){
-            if(!f(m_sender, m_recipient, p))
+        for(const FilterCPtr& f : m_sender.m_filters){
+            if(!f->accept(m_sender, m_recipient, p))
                 return false;
         }
-        for(const FilterFN& f : m_recipient.m_filters){
-            if(!f(m_sender, m_recipient, p))
+        for(const FilterCPtr& f : m_recipient.m_filters){
+            if(!f->accept(m_sender, m_recipient, p))
                 return false;
         }
-        for(const FilterFN& f : g.filters){
-            if(!f(m_sender, m_recipient, p))
+        for(const FilterCPtr& f : g.filters){
+            if(!f->accept(m_sender, m_recipient, p))
                 return false;
         }
         return true;
@@ -308,6 +309,13 @@ namespace yq::post {
         return removed.size();
     }
     
+    void Dispatcher::install(global_t, const FilterCPtr& fn)
+    {
+        if(fn){
+            common().filters.push_back(fn);
+        }
+    }
+        
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -333,24 +341,24 @@ namespace yq::post {
     bool    Dispatcher::_accept(Dispatcher& rx, const Post&p)
     {
         static Common& g    = common();
-        for(const FilterFN& f : m_tx.filters){
-            if(!f(*this, rx, p))
+        for(const FilterCPtr& f : m_tx.filters){
+            if(!f->accept(*this, rx, p))
                 return false;
         }
-        for(const FilterFN& f : rx.m_rx.filters){
-            if(!f(*this, rx, p))
+        for(const FilterCPtr& f : rx.m_rx.filters){
+            if(!f->accept(*this, rx, p))
                 return false;
         }
-        for(const FilterFN& f : m_filters){
-            if(!f(*this, rx, p))
+        for(const FilterCPtr& f : m_filters){
+            if(!f->accept(*this, rx, p))
                 return false;
         }
-        for(const FilterFN& f : rx.m_filters){
-            if(!f(*this, rx, p))
+        for(const FilterCPtr& f : rx.m_filters){
+            if(!f->accept(*this, rx, p))
                 return false;
         }
-        for(const FilterFN& f : g.filters){
-            if(!f(*this, rx, p))
+        for(const FilterCPtr& f : g.filters){
+            if(!f->accept(*this, rx, p))
                 return false;
         }
         return true;
@@ -607,17 +615,31 @@ namespace yq::post {
         //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
         static void install(global_t, SnoopFN&&);
         
-        //! Installs a global filter
-        //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
-        static void install(global_t, FilterFN&&);
-        
         void install(SnoopFN&&);
         void install(sender_k, SnoopFN&&);
         void install(receiver_k, SnoopFN&&);
-        void install(FilterFN&&);
-        void install(sender_k, FilterFN&&);
-        void install(receiver_k, FilterFN&&);
 #endif
+
+    void Dispatcher::install(const FilterCPtr& fn)
+    {
+        if(fn){
+            m_filters.push_back(fn);
+        }
+    }
+    
+    void Dispatcher::install(sender_k, const FilterCPtr&fn)
+    {
+        if(fn){
+            m_tx.filters.push_back(fn);
+        }
+    }
+    
+    void Dispatcher::install(receiver_k, const FilterCPtr&fn)
+    {
+        if(fn){
+            m_rx.filters.push_back(fn);
+        }
+    }
 
     std::string_view    Dispatcher::name() const
     {

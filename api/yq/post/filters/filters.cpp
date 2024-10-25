@@ -4,11 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Filter.ipp"
-#include "Command.ipp"
-#include "Event.ipp"
-#include "Dispatcher.ipp"
-#include "Message.ipp"
-#include "Post.ipp"
-#include "Reply.ipp"
-#include "Request.ipp"
+#include "PostClassFilter.ipp"
+
+#include "AndFilter.ipp"
+#include "NotFilter.ipp"
+#include "OrFilter.ipp"

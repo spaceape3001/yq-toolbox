@@ -19,17 +19,17 @@ namespace yq::post {
     class Reply : public Post {
         YQ_OBJECT_INFO(ReplyInfo)
         YQ_OBJECT_DECLARE(Reply, Post)
+        template <class> friend class Ref;
     public:
    
         struct Param : public Post::Param {
         };
         
-        virtual ~Reply();
-        
         const Request*  request() const;
         
     protected:
         Reply(const RequestCPtr&, const Param&);
+        virtual ~Reply();
         
     private:
         RequestCPtr     m_request;

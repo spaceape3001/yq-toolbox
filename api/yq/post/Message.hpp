@@ -24,16 +24,16 @@ namespace yq::post {
     class Message : public Post {
         YQ_OBJECT_INFO(MessageInfo)
         YQ_OBJECT_DECLARE(Message, Post)
+        template <class> friend class Ref;
     public:
     
         struct Param : public Post::Param {
         };
     
-        virtual ~Message();
-        
     protected:
 
         Message(const Param&);
+        virtual ~Message();
     };
     
     template <typename E>

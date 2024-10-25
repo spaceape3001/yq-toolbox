@@ -50,7 +50,7 @@ namespace yq::post {
             This function is a filter, it will return TRUE to accept the message, FALSE to reject.
             First dispatcher is the sender, second is the receiver. 
         */
-        using FilterFN      = std::function<bool(const Dispatcher&, const Dispatcher&, const Post&)>;
+        //using FilterFN      = std::function<bool(const Dispatcher&, const Dispatcher&, const Post&)>;
 
         enum class Log : uint8_t {
             Connections,
@@ -176,17 +176,19 @@ namespace yq::post {
         //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
         static void install(global_t, SnoopFN&&);
         
-        //! Installs a global filter
-        //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
-        static void install(global_t, FilterFN&&);
         
         void install(SnoopFN&&);
         void install(sender_k, SnoopFN&&);
         void install(receiver_k, SnoopFN&&);
-        void install(FilterFN&&);
-        void install(sender_k, FilterFN&&);
-        void install(receiver_k, FilterFN&&);
         #endif
+
+        //! Installs a global filter
+        //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
+        static void install(global_t, const FilterCPtr&);
+
+        void install(const FilterCPtr&);
+        void install(sender_k, const FilterCPtr&);
+        void install(receiver_k, const FilterCPtr&);
         
         struct Param {
             std::string_view    name;
@@ -285,7 +287,7 @@ namespace yq::post {
         using binding_set_t  = std::set<Binding>;
         
         struct Queue {
-            std::vector<FilterFN>       filters;
+            std::vector<FilterCPtr>     filters;
             std::vector<SnoopFN>        snoops;
             std::vector<Binding*>       connections;
             std::atomic<size_t>         usage{0};
@@ -295,7 +297,7 @@ namespace yq::post {
         };
         
         Queue                   m_rx, m_tx;
-        std::vector<FilterFN>   m_filters;
+        std::vector<FilterCPtr> m_filters;
         std::vector<SnoopFN>    m_snoops;
         std::string             m_name, m_description;
         std::atomic<int>        m_balance{0};   //< Balance of sent message that still exist
@@ -328,7 +330,7 @@ namespace yq::post {
     public:
     
         Binding&    operator<<(SnoopFN&&);
-        Binding&    operator<<(FilterFN&&);
+        Binding&    operator<<(const FilterCPtr&);
         
         std::string_view name() const { return m_name; }
         Binding&    name(std::string_view);
@@ -345,7 +347,7 @@ namespace yq::post {
         Dispatcher&             m_sender;
         Dispatcher&             m_recipient;
         std::string             m_name;
-        std::vector<FilterFN>   m_filters;
+        std::vector<FilterCPtr> m_filters;
         std::vector<SnoopFN>    m_snoops;
         
         bool    accept(const Post&) const;

@@ -21,6 +21,10 @@ namespace yq::post {
     using EventPtr      = Ref<Event>;
     using EventCPtr     = Ref<const Event>;
 
+    class Filter;
+    using FilterPtr     = Ref<Filter>;
+    using FilterCPtr    = Ref<const Filter>;
+
     class Message;
     using MessagePtr    = Ref<Message>;
     using MessageCPtr   = Ref<const Message>;

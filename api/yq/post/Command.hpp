@@ -20,14 +20,14 @@ namespace yq::post {
     class Command : public Post {
         YQ_OBJECT_INFO(CommandInfo)
         YQ_OBJECT_DECLARE(Command, Post)
+        template <class> friend class Ref;
     public:
    
         struct Param : public Post::Param {
         };
         
-        virtual ~Command();
-        
     protected:
         Command(const Param&);
+        virtual ~Command();
     };
 }

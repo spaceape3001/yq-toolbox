@@ -371,6 +371,16 @@ namespace yq {
         return has(Flag::PIXMAP);
     }
 
+    bool    Meta::is_post() const
+    {
+        return has(Flag::POST) && !has(Flag::FILTER);
+    }
+    
+    bool    Meta::is_post_filter() const
+    {
+        return has(Flag::POST) && has(Flag::FILTER);
+    }
+
     bool  Meta::is_property() const
     {
         return has(Flag::PROPERTY);

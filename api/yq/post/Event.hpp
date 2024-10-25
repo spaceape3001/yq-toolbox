@@ -20,14 +20,14 @@ namespace yq::post {
     class Event : public Post {
         YQ_OBJECT_INFO(EventInfo)
         YQ_OBJECT_DECLARE(Event, Post)
+        template <class> friend class Ref;
     public:
     
         struct Param : public Post::Param {
         };
         
-        virtual ~Event();
-        
     protected:
+        virtual ~Event();
         Event(const Param&);
     };
 }

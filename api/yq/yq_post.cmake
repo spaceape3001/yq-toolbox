@@ -9,6 +9,7 @@ add_library(yq_post SHARED
     post/boxes/boxes.cpp
     post/commands/commands.cpp
     post/events/events.cpp
+    post/filters/filters.cpp
     post/messages/messages.cpp
     post/posts/posts.cpp
     post/replies/replies.cpp

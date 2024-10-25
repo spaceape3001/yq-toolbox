@@ -20,14 +20,14 @@ namespace yq::post {
     class Request : public Post {
         YQ_OBJECT_INFO(RequestInfo)
         YQ_OBJECT_DECLARE(Request, Post)
+        template <class> friend class Ref;
     public:
     
         struct Param : public Post::Param {
         };
         
-        virtual ~Request();
-        
     protected:
         Request(const Param&);
+        virtual ~Request();
     };
 }
