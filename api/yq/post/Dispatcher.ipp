@@ -10,6 +10,7 @@
 #include <yq/container/Stack.hpp>
 #include <yq/container/vector_utils.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/post/logging.hpp>
 #include <stack>
 
 namespace yq::post {
@@ -35,9 +36,8 @@ namespace yq::post {
         std::set<const Dispatcher*>     recipients;
         
         Postage() {}
-        Postage(const Post* m, const Dispatcher* b) : msg(m)
+        Postage(const Post* m) : msg(m)
         {
-            senders.insert(b);
         }
         
         bool    first(sender_k, const Dispatcher* b)
@@ -206,6 +206,11 @@ namespace yq::post {
         Binding*    b   = new Binding(tx, rx);
         rx.m_rx.connections.push_back(b);
         tx.m_tx.connections.push_back(b);
+        
+        if(tx.m_logging(Log::Connections) || rx.m_logging(Log::Connections)){
+            postInfo << "Dispatcher::connect(" << tx.name() << ">>" << rx.name() << ")";
+        }
+        
         return *b;
     }
 
@@ -306,7 +311,12 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Dispatcher::Dispatcher(const Param& p)
+    Dispatcher::Dispatcher() : Dispatcher(Param())
+    {
+    }
+
+    Dispatcher::Dispatcher(const Param& p) : m_name(p.name), 
+        m_description(p.description), m_logging(p.logging)
     {
     }
     
@@ -353,6 +363,8 @@ namespace yq::post {
         
         if(!p.first(TX, this))  // already sent from this dispatcher
             return ;
+            
+        uint64_t    cnt = 0;
 
         for(Dispatcher* b : g.sockets){
             if(!p.first(RX, b))
@@ -360,7 +372,9 @@ namespace yq::post {
             if(!_accept(*b, *msg))
                 continue;
             _snoop(*b, *msg);
+            
             b -> _receive(msg);
+            ++cnt;
         }
             
         for(Dispatcher* b : t.sockets){
@@ -370,6 +384,7 @@ namespace yq::post {
                 continue;
             _snoop(*b, *msg);
             b -> _receive(msg);
+            ++cnt;
         }
         
         
@@ -380,13 +395,22 @@ namespace yq::post {
                 continue;
             c -> snoop(*msg);
             c -> m_recipient._receive(msg);
+            ++cnt;
         }
-        
+
         ++(m_tx.usage);
+
+        if(m_logging(Log::Dispatches)){
+            postInfo << "Dispatcher(" << name() << ") sent post (" << msg->metaInfo().name() << ":" << msg->id() 
+                << ") to " << cnt << " recipients";
+        }
     }
 
     void    Dispatcher::_receive(const PostCPtr& msg)
     {
+        if(m_logging(Log::Receives)){
+            postInfo << "Dispatcher(" << name() << ") received post (" << msg->metaInfo().name() << ":" << msg->id() << ")";
+        }
         receive(msg);
         ++(m_rx.usage);
     }
@@ -530,7 +554,7 @@ namespace yq::post {
     {
         if(!msg.valid())
             return ;
-            
+
         auto& t = thread();
         bool    pushed  = false;
 
@@ -545,7 +569,7 @@ namespace yq::post {
         
         // Check for circular sending loops
         if(t.postage.empty() || (t.postage.top().msg != msg.ptr())){
-            t.postage << Postage(msg.ptr(), this);
+            t.postage << Postage(msg.ptr());
             pushed  = true;
         }
 

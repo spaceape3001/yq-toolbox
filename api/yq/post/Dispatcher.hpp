@@ -50,6 +50,13 @@ namespace yq::post {
         */
         using FilterFN      = std::function<bool(const Dispatcher&, const Dispatcher&, const Post&)>;
 
+        enum class Log : uint8_t {
+            Connections,
+            Dispatches,
+            Receives
+        };
+        using log_flags_t   = Flags<Log>;
+
 
         /*! \brief Post SnoopFN
         
@@ -180,10 +187,12 @@ namespace yq::post {
         struct Param {
             std::string_view    name;
             std::string_view    description;
+            log_flags_t         logging = {};
         };
         
     protected:
-        Dispatcher(const Param&p = Param());
+        Dispatcher();
+        Dispatcher(const Param&p);
         ~Dispatcher();
 
         /*! \brief Dispatches a post
@@ -258,6 +267,7 @@ namespace yq::post {
         std::atomic<int>        m_balance{0};   //< Balance of sent message that still exist
         //Cleanup*            m_cleanup   = nullptr;
         Flags<F>                m_flags;
+        log_flags_t             m_logging;
     };
     
     class Dispatcher::Capture {

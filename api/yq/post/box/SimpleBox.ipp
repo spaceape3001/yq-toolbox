@@ -36,11 +36,15 @@ namespace yq::post {
     
     void    SimpleBox::receive(const PostCPtr&pp) 
     {
+        if(!pp)
+            return ;
         m_posts.push_back(pp);
     }
 
     void    SimpleBox::send(const PostCPtr& pp)
     {
+        if(!pp)
+            return ;
         dispatch(pp, { Post::kFlag_Public });
     }
 }

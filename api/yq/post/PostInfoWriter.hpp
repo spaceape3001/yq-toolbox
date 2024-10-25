@@ -17,12 +17,12 @@ namespace yq::post {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(PostInfo* postInfo) : ObjectInfo::Writer<C>(postInfo), m_meta(postInfo)
+        Writer(PostInfo* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
         //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(PostInfo& postInfo) : Writer(&postInfo)
+        Writer(PostInfo& pInfo) : Writer(&pInfo)
         {
         }
 
