@@ -9,15 +9,15 @@
 #include <yq/post/PostInfoWriter.hpp>
 
 namespace yq::post {
-    StringPost::StringPost(std::string&&k,       const Param& p) : Post(p), m_text(std::move(k))
+    StringPost::StringPost(std::string&&k, const Param& p) : Post(p), m_text(std::move(k))
     {
     }
     
-    StringPost::StringPost(const char* k,        const Param& p) : Post(p), m_text(k)
+    StringPost::StringPost(const char* k, const Param& p) : Post(p), m_text(k)
     {
     }
     
-    StringPost::StringPost(std::string_view k,   const Param& p) : Post(p), m_text(k)
+    StringPost::StringPost(std::string_view k, const Param& p) : Post(p), m_text(k)
     {
     }
     
