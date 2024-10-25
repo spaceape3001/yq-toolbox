@@ -17,6 +17,23 @@ namespace yq::post {
     {
     }
 
+    std::vector<PostCPtr>   SimpleBox::posts(pickup_t)
+    {
+        std::vector<PostCPtr> ret;
+        std::swap(ret, m_posts);
+        return ret;
+    }
+
+    size_t      SimpleBox::posts(count_t) const
+    {
+        return m_posts.size();
+    }
+    
+    bool        SimpleBox::posts(empty_t) const
+    {
+        return m_posts.empty();
+    }
+    
     void    SimpleBox::receive(const PostCPtr&pp) 
     {
         m_posts.push_back(pp);

@@ -26,8 +26,12 @@ namespace yq::post {
         
         const std::vector<PostCPtr>& posts() const { return m_posts; }
         
-        void    send(const PostCPtr&);
-
+        void        send(const PostCPtr&);
+        
+        std::vector<PostCPtr>   posts(pickup_t);
+        size_t      posts(count_t) const;
+        bool        posts(empty_t) const;
+        
     protected:
         void    receive(const PostCPtr&) override;
         

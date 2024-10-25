@@ -17,7 +17,19 @@ namespace yq::post {
     {
     }
     
-    std::vector<PostCPtr>   MailBox::pickup()
+    size_t  MailBox::posts(count_t) const
+    {
+        lock_t  _lock(m_mutex, false);
+        return m_posts.size();
+    }
+    
+    bool    MailBox::posts(empty_t) const
+    {
+        lock_t  _lock(m_mutex, false);
+        return m_posts.empty();
+    }
+    
+    std::vector<PostCPtr>   MailBox::posts(pickup_t)
     {
         std::vector<PostCPtr> ret;
         {
@@ -25,19 +37,6 @@ namespace yq::post {
             std::swap(ret, m_posts);
         }
         return ret;
-    }
-    
-    size_t  MailBox::size() const
-    {
-        lock_t  _lock(m_mutex, false);
-        return m_posts.size();
-    }
-    
-    
-    bool    MailBox::empty() const
-    {
-        lock_t  _lock(m_mutex, false);
-        return m_posts.empty();
     }
     
     void    MailBox::send(const PostCPtr& pp)

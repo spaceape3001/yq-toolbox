@@ -204,8 +204,8 @@ namespace yq::post {
     Dispatcher::Binding&    Dispatcher::connect(Dispatcher& tx, Dispatcher& rx)
     {
         Binding*    b   = new Binding(tx, rx);
-        rx.m_tx.connections.push_back(b);
-        tx.m_rx.connections.push_back(b);
+        rx.m_rx.connections.push_back(b);
+        tx.m_tx.connections.push_back(b);
         return *b;
     }
 

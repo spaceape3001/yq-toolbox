@@ -58,6 +58,7 @@ namespace yq {
     struct easter_t {};
     struct edge_t {};
     struct ellipse_t {};
+    struct empty_t {};
     struct euler_t {};
     struct even_t {};
     struct every_t {};
@@ -105,6 +106,7 @@ namespace yq {
     struct optional_t {};
     struct parse_t {};
     struct partial_t {};
+    struct pickup_t {};
     struct pixel_t {};
     struct pixels_t {};
     struct pointer_t {};
@@ -204,6 +206,7 @@ namespace yq {
     static constexpr const easter_t         EASTER;
     static constexpr const edge_t           EDGE;
     static constexpr const ellipse_t        ELLIPSE;
+    static constexpr const empty_t          EMPTY;
     static constexpr const euler_t          EULER;
     static constexpr const even_t           EVEN;
     static constexpr const every_t          EVERY;
@@ -251,6 +254,7 @@ namespace yq {
     static constexpr const optional_t       OPTIONAL;
     static constexpr const parse_t          PARSE;
     static constexpr const partial_t        PARTIAL;
+    static constexpr const pickup_t         PICKUP;
     static constexpr const pixel_t          PIXEL;
     static constexpr const pixels_t         PIXELS;
     static constexpr const pointer_t        POINTER;
