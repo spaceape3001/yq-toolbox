@@ -7,7 +7,7 @@
 #include "MailBox.hpp"
 
 namespace yq::post {
-    MailBox::MailBox(const Param& p) : Dispatcher(p)
+    MailBox::MailBox(const Param& p) : Dispatcher(p, { R::Listener })
     {
         if(p.name.empty())
             name("MailBox");

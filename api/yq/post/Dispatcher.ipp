@@ -315,15 +315,17 @@ namespace yq::post {
     {
     }
 
-    Dispatcher::Dispatcher(const Param& p) : m_name(p.name), 
-        m_description(p.description), m_logging(p.logging)
+    Dispatcher::Dispatcher(const Param& p, std::initializer_list<R> flags) : m_name(p.name), 
+        m_description(p.description), m_roles(flags), m_logging(p.logging)
     {
+        if(m_roles[R::GlobalCapture])
+            common().sockets.push_back(this);
     }
     
     Dispatcher::~Dispatcher()
     {
         disconnect(ALL);
-        if(m_flags[F::GlobalCapture]){
+        if(m_roles[R::GlobalCapture]){
             std::erase(common().sockets, this);
         }
     }
@@ -406,6 +408,25 @@ namespace yq::post {
         }
     }
 
+    void    Dispatcher::_poll(Dispatcher* disp, unit::Second timeout)
+    {
+        if(m_polling.test_and_set())
+            return ;
+
+        auto& t = thread();
+        size_t  n = 0;
+        if(disp){
+            n       = t.sockets.size();
+            t.sockets.push_back(disp);
+        }
+        
+        polling(timeout);
+        if(disp){
+            t.sockets[n]    = nullptr;
+        }
+        m_polling.clear();
+    }
+
     void    Dispatcher::_receive(const PostCPtr& msg)
     {
         if(m_logging(Log::Receives)){
@@ -435,17 +456,18 @@ namespace yq::post {
         }
     }
 
+#if 0
     void    Dispatcher::capture(global_t)
     {
         common().sockets.push_back(this);
-        m_flags |= F::GlobalCapture;
+        m_roles |= F::GlobalCapture;
     }
+#endif
 
     Dispatcher::Capture     Dispatcher::capture(thread_t)
     {
         return Capture(this);
     }
-
 
     Dispatcher::Binding&     Dispatcher::connect(sender_k, Dispatcher& sender)
     {
@@ -609,8 +631,33 @@ namespace yq::post {
         return "post::Dispatcher";
     }
 
+    bool    Dispatcher::is_listener() const
+    {
+        return m_roles(R::Listener);
+    }
+    
+    bool    Dispatcher::is_poller() const
+    {
+        return m_roles(R::Poller);
+    }
+    
+    bool    Dispatcher::is_global_capture() const
+    {
+        return m_roles(R::GlobalCapture);
+    }
+
     void    Dispatcher::name(std::string_view k)
     {
         m_name      = k;
+    }
+
+    void    Dispatcher::poll(unit::Second timeout)
+    {
+        _poll(nullptr, timeout);
+    }
+    
+    void    Dispatcher::poll(Dispatcher&disp, unit::Second timeout)
+    {
+        _poll(&disp, timeout);
     }
 }

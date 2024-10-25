@@ -7,7 +7,7 @@
 #include "SimpleBox.hpp"
 
 namespace yq::post {
-    SimpleBox::SimpleBox(const Param& p) : Dispatcher(p)
+    SimpleBox::SimpleBox(const Param& p) : Dispatcher(p, { R::Listener })
     {
         if(p.name.empty())
             name("SimpleBox");

@@ -136,6 +136,7 @@ namespace yq {
     struct three_t {};
     struct throw_t {};
     struct ticks_t {};
+    struct timeout_t {};
     struct triangle_t {};
     struct to_t {};
     struct today_t {};
@@ -284,6 +285,7 @@ namespace yq {
     static constexpr const three_t          THREE;
     static constexpr const throw_t          THROW;
     static constexpr const ticks_t          TICKS;
+    static constexpr const timeout_t        TIMEOUT;
     static constexpr const to_t             TO;
     static constexpr const today_t          TODAY;
     static constexpr const total_t          TOTAL;

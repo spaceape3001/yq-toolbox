@@ -9,10 +9,12 @@
 #include <yq/keywords.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/post/Post.hpp>
+#include <yq/units.hpp>
 #include <atomic>
 #include <cassert>
 #include <cstdint>
 #include <functional>
+#include <initializer_list>
 #include <set>
 #include <string_view>
 #include <variant>
@@ -161,7 +163,7 @@ namespace yq::post {
         
         //! Captures *ALL* messages sent globally
         //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
-        void    capture(global_t);
+        //void    capture(global_t);
 
         #if 0
         //  pending feature idea....
@@ -169,6 +171,7 @@ namespace yq::post {
         void            set_cleanup(Cleanup*);
         #endif
         
+        #if 0
         //! Installs a global snoop (good for event logging)
         //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
         static void install(global_t, SnoopFN&&);
@@ -183,6 +186,7 @@ namespace yq::post {
         void install(FilterFN&&);
         void install(sender_k, FilterFN&&);
         void install(receiver_k, FilterFN&&);
+        #endif
         
         struct Param {
             std::string_view    name;
@@ -190,9 +194,34 @@ namespace yq::post {
             log_flags_t         logging = {};
         };
         
+        bool    is_listener() const;
+        bool    is_poller() const;
+        bool    is_global_capture() const;
+        
+        /*! \brief Polls the dispatcher for posts
+        
+            This polls the dispatcher for posts.  The timeout, if positive, allows the dispatcher to wait *UP* to the 
+            specified duration.
+        */
+        void    poll(unit::Second timeout=ZERO);
+        
+        /*! \brief Polls the dispatcher for posts
+        
+            This polls the dispatcher for posts.  The timeout, if positive, allows the dispatcher to wait *UP* to the 
+            specified duration.  The given other dispatcher could be a mailbox, or similar listener, that's used
+            temporarily for this polling festival.
+        */
+        void    poll(Dispatcher&, unit::Second timeout=ZERO);
+        
     protected:
+        enum class R {
+            Listener,       //!< We're a listener to posts
+            Poller,         //!< We're a polling source of posts
+            GlobalCapture,  //!< Global capture enabled for us
+        };
+        
         Dispatcher();
-        Dispatcher(const Param&p);
+        Dispatcher(const Param&p, std::initializer_list<R> classFlags={});
         ~Dispatcher();
 
         /*! \brief Dispatches a post
@@ -218,7 +247,16 @@ namespace yq::post {
             return *msg;
         }
 
+        /*! \brief Your receiver function, extend here
+        */
         virtual void    receive(const PostCPtr&){}
+        
+        /*! \brief Your polling function for messages, extend here
+        
+            \param[in] timeout (positive & non-zero) gives notional permission to wait up to around 
+                the given amount of time
+        */
+        virtual void    polling(unit::Second) {}
         
         void    description(std::string_view);
         void    name(std::string_view);
@@ -242,10 +280,10 @@ namespace yq::post {
         void    _snoop(Dispatcher& rx, const Post&);
         void    _receive(const PostCPtr&);
         void    _dispatch(const PostCPtr&);
+        void    _poll(Dispatcher*, unit::Second);
 
         using binding_set_t  = std::set<Binding>;
         
-
         struct Queue {
             std::vector<FilterFN>       filters;
             std::vector<SnoopFN>        snoops;
@@ -256,18 +294,16 @@ namespace yq::post {
             //std::atomic_flag            hold;
         };
         
-        enum class F {
-            GlobalCapture
-        };
-        
         Queue                   m_rx, m_tx;
         std::vector<FilterFN>   m_filters;
         std::vector<SnoopFN>    m_snoops;
         std::string             m_name, m_description;
         std::atomic<int>        m_balance{0};   //< Balance of sent message that still exist
         //Cleanup*            m_cleanup   = nullptr;
-        Flags<F>                m_flags;
+        Flags<R>                m_roles;
         log_flags_t             m_logging;
+        //! Guard against reentrancy to "polling"
+        std::atomic_flag        m_polling;
     };
     
     class Dispatcher::Capture {
