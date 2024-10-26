@@ -51,6 +51,8 @@ namespace yq {
         
         //! Constructs by components (scalar, vector, bivector)
         constexpr Multivector2(T _a, const Vector2<T>& v, const Bivector2<T>& b) noexcept : a(_a), x(v.x), y(v.y), xy(b.xy) {}
+        
+        //! Constructs by setting all components to the same value
         constexpr Multivector2(all_t, T v) noexcept : a(v), x(v), y(v), xy(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Multivector2(nan_t) noexcept : Multivector2(ALL, nan_v<T>) {}
