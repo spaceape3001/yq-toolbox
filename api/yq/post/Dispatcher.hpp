@@ -262,6 +262,8 @@ namespace yq::post {
         
         void    description(std::string_view);
         void    name(std::string_view);
+        
+        void    add_role(R);
 
     private:
         friend class Post;

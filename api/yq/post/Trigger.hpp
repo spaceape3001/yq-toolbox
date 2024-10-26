@@ -7,8 +7,13 @@
 #pragma once
 
 #include <yq/post/Filter.hpp>
+#include <concepts>
 
 namespace yq::post {
+    class Trigger;
+    template <typename C>
+    concept SomeTrigger = std::derived_from<C,Trigger>;
+
     class TriggerInfo : public FilterInfo {
     public:
         template <typename C> class Writer;
@@ -27,6 +32,7 @@ namespace yq::post {
     public:
     
         using Filter::Param;
+        
     
         virtual bool    accept(const Post&) const = 0;
         virtual bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const override final;

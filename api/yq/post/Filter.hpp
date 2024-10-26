@@ -29,6 +29,8 @@ namespace yq::post {
         template <typename> friend class Ref;
     public:
     
+        using post_type = Post;
+
         static void init_info();
     
         struct Param {

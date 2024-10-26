@@ -464,6 +464,11 @@ namespace yq::post {
         }
     }
 
+    void    Dispatcher::add_role(R r)
+    {
+        m_roles |= r;
+    }
+
 #if 0
     void    Dispatcher::capture(global_t)
     {
