@@ -12,6 +12,7 @@ add_library(yq_core SHARED
 
     container/ByteArray.cpp
 
+    core/core.cpp
     core/Any.cpp
     core/BasicApp.cpp
     core/Cleanup.cpp
