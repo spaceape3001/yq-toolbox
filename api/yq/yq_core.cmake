@@ -13,7 +13,6 @@ add_library(yq_core SHARED
     container/ByteArray.cpp
 
     core/core.cpp
-    core/Any.cpp
     core/BasicApp.cpp
     core/Cleanup.cpp
     core/DelayInit.cpp
@@ -24,8 +23,6 @@ add_library(yq_core SHARED
     core/Global.cpp
     core/Logging.cpp
     core/Memory.cpp
-    core/MetaObject.cpp
-    core/Object.cpp
     core/Ref.cpp
     core/Revision.cpp
     core/Stream.cpp
