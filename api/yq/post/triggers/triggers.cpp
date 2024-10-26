@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AndFilter.ipp"
-#include "NotFilter.ipp"
-#include "OrFilter.ipp"
+#include "AndTrigger.ipp"
+#include "NotTrigger.ipp"
+#include "OrTrigger.ipp"
+#include "PostClass.ipp"

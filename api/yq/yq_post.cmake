@@ -14,6 +14,7 @@ add_library(yq_post SHARED
     post/posts/posts.cpp
     post/replies/replies.cpp
     post/requests/requests.cpp
+    post/triggers/triggers.cpp
 )
 
 target_link_libraries(yq_post PUBLIC
