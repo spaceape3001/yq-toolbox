@@ -159,6 +159,7 @@ namespace yq {
             TLS,            //!< Thread local storage
             TODO,           //!< It's "TODO" later
             TOOL,           //!< It's a Tool
+            TRIGGER,        //!< It's a trigger/detector
             TYPE,           //!< Meta has TypeInfo
             VIEWER,         //!< Viewer related (tachyon library)
             VULKAN,         //!< Vulkan api enabled
@@ -326,6 +327,8 @@ namespace yq {
         bool                            is_post() const;
         
         bool                            is_post_filter() const;
+        
+        bool                            is_post_trigger() const;
         
         bool                            is_property() const;
         

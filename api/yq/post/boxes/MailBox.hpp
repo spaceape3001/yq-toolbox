@@ -30,6 +30,7 @@ namespace yq::post {
         bool    posts(empty_t) const;
         
         void    send(const PostCPtr&);
+        
     protected:
         void    receive(const PostCPtr&) override;
         

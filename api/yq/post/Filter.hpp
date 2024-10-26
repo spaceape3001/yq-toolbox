@@ -19,6 +19,10 @@ namespace yq::post {
         FilterInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
     };
     
+    /*! \brief Filters posts
+    
+        Given the inputs of dispatchers, a filter can be more discerning than triggers.
+    */
     class Filter : public Object, public RefCount, public UniqueID {
         YQ_OBJECT_INFO(FilterInfo)
         YQ_OBJECT_DECLARE(Filter, Object)

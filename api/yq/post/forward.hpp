@@ -41,9 +41,7 @@ namespace yq::post {
     using ReplyPtr      = Ref<Reply>;
     using ReplyCPtr     = Ref<const Reply>;
 
-#if 0
-    class Filter;
-    using FilterPtr     = Ref<Filter>;
-    using FilterCPtr    = Ref<const Filter>;
-#endif    
+    class Trigger;
+    using TriggerPtr    = Ref<Trigger>;
+    using TriggerCPtr   = Ref<const Trigger>;
 }

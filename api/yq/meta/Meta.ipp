@@ -381,6 +381,11 @@ namespace yq {
         return has(Flag::POST) && has(Flag::FILTER);
     }
 
+    bool    Meta::is_post_trigger() const
+    {
+        return has(Flag::POST) && has(Flag::FILTER) && has(Flag::TRIGGER);
+    }
+
     bool  Meta::is_property() const
     {
         return has(Flag::PROPERTY);
