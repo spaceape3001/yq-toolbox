@@ -28,6 +28,7 @@ add_library(yq_core SHARED
     core/Stream.cpp
     core/StreamOps.cpp
     core/ThreadId.cpp
+    core/Tristate.cpp
     core/UniqueID.cpp
     
     hash/MD5.cpp
