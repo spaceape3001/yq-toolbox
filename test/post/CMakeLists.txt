@@ -12,3 +12,4 @@ endmacro()
 
 test(posting)
 test(pbx)
+test(triggers)

@@ -41,7 +41,7 @@ namespace yq::post {
         if(auto p = std::get_if<bool>(&chk))
             return *p;
         if(auto p = std::get_if<MismatchFlags>(&chk))
-            return (*p - m_mismatch) != MismatchFlags();
+            return (*p - m_mismatch) == MismatchFlags();
         return false;   // should never hit here
     }
 

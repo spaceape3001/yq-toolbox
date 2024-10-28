@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "OnCommand.ipp"
+
 #include "AndTrigger.ipp"
 #include "NotTrigger.ipp"
 #include "OrTrigger.ipp"

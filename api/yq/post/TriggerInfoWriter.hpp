@@ -12,7 +12,6 @@
 namespace yq::post {
 
     namespace impl {
-
         template <SomeTrigger T, SomePost P> 
         struct TriggerArgDeducer {
             using trigger_t     = T;
@@ -20,7 +19,7 @@ namespace yq::post {
         };
         
         template <SomeTrigger T, SomePost P> 
-        constexpr TriggerArgDeducer<T,P> deduce_trigger(bool (T::*)(const P&)) 
+        constexpr TriggerArgDeducer<T,P> deduce_trigger(bool (T::*)(const P&) const) 
         {
             return {};
         }
@@ -43,7 +42,7 @@ namespace yq::post {
     template <typename C>
     class Trigger::Fixer : public ObjectFixer<C> {
     public:
-        using traits_t      = std::conditional_t<HasAccept<C>, impl::ConcreteTriggerTraits<C>, impl::AbstractTriggerTraits>;
+        using traits_t      = std::conditional_t<std::is_same_v<Trigger,C>, impl::AbstractTriggerTraits, impl::ConcreteTriggerTraits<C>>;
         using post_t        = typename traits_t::post_t;
         static constexpr bool      has_accept  = traits_t::has_accept;
         
@@ -62,7 +61,7 @@ namespace yq::post {
         FilterResult      accept(const Trigger& trigger, const Post& thePost) const override
         {
             if constexpr (has_accept){
-                MismatchFlags    m;
+                MismatchFlags    m = {};
                 const post_t*       pp;
                 
                 if constexpr (std::is_same_v<post_t, Post>){

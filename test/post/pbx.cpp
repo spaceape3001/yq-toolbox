@@ -14,12 +14,10 @@
 #include <yq/post/boxes/PostBox.hpp>
 #include <yq/post/commands/EmptyCommand.hpp>
 #include <yq/post/posts/EmptyPost.hpp>
-#include <yq/post/triggers/PostClass.hpp>
+#include <yq/post/triggers/OnCommand.hpp>
 
 using namespace yq;
 using namespace yq::post;
-
-using OnCommand     = PostClass<Command>;
 
 class SampleCommand : public Command {
     YQ_OBJECT_DECLARE(SampleCommand, Command)

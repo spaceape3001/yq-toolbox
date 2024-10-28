@@ -88,7 +88,7 @@ namespace yq::post {
     //! When calling a filter, the parameters might mismatch
     //! and this enum/flag pair captures that
     enum class MismatchType : uint8_t {
-        InSender,
+        InSender = 0,
         InReceiver,
         InPost
     };
