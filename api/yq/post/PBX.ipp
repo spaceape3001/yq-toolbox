@@ -40,9 +40,10 @@ namespace yq::post {
     void PBX::_add(entry_vector_t& ranked, const PBXDispatch*fn, unsigned depth)
     {
         const PBXInfo*  pbx = fn->pbx_info();
+        const PBXInfo&  us  = metaInfo();
         if(!pbx)
             return ;
-        if(!metaInfo().is_derived(*pbx))   // reject if not related to this
+        if((pbx != &us) && !pbx->is_derived(us)) // reject if not related to this
             return ;
             
         const PostInfo* ppi = fn->post_info();
