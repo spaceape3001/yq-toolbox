@@ -18,7 +18,7 @@ namespace yq::post {
     
         PostClassTrigger(const PostInfo&, const Param& p = {});
         ~PostClassTrigger();
-        bool    accept(const Post&) const override;
+        bool    accept(const Post&) const;
     
     private:
         const PostInfo&     m_postInfo;

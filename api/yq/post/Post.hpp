@@ -16,8 +16,6 @@
 #include <concepts>
 
 namespace yq::post {
-    class Dispatcher;
-    
     class PostInfo : public ObjectInfo {
     public:
         template <typename C> class Writer;
@@ -128,7 +126,4 @@ namespace yq::post {
         
         static std::atomic<uint64_t>    s_lastId;
     };
-    
-    template <typename E>
-    concept SomePost = std::derived_from<E, Post>;
 }

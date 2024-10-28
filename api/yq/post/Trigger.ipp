@@ -25,9 +25,24 @@ namespace yq::post {
     {
     }
 
-    bool    Trigger::accept(const Dispatcher&, const Dispatcher&, const Post& pp) const 
+    FilterResult    Trigger::check(const Post& pp) const
     {
-        return accept(pp);
+        return metaInfo().accept(*this, pp);
+    }
+
+    MismatchPolicy  Trigger::mismatch() const
+    {
+        return m_mismatch(MismatchType::InPost) ? MismatchPolicy::Accept : MismatchPolicy::Reject;
+    }
+
+    bool    Trigger::passed(const Post& pp) const
+    {
+        FilterResult    chk  = check(pp);
+        if(auto p = std::get_if<bool>(&chk))
+            return *p;
+        if(auto p = std::get_if<MismatchFlags>(&chk))
+            return (*p - m_mismatch) != MismatchFlags();
+        return false;   // should never hit here
     }
 
     static void reg_trigger()

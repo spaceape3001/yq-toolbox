@@ -29,8 +29,23 @@ namespace yq::post {
         w.property("name", &Filter::name_get).setter(&Filter::name_set).description("Filter name");
     }
 
-    Filter::Filter(const Param& p) : m_name(p.name)
+    Filter::Filter(const Param& cfg) : m_name(cfg.name)
     {
+        if(auto p = std::get_if<bool>(&cfg.mismatches)){
+            if(*p){
+                m_mismatch    = ALL;
+            }
+        }
+        
+        if(auto p = std::get_if<MismatchPolicy>(&cfg.mismatches)){
+            if(*p == MismatchPolicy::Accept){
+                m_mismatch    = ALL;
+            }
+        }
+        
+        if(auto p = std::get_if<MismatchFlags>(&cfg.mismatches)){
+            m_mismatch    = *p;
+        }
     }
     
     Filter::~Filter()
@@ -60,6 +75,20 @@ namespace yq::post {
         m_name  = v;
     }
 
+    FilterResult    Filter::check(const Dispatcher&src, const Dispatcher&tgt, const Post&pp) const
+    {
+        return metaInfo().accept(*this, src, tgt, pp);
+    }
+
+    bool    Filter::passed(const Dispatcher& src, const Dispatcher& tgt, const Post& pp) const
+    {
+        FilterResult    chk  = check(src, tgt, pp);
+        if(auto p = std::get_if<bool>(&chk))
+            return *p;
+        if(auto p = std::get_if<MismatchFlags>(&chk))
+            return (*p - m_mismatch) != MismatchFlags();
+        return false;   // should never hit here
+    }
     
     YQ_INVOKE(Filter::init_info();)
 }

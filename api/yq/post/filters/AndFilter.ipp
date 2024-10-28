@@ -22,7 +22,7 @@ namespace yq::post {
     bool    AndFilter::accept(const Dispatcher&src, const Dispatcher&tgt, const Post& pp) const 
     {
         for(const FilterCPtr& f : m_filters){
-            if(f && !f->accept(src, tgt, pp))
+            if(f && !f->passed(src, tgt, pp))
                 return false;
         }
         return true;

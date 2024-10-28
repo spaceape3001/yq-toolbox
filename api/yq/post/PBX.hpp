@@ -7,15 +7,13 @@
 #pragma once
 
 #include <yq/core/Object.hpp>
+#include <yq/core/Required.hpp>
 #include <yq/post/Dispatcher.hpp>
 #include <yq/post/Post.hpp>
 
 namespace yq::post {
     struct PBXDispatch;
     class PBX;
-    
-    template <typename C>
-    concept SomePBX = std::derived_from<C, PBX>;
     
     class PBXInfo : public ObjectInfo {
     public:
@@ -52,40 +50,44 @@ namespace yq::post {
 
         //! Can only register *BEFORE* first post is received
         template <SomePost P, SomePBX C>
-        void        reg_receive(void (C::*)(const P&), const TriggerCPtr& trigger={});
+        void        reg_receive(void (C::*)(const P&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject);
 
         //! Can only register *BEFORE* first post is received
         template <SomePost P, SomePBX C>
-        void        reg_receive(bool (C::*)(const P&), const TriggerCPtr& trigger={});
+        void        reg_receive(bool (C::*)(const P&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject);
 
         //! Can only register *BEFORE* first post is received
         template <SomePost P, SomePBX C>
-        void        reg_receive(void (C::*)(const Ref<const P>&), const TriggerCPtr& trigger={});
+        void        reg_receive(void (C::*)(const Ref<const P>&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject);
 
         //! Can only register *BEFORE* first post is received
         template <SomePost P, SomePBX C>
-        void        reg_receive(bool (C::*)(const Ref<const P>&), const TriggerCPtr& trigger={});
+        void        reg_receive(bool (C::*)(const Ref<const P>&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject);
         
+        //! Can only register *BEFORE* first post is received
+        template <SomePBX C>
+        void        reg_receive(void (C::*)(), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject);
+
+        template <SomePBX C>
+        void        reg_receive(bool (C::*)(), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject);
+
     private:
         using dispatch_span_t = std::span<const PBXDispatch*>;
     
-        //std::unordered_map<const PostInfo*, dispatch_span_t>    m_lookup;
-        //std::vector<const PBXDispatch*>                         m_dispatch;   // will transition to these
-        std::unordered_map<const PostInfo*, const PBXDispatch*>     m_dispatch;
+        std::unordered_map<const PostInfo*, dispatch_span_t>        m_lookup;
+        std::vector<const PBXDispatch*>                             m_dispatch;   // will transition to these
         std::vector<const PBXDispatch*>                             m_custom;
         bool                                                        m_built = false;
         
-        struct Rank {
-            unsigned            depth;
-            const PostInfo*     info    = nullptr;
-            const PBXDispatch*  fn      = nullptr;
-        };
+        struct Entry;
         
-        using rank_vector_t = std::vector<Rank>;
+        using entry_vector_t = std::vector<Entry>;
         
-        void    _add(rank_vector_t&, const PBXDispatch*, unsigned depth);
-        void    _add(rank_vector_t&, const PBXInfo&, unsigned depth);
+        void    _add(entry_vector_t&, const PBXDispatch*, unsigned depth);
+        void    _add(entry_vector_t&, const PBXInfo&, unsigned depth);
         void    _build();
+        
+        bool    _execute(const PBXDispatch&, const PostCPtr&);
     };
     
 }

@@ -62,6 +62,7 @@ namespace yq {
     struct euler_t {};
     struct even_t {};
     struct every_t {};
+    struct fail_t {};
     struct focus_t {};
     struct frequency_t {};
     struct full_t {};
@@ -106,6 +107,7 @@ namespace yq {
     struct optional_t {};
     struct parse_t {};
     struct partial_t {};
+    struct pass_t {};
     struct pickup_t {};
     struct pixel_t {};
     struct pixels_t {};
@@ -211,6 +213,7 @@ namespace yq {
     static constexpr const euler_t          EULER;
     static constexpr const even_t           EVEN;
     static constexpr const every_t          EVERY;
+    static constexpr const fail_t           FAIL;
     static constexpr const focus_t          FOCUS;
     static constexpr const frequency_t      FREQUENCY;
     static constexpr const full_t           FULL;
@@ -255,6 +258,7 @@ namespace yq {
     static constexpr const optional_t       OPTIONAL;
     static constexpr const parse_t          PARSE;
     static constexpr const partial_t        PARTIAL;
+    static constexpr const pass_t           PASS;
     static constexpr const pickup_t         PICKUP;
     static constexpr const pixel_t          PIXEL;
     static constexpr const pixels_t         PIXELS;
