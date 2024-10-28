@@ -1,3 +1,6 @@
+# Local configuration
+local.cmake
+
 # Other source control
 .svn
 .svn0

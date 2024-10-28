@@ -6,7 +6,6 @@
 
 add_library(yq_net SHARED
     net/ContentType.cpp
-    net/Curl.cpp
     net/HttpParser.cpp
     net/HttpStatus.cpp
     net/Url.cpp
@@ -32,7 +31,7 @@ if(Build_CURL)
             ${CURL_INCLUDE_DIR}
     )
 
-message("Adding curl libraries... ${CURL_LIBRARIES}")
+    message("Adding curl libraries... ${CURL_LIBRARIES}")
 
     target_link_libraries(yq_net 
         PUBLIC

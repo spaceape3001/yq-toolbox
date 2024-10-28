@@ -10,6 +10,7 @@ if("${PROJECT_NAME}" STREQUAL "")
     project(YourQuill VERSION 0.0.0.3)
 endif()
 
+include(local.cmake OPTIONAL)
 include(configure.cmake)
 
 set(YQ_TOOLBOX_ROOT ${CMAKE_CURRENT_LIST_DIR})
