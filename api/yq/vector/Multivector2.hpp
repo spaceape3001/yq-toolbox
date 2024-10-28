@@ -58,6 +58,8 @@ namespace yq {
         //! Constructs all elements to Not-a-number
         template <typename=void> requires has_nan_v<T>
         consteval Multivector2(nan_t) noexcept : Multivector2(ALL, nan_v<T>) {}
+        
+        //! Constructs all elements to be one
         consteval Multivector2(one_t) noexcept : Multivector2(ALL, one_v<T>) {}
         consteval Multivector2(zero_t) noexcept : Multivector2(ALL, zero_v<T>) {}
 
