@@ -4,9 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "OnCommand.ipp"
 
 #include "AndTrigger.ipp"
 #include "NotTrigger.ipp"
+#include "OnCommand.ipp"
+#include "OnEvent.ipp"
+#include "OnMessage.ipp"
+#include "OnPost.ipp"
+#include "OnReply.ipp"
+#include "OnRequest.ipp"
 #include "OrTrigger.ipp"
-#include "PostClass.ipp"
