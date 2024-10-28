@@ -11,3 +11,4 @@ macro(test name)
 endmacro()
 
 test(posting)
+test(pbx)

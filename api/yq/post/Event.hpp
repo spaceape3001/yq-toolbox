@@ -28,6 +28,6 @@ namespace yq::post {
         
     protected:
         virtual ~Event();
-        Event(const Param&);
+        Event(const Param& p={});
     };
 }

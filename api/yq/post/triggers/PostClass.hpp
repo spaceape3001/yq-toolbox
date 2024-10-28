@@ -26,7 +26,8 @@ namespace yq::post {
     
     template <SomePost P>
     class PostClass : public PostClassTrigger {
-        YQ_OBJECT_DECLARE(PostClass, PostClassTrigger)
+        //  template issues on implement
+        //  YQ_OBJECT_DECLARE(PostClass, PostClassTrigger)
     public:
         using post_type = P;
         PostClass(const Param& p = {}) : PostClassTrigger(meta<P>(), p) {}

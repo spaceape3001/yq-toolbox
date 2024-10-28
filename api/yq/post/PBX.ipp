@@ -118,6 +118,8 @@ namespace yq::post {
             } else {
                 if(pfn.m_trigger->mismatch() == MismatchPolicy::Reject)
                     return false;
+                if(pfn.m_mismatch == MismatchPolicy::Reject)
+                    return false;
             }
         }
         

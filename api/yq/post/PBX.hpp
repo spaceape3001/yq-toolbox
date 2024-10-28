@@ -41,7 +41,7 @@ namespace yq::post {
         
     protected:
     
-        PBX(const Param&, std::initializer_list<R> classFlags={});
+        PBX(const Param& p={}, std::initializer_list<R> classFlags={});
         ~PBX();
         
         //! Handles unclaimed posts (so if there's a registered reciever that handles the post, that takes precedence)

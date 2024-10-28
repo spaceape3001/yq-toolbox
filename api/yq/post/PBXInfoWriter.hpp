@@ -28,7 +28,7 @@ namespace yq::post {
         
     protected:
         friend class PBX;
-        PBXDispatch(const TriggerCPtr& trig, Required req) : m_trigger(trig) {}
+        PBXDispatch(const TriggerCPtr& trig, MismatchPolicy mp) : m_trigger(trig), m_mismatch(mp) {}
         virtual ~PBXDispatch(){}
         
         virtual bool        dispatch(PBX&, const PostCPtr&) const = 0;
@@ -56,8 +56,8 @@ namespace yq::post {
         
         bool  dispatch(PBX& pbx, const PostCPtr& pp) const override
         {
-            C*  c   = static_cast<C*>(pbx);
-            (c->*m_fn)();
+            C&  c   = static_cast<C&>(pbx);
+            (c.*m_fn)();
             return true;
         }
     };
@@ -73,10 +73,10 @@ namespace yq::post {
             m_pbx   = &meta<C>();
         }
         
-        bool  dispatch(PBX *pbx, const PostCPtr& pp) const override
+        bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
-            C*  c   = static_cast<C*>(pbx);
-            return (c->*m_fn)();
+            C&  c   = static_cast<C&>(pbx);
+            return (c.*m_fn)();
         }
     };
 
@@ -92,10 +92,10 @@ namespace yq::post {
             m_post  = &meta<P>();
         }
         
-        bool  dispatch(PBX *pbx, const PostCPtr& pp) const override
+        bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
-            C*  c   = static_cast<C*>(pbx);
-            (c->*m_fn)(static_cast<const P&>(pp));
+            C&  c   = static_cast<C&>(pbx);
+            (c.*m_fn)(static_cast<const P&>(pp));
             return true;
         }
     };
@@ -112,10 +112,10 @@ namespace yq::post {
             m_post  = &meta<P>();
         }
         
-        bool  dispatch(PBX *pbx, const PostCPtr& pp) const override
+        bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
-            C*  c   = static_cast<C*>(pbx);
-            return (c->*m_fn)(static_cast<const P&>(pp));
+            C&  c   = static_cast<C&>(pbx);
+            return (c.*m_fn)(static_cast<const P&>(pp));
         }
     };
     
@@ -131,11 +131,11 @@ namespace yq::post {
             m_post  = &meta<P>();
         }
         
-        bool  dispatch(PBX *pbx, const PostCPtr& pp) const override
+        bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
-            C* c   = static_cast<C*>(pbx);
+            C&  c   = static_cast<C&>(pbx);
             Ref<const P>    ppp(static_cast<const P*>(pp.ptr()));
-            (c->*m_fn)(ppp);
+            (c.*m_fn)(ppp);
             return true;
         }
     };
@@ -150,11 +150,11 @@ namespace yq::post {
         {
         }
         
-        bool            dispatch(PBX *pbx, const PostCPtr& pp) const override
+        bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
-            C* c   = static_cast<C*>(pbx);
+            C&  c   = static_cast<C&>(pbx);
             Ref<const P>    ppp(static_cast<const P*>(pp.ptr()));
-            return (c->*m_fn)(ppp);
+            return (c.*m_fn)(ppp);
         }
     };
 

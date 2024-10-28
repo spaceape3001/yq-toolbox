@@ -28,7 +28,7 @@ namespace yq::post {
         const Request*  request() const;
         
     protected:
-        Reply(const RequestCPtr&, const Param&);
+        Reply(const RequestCPtr&, const Param& p={});
         virtual ~Reply();
         
     private:

@@ -32,7 +32,7 @@ namespace yq::post {
     
     protected:
 
-        Message(const Param&);
+        Message(const Param& p={});
         virtual ~Message();
     };
 }

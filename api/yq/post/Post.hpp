@@ -107,8 +107,8 @@ namespace yq::post {
         
     protected:
 
-        //! Constructs a post, parameters are required!
-        Post(const Param&);
+        //! Constructs a post
+        Post(const Param& p={});
         
     private:
         friend class Dispatcher;
