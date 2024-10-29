@@ -48,7 +48,7 @@ namespace yq::post {
         
         //! Handles unclaimed posts (so if there's a registered reciever that handles the post, that takes precedence)
         virtual void    handle(const PostCPtr&) {}
-        virtual void    receive(const PostCPtr&) override final;
+        virtual void    receive(const PostCPtr&) override;  // If you override this, you *MUST* call the PBX
 
         //! Can only register *BEFORE* first post is received
         template <SomePost P, SomePBX C>

@@ -214,6 +214,10 @@ namespace yq::post {
             temporarily for this polling festival.
         */
         void    poll(Dispatcher&, unit::Second timeout=ZERO);
+
+        /*! \brief Your receiver function, extend here
+        */
+        virtual void    receive(const PostCPtr&){}
         
     protected:
         enum class R {
@@ -249,9 +253,6 @@ namespace yq::post {
             return *msg;
         }
 
-        /*! \brief Your receiver function, extend here
-        */
-        virtual void    receive(const PostCPtr&){}
         
         /*! \brief Your polling function for messages, extend here
         
