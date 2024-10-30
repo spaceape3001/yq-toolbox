@@ -25,7 +25,7 @@ namespace yq::post {
     {
         if(!m_original)   // shouldn't happen, demo...
             return false;
-        return !m_original->accept(src, tgt, pp);
+        return !m_original->passed(src, tgt, pp);
     }
 
     static void reg_not_filter()

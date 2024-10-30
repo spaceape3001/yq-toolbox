@@ -18,8 +18,8 @@ namespace yq {
     
         static constexpr size_t     PER     = sizeof(T) * 8ULL;
         static constexpr size_t     MAX     = PER * N;
-        static constexpr size_t     SHIFT   = log_two_approximate(N);
-        static constexpr size_t     MASK    = SHIFT - 1;
+        static constexpr size_t     SHIFT   = log_two_approximate(PER);
+        static constexpr size_t     MASK    = (1ULL << SHIFT) - 1;
         
         
         constexpr BitArray()
@@ -58,7 +58,7 @@ namespace yq {
         }
         
     private:
-        T           m_data[MAX];
+        T           m_data[N];
         
         static constexpr size_t bit(size_t i) 
         {

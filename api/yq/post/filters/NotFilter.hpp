@@ -24,7 +24,7 @@ namespace yq::post {
     
         NotFilter(const FilterCPtr&, const Param& p = {});
         ~NotFilter();
-        bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const override;
+        bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const;
     
     private:
         FilterCPtr m_original;

@@ -31,7 +31,7 @@ namespace yq::post {
         //OrFilter(const std::span<const FilterCPtr>);
 
         ~OrFilter();
-        bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const override;
+        bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const;
     
     private:
         std::vector<FilterCPtr> m_filters;

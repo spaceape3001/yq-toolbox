@@ -24,7 +24,7 @@ namespace yq::post {
     
         NotTrigger(const TriggerCPtr&, const Param& p = {});
         ~NotTrigger();
-        bool    accept(const Post&) const override;
+        bool    accept(const Post&) const;
     
     private:
         TriggerCPtr m_original;

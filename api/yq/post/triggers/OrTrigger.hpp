@@ -31,7 +31,7 @@ namespace yq::post {
         //OrTrigger(const std::span<const TriggerCPtr>);
 
         ~OrTrigger();
-        bool    accept(const Post&) const override;
+        bool    accept(const Post&) const;
     
     private:
         std::vector<TriggerCPtr> m_triggers;

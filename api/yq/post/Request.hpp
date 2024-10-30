@@ -27,7 +27,7 @@ namespace yq::post {
         };
         
     protected:
-        Request(const Param&);
+        Request(const Param& p={});
         virtual ~Request();
     };
 }

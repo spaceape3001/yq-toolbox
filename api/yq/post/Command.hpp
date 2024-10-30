@@ -27,7 +27,7 @@ namespace yq::post {
         };
         
     protected:
-        Command(const Param&);
+        Command(const Param& p={});
         virtual ~Command();
     };
 }

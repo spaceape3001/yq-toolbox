@@ -22,7 +22,7 @@ namespace yq::post {
     bool    OrTrigger::accept(const Post& pp) const 
     {
         for(const TriggerCPtr& f : m_triggers){
-            if(f && f->accept(pp))
+            if(f && f->passed(pp))
                 return true;
         }
         return false;

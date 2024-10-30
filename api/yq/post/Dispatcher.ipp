@@ -143,27 +143,27 @@ namespace yq::post {
     {
         static Common& g    = common();
         for(const FilterCPtr& f : m_filters){
-            if(!f->accept(m_sender, m_recipient, p))
+            if(!f->passed(m_sender, m_recipient, p))
                 return false;
         }
         for(const FilterCPtr& f : m_sender.m_tx.filters){
-            if(!f->accept(m_sender, m_recipient, p))
+            if(!f->passed(m_sender, m_recipient, p))
                 return false;
         }
         for(const FilterCPtr& f : m_recipient.m_rx.filters){
-            if(!f->accept(m_sender, m_recipient, p))
+            if(!f->passed(m_sender, m_recipient, p))
                 return false;
         }
         for(const FilterCPtr& f : m_sender.m_filters){
-            if(!f->accept(m_sender, m_recipient, p))
+            if(!f->passed(m_sender, m_recipient, p))
                 return false;
         }
         for(const FilterCPtr& f : m_recipient.m_filters){
-            if(!f->accept(m_sender, m_recipient, p))
+            if(!f->passed(m_sender, m_recipient, p))
                 return false;
         }
         for(const FilterCPtr& f : g.filters){
-            if(!f->accept(m_sender, m_recipient, p))
+            if(!f->passed(m_sender, m_recipient, p))
                 return false;
         }
         return true;
@@ -342,23 +342,23 @@ namespace yq::post {
     {
         static Common& g    = common();
         for(const FilterCPtr& f : m_tx.filters){
-            if(!f->accept(*this, rx, p))
+            if(!f->passed(*this, rx, p))
                 return false;
         }
         for(const FilterCPtr& f : rx.m_rx.filters){
-            if(!f->accept(*this, rx, p))
+            if(!f->passed(*this, rx, p))
                 return false;
         }
         for(const FilterCPtr& f : m_filters){
-            if(!f->accept(*this, rx, p))
+            if(!f->passed(*this, rx, p))
                 return false;
         }
         for(const FilterCPtr& f : rx.m_filters){
-            if(!f->accept(*this, rx, p))
+            if(!f->passed(*this, rx, p))
                 return false;
         }
         for(const FilterCPtr& f : g.filters){
-            if(!f->accept(*this, rx, p))
+            if(!f->passed(*this, rx, p))
                 return false;
         }
         return true;

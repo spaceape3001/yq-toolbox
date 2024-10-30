@@ -32,10 +32,7 @@ namespace yq::post {
     
     protected:
 
-        Message(const Param&);
+        Message(const Param& p={});
         virtual ~Message();
     };
-    
-    template <typename E>
-    concept SomeMessage = std::derived_from<E, Message>;
 }
