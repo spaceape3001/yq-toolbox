@@ -65,6 +65,7 @@ namespace yq {
         //! Constructs all elements to be zero
         consteval Multivector2(zero_t) noexcept : Multivector2(ALL, zero_v<T>) {}
 
+        //! Converts this multivector to another multivector2 of compatible data type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Multivector2<U>() const noexcept
