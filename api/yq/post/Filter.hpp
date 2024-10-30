@@ -21,7 +21,7 @@ namespace yq::post {
     public:
         template <typename C> class Writer;
         
-        FilterInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        FilterInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
         
         //! \note This can be NULL (and valid as such)
         const ObjectInfo*   sender_info() const { return m_sender; }

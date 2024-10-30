@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Event)
 
 namespace yq::post {
-    EventInfo::EventInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl) :
+    EventInfo::EventInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
         PostInfo(zName, base, sl)
     {
         set(Flag::EVENT);

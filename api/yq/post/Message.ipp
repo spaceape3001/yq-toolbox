@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Message)
 
 namespace yq::post {
-    MessageInfo::MessageInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl) :
+    MessageInfo::MessageInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
         PostInfo(zName, base, sl)
     {
         set(Flag::MESSAGE);

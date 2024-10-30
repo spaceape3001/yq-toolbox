@@ -46,7 +46,7 @@ namespace yq::post {
         using post_t        = typename traits_t::post_t;
         static constexpr bool      has_accept  = traits_t::has_accept;
         
-        Fixer(std::string_view zName, const typename C::MyBase::MyInfo& base, const std::source_location& sl=std::source_location::current()) : 
+        Fixer(std::string_view zName, typename C::MyBase::MyInfo& base, const std::source_location& sl=std::source_location::current()) : 
             ObjectFixer<C>(zName, base, sl)
         {
             if constexpr (has_accept){

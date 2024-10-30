@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Reply)
 
 namespace yq::post {
-    ReplyInfo::ReplyInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl) :
+    ReplyInfo::ReplyInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
         PostInfo(zName, base, sl)
     {
         set(Flag::REPLY);

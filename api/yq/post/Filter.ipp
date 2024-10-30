@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Filter)
 
 namespace yq::post {
-    FilterInfo::FilterInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
+    FilterInfo::FilterInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::POST);

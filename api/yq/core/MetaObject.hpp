@@ -27,7 +27,7 @@ namespace yq {
             \param[in] base     Base object
             \param[in] sl       Source location of being instantiated
         */
-        MetaObjectInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        MetaObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
     };
 
     /*! \brief Abstract Meta Object

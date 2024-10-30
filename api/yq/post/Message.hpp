@@ -13,7 +13,7 @@ namespace yq::post {
     public:
         template <typename C> class Writer;
 
-        MessageInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl=std::source_location::current());
+        MessageInfo(std::string_view zName, PostInfo& base, const std::source_location& sl=std::source_location::current());
     };
     
     /*! \brief Light weight message

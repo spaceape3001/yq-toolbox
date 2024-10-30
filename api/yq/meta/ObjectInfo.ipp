@@ -30,8 +30,8 @@ namespace yq {
     {
     }
     
-    ObjectInfo::ObjectInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, const_cast<ObjectInfo*>(&base), sl)
+    ObjectInfo::ObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
+        ObjectInfo(zName, &base, sl)
     {
     }
 

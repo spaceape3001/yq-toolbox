@@ -30,7 +30,7 @@ namespace yq {
     public:
         template <typename C> class Writer;
 
-        AssetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        AssetInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
         
         //! Loads the asset from native binary format (whatever that is)
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }

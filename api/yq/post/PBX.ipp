@@ -12,7 +12,7 @@ YQ_OBJECT_IMPLEMENT(yq::post::PBX)
 
 namespace yq::post {
 
-    PBXInfo::PBXInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
+    PBXInfo::PBXInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         //set(Flag::PBX);

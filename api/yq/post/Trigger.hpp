@@ -14,7 +14,7 @@ namespace yq::post {
     public:
         template <typename C> class Writer;
 
-        TriggerInfo(std::string_view zName, const FilterInfo& base, const std::source_location& sl=std::source_location::current());
+        TriggerInfo(std::string_view zName, FilterInfo& base, const std::source_location& sl=std::source_location::current());
     
     protected:
         friend class Trigger;

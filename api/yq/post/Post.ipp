@@ -12,7 +12,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Post)
 
 namespace yq::post {
-    PostInfo::PostInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
+    PostInfo::PostInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::POST);

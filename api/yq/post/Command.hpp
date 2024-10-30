@@ -14,7 +14,7 @@ namespace yq::post {
     public:
         template <typename C> class Writer;
 
-        CommandInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl=std::source_location::current());
+        CommandInfo(std::string_view zName, PostInfo& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Command : public Post {

@@ -103,7 +103,7 @@ public:                                                 \
     */
     template <typename Obj>
     struct ObjectFixer  : public Obj::MyInfo {
-        ObjectFixer(std::string_view szName, const typename Obj::MyBase::MyInfo& myBase, std::source_location sl=std::source_location::current()) :
+        ObjectFixer(std::string_view szName, typename Obj::MyBase::MyInfo& myBase, std::source_location sl=std::source_location::current()) :
             Obj::MyInfo(szName, myBase, sl)
         {
             if constexpr ( std::is_abstract_v<Obj> ){

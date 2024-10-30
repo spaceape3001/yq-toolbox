@@ -27,7 +27,7 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    AssetInfo::AssetInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl) :
+    AssetInfo::AssetInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::ASSET);

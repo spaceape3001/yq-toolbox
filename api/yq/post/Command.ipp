@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Command)
 
 namespace yq::post {
-    CommandInfo::CommandInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl) :
+    CommandInfo::CommandInfo(std::string_view zName, PostInfo& base, const std::source_location& sl) :
         PostInfo(zName, base, sl)
     {
         set(Flag::COMMAND);

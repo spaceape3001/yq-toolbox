@@ -31,7 +31,7 @@ namespace yq {
             \param[in] base     Base object
             \param[in] sl       Source location (defaulted)
         */
-        ObjectInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        ObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
         
         /*! Creates the object
         

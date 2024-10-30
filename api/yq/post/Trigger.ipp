@@ -11,7 +11,7 @@
 YQ_OBJECT_IMPLEMENT(yq::post::Trigger)
 
 namespace yq::post {
-    TriggerInfo::TriggerInfo(std::string_view zName, const FilterInfo& base, const std::source_location& sl) :
+    TriggerInfo::TriggerInfo(std::string_view zName, FilterInfo& base, const std::source_location& sl) :
         FilterInfo(zName, base, sl)
     {
         set(Flag::TRIGGER);

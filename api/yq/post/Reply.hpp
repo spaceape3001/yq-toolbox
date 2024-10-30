@@ -13,7 +13,7 @@ namespace yq::post {
     public:
         template <typename C> class Writer;
 
-        ReplyInfo(std::string_view zName, const PostInfo& base, const std::source_location& sl=std::source_location::current());
+        ReplyInfo(std::string_view zName, PostInfo& base, const std::source_location& sl=std::source_location::current());
     };
 
     class Reply : public Post {

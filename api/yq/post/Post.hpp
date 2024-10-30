@@ -20,7 +20,7 @@ namespace yq::post {
     public:
         template <typename C> class Writer;
 
-        PostInfo(std::string_view zName, const ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        PostInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
     };
     
     /*! \brief Light weight message, which can be an event, an input, a command, a request, etc.
