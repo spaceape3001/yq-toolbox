@@ -377,6 +377,8 @@ namespace yq::post {
         uint64_t    cnt = 0;
 
         for(Dispatcher* b : g.sockets){
+            if(!b)
+                continue;
             if(!p.first(RX, b))
                 continue;
             if(!_accept(*b, *msg))
@@ -388,6 +390,8 @@ namespace yq::post {
         }
             
         for(Dispatcher* b : t.sockets){
+            if(!b)
+                continue;
             if(!p.first(RX, b))
                 continue;
             if(!_accept(*b, *msg))
@@ -424,8 +428,14 @@ namespace yq::post {
         auto& t = thread();
         size_t  n = 0;
         if(disp){
-            n       = t.sockets.size();
-            t.sockets.push_back(disp);
+            for(; n<t.sockets.size(); ++n){
+                if(!t.sockets[n])
+                    break;
+            }
+            if(n>=t.sockets.size()){
+                n       = t.sockets.size();
+                t.sockets.push_back(disp);
+            }
         }
         
         polling(timeout);
