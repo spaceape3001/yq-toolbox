@@ -395,9 +395,11 @@ namespace yq {
         const std::u32string_view       stem32() const { return m_stem32; }
 
         //  TODO
+        const Any&                      tag(int) const;
         const Any&                      tag(std::string_view) const;
         
-        
+        bool                            tagged(int) const;
+        bool                            tagged(std::string_view) const;
         
 
             // used during the creation....
@@ -429,9 +431,10 @@ namespace yq {
         virtual void                add_alias(std::string_view);
         
     private:
-        using TagMap    = string_view_any_map_t;
+        using TagMap    = std::map<int,Any>;
     
-        string_view_any_map_t                   m_tags;
+        string_view_any_map_t                   m_tagsByString;
+        std::map<int,Any>                       m_tagsByInt;
         string_view_xset_t                      m_aliases;
         std::string_view                        m_description;
         std::string_view                        m_label;

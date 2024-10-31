@@ -163,7 +163,7 @@ namespace yq {
 
     bool  Meta::has_tag(std::string_view k) const
     {
-        return m_tags.contains(k);
+        return m_tagsByString.contains(k);
     }
 
     bool  Meta::is_1d() const
@@ -525,10 +525,29 @@ namespace yq {
     const Any&  Meta::tag(std::string_view k) const
     {
         static Any bad;
-        auto i = m_tags.find(k);
-        if(i != m_tags.end())
+        auto i = m_tagsByString.find(k);
+        if(i != m_tagsByString.end())
             return i->second;
         return bad;
+    }
+
+    const Any&  Meta::tag(int k) const
+    {
+        static Any bad;
+        auto i = m_tagsByInt.find(k);
+        if(i != m_tagsByInt.end())
+            return i->second;
+        return bad;
+    }
+
+    bool    Meta::tagged(std::string_view k) const
+    {
+        return m_tagsByString.contains(k);
+    }
+
+    bool    Meta::tagged(int k) const
+    {
+        return m_tagsByInt.contains(k);
     }
 }
 

@@ -33,6 +33,9 @@ namespace yq::post {
         YQ_OBJECT_DECLARE(Post, Object)
     public:
     
+        //! Use this to make a property listable by the logger box
+        static constexpr const int kTag_Log = 2000;
+    
         /*! Post flag type
         
             Exact ranges TBD... let the fight begin!
