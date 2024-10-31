@@ -479,13 +479,11 @@ namespace yq::post {
         m_roles |= r;
     }
 
-#if 0
     void    Dispatcher::capture(global_t)
     {
         common().sockets.push_back(this);
-        m_roles |= F::GlobalCapture;
+        m_roles |= R::GlobalCapture;
     }
-#endif
 
     Dispatcher::Capture     Dispatcher::capture(thread_t)
     {

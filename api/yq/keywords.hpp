@@ -86,6 +86,7 @@ namespace yq {
     struct l_t {};
     struct layout_t {};
     struct line_t {};
+    struct local_t {};
     struct m_t {};
     struct maybe_t {};
     struct move_t {};
@@ -122,6 +123,7 @@ namespace yq {
     struct rectangle_t {};
     struct ref_t {};
     struct reference_t {};
+    struct remote_t {};
     struct repo_t {};
     struct required_t {};
     struct return_t {};
@@ -237,6 +239,7 @@ namespace yq {
     static constexpr const l_t              L;
     static constexpr const layout_t         LAYOUT;
     static constexpr const line_t           LINE;
+    static constexpr const local_t          LOCAL;
     static constexpr const m_t              M;
     static constexpr const maybe_t          MAYBE;
     static constexpr const move_t           MOVE;
@@ -273,6 +276,7 @@ namespace yq {
     static constexpr const recursive_t      RECURSIVE;
     static constexpr const ref_t            REF;
     static constexpr const reference_t      REFERENCE;
+    static constexpr const remote_t         REMOTE;
     static constexpr const repo_t           REPO;
     static constexpr const required_t       REQUIRED;
     static constexpr const return_t         RETURN;

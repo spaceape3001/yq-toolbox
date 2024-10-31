@@ -163,7 +163,7 @@ namespace yq::post {
         
         //! Captures *ALL* messages sent globally
         //! This is *NOT* thread-safe call, do it at initialization time.  (ie create & set before use)
-        //void    capture(global_t);
+        void     capture(global_t);
 
         #if 0
         //  pending feature idea....
