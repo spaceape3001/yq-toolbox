@@ -92,6 +92,7 @@ namespace yq {
         //! Defaulted equality operator
         constexpr bool operator==(const Multivector2&) const noexcept = default;
 
+        //! Positive (affirmation) operator
         constexpr Multivector2<T> operator+() const noexcept;
         constexpr Multivector2<T> operator-() const noexcept;
         
