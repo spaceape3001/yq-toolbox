@@ -36,6 +36,7 @@ namespace yq {
         bool    cmtc            = false;
         char    last            = ' ';
         bool    alpha           = false;
+        bool    hex             = false;
         bool    skip            = false;    // skip to next significant thing
         
         std::string_view        k, v;
@@ -76,6 +77,10 @@ namespace yq {
                     assert(itr != m_name2value.end());  // shouldn't ever trigger, as it was compilable code
                     if(itr != m_name2value.end())
                         val = itr -> second;
+                } else if(hex){
+                    auto ir = to_hex(v.substr(2));
+                    assert(ir);
+                    val  = (int) *ir;
                 } else {
                     auto ir = to_integer(v);
                     assert(ir);                    // shouldn't ever trigger, as it was compilable code
@@ -172,8 +177,13 @@ namespace yq {
                         }
                     }
                 } else {
-                    if((mode == VALUE) && is_alpha(*c))
-                        alpha   = true;
+                    if((mode == VALUE) && is_alpha(*c)){
+                        if(((c-s) == 1) && (*c == 'x' || *c=='X')){
+                            hex     = true;
+                        } else {
+                            alpha   = true;
+                        }
+                    }
                     if(!s && !skip){
                         s   = c;
                         if(mode == LINE)
