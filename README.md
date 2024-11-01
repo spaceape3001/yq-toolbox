@@ -6,20 +6,21 @@ This is the general utility toolbox for my Your Quill project.  It's split into 
 
 ### Building
 
-Your Quill uses CMake for build management and C++20 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
+Your Quill uses CMake for build management and C++23 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
 
 ### Contributing
 
 ### Dependencies
 
-* C++ 23 compiler
+* C++ 23 compiler (GCC 14 recommended)
 * Intel TBB (thread building blocks)
-* Log4Cpp
-* Curl (might vanish...)
-* RapidXML &mdash; bundled
-* Boost-ext UT &mdash; bundled
-* NLohmann JSON &mdash; bundled
+* [Log4Cpp](https://log4cpp.sourceforge.net/) &mdash; O/S installed/package
+* Curl &mdash; optional (to the toolbox)
+* RapidXML &mdash; use the submodule!
+* Boost-ext UT &mdash; submodule
+* [NLohmann JSON](https://github.com/nlohmann/json) &mdash; submodule
 * Sqlite3
-* GLM
+* GLM &mdash; optional (to the toolbox)
+* [PStreams](https://pstreams.sourceforge.net/) &mdash; bundled 
 
 
