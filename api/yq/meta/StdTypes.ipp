@@ -17,6 +17,7 @@
 
 YQ_TYPE_FIXED(MT_String, std::string)
 YQ_TYPE_FIXED(MT_Boolean, bool)
+YQ_TYPE_FIXED(MT_Char32, char32_t)
 YQ_TYPE_FIXED(MT_Float, float)
 YQ_TYPE_FIXED(MT_Double, double)
 YQ_TYPE_FIXED(MT_Int8, int8_t)
@@ -103,6 +104,11 @@ namespace yq {
         {
             str << v;
         }
+        
+        void    print_char32(Stream& str, char32_t v)
+        {
+            str << v;
+        }
 
         void    print_double(Stream& str, double v)
         {
@@ -172,6 +178,11 @@ namespace yq {
                 w.parse<parse_boolean>();
                 w.print<print_boolean>();
             }
+            {
+                auto w = writer<char32_t>();
+                w.print<print_char32>();
+            }
+            
             {
                 auto w = writer<double>();
                 w.casts<float>();
