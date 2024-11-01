@@ -110,6 +110,10 @@ namespace yq {
         */
         Writer&     tag(std::string_view zKey, const Any& value);
         
+        Writer&     tag(int);
+        Writer&     tag(int, Any&&value);
+        Writer&     tag(int, const Any&);
+        
         /*! \brief Mark the static global as being static thread_local instead
         */
         Writer&     tls();  //!< Marks the TLS flag ... only meaningful on static variables, still

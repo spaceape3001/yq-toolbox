@@ -17,6 +17,7 @@ namespace yq {
         MT_Any,
         MC_Global,      // Global is a compound, not type
         MT_String,
+        MT_Char32,
         MT_Boolean,
         MT_Float,
         MT_Double,

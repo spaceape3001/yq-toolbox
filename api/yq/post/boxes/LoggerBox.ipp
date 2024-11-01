@@ -40,6 +40,8 @@ namespace yq::post {
             // filter out properties
             if(prop->name() == "id")
                 continue;
+            if(!prop->tagged(Post::kTag_Log))
+                continue;
 
             // Comma!
             if(f){  

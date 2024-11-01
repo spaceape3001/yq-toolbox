@@ -94,8 +94,13 @@ namespace yq {
         CompoundInfo::sweep_impl();
         
         m_all.clear();
-        m_local.bases.clear();
-        m_local.derived.clear();
+        m_local.clear();
+        
+        gather(m_local.properties);
+        gather(m_local.methods);
+        
+        m_all.methods     += m_local.methods;
+        m_all.properties  += m_local.properties;
 
         if(m_base){
             m_local.bases << m_base;
