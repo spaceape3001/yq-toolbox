@@ -2,7 +2,7 @@
 
 Meta is runtime reflection, by employing registration requirements on individual components, aspects of the codebase is exposed in an abstract fashion.  This permits for dynamic definition of behavior (ie, scripts, user inputs, etc).
 
-*NOTE* Meta is expected to be defined at application initialization (see [Initialization](initialization.md) ) in the main thread, using the delayed initialization mechanism.
+*NOTE* Meta is expected to be defined at application startp (see [Startup](startup.md) ) in the main thread, using the delayed initialization mechanism.
 
 ## Meta Meta
 
