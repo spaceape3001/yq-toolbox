@@ -91,6 +91,13 @@ namespace yq {
         return repo().openReg;
     }
 
+    const char*     Meta::allocate_copy(std::string_view z)
+    {
+        char*   data    = new char[z.size()+1];
+        memcpy(data, z.data(), z.size());
+        data[z.size()]  = '\0';
+        return data;
+    }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

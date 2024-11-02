@@ -154,8 +154,10 @@ namespace yq {
             STATE,          //!< "State" property
             STATIC,         //!< Non-object specific (global variables, functions, etc)
             SWEPT,          //!< Meta internal
+            TACHYON,        //!< Tachyon object/related
             TEMPLATE,       //!< It's a template-based thing
             TEXTURE,        //!< Meta has TextureInfo
+            THREAD,         //!< Thread object/related
             TLS,            //!< Thread local storage
             TODO,           //!< It's "TODO" later
             TOOL,           //!< It's a Tool
@@ -429,6 +431,10 @@ namespace yq {
         void    set_name(std::string_view v);
         
         virtual void                add_alias(std::string_view);
+        
+            //  *ONLY* for meta registration use when there's dynamic name/alias generation and a copy needs to be
+            //  stored, permanently in the meta system
+        const char*                 allocate_copy(std::string_view);
         
     private:
         using TagMap    = std::map<int,Any>;
