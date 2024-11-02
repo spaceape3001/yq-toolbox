@@ -1,5 +1,11 @@
 # Local configuration
 local.cmake
+apix/**
+exex/**
+playx/**
+sdkx/**
+testx/**
+toolx/**
 
 # Other source control
 .svn
