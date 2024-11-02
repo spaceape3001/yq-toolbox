@@ -94,6 +94,8 @@ namespace yq {
 
         //! Positive (affirmation) operator
         constexpr Multivector2<T> operator+() const noexcept;
+        
+        //! Negation operator
         constexpr Multivector2<T> operator-() const noexcept;
         
         constexpr Multivector2<T> operator+(T b) const noexcept;
