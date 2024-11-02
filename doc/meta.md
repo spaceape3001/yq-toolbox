@@ -9,7 +9,7 @@ Meta is runtime reflection, by employing registration requirements on individual
 Class `Meta` is the generic base to all meta information.  It's got a name, description, flags, id, source, and a tree.
 
 | function    | description                                                    |
-|=============|================================================================|
+|-------------|----------------------------------------------------------------|
 | aliases     | Set of aliases this is also known for.                         |
 | description | Brief description of the item                                  |
 | children    | All children meta (ie, properties for a type/object)           |
