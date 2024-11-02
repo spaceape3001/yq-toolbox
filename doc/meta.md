@@ -23,7 +23,7 @@ Class `Meta` is the generic base to all meta information.  It's got a name, desc
 | parent      | Meta parent (ie, the type/object for a property)               |
 | source      | Source location of its definition                              |
 | stem        | Name without namespace, so `yq::post::PBX` would be `PBX`      |
-| stem32      | Stem (above) in 32-bit unicode strings                         |
+| stem32      | Stem (above) in 32-bit unicode                                 |
 | tag         | Gets a tag                                                     |
 | tagged      | Tests for a tag                                                |
 
@@ -32,7 +32,6 @@ Class `Meta` is the generic base to all meta information.  It's got a name, desc
 Meta holds onto string *views* which means the actual string must reside in the caller.  As most of this is being done with `"name"` syntax, that data is in the program strings-table, and is thus, fine.  Dynamic generation of a name is where this can be trouble, thus, if *dynamic* generation is required, allocation without free would be acceptable, and you can use `Meta::allocate_copy(std::ttring_view)` for this purpose.
 
 *Standard encoding is UTF-8.*
-
 
 ### ID
 
@@ -47,18 +46,66 @@ This name will remove the `yq::` namespace, if found (basically by advancing the
 ### Description
 
 
+## Getting Meta
 
-### Writers
+Getting the meta for a specific type/object is the same.
 
-## Types
+```
+    #include <yq/meta/InfoBinder.hpp>  //< Has the `meta()` routine in it
+    #include "MyType.hpp"
+    #include "MyObject.hpp"
+    
+    const auto& typeInfo    = meta<MyType>();
+    const auto& objectInfo  = meta<MyObject>();
+```
 
-## Objects
+For a specific object, it's
 
-## Properties
+```
+    #include "MyObject.hpp"
+    MyObject*   obj        = new MyObject;
+    const auto& objectInfo = obj -> metaInfo();  //< Function defined before I settled on convention
+```
 
-## Methods
+## Writing Meta
 
-## Globals
+**MAIN THREAD/STARTUP ONLY**
+
+For writing meta, it follows the generally same signature.
+
+```
+    #include "MyObject.hpp"
+    #include <yq/meta/TypeInfoWriter.hpp>
+    #include <yq/core/DelayInit.hpp>
+    #include "MyType.hpp"
+    
+    static void reg_my_type()
+    {
+        auto w = writer<MyType>();
+        w.description("It's my type");
+        w.property("party", &MyType::party).description("Partying happening?");
+    }
+    
+    YQ_INVOKE(reg_my_type();)
+```
+
+```
+    #include "MyObject.hpp"
+    #include <yq/meta/ObjectInfoWriter.hpp>
+    #include <yq/core/DelayInit.hpp>
+    
+    void MyObject::init_info()
+    {
+        auto w = writer<MyObject>();
+        w.description("It's my object");
+        w.property("party", &MyObject::party).description("Partying happening?");
+    }
+    
+    YQ_INVOKE(MyObject::init_info();)
+```
+ 
+Meta uses the notion of writers to differentiate between runtime and startup-initialization.  To alter meta requires a writer.  That writer has the mechanisms to define description, properties, methods, etc.
+
 
 
 
