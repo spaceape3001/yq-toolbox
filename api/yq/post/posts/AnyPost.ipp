@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AnyPost.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/PostInfoWriter.hpp>
 
 namespace yq::post {
@@ -21,16 +20,12 @@ namespace yq::post {
     {
     }
 
-    static void reg_any_post()
+    void AnyPost::init_info()
     {
         auto w = writer<AnyPost>();
         w.description("Any Post");
         w.property("value", &AnyPost::value);
     }
-
-    YQ_INVOKE(
-        reg_any_post();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::AnyPost)

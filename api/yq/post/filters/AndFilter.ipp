@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AndFilter.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/FilterInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::AndFilter)
@@ -28,11 +27,9 @@ namespace yq::post {
         return true;
     }
     
-    static void reg_and_filter()
+    void AndFilter::init_info()
     {
         auto w = writer<AndFilter>();
         w.description("An AND post filter based on other filters");
     }
-    
-    YQ_INVOKE(reg_and_filter();)
 }

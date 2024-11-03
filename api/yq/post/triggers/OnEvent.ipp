@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "OnEvent.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::OnEvent)
@@ -26,11 +25,10 @@ namespace yq::post {
         return (&cInfo == &m_info) || cInfo.is_base(m_info);
     }
     
-    static void reg_on_event()
+    void OnEvent::init_info()
     {
         auto w = writer<OnEvent>();
         w.description("Trigger for a particular event class");
     }
     
-    YQ_INVOKE(reg_on_event();)
 }

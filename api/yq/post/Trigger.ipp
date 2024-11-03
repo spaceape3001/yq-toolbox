@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Trigger.hpp"
-#include <yq/core/DelayInit.hpp>
 #include "TriggerInfoWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::post::Trigger)
@@ -45,12 +44,9 @@ namespace yq::post {
         return false;   // should never hit here
     }
 
-    static void reg_trigger()
+    void Trigger::init_info()
     {
         auto w = writer<Trigger>();
         w.description("Abstract Post Trigger");
     }
-
-    
-    YQ_INVOKE(reg_trigger();)
 }

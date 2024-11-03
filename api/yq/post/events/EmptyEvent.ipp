@@ -17,15 +17,11 @@ namespace yq::post {
     {
     }
     
-    static void reg_empty_event()
+    void EmptyEvent::init_info()
     {
         auto w = writer<EmptyEvent>();
         w.description("Empty Event");
     }
-    
-    YQ_INVOKE(
-        reg_empty_event();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::EmptyEvent)

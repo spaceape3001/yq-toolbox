@@ -6,7 +6,6 @@
 
 #include "Message.hpp"
 #include "MessageInfoWriter.hpp"
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Message)
 
@@ -30,11 +29,9 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_message()
+    void Message::init_info()
     {
         auto w = writer<Message>();
         w.description("Abstract Message Class");
     }
-    
-    YQ_INVOKE(reg_message();)
 }

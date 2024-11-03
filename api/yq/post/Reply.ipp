@@ -7,7 +7,6 @@
 #include "Reply.hpp"
 #include "ReplyInfoWriter.hpp"
 #include <yq/post/Request.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Reply)
 
@@ -35,11 +34,9 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_reply()
+    void Reply::init_info()
     {
         auto w = writer<Reply>();
         w.description("Abstract Reply Class");
     }
-    
-    YQ_INVOKE(reg_reply();)
 }

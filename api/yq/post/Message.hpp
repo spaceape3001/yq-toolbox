@@ -30,6 +30,8 @@ namespace yq::post {
         struct Param : public Post::Param {
         };
     
+        static void init_info();
+    
     protected:
 
         Message(const Param& p={});

@@ -53,6 +53,8 @@ namespace yq::post {
         FilterResult    check(const Post&) const;
         
         MismatchPolicy  mismatch() const;
+        
+        static void init_info();
 
     protected:
         Trigger(const Param& p={});

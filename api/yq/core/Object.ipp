@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Object.hpp"
+#include <yq/meta/ObjectInfoWriter.hpp>
 
 namespace yq {
     const ObjectInfo&    Object::metaInfo() const 
@@ -16,5 +17,11 @@ namespace yq {
     {
         static ObjectInfo   *s_info = new ObjectInfo("Object");
         return *s_info;
+    }
+
+    void Object::init_info()
+    {
+        auto w = writer<Object>();
+        w.description("Abstract object class (root of all objects)");
     }
 }

@@ -24,6 +24,8 @@ namespace yq::post {
         OnPost(const Param& p = {}) : OnPost(meta<C>(), p) {}
         OnPost(const PostInfo&, const Param& p={});
 
+        static void init_info();
+
     private:
         ~OnPost();
         const PostInfo&  m_info;

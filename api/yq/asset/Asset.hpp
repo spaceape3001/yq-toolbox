@@ -95,6 +95,8 @@ namespace yq {
         */
         //static std::filesystem::path            search(const path_vector_t& paths, const std::filesystem::path& file);
     
+        static void init_info();
+    
     protected:
         friend class AssetFactory;
         

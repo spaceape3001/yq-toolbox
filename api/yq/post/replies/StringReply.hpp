@@ -27,6 +27,8 @@ namespace yq::post {
         ~StringReply(){}
     
         const std::string&    text() const { return m_text; }
+        
+        static void init_info();
     
     private:
         std::string     m_text;

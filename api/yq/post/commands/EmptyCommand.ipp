@@ -17,15 +17,11 @@ namespace yq::post {
     {
     }
     
-    static void reg_empty_command()
+    void EmptyCommand::init_info()
     {
         auto w = writer<EmptyCommand>();
         w.description("Empty Command");
     }
-    
-    YQ_INVOKE(
-        reg_empty_command();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::EmptyCommand)

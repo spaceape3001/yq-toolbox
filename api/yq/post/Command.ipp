@@ -6,7 +6,6 @@
 
 #include "Command.hpp"
 #include "CommandInfoWriter.hpp"
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Command)
 
@@ -30,11 +29,9 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_command()
+    void Command::init_info()
     {
         auto w = writer<Command>();
         w.description("Abstract Command Class");
     }
-    
-    YQ_INVOKE(reg_command();)
 }

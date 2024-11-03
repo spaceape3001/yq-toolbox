@@ -111,6 +111,8 @@ namespace yq::post {
         //! \note an empty list will return FALSE
         bool  has(any_t, std::initializer_list<flag_t>) const;
         
+        static void init_info();
+        
     protected:
 
         //! Constructs a post

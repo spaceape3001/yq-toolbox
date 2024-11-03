@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "OrFilter.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/FilterInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::OrFilter)
@@ -28,11 +27,9 @@ namespace yq::post {
         return false;
     }
     
-    static void reg_or_filter()
+    void OrFilter::init_info()
     {
         auto w = writer<OrFilter>();
         w.description("An OR post filter based on other filters");
     }
-    
-    YQ_INVOKE(reg_or_filter();)
 }

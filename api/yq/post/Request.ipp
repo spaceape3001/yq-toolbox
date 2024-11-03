@@ -6,7 +6,6 @@
 
 #include "Request.hpp"
 #include "RequestInfoWriter.hpp"
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Request)
 
@@ -30,11 +29,9 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_request()
+    void Request::init_info()
     {
         auto w = writer<Request>();
         w.description("Abstract Request Class");
     }
-    
-    YQ_INVOKE(reg_request();)
 }

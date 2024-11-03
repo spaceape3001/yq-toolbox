@@ -16,5 +16,7 @@ namespace yq {
     public:
         virtual bool    load(const XmlNode&) override;
         virtual bool    save(XmlNode&) const override;
+        
+        static void init_info();
     };
 }

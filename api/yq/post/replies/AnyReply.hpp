@@ -25,6 +25,8 @@ namespace yq::post {
     
         const Any&    value() const { return m_value; }
     
+        static void init_info();
+    
     private:
         Any     m_value;
     };

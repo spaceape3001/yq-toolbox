@@ -26,6 +26,8 @@ namespace yq::post {
         struct Param : public Post::Param {
         };
         
+        static void init_info();
+        
     protected:
         Command(const Param& p={});
         virtual ~Command();

@@ -6,7 +6,6 @@
 
 #include "Event.hpp"
 #include "EventInfoWriter.hpp"
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Event)
 
@@ -30,11 +29,9 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_event()
+    void Event::init_info()
     {
         auto w = writer<Event>();
         w.description("Abstract Event Class");
     }
-    
-    YQ_INVOKE(reg_event();)
 }

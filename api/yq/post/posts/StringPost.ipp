@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "StringPost.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/PostInfoWriter.hpp>
 
 namespace yq::post {
@@ -21,17 +20,12 @@ namespace yq::post {
     {
     }
     
-    static void reg_string_post()
+    void StringPost::init_info()
     {
         auto w = writer<StringPost>();
         w.description("Text Post");
         w.property("text", &StringPost::text);
     }
-
-    
-    YQ_INVOKE(
-        reg_string_post();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::StringPost)

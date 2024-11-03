@@ -6,7 +6,6 @@
 
 #include "PBX.hpp"
 #include "PBXInfoWriter.hpp"
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::PBX)
 
@@ -146,12 +145,10 @@ namespace yq::post {
         }
     }
 
-    static void reg_pbx()
+    void PBX::init_info()
     {
         auto w = writer<PBX>();
         w.description("Abstract PBX Object");
     }
-    
-    YQ_INVOKE(reg_pbx();)
 }
 

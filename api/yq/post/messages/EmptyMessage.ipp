@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "EmptyMessage.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/MessageInfoWriter.hpp>
 
 namespace yq::post {
@@ -17,15 +16,11 @@ namespace yq::post {
     {
     }
     
-    static void reg_empty_message()
+    void EmptyMessage::init_info()
     {
         auto w = writer<EmptyMessage>();
         w.description("Empty Message");
     }
-    
-    YQ_INVOKE(
-        reg_empty_message();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::EmptyMessage)

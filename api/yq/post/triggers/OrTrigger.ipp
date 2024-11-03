@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "OrTrigger.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::OrTrigger)
@@ -28,11 +27,9 @@ namespace yq::post {
         return false;
     }
     
-    static void reg_or_trigger()
+    void OrTrigger::init_info()
     {
         auto w = writer<OrTrigger>();
         w.description("An OR post trigger based on other triggers");
     }
-    
-    YQ_INVOKE(reg_or_trigger();)
 }

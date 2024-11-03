@@ -24,6 +24,8 @@ namespace yq::post {
         OnMessage(const Param& p = {}) : OnMessage(meta<C>(), p) {}
         OnMessage(const MessageInfo&, const Param& p={});
 
+        static void init_info();
+
     private:
         ~OnMessage();
         const MessageInfo&  m_info;

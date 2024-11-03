@@ -48,6 +48,8 @@ namespace yq {
         //! Our current revision number.
         uint64_t revision() const { return Revision::revision(); }
         
+        static void init_info();
+        
     protected:
     
         //! Default constructor

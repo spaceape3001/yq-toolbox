@@ -49,7 +49,7 @@ A daisy chain of these hooks is created when the program or a plugin is loaded. 
 
 ## Meta Initialization
 
-
+For objects, if the class has `init_info()` defined, it will be called (ie, it will be automatically inserted into delay initialization system).
 
 ## PID Files
 

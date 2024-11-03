@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Filter.hpp"
-#include <yq/core/DelayInit.hpp>
 #include "FilterInfoWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::post::Filter)
@@ -89,6 +88,4 @@ namespace yq::post {
             return (*p - m_mismatch) != MismatchFlags();
         return false;   // should never hit here
     }
-    
-    YQ_INVOKE(Filter::init_info();)
 }

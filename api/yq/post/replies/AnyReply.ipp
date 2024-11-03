@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AnyReply.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/ReplyInfoWriter.hpp>
 
 namespace yq::post {
@@ -21,16 +20,12 @@ namespace yq::post {
     {
     }
 
-    static void reg_any_reply()
+    void AnyReply::init_info()
     {
         auto w = writer<AnyReply>();
         w.description("Any Reply");
         w.property("value", &AnyReply::value);
     }
-
-    YQ_INVOKE(
-        reg_any_reply();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::AnyReply)

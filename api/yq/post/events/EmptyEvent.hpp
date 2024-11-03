@@ -20,5 +20,7 @@ namespace yq::post {
         
         EmptyEvent(const Param& p = {});
         ~EmptyEvent();
+        
+        static void init_info();
     };
 }

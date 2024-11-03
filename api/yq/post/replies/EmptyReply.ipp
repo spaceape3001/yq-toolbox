@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "EmptyReply.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/ReplyInfoWriter.hpp>
 
 namespace yq::post {
@@ -17,15 +16,11 @@ namespace yq::post {
     {
     }
     
-    static void reg_empty_post()
+    void EmptyReply::init_info()
     {
         auto w = writer<EmptyReply>();
         w.description("Empty Reply");
     }
-    
-    YQ_INVOKE(
-        reg_empty_post();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::EmptyReply)

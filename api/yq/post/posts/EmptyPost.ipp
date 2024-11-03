@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "EmptyPost.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/PostInfoWriter.hpp>
 
 namespace yq::post {
@@ -17,15 +16,11 @@ namespace yq::post {
     {
     }
     
-    static void reg_empty_post()
+    void EmptyPost::init_info()
     {
         auto w = writer<EmptyPost>();
         w.description("Empty Post");
     }
-    
-    YQ_INVOKE(
-        reg_empty_post();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::EmptyPost)

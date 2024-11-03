@@ -184,12 +184,9 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static void    reg_asset()
+    void Asset::init_info()
     {
         auto w = writer<Asset>();
-        w.description("Tachyon asset (ie texture, mesh, shader, etc)");
+        w.description("Asset (ie texture, mesh, shader, etc)");
     }
-        
-    YQ_INVOKE(reg_asset();)
-
 }

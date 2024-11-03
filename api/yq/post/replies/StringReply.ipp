@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "StringReply.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/ReplyInfoWriter.hpp>
 
 namespace yq::post {
@@ -21,17 +20,12 @@ namespace yq::post {
     {
     }
     
-    static void reg_string_reply()
+    void StringReply::init_info()
     {
         auto w = writer<StringReply>();
         w.description("Text Reply");
         w.property("text", &StringReply::text);
     }
-
-    
-    YQ_INVOKE(
-        reg_string_reply();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::StringReply)

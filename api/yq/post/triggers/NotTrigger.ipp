@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "NotTrigger.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::NotTrigger)
@@ -28,11 +27,9 @@ namespace yq::post {
         return !m_original->passed(pp);
     }
 
-    static void reg_not_trigger()
+    void NotTrigger::init_info()
     {
         auto w = writer<NotTrigger>();
         w.description("NOT post trigger (ie, negates the given trigger's test)");
     }
-    
-    YQ_INVOKE(reg_not_trigger();)
 }

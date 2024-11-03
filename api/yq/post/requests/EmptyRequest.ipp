@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "EmptyRequest.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/RequestInfoWriter.hpp>
 
 namespace yq::post {
@@ -17,15 +16,11 @@ namespace yq::post {
     {
     }
     
-    static void reg_empty_request()
+    void EmptyRequest::init_info()
     {
         auto w = writer<EmptyRequest>();
         w.description("Empty Request");
     }
-    
-    YQ_INVOKE(
-        reg_empty_request();
-    );
 }
 
 YQ_OBJECT_IMPLEMENT(yq::post::EmptyRequest)

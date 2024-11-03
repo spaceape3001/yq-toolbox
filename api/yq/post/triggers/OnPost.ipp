@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "OnPost.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/TriggerInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::OnPost)
@@ -26,11 +25,9 @@ namespace yq::post {
         return (&cInfo == &m_info) || cInfo.is_base(m_info);
     }
     
-    static void reg_on_post()
+    void OnPost::init_info()
     {
         auto w = writer<OnPost>();
         w.description("Trigger for a particular post class");
     }
-    
-    YQ_INVOKE(reg_on_post();)
 }

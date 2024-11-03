@@ -7,7 +7,6 @@
 #include "Post.hpp"
 #include "PostInfoWriter.hpp"
 #include <yq/post/Dispatcher.hpp>
-#include <yq/core/DelayInit.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Post)
 
@@ -76,13 +75,11 @@ namespace yq::post {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    static void reg_post()
+    void Post::init_info()
     {
         auto w = writer<Post>();
         w.description("Abstract Post Base Class");
         w.property("handled", &Post::handled).description("TRUE if the message has been dealt with");
         w.property("id", &Post::id).description("Post ID (do NOT assume monoticity)");
     }
-    
-    YQ_INVOKE(reg_post();)
 }

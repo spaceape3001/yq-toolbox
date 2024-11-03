@@ -25,11 +25,12 @@ namespace yq {
     {
     }
 
-    YQ_INVOKE(
+    void MetaObject::init_info()
+    {
         auto mo = writer<MetaObject>();
         mo.property("id",       &MetaObject::id).description("ID");
         mo.property("revision", &MetaObject::revision).description("Revision Number");
-    )
+    }
 }
 
 YQ_OBJECT_IMPLEMENT(yq::MetaObject)

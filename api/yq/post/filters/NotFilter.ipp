@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "NotFilter.hpp"
-#include <yq/core/DelayInit.hpp>
 #include <yq/post/FilterInfoWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::NotFilter)
@@ -28,11 +27,9 @@ namespace yq::post {
         return !m_original->passed(src, tgt, pp);
     }
 
-    static void reg_not_filter()
+    void NotFilter::init_info()
     {
         auto w = writer<NotFilter>();
         w.description("NOT post filter (ie, negates the given filter's test)");
     }
-    
-    YQ_INVOKE(reg_not_filter();)
 }
