@@ -98,7 +98,9 @@ namespace yq {
         //! Negation operator
         constexpr Multivector2<T> operator-() const noexcept;
         
+        //! Adds scalar to multivector
         constexpr Multivector2<T> operator+(T b) const noexcept;
+
         Multivector2<T>& operator+=(T b) noexcept;
         
         constexpr Multivector2<T> operator+(const Bivector2<T>& b) const noexcept;
