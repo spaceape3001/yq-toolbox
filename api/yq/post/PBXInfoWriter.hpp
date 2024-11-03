@@ -95,7 +95,7 @@ namespace yq::post {
         bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
             C&  c   = static_cast<C&>(pbx);
-            (c.*m_fn)(static_cast<const P&>(pp));
+            (c.*m_fn)(static_cast<const P&>(*pp));
             return true;
         }
     };
@@ -115,7 +115,7 @@ namespace yq::post {
         bool  dispatch(PBX &pbx, const PostCPtr& pp) const override
         {
             C&  c   = static_cast<C&>(pbx);
-            return (c.*m_fn)(static_cast<const P&>(pp));
+            return (c.*m_fn)(static_cast<const P&>(*pp));
         }
     };
     
