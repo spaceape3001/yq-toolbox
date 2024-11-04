@@ -57,6 +57,17 @@ namespace yq {
             m_data[index(i)]  |= mask(i);
         }
         
+        void    set(size_t i, bool v)
+        {
+            if(i>=MAX)
+                return ;
+            if(v){
+                m_data[index(i)]  |= mask(i);
+            } else {
+                m_data[index(i)] &= ~mask(i);
+            }
+        }
+
     private:
         T           m_data[N];
         
