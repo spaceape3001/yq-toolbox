@@ -77,6 +77,7 @@ namespace yq {
     struct if_t {};
     struct igcase_t {};
     struct individual_t {};
+    struct init_t {};
     struct intersect_t {};
     struct interval_t {};
     struct j_t {};
@@ -230,6 +231,7 @@ namespace yq {
     static constexpr const if_t             IF;
     static constexpr const igcase_t         IGCASE;
     static constexpr const individual_t     INDIVIDUAL;
+    static constexpr const init_t           INIT;
     static constexpr const intersect_t      INTERSECT;
     static constexpr const interval_t       INTERVAL;
     static constexpr const j_t              J;
