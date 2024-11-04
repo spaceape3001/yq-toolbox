@@ -141,6 +141,7 @@ namespace yq {
             PHYSICAL,       //!< Physical doodle item
             PROJECT,        //!< A project type of object
             PROPERTY,       //!< Meta has PropertyInfo
+            RASTER,         //!< Raster (iamge) related
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
             REPLY,          //!< It's a reply (message API)
