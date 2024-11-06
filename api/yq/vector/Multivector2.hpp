@@ -108,6 +108,7 @@ namespace yq {
         constexpr Multivector2<T> operator+(const Bivector2<T>& b) const noexcept;
         Multivector2<T>& operator+=(const Bivector2<T>& b) noexcept;
         
+        //! Adds two multivectors together, returns the result
         constexpr Multivector2<T> operator+(const Multivector2<T>& b) const noexcept;
         Multivector2<T>& operator+=(const Multivector2<T>& b) noexcept;
         
