@@ -236,6 +236,8 @@ namespace yq::post {
             and the originator/flags are set.
         */
         void            dispatch(const PostCPtr&, Post::flag_initlist_t flags = {});
+
+        void            dispatch(self_t, const PostCPtr&, Post::flag_initlist_t flags = {});
         
         template <SomePost M>
         const M&        dispatch(const Post* msg, ref_t)
@@ -246,10 +248,26 @@ namespace yq::post {
         }
         
         template <SomePost M>
+        const M&        dispatch(self_t, const Post* msg, ref_t)
+        {
+            assert(msg);
+            dispatch(SELF, msg);
+            return *msg;
+        }
+
+        template <SomePost M>
         const M&        dispatch(const Post* msg, Post::flag_initlist_t flags, ref_t)
         {
             assert(msg);
             dispatch(msg, flags);
+            return *msg;
+        }
+
+        template <SomePost M>
+        const M&        dispatch(self_t, const Post* msg, Post::flag_initlist_t flags, ref_t)
+        {
+            assert(msg);
+            dispatch(SELF, msg, flags);
             return *msg;
         }
 
@@ -284,8 +302,10 @@ namespace yq::post {
         bool    _accept(Dispatcher& rx, const Post&);
         void    _snoop(Dispatcher& rx, const Post&);
         void    _receive(const PostCPtr&);
-        void    _dispatch(const PostCPtr&);
+        void    _dispatch(const PostCPtr&, bool self);
         void    _poll(Dispatcher*, unit::Second);
+
+        void    _dispatching(const PostCPtr&, Post::flag_initlist_t flags, bool);
 
         using binding_set_t  = std::set<Binding>;
         

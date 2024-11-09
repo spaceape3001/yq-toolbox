@@ -364,7 +364,7 @@ namespace yq::post {
         return true;
     }
 
-    void    Dispatcher::_dispatch(const PostCPtr& msg)
+    void    Dispatcher::_dispatch(const PostCPtr& msg, bool self)
     {
         static Common& g = common();
         
@@ -373,6 +373,10 @@ namespace yq::post {
         
         if(!p.first(TX, this))  // already sent from this dispatcher
             return ;
+            
+        if(self){
+            _receive(msg);
+        }
             
         uint64_t    cnt = 0;
 
@@ -417,6 +421,36 @@ namespace yq::post {
         if(m_logging(Log::Dispatches)){
             postInfo << "Dispatcher(" << name() << ") sent post (" << msg->metaInfo().name() << ":" << msg->id() 
                 << ") to " << cnt << " recipients";
+        }
+    }
+
+    void        Dispatcher::_dispatching(const PostCPtr&msg, Post::flag_initlist_t auxFlags, bool self)
+    {
+        if(!msg.valid())
+            return ;
+
+        auto& t = thread();
+        bool    pushed  = false;
+
+        // Claim ownership if unassigned
+        if(!msg->m_originator){
+            ++m_balance;
+            Post*   p   = const_cast<Post*>(msg.ptr());
+            for(Post::flag_t f : auxFlags)
+                p->m_flags.set(f);
+            p->m_originator   = this;
+        }
+        
+        // Check for circular sending loops
+        if(t.postage.empty() || (t.postage.top().msg != msg.ptr())){
+            t.postage << Postage(msg.ptr());
+            pushed  = true;
+        }
+        
+        _dispatch(msg, self);
+        
+        if(pushed){
+            t.postage.pop();
         }
     }
 
@@ -591,36 +625,16 @@ namespace yq::post {
     {
         return disconnect(ALL, *this, k);
     }
-    
+
 
     void        Dispatcher::dispatch(const PostCPtr& msg, Post::flag_initlist_t auxFlags)
     {
-        if(!msg.valid())
-            return ;
+        _dispatching(msg, auxFlags, false);
+    }
 
-        auto& t = thread();
-        bool    pushed  = false;
-
-        // Claim ownership if unassigned
-        if(!msg->m_originator){
-            ++m_balance;
-            Post*   p   = const_cast<Post*>(msg.ptr());
-            for(Post::flag_t f : auxFlags)
-                p->m_flags.set(f);
-            p->m_originator   = this;
-        }
-        
-        // Check for circular sending loops
-        if(t.postage.empty() || (t.postage.top().msg != msg.ptr())){
-            t.postage << Postage(msg.ptr());
-            pushed  = true;
-        }
-
-        _dispatch(msg);
-        
-        if(pushed){
-            t.postage.pop();
-        }
+    void        Dispatcher::dispatch(self_t, const PostCPtr&msg, Post::flag_initlist_t auxFlags)
+    {
+        _dispatching(msg, auxFlags, true);
     }
     
     #if 0

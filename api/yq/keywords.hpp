@@ -131,6 +131,7 @@ namespace yq {
     struct rotor_t {};
     struct rows_t {};
     struct rx_t {};
+    struct self_t {};
     struct sender_t {};
     struct set_t {};
     struct skip_t {};
@@ -285,6 +286,7 @@ namespace yq {
     static constexpr const rotor_t          ROTOR;
     static constexpr const rows_t           ROWS;
     static constexpr const rx_t             RX;
+    static constexpr const self_t           SELF;
     static constexpr const sender_t         SENDER;
     static constexpr const set_t            SET;
     static constexpr const skip_t           SKIP;
