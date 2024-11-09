@@ -7,6 +7,10 @@
 #include "PBX.hpp"
 #include "PBXInfoWriter.hpp"
 
+#include <yq/core/StreamOps.hpp>
+#include <yq/post/logging.hpp>
+#include <yq/stream/Logger.hpp>
+
 YQ_OBJECT_IMPLEMENT(yq::post::PBX)
 
 namespace yq::post {
@@ -95,6 +99,7 @@ namespace yq::post {
                 if(pi != r.info){   // edge detection
                     if(pi){
                         m_lookup[pi]    = std::span(&m_dispatch[nC], n-nC);
+                        nC  = n;
                     }
                     pi  = r.info;
                 }
@@ -103,6 +108,27 @@ namespace yq::post {
             }
             
             m_lookup[pi] = std::span(&m_dispatch[nC], ranked.size()-nC);
+        }
+        
+        if(metaInfo().is_verbose()){
+            stream::Logger  log(pbxNotice);
+            log << "Dispatch Table for " << metaInfo().name() << "\n";
+        
+            for(auto& itr : m_lookup){
+                log << itr.first->name() << ">\n";
+                for(const PBXDispatch* pfn : itr.second){
+                    const PostInfo* pi  = pfn->post_info();
+                    if(pi){
+                        log << "  via post  " << pi -> name() << " to ";
+                    } else {
+                        log << "  via any post to ";
+                    }
+                    
+                    const PBXInfo* pbx = pfn->pbx_info();
+                    log << "pbx " << pbx->name() << " (" << pfn->name() << " " << pfn->debug_string() << ")\n";
+                }
+            }
+        
         }
         
         m_built = true;

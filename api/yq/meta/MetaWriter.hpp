@@ -121,6 +121,8 @@ namespace yq {
         /*! \brief Mark the feature as still in progress/needs-to-be-done
         */
         Writer&     todo(); //!< Marks this as needing TODO work
+        
+        Writer&     verbose();
     
         //! Constructor from proper meta
         //! \note Only use if you KNOW what you're up to

@@ -463,6 +463,11 @@ namespace yq {
         return has(Flag::TYPE); 
     }
 
+    bool  Meta::is_verbose() const
+    {
+        return has(Flag::VERBOSE);
+    }
+
     bool  Meta::is_vulkan() const
     {
         return has(Flag::VULKAN);

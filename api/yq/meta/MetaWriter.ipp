@@ -164,4 +164,11 @@ namespace yq {
             m_meta -> set(Flag::TODO);
         return *this;
     }
+
+    Meta::Writer&     Meta::Writer::verbose()
+    {
+        if(m_meta && thread_safe_write())
+            m_meta -> set(Flag::VERBOSE);
+        return *this;
+    }
 }

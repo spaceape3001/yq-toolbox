@@ -164,6 +164,7 @@ namespace yq {
             TOOL,           //!< It's a Tool
             TRIGGER,        //!< It's a trigger/detector
             TYPE,           //!< Meta has TypeInfo
+            VERBOSE,        //!< Enable to get verbose diagnostics (avoid for most things)
             VIEWER,         //!< Viewer related (tachyon library)
             VULKAN,         //!< Vulkan api enabled
             WEB,            //!< Web related
@@ -369,6 +370,8 @@ namespace yq {
         bool                            is_tool() const;
         
         bool                            is_type() const;
+        
+        bool                            is_verbose() const;
         
         bool                            is_vulkan() const;
         

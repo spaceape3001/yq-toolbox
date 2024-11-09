@@ -16,6 +16,8 @@ namespace yq::post {
 
     class PBXDispatch {
     public:
+        
+        class Writer;
     
         //! Post it takes (null if post's ignored)
         const PostInfo*     post_info() const { return m_post; }
@@ -26,6 +28,10 @@ namespace yq::post {
         //! And the trigger
         const TriggerCPtr&  trigger() const { return m_trigger; }
         
+        std::string_view    name() const { return m_name; }
+        
+        virtual const char* debug_string() const = 0;
+        
     protected:
         friend class PBX;
         PBXDispatch(const TriggerCPtr& trig, MismatchPolicy mp) : m_trigger(trig), m_mismatch(mp) {}
@@ -35,6 +41,7 @@ namespace yq::post {
     
         const PostInfo*     m_post          = nullptr;
         const PBXInfo*      m_pbx           = nullptr;
+        std::string_view    m_name;
     
         TriggerCPtr         m_trigger       = {};
 
@@ -60,6 +67,11 @@ namespace yq::post {
             (c.*m_fn)();
             return true;
         }
+        
+        const char* debug_string() const override
+        {
+            return "void(C::*)()";
+        }
     };
 
     template <SomePBX C>
@@ -77,6 +89,11 @@ namespace yq::post {
         {
             C&  c   = static_cast<C&>(pbx);
             return (c.*m_fn)();
+        }
+
+        const char* debug_string() const override
+        {
+            return "bool(C::*)()";
         }
     };
 
@@ -98,6 +115,11 @@ namespace yq::post {
             (c.*m_fn)(static_cast<const P&>(*pp));
             return true;
         }
+
+        const char* debug_string() const override
+        {
+            return "void(C::*)(const P&)";
+        }
     };
 
     template <SomePBX C, SomePost P>
@@ -116,6 +138,11 @@ namespace yq::post {
         {
             C&  c   = static_cast<C&>(pbx);
             return (c.*m_fn)(static_cast<const P&>(*pp));
+        }
+
+        const char* debug_string() const override
+        {
+            return "bool(C::*)(const P&)";
         }
     };
     
@@ -138,6 +165,11 @@ namespace yq::post {
             (c.*m_fn)(ppp);
             return true;
         }
+
+        const char* debug_string() const override
+        {
+            return "void(C::*)(const Ref<P>&)";
+        }
     };
 
     template <SomePBX C, SomePost P>
@@ -156,6 +188,27 @@ namespace yq::post {
             Ref<const P>    ppp(static_cast<const P*>(pp.ptr()));
             return (c.*m_fn)(ppp);
         }
+
+        const char* debug_string() const override
+        {
+            return "bool(C::*)(const Ref<P>&)";
+        }
+    };
+
+    class PBXDispatch::Writer {
+    public:
+        Writer(PBXDispatch* pbx=nullptr) : m_pbx(pbx) {}
+        
+        Writer& name(std::string_view v) 
+        {
+            if(m_pbx){
+                m_pbx -> m_name = v;
+            }
+            return *this;
+        }
+        
+    private:
+        PBXDispatch*    m_pbx;
     };
 
 
@@ -176,57 +229,75 @@ namespace yq::post {
         }
         
         template <SomePost P, SomePBX C2=C>
-        void    receive(void (C2::*fn)(const P&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
+        PBXDispatch::Writer    receive(void (C2::*fn)(const P&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
         {
             static_assert(std::derived_from<C,C2>, "Incompatible PBX types, need inheritance");
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_dispatches.push_back(new PBXDispatch_VoidCRef<C2,P>(fn, trigger, mp));
+                PBXDispatch*    ret = new PBXDispatch_VoidCRef<C2,P>(fn, trigger, mp);
+                m_meta -> m_dispatches.push_back(ret);
+                return ret;
             }
+            return {};
         }
 
         template <SomePost P, SomePBX C2=C>
-        void    receive(bool (C2::*fn)(const P&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
+        PBXDispatch::Writer    receive(bool (C2::*fn)(const P&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
         {
             static_assert(std::derived_from<C,C2>, "Incompatible PBX types, need inheritance");
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_dispatches.push_back(new PBXDispatch_BoolCRef<C2,P>(fn, trigger, mp));
+                PBXDispatch*    ret = new PBXDispatch_BoolCRef<C2,P>(fn, trigger, mp);
+                m_meta -> m_dispatches.push_back(ret);
+                return ret;
             }
+            return {};
         }
 
         template <SomePost P, SomePBX C2=C>
-        void    receive(void (C2::*fn)(const Ref<const P>&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
+        PBXDispatch::Writer    receive(void (C2::*fn)(const Ref<const P>&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
         {
             static_assert(std::derived_from<C,C2>, "Incompatible PBX types, need inheritance");
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_dispatches.push_back(new PBXDispatch_VoidCPtr<C2,P>(fn, trigger, mp));
+                PBXDispatch*    ret = new PBXDispatch_VoidCPtr<C2,P>(fn, trigger, mp);
+                m_meta -> m_dispatches.push_back(ret);
+                return ret;
             }
+            return {};
         }
 
         template <SomePost P, SomePBX C2=C>
-        void    receive(bool (C2::*fn)(const Ref<const P>&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
+        PBXDispatch::Writer    receive(bool (C2::*fn)(const Ref<const P>&), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
         {
             static_assert(std::derived_from<C,C2>, "Incompatible PBX types, need inheritance");
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_dispatches.push_back(new PBXDispatch_BoolCPtr<C2,P>(fn, trigger, mp));
+                PBXDispatch*    ret = new PBXDispatch_BoolCPtr<C2,P>(fn, trigger, mp);
+                m_meta -> m_dispatches.push_back(ret);
+                return ret;
             }
+            return {};
         }
         
         template <SomePBX C2=C>
-        void    receive(void (C2::*fn)(), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
+        PBXDispatch::Writer    receive(void (C2::*fn)(), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
         {
             static_assert(std::derived_from<C,C2>, "Incompatible PBX types, need inheritance");
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_dispatches.push_back(new PBXDispatch_Void<C2>(fn, trigger, mp));
+                PBXDispatch*    ret = new PBXDispatch_Void<C2>(fn, trigger, mp);
+                m_meta -> m_dispatches.push_back(ret);
+                return ret;
             }
+            return {};
         }
 
         template <SomePBX C2=C>
-        void    receive(bool (C2::*fn)(), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
+        PBXDispatch::Writer    receive(bool (C2::*fn)(), const TriggerCPtr& trigger={}, MismatchPolicy mp=MismatchPolicy::Reject)
         {
             static_assert(std::derived_from<C,C2>, "Incompatible PBX types, need inheritance");
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_dispatches.push_back(new PBXDispatch_Bool<C2>(fn, trigger, mp));
+                PBXDispatch*    ret = new PBXDispatch_Bool<C2>(fn, trigger, mp);
+                m_meta -> m_dispatches.push_back(ret);
+                return ret;
             }
+            return {};
         }
 
     private:
