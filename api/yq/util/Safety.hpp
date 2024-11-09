@@ -27,6 +27,7 @@ namespace yq {
         }
         
         void    clear() { m_done = true; }
+        void    disarm() { m_done = true; }
 
     private:
     
