@@ -116,6 +116,7 @@ namespace yq {
         //! Self adds multivector to this multivector, returns a reference to self
         Multivector2<T>& operator+=(const Multivector2<T>& b) noexcept;
         
+        //! Adds vector with multivector
         constexpr Multivector2<T> operator+(const Vector2<T>& b) const noexcept;
         Multivector2<T>& operator+=(const Vector2<T>& b) noexcept;
 
