@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/utility.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor21.hpp>
 #include <yq/tensor/Tensor22.hpp>
@@ -24,6 +25,13 @@ YQ_TYPE_IMPLEMENT(yq::Vector2D)
 YQ_TYPE_IMPLEMENT(yq::Vector2F)
 YQ_TYPE_IMPLEMENT(yq::Vector2I)
 YQ_TYPE_IMPLEMENT(yq::Vector2U)
+
+namespace yq {
+    Vector2I    iround(const Vector2D&v)
+    {
+        return { iround(v.x), iround(v.y) };
+    }
+}
 
 using namespace yq;
 

@@ -776,6 +776,8 @@ namespace yq {
 
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Vector3<T>& v);
+
+    Vector3I    iround(const Vector3D&);
 }
 
 YQ_TYPE_DECLARE(yq::Vector3D)
