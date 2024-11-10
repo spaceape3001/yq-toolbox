@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/utility.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Size1.hxx"
@@ -16,6 +17,13 @@ YQ_TYPE_IMPLEMENT(yq::Size1D)
 YQ_TYPE_IMPLEMENT(yq::Size1F)
 YQ_TYPE_IMPLEMENT(yq::Size1I)
 YQ_TYPE_IMPLEMENT(yq::Size1U)
+
+namespace yq {
+    Size1I  iround(const Size1D&v)
+    {
+        return { iround(v.x) };
+    }
+}
 
 using namespace yq;
 

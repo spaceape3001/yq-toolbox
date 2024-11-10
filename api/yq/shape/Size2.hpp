@@ -326,6 +326,8 @@ namespace yq {
 
     template <typename T>
     AnyComponents<const Size2<T>>   any(const Size2<T>& val);
+    
+    Size2I  iround(const Size2D&);
 }
 
 YQ_TYPE_DECLARE(yq::Size2D)
