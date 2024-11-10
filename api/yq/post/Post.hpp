@@ -100,6 +100,9 @@ namespace yq::post {
         //! Post identifier (executable-unique)
         uint64_t  id() const { return m_id; }
         
+        //! Originating thread
+        unsigned int thread_id() const { return m_thread; }
+        
         //! Detects for specified flag on the post
         bool  has(flag_t f) const;
         
@@ -123,6 +126,7 @@ namespace yq::post {
         
         const uint64_t              m_id;
         const time_point_t          m_time;
+        const unsigned              m_thread;
         flags_t                     m_flags;
         Dispatcher*                 m_originator    = nullptr;
         mutable std::atomic_flag    m_handled;

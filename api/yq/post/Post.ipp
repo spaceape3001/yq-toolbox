@@ -6,6 +6,7 @@
 
 #include "Post.hpp"
 #include "PostInfoWriter.hpp"
+#include <yq/core/ThreadId.hpp>
 #include <yq/post/Dispatcher.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::Post)
@@ -24,6 +25,7 @@ namespace yq::post {
     Post::Post(const Param& p) : 
         m_id(++s_lastId), 
         m_time(clock_t::now()), 
+        m_thread(thread::id()),
         m_flags(p.flags)
     {
     }
