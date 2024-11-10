@@ -23,6 +23,13 @@ YQ_TYPE_IMPLEMENT(yq::Vector1F)
 YQ_TYPE_IMPLEMENT(yq::Vector1I)
 YQ_TYPE_IMPLEMENT(yq::Vector1U)
 
+namespace yq {
+    Vector1I    iround(const Vector1D&v)
+    {
+        return { iround(v.x) };
+    }
+}
+
 using namespace yq;
 
 template <typename T>

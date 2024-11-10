@@ -26,6 +26,13 @@ YQ_TYPE_IMPLEMENT(yq::Vector3F)
 YQ_TYPE_IMPLEMENT(yq::Vector3I)
 YQ_TYPE_IMPLEMENT(yq::Vector3U)
 
+namespace yq {
+    Vector3I    iround(const Vector3D&v)
+    {
+        return { iround(v.x), iround(v.y), iround(v.z) };
+    }
+}
+
 using namespace yq;
 
 template <typename T>
