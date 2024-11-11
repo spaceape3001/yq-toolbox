@@ -135,6 +135,7 @@ namespace yq {
     struct sender_t {};
     struct set_t {};
     struct skip_t {};
+    struct snoop_t {};
     struct sort_t {};
     struct span_t {};
     struct stem_t {};
@@ -291,6 +292,7 @@ namespace yq {
     static constexpr const set_t            SET;
     static constexpr const skip_t           SKIP;
     static constexpr const sort_t           SORT;
+    static constexpr const snoop_t          SNOOP;
     static constexpr const span_t           SPAN;
     static constexpr const stem_t           STEM;
     static constexpr const thread_t         THREAD;
