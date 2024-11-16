@@ -92,6 +92,8 @@ public:                                                 \
         static constexpr const bool IsObject        = true;                 
         static constexpr const bool IsCompound      = true;                 
         static constexpr const bool IsType          = false;
+        static constexpr const bool IsTachyon       = false;                 
+        static constexpr const bool IsInterface     = false;                 
         static const Info& bind() { return Obj::staticMetaInfo(); } 
         static Info&       edit() { return const_cast<Info&>(Obj::staticMetaInfo()); }
     };

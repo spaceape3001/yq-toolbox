@@ -43,7 +43,7 @@ namespace yq {
     public:
     
         //! Our ID number, must be exposed for the meta property
-        uint64_t id() const { return UniqueID::id(); }
+        constexpr uint64_t id() const { return UniqueID::id(); }
         
         //! Our current revision number.
         uint64_t revision() const { return Revision::revision(); }
@@ -65,22 +65,5 @@ namespace yq {
         MetaObject(MetaObject&&) = delete;
         MetaObject& operator=(const MetaObject&) = delete;
         MetaObject& operator=(MetaObject&&) = delete;
-    };
-
-    /*! \brief Writer of meta object's meta
-    
-        This is using during initialization by the methods writing to meta, presenting a writable
-        API to modify/set the meta properties, methods, etc.
-    */
-    template <typename C>
-    class MetaObjectInfo::Writer : public ObjectInfo::Writer<C> {
-    public:
-        Writer(MetaObjectInfo* metaObjInfo) : ObjectInfo::Writer<C>(metaObjInfo)
-        {
-        }
-        
-        Writer(MetaObjectInfo& metaObjInfo) : Writer(&metaObjInfo)
-        {
-        }
     };
 }

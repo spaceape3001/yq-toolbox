@@ -20,19 +20,23 @@ namespace yq {
         static constexpr const bool IsCompound  = false;
         static constexpr const bool IsType      = false;
         static constexpr const bool IsObject    = false;
+        
+        static constexpr const bool IsInterface = false;
+        static constexpr const bool IsProxy     = false;
+        static constexpr const bool IsTachyon   = false;
     };
     
     template <typename T>
-    static constexpr const bool     is_defined_v  = InfoBinder<T>::Defined;
+    static constexpr const bool     is_defined_v    = InfoBinder<T>::Defined;
     
     template <typename T>
-    static constexpr const bool     is_type_v     = InfoBinder<T>::IsType;
+    static constexpr const bool     is_type_v       = InfoBinder<T>::IsType;
 
     template <typename T>
-    static constexpr const bool     is_object_v   = InfoBinder<T>::IsObject;
+    static constexpr const bool     is_object_v     = InfoBinder<T>::IsObject;
 
     template <typename T>
-    static constexpr const bool     is_compound_v = InfoBinder<T>::IsCompound;
+    static constexpr const bool     is_compound_v   = InfoBinder<T>::IsCompound;
 
     template <typename T>
     using info_t    = typename InfoBinder<T>::Info;
@@ -43,20 +47,26 @@ namespace yq {
     template <>
     struct InfoBinder<void> {
         using Info   = TypeInfo;
-        static constexpr const bool Defined     = true;
-        static constexpr const bool IsCompound  = false;
-        static constexpr const bool IsType      = false;
-        static constexpr const bool IsObject    = false;
+        static constexpr const bool Defined         = true;
+        static constexpr const bool IsCompound      = false;
+        static constexpr const bool IsType          = false;
+        static constexpr const bool IsObject        = false;
+        static constexpr const bool IsInterface     = false;
+        static constexpr const bool IsProxy         = false;
+        static constexpr const bool IsTachyon       = false;
         static const TypeInfo&  bind() { return invalid(); }
     };
 
     template <>
     struct InfoBinder<Any> {
         using Info   = TypeInfo;
-        static constexpr const bool Defined     = true;
-        static constexpr const bool IsCompound  = false;
-        static constexpr const bool IsType      = true;
-        static constexpr const bool IsObject    = false;
+        static constexpr const bool Defined         = true;
+        static constexpr const bool IsCompound      = false;
+        static constexpr const bool IsType          = true;
+        static constexpr const bool IsObject        = false;
+        static constexpr const bool IsInterface     = false;
+        static constexpr const bool IsProxy         = false;
+        static constexpr const bool IsTachyon       = false;
         static const TypeInfo&  bind() { return any(); }
     };
 
@@ -89,12 +99,15 @@ namespace yq {
 #define YQ_TYPE_DECLARE(...)                                            \
     namespace yq {                                                      \
         template <>                                                     \
-        struct InfoBinder<__VA_ARGS__>  : public std::true_type {           \
+        struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
             using Info = TypeInfo;                                      \
-            static constexpr const bool Defined     = true;             \
-            static constexpr const bool IsObject    = false;            \
-            static constexpr const bool IsType      = true;             \
-            static constexpr const bool IsCompound  = true;             \
+            static constexpr const bool Defined         = true;         \
+            static constexpr const bool IsObject        = false;        \
+            static constexpr const bool IsType          = true;         \
+            static constexpr const bool IsCompound      = true;         \
+            static constexpr const bool IsInterface     = false;        \
+            static constexpr const bool IsProxy         = false;        \
+            static constexpr const bool IsTachyon       = false;        \
             static const TypeInfo&   bind() { return edit(); }          \
             static TypeInfo&         edit();                            \
         };                                                              \
