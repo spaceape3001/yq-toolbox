@@ -22,8 +22,9 @@
 
 namespace yq {
 
+    // Problematic macros...
     #ifdef NAN
-    #undef NAN
+        #undef NAN
     #endif
 
         //  keywords
