@@ -18,14 +18,14 @@ namespace yq {
     public:
     
         //! This instance's unique ID
-        uint64_t    id() const { return m_id; }
+        constexpr uint64_t    id() const { return m_id; }
         
     protected:
     
         //! Default constructor (that auto-generates a new ID)
         UniqueID();
     private:
-        uint64_t    m_id;
+        const uint64_t    m_id;
 
         UniqueID(const UniqueID&) = delete;
         UniqueID(UniqueID&&) = delete;

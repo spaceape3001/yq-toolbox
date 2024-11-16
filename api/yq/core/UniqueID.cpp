@@ -8,9 +8,13 @@
 #include <atomic>
 
 namespace yq {
-    UniqueID::UniqueID()
+    static uint64_t     generateUniqueId()
     {
         static std::atomic<uint64_t>    last{0};
-        m_id    = ++last;
+        return ++last;
+    }
+
+    UniqueID::UniqueID() : m_id(generateUniqueId())
+    {
     }
 }
