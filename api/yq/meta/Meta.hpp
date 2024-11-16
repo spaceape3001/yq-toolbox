@@ -111,6 +111,7 @@ namespace yq {
             IMGUI,          //!< ImGUI api enabled/similar usage
             INFORMATION,    //!< Information post class
             INPUT,          //!< It's flagged as input (graphs/events/etc)
+            INTERFACE,      //!< It's an interface
             JOYSTICK,       //!< Joystick related
             KEYBOARD,       //!< Keyboard related
             LESS,           //!< Can compare
@@ -141,6 +142,7 @@ namespace yq {
             PHYSICAL,       //!< Physical doodle item
             PROJECT,        //!< A project type of object
             PROPERTY,       //!< Meta has PropertyInfo
+            PROXY,          //!< It's a proxy
             RASTER,         //!< Raster (iamge) related
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
