@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <yq/unit/declare.hpp>
 
 namespace yq {
     template <typename> struct Vector1;
@@ -13,4 +14,5 @@ namespace yq {
     using Vector1F                  = Vector1<float>;
     using Vector1I                  = Vector1<int>;
     using Vector1U                  = Vector1<unsigned>;
+    using Vector1M                  = Vector1<Meter>;
 }
