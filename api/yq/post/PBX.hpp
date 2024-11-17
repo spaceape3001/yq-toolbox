@@ -6,6 +6,8 @@
 
 #pragma once
 
+#error "Obsolete, do not include"
+
 #include <yq/core/Object.hpp>
 #include <yq/core/Required.hpp>
 #include <yq/post/Dispatcher.hpp>
