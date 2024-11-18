@@ -18,7 +18,7 @@ namespace yq::args {
     #endif
     
     template <class T, class A, bool K> 
-    struct VoidSingleClassArgDeducer {
+    struct VoidClassSingleArgDeducer {
         static constexpr const unsigned count       = 1;
         static constexpr const bool     is_const    = K;
         using class_t       = T;
