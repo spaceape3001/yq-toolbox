@@ -146,6 +146,7 @@ namespace yq {
         //! Self subtracts vector from this multivector, returns reference to self
         Multivector2<T>& operator-=(const Vector2<T>& b) noexcept;
         
+        //! Scales the multivector by the given amount, returns the result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector2<product_t<T,U>> operator*(U b) const noexcept;
