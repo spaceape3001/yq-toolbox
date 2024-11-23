@@ -166,6 +166,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         Multivector2<T>& operator/=(U b) noexcept;
 
+        //! Returns the bivector component
         constexpr Bivector2<T>  bivector() const noexcept;
         constexpr Vector2<T>    vector() const noexcept;
         
