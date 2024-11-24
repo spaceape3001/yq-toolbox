@@ -168,6 +168,8 @@ namespace yq {
 
         //! Returns the bivector component
         constexpr Bivector2<T>  bivector() const noexcept;
+        
+        //! Returns the vector component
         constexpr Vector2<T>    vector() const noexcept;
         
     };
