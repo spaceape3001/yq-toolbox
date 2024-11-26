@@ -210,6 +210,7 @@ namespace yq {
     constexpr Multivector2<T> operator+(T a, const Multivector2<T>& b) noexcept;
 
 
+    //! Subtracts multivector from scalar, returns the result
     template <typename T>
     constexpr Multivector2<T> operator-(T a, const Multivector2<T>& b) noexcept;
 
