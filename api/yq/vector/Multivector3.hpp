@@ -31,6 +31,7 @@ namespace yq {
         //! Captures the template parameter
         using component_type    = T;
 
+        //! Scalar
         T   a;
         T   x, y, z;
         T   xy, yz, zx;
