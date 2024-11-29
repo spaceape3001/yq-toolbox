@@ -33,8 +33,14 @@ namespace yq {
 
         //! Scalar
         T   a;
-        T   x, y, z;
-        T   xy, yz, zx;
+        
+        //! X (vector component)
+        T   x;
+        T   y;
+        T   z;
+        T   xy;
+        T   yz;
+        T   zx;
         T   xyz;
         
         constexpr Multivector3() noexcept = default;
