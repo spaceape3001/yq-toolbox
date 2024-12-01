@@ -140,26 +140,36 @@ namespace yq {
         //! Self subtracts multivector from this multivector, returns reference to self
         Multivector2<T>& operator-=(const Multivector2<T>& b) noexcept;
         
+        //! Subtracts vector from multivector, returns result
         constexpr Multivector2<T> operator-(const Vector2<T>& b) const noexcept;
+        
+        //! Self subtracts vector from this multivector, returns reference to self
         Multivector2<T>& operator-=(const Vector2<T>& b) noexcept;
         
+        //! Scales the multivector by the given amount, returns the result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector2<product_t<T,U>> operator*(U b) const noexcept;
 
+        //! Self scales this multivector by the given amount, returns reference to self
         template <typename U>
         requires is_arithmetic_v<U>
         Multivector2<T>& operator*=(U b) noexcept;
 
+        //! Divides multivector by scalar, returns the result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector2<quotient_t<T,U>> operator/(U b) const noexcept;
 
+        //! Self divides this multivector by the given amount, returns reference to self
         template <typename U>
         requires is_arithmetic_v<U>
         Multivector2<T>& operator/=(U b) noexcept;
 
+        //! Returns the bivector component
         constexpr Bivector2<T>  bivector() const noexcept;
+        
+        //! Returns the vector component
         constexpr Vector2<T>    vector() const noexcept;
         
     };
@@ -195,15 +205,17 @@ namespace yq {
 //  --------------------------------------------------------
 //  --------------------------------------------------------
 
+    //! Adds scalar with multivector, returns the result
     template <typename T>
     constexpr Multivector2<T> operator+(T a, const Multivector2<T>& b) noexcept;
 
 
+    //! Subtracts multivector from scalar, returns the result
     template <typename T>
     constexpr Multivector2<T> operator-(T a, const Multivector2<T>& b) noexcept;
 
 
-    
+    //! Multiplies scalar with multivector, returns the result
     template <typename T, typename U>
     requires is_arithmetic_v<U>
     constexpr Multivector2<product_t<T,U>> operator*(T a, const Multivector2<U>&b) noexcept;

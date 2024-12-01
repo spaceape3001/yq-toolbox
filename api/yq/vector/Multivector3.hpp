@@ -31,9 +31,20 @@ namespace yq {
         //! Captures the template parameter
         using component_type    = T;
 
+        //! Scalar
         T   a;
-        T   x, y, z;
-        T   xy, yz, zx;
+        
+        //! X (vector component)
+        T   x;
+        
+        //! Y (vector component)
+        T   y;
+        
+        //! Z (vector component)
+        T   z;
+        T   xy;
+        T   yz;
+        T   zx;
         T   xyz;
         
         constexpr Multivector3() noexcept = default;
