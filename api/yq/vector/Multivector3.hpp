@@ -48,6 +48,8 @@ namespace yq {
         
         //! YZ (bivector component)
         T   yz;
+        
+        //! ZX (bivector component)
         T   zx;
         T   xyz;
         
