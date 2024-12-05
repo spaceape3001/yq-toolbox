@@ -318,6 +318,11 @@ namespace yq {
         return has(Flag::INPUT) && has(Flag::EVENT); 
     }
 
+    bool  Meta::is_interface() const
+    {
+        return has(Flag::INTERFACE);
+    }
+
     bool  Meta::is_loader() const
     {
         return has(Flag::LOADER);

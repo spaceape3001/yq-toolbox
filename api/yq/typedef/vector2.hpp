@@ -15,4 +15,6 @@ namespace yq {
     using Vector2I                  = Vector2<int>;
     using Vector2U                  = Vector2<unsigned>;
     using Vector2M                  = Vector2<Meter>;
+    using Vector2CM                 = Vector2<unit::Centimeter>;
+    using Vector2MM                 = Vector2<unit::Millimeter>;
 }

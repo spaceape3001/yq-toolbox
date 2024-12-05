@@ -8,6 +8,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <yq/unit/declare.hpp>
 
 namespace yq {
     template <typename> struct Size2;
@@ -25,4 +26,7 @@ namespace yq {
     using Size2U32                  = Size2<int32_t>;
     using Size2U64                  = Size2<int64_t>;
     using Size2Z                    = Size2<size_t>;
+    using Size2M                    = Size2<unit::Meter>;
+    using Size2MM                   = Size2<unit::Millimeter>;
+    using Size2CM                   = Size2<unit::Centimeter>;
 }

@@ -306,6 +306,8 @@ namespace yq {
         
         bool                            is_input_event() const;
         
+        bool                            is_interface() const;
+        
         bool                            is_loader() const;
         
         bool                            is_login_required() const;

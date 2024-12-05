@@ -36,6 +36,9 @@ namespace yq {
     static constexpr const bool     is_object_v     = InfoBinder<T>::IsObject;
 
     template <typename T>
+    static constexpr const bool     is_interface_v   = InfoBinder<T>::IsInterface;
+
+    template <typename T>
     static constexpr const bool     is_compound_v   = InfoBinder<T>::IsCompound;
 
     template <typename T>
