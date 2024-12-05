@@ -51,6 +51,8 @@ namespace yq {
         
         //! ZX (bivector component)
         T   zx;
+        
+        //! XYZ (trivector component)
         T   xyz;
         
         constexpr Multivector3() noexcept = default;
