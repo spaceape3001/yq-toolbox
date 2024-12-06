@@ -42,11 +42,20 @@ namespace yq {
         
         //! Z (vector component)
         T   z;
+        
+        //! XY (bivector component)
         T   xy;
+        
+        //! YZ (bivector component)
         T   yz;
+        
+        //! ZX (bivector component)
         T   zx;
+        
+        //! XYZ (trivector component)
         T   xyz;
         
+        //! Default constructor
         constexpr Multivector3() noexcept = default;
         constexpr Multivector3(T _a, T _x, T _y, T _z, T _xy, T _yz, T _zx, T _xyz) noexcept : 
             a(_a), x(_x), y(_y), z(_z), xy(_xy), yz(_yz), zx(_zx), xyz(_xyz) {}
