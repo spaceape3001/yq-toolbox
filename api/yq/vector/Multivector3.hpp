@@ -57,6 +57,8 @@ namespace yq {
         
         //! Default constructor
         constexpr Multivector3() noexcept = default;
+        
+        //! Number-by-number constructor
         constexpr Multivector3(T _a, T _x, T _y, T _z, T _xy, T _yz, T _zx, T _xyz) noexcept : 
             a(_a), x(_x), y(_y), z(_z), xy(_xy), yz(_yz), zx(_zx), xyz(_xyz) {}
         constexpr Multivector3(T _a, const Vector3<T>& v, const Bivector3<T>& b, const Trivector3<T>& t) noexcept : 
