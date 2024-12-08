@@ -61,6 +61,8 @@ namespace yq {
         //! Number-by-number constructor
         constexpr Multivector3(T _a, T _x, T _y, T _z, T _xy, T _yz, T _zx, T _xyz) noexcept : 
             a(_a), x(_x), y(_y), z(_z), xy(_xy), yz(_yz), zx(_zx), xyz(_xyz) {}
+            
+        //! Component by component constructor
         constexpr Multivector3(T _a, const Vector3<T>& v, const Bivector3<T>& b, const Trivector3<T>& t) noexcept : 
             a(_a), x(v.x), y(v.y), z(v.z), xy(b.xy), yz(b.yz), zx(b.zx), xyz(t.xyz) {}
         constexpr Multivector3(all_t, T v) noexcept : a(v), x(v), y(v), z(v), xy(v), yz(v), zx(v), xyz(v) {}
