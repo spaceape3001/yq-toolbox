@@ -65,6 +65,8 @@ namespace yq {
         //! Component by component constructor
         constexpr Multivector3(T _a, const Vector3<T>& v, const Bivector3<T>& b, const Trivector3<T>& t) noexcept : 
             a(_a), x(v.x), y(v.y), z(v.z), xy(b.xy), yz(b.yz), zx(b.zx), xyz(t.xyz) {}
+
+        //! Constructs by setting all sub-values to same value
         constexpr Multivector3(all_t, T v) noexcept : a(v), x(v), y(v), z(v), xy(v), yz(v), zx(v), xyz(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Multivector3(nan_t) noexcept : Multivector3(ALL, nan_v<T>) {}
