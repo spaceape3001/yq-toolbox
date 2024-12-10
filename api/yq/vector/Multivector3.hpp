@@ -68,6 +68,8 @@ namespace yq {
 
         //! Constructs by setting all sub-values to same value
         constexpr Multivector3(all_t, T v) noexcept : a(v), x(v), y(v), z(v), xy(v), yz(v), zx(v), xyz(v) {}
+        
+        //! Constructs ALL values to not-a-number
         template <typename=void> requires has_nan_v<T>
         consteval Multivector3(nan_t) noexcept : Multivector3(ALL, nan_v<T>) {}
         consteval Multivector3(one_t) noexcept : Multivector3(ALL, one_v<T>) {}
