@@ -79,6 +79,7 @@ namespace yq {
         //! Constructs ALL values to be zero
         consteval Multivector3(zero_t) noexcept : Multivector3(ALL, zero_v<T>) {}
 
+        //! Converts this multivector to another of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Multivector3<U>() const noexcept
