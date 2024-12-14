@@ -92,6 +92,7 @@ namespace yq {
             };
         }
         
+        //! Converts this multivector to another of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Multivector3<U>() const 
