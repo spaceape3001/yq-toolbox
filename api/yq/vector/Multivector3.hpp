@@ -104,7 +104,8 @@ namespace yq {
                 (U) xyz
             };
         }
-        
+
+        //! Equality operator (defaulted)
         constexpr bool operator==(const Multivector3&) const noexcept = default;
 
         constexpr Multivector3 operator+() const noexcept;
