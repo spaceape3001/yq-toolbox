@@ -6,7 +6,10 @@
 
 
 add_library(yq_sql SHARED
-    sql/sql.cpp
+    sql/SqlError.cpp
+    sql/SqlLite.cpp
+    sql/SqlStatement.cpp
+    sql/SqlUtils.cpp
 )
 
 target_link_libraries(yq_sql 

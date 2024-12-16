@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "GraphIO.ipp"
+#include "Graph.hpp"
 #include "GraphTraits.hpp"
 #include <cstdint>
 #include <yq/meta/Init.hpp>

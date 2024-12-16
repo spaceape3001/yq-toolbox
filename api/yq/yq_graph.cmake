@@ -5,6 +5,7 @@
 ################################################################################
 
 add_library(yq_graph SHARED
+    graph/GraphIO.cpp
     graph/graph.cpp
     graph/PinFlow.cpp
 )
