@@ -5,7 +5,11 @@
 ################################################################################
 
 add_library(yq_date SHARED
-    date/date.cpp
+    date/CalendarType.cpp
+    date/Date.cpp
+    date/JulianDay.cpp
+    date/Time.cpp
+    date/Weekday.cpp
 )
 
 target_link_libraries(yq_date PUBLIC

@@ -5,7 +5,10 @@
 ################################################################################
 
 add_library(yq_color SHARED
-    color/color.cpp
+    color/HSL.cpp
+    color/HSV.cpp
+    color/RGBA.cpp
+    color/RGB.cpp
 )
 
 target_link_libraries(yq_color PUBLIC

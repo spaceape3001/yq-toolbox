@@ -12,7 +12,7 @@ add_library(yq_core SHARED
 
     container/ByteArray.cpp
 
-    core/core.cpp
+    core/Any.cpp
     core/BasicApp.cpp
     core/Cleanup.cpp
     core/DelayInit.cpp
@@ -23,6 +23,8 @@ add_library(yq_core SHARED
     core/Global.cpp
     core/Logging.cpp
     core/Memory.cpp
+    core/MetaObject.cpp
+    core/Object.cpp
     core/Ref.cpp
     core/Revision.cpp
     core/Stream.cpp
@@ -32,8 +34,23 @@ add_library(yq_core SHARED
     core/UniqueID.cpp
     
     hash/MD5.cpp
-    
-    meta/meta.cpp
+
+    meta/AnyArgHelper.cpp
+    meta/ArgInfo.cpp
+    meta/CompoundInfo.cpp
+    meta/ConstructorInfo.cpp
+    meta/Generator.cpp
+    meta/GlobalInfo.cpp
+    meta/Meta.cpp
+    meta/MetaWriter.cpp
+    meta/MethodInfo.cpp
+    meta/ObjectInfo.cpp
+    meta/OperatorInfo.cpp
+    meta/PropertyInfo.cpp
+    meta/PropGetter.cpp
+    meta/PropSetter.cpp
+    meta/StdTypes.cpp
+    meta/TypeInfo.cpp
     
     stream/Bytes.cpp
     stream/File.cpp
