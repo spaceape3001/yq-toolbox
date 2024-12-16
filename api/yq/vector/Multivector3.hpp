@@ -57,16 +57,29 @@ namespace yq {
         
         //! Default constructor
         constexpr Multivector3() noexcept = default;
+        
+        //! Number-by-number constructor
         constexpr Multivector3(T _a, T _x, T _y, T _z, T _xy, T _yz, T _zx, T _xyz) noexcept : 
             a(_a), x(_x), y(_y), z(_z), xy(_xy), yz(_yz), zx(_zx), xyz(_xyz) {}
+            
+        //! Component by component constructor
         constexpr Multivector3(T _a, const Vector3<T>& v, const Bivector3<T>& b, const Trivector3<T>& t) noexcept : 
             a(_a), x(v.x), y(v.y), z(v.z), xy(b.xy), yz(b.yz), zx(b.zx), xyz(t.xyz) {}
+
+        //! Constructs by setting all sub-values to same value
         constexpr Multivector3(all_t, T v) noexcept : a(v), x(v), y(v), z(v), xy(v), yz(v), zx(v), xyz(v) {}
+        
+        //! Constructs ALL values to not-a-number
         template <typename=void> requires has_nan_v<T>
         consteval Multivector3(nan_t) noexcept : Multivector3(ALL, nan_v<T>) {}
+        
+        //! Constructs ALL values to be one
         consteval Multivector3(one_t) noexcept : Multivector3(ALL, one_v<T>) {}
+        
+        //! Constructs ALL values to be zero
         consteval Multivector3(zero_t) noexcept : Multivector3(ALL, zero_v<T>) {}
 
+        //! Converts this multivector to another of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Multivector3<U>() const noexcept
@@ -79,6 +92,7 @@ namespace yq {
             };
         }
         
+        //! Converts this multivector to another of compatible type
         template <typename U>
         requires (std::is_convertible_v<T,U> && !std::is_nothrow_convertible_v<T,U>)
         explicit constexpr operator Multivector3<U>() const 
@@ -90,9 +104,11 @@ namespace yq {
                 (U) xyz
             };
         }
-        
+
+        //! Equality operator (defaulted)
         constexpr bool operator==(const Multivector3&) const noexcept = default;
 
+        //! Positive (affirm) operator (to compliment the negation)
         constexpr Multivector3 operator+() const noexcept;
         constexpr Multivector3 operator-() const noexcept;
 
