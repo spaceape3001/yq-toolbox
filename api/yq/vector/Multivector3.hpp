@@ -110,6 +110,8 @@ namespace yq {
 
         //! Positive (affirm) operator (to compliment the negation)
         constexpr Multivector3 operator+() const noexcept;
+        
+        //! Negation operator
         constexpr Multivector3 operator-() const noexcept;
 
         constexpr Multivector3  operator+(T b) const noexcept;
