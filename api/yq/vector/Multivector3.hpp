@@ -114,6 +114,7 @@ namespace yq {
         //! Negation operator
         constexpr Multivector3 operator-() const noexcept;
 
+        //! Addition of a scalar to this multivector, returns result
         constexpr Multivector3  operator+(T b) const noexcept;
         Multivector3&           operator+=(T b) noexcept;
         constexpr Multivector3  operator+(const Bivector3<T>& b) const noexcept;
