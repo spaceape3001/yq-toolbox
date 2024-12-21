@@ -122,6 +122,8 @@ namespace yq {
         
         //! Addition of a bivector to this multivector, returns result
         constexpr Multivector3  operator+(const Bivector3<T>& b) const noexcept;
+
+        //! Self adds bivector to this multivector, returns reference
         Multivector3&           operator+=(const Bivector3<T>& b) noexcept;
         constexpr Multivector3  operator+(const Multivector3& b) const noexcept;
         Multivector3&           operator+=(const Multivector3& b) noexcept;
