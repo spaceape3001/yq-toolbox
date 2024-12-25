@@ -6,6 +6,14 @@
 
 #pragma once
 
+#error "Obsolete, do not include"
+
+/*
+    This (the post library) is being removed SOON, however, 
+    it's kept around as reference
+*/
+
+
 #include <yq/post/forward.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>

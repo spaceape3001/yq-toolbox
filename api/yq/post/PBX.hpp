@@ -8,6 +8,12 @@
 
 #error "Obsolete, do not include"
 
+/*
+    This (the post library) is being removed SOON, however, 
+    it's kept around as reference
+*/
+
+
 #include <yq/core/Object.hpp>
 #include <yq/core/Required.hpp>
 #include <yq/post/Dispatcher.hpp>
