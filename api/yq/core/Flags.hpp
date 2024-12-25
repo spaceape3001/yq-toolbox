@@ -26,6 +26,8 @@ namespace yq {
     class Flags {
     public:
     
+        struct Checker;
+    
         //! Captures the enumeration parameter
         using DefEnum   = E;
         //! Captures the bit-field type parameter
@@ -290,5 +292,19 @@ namespace yq {
     private:
         T    m_value;
     };
+    
 
+    template <typename E, typename T>
+    struct Flags<E,T>::Checker {
+        Flags     value, mask;
+        
+        constexpr Checker(){}
+        constexpr Checker(Flags v) : value(v), mask(v) {}
+        constexpr Checker(Flags v, Flags m) : value(v), mask(m|v) {}
+        
+        constexpr bool operator()(Flags v) const
+        {
+            return (v&mask) == value;
+        }
+    };
 }

@@ -42,6 +42,8 @@ namespace yq {
     template <typename E, typename T=uint64_t>
     class Flag {
     public:
+
+        struct Checker;
     
         static_assert( is_template_enum_v<E>, "Use Flags instead for non-yq-Enum enumerations (sorry, it's a C++ syntax issue :( )");
     
@@ -401,4 +403,18 @@ namespace yq {
         return Flag<E>::all();
     }
 
+
+    template <typename E, typename T>
+    struct Flag<E,T>::Checker {
+        Flag     value, mask;
+        
+        constexpr Checker(){}
+        constexpr Checker(Flag v) : value(v), mask(v) {}
+        constexpr Checker(Flag v, Flag m) : value(v), mask(m|v) {}
+        
+        constexpr bool operator()(Flag v) const
+        {
+            return (v&mask) == value;
+        }
+    };
 }
