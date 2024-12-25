@@ -81,6 +81,11 @@ namespace yq {
         return false;
     }
     
+    bool    ObjectInfo::is_this(const ObjectInfo& presumedBase) const
+    {
+        return (this == &presumedBase) || is_base(presumedBase);
+    }
+
     const MetaLookup<MethodInfo>&    ObjectInfo::methods(bool all) const
     {
         return def(all).methods;

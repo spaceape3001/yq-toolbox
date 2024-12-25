@@ -65,6 +65,8 @@ namespace yq {
             \return TRUE if presumedBase is a correct assumption, and is a base class to this object.
         */
         bool    is_base(const ObjectInfo& presumedBase) const;
+
+        bool    is_this(const ObjectInfo& presumedBase) const;
         
         /*! \brief Tests for derived object
         
