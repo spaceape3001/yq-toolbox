@@ -12,6 +12,7 @@
 namespace yq {
 
     class Object;
+    class ConstructorInfo;
 
     /*! \brief Represents info for an object thats intrusively bound
     */
@@ -39,6 +40,9 @@ namespace yq {
             Caller is responsible for deleting the object.
         */
         virtual Object* create() const { return nullptr; }
+        
+        //  TODO
+        //  Object* create(std::span<const Any>) const;
 
         //! Vector of all object infos
         static const Vector<const ObjectInfo*>&   all();
@@ -49,6 +53,9 @@ namespace yq {
         //! Finds the specified object by ID
         static const ObjectInfo*        find(id_t);
         
+        // TODO
+        //  const std::vector<const ConstructorInfo*>& constructors() const { return m_constructors; }
+
         /*! \brief  Tests for base object
         
             This tests to see if the presumed base *is* a base class to this object.
@@ -163,6 +170,8 @@ namespace yq {
         D               m_local;
         //! What's defiend across all relevant objects
         D               m_all;
+
+        //std::vector<const ConstructorInfo*> m_constructors;
         
         const D& def(bool all) const { return all ? m_all : m_local; }
     

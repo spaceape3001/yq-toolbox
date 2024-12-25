@@ -238,7 +238,7 @@ namespace yq {
         //! Converter hash
         using ConvertHash   = Hash<const TypeInfo*, FNConvert>;
         
-        //! Method for this type
+        //! Constructors for this type
         std::vector<const ConstructorInfo*> m_constructors;
 
         //! Default for this type

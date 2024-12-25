@@ -45,6 +45,13 @@ namespace yq {
         r.objects << this;
     }
 
+    /* TODO
+    Object* ObjectInfo::create(std::span<const Any>) const
+    {
+        return nullptr;
+    }
+    */
+
     const MetaLookup<ObjectInfo>&    ObjectInfo::bases(bool all) const
     {
         return def(all).bases;
