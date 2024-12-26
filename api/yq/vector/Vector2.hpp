@@ -75,7 +75,7 @@ namespace yq {
         
         constexpr Vector2() noexcept = default;
         constexpr Vector2(T _x, T _y) noexcept : x(_x), y(_y) {}
-        constexpr Vector2(all_t, T v) noexcept : x(v), y(v) {}
+        constexpr Vector2(all_k, T v) noexcept : x(v), y(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Vector2(nan_t) noexcept : Vector2(ALL, nan_v<T>) {}
         consteval Vector2(one_t) noexcept : Vector2(ALL, one_v<T>) {}
@@ -83,7 +83,7 @@ namespace yq {
         constexpr Vector2(x_t, T v) noexcept : x(v), y(zero_v<T>) {}
         consteval Vector2(y_t) noexcept : x(zero_v<T>), y(one_v<T>) {}
         constexpr Vector2(y_t, T v) noexcept : x(zero_v<T>), y(v) {}
-        consteval Vector2(zero_t) noexcept : Vector2(ALL, zero_v<T>) {}
+        consteval Vector2(zero_k) noexcept : Vector2(ALL, zero_v<T>) {}
         
         explicit constexpr Vector2(const Size2<T>&) noexcept;
 
@@ -376,7 +376,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept;
+        constexpr bool all_kest(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -386,7 +386,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Vector2& b, Pred pred) const noexcept;
+        constexpr bool all_kest(const Vector2& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -396,13 +396,13 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept;
+        constexpr bool all_kest(T b, Pred pred) const noexcept;
 
 
             //  ===================================================================================================
             //  AnyComponents Adapters
             //  
-            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  The following all_kest() are for the AllComponents Adapters, to apply the test on ALL components,
             //  returning true if all elements are successful
             //  ===================================================================================================
         

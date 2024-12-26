@@ -52,7 +52,7 @@ namespace yq {
         constexpr Trivector3(T _xyz) noexcept : xyz(_xyz) {}
         
         //! Constructs all components to same value (here to allow for templated cases, otherwise redundant)
-        constexpr Trivector3(all_t, T v) noexcept : xyz(v) {}
+        constexpr Trivector3(all_k, T v) noexcept : xyz(v) {}
         
         //! Constructs to not-a-number
         template <typename=void> requires has_nan_v<T>
@@ -68,7 +68,7 @@ namespace yq {
         consteval Trivector3(xyz_t) noexcept : Trivector3(XYZ, one_v<T>) {}
         
         //! Constructs to a zero trivector
-        consteval Trivector3(zero_t) noexcept : Trivector3(ALL, zero_v<T>) {}
+        consteval Trivector3(zero_k) noexcept : Trivector3(ALL, zero_v<T>) {}
         
         //! Converts to another Trivector3 of convertible data type
         template <typename U>

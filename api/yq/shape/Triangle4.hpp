@@ -57,13 +57,13 @@ namespace yq {
         constexpr Triangle4(const Segment4<T>&, const Vector4<T>& c) noexcept;
 
         //! Sets ALL three to the same point value (should have no area)
-        constexpr Triangle4(all_t, const Vector4<T>& v) noexcept : a(v), b(v), c(v) {}
+        constexpr Triangle4(all_k, const Vector4<T>& v) noexcept : a(v), b(v), c(v) {}
 
         //! Sets all to not-a-number
         consteval Triangle4(nan_t) noexcept : Triangle4(ALL, Vector4<T>(NAN)) {}
 
         //! Sets all to zero
-        consteval Triangle4(zero_t) noexcept : Triangle4(ALL, Vector4<T>(ZERO)) {}
+        consteval Triangle4(zero_k) noexcept : Triangle4(ALL, Vector4<T>(ZERO)) {}
         
         //! Converts to another triangle of compatible data type
         template <typename U>

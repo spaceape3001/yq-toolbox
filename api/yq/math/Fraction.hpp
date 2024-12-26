@@ -54,7 +54,7 @@ namespace yq {
         consteval Fraction(one_t) : num(one_v<I>), den(one_v<I>) {}
         
         //! Fraction of zero
-        consteval Fraction(zero_t) : num(zero_v<I>), den(one_v<I>) {}
+        consteval Fraction(zero_k) : num(zero_v<I>), den(one_v<I>) {}
 
         //! Converts to an double
         constexpr operator double() const { return (double) num / (double) den; }

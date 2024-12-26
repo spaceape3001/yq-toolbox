@@ -51,7 +51,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor34(all_t, T v) : 
+        constexpr Tensor34(all_k, T v) : 
             xx(v), xy(v), xz(v), xw(v),
             yx(v), yy(v), yz(v), yw(v),
             zx(v), zy(v), zz(v), zw(v)
@@ -87,7 +87,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor34(zero_t) : 
+        consteval Tensor34(zero_k) : 
             xx(zero_v<T>), xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(zero_v<T>), yz(zero_v<T>), yw(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(zero_v<T>), zw(zero_v<T>)
@@ -262,7 +262,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(Pred pred) const noexcept;
+            constexpr bool all_kest(Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -272,7 +272,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(const Tensor34& b, Pred pred) const noexcept;
+            constexpr bool all_kest(const Tensor34& b, Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -282,7 +282,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(T b, Pred pred) const noexcept;
+            constexpr bool all_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  AnyComponents Adapters

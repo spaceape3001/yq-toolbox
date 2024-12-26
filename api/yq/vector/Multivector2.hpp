@@ -53,7 +53,7 @@ namespace yq {
         constexpr Multivector2(T _a, const Vector2<T>& v, const Bivector2<T>& b) noexcept : a(_a), x(v.x), y(v.y), xy(b.xy) {}
         
         //! Constructs by setting all components to the same value
-        constexpr Multivector2(all_t, T v) noexcept : a(v), x(v), y(v), xy(v) {}
+        constexpr Multivector2(all_k, T v) noexcept : a(v), x(v), y(v), xy(v) {}
         
         //! Constructs all elements to Not-a-number
         template <typename=void> requires has_nan_v<T>
@@ -63,7 +63,7 @@ namespace yq {
         consteval Multivector2(one_t) noexcept : Multivector2(ALL, one_v<T>) {}
         
         //! Constructs all elements to be zero
-        consteval Multivector2(zero_t) noexcept : Multivector2(ALL, zero_v<T>) {}
+        consteval Multivector2(zero_k) noexcept : Multivector2(ALL, zero_v<T>) {}
 
         //! Converts this multivector to another multivector2 of compatible data type
         template <typename U>

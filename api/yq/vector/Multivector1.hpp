@@ -49,7 +49,7 @@ namespace yq {
         constexpr Multivector1(T _a, const Vector1<T>& v) noexcept : a(_a), x(v.x) {}
         
         //! Constructs all components to same value
-        constexpr Multivector1(all_t, T v) noexcept : a(v), x(v) {}
+        constexpr Multivector1(all_k, T v) noexcept : a(v), x(v) {}
         
         //! Constructs to all NaN
         template <typename=void> requires has_nan_v<T>
@@ -59,7 +59,7 @@ namespace yq {
         consteval Multivector1(one_t) noexcept : Multivector1(ALL, one_v<T>) {}
         
         //! Constructs to all zeros
-        consteval Multivector1(zero_t) noexcept : Multivector1(ALL, zero_v<T>) {}
+        consteval Multivector1(zero_k) noexcept : Multivector1(ALL, zero_v<T>) {}
         
         //! Casting operator, to another multivector type of compatible type
         template <typename U>

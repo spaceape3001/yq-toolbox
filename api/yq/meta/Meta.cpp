@@ -159,7 +159,7 @@ namespace yq {
         return false;
     }
     
-    bool    Meta::has(all_t, std::initializer_list<Flag> flags) const
+    bool    Meta::has(all_k, std::initializer_list<Flag> flags) const
     {
         for(Flag f : flags){
             if(!has(f))

@@ -28,7 +28,7 @@ namespace yq {
         constexpr UV(const T& _u, const T& _v) noexcept : u(_u), v(_v) {}
         
         //! Construct with all components to same value
-        constexpr UV(all_t, const T& _val) noexcept : u(_val), v(_val) {}
+        constexpr UV(all_k, const T& _val) noexcept : u(_val), v(_val) {}
         
         //! Defaulted equality operator
         constexpr bool operator==(const UV&) const noexcept = default;

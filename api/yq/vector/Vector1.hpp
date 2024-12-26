@@ -70,13 +70,13 @@ namespace yq {
         
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
-        constexpr Vector1(all_t, T v) noexcept : x(v) {}
+        constexpr Vector1(all_k, T v) noexcept : x(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Vector1(nan_t) noexcept : Vector1(ALL, nan_v<T>) {}
         consteval Vector1(one_t) noexcept : Vector1(ALL, one_v<T>) {}
         constexpr Vector1(x_t, T v) noexcept : x(v) {}
         consteval Vector1(x_t) noexcept : x(one_v<T>) {}
-        consteval Vector1(zero_t) noexcept : Vector1(ALL, zero_v<T>) {}
+        consteval Vector1(zero_k) noexcept : Vector1(ALL, zero_v<T>) {}
 
         #if YQ_USE_GLM
         template <glm::qualifier Q>
@@ -339,7 +339,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept;
+        constexpr bool all_kest(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -347,7 +347,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Vector1& b, Pred pred) const noexcept;
+        constexpr bool all_kest(const Vector1& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -356,7 +356,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept;
+        constexpr bool all_kest(T b, Pred pred) const noexcept;
         
 
             //  ===================================================================================================

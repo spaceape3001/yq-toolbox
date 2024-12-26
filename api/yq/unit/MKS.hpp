@@ -37,7 +37,7 @@ namespace yq {
         template <typename=void> requires has_nan_v<T>
         consteval MKS(nan_t) noexcept : value(nan_v<T>) {}
         consteval MKS(one_t) noexcept : value(one_v<T>) {}
-        consteval MKS(zero_t) noexcept : value(zero_v<T>) {}
+        consteval MKS(zero_k) noexcept : value(zero_v<T>) {}
         
         template <int N>
         requires std::is_floating_point_v<T>

@@ -40,7 +40,7 @@ namespace yq {
         
         constexpr Tensor12() noexcept {}
         constexpr Tensor12(T _xx, T _xy) noexcept : xx(_xx), xy(_xy) {}
-        constexpr Tensor12(all_t, T v) : 
+        constexpr Tensor12(all_k, T v) : 
             xx(v), xy(v)
         {
         }
@@ -49,7 +49,7 @@ namespace yq {
         template <typename=void> requires has_nan_v<T>
         consteval Tensor12(nan_t) noexcept : Tensor12(ALL, nan_v<T>) {}
         constexpr Tensor12(rows_t, Vector2<T>& v) noexcept : xx(v.x), xy(v.y) {}
-        consteval Tensor12(zero_t) noexcept : Tensor12(ALL, zero_v<T>) {}
+        consteval Tensor12(zero_k) noexcept : Tensor12(ALL, zero_v<T>) {}
         
         #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
@@ -176,7 +176,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(Pred pred) const noexcept;
+            constexpr bool all_kest(Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -186,7 +186,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(const Tensor12& b, Pred pred) const noexcept;
+            constexpr bool all_kest(const Tensor12& b, Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -196,7 +196,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(T b, Pred pred) const noexcept;
+            constexpr bool all_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  AnyComponents Adapters

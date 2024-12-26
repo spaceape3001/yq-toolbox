@@ -57,7 +57,7 @@ namespace yq {
         constexpr Segment4(nan_t) : Segment4( Vector4<T>(NAN), Vector4<T>(NAN)) {}
         
         //! Zero constructor
-        constexpr Segment4(zero_t) : Segment4( Vector4<T>(ZERO), Vector4<T>(ZERO)) {}
+        constexpr Segment4(zero_k) : Segment4( Vector4<T>(ZERO), Vector4<T>(ZERO)) {}
 
         //! Converter to another segment4 of compatible data types
         template <typename U>

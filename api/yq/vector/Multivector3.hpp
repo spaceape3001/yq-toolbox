@@ -67,7 +67,7 @@ namespace yq {
             a(_a), x(v.x), y(v.y), z(v.z), xy(b.xy), yz(b.yz), zx(b.zx), xyz(t.xyz) {}
 
         //! Constructs by setting all sub-values to same value
-        constexpr Multivector3(all_t, T v) noexcept : a(v), x(v), y(v), z(v), xy(v), yz(v), zx(v), xyz(v) {}
+        constexpr Multivector3(all_k, T v) noexcept : a(v), x(v), y(v), z(v), xy(v), yz(v), zx(v), xyz(v) {}
         
         //! Constructs ALL values to not-a-number
         template <typename=void> requires has_nan_v<T>
@@ -77,7 +77,7 @@ namespace yq {
         consteval Multivector3(one_t) noexcept : Multivector3(ALL, one_v<T>) {}
         
         //! Constructs ALL values to be zero
-        consteval Multivector3(zero_t) noexcept : Multivector3(ALL, zero_v<T>) {}
+        consteval Multivector3(zero_k) noexcept : Multivector3(ALL, zero_v<T>) {}
 
         //! Converts this multivector to another of compatible type
         template <typename U>

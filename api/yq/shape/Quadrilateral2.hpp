@@ -50,17 +50,17 @@ namespace yq {
             a(_a), b(_b), c(_c), d(_d) {}
             
         //! Construct all vector components to same value
-        constexpr Quadrilateral2(all_t, T v) : a(ALL, v), b(ALL, v), c(ALL, v), d(ALL, v) {}
+        constexpr Quadrilateral2(all_k, T v) : a(ALL, v), b(ALL, v), c(ALL, v), d(ALL, v) {}
         
         //! Construct all points to same value
-        constexpr Quadrilateral2(all_t, const Vector2<T>& v) : a(v), b(v), c(v), d(v) {}
+        constexpr Quadrilateral2(all_k, const Vector2<T>& v) : a(v), b(v), c(v), d(v) {}
         
         //! Constructs NaN Quad
         template <typename=void> requires has_nan_v<T>
         consteval Quadrilateral2(nan_t) noexcept : Quadrilateral2(ALL, nan_v<T>) {}
         
         //! Constructs a zero Quad
-        consteval Quadrilateral2(zero_t) noexcept : Quadrilateral2(ALL, zero_v<T>) {}
+        consteval Quadrilateral2(zero_k) noexcept : Quadrilateral2(ALL, zero_v<T>) {}
         
         //! Construct from Axially aligned bounding box
         explicit constexpr Quadrilateral2(const AxBox2<T>&) noexcept;

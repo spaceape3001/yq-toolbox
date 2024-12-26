@@ -39,7 +39,7 @@ namespace yq {
         
         constexpr Tensor11() noexcept = default;
         constexpr Tensor11(T _xx) noexcept : xx(_xx) {}
-        constexpr Tensor11(all_t, T v) : xx(v) {}
+        constexpr Tensor11(all_k, T v) : xx(v) {}
         constexpr Tensor11(columns_t, const Vector1<T>& x) noexcept : xx(x.x) {}
         constexpr Tensor11(diagonal_t, T _xx) noexcept : xx(_xx) {}
         constexpr Tensor11(diagonal_t, const Vector1<T>& v) noexcept : xx(v.x) {}
@@ -47,7 +47,7 @@ namespace yq {
         template <typename=void> requires has_nan_v<T>
         constexpr Tensor11(nan_t) noexcept : Tensor11(ALL, nan_v<T> ) {}
         constexpr Tensor11(rows_t,    const Vector1<T>& x) noexcept : xx(x.x) {}
-        constexpr Tensor11(zero_t) noexcept : Tensor11(ALL, zero_v<T> ) {}
+        constexpr Tensor11(zero_k) noexcept : Tensor11(ALL, zero_v<T> ) {}
         
         #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
@@ -167,7 +167,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(Pred pred) const noexcept;
+            constexpr bool all_kest(Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -177,7 +177,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(const Tensor11& b, Pred pred) const noexcept;
+            constexpr bool all_kest(const Tensor11& b, Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -187,7 +187,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(T b, Pred pred) const noexcept;
+            constexpr bool all_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  AnyComponents Adapters

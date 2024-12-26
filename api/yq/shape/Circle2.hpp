@@ -49,7 +49,7 @@ namespace yq {
         consteval Circle2(unit_t) : Circle2(Vector2<T>(ZERO), one_v<T>) {}
         
         //! Constructs to zero circle
-        consteval Circle2(zero_t) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
+        consteval Circle2(zero_k) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
         
         //! Constructs to focus and radius
         constexpr Circle2(focus_t, const Vector2<T>& focus, const T dist) noexcept : Circle2(focus, dist) {}

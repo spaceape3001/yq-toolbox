@@ -39,9 +39,9 @@ namespace yq {
         constexpr Tetrahedron3() noexcept = default;
         constexpr Tetrahedron3(const Vector3<T>& _a, const Vector3<T>& _b, const Vector3<T>& _c, const Vector3<T>& _d) 
             : a(_a), b(_b), c(_c), d(_d) {}
-        constexpr Tetrahedron3(all_t, const Vector3<T>& v) noexcept : a(v), b(v), c(v), d(v) {}
+        constexpr Tetrahedron3(all_k, const Vector3<T>& v) noexcept : a(v), b(v), c(v), d(v) {}
         consteval Tetrahedron3(nan_t) noexcept : Tetrahedron3(ALL, Vector3<T>(NAN)) {}
-        consteval Tetrahedron3(zero_t) noexcept : Tetrahedron3(ALL, Vector3<T>(ZERO)) {}
+        consteval Tetrahedron3(zero_k) noexcept : Tetrahedron3(ALL, Vector3<T>(ZERO)) {}
         constexpr Tetrahedron3(const Triangle3<T>& _t, const Vector3<T>& d);
         
         /*! \brief Makes a regular tetrahedron 

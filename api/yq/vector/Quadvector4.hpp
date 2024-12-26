@@ -54,7 +54,7 @@ namespace yq {
         constexpr Quadvector4(T _xyzw) noexcept : xyzw(_xyzw) {}
         
         //! Constructs ALL components to same value
-        constexpr Quadvector4(all_t, T v) noexcept : xyzw(v) {}
+        constexpr Quadvector4(all_k, T v) noexcept : xyzw(v) {}
 
         //! Constructs to NaN in the components
         template <typename=void> requires has_nan_v<T>
@@ -71,7 +71,7 @@ namespace yq {
         consteval Quadvector4(xyzw_t) noexcept : Quadvector4(XYZW, one_v<T>) {}
         
         //! Constructs with all components zero
-        consteval Quadvector4(zero_t) noexcept : Quadvector4(ALL, zero_v<T>) {}
+        consteval Quadvector4(zero_k) noexcept : Quadvector4(ALL, zero_v<T>) {}
 
         //! Converts this quadvector to another of compatible type
         template <typename U>

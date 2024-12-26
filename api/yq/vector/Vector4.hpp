@@ -80,7 +80,7 @@ namespace yq {
         constexpr Vector4() noexcept = default;
         constexpr Vector4(T _x, T _y, T _z, T _w) noexcept : 
             x(_x), y(_y), z(_z), w(_w) {}
-        constexpr Vector4(all_t, T v) noexcept : x(v), y(v), z(v), w(v) {}
+        constexpr Vector4(all_k, T v) noexcept : x(v), y(v), z(v), w(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Vector4(nan_t) noexcept : Vector4(ALL, nan_v<T>) {}
         consteval Vector4(one_t) noexcept : Vector4(ALL, one_v<T>) {}
@@ -92,7 +92,7 @@ namespace yq {
         constexpr Vector4(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v), w(zero_v<T>) {}
         consteval Vector4(w_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(one_v<T>) {}
         constexpr Vector4(w_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
-        consteval Vector4(zero_t) noexcept : Vector4(ALL, zero_v<T>) {}
+        consteval Vector4(zero_k) noexcept : Vector4(ALL, zero_v<T>) {}
 
         explicit constexpr Vector4(const Size4<T>&) noexcept;
 
@@ -401,7 +401,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept;
+        constexpr bool all_kest(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -411,7 +411,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Vector4& b, Pred pred) const noexcept;
+        constexpr bool all_kest(const Vector4& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -421,12 +421,12 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept;
+        constexpr bool all_kest(T b, Pred pred) const noexcept;
 
             //  ===================================================================================================
             //  AnyComponents Adapters
             //  
-            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  The following all_kest() are for the AllComponents Adapters, to apply the test on ALL components,
             //  returning true if all elements are successful
             //  ===================================================================================================
         

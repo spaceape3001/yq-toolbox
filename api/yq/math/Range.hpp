@@ -61,13 +61,13 @@ namespace yq {
         constexpr Range(T _lo, T _hi) noexcept : lo(_lo), hi(_hi) {}
         
         //! Initialize all components to same value
-        constexpr Range(all_t, T v) noexcept : lo(v), hi(v) {}
+        constexpr Range(all_k, T v) noexcept : lo(v), hi(v) {}
         
         //! Initialize with nan
         consteval Range(nan_t) noexcept : Range(ALL, nan_v<T>) {}
         
         //! Initialize with zero
-        consteval Range(zero_t) noexcept : Range(ALL, zero_v<T>) {}
+        consteval Range(zero_k) noexcept : Range(ALL, zero_v<T>) {}
         
         //! Construct by intersection of two value lists
         constexpr Range(intersect_t, std::initializer_list<T>, std::initializer_list<T>);

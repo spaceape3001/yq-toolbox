@@ -90,7 +90,7 @@ namespace yq {
         */
         const MetaLookup<ObjectInfo>&    deriveds(bool all=false) const;
 
-        const MetaLookup<ObjectInfo>&    deriveds(all_t) const { return m_all.derived; }
+        const MetaLookup<ObjectInfo>&    deriveds(all_k) const { return m_all.derived; }
         
         const MetaLookup<ObjectInfo>&    deriveds(local_t) const { return m_local.derived; }
         
@@ -102,7 +102,7 @@ namespace yq {
         */
         const MetaLookup<ObjectInfo>&    bases(bool all=false) const;
 
-        const MetaLookup<ObjectInfo>&    bases(all_t) const { return m_all.bases; }
+        const MetaLookup<ObjectInfo>&    bases(all_k) const { return m_all.bases; }
         
         const MetaLookup<ObjectInfo>&    bases(local_t) const { return m_local.bases; }
         
@@ -114,7 +114,7 @@ namespace yq {
         */
         const MetaLookup<PropertyInfo>&  properties(bool all=false) const;
 
-        const MetaLookup<PropertyInfo>&  properties(all_t) const { return m_all.properties; }
+        const MetaLookup<PropertyInfo>&  properties(all_k) const { return m_all.properties; }
 
         const MetaLookup<PropertyInfo>&  properties(local_t) const { return m_local.properties; }
         
@@ -126,7 +126,7 @@ namespace yq {
         */
         const MetaLookup<MethodInfo>&   methods(bool all=false) const;
         
-        const MetaLookup<MethodInfo>&   methods(all_t) const { return m_all.methods; }
+        const MetaLookup<MethodInfo>&   methods(all_k) const { return m_all.methods; }
         
         const MetaLookup<MethodInfo>&   methods(local_t) const { return m_local.methods; }
     

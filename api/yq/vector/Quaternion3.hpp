@@ -50,7 +50,7 @@ namespace yq {
         constexpr Quaternion3() noexcept = default;
         constexpr Quaternion3(T _w, T _x, T _y, T _z) : w(_w), x(_x), y(_y), z(_z) {}
         
-        constexpr Quaternion3(all_t, T v) : w(v), x(v), y(v), z(v) {}
+        constexpr Quaternion3(all_k, T v) : w(v), x(v), y(v), z(v) {}
         consteval Quaternion3(identity_t) : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
         consteval Quaternion3(nan_t) : Quaternion3(ALL, nan_v<T>) {}
         consteval Quaternion3(w_t) noexcept : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
@@ -61,7 +61,7 @@ namespace yq {
         constexpr Quaternion3(y_t, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(v), z(zero_v<T>) {}
         consteval Quaternion3(z_t) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
         constexpr Quaternion3(z_t, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
-        consteval Quaternion3(zero_t) : Quaternion3(ALL, zero_v<T>) {}
+        consteval Quaternion3(zero_k) : Quaternion3(ALL, zero_v<T>) {}
         
         #if YQ_USE_GLM
         template <glm::qualifier Q>

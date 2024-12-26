@@ -59,7 +59,7 @@ namespace yq {
         constexpr Bivector3(T _xy, T _yz, T _zx) noexcept : xy(_xy), yz(_yz), zx(_zx) {}
         
         //! Constructs all component to same value
-        constexpr Bivector3(all_t, T v) noexcept : xy(v), yz(v), zx(v) {}
+        constexpr Bivector3(all_k, T v) noexcept : xy(v), yz(v), zx(v) {}
         
         //! Constructs to NaN
         consteval Bivector3(nan_t) noexcept : Bivector3(ALL, nan_v<T>) {}
@@ -86,7 +86,7 @@ namespace yq {
         consteval Bivector3(zx_t) noexcept : Bivector3(ZX, one_v<T>) {}
         
         //! Constructs a zero bivector
-        consteval Bivector3(zero_t) noexcept : Bivector3(ALL, zero_v<T>) {}
+        consteval Bivector3(zero_k) noexcept : Bivector3(ALL, zero_v<T>) {}
 
         //! Converts to another bivector of compatible type
         template <typename U>

@@ -132,7 +132,7 @@ namespace yq {
         consteval AxBox4(nan_t) : AxBox4(Vector4<T>(NAN)) {}
 
         //! Zero box
-        consteval AxBox4(zero_t) : AxBox4(Vector4<T>(ZERO)) {}
+        consteval AxBox4(zero_k) : AxBox4(Vector4<T>(ZERO)) {}
 
         //! Constructs using the bounding box of the given segment
         explicit constexpr AxBox4(const Segment4<T>&) noexcept;

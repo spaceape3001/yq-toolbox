@@ -50,7 +50,7 @@ bool            equal(const char* lhs, const char* rhs)
     return !(*lhs || *rhs);
 }
 
-bool            equal(igcase_t, const char* lhs, const char* rhs)
+bool            equal(igcase_k, const char* lhs, const char* rhs)
 {
     for(;*lhs && *rhs; ++lhs, ++rhs){
         if(tolower(*rhs) != tolower(*lhs))
@@ -74,7 +74,7 @@ const char*    start(const char* str, const char* pat)
 }
 
 
-const char*    start(igcase_t, const char* str, const char* pat)
+const char*    start(igcase_k, const char* str, const char* pat)
 {
     // skip whitespace
     for(;*str && isspace(*str); ++str)

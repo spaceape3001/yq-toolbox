@@ -52,7 +52,7 @@ namespace yq {
         {
         }
         
-        constexpr Tensor31(all_t, T v) : 
+        constexpr Tensor31(all_k, T v) : 
             xx(v), 
             yx(v), 
             zx(v)
@@ -83,7 +83,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor31(zero_t) : Tensor31(ALL, zero_v<T>) {} 
+        consteval Tensor31(zero_k) : Tensor31(ALL, zero_v<T>) {} 
         
         #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
@@ -218,7 +218,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(Pred pred) const noexcept;
+            constexpr bool all_kest(Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -228,7 +228,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(const Tensor31& b, Pred pred) const noexcept;
+            constexpr bool all_kest(const Tensor31& b, Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -238,7 +238,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(T b, Pred pred) const noexcept;
+            constexpr bool all_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  AnyComponents Adapters

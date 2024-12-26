@@ -61,7 +61,7 @@ namespace yq {
         constexpr Trivector4(T _xyz, T _yzw, T _zwx, T _wxy) noexcept : xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy) {}
         
         //! Constructs all components to same value
-        constexpr Trivector4(all_t, T v) noexcept : xyz(v), yzw(v), zwx(v), wxy(v) {}
+        constexpr Trivector4(all_k, T v) noexcept : xyz(v), yzw(v), zwx(v), wxy(v) {}
         
         //! Constructs the trivector to not-a-number
         template <typename=void> requires has_nan_v<T>
@@ -95,7 +95,7 @@ namespace yq {
         consteval Trivector4(zwx_t) noexcept : Trivector4(ZWX, one_v<T>) {}
         
         //! Constructs to a zero trivector
-        consteval Trivector4(zero_t) noexcept : Trivector4(ALL, zero_v<T>) {}
+        consteval Trivector4(zero_k) noexcept : Trivector4(ALL, zero_v<T>) {}
 
         //! Converts to another trivector of compatible type
         template <typename U>

@@ -55,7 +55,7 @@ namespace yq {
             xy(_xy), yz(_yz), zw(_zw), wx(_wx), xz(_xz), yw(_yw) {}
             
         //! Constructs all elements to same value
-        constexpr Bivector4(all_t, T v) noexcept : xy(v), yz(v), zw(v), wx(v), xz(v), yw(v) {}
+        constexpr Bivector4(all_k, T v) noexcept : xy(v), yz(v), zw(v), wx(v), xz(v), yw(v) {}
         
         //! Constructs all elements to NaN
         consteval Bivector4(nan_t) noexcept : Bivector4(ALL, nan_v<T>) {}
@@ -106,7 +106,7 @@ namespace yq {
         consteval Bivector4(yw_t) noexcept : Bivector4(YW, one_v<T>) {}
         
         //! Constructs a zero bivector
-        consteval Bivector4(zero_t) noexcept : Bivector4(ALL, zero_v<T>) {}
+        consteval Bivector4(zero_k) noexcept : Bivector4(ALL, zero_v<T>) {}
 
         //! Converts to another bivector of compatible type
         template <typename U>

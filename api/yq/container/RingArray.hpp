@@ -178,7 +178,7 @@ namespace yq {
         }
         
         //! Span to ALL the data (note, might not be in order)
-        std::span<const T>  span(all_t) const
+        std::span<const T>  span(all_k) const
         {
             if(m_zero < N)
                 return std::span<const T>(m_data, N);

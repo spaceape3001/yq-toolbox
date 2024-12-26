@@ -75,8 +75,8 @@ namespace yq {
         //!  Default constructor, all flags clear ....
         constexpr Flag() noexcept : m_value(0) {}
         
-        constexpr Flag(all_t, bool v) noexcept : m_value(v?~T(0):T(0)) {}
-        constexpr Flag(all_t) noexcept : Flag(ALL, true) {}
+        constexpr Flag(all_k, bool v) noexcept : m_value(v?~T(0):T(0)) {}
+        constexpr Flag(all_k) noexcept : Flag(ALL, true) {}
         
         //! Constructs by bit-field
         constexpr Flag(T v) noexcept : m_value(v) {}

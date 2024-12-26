@@ -58,7 +58,7 @@ namespace yq {
         consteval Polar2(unit_t) noexcept : angle(zero_v<A>), radius(one_v<L>) {}
         
         //! Zero constructor
-        consteval Polar2(zero_t) noexcept : angle(zero_v<A>), radius(zero_v<L>) {}
+        consteval Polar2(zero_k) noexcept : angle(zero_v<A>), radius(zero_v<L>) {}
 
         //! Creates a polar assuming euler convention
         Polar2(const Vector2<L>&);

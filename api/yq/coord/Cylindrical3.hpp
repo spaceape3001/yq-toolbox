@@ -57,7 +57,7 @@ namespace yq {
         consteval Cylindrical3(unit_t) noexcept : angle(zero_v<A>), radius(one_v<L>), z(one_v<L>) {}
         
         //! Constructs to a zero
-        consteval Cylindrical3(zero_t) noexcept : angle(zero_v<A>), radius(zero_v<L>), z(zero_v<L>) {}
+        consteval Cylindrical3(zero_k) noexcept : angle(zero_v<A>), radius(zero_v<L>), z(zero_v<L>) {}
 
         //! Creates a polar assuming euler convention
         Cylindrical3(const Vector3<L>&);

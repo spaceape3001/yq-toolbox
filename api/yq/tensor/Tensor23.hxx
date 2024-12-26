@@ -303,7 +303,7 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor23<T>::all_test(Pred pred) const noexcept
+    constexpr bool Tensor23<T>::all_kest(Pred pred) const noexcept
     {
         return 
             pred(xx) && pred(xy) && pred(xz) && 
@@ -313,7 +313,7 @@ namespace yq {
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor23<T>::all_test(const Tensor23& b, Pred pred) const noexcept
+    constexpr bool Tensor23<T>::all_kest(const Tensor23& b, Pred pred) const noexcept
     {
         return 
             pred(xx, b.xx) && pred(xy, b.xy) && pred(xz, b.xz) && 
@@ -323,7 +323,7 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor23<T>::all_test(T b, Pred pred) const noexcept
+    constexpr bool Tensor23<T>::all_kest(T b, Pred pred) const noexcept
     {
         return 
             pred(xx, b) && pred(xy, b) && pred(xz, b) && 

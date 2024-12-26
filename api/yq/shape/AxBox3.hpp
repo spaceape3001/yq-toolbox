@@ -141,7 +141,7 @@ namespace yq {
         consteval AxBox3(nan_t) : AxBox3(Vector3<T>(NAN)) {}
 
         //! Zero box
-        consteval AxBox3(zero_t) : AxBox3(Vector3<T>(ZERO)) {}
+        consteval AxBox3(zero_k) : AxBox3(Vector3<T>(ZERO)) {}
 
         //! Constructs using the bounding box of the given segment
         explicit constexpr AxBox3(const Segment3<T>&) noexcept;

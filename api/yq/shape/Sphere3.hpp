@@ -49,7 +49,7 @@ namespace yq {
         consteval Sphere3(unit_t) : Sphere3(Vector3<T>(ZERO), one_v<T>) {}
         
         //! Zero constructor
-        consteval Sphere3(zero_t) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
+        consteval Sphere3(zero_k) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
 
         //! Construct with focus and distance
         constexpr Sphere3(focus_t, const Vector3<T>& focus, const T dist) noexcept : Sphere3(focus, dist) {}

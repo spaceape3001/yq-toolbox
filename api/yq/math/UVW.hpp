@@ -33,7 +33,7 @@ namespace yq {
         constexpr UVW(const T& _u, const T& _v, const T& _w) noexcept : u(_u), v(_v), w(_w) {}
         
         //! Constructs all data to same value
-        constexpr UVW(all_t, const T& _val) noexcept : u(_val), v(_val), w(_val) {}
+        constexpr UVW(all_k, const T& _val) noexcept : u(_val), v(_val), w(_val) {}
         
         //! Defaulted equality operator
         constexpr bool operator==(const UVW&) const noexcept = default;

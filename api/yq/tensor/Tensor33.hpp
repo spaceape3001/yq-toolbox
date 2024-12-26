@@ -67,7 +67,7 @@ namespace yq {
         {
         }
         
-        constexpr Tensor33(all_t, T v) : 
+        constexpr Tensor33(all_k, T v) : 
             xx(v), xy(v), xz(v),
             yx(v), yy(v), yz(v),
             zx(v), zy(v), zz(v)
@@ -112,7 +112,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor33(zero_t) : Tensor33(ALL, zero_v<T>) {}
+        consteval Tensor33(zero_k) : Tensor33(ALL, zero_v<T>) {}
         
         template <typename=void>
         requires std::is_floating_point_v<T>
@@ -336,7 +336,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(Pred pred) const noexcept;
+            constexpr bool all_kest(Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -346,7 +346,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(const Tensor33& b, Pred pred) const noexcept;
+            constexpr bool all_kest(const Tensor33& b, Pred pred) const noexcept;
 
             /*! Tests every element
                 This applies the given test to every component, 
@@ -356,7 +356,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool all_test(T b, Pred pred) const noexcept;
+            constexpr bool all_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  AnyComponents Adapters

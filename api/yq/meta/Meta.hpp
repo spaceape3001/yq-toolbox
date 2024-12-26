@@ -239,7 +239,7 @@ namespace yq {
 
         //! Detects for all flags being set
         //! \note an empty list will return TRUE
-        bool                            has(all_t, std::initializer_list<Flag>) const;
+        bool                            has(all_k, std::initializer_list<Flag>) const;
 
         //! Detects for any flag being set
         //! \note an empty list will return FALSE

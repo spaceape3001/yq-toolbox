@@ -57,7 +57,7 @@ namespace yq {
             xy(b.xy), yz(b.yz), zw(b.zw), wx(b.wx), xz(b.xz), yw(b.yw),
             xyz(t.xyz), yzw(t.yzw), zwx(t.zwx), wxy(t.wxy),
             xyzw(q.xyzw) {}
-        constexpr Multivector4(all_t, T v) noexcept : 
+        constexpr Multivector4(all_k, T v) noexcept : 
             a(v), 
             x(v), y(v), z(v), 
             xy(v), yz(v), zw(v), wx(v), xz(v), yw(v),
@@ -66,7 +66,7 @@ namespace yq {
         template <typename=void> requires has_nan_v<T>
         consteval Multivector4(nan_t) noexcept : Multivector4(ALL, nan_v<T>) {}
         consteval Multivector4(one_t) noexcept : Multivector4(ALL, one_v<T>) {}
-        consteval Multivector4(zero_t) noexcept : Multivector4(ALL, zero_v<T>) {}
+        consteval Multivector4(zero_k) noexcept : Multivector4(ALL, zero_v<T>) {}
 
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>

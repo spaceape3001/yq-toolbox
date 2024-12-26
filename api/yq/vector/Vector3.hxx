@@ -567,21 +567,21 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector3<T>::all_test(Pred pred) const noexcept
+    constexpr bool Vector3<T>::all_kest(Pred pred) const noexcept
     {
         return pred(x) && pred(y) && pred(z);
     }
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector3<T>::all_test(const Vector3& b, Pred pred) const noexcept
+    constexpr bool Vector3<T>::all_kest(const Vector3& b, Pred pred) const noexcept
     {
         return pred(x, b.x) && pred(y, b.y) && pred(z, b.z);
     }
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector3<T>::all_test(T b, Pred pred) const noexcept
+    constexpr bool Vector3<T>::all_kest(T b, Pred pred) const noexcept
     {
         return pred(x, b) && pred(y, b) && pred(z, b);
     }

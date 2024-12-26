@@ -131,7 +131,7 @@ namespace yq {
         consteval AxBox2(nan_t) : AxBox2(Vector2<T>(NAN)) {}
 
         //! Zero box
-        consteval AxBox2(zero_t) : AxBox2(Vector2<T>(ZERO)) {}
+        consteval AxBox2(zero_k) : AxBox2(Vector2<T>(ZERO)) {}
 
         //! Constructs using the bounding box of the given circle
         explicit constexpr AxBox2(const Circle2<T>&) noexcept;

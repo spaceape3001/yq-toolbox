@@ -54,11 +54,11 @@ namespace yq {
 
         constexpr Size2() noexcept = default;
         constexpr Size2(T _x, T _y) noexcept : x(_x), y(_y) {}
-        constexpr Size2(all_t, T v) noexcept : x(v), y(v) {}
+        constexpr Size2(all_k, T v) noexcept : x(v), y(v) {}
         
         template <typename=void> requires has_nan_v<T>
         consteval Size2(nan_t) : Size2(ALL, nan_v<T>) {}
-        consteval Size2(zero_t) : Size2(ALL, zero_v<T>) {}
+        consteval Size2(zero_k) : Size2(ALL, zero_v<T>) {}
         consteval Size2(one_t) : Size2(ALL, one_v<T>) {}
         
         explicit constexpr Size2(const Vector2<T>&) noexcept;
@@ -193,7 +193,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(Pred pred) const noexcept;
+        constexpr bool all_kest(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -203,7 +203,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(const Size2& b, Pred pred) const noexcept;
+        constexpr bool all_kest(const Size2& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -213,12 +213,12 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_test(T b, Pred pred) const noexcept;
+        constexpr bool all_kest(T b, Pred pred) const noexcept;
 
             //  ===================================================================================================
             //  AnyComponents Adapters
             //  
-            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  The following all_kest() are for the AllComponents Adapters, to apply the test on ALL components,
             //  returning true if all elements are successful
             //  ===================================================================================================
         
