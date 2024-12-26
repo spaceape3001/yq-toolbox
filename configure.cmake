@@ -29,7 +29,7 @@ if(NOT YOUR_QUILL_TOOLBOX)
     endif()
 
     set(CMAKE_CONFIGURATION_TYPES Debug;Release)
-    set(CMAKE_CXX_STANDARD 23)                  # C++23 is the standard (may be bumped in the future)
+    set(CMAKE_CXX_STANDARD 26)                  # C++23 is the standard (may be bumped in the future)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin)

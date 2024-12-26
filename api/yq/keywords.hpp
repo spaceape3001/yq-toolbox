@@ -72,6 +72,7 @@ namespace yq {
     struct graph_t {};
     struct gregorian_t {};
     struct guard_t {};
+    struct high_t {};
     struct hpr_t {};
     struct i_t {};
     struct identity_t {};
@@ -89,6 +90,7 @@ namespace yq {
     struct layout_t {};
     struct line_t {};
     struct local_t {};
+    struct low_t {};
     struct m_t {};
     struct maybe_t {};
     struct move_t {};
@@ -229,6 +231,7 @@ namespace yq {
     static constexpr const gregorian_t      GREGORIAN;
     static constexpr const guard_t          GUARD;
     static constexpr const hpr_t            HPR;
+    static constexpr const high_t           HIGH;
     static constexpr const i_t              I;
     static constexpr const identity_t       IDENTITY;
     static constexpr const if_t             IF;
@@ -245,6 +248,7 @@ namespace yq {
     static constexpr const layout_t         LAYOUT;
     static constexpr const line_t           LINE;
     static constexpr const local_t          LOCAL;
+    static constexpr const low_t            LOW;
     static constexpr const m_t              M;
     static constexpr const maybe_t          MAYBE;
     static constexpr const move_t           MOVE;
