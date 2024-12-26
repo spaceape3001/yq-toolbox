@@ -16,6 +16,7 @@
 #include <yq/trait/has_zero.hpp>
 #include <yq/trait/ieee754.hpp>
 #include <yq/trait/is_arithmetic.hpp>
+#include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/square.hpp>
 #include <cmath>
 #include <span>
@@ -131,4 +132,35 @@ namespace yq {
         return ret;
     }
 
+    template <typename T>
+    square_t<T>  sum(square_k, std::span<const T> values)
+    {
+        static_assert(is_floating_point_v<T>, "Needs to be a floating point type");
+        square_t<T>   ret{};
+        for(const T& v : values)
+            ret += v*v;
+        return ret;
+    }
+
+    template <typename T>
+    square_t<T>  sum(square_k, std::span<const T> values, T bias)
+    {
+        static_assert(is_floating_point_v<T>, "Needs to be a floating point type");
+        square_t<T>   ret{};
+        for(const T& v : values){
+            T w = v - bias;
+            ret += w*w;
+        }
+        return ret;
+    }
+
+    template <typename T>
+    T       average(std::span<const T> values)
+    {
+        static_assert(is_floating_point_v<T>, "Needs to be a floating point type");
+        if(values.empty())
+            return T{};
+        return sum(values) / ieee754_t<T>(values.size());
+    }
 }
+

@@ -141,6 +141,7 @@ namespace yq {
     struct snoop_t {};
     struct sort_t {};
     struct span_t {};
+    struct square_k {};
     struct stem_t {};
     struct thread_t {};
     struct three_t {};
@@ -299,6 +300,7 @@ namespace yq {
     static constexpr const sort_t           SORT;
     static constexpr const snoop_t          SNOOP;
     static constexpr const span_t           SPAN;
+    static constexpr const square_k         SQUARE;
     static constexpr const stem_t           STEM;
     static constexpr const thread_t         THREAD;
     static constexpr const three_t          THREE;
