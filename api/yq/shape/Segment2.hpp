@@ -52,7 +52,7 @@ namespace yq {
 
         //! NaN constructor
         template <typename=void> requires has_nan_v<T>
-        constexpr Segment2(nan_t) : Segment2( Vector2<T>(NAN), Vector2<T>(NAN)) {}
+        constexpr Segment2(nan_k) : Segment2( Vector2<T>(NAN), Vector2<T>(NAN)) {}
 
         //! Zero constructor
         constexpr Segment2(zero_k) : Segment2( Vector2<T>(ZERO), Vector2<T>(ZERO)) {}

@@ -233,7 +233,7 @@ namespace yq {
 
     /*! \brief Composes a six dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord6<T>    coord(T i, std::type_identity_k<T> j, std::type_identity_k<T> k, std::type_identity_k<T> l, std::type_identity_k<T> m, std::type_identity_k<T> n) noexcept
+    constexpr Coord6<T>    coord(T i, std::type_identity_t<T> j, std::type_identity_t<T> k, std::type_identity_t<T> l, std::type_identity_t<T> m, std::type_identity_t<T> n) noexcept
     {
         return { i, j, k, l, m, n };
     }

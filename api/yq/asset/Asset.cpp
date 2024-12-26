@@ -68,12 +68,12 @@ namespace yq {
         return resolver().resolve(x);
     }
     
-    std::filesystem::path    Asset::resolve(full_t, std::string_view x)
+    std::filesystem::path    Asset::resolve(full_k, std::string_view x)
     {
         return resolver().resolve(x);
     }
     
-    std::filesystem::path    Asset::resolve(partial_t, std::string_view x)
+    std::filesystem::path    Asset::resolve(partial_k, std::string_view x)
     {
         return resolver().partial(x);
     }

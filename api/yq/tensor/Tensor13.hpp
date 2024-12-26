@@ -50,7 +50,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor13(columns_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z) noexcept :
+        constexpr Tensor13(columns_k, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z) noexcept :
             xx(x.x), xy(y.x), xz(z.x)
         {
         }
@@ -62,9 +62,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor13(nan_t) : Tensor13(ALL, nan_v<T>) {}
+        consteval Tensor13(nan_k) : Tensor13(ALL, nan_v<T>) {}
 
-        constexpr Tensor13(rows_t, const Vector3<T>& x) :
+        constexpr Tensor13(rows_k, const Vector3<T>& x) :
             xx(x.x), xy(x.y), xz(x.z)
         {
         }

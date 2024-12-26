@@ -79,13 +79,13 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr RGBA<T> rgba(T r, std::type_identity_k<T> g, std::type_identity_k<T> b, std::type_identity_k<T> a)
+    constexpr RGBA<T> rgba(T r, std::type_identity_t<T> g, std::type_identity_t<T> b, std::type_identity_t<T> a)
     {
         return {r,g,b,a};
     }
     
     template <typename T>
-    constexpr RGBA<T> rgba(const RGB<T>& clr, std::type_identity_k<T> a)
+    constexpr RGBA<T> rgba(const RGB<T>& clr, std::type_identity_t<T> a)
     {
         return {clr.red,clr.green,clr.blue,a};
     }

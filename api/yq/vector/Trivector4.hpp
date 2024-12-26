@@ -65,34 +65,34 @@ namespace yq {
         
         //! Constructs the trivector to not-a-number
         template <typename=void> requires has_nan_v<T>
-        consteval Trivector4(nan_t) noexcept : Trivector4(ALL, nan_v<T>) {}
+        consteval Trivector4(nan_k) noexcept : Trivector4(ALL, nan_v<T>) {}
         
         //! Constructs the trivector to all ones
-        consteval Trivector4(one_t) noexcept : Trivector4(ALL, one_v<T>) {}
+        consteval Trivector4(one_k) noexcept : Trivector4(ALL, one_v<T>) {}
         
         //! Constructs to the specified value in WXY component, all others zero
-        constexpr Trivector4(wxy_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(zero_v<T>), wxy(v) {}
+        constexpr Trivector4(wxy_k, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(zero_v<T>), wxy(v) {}
         
         //! Constructs to a unit trivector in the WXY component
-        consteval Trivector4(wxy_t) noexcept : Trivector4(WXY, one_v<T>) {}
+        consteval Trivector4(wxy_k) noexcept : Trivector4(WXY, one_v<T>) {}
         
         //! Constructs to the specified value in XYZ component, all others zero
-        constexpr Trivector4(xyz_t, T v) noexcept : xyz(v), yzw(zero_v<T>), zwx(zero_v<T>), wxy(zero_v<T>) {}
+        constexpr Trivector4(xyz_k, T v) noexcept : xyz(v), yzw(zero_v<T>), zwx(zero_v<T>), wxy(zero_v<T>) {}
         
         //! Constructs to a unit trivector in the XYZ component
-        consteval Trivector4(xyz_t) noexcept : Trivector4(XYZ, one_v<T>) {}
+        consteval Trivector4(xyz_k) noexcept : Trivector4(XYZ, one_v<T>) {}
         
         //! Construct to the specified value in YZW component, all others zero
-        constexpr Trivector4(yzw_t, T v) noexcept : xyz(zero_v<T>), yzw(v), zwx(zero_v<T>), wxy(zero_v<T>) {}
+        constexpr Trivector4(yzw_k, T v) noexcept : xyz(zero_v<T>), yzw(v), zwx(zero_v<T>), wxy(zero_v<T>) {}
         
         //! Constructs to a unit trivector in the YZW component
-        consteval Trivector4(yzw_t) noexcept : Trivector4(YZW, one_v<T>) {}
+        consteval Trivector4(yzw_k) noexcept : Trivector4(YZW, one_v<T>) {}
         
         //! Construct to the specified value in ZWX component, all others zero
-        constexpr Trivector4(zwx_t, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(v), wxy(zero_v<T>) {}
+        constexpr Trivector4(zwx_k, T v) noexcept : xyz(zero_v<T>), yzw(zero_v<T>), zwx(v), wxy(zero_v<T>) {}
         
         //! Constructs to a unit trivector in the ZWX component
-        consteval Trivector4(zwx_t) noexcept : Trivector4(ZWX, one_v<T>) {}
+        consteval Trivector4(zwx_k) noexcept : Trivector4(ZWX, one_v<T>) {}
         
         //! Constructs to a zero trivector
         consteval Trivector4(zero_k) noexcept : Trivector4(ALL, zero_v<T>) {}

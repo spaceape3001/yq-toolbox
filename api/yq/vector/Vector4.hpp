@@ -82,16 +82,16 @@ namespace yq {
             x(_x), y(_y), z(_z), w(_w) {}
         constexpr Vector4(all_k, T v) noexcept : x(v), y(v), z(v), w(v) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Vector4(nan_t) noexcept : Vector4(ALL, nan_v<T>) {}
-        consteval Vector4(one_t) noexcept : Vector4(ALL, one_v<T>) {}
-        consteval Vector4(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
-        constexpr Vector4(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
-        consteval Vector4(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>), w(zero_v<T>) {}
-        constexpr Vector4(y_t, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>), w(zero_v<T>) {}
-        consteval Vector4(z_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>), w(zero_v<T>) {}
-        constexpr Vector4(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v), w(zero_v<T>) {}
-        consteval Vector4(w_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(one_v<T>) {}
-        constexpr Vector4(w_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
+        consteval Vector4(nan_k) noexcept : Vector4(ALL, nan_v<T>) {}
+        consteval Vector4(one_k) noexcept : Vector4(ALL, one_v<T>) {}
+        consteval Vector4(x_k) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
+        constexpr Vector4(x_k, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>), w(zero_v<T>) {}
+        consteval Vector4(y_k) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>), w(zero_v<T>) {}
+        constexpr Vector4(y_k, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>), w(zero_v<T>) {}
+        consteval Vector4(z_k) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>), w(zero_v<T>) {}
+        constexpr Vector4(z_k, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v), w(zero_v<T>) {}
+        consteval Vector4(w_k) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(one_v<T>) {}
+        constexpr Vector4(w_k, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(zero_v<T>), w(v) {}
         consteval Vector4(zero_k) noexcept : Vector4(ALL, zero_v<T>) {}
 
         explicit constexpr Vector4(const Size4<T>&) noexcept;
@@ -161,7 +161,7 @@ namespace yq {
         Vector4<quotient_t<T,T>> operator~() const;
 
         //! Power (of two)
-        constexpr square_t<T> operator^(two_t) const noexcept;
+        constexpr square_t<T> operator^(two_k) const noexcept;
 
         #ifdef YQ_USE_GLM
         //! Conversion to GLM library
@@ -479,7 +479,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector4<T> vector(T x, std::type_identity_k<T> y, std::type_identity_k<T> z, std::type_identity_k<T> w) noexcept
+    constexpr Vector4<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w) noexcept
     {
         return Vector4<T>(x,y,z,w);
     }
@@ -646,7 +646,7 @@ namespace yq {
     bool is_close(const R& compare, const Vector4<T>& actual, const Vector4<T>& expected);
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z,std::type_identity_k<T>w);
+    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z,std::type_identity_t<T>w);
 
     template <typename T>
     constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;

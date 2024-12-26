@@ -62,7 +62,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor43(columns_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z) noexcept :
+        constexpr Tensor43(columns_k, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z) noexcept :
             xx(x.x), xy(y.x), xz(z.x), 
             yx(x.y), yy(y.y), yz(z.y), 
             zx(x.z), zy(y.z), zz(z.z), 
@@ -79,9 +79,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor43(nan_t) : Tensor43(ALL, nan_v<T>) {}
+        consteval Tensor43(nan_k) : Tensor43(ALL, nan_v<T>) {}
 
-        constexpr Tensor43(rows_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z, const Vector3<T>& w) :
+        constexpr Tensor43(rows_k, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z, const Vector3<T>& w) :
             xx(x.x), xy(x.y), xz(x.z),
             yx(y.x), yy(y.y), yz(y.z),
             zx(z.x), zy(z.y), zz(z.z),

@@ -56,16 +56,16 @@ namespace yq {
         
         //! Constructs to not-a-number
         template <typename=void> requires has_nan_v<T>
-        consteval Trivector3(nan_t) noexcept : Trivector3(ALL, nan_v<T>) {}
+        consteval Trivector3(nan_k) noexcept : Trivector3(ALL, nan_v<T>) {}
         
         //! Constructs to a size of one, the unit trivector
-        consteval Trivector3(one_t) noexcept : Trivector3(ALL, one_v<T>) {}
+        consteval Trivector3(one_k) noexcept : Trivector3(ALL, one_v<T>) {}
         
         //! Constructs to a value in the XYZ component
-        constexpr Trivector3(xyz_t, T v) noexcept : xyz(v) {}
+        constexpr Trivector3(xyz_k, T v) noexcept : xyz(v) {}
 
         //! Constructs to a unit value in the XYZ component
-        consteval Trivector3(xyz_t) noexcept : Trivector3(XYZ, one_v<T>) {}
+        consteval Trivector3(xyz_k) noexcept : Trivector3(XYZ, one_v<T>) {}
         
         //! Constructs to a zero trivector
         consteval Trivector3(zero_k) noexcept : Trivector3(ALL, zero_v<T>) {}

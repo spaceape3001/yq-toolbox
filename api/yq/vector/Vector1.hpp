@@ -72,10 +72,10 @@ namespace yq {
         constexpr Vector1(T _x) noexcept : x(_x) {}
         constexpr Vector1(all_k, T v) noexcept : x(v) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Vector1(nan_t) noexcept : Vector1(ALL, nan_v<T>) {}
-        consteval Vector1(one_t) noexcept : Vector1(ALL, one_v<T>) {}
-        constexpr Vector1(x_t, T v) noexcept : x(v) {}
-        consteval Vector1(x_t) noexcept : x(one_v<T>) {}
+        consteval Vector1(nan_k) noexcept : Vector1(ALL, nan_v<T>) {}
+        consteval Vector1(one_k) noexcept : Vector1(ALL, one_v<T>) {}
+        constexpr Vector1(x_k, T v) noexcept : x(v) {}
+        consteval Vector1(x_k) noexcept : x(one_v<T>) {}
         consteval Vector1(zero_k) noexcept : Vector1(ALL, zero_v<T>) {}
 
         #if YQ_USE_GLM
@@ -142,7 +142,7 @@ namespace yq {
         constexpr Vector1<T> operator~() const noexcept;
 
         //! Squares the vector
-        constexpr square_t<T> operator^(two_t) const noexcept;
+        constexpr square_t<T> operator^(two_k) const noexcept;
 
         //! Addition with scalar
         constexpr Multivector1<T> operator+(T b) const noexcept;
@@ -563,7 +563,7 @@ namespace yq {
     }
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector1<T>& actual, std::type_identity_k<T> x)
+    bool is_close(const R& compare, const Vector1<T>& actual, std::type_identity_t<T> x)
     {
         return is_close(compare, actual, Vector1<T>(x) );
     }

@@ -13,13 +13,13 @@
 namespace yq {
 
     template <typename A, typename L>
-    Cylindrical3<A,L>::Cylindrical3(clock_arg_t, const Vector3<L>& v) : 
+    Cylindrical3<A,L>::Cylindrical3(clock_arg_k, const Vector3<L>& v) : 
         angle(atan(v.x, v.y)), radius(v.length()), z(v.z)
     {
     }
     
     template <typename A, typename L>
-    Cylindrical3<A,L>::Cylindrical3(euler_t, const Vector3<L>& v) : 
+    Cylindrical3<A,L>::Cylindrical3(euler_k, const Vector3<L>& v) : 
         angle(atan(v.y, v.x)), radius(v.length()), z(v.z)
     {
     }
@@ -48,13 +48,13 @@ namespace yq {
     }
     
     template <typename A, typename L>
-    Vector3<L>  Cylindrical3<A,L>::operator()(clock_arg_t) const
+    Vector3<L>  Cylindrical3<A,L>::operator()(clock_arg_k) const
     {
         return to_clock();
     }
     
     template <typename A, typename L>
-    Vector3<L>  Cylindrical3<A,L>::operator()(euler_t) const
+    Vector3<L>  Cylindrical3<A,L>::operator()(euler_k) const
     {
         return to_euler();
     }

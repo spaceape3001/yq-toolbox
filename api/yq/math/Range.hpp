@@ -64,34 +64,34 @@ namespace yq {
         constexpr Range(all_k, T v) noexcept : lo(v), hi(v) {}
         
         //! Initialize with nan
-        consteval Range(nan_t) noexcept : Range(ALL, nan_v<T>) {}
+        consteval Range(nan_k) noexcept : Range(ALL, nan_v<T>) {}
         
         //! Initialize with zero
         consteval Range(zero_k) noexcept : Range(ALL, zero_v<T>) {}
         
         //! Construct by intersection of two value lists
-        constexpr Range(intersect_t, std::initializer_list<T>, std::initializer_list<T>);
+        constexpr Range(intersect_k, std::initializer_list<T>, std::initializer_list<T>);
 
         //! Construct by intersection of two value lists
-        constexpr Range(intersect_t, std::span<const T>, std::span<const T>);
+        constexpr Range(intersect_k, std::span<const T>, std::span<const T>);
         
         //! Construct by sorting the two arguments
-        constexpr Range(sort_t, T, T) noexcept;
+        constexpr Range(sort_k, T, T) noexcept;
         
         //! Construct by the union of the two arguments
-        constexpr Range(union_t, T, T) noexcept;
+        constexpr Range(union_k, T, T) noexcept;
         
         //! Construct by the union of the listed values
-        constexpr Range(union_t, std::initializer_list<T>vs);
+        constexpr Range(union_k, std::initializer_list<T>vs);
 
         //! Construct by the union of the listed values
-        constexpr Range(union_t, std::span<const T>vs);
+        constexpr Range(union_k, std::span<const T>vs);
 
         //! Construct by the union of the listed values for lo & high
-        constexpr Range(union_t, std::initializer_list<T>ls, std::initializer_list<T>hs);
+        constexpr Range(union_k, std::initializer_list<T>ls, std::initializer_list<T>hs);
 
         //! Construct by the union of the listed values for lo & high
-        constexpr Range(union_t, std::span<const T>ls, std::span<const T>hs);
+        constexpr Range(union_k, std::span<const T>ls, std::span<const T>hs);
         
         //! Default comparison object
         constexpr bool      operator==(const Range&) const noexcept = default;

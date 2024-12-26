@@ -40,7 +40,7 @@ namespace yq {
         constexpr Rectangle2(const Size2<T>&sz) noexcept : Rectangle2(Vector2<T>(ZERO), sz) {}
         constexpr Rectangle2(all_k, T v) noexcept : position(ALL, v), size(ALL, v) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Rectangle2(nan_t) noexcept : Rectangle2(ALL, nan_v<T>) {}
+        consteval Rectangle2(nan_k) noexcept : Rectangle2(ALL, nan_v<T>) {}
         consteval Rectangle2(zero_k) noexcept : Rectangle2(ALL, zero_v<T>) {}
         
         explicit constexpr Rectangle2(const AxBox2<T>&) noexcept;

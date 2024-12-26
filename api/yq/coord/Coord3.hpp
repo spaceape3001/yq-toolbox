@@ -226,7 +226,7 @@ namespace yq {
 
     /*! \brief Composes a three dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord3<T>    coord(T i, std::type_identity_k<T> j, std::type_identity_k<T> k) noexcept
+    constexpr Coord3<T>    coord(T i, std::type_identity_t<T> j, std::type_identity_t<T> k) noexcept
     {
         return { i, j, k};
     }

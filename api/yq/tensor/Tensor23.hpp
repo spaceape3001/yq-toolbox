@@ -57,7 +57,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor23(columns_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z) noexcept :
+        constexpr Tensor23(columns_k, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z) noexcept :
             xx(x.x), xy(y.x), xz(z.x), 
             yx(x.y), yy(y.y), yz(z.y)
         {
@@ -71,9 +71,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor23(nan_t) : Tensor23(ALL, nan_v<T>) {}
+        consteval Tensor23(nan_k) : Tensor23(ALL, nan_v<T>) {}
 
-        constexpr Tensor23(rows_t, const Vector3<T>& x, const Vector3<T>& y) :
+        constexpr Tensor23(rows_k, const Vector3<T>& x, const Vector3<T>& y) :
             xx(x.x), xy(x.y), xz(x.z),
             yx(y.x), yy(y.y), yz(y.z)
         {

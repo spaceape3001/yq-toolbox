@@ -100,7 +100,7 @@ namespace yq {
     }
 
     template <typename T>
-    TriangleData<RGBA<T>>     rgba(const TriangleData<RGB<T>>& t, std::type_identity_k<T> a)
+    TriangleData<RGBA<T>>     rgba(const TriangleData<RGB<T>>& t, std::type_identity_t<T> a)
     {
         return { rgba(t.a, a), rgba(t.b, a), rgba(t.c, a)};
     }

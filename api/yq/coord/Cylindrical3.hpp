@@ -51,10 +51,10 @@ namespace yq {
 
         //! Not a number constructor
         template <typename=void> requires (has_nan_v<A> && has_nan_v<L>)
-        consteval Cylindrical3(nan_t) noexcept : angle(nan_v<A>), radius(nan_v<L>), z(nan_v<L>) {}
+        consteval Cylindrical3(nan_k) noexcept : angle(nan_v<A>), radius(nan_v<L>), z(nan_v<L>) {}
 
         //! Constructs to a unit size in each coordinate
-        consteval Cylindrical3(unit_t) noexcept : angle(zero_v<A>), radius(one_v<L>), z(one_v<L>) {}
+        consteval Cylindrical3(unit_k) noexcept : angle(zero_v<A>), radius(one_v<L>), z(one_v<L>) {}
         
         //! Constructs to a zero
         consteval Cylindrical3(zero_k) noexcept : angle(zero_v<A>), radius(zero_v<L>), z(zero_v<L>) {}
@@ -63,18 +63,18 @@ namespace yq {
         Cylindrical3(const Vector3<L>&);
         
         //! Creates a polar assuming clock convention
-        Cylindrical3(clock_arg_t, const Vector3<L>&);
+        Cylindrical3(clock_arg_k, const Vector3<L>&);
         //! Creates a polar assuming euler convention
-        Cylindrical3(euler_t, const Vector3<L>&);
+        Cylindrical3(euler_k, const Vector3<L>&);
         
         //! Converts to a L-based 3D vector
         operator Vector3<L> () const;
         
         //! Constructs a L-based 3D vector using angle as clockwise
-        Vector3<L>  operator()(clock_arg_t) const;
+        Vector3<L>  operator()(clock_arg_k) const;
         
         //! Constructs a L-based 3D vector using angle as counter-clockwise
-        Vector3<L>  operator()(euler_t) const;
+        Vector3<L>  operator()(euler_k) const;
 
         //! Converts to a vector assuming this polar represents a clock angle
         Vector3<L>  to_clock() const;

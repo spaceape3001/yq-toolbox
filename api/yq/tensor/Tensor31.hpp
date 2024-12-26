@@ -59,7 +59,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor31(columns_t, const Vector3<T>& x) noexcept :
+        constexpr Tensor31(columns_k, const Vector3<T>& x) noexcept :
             xx(x.x),
             yx(x.y),
             zx(x.z)
@@ -74,9 +74,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor31(nan_t) : Tensor31(ALL, nan_v<T>) {}
+        consteval Tensor31(nan_k) : Tensor31(ALL, nan_v<T>) {}
 
-        constexpr Tensor31(rows_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z) :
+        constexpr Tensor31(rows_k, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z) :
             xx(x.x), 
             yx(y.x), 
             zx(z.x)

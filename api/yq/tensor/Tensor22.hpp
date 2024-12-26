@@ -55,19 +55,19 @@ namespace yq {
         {
         }
         
-        constexpr Tensor22(columns_t, const Vector2<T>& x, const Vector2<T>& y) noexcept :
+        constexpr Tensor22(columns_k, const Vector2<T>& x, const Vector2<T>& y) noexcept :
             xx(x.x), xy(y.x), 
             yx(x.y), yy(y.y)
         {
         }
 
-        constexpr Tensor22(diagonal_t, T _xx, T _yy) : 
+        constexpr Tensor22(diagonal_k, T _xx, T _yy) : 
             xx(_xx),  xy(zero_v<T>), 
             yx(zero_v<T>), yy(_yy)
         {
         }
 
-        constexpr Tensor22(diagonal_t, const Vector2<T>& v) : 
+        constexpr Tensor22(diagonal_k, const Vector2<T>& v) : 
             xx(v.x),  xy(zero_v<T>), 
             yx(zero_v<T>), yy(v.y)
         {
@@ -80,9 +80,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor22(nan_t) : Tensor22(ALL, nan_v<T>) {}
+        consteval Tensor22(nan_k) : Tensor22(ALL, nan_v<T>) {}
 
-        constexpr Tensor22(rows_t, const Vector2<T>& x, const Vector2<T>& y) :
+        constexpr Tensor22(rows_k, const Vector2<T>& x, const Vector2<T>& y) :
             xx(x.x), xy(x.y), 
             yx(y.x), yy(y.y)
         {
@@ -92,11 +92,11 @@ namespace yq {
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor22(ccw_t, MKS<T,dim::Angle>);
+        Tensor22(ccw_k, MKS<T,dim::Angle>);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor22(clockwise_t, MKS<T,dim::Angle>);
+        Tensor22(clockwise_k, MKS<T,dim::Angle>);
 
         #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
@@ -358,7 +358,7 @@ namespace yq {
     /*! \brief Create 2x2 tensor by its diagonal
     */
     template <typename T>
-    constexpr Tensor22<T>  diagonal(T x, std::type_identity_k<T> y)
+    constexpr Tensor22<T>  diagonal(T x, std::type_identity_t<T> y)
     {
         return Tensor22<T>(DIAGONAL, x, y);
     }

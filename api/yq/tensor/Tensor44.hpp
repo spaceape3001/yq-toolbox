@@ -69,7 +69,7 @@ namespace yq {
         */
         explicit constexpr Tensor44(const Tensor33<T>& t33, const Vector3<T>& wCol=ZERO, const Vector3<T>& wRow=ZERO, T ww=one_v<T>) noexcept;
 
-        constexpr Tensor44(columns_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) noexcept :
+        constexpr Tensor44(columns_k, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) noexcept :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),
             yx(x.y), yy(y.y), yz(z.y), yw(w.y),
             zx(x.z), zy(y.z), zz(z.z), zw(w.z),
@@ -77,7 +77,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor44(diagonal_t, T _xx, T _yy, T _zz, T _ww) noexcept : 
+        constexpr Tensor44(diagonal_k, T _xx, T _yy, T _zz, T _ww) noexcept : 
             xx(_xx),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(_yy),  yz(zero_v<T>), yw(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(_zz),  zw(zero_v<T>),
@@ -85,7 +85,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor44(diagonal_t, const Vector4<T>& v) noexcept : 
+        constexpr Tensor44(diagonal_k, const Vector4<T>& v) noexcept : 
             xx(v.x),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(v.y),  yz(zero_v<T>), yw(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(v.z),  zw(zero_v<T>),
@@ -102,9 +102,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor44(nan_t) noexcept : Tensor44(ALL, nan_v<T>){}
+        consteval Tensor44(nan_k) noexcept : Tensor44(ALL, nan_v<T>){}
 
-        constexpr Tensor44(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) noexcept :
+        constexpr Tensor44(rows_k, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) noexcept :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
             yx(y.x), yy(y.y), yz(y.z), yw(y.w),
             zx(z.x), zy(z.y), zz(z.z), zw(z.w),
@@ -417,7 +417,7 @@ namespace yq {
         This assumes the rest of the components are zero.
     */
     template <typename T>
-    constexpr Tensor44<T>  diagonal(T x, std::type_identity_k<T> y, std::type_identity_k<T> z, std::type_identity_k<T> w) noexcept
+    constexpr Tensor44<T>  diagonal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w) noexcept
     {
         return Tensor44<T>(DIAGONAL, x, y, z, w);
     }

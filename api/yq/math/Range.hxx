@@ -187,11 +187,11 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     template <typename T>
-    constexpr Range<T>::Range(intersect_t, std::initializer_list<T> ls, std::initializer_list<T> hs) :
+    constexpr Range<T>::Range(intersect_k, std::initializer_list<T> ls, std::initializer_list<T> hs) :
         Range(INTERSECT, std::span<const T>(ls.data(), ls.size()), std::span<const T>(hs.data(), hs.size())){}
 
     template <typename T>
-    constexpr Range<T>::Range(intersect_t, std::span<const T>ls, std::span<const T> hs)
+    constexpr Range<T>::Range(intersect_k, std::span<const T>ls, std::span<const T> hs)
     {
        if(!ls.empty()){
             lo      = *std::max_element(ls.begin(), ls.end());
@@ -207,20 +207,20 @@ namespace yq {
      }
 
     template <typename T>
-    constexpr Range<T>::Range(sort_t, T a, T b) noexcept 
+    constexpr Range<T>::Range(sort_k, T a, T b) noexcept 
     {
         std::tie(lo, hi)    = std::minmax(a, b);
     }
     
     template <typename T>
-    constexpr Range<T>::Range(union_t, T a, T b) noexcept : Range(SORT, a, b) {}
+    constexpr Range<T>::Range(union_k, T a, T b) noexcept : Range(SORT, a, b) {}
     
     template <typename T>
-    constexpr Range<T>::Range(union_t, std::initializer_list<T> vs) : 
+    constexpr Range<T>::Range(union_k, std::initializer_list<T> vs) : 
         Range(UNION, std::span<const T>(vs.data(), vs.size())) {}
 
     template <typename T>
-    constexpr Range<T>::Range(union_t, std::span<const T> data)
+    constexpr Range<T>::Range(union_k, std::span<const T> data)
     {
         if(!data.empty()){
             auto [l, h] = std::minmax_element(data.begin(), data.end());
@@ -232,11 +232,11 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Range<T>::Range(union_t, std::initializer_list<T> ls, std::initializer_list<T> hs) :
+    constexpr Range<T>::Range(union_k, std::initializer_list<T> ls, std::initializer_list<T> hs) :
         Range(UNION, std::span<const T>(ls.data(), ls.size()), std::span<const T>(hs.data(), hs.size())){}
 
     template <typename T>
-    constexpr Range<T>::Range(union_t, std::span<const T>ls, std::span<const T> hs)
+    constexpr Range<T>::Range(union_k, std::span<const T>ls, std::span<const T> hs)
     {
         if(!ls.empty()){
             lo      = std::min_element(ls.begin(), ls.end());

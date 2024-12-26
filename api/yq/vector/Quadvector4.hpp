@@ -58,17 +58,17 @@ namespace yq {
 
         //! Constructs to NaN in the components
         template <typename=void> requires has_nan_v<T>
-        consteval Quadvector4(nan_t) noexcept : Quadvector4(ALL, nan_v<T>) {}
+        consteval Quadvector4(nan_k) noexcept : Quadvector4(ALL, nan_v<T>) {}
         
         //! Constructs with all components ONE
-        consteval Quadvector4(one_t) noexcept : Quadvector4(ALL, one_v<T>) {}
+        consteval Quadvector4(one_k) noexcept : Quadvector4(ALL, one_v<T>) {}
         
         //! Constructs with the XYZW component set to the specified value
         //! \note This is done for consistency to the other structs.
-        constexpr Quadvector4(xyzw_t, T v) noexcept : xyzw(v) {}
+        constexpr Quadvector4(xyzw_k, T v) noexcept : xyzw(v) {}
         
         //! Constructs to a unit quadvector in the XYZW component
-        consteval Quadvector4(xyzw_t) noexcept : Quadvector4(XYZW, one_v<T>) {}
+        consteval Quadvector4(xyzw_k) noexcept : Quadvector4(XYZW, one_v<T>) {}
         
         //! Constructs with all components zero
         consteval Quadvector4(zero_k) noexcept : Quadvector4(ALL, zero_v<T>) {}

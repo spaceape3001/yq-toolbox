@@ -17,7 +17,7 @@
 #include <iostream>
 
 namespace yq {
-    Date::Date(today_t) : Date()
+    Date::Date(today_k) : Date()
     {
         time_t      n;
         struct tm   ti;
@@ -30,14 +30,14 @@ namespace yq {
     }
 
     Date::Date(const JulianDay& jd) : Date(date(jd)) {}
-    Date::Date(julian_t, const JulianDay& jd) : Date(date(JULIAN, jd)) {}
-    Date::Date(gregorian_t, const JulianDay& jd) : Date(date(GREGORIAN, jd)) {}
+    Date::Date(julian_k, const JulianDay& jd) : Date(date(JULIAN, jd)) {}
+    Date::Date(gregorian_k, const JulianDay& jd) : Date(date(GREGORIAN, jd)) {}
     Date::Date(CalendarType ct, const JulianDay& jd) : Date(date(ct, jd)) {}
     
     Date::Date(easter_t, int16_t y) : Date(easter(y)) {}
-    Date::Date(julian_t, easter_t, int16_t y) : Date(easter(JULIAN, y)){}
+    Date::Date(julian_k, easter_t, int16_t y) : Date(easter(JULIAN, y)){}
     
-    Date::Date(gregorian_t, easter_t, int16_t y) : Date(easter(GREGORIAN, y)){}
+    Date::Date(gregorian_k, easter_t, int16_t y) : Date(easter(GREGORIAN, y)){}
     Date::Date(CalendarType ct, easter_t, int16_t y) : Date(easter(ct, y)) {}
     
     bool    Date::is_gregorian() const
@@ -55,7 +55,7 @@ namespace yq {
         return jd.is_gregorian() ? date(GREGORIAN, jd) : date(JULIAN, jd);
     }
     
-    Date    date(julian_t, JulianDay jd)
+    Date    date(julian_k, JulianDay jd)
     {
         // from http://www.tondering.dk/claus/cal/julperiod.php
         int b, c;
@@ -76,7 +76,7 @@ namespace yq {
         return ret;
     }
     
-    Date    date(gregorian_t, JulianDay jd)
+    Date    date(gregorian_k, JulianDay jd)
     {
         // from http://www.tondering.dk/claus/cal/julperiod.php
         int b, c;
@@ -114,7 +114,7 @@ namespace yq {
         return (year > Date::kGregorianYear) ? easter(GREGORIAN, year) : easter(JULIAN, year);
     }
 
-    Date    easter(julian_t, int16_t y)
+    Date    easter(julian_k, int16_t y)
     {
         //  Taken from Astronomical Algorithms 
         int a   = y % 4;
@@ -129,7 +129,7 @@ namespace yq {
         return { y, (uint8_t) f, (uint8_t) (g+1) };
     }
     
-    Date    easter(gregorian_t, int16_t y)
+    Date    easter(gregorian_k, int16_t y)
     {
         //  Taken from Astronomical Algorithms 
         int a = y % 19;

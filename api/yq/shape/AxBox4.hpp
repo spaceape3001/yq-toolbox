@@ -68,7 +68,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox4(intersect_t, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
+        constexpr AxBox4(intersect_k, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
 
         /*! \brief Construct as an intersection of points
         
@@ -79,31 +79,31 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox4(intersect_t, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
+        constexpr AxBox4(intersect_k, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
 
         /*! \brief Construct a box using the two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox4(sort_t, const Vector4<T>&a, const Vector4<T>& b) noexcept;
+        constexpr AxBox4(sort_k, const Vector4<T>&a, const Vector4<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox4(union_t, const Vector4<T>&a, const Vector4<T>& b) noexcept;
+        constexpr AxBox4(union_k, const Vector4<T>&a, const Vector4<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox4(union_t, std::initializer_list<Vector4<T>>) noexcept;
+        constexpr AxBox4(union_k, std::initializer_list<Vector4<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox4(union_t, std::span<const Vector4<T>>) noexcept;
+        constexpr AxBox4(union_k, std::span<const Vector4<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -114,7 +114,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox4(union_t, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
+        constexpr AxBox4(union_k, std::initializer_list<Vector4<T>>, std::initializer_list<Vector4<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -125,11 +125,11 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox4(union_t, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
+        constexpr AxBox4(union_k, std::span<const Vector4<T>>, std::span<const Vector4<T>>) noexcept;
 
         //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
-        consteval AxBox4(nan_t) : AxBox4(Vector4<T>(NAN)) {}
+        consteval AxBox4(nan_k) : AxBox4(Vector4<T>(NAN)) {}
 
         //! Zero box
         consteval AxBox4(zero_k) : AxBox4(Vector4<T>(ZERO)) {}
@@ -444,7 +444,7 @@ namespace yq {
         
             \note This instance guards against negative numbers
         */
-        constexpr fourth_t<T> hypervolume(guard_t) const noexcept;
+        constexpr fourth_t<T> hypervolume(guard_k) const noexcept;
 
         /*! \brief Inflates the box
         
@@ -458,7 +458,7 @@ namespace yq {
             This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
             half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
         */
-        constexpr AxBox4    inflate(guard_t, T) const noexcept;
+        constexpr AxBox4    inflate(guard_k, T) const noexcept;
 
         //! Largest sphere contained by this box (won't touch all sides)
         constexpr Sphere4<T>    insphere() const noexcept;
@@ -548,7 +548,7 @@ namespace yq {
         
             This guards against negative values (ie, takes absolute value)
         */
-        constexpr Vector4<T>    span(guard_t) const noexcept;
+        constexpr Vector4<T>    span(guard_k) const noexcept;
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
 

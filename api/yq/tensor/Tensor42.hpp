@@ -63,7 +63,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor42(columns_t, const Vector4<T>& x, const Vector4<T>& y) noexcept :
+        constexpr Tensor42(columns_k, const Vector4<T>& x, const Vector4<T>& y) noexcept :
             xx(x.x), xy(y.x), 
             yx(x.y), yy(y.y), 
             zx(x.z), zy(y.z), 
@@ -80,9 +80,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor42(nan_t) : Tensor42(ALL, nan_v<T>) {}
+        consteval Tensor42(nan_k) : Tensor42(ALL, nan_v<T>) {}
 
-        constexpr Tensor42(rows_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :
+        constexpr Tensor42(rows_k, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :
             xx(x.x), xy(x.y), 
             yx(y.x), yy(y.y), 
             zx(z.x), zy(z.y), 

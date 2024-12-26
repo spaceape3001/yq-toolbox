@@ -24,7 +24,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor22<T>::Tensor22(ccw_t, MKS<T,dim::Angle> v)
+    Tensor22<T>::Tensor22(ccw_k, MKS<T,dim::Angle> v)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -36,7 +36,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor22<T>::Tensor22(clockwise_t, MKS<T,dim::Angle>v) : Tensor22(CCW, -v) {}
+    Tensor22<T>::Tensor22(clockwise_k, MKS<T,dim::Angle>v) : Tensor22(CCW, -v) {}
 
     #ifdef YQ_USE_GLM
     template <typename T>

@@ -228,7 +228,7 @@ namespace yq {
 
     /*! \brief Composes a two dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord2<T>    coord(T i, std::type_identity_k<T> j) noexcept
+    constexpr Coord2<T>    coord(T i, std::type_identity_t<T> j) noexcept
     {
         return { i, j };
     }

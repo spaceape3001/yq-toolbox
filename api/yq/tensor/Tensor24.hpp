@@ -55,7 +55,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor24(columns_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :
+        constexpr Tensor24(columns_k, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z, const Vector2<T>& w) :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),
             yx(x.y), yy(y.y), yz(z.y), yw(w.y)
         {
@@ -68,9 +68,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor24(nan_t) : Tensor24(ALL, nan_v<T>) {}
+        consteval Tensor24(nan_k) : Tensor24(ALL, nan_v<T>) {}
 
-        constexpr Tensor24(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+        constexpr Tensor24(rows_k, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
             yx(y.x), yy(y.y), yz(y.z), yw(y.w)
         {

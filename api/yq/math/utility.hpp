@@ -100,7 +100,7 @@ namespace yq {
     
     template <typename T>
     requires is_arithmetic_v<T>
-    constexpr square_t<T>    operator^(T v, two_t) noexcept
+    constexpr square_t<T>    operator^(T v, two_k) noexcept
     {
         return v*v;
     }

@@ -28,8 +28,8 @@ namespace yq {
         constexpr SCALED(T v) noexcept : value(v) {}
 
         template <typename=void> requires has_nan_v<T>
-        consteval SCALED(nan_t) noexcept : value(nan_v<T>) {}
-        consteval SCALED(one_t) noexcept : value(one_v<T>) {}
+        consteval SCALED(nan_k) noexcept : value(nan_v<T>) {}
+        consteval SCALED(one_k) noexcept : value(one_v<T>) {}
         consteval SCALED(zero_k) noexcept : value(zero_v<T>) {}
          
         auto operator<=>(const SCALED& b) const noexcept = default;
@@ -278,7 +278,7 @@ namespace yq {
 
 
     template <typename T, typename DIM, double K, typename R>
-    bool is_close(const R& compare, SCALED<T,DIM,K> actual, std::type_identity_k<T> v)
+    bool is_close(const R& compare, SCALED<T,DIM,K> actual, std::type_identity_t<T> v)
     {
         return compare(actual, SCALED<T,DIM,K>{v});
     }

@@ -71,7 +71,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr RGB<T> rgb(T r, std::type_identity_k<T> g, std::type_identity_k<T> b)
+    constexpr RGB<T> rgb(T r, std::type_identity_t<T> g, std::type_identity_t<T> b)
     {
         return {r,g,b};
     }

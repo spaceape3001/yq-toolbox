@@ -54,7 +54,7 @@ namespace yq {
         
         //! NaN constructor
         template <typename=void> requires has_nan_v<T>
-        constexpr Segment4(nan_t) : Segment4( Vector4<T>(NAN), Vector4<T>(NAN)) {}
+        constexpr Segment4(nan_k) : Segment4( Vector4<T>(NAN), Vector4<T>(NAN)) {}
         
         //! Zero constructor
         constexpr Segment4(zero_k) : Segment4( Vector4<T>(ZERO), Vector4<T>(ZERO)) {}

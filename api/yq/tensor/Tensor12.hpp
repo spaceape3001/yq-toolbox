@@ -44,11 +44,11 @@ namespace yq {
             xx(v), xy(v)
         {
         }
-        constexpr Tensor12(columns_t, const Vector1<T>& x, const Vector1<T>& y) noexcept : xx(x.x), xy(y.x) {}
+        constexpr Tensor12(columns_k, const Vector1<T>& x, const Vector1<T>& y) noexcept : xx(x.x), xy(y.x) {}
         consteval Tensor12(identity_k) noexcept : xx(one_v<T>), xy(zero_v<T>) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor12(nan_t) noexcept : Tensor12(ALL, nan_v<T>) {}
-        constexpr Tensor12(rows_t, Vector2<T>& v) noexcept : xx(v.x), xy(v.y) {}
+        consteval Tensor12(nan_k) noexcept : Tensor12(ALL, nan_v<T>) {}
+        constexpr Tensor12(rows_k, Vector2<T>& v) noexcept : xx(v.x), xy(v.y) {}
         consteval Tensor12(zero_k) noexcept : Tensor12(ALL, zero_v<T>) {}
         
         #ifdef YQ_USE_GLM

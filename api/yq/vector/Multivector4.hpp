@@ -64,8 +64,8 @@ namespace yq {
             xyz(v), yzw(v), zwx(v), wxy(v),
             xyzw(v) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Multivector4(nan_t) noexcept : Multivector4(ALL, nan_v<T>) {}
-        consteval Multivector4(one_t) noexcept : Multivector4(ALL, one_v<T>) {}
+        consteval Multivector4(nan_k) noexcept : Multivector4(ALL, nan_v<T>) {}
+        consteval Multivector4(one_k) noexcept : Multivector4(ALL, one_v<T>) {}
         consteval Multivector4(zero_k) noexcept : Multivector4(ALL, zero_v<T>) {}
 
         template <typename U>

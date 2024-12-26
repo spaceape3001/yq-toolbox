@@ -41,22 +41,22 @@ namespace yq {
         constexpr Sphere4(const Vector4<T>& pt, T r) : center(pt), radius(r) {}
 
         //! Not a number constructor
-        consteval Sphere4(nan_t) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
+        consteval Sphere4(nan_k) : Sphere4(Vector4<T>(NAN), nan_v<T>) {}
         
         //! Unit sphere constructor
-        consteval Sphere4(unit_t) : Sphere4(Vector4<T>(ZERO), one_v<T>) {}
+        consteval Sphere4(unit_k) : Sphere4(Vector4<T>(ZERO), one_v<T>) {}
 
         //! Zero constructor
         consteval Sphere4(zero_k) : Sphere4(Vector4<T>(ZERO), zero_v<T>) {}
 
         //! Construct with focus and distance
-        constexpr Sphere4(focus_t, const Vector4<T>& focus, const T dist) noexcept : Sphere4(focus, dist) {}
+        constexpr Sphere4(focus_k, const Vector4<T>& focus, const T dist) noexcept : Sphere4(focus, dist) {}
 
         //! Construct with focus and point
-        Sphere4(focus_t, const Vector4<T>& focus, const Vector4<T>& edge);
+        Sphere4(focus_k, const Vector4<T>& focus, const Vector4<T>& edge);
 
         //! Construct with two opposite points
-        Sphere4(opposite_t, const Vector4<T>&, const Vector4<T>&);
+        Sphere4(opposite_k, const Vector4<T>&, const Vector4<T>&);
 
         //! Convert to another sphere with compatible data type
         template <typename U>

@@ -50,7 +50,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor14(columns_t, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z, const Vector1<T>& w) :
+        constexpr Tensor14(columns_k, const Vector1<T>& x, const Vector1<T>& y, const Vector1<T>& z, const Vector1<T>& w) :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x)
         {
         }
@@ -61,9 +61,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor14(nan_t) : Tensor14(ALL, nan_v<T>) {}
+        consteval Tensor14(nan_k) : Tensor14(ALL, nan_v<T>) {}
 
-        constexpr Tensor14(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+        constexpr Tensor14(rows_k, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w)
         {
         }

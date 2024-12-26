@@ -58,7 +58,7 @@ namespace yq {
         {
         }
         
-        constexpr Tensor34(columns_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z, const Vector3<T>& w) :
+        constexpr Tensor34(columns_k, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z, const Vector3<T>& w) :
             xx(x.x), xy(y.x), xz(z.x), xw(w.x),
             yx(x.y), yy(y.y), yz(z.y), yw(w.y),
             zx(x.z), zy(y.z), zz(z.z), zw(w.z)
@@ -73,14 +73,14 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor34(nan_t) : 
+        consteval Tensor34(nan_k) : 
             xx(nan_v<T>), xy(nan_v<T>), xz(nan_v<T>), xw(nan_v<T>),
             yx(nan_v<T>), yy(nan_v<T>), yz(nan_v<T>), yw(nan_v<T>),
             zx(nan_v<T>), zy(nan_v<T>), zz(nan_v<T>), zw(nan_v<T>)
         {
         }
 
-        constexpr Tensor34(rows_t, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
+        constexpr Tensor34(rows_k, const Vector4<T>& x, const Vector4<T>& y, const Vector4<T>& z, const Vector4<T>& w) :
             xx(x.x), xy(x.y), xz(x.z), xw(x.w),
             yx(y.x), yy(y.y), yz(y.z), yw(y.w),
             zx(z.x), zy(z.y), zz(z.z), zw(z.w)

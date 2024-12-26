@@ -21,11 +21,11 @@ namespace yq {
         
         constexpr JulianDay() noexcept = default;
         constexpr JulianDay(int32_t j) noexcept : jday(j) {}
-        consteval JulianDay(gregorian_t);
+        consteval JulianDay(gregorian_k);
         
         JulianDay(Date);
-        JulianDay(gregorian_t, Date);
-        JulianDay(julian_t, Date);
+        JulianDay(gregorian_k, Date);
+        JulianDay(julian_k, Date);
         JulianDay(CalendarType, Date);
         
         constexpr auto operator<=>(const JulianDay&) const noexcept = default;
@@ -33,13 +33,13 @@ namespace yq {
         bool        is_gregorian() const;
     };
 
-    consteval JulianDay::JulianDay(gregorian_t) : JulianDay(kGregorian) // 15 Oct 1582
+    consteval JulianDay::JulianDay(gregorian_k) : JulianDay(kGregorian) // 15 Oct 1582
     {
     }
     
     JulianDay    julian_day(Date);
-    JulianDay    julian_day(gregorian_t, Date);
-    JulianDay    julian_day(julian_t, Date);
+    JulianDay    julian_day(gregorian_k, Date);
+    JulianDay    julian_day(julian_k, Date);
     JulianDay    julian_day(CalendarType, Date);
 }
 

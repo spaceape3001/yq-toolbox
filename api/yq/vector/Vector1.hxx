@@ -47,7 +47,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr square_t<T> Vector1<T>::operator^(two_t) const noexcept
+    constexpr square_t<T> Vector1<T>::operator^(two_k) const noexcept
     {
         return x*x;
     }    

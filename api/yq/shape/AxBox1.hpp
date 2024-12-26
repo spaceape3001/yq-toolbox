@@ -72,7 +72,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox1(intersect_t, std::initializer_list<Vector1<T>> low, std::initializer_list<Vector1<T>> high) noexcept;
+        constexpr AxBox1(intersect_k, std::initializer_list<Vector1<T>> low, std::initializer_list<Vector1<T>> high) noexcept;
 
         /*! \brief Construct as an intersection of points
         
@@ -83,31 +83,31 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox1(intersect_t, std::span<const Vector1<T>> low, std::span<const Vector1<T>> high) noexcept;
+        constexpr AxBox1(intersect_k, std::span<const Vector1<T>> low, std::span<const Vector1<T>> high) noexcept;
         
         /*! \brief Construct a box using the two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox1(sort_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
+        constexpr AxBox1(sort_k, const Vector1<T>&a, const Vector1<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox1(union_t, const Vector1<T>&a, const Vector1<T>& b) noexcept;
+        constexpr AxBox1(union_k, const Vector1<T>&a, const Vector1<T>& b) noexcept;
         
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>>) noexcept;
+        constexpr AxBox1(union_k, std::initializer_list<Vector1<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox1(union_t, std::span<const Vector1<T>>) noexcept;
+        constexpr AxBox1(union_k, std::span<const Vector1<T>>) noexcept;
         
         /*! \brief Construct a box as a union of multiple points
         
@@ -118,7 +118,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox1(union_t, std::initializer_list<Vector1<T>> low, std::initializer_list<Vector1<T>> high) noexcept;
+        constexpr AxBox1(union_k, std::initializer_list<Vector1<T>> low, std::initializer_list<Vector1<T>> high) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -129,11 +129,11 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox1(union_t, std::span<const Vector1<T>> low, std::span<const Vector1<T>> high) noexcept;
+        constexpr AxBox1(union_k, std::span<const Vector1<T>> low, std::span<const Vector1<T>> high) noexcept;
         
         //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
-        consteval AxBox1(nan_t) : AxBox1(Vector1<T>(NAN)) {}
+        consteval AxBox1(nan_k) : AxBox1(Vector1<T>(NAN)) {}
         
         //! Zero box
         consteval AxBox1(zero_k) : AxBox1(Vector1<T>(ZERO)) {}
@@ -304,7 +304,7 @@ namespace yq {
             This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
             half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
         */
-        constexpr AxBox1    inflate(guard_t, T) const noexcept;
+        constexpr AxBox1    inflate(guard_k, T) const noexcept;
 
         /*! \brief Tests for a valid box */
         constexpr bool    is_valid() const noexcept;
@@ -354,7 +354,7 @@ namespace yq {
         
             This guards against negative values (ie, takes absolute value)
         */
-        constexpr Vector1<T>    span(guard_t) const noexcept;
+        constexpr Vector1<T>    span(guard_k) const noexcept;
 
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate

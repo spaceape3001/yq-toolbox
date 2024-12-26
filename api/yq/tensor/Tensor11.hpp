@@ -40,13 +40,13 @@ namespace yq {
         constexpr Tensor11() noexcept = default;
         constexpr Tensor11(T _xx) noexcept : xx(_xx) {}
         constexpr Tensor11(all_k, T v) : xx(v) {}
-        constexpr Tensor11(columns_t, const Vector1<T>& x) noexcept : xx(x.x) {}
-        constexpr Tensor11(diagonal_t, T _xx) noexcept : xx(_xx) {}
-        constexpr Tensor11(diagonal_t, const Vector1<T>& v) noexcept : xx(v.x) {}
+        constexpr Tensor11(columns_k, const Vector1<T>& x) noexcept : xx(x.x) {}
+        constexpr Tensor11(diagonal_k, T _xx) noexcept : xx(_xx) {}
+        constexpr Tensor11(diagonal_k, const Vector1<T>& v) noexcept : xx(v.x) {}
         constexpr Tensor11(identity_k) noexcept : xx( one_v<T> ) {}
         template <typename=void> requires has_nan_v<T>
-        constexpr Tensor11(nan_t) noexcept : Tensor11(ALL, nan_v<T> ) {}
-        constexpr Tensor11(rows_t,    const Vector1<T>& x) noexcept : xx(x.x) {}
+        constexpr Tensor11(nan_k) noexcept : Tensor11(ALL, nan_v<T> ) {}
+        constexpr Tensor11(rows_k,    const Vector1<T>& x) noexcept : xx(x.x) {}
         constexpr Tensor11(zero_k) noexcept : Tensor11(ALL, zero_v<T> ) {}
         
         #ifdef YQ_USE_GLM

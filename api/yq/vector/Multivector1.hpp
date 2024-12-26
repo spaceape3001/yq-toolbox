@@ -53,10 +53,10 @@ namespace yq {
         
         //! Constructs to all NaN
         template <typename=void> requires has_nan_v<T>
-        consteval Multivector1(nan_t) noexcept : Multivector1(ALL, nan_v<T>) {}
+        consteval Multivector1(nan_k) noexcept : Multivector1(ALL, nan_v<T>) {}
         
         //! Constructs to all ones
-        consteval Multivector1(one_t) noexcept : Multivector1(ALL, one_v<T>) {}
+        consteval Multivector1(one_k) noexcept : Multivector1(ALL, one_v<T>) {}
         
         //! Constructs to all zeros
         consteval Multivector1(zero_k) noexcept : Multivector1(ALL, zero_v<T>) {}

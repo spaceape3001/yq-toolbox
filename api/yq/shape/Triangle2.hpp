@@ -60,7 +60,7 @@ namespace yq {
         constexpr Triangle2(all_k, const Vector2<T>& v) noexcept : a(v), b(v), c(v) {}
         
         //! Sets all to not-a-number
-        consteval Triangle2(nan_t) noexcept : Triangle2(ALL, Vector2<T>(NAN)) {}
+        consteval Triangle2(nan_k) noexcept : Triangle2(ALL, Vector2<T>(NAN)) {}
         
         //! Sets all to zero
         consteval Triangle2(zero_k) noexcept : Triangle2(ALL, Vector2<T>(ZERO)) {}

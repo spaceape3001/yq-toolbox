@@ -19,11 +19,11 @@
 
 namespace yq {
     template <typename T>
-    Circle2<T>::Circle2(focus_t, const Vector2<T>& focus, const Vector2<T>& edge) : 
+    Circle2<T>::Circle2(focus_k, const Vector2<T>& focus, const Vector2<T>& edge) : 
         Circle2(focus, (edge-focus).length()) {}
 
     template <typename T>
-    Circle2<T>::Circle2(opposite_t, const Vector2<T>&a, const Vector2<T>&b) : 
+    Circle2<T>::Circle2(opposite_k, const Vector2<T>&a, const Vector2<T>&b) : 
         Circle2(middivide(a,b), middivide((a-b).length())) {}
 
     template <typename T>

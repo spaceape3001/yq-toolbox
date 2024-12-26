@@ -58,52 +58,52 @@ namespace yq {
         constexpr Bivector4(all_k, T v) noexcept : xy(v), yz(v), zw(v), wx(v), xz(v), yw(v) {}
         
         //! Constructs all elements to NaN
-        consteval Bivector4(nan_t) noexcept : Bivector4(ALL, nan_v<T>) {}
+        consteval Bivector4(nan_k) noexcept : Bivector4(ALL, nan_v<T>) {}
 
         //! Constructs all elements to one
-        consteval Bivector4(one_t) noexcept : Bivector4(ALL, one_v<T>) {}
+        consteval Bivector4(one_k) noexcept : Bivector4(ALL, one_v<T>) {}
         
         //! Constructs a bivector with the specified value to the XY component, all others zero
-        constexpr Bivector4(xy_t, T v) noexcept : 
+        constexpr Bivector4(xy_k, T v) noexcept : 
             xy(v), yz(zero_v<T>), zw(zero_v<T>), wx(zero_v<T>), xz(zero_v<T>), yw(zero_v<T>) {}
             
         //! Constructs a unit bivector in the XY component
-        consteval Bivector4(xy_t) noexcept : Bivector4(XY, one_v<T>) {}
+        consteval Bivector4(xy_k) noexcept : Bivector4(XY, one_v<T>) {}
 
         //! Constructs a bivector with the specified value to the YZ component, all others zero
-        constexpr Bivector4(yz_t, T v) noexcept : 
+        constexpr Bivector4(yz_k, T v) noexcept : 
             xy(zero_v<T>), yz(v), zw(zero_v<T>), wx(zero_v<T>), xz(zero_v<T>), yw(zero_v<T>) {}
         
         //! Constructs a unit bivector in the YZ component
-        consteval Bivector4(yz_t) noexcept : Bivector4(YZ, one_v<T>) {}
+        consteval Bivector4(yz_k) noexcept : Bivector4(YZ, one_v<T>) {}
 
         //! Constructs a bivector with the specified value to the ZW component, all others zero
-        constexpr Bivector4(zw_t, T v) noexcept : 
+        constexpr Bivector4(zw_k, T v) noexcept : 
             xy(zero_v<T>), yz(zero_v<T>), zw(zero_v<T>), wx(v), xz(zero_v<T>), yw(zero_v<T>) {}
 
         //! Constructs a unit bivector in the ZW component
-        consteval Bivector4(zw_t) noexcept : Bivector4(ZW, one_v<T>) {}
+        consteval Bivector4(zw_k) noexcept : Bivector4(ZW, one_v<T>) {}
 
         //! Constructs a bivector with the specified value to the WX component, all others zero
-        constexpr Bivector4(wx_t, T v) noexcept : 
+        constexpr Bivector4(wx_k, T v) noexcept : 
             xy(zero_v<T>), yz(zero_v<T>), zw(zero_v<T>), wx(v), xz(zero_v<T>), yw(zero_v<T>) {}
             
         //! Constructs a unit bivector in the WX component
-        consteval Bivector4(wx_t) noexcept : Bivector4(WX, one_v<T>) {}
+        consteval Bivector4(wx_k) noexcept : Bivector4(WX, one_v<T>) {}
         
         //! Constructs a bivector with the specified value to the XZ component, all others zero
-        constexpr Bivector4(xz_t, T v) noexcept : 
+        constexpr Bivector4(xz_k, T v) noexcept : 
             xy(zero_v<T>), yz(zero_v<T>), zw(zero_v<T>), wx(zero_v<T>), xz(v), yw(zero_v<T>) {}
             
         //! Constructs a unit bivector in the XZ component
-        consteval Bivector4(xz_t) noexcept : Bivector4(XZ, one_v<T>) {}
+        consteval Bivector4(xz_k) noexcept : Bivector4(XZ, one_v<T>) {}
         
         //! Constructs a bivector with the specified value to the YW component, all others zero
-        constexpr Bivector4(yw_t, T v) noexcept : 
+        constexpr Bivector4(yw_k, T v) noexcept : 
             xy(zero_v<T>), yz(zero_v<T>), zw(zero_v<T>), wx(zero_v<T>), xz(zero_v<T>), yw(v) {}
             
         //! Constructs a unit bivector in the YW component
-        consteval Bivector4(yw_t) noexcept : Bivector4(YW, one_v<T>) {}
+        consteval Bivector4(yw_k) noexcept : Bivector4(YW, one_v<T>) {}
         
         //! Constructs a zero bivector
         consteval Bivector4(zero_k) noexcept : Bivector4(ALL, zero_v<T>) {}

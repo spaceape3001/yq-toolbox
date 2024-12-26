@@ -71,8 +71,8 @@ namespace yq {
         static const FileResolver&      resolver();
         
         static std::filesystem::path    resolve(std::string_view);
-        static std::filesystem::path    resolve(full_t, std::string_view);
-        static std::filesystem::path    resolve(partial_t, std::string_view);
+        static std::filesystem::path    resolve(full_k, std::string_view);
+        static std::filesystem::path    resolve(partial_k, std::string_view);
         
         std::error_code                 save_to(const std::filesystem::path&) const;
         std::error_code                 save_to(const std::filesystem::path&, const AssetSaveOptions& options) const;

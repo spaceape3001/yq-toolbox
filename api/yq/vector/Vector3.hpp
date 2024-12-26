@@ -85,14 +85,14 @@ namespace yq {
         constexpr Vector3(T _x, T _y, T _z) noexcept : x(_x), y(_y), z(_z) {}
         constexpr Vector3(all_k, T v) noexcept : x(v), y(v), z(v) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Vector3(nan_t) noexcept : Vector3(ALL, nan_v<T>) {}
-        consteval Vector3(one_t) noexcept : Vector3(ALL, one_v<T>) {}
-        consteval Vector3(x_t) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
-        constexpr Vector3(x_t, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>) {}
-        consteval Vector3(y_t) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
-        constexpr Vector3(y_t, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>) {}
-        consteval Vector3(z_t) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
-        constexpr Vector3(z_t, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v) {}
+        consteval Vector3(nan_k) noexcept : Vector3(ALL, nan_v<T>) {}
+        consteval Vector3(one_k) noexcept : Vector3(ALL, one_v<T>) {}
+        consteval Vector3(x_k) noexcept : x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        constexpr Vector3(x_k, T v) noexcept : x(v), y(zero_v<T>), z(zero_v<T>) {}
+        consteval Vector3(y_k) noexcept : x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
+        constexpr Vector3(y_k, T v) noexcept : x(zero_v<T>), y(v), z(zero_v<T>) {}
+        consteval Vector3(z_k) noexcept : x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
+        constexpr Vector3(z_k, T v) noexcept : x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Vector3(zero_k) noexcept : Vector3(ALL, zero_v<T>) {}
 
         #if YQ_USE_GLM || defined(YQ_FEATURE_GLM)
@@ -170,7 +170,7 @@ namespace yq {
         Vector3<quotient_t<T,T>> operator~() const;
 
         //! Square (ie, length2)
-        constexpr square_t<T> operator^(two_t) const noexcept;
+        constexpr square_t<T> operator^(two_k) const noexcept;
 
         //! Addition with number
         constexpr Multivector3<T> operator+(T b) const noexcept;
@@ -480,7 +480,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector3<T> vector(T x, std::type_identity_k<T> y, std::type_identity_k<T> z) noexcept
+    constexpr Vector3<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z) noexcept
     {
         return Vector3<T>( x,y,z );
     }
@@ -542,7 +542,7 @@ namespace yq {
     constexpr Vector2<T> xy( const Vector3<T>& a) noexcept;
 
     template <typename T>
-    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_k<T> z) noexcept;
+    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept;
     
     YQ_NAN_1(Vector3, Vector3<T>(NAN))
     YQ_ONE_1(Vector3, Vector3<T>(ONE))
@@ -723,7 +723,7 @@ namespace yq {
     bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected);
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z);
+    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z);
 
     template <typename T>
     constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;

@@ -266,7 +266,7 @@ namespace yq {
             if b.first:
                 f.write("T %(bit)s" % b.args)
             else:
-                f.write(", std::type_identity_k<T> %(bit)s" % b.args)
+                f.write(", std::type_identity_t<T> %(bit)s" % b.args)
         f.write(""")
     {
         return {""")
@@ -815,7 +815,7 @@ namespace yq {
                 if r == 0:
                     f.write("T %s" % DIMS[0])
                 else:
-                    f.write(", std::type_identity_k<T> %s" % DIMS[r])
+                    f.write(", std::type_identity_t<T> %s" % DIMS[r])
             f.write(""")
     {
         return {""")

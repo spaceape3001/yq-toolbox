@@ -60,7 +60,7 @@ namespace yq {
         constexpr Triangle3(all_k, const Vector3<T>& v) noexcept : a(v), b(v), c(v) {}
 
         //! Sets all to not-a-number
-        consteval Triangle3(nan_t) noexcept : Triangle3(ALL, Vector3<T>(NAN)) {}
+        consteval Triangle3(nan_k) noexcept : Triangle3(ALL, Vector3<T>(NAN)) {}
 
         //! Sets all to zero
         consteval Triangle3(zero_k) noexcept : Triangle3(ALL, Vector3<T>(ZERO)) {}
@@ -232,7 +232,7 @@ namespace yq {
     
     /*! \brief Promotes 2D triangle to 3D triangle */
     template <typename T>
-    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_k<T> z);
+    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z);
     #endif
 
     /*! \brief Computes the perimeter of the triangle

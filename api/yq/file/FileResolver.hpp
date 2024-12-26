@@ -45,8 +45,8 @@ namespace yq {
 
         //! Full resolution (by default)
         filesystem_path_t       operator()(std::string_view) const;
-        filesystem_path_t       operator()(full_t, std::string_view) const;
-        filesystem_path_t       operator()(partial_t, std::string_view) const;
+        filesystem_path_t       operator()(full_k, std::string_view) const;
+        filesystem_path_t       operator()(partial_k, std::string_view) const;
 
     private:
     

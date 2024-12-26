@@ -26,11 +26,11 @@
 
 namespace yq {
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(intersect_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept:
+    constexpr AxBox1<T>::AxBox1(intersect_k, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept:
         AxBox1(INTERSECT, yq::span(ls), yq::span(hs)) {}
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(intersect_t, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
+    constexpr AxBox1<T>::AxBox1(intersect_k, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
     {
         if(!ls.empty()){
             lo.x    = std::max_element(ls.begin(), ls.end(), Vector1<T>::less_x) -> x;
@@ -46,20 +46,20 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(sort_t, const Vector1<T>&a, const Vector1<T>& b) noexcept
+    constexpr AxBox1<T>::AxBox1(sort_k, const Vector1<T>&a, const Vector1<T>& b) noexcept
     {
         std::tie(lo.x, hi.x)    = std::minmax(a.x, b.x);
     }
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(union_t, const Vector1<T>&a, const Vector1<T>& b) noexcept : AxBox1(SORT, a, b) {}
+    constexpr AxBox1<T>::AxBox1(union_k, const Vector1<T>&a, const Vector1<T>& b) noexcept : AxBox1(SORT, a, b) {}
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(union_t, std::initializer_list<Vector1<T>> list) noexcept : 
+    constexpr AxBox1<T>::AxBox1(union_k, std::initializer_list<Vector1<T>> list) noexcept : 
         AxBox1(UNION, yq::span(list)){}
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(union_t, std::span<const Vector1<T>> data) noexcept
+    constexpr AxBox1<T>::AxBox1(union_k, std::span<const Vector1<T>> data) noexcept
     {
         if(!data.empty()){
             auto [lx, hx] = std::minmax_element(data.begin(), data.end(), Vector1<T>::less_x);
@@ -71,11 +71,11 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(union_t, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept :
+    constexpr AxBox1<T>::AxBox1(union_k, std::initializer_list<Vector1<T>> ls, std::initializer_list<Vector1<T>> hs) noexcept :
         AxBox1(UNION, yq::span(ls), yq::span(hs)) {}
 
     template <typename T>
-    constexpr AxBox1<T>::AxBox1(union_t, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
+    constexpr AxBox1<T>::AxBox1(union_k, std::span<const Vector1<T>>ls, std::span<const Vector1<T>>hs) noexcept
     {
         if(!ls.empty()){
             lo.x    = std::min_element(ls.begin(), ls.end(), Vector1<T>::less_x) -> x;
@@ -347,7 +347,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr AxBox1<T>    AxBox1<T>::inflate(guard_t, T d) const noexcept
+    constexpr AxBox1<T>    AxBox1<T>::inflate(guard_k, T d) const noexcept
     {
         AxBox1  bx  = fixed();
         return bx.inflate(std::max(d, bx.min_inflate()));
@@ -413,7 +413,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr Vector1<T>    AxBox1<T>::span(guard_t) const noexcept
+    constexpr Vector1<T>    AxBox1<T>::span(guard_k) const noexcept
     {
         return span().eabs();
     }

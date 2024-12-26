@@ -37,7 +37,7 @@ namespace yq {
     template <typename T>
         template <typename>
     requires has_sqrt_v<square_t<T>>
-    Tetrahedron3<T>::Tetrahedron3(unit_t)
+    Tetrahedron3<T>::Tetrahedron3(unit_k)
     {
         //  formula taken from https://en.wikipedia.org/wiki/Tetrahedron
         const T third    = T(1./3.);

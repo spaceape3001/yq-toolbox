@@ -13,8 +13,8 @@
 namespace yq {
 
     JulianDay::JulianDay(Date d) : JulianDay(julian_day(d)) {}
-    JulianDay::JulianDay(gregorian_t, Date d) : JulianDay(julian_day(GREGORIAN, d)) {}
-    JulianDay::JulianDay(julian_t, Date d) : JulianDay(julian_day(JULIAN, d)) {}
+    JulianDay::JulianDay(gregorian_k, Date d) : JulianDay(julian_day(GREGORIAN, d)) {}
+    JulianDay::JulianDay(julian_k, Date d) : JulianDay(julian_day(JULIAN, d)) {}
     JulianDay::JulianDay(CalendarType ct, Date d) : JulianDay(julian_day(ct, d)) {}
 
     bool        JulianDay::is_gregorian() const
@@ -29,7 +29,7 @@ namespace yq {
         return d.is_gregorian() ? julian_day(GREGORIAN, d) : julian_day(JULIAN, d);
     }
     
-    JulianDay    julian_day(gregorian_t, Date v)
+    JulianDay    julian_day(gregorian_k, Date v)
     {
         if(v.year < 0)
             ++v.year;
@@ -41,7 +41,7 @@ namespace yq {
         return { (int32_t)( v.day + (153*m+2)/5+365*y+y/4-y/100+y/400-32045) };
     }
     
-    JulianDay    julian_day(julian_t, Date v)
+    JulianDay    julian_day(julian_k, Date v)
     {
         if(v.year < 0)
             ++v.year;

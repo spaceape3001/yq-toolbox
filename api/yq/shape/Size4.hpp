@@ -58,10 +58,10 @@ namespace yq {
         constexpr Size4() noexcept = default;
         constexpr Size4(T _x, T _y, T _z, T _w) noexcept : x(_x), y(_y), z(_z), w(_w) {}
         constexpr Size4(all_k, T v) noexcept : x(v), y(v), z(v), w(v) {}
-        consteval Size4(one_t) : Size4(ALL, one_v<T>) {}
+        consteval Size4(one_k) : Size4(ALL, one_v<T>) {}
         
         template <typename=void> requires has_nan_v<T>
-        consteval Size4(nan_t) : Size4(ALL, nan_v<T>) {}
+        consteval Size4(nan_k) : Size4(ALL, nan_v<T>) {}
         consteval Size4(zero_k) : Size4(ALL, zero_v<T>) {}
 
         explicit constexpr Size4(const Vector4<T>&) noexcept;

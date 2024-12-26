@@ -150,25 +150,25 @@ namespace yq {
         }
         
         //! Number of low-index entries
-        size_t size(low_t) const noexcept
+        size_t size(low_k) const noexcept
         {
             return (m_zero < N) ? (N-m_zero) : (K7-m_zero);
         }
         
         //! Number of high-index entries
-        size_t size(high_t) const
+        size_t size(high_k) const
         {
             return (m_zero && (m_zero < N)) ? ( m_zero - 1 ) : 0;
         }
         
         //! Span to lowside data
-        std::span<const T>  span(low_t) const
+        std::span<const T>  span(low_k) const
         {
             return std::span<const T>(m_data + m_zero, m_data + N);
         }
         
         //! Span to highside data
-        std::span<const T>  span(high_t) const
+        std::span<const T>  span(high_k) const
         {
             if(m_zero < N){
                 return std::span<const T>(m_data, m_data + m_zero);

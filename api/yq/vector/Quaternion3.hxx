@@ -38,7 +38,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(ccw_t, x_t, MKS<T,dim::Angle>v)
+    Quaternion3<T>::Quaternion3(ccw_k, x_k, MKS<T,dim::Angle>v)
     {
         w   = cos(T(0.5)*v);
         x   = sin(T(0.5)*v);
@@ -49,14 +49,14 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(clockwise_t, x_t, MKS<T,dim::Angle>v) : Quaternion3(CCW,X,-v)
+    Quaternion3<T>::Quaternion3(clockwise_k, x_k, MKS<T,dim::Angle>v) : Quaternion3(CCW,X,-v)
     {
     }
     
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(ccw_t, y_t, MKS<T,dim::Angle>v)
+    Quaternion3<T>::Quaternion3(ccw_k, y_k, MKS<T,dim::Angle>v)
     {
         w   = cos(T(0.5)*v);
         x   = zero_v<T>;
@@ -67,14 +67,14 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(clockwise_t, y_t, MKS<T,dim::Angle>v) : Quaternion3(CCW,Y,-v)
+    Quaternion3<T>::Quaternion3(clockwise_k, y_k, MKS<T,dim::Angle>v) : Quaternion3(CCW,Y,-v)
     {
     }
 
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(ccw_t, z_t, MKS<T,dim::Angle>v)
+    Quaternion3<T>::Quaternion3(ccw_k, z_k, MKS<T,dim::Angle>v)
     {
         w   = cos(T(0.5)*v);
         x   = zero_v<T>;
@@ -86,7 +86,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(clockwise_t, z_t, MKS<T,dim::Angle>v) : Quaternion3(CCW,Z,-v)
+    Quaternion3<T>::Quaternion3(clockwise_k, z_k, MKS<T,dim::Angle>v) : Quaternion3(CCW,Z,-v)
     {
     }
 
@@ -94,7 +94,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(ccw_t, const Vector3<T>&a, MKS<T,dim::Angle>v)
+    Quaternion3<T>::Quaternion3(ccw_k, const Vector3<T>&a, MKS<T,dim::Angle>v)
     {
         if(a.length²() == (T) 0.){
             w   = (T) 1.;
@@ -115,7 +115,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(clockwise_t, const Vector3<T>&a, MKS<T,dim::Angle>v) : Quaternion3(CCW, a, -v) 
+    Quaternion3<T>::Quaternion3(clockwise_k, const Vector3<T>&a, MKS<T,dim::Angle>v) : Quaternion3(CCW, a, -v) 
     {
     }
     #endif
@@ -123,7 +123,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Quaternion3<T>::Quaternion3(hpr_t, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll) :
+    Quaternion3<T>::Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll) :
         Quaternion3(Quaternion3(CCW, Z, roll)*Quaternion3(CCW, Y,pitch)*Quaternion3(CCW, X,hdg_or_yaw))
     {
     }
@@ -150,7 +150,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr square_t<T>  Quaternion3<T>::operator^(two_t) const noexcept
+    constexpr square_t<T>  Quaternion3<T>::operator^(two_k) const noexcept
     {
         return length²();
     }

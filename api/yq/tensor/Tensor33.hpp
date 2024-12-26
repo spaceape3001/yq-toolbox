@@ -74,21 +74,21 @@ namespace yq {
         {
         }
 
-        constexpr Tensor33(columns_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) noexcept :
+        constexpr Tensor33(columns_k, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) noexcept :
             xx(x.x), xy(y.x), xz(z.x), 
             yx(x.y), yy(y.y), yz(z.y), 
             zx(x.z), zy(y.z), zz(z.z)
         {
         }
 
-        constexpr Tensor33(diagonal_t, T _xx, T _yy, T _zz) : 
+        constexpr Tensor33(diagonal_k, T _xx, T _yy, T _zz) : 
             xx(_xx),  xy(zero_v<T>), xz(zero_v<T>),
             yx(zero_v<T>), yy(_yy),  yz(zero_v<T>),
             zx(zero_v<T>), zy(zero_v<T>), zz(_zz)
         {
         }
 
-        constexpr Tensor33(diagonal_t, const Vector3<T>& v) : 
+        constexpr Tensor33(diagonal_k, const Vector3<T>& v) : 
             xx(v.x),  xy(zero_v<T>), xz(zero_v<T>), 
             yx(zero_v<T>), yy(v.y),  yz(zero_v<T>), 
             zx(zero_v<T>), zy(zero_v<T>), zz(v.z)
@@ -103,9 +103,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor33(nan_t) : Tensor33(ALL, nan_v<T>) {}
+        consteval Tensor33(nan_k) : Tensor33(ALL, nan_v<T>) {}
 
-        constexpr Tensor33(rows_t, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) :
+        constexpr Tensor33(rows_k, const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z) :
             xx(x.x), xy(x.y), xz(x.z),
             yx(y.x), yy(y.y), yz(y.z),
             zx(z.x), zy(z.y), zz(z.z)
@@ -120,31 +120,31 @@ namespace yq {
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(hpr_t, MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
+        Tensor33(hpr_k, MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(ccw_t, x_t, MKS<T,dim::Angle>v);
+        Tensor33(ccw_k, x_k, MKS<T,dim::Angle>v);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(clockwise_t, x_t, MKS<T,dim::Angle>v);
+        Tensor33(clockwise_k, x_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(ccw_t, y_t, MKS<T,dim::Angle>v);
+        Tensor33(ccw_k, y_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(clockwise_t, y_t, MKS<T,dim::Angle>v);
+        Tensor33(clockwise_k, y_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(ccw_t, z_t, MKS<T,dim::Angle>v);
+        Tensor33(ccw_k, z_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Tensor33(clockwise_t, z_t, MKS<T,dim::Angle>v);
+        Tensor33(clockwise_k, z_k, MKS<T,dim::Angle>v);
 
         #ifdef YQ_USE_GLM
         template <glm::qualifier Q>
@@ -431,7 +431,7 @@ namespace yq {
     /*! \brief Create 3x3 tensor by its diagonal
     */
     template <typename T>
-    constexpr Tensor33<T>  diagonal(T x, std::type_identity_k<T> y, std::type_identity_k<T> z)
+    constexpr Tensor33<T>  diagonal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
         return Tensor33<T>(DIAGONAL, x, y, z);
     }

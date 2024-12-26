@@ -54,16 +54,16 @@ namespace yq {
         constexpr Bivector2(all_k, T v) noexcept : xy(v) {}
         
         //! Constructs with NaN in all components
-        consteval Bivector2(nan_t) noexcept : Bivector2(ALL, nan_v<T>) {}
+        consteval Bivector2(nan_k) noexcept : Bivector2(ALL, nan_v<T>) {}
 
         //! Constructs with ONE in all components
-        consteval Bivector2(one_t) noexcept : Bivector2(ALL, one_v<T>) {}
+        consteval Bivector2(one_k) noexcept : Bivector2(ALL, one_v<T>) {}
         
         //! Constructs with a single (possibly) non-zero value in the XY component
-        constexpr Bivector2(xy_t, T v) noexcept : xy(v) {}
+        constexpr Bivector2(xy_k, T v) noexcept : xy(v) {}
         
         //! Constructs a unit bivector in the XY component
-        consteval Bivector2(xy_t) noexcept : Bivector2(XY, one_v<T>) {}
+        consteval Bivector2(xy_k) noexcept : Bivector2(XY, one_v<T>) {}
         
         //! Constructs a zero bivector
         consteval Bivector2(zero_k) noexcept : Bivector2(ALL, zero_v<T>) {}

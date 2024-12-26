@@ -43,22 +43,22 @@ namespace yq {
         constexpr Circle2(const Vector2<T>& pt, T r) : center(pt), radius(r) {}
         
         //! Constructs to NaN
-        consteval Circle2(nan_t) : Circle2(Vector2<T>(NAN), nan_v<T>) {}
+        consteval Circle2(nan_k) : Circle2(Vector2<T>(NAN), nan_v<T>) {}
         
         //! Constructs to unit circle at origin
-        consteval Circle2(unit_t) : Circle2(Vector2<T>(ZERO), one_v<T>) {}
+        consteval Circle2(unit_k) : Circle2(Vector2<T>(ZERO), one_v<T>) {}
         
         //! Constructs to zero circle
         consteval Circle2(zero_k) : Circle2(Vector2<T>(ZERO), zero_v<T>) {}
         
         //! Constructs to focus and radius
-        constexpr Circle2(focus_t, const Vector2<T>& focus, const T dist) noexcept : Circle2(focus, dist) {}
+        constexpr Circle2(focus_k, const Vector2<T>& focus, const T dist) noexcept : Circle2(focus, dist) {}
         
         //! Constructs to focus and edge
-        Circle2(focus_t, const Vector2<T>& focus, const Vector2<T>& edge);
+        Circle2(focus_k, const Vector2<T>& focus, const Vector2<T>& edge);
         
         //! Constructs between two opposite points
-        Circle2(opposite_t, const Vector2<T>&, const Vector2<T>&);
+        Circle2(opposite_k, const Vector2<T>&, const Vector2<T>&);
 
         //! Converts to circle of compatible type
         template <typename U>

@@ -52,10 +52,10 @@ namespace yq {
 
         //! NaN constructor
         template <typename=void> requires (has_nan_v<A> && has_nan_v<L>)
-        consteval Polar2(nan_t) noexcept : angle(nan_v<A>), radius(nan_v<L>) {}
+        consteval Polar2(nan_k) noexcept : angle(nan_v<A>), radius(nan_v<L>) {}
 
         //! Unit constructor
-        consteval Polar2(unit_t) noexcept : angle(zero_v<A>), radius(one_v<L>) {}
+        consteval Polar2(unit_k) noexcept : angle(zero_v<A>), radius(one_v<L>) {}
         
         //! Zero constructor
         consteval Polar2(zero_k) noexcept : angle(zero_v<A>), radius(zero_v<L>) {}
@@ -63,18 +63,18 @@ namespace yq {
         //! Creates a polar assuming euler convention
         Polar2(const Vector2<L>&);
         //! Creates a polar assuming clock convention
-        Polar2(clock_arg_t, const Vector2<L>&);
+        Polar2(clock_arg_k, const Vector2<L>&);
         //! Creates a polar assuming euler convention
-        Polar2(euler_t, const Vector2<L>&);
+        Polar2(euler_k, const Vector2<L>&);
         
         //! Convert to x,y cartesian
         operator Vector2<L> () const;
         
         //! Convert to x,y cartesian with clockwise convention
-        Vector2<L>  operator()(clock_arg_t) const;
+        Vector2<L>  operator()(clock_arg_k) const;
 
         //! Convert to x,y cartesian with euler (counter clockwise) convetion
-        Vector2<L>  operator()(euler_t) const;
+        Vector2<L>  operator()(euler_k) const;
 
         //! Converts to a vector assuming this polar represents a clock angle
         Vector2<L>  to_clock() const;

@@ -56,7 +56,7 @@ namespace yq {
     struct disabled_k {};
     struct done_k {};
     struct down_k {};
-    struct easter_k {};
+    struct easter_t {};
     struct edge_k {};
     struct ellipse_k {};
     struct empty_k {};
@@ -215,7 +215,7 @@ namespace yq {
     static constexpr const disabled_k       DISABLED;
     static constexpr const done_k           DONE;
     static constexpr const down_k           DOWN;
-    static constexpr const easter_k         EASTER;
+    static constexpr const easter_t         EASTER;
     static constexpr const edge_k           EDGE;
     static constexpr const ellipse_k        ELLIPSE;
     static constexpr const empty_k          EMPTY;

@@ -35,7 +35,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(hpr_t, MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
+    Tensor33<T>::Tensor33(hpr_k, MKS<T,dim::Angle> hdg, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
     {
         auto ch = cos(hdg);
         auto sh = sin(hdg);
@@ -63,7 +63,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(ccw_t, x_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    Tensor33<T>::Tensor33(ccw_k, x_k, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -79,12 +79,12 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(clockwise_t, x_t, MKS<T,dim::Angle>v) : Tensor33(CCW, X, -v) {}
+    Tensor33<T>::Tensor33(clockwise_k, x_k, MKS<T,dim::Angle>v) : Tensor33(CCW, X, -v) {}
 
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(ccw_t, y_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    Tensor33<T>::Tensor33(ccw_k, y_k, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -99,12 +99,12 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(clockwise_t, y_t, MKS<T,dim::Angle>v) : Tensor33(CCW, Y, -v) {}
+    Tensor33<T>::Tensor33(clockwise_k, y_k, MKS<T,dim::Angle>v) : Tensor33(CCW, Y, -v) {}
 
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(ccw_t, z_t, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
+    Tensor33<T>::Tensor33(ccw_k, z_k, MKS<T,dim::Angle>v) : Tensor33(IDENTITY)
     {
         auto c  = cos(v);
         auto s  = sin(v);
@@ -118,7 +118,7 @@ namespace yq {
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>
-    Tensor33<T>::Tensor33(clockwise_t, z_t, MKS<T,dim::Angle>v) : Tensor33(CCW, Z, -v) {}
+    Tensor33<T>::Tensor33(clockwise_k, z_k, MKS<T,dim::Angle>v) : Tensor33(CCW, Z, -v) {}
 
     #ifdef YQ_USE_GLM
     template <typename T>

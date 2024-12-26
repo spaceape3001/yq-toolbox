@@ -49,7 +49,7 @@ namespace yq {
     }
 
     template <typename T>
-    constexpr square_t<T> Vector2<T>::operator^(two_t) const noexcept
+    constexpr square_t<T> Vector2<T>::operator^(two_k) const noexcept
     {
         return x*x + y*y;
     }    
@@ -827,8 +827,8 @@ namespace yq {
     requires (std::is_floating_point_v<T> && has_sqrt_v<T>)
     Radian      angle(const Vector2<MKS<T,DIM1>>&a, const Vector2<MKS<T,DIM2>>& b)
     {
-        using one_t = MKS<T,dim::None>;
-        return acos( std::clamp<one_t>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
+        using one_k = MKS<T,dim::None>;
+        return acos( std::clamp<one_k>( (a*b)/(length(a)*length(b)), -one_v<T>, one_v<T>));
     }
 
     template <typename T>
@@ -953,7 +953,7 @@ namespace yq {
     }
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector2<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y)
+    bool is_close(const R& compare, const Vector2<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y)
     {
         return is_close(compare, actual, Vector2<T>(x, y) );
     }

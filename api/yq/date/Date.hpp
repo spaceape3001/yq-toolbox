@@ -36,19 +36,19 @@ namespace yq {
         constexpr Date(int64_t y, uint8_t m, uint8_t d) : year(y), month(m), day(d) {}
         
         Date(const JulianDay&);
-        Date(julian_t, const JulianDay&);
-        Date(gregorian_t, const JulianDay&);
+        Date(julian_k, const JulianDay&);
+        Date(gregorian_k, const JulianDay&);
         Date(CalendarType, const JulianDay&);
         
         Date(easter_t, int16_t);
-        Date(julian_t, easter_t, int16_t);
-        Date(gregorian_t, easter_t, int16_t);
+        Date(julian_k, easter_t, int16_t);
+        Date(gregorian_k, easter_t, int16_t);
         Date(CalendarType, easter_t, int16_t);
         
         //! Gets today's earth date
-        Date(today_t);
+        Date(today_k);
         
-        consteval Date(gregorian_t);
+        consteval Date(gregorian_k);
         
 
         constexpr auto operator<=>(const Date&) const noexcept = default;
@@ -58,18 +58,18 @@ namespace yq {
         
     };
 
-    consteval Date::Date(gregorian_t) : Date(kGregorianYear, kGregorianMonth, kGregorianDay)
+    consteval Date::Date(gregorian_k) : Date(kGregorianYear, kGregorianMonth, kGregorianDay)
     {
     }
         
     Date                date(JulianDay);
-    Date                date(julian_t, JulianDay);
-    Date                date(gregorian_t, JulianDay);
+    Date                date(julian_k, JulianDay);
+    Date                date(gregorian_k, JulianDay);
     Date                date(CalendarType, JulianDay);
     
     Date                easter(int16_t);
-    Date                easter(julian_t, int16_t);
-    Date                easter(gregorian_t, int16_t);
+    Date                easter(julian_k, int16_t);
+    Date                easter(gregorian_k, int16_t);
     Date                easter(CalendarType, int16_t);
 
     //! Puts date out as string view (copy to preserve, it's thread-local)

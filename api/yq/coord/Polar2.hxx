@@ -13,13 +13,13 @@
 namespace yq {
 
     template <typename A, typename L>
-    Polar2<A,L>::Polar2(clock_arg_t, const Vector2<L>& v) : 
+    Polar2<A,L>::Polar2(clock_arg_k, const Vector2<L>& v) : 
         angle(atan(v.x, v.y)), radius(v.length())
     {
     }
     
     template <typename A, typename L>
-    Polar2<A,L>::Polar2(euler_t, const Vector2<L>& v) : 
+    Polar2<A,L>::Polar2(euler_k, const Vector2<L>& v) : 
         angle(atan(v.y, v.x)), radius(v.length())
     {
     }
@@ -48,13 +48,13 @@ namespace yq {
     }
     
     template <typename A, typename L>
-    Vector2<L>  Polar2<A,L>::operator()(clock_arg_t) const
+    Vector2<L>  Polar2<A,L>::operator()(clock_arg_k) const
     {
         return to_clock();
     }
     
     template <typename A, typename L>
-    Vector2<L>  Polar2<A,L>::operator()(euler_t) const
+    Vector2<L>  Polar2<A,L>::operator()(euler_k) const
     {
         return to_euler();
     }

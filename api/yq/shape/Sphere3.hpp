@@ -43,22 +43,22 @@ namespace yq {
         constexpr Sphere3(const Vector3<T>& pt, T r) : center(pt), radius(r) {}
         
         //! Not a number constructor
-        consteval Sphere3(nan_t) : Sphere3(Vector3<T>(NAN), nan_v<T>) {}
+        consteval Sphere3(nan_k) : Sphere3(Vector3<T>(NAN), nan_v<T>) {}
         
         //! Unit sphere constructor
-        consteval Sphere3(unit_t) : Sphere3(Vector3<T>(ZERO), one_v<T>) {}
+        consteval Sphere3(unit_k) : Sphere3(Vector3<T>(ZERO), one_v<T>) {}
         
         //! Zero constructor
         consteval Sphere3(zero_k) : Sphere3(Vector3<T>(ZERO), zero_v<T>) {}
 
         //! Construct with focus and distance
-        constexpr Sphere3(focus_t, const Vector3<T>& focus, const T dist) noexcept : Sphere3(focus, dist) {}
+        constexpr Sphere3(focus_k, const Vector3<T>& focus, const T dist) noexcept : Sphere3(focus, dist) {}
         
         //! Construct with focus and point
-        Sphere3(focus_t, const Vector3<T>& focus, const Vector3<T>& edge);
+        Sphere3(focus_k, const Vector3<T>& focus, const Vector3<T>& edge);
         
         //! Construct with two opposite points
-        Sphere3(opposite_t, const Vector3<T>&, const Vector3<T>&);
+        Sphere3(opposite_k, const Vector3<T>&, const Vector3<T>&);
 
         //! Convert to another sphere with compatible data type
         template <typename U>
@@ -155,7 +155,7 @@ namespace yq {
 
     //! Creates a sphere from a center and radius
     template <typename T>
-    constexpr Sphere3<T>  sphere(const Vector3<T>& center, std::type_identity_k<T> radius) noexcept
+    constexpr Sphere3<T>  sphere(const Vector3<T>& center, std::type_identity_t<T> radius) noexcept
     {
         return {center, radius};
     }

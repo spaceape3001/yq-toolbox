@@ -298,7 +298,7 @@ namespace yq {
     
     #ifdef YQ_MATH_TRIANGLE2_HPP
     template <typename T>
-    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_k<T> z)
+    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z)
     {
         return { xy(a.a, z), xy(a.b, z), xy(a.c, z) };
     }

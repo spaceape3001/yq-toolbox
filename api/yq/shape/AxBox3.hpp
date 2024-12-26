@@ -77,7 +77,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox3(intersect_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
+        constexpr AxBox3(intersect_k, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
 
         /*! \brief Construct as an intersection of points
         
@@ -88,31 +88,31 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox3(intersect_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
+        constexpr AxBox3(intersect_k, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
 
         /*! \brief Construct a box using the two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox3(sort_t, const Vector3<T>&a, const Vector3<T>& b) noexcept;
+        constexpr AxBox3(sort_k, const Vector3<T>&a, const Vector3<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox3(union_t, const Vector3<T>&a, const Vector3<T>& b) noexcept;
+        constexpr AxBox3(union_k, const Vector3<T>&a, const Vector3<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox3(union_t, std::initializer_list<Vector3<T>>) noexcept;
+        constexpr AxBox3(union_k, std::initializer_list<Vector3<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox3(union_t, std::span<const Vector3<T>>) noexcept;
+        constexpr AxBox3(union_k, std::span<const Vector3<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -123,7 +123,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox3(union_t, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
+        constexpr AxBox3(union_k, std::initializer_list<Vector3<T>>, std::initializer_list<Vector3<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -134,11 +134,11 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox3(union_t, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
+        constexpr AxBox3(union_k, std::span<const Vector3<T>>, std::span<const Vector3<T>>) noexcept;
 
         //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
-        consteval AxBox3(nan_t) : AxBox3(Vector3<T>(NAN)) {}
+        consteval AxBox3(nan_k) : AxBox3(Vector3<T>(NAN)) {}
 
         //! Zero box
         consteval AxBox3(zero_k) : AxBox3(Vector3<T>(ZERO)) {}
@@ -405,7 +405,7 @@ namespace yq {
             This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
             half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
         */
-        constexpr AxBox3    inflate(guard_t, T) const noexcept;
+        constexpr AxBox3    inflate(guard_k, T) const noexcept;
         
         //! Largest sphere contained by this box (won't touch all sides)
         constexpr Sphere3<T>    insphere() const noexcept;
@@ -499,7 +499,7 @@ namespace yq {
         
             This guards against negative values (ie, takes absolute value)
         */
-        constexpr Vector3<T>    span(guard_t) const noexcept;
+        constexpr Vector3<T>    span(guard_k) const noexcept;
 
         /*! \brief Computes the surface area of a 3D axially aligned bounding box
         */
@@ -526,7 +526,7 @@ namespace yq {
             
             \note This one guards against negative volumes (ie, takes the absolute value)
         */
-        constexpr cube_t<T>       volume(guard_t) const noexcept;
+        constexpr cube_t<T>       volume(guard_k) const noexcept;
 
         //! X Range of the box
         constexpr Range<T>  x_range() const noexcept;

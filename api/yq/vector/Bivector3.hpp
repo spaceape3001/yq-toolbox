@@ -62,28 +62,28 @@ namespace yq {
         constexpr Bivector3(all_k, T v) noexcept : xy(v), yz(v), zx(v) {}
         
         //! Constructs to NaN
-        consteval Bivector3(nan_t) noexcept : Bivector3(ALL, nan_v<T>) {}
+        consteval Bivector3(nan_k) noexcept : Bivector3(ALL, nan_v<T>) {}
 
         //! Constructs to all ones
-        consteval Bivector3(one_t) noexcept : Bivector3(ALL, one_v<T>) {}
+        consteval Bivector3(one_k) noexcept : Bivector3(ALL, one_v<T>) {}
         
         //! Constructs a bivector with the XY component set as given
-        constexpr Bivector3(xy_t, T v) noexcept : xy(v), yz(zero_v<T>), zx(zero_v<T>) {}
+        constexpr Bivector3(xy_k, T v) noexcept : xy(v), yz(zero_v<T>), zx(zero_v<T>) {}
         
         //! Constructs a unit bivector in the XY component
-        consteval Bivector3(xy_t) noexcept : Bivector3(XY, one_v<T>) {}
+        consteval Bivector3(xy_k) noexcept : Bivector3(XY, one_v<T>) {}
         
         //! Constructs a bivector with the YZ component set as given
-        constexpr Bivector3(yz_t, T v) noexcept : xy(zero_v<T>), yz(v), zx(zero_v<T>) {}
+        constexpr Bivector3(yz_k, T v) noexcept : xy(zero_v<T>), yz(v), zx(zero_v<T>) {}
 
         //! Constructs a unit bivector in the YZ component
-        consteval Bivector3(yz_t) noexcept : Bivector3(YZ, one_v<T>) {}
+        consteval Bivector3(yz_k) noexcept : Bivector3(YZ, one_v<T>) {}
 
         //! Constructs a bivector with the ZX component set as given
-        constexpr Bivector3(zx_t, T v) noexcept : xy(zero_v<T>), yz(zero_v<T>), zx(v) {}
+        constexpr Bivector3(zx_k, T v) noexcept : xy(zero_v<T>), yz(zero_v<T>), zx(v) {}
 
         //! Constructs a unit bivector in the ZX component
-        consteval Bivector3(zx_t) noexcept : Bivector3(ZX, one_v<T>) {}
+        consteval Bivector3(zx_k) noexcept : Bivector3(ZX, one_v<T>) {}
         
         //! Constructs a zero bivector
         consteval Bivector3(zero_k) noexcept : Bivector3(ALL, zero_v<T>) {}

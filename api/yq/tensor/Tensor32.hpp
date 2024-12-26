@@ -59,7 +59,7 @@ namespace yq {
         {
         }
 
-        constexpr Tensor32(columns_t, const Vector3<T>& x, const Vector3<T>& y) noexcept :
+        constexpr Tensor32(columns_k, const Vector3<T>& x, const Vector3<T>& y) noexcept :
             xx(x.x), xy(y.x), 
             yx(x.y), yy(y.y), 
             zx(x.z), zy(y.z)
@@ -74,9 +74,9 @@ namespace yq {
         }
 
         template <typename=void> requires has_nan_v<T>
-        consteval Tensor32(nan_t) : Tensor32(ALL, nan_v<T>) {}
+        consteval Tensor32(nan_k) : Tensor32(ALL, nan_v<T>) {}
 
-        constexpr Tensor32(rows_t, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z) :
+        constexpr Tensor32(rows_k, const Vector2<T>& x, const Vector2<T>& y, const Vector2<T>& z) :
             xx(x.x), xy(x.y), 
             yx(y.x), yy(y.y), 
             zx(z.x), zy(z.y)

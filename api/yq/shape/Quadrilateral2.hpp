@@ -57,7 +57,7 @@ namespace yq {
         
         //! Constructs NaN Quad
         template <typename=void> requires has_nan_v<T>
-        consteval Quadrilateral2(nan_t) noexcept : Quadrilateral2(ALL, nan_v<T>) {}
+        consteval Quadrilateral2(nan_k) noexcept : Quadrilateral2(ALL, nan_v<T>) {}
         
         //! Constructs a zero Quad
         consteval Quadrilateral2(zero_k) noexcept : Quadrilateral2(ALL, zero_v<T>) {}

@@ -52,15 +52,15 @@ namespace yq {
         
         constexpr Quaternion3(all_k, T v) : w(v), x(v), y(v), z(v) {}
         consteval Quaternion3(identity_k) : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
-        consteval Quaternion3(nan_t) : Quaternion3(ALL, nan_v<T>) {}
-        consteval Quaternion3(w_t) noexcept : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
-        constexpr Quaternion3(w_t, T v) noexcept :  w(v), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
-        consteval Quaternion3(x_t) noexcept : w(zero_v<T>), x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
-        constexpr Quaternion3(x_t, T v) noexcept : w(zero_v<T>), x(v), y(zero_v<T>), z(zero_v<T>)  {}
-        consteval Quaternion3(y_t) noexcept : w(zero_v<T>), x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
-        constexpr Quaternion3(y_t, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(v), z(zero_v<T>) {}
-        consteval Quaternion3(z_t) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
-        constexpr Quaternion3(z_t, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
+        consteval Quaternion3(nan_k) : Quaternion3(ALL, nan_v<T>) {}
+        consteval Quaternion3(w_k) noexcept : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        constexpr Quaternion3(w_k, T v) noexcept :  w(v), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        consteval Quaternion3(x_k) noexcept : w(zero_v<T>), x(one_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        constexpr Quaternion3(x_k, T v) noexcept : w(zero_v<T>), x(v), y(zero_v<T>), z(zero_v<T>)  {}
+        consteval Quaternion3(y_k) noexcept : w(zero_v<T>), x(zero_v<T>), y(one_v<T>), z(zero_v<T>) {}
+        constexpr Quaternion3(y_k, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(v), z(zero_v<T>) {}
+        consteval Quaternion3(z_k) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
+        constexpr Quaternion3(z_k, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Quaternion3(zero_k) : Quaternion3(ALL, zero_v<T>) {}
         
         #if YQ_USE_GLM
@@ -70,40 +70,40 @@ namespace yq {
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(ccw_t, x_t, MKS<T,dim::Angle>v);
+        Quaternion3(ccw_k, x_k, MKS<T,dim::Angle>v);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(clockwise_t, x_t, MKS<T,dim::Angle>v);
+        Quaternion3(clockwise_k, x_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(ccw_t, y_t, MKS<T,dim::Angle>v);
+        Quaternion3(ccw_k, y_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(clockwise_t, y_t, MKS<T,dim::Angle>v);
+        Quaternion3(clockwise_k, y_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(ccw_t, z_t, MKS<T,dim::Angle>v);
+        Quaternion3(ccw_k, z_k, MKS<T,dim::Angle>v);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(clockwise_t, z_t, MKS<T,dim::Angle>v);
+        Quaternion3(clockwise_k, z_k, MKS<T,dim::Angle>v);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(ccw_t, const Vector3<T>&, MKS<T,dim::Angle>);
+        Quaternion3(ccw_k, const Vector3<T>&, MKS<T,dim::Angle>);
 
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(clockwise_t, const Vector3<T>&, MKS<T,dim::Angle>);
+        Quaternion3(clockwise_k, const Vector3<T>&, MKS<T,dim::Angle>);
         
         
         template <typename=void>
         requires std::is_floating_point_v<T>
-        Quaternion3(hpr_t, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
+        Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
         
 
         template <typename=void>
@@ -129,7 +129,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3<T>          operator~() const;
         
-        constexpr square_t<T>   operator^(two_t) const noexcept;
+        constexpr square_t<T>   operator^(two_k) const noexcept;
 
         constexpr Quaternion3   operator+ (const Quaternion3<T>&b) const noexcept;
         Quaternion3&            operator+=(const Quaternion3<T>&b) noexcept;
@@ -184,7 +184,7 @@ namespace yq {
     /*! \brief Creates a quaternion
     */
     template <typename T>
-    constexpr Quaternion3<T> quaternion(T w, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z)
+    constexpr Quaternion3<T> quaternion(T w, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
         return {w,x,y,z};
     }

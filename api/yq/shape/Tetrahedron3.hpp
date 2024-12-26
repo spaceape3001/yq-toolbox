@@ -40,7 +40,7 @@ namespace yq {
         constexpr Tetrahedron3(const Vector3<T>& _a, const Vector3<T>& _b, const Vector3<T>& _c, const Vector3<T>& _d) 
             : a(_a), b(_b), c(_c), d(_d) {}
         constexpr Tetrahedron3(all_k, const Vector3<T>& v) noexcept : a(v), b(v), c(v), d(v) {}
-        consteval Tetrahedron3(nan_t) noexcept : Tetrahedron3(ALL, Vector3<T>(NAN)) {}
+        consteval Tetrahedron3(nan_k) noexcept : Tetrahedron3(ALL, Vector3<T>(NAN)) {}
         consteval Tetrahedron3(zero_k) noexcept : Tetrahedron3(ALL, Vector3<T>(ZERO)) {}
         constexpr Tetrahedron3(const Triangle3<T>& _t, const Vector3<T>& d);
         
@@ -53,7 +53,7 @@ namespace yq {
         */
         template <typename=void>
             requires has_sqrt_v<square_t<T>>
-        Tetrahedron3(unit_t);
+        Tetrahedron3(unit_k);
         
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
@@ -125,7 +125,7 @@ namespace yq {
 
     //! Creates a tetrahedron from four points
     template <typename T>
-    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const std::type_identity_k<Vector3<T>>& b, const std::type_identity_k<Vector3<T>>& c, const std::type_identity_k<Vector3<T>>& d)
+    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const std::type_identity_t<Vector3<T>>& b, const std::type_identity_t<Vector3<T>>& c, const std::type_identity_t<Vector3<T>>& d)
     {
         return { a, b, c, d };
     }

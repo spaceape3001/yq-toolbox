@@ -77,12 +77,12 @@ namespace yq {
         constexpr Vector2(T _x, T _y) noexcept : x(_x), y(_y) {}
         constexpr Vector2(all_k, T v) noexcept : x(v), y(v) {}
         template <typename=void> requires has_nan_v<T>
-        consteval Vector2(nan_t) noexcept : Vector2(ALL, nan_v<T>) {}
-        consteval Vector2(one_t) noexcept : Vector2(ALL, one_v<T>) {}
-        consteval Vector2(x_t) noexcept : x(one_v<T>), y(zero_v<T>) {}
-        constexpr Vector2(x_t, T v) noexcept : x(v), y(zero_v<T>) {}
-        consteval Vector2(y_t) noexcept : x(zero_v<T>), y(one_v<T>) {}
-        constexpr Vector2(y_t, T v) noexcept : x(zero_v<T>), y(v) {}
+        consteval Vector2(nan_k) noexcept : Vector2(ALL, nan_v<T>) {}
+        consteval Vector2(one_k) noexcept : Vector2(ALL, one_v<T>) {}
+        consteval Vector2(x_k) noexcept : x(one_v<T>), y(zero_v<T>) {}
+        constexpr Vector2(x_k, T v) noexcept : x(v), y(zero_v<T>) {}
+        consteval Vector2(y_k) noexcept : x(zero_v<T>), y(one_v<T>) {}
+        constexpr Vector2(y_k, T v) noexcept : x(zero_v<T>), y(v) {}
         consteval Vector2(zero_k) noexcept : Vector2(ALL, zero_v<T>) {}
         
         explicit constexpr Vector2(const Size2<T>&) noexcept;
@@ -153,7 +153,7 @@ namespace yq {
         Vector2<quotient_t<T,T>> operator~() const;
 
         //! Squares the vector (ie, length square)
-        constexpr square_t<T> operator^(two_t) const noexcept;
+        constexpr square_t<T> operator^(two_k) const noexcept;
 
         //! Addition with number
         constexpr Multivector2<T> operator+(T b) const noexcept;
@@ -466,7 +466,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector2<T> vector(T x, std::type_identity_k<T> y) noexcept
+    constexpr Vector2<T> vector(T x, std::type_identity_t<T> y) noexcept
     {
         return Vector2<T>(x,y);
     }
@@ -677,7 +677,7 @@ namespace yq {
     bool is_close(const R& compare, const Vector2<T>& actual, const Vector2<T>& expected);
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector2<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y);
+    bool is_close(const R& compare, const Vector2<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y);
 
     template <typename T>
     constexpr Vector2<T>   max_elem(const Vector2<T>&a, const Vector2<T>&b) noexcept;

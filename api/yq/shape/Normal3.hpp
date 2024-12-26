@@ -51,7 +51,7 @@ namespace yq {
     //! Creates a normal from two parameters
     template <typename T>
     requires std::is_floating_point_v<T>
-    Normal3<T>     normal(T x, std::type_identity_k<T> y, std::type_identity_k<T> z)
+    Normal3<T>     normal(T x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
         return { ~Vector3<T>{x,y,z} };
     }

@@ -67,7 +67,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox2(intersect_t, std::initializer_list<Vector2<T>> low, std::initializer_list<Vector2<T>> high) noexcept;
+        constexpr AxBox2(intersect_k, std::initializer_list<Vector2<T>> low, std::initializer_list<Vector2<T>> high) noexcept;
 
         /*! \brief Construct as an intersection of points
         
@@ -78,31 +78,31 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox2(intersect_t, std::span<const Vector2<T>> low, std::span<const Vector2<T>> high) noexcept;
+        constexpr AxBox2(intersect_k, std::span<const Vector2<T>> low, std::span<const Vector2<T>> high) noexcept;
 
         /*! \brief Construct a box using the two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox2(sort_t, const Vector2<T>&a, const Vector2<T>& b) noexcept;
+        constexpr AxBox2(sort_k, const Vector2<T>&a, const Vector2<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of two points
         
             This ensures lo <= hi (unless infinite/nan)
         */
-        constexpr AxBox2(union_t, const Vector2<T>&a, const Vector2<T>& b) noexcept;
+        constexpr AxBox2(union_k, const Vector2<T>&a, const Vector2<T>& b) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox2(union_t, std::initializer_list<Vector2<T>>) noexcept;
+        constexpr AxBox2(union_k, std::initializer_list<Vector2<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
             This returns the bounding box of *ALL* the given points
         */
-        constexpr AxBox2(union_t, std::span<const Vector2<T>>) noexcept;
+        constexpr AxBox2(union_k, std::span<const Vector2<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -113,7 +113,7 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox2(union_t, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
+        constexpr AxBox2(union_k, std::initializer_list<Vector2<T>>, std::initializer_list<Vector2<T>>) noexcept;
 
         /*! \brief Construct a box as a union of multiple points
         
@@ -124,11 +124,11 @@ namespace yq {
             \param[in] low Low values
             \param[in] high High values
         */
-        constexpr AxBox2(union_t, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
+        constexpr AxBox2(union_k, std::span<const Vector2<T>>, std::span<const Vector2<T>>) noexcept;
         
         //! Box of not-a-numbers
         template <typename=void> requires has_nan_v<T>
-        consteval AxBox2(nan_t) : AxBox2(Vector2<T>(NAN)) {}
+        consteval AxBox2(nan_k) : AxBox2(Vector2<T>(NAN)) {}
 
         //! Zero box
         consteval AxBox2(zero_k) : AxBox2(Vector2<T>(ZERO)) {}
@@ -232,7 +232,7 @@ namespace yq {
         constexpr square_t<T>               area() const noexcept;
 
         //! Area of the box (ensuring it's positive)
-        constexpr square_t<T>               area(guard_t) const noexcept;
+        constexpr square_t<T>               area(guard_k) const noexcept;
 
         /*! \brief Computes the center
         */
@@ -350,7 +350,7 @@ namespace yq {
         constexpr Vector2<T>    hh(T adjust) const noexcept;
         
         //! Hi-hi corner of this box GUARDED against invalid boxes
-        constexpr Vector2<T>    hh(guard_t) const noexcept;
+        constexpr Vector2<T>    hh(guard_k) const noexcept;
         
         //! Hi-Lo corner of this box
         constexpr Vector2<T>    hl() const noexcept;
@@ -375,7 +375,7 @@ namespace yq {
             This guards against invalid boxes, by first fixing it, and second, limiting any shrinkage to 
             half the minimum dimension of the box (ie, it'll be zero-thickness if the limit is activated)
         */
-        constexpr AxBox2    inflate(guard_t, T) const noexcept;
+        constexpr AxBox2    inflate(guard_k, T) const noexcept;
 
         //! Tests this box for validness
         constexpr bool          is_valid() const noexcept;
@@ -392,7 +392,7 @@ namespace yq {
         constexpr Vector2<T>    ll(T adjust) const noexcept;
 
         //! Low/low corner, guarded against invalid boxes
-        constexpr Vector2<T>    ll(guard_t) const noexcept;
+        constexpr Vector2<T>    ll(guard_k) const noexcept;
 
         //! Minimum inflation number on a valid box to keep it from going invalid
         constexpr T min_inflate() const noexcept;
@@ -426,7 +426,7 @@ namespace yq {
         constexpr Size2<T> size() const noexcept;
         
         //! Size of this box, guarded against invalid boxes
-        constexpr Size2<T> size(guard_t) const noexcept;
+        constexpr Size2<T> size(guard_k) const noexcept;
 
 
         //! Returns the southeast corner of the box
@@ -443,7 +443,7 @@ namespace yq {
         
             This guards against negative values (ie, takes absolute value)
         */
-        constexpr Vector2<T>    span(guard_t) const noexcept;
+        constexpr Vector2<T>    span(guard_k) const noexcept;
 
         /*! \brief Projects a global coordinate to a local [0,1] coordinate for the axially aligned box
 

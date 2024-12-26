@@ -51,7 +51,7 @@ namespace yq {
         consteval Fraction(const FRACTION<N,D>&) : num(N), den(D) {}
         
         //! Fraction of one
-        consteval Fraction(one_t) : num(one_v<I>), den(one_v<I>) {}
+        consteval Fraction(one_k) : num(one_v<I>), den(one_v<I>) {}
         
         //! Fraction of zero
         consteval Fraction(zero_k) : num(zero_v<I>), den(one_v<I>) {}

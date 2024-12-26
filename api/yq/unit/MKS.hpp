@@ -35,8 +35,8 @@ namespace yq {
         constexpr MKS(T v) noexcept : value(v) {}
 
         template <typename=void> requires has_nan_v<T>
-        consteval MKS(nan_t) noexcept : value(nan_v<T>) {}
-        consteval MKS(one_t) noexcept : value(one_v<T>) {}
+        consteval MKS(nan_k) noexcept : value(nan_v<T>) {}
+        consteval MKS(one_k) noexcept : value(one_v<T>) {}
         consteval MKS(zero_k) noexcept : value(zero_v<T>) {}
         
         template <int N>
@@ -132,7 +132,7 @@ namespace yq {
     }
 
     template <typename T, typename DIM>
-    auto operator^(const MKS<T,DIM>& v,three_t)
+    auto operator^(const MKS<T,DIM>& v,three_k)
     {
         return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
     }
@@ -164,7 +164,7 @@ namespace yq {
     }
 
     template <typename T, typename DIM>
-    auto operator^(const MKS<T,DIM>& v, two_t)
+    auto operator^(const MKS<T,DIM>& v, two_k)
     {
         return MKS<square_t<T>, typename DIM::template _pow_<2,1>>{ v.value * v.value };
     }
@@ -316,7 +316,7 @@ namespace yq {
     }
 
     template <typename T, typename DIM, typename R>
-    bool is_close(const R& compare, MKS<T,DIM> actual, std::type_identity_k<T> v)
+    bool is_close(const R& compare, MKS<T,DIM> actual, std::type_identity_t<T> v)
     {
         return is_close(compare, actual, MKS<T,DIM>{v});
     }

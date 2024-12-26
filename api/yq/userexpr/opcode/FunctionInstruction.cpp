@@ -115,7 +115,7 @@ namespace yq::expr {
             }
         }
 
-        size_t        functions(repo_t, string_view_t k)
+        size_t        functions(repo_k, string_view_t k)
         {
             static const Repo& _r  = Repo::instance();
             size_t  start = scored.size();
