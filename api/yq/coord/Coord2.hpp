@@ -195,7 +195,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept;
+        constexpr bool any_kest(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -205,7 +205,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Coord& b, Pred pred) const noexcept;
+        constexpr bool any_kest(const Coord& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -215,7 +215,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept;
+        constexpr bool any_kest(T b, Pred pred) const noexcept;
     };
 
     YQ_NAN_1(Coord2, Coord2<T>( nan_v<T>, nan_v<T> ))
@@ -228,7 +228,7 @@ namespace yq {
 
     /*! \brief Composes a two dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord2<T>    coord(T i, std::type_identity_t<T> j) noexcept
+    constexpr Coord2<T>    coord(T i, std::type_identity_k<T> j) noexcept
     {
         return { i, j };
     }

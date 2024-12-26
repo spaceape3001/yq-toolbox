@@ -437,7 +437,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept;
+        constexpr bool any_kest(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -447,7 +447,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Vector4& b, Pred pred) const noexcept;
+        constexpr bool any_kest(const Vector4& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -457,7 +457,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept;
+        constexpr bool any_kest(T b, Pred pred) const noexcept;
 
         static bool less_x( const Vector4& a, const Vector4& b) { return a.x < b.x; }
         static bool less_y( const Vector4& a, const Vector4& b) { return a.y < b.y; }
@@ -479,7 +479,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector4<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z, std::type_identity_t<T> w) noexcept
+    constexpr Vector4<T> vector(T x, std::type_identity_k<T> y, std::type_identity_k<T> z, std::type_identity_k<T> w) noexcept
     {
         return Vector4<T>(x,y,z,w);
     }
@@ -646,7 +646,7 @@ namespace yq {
     bool is_close(const R& compare, const Vector4<T>& actual, const Vector4<T>& expected);
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z,std::type_identity_t<T>w);
+    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z,std::type_identity_k<T>w);
 
     template <typename T>
     constexpr Vector4<T>   max_elem(const Vector4<T>&a, const Vector4<T>&b) noexcept;

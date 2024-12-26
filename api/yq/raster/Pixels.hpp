@@ -29,14 +29,14 @@ namespace yq {
         
         Pixels();
         Pixels(coord_t, const C& def={});
-        Pixels(coord_t, copy_t, const C*);
+        Pixels(coord_t, copy_k, const C*);
         ~Pixels();
         
         size_t          bytes(pixel_t) const override;
         size_t          bytes(total_t) const override;
         bool            contains(const coord_t&) const;
         uint8_t         count(dimensions_t) const override;
-        size_t          count(i_t) const override;
+        size_t          count(i_k) const override;
         size_t          count(j_t) const override;
         size_t          count(k_t) const override;
         size_t          count(l_t) const override;
@@ -56,8 +56,8 @@ namespace yq {
         bool            inside(const coord_t&) const override;
         bool            inside(index_span_t) const override;
 
-        Memory          memory(ref_t) const override;
-        Memory          memory(copy_t) const override;
+        Memory          memory(ref_k) const override;
+        Memory          memory(copy_k) const override;
 
 
         C               pixel(const coord_t& coord) const;

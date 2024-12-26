@@ -69,7 +69,7 @@ namespace yq {
         return repo().types.lut.first(sv, nullptr);
     }
 
-    const TypeInfo*                  TypeInfo::find(stem_t, std::string_view sv)
+    const TypeInfo*                  TypeInfo::find(stem_k, std::string_view sv)
     {
         assert(thread_safe_read());
         return repo().types.stem.first(sv, nullptr);

@@ -43,7 +43,7 @@ namespace yq {
         constexpr Tensor11(columns_t, const Vector1<T>& x) noexcept : xx(x.x) {}
         constexpr Tensor11(diagonal_t, T _xx) noexcept : xx(_xx) {}
         constexpr Tensor11(diagonal_t, const Vector1<T>& v) noexcept : xx(v.x) {}
-        constexpr Tensor11(identity_t) noexcept : xx( one_v<T> ) {}
+        constexpr Tensor11(identity_k) noexcept : xx( one_v<T> ) {}
         template <typename=void> requires has_nan_v<T>
         constexpr Tensor11(nan_t) noexcept : Tensor11(ALL, nan_v<T> ) {}
         constexpr Tensor11(rows_t,    const Vector1<T>& x) noexcept : xx(x.x) {}
@@ -199,7 +199,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool any_test(Pred pred) const noexcept;
+            constexpr bool any_kest(Pred pred) const noexcept;
             
             /*! Tests every element
                 This applies the given test to every component, 
@@ -209,7 +209,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool any_test(const Tensor11& b, Pred pred) const noexcept;
+            constexpr bool any_kest(const Tensor11& b, Pred pred) const noexcept;
             
             /*! Tests every element
                 This applies the given test to every component, 
@@ -219,7 +219,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool any_test(T b, Pred pred) const noexcept;
+            constexpr bool any_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  COMPARISONS

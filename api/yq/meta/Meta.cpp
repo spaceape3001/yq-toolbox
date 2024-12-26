@@ -150,7 +150,7 @@ namespace yq {
         return m_flags[(size_t) f];
     }
 
-    bool    Meta::has(any_t, std::initializer_list<Flag> flags) const
+    bool    Meta::has(any_k, std::initializer_list<Flag> flags) const
     {
         for(Flag f : flags){
             if(has(f))

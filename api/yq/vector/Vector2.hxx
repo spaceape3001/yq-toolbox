@@ -557,21 +557,21 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector2<T>::any_test(Pred pred) const noexcept
+    constexpr bool Vector2<T>::any_kest(Pred pred) const noexcept
     {
         return pred(x) || pred(y);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector2<T>::any_test(const Vector2& b, Pred pred) const noexcept
+    constexpr bool Vector2<T>::any_kest(const Vector2& b, Pred pred) const noexcept
     {
         return pred(x, b.x) || pred(y, b.y);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector2<T>::any_test(T b, Pred pred) const noexcept
+    constexpr bool Vector2<T>::any_kest(T b, Pred pred) const noexcept
     {
         return pred(x, b) || pred(y, b);
     }
@@ -953,7 +953,7 @@ namespace yq {
     }
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector2<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y)
+    bool is_close(const R& compare, const Vector2<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y)
     {
         return is_close(compare, actual, Vector2<T>(x, y) );
     }

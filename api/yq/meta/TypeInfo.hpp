@@ -48,7 +48,7 @@ namespace yq {
         static std::vector<const TypeInfo*>     find_all(const string_set_t&, bool noisy=false);
         
         //! Returns the *FIRST* match
-        static const TypeInfo*                  find(stem_t, std::string_view);
+        static const TypeInfo*                  find(stem_k, std::string_view);
     
         //! All aliases for this type info
         //const std::vector<std::string_view>&    aliases() const { return m_aliases; }

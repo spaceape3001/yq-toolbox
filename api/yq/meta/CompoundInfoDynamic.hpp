@@ -37,7 +37,7 @@ namespace yq {
         }
         
         template <typename T>
-        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_t, T (C::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_k, T (C::*pointer), const std::source_location& sl=std::source_location::current())
         {
             return property(szName, pointer, true, sl);
         }
@@ -61,7 +61,7 @@ namespace yq {
         }
 
         template <typename T>
-        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_t, const T (C::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_k, const T (C::*pointer), const std::source_location& sl=std::source_location::current())
         {
             return property(szName, pointer, sl);
         }

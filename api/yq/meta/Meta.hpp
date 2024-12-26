@@ -243,7 +243,7 @@ namespace yq {
 
         //! Detects for any flag being set
         //! \note an empty list will return FALSE
-        bool                            has(any_t, std::initializer_list<Flag>) const;
+        bool                            has(any_k, std::initializer_list<Flag>) const;
 
         //  TODO
         bool                            has_tag(std::string_view) const;

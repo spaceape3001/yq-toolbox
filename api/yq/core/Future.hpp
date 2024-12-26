@@ -140,10 +140,10 @@ namespace yq {
         bool        cancelled() const noexcept;
 
         //! Sets & detaches
-        bool        set(cancel_t);
+        bool        set(cancel_k);
 
         //! Sets & detaches
-        bool        set(done_t);
+        bool        set(done_k);
 
         //! Sets & detaches
         bool        set(std::error_code ec);

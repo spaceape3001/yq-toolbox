@@ -159,21 +159,21 @@ namespace yq {
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Size3<T>::any_test(Pred pred) const noexcept
+    constexpr bool Size3<T>::any_kest(Pred pred) const noexcept
     {
         return pred(x) || pred(y) || pred(z);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Size3<T>::any_test(const Size3& b, Pred pred) const noexcept
+    constexpr bool Size3<T>::any_kest(const Size3& b, Pred pred) const noexcept
     {
         return pred(x, b.x) || pred(y, b.y) || pred(z, b.z);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Size3<T>::any_test(T b, Pred pred) const noexcept
+    constexpr bool Size3<T>::any_kest(T b, Pred pred) const noexcept
     {
         return pred(x, b) || pred(y, b) || pred(z, b);
     }

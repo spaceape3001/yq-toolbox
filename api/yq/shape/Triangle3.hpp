@@ -232,7 +232,7 @@ namespace yq {
     
     /*! \brief Promotes 2D triangle to 3D triangle */
     template <typename T>
-    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_t<T> z);
+    Triangle3<T>   xy(const Triangle2<T>& a, std::type_identity_k<T> z);
     #endif
 
     /*! \brief Computes the perimeter of the triangle

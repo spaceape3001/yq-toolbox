@@ -324,31 +324,31 @@ namespace yq {
         //! Constructs by data copy
 
         template <typename T>
-        Memory(copy_t, const T* pData, size_t count) : Memory()
+        Memory(copy_k, const T* pData, size_t count) : Memory()
         {
             copy(pData, count);
         }
         
         template <typename T, typename A>
-        Memory(copy_t, const std::vector<T, A>& data)
+        Memory(copy_k, const std::vector<T, A>& data)
         {
             copy(data.data(), data.size());
         }
 
         template <typename T>
-        Memory(copy_t, std::span<const T> data) : Memory()
+        Memory(copy_k, std::span<const T> data) : Memory()
         {
             copy(data);
         }
 
         template <typename T>
-        Memory(copy_t, std::span<T> data) : Memory()
+        Memory(copy_k, std::span<T> data) : Memory()
         {
             copy(data);
         }
 
         template <typename T, size_t N>
-        Memory(copy_t, const T (&ptr)[N]) : Memory()
+        Memory(copy_k, const T (&ptr)[N]) : Memory()
         {
             copy<T,N>(ptr);
         }
@@ -361,37 +361,37 @@ namespace yq {
 
 
         template <typename T>
-        Memory(ref_t, const T* pData, size_t count) : Memory()
+        Memory(ref_k, const T* pData, size_t count) : Memory()
         {
             ref(pData, count);
         }
 
         template <typename T, typename A>
-        Memory(ref_t, const std::vector<T, A>& data)
+        Memory(ref_k, const std::vector<T, A>& data)
         {
             ref(data.data(), data.size());
         }
 
         template <typename T>
-        Memory(ref_t, std::span<T> data) : Memory()
+        Memory(ref_k, std::span<T> data) : Memory()
         {
             ref(data);
         }
 
         template <typename T>
-        Memory(ref_t, std::span<const T> data) : Memory()
+        Memory(ref_k, std::span<const T> data) : Memory()
         {
             ref(data);
         }
 
         template <typename T, size_t N>
-        Memory(ref_t, const T (&ptr)[N]) : Memory()
+        Memory(ref_k, const T (&ptr)[N]) : Memory()
         {
             ref<T,N>(ptr);
         }
 
         template <typename T, size_t N>
-        Memory(ref_t, T (&ptr)[N]) : Memory()
+        Memory(ref_k, T (&ptr)[N]) : Memory()
         {
             ref<T,N>(ptr);
         }
@@ -405,17 +405,17 @@ namespace yq {
         template <typename T>
         Memory(ref1_t, T&&) = delete;
 
-        Memory(set_t, const void* pData, size_t byteCount); 
+        Memory(set_k, const void* pData, size_t byteCount); 
 
-        Memory(set_t, const void* pData, size_t byteCount, size_t stride); 
+        Memory(set_k, const void* pData, size_t byteCount, size_t stride); 
 
-        Memory(set_t, const void* pData, size_t byteCount, const TypeInfo& type); 
+        Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type); 
 
-        Memory(set_t, const void* pData, size_t byteCount, Free&& free); 
+        Memory(set_k, const void* pData, size_t byteCount, Free&& free); 
 
-        Memory(set_t, const void* pData, size_t byteCount, size_t stride, Free&& free); 
+        Memory(set_k, const void* pData, size_t byteCount, size_t stride, Free&& free); 
 
-        Memory(set_t, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free); 
+        Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free); 
 
 
         //! Move constructor

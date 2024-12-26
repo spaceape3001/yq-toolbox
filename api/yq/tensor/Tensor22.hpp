@@ -73,7 +73,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor22(identity_t) : 
+        consteval Tensor22(identity_k) : 
             xx(one_v<T>),  xy(zero_v<T>), 
             yx(zero_v<T>), yy(one_v<T>)
         {
@@ -301,7 +301,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool any_test(Pred pred) const noexcept;
+            constexpr bool any_kest(Pred pred) const noexcept;
             
             /*! Tests every element
                 This applies the given test to every component, 
@@ -311,7 +311,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool any_test(const Tensor22& b, Pred pred) const noexcept;
+            constexpr bool any_kest(const Tensor22& b, Pred pred) const noexcept;
             
             /*! Tests every element
                 This applies the given test to every component, 
@@ -321,7 +321,7 @@ namespace yq {
                 \param[in] pred The predicate (your test)
             */
             template <typename Pred>
-            constexpr bool any_test(T b, Pred pred) const noexcept;
+            constexpr bool any_kest(T b, Pred pred) const noexcept;
 
         //  --------------------------------------------------------
         //  COMPARISONS
@@ -358,7 +358,7 @@ namespace yq {
     /*! \brief Create 2x2 tensor by its diagonal
     */
     template <typename T>
-    constexpr Tensor22<T>  diagonal(T x, std::type_identity_t<T> y)
+    constexpr Tensor22<T>  diagonal(T x, std::type_identity_k<T> y)
     {
         return Tensor22<T>(DIAGONAL, x, y);
     }

@@ -125,7 +125,7 @@ namespace yq {
 
     //! Creates a tetrahedron from four points
     template <typename T>
-    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const std::type_identity_t<Vector3<T>>& b, const std::type_identity_t<Vector3<T>>& c, const std::type_identity_t<Vector3<T>>& d)
+    Tetrahedron3<T>    tetrahedron(const Vector3<T>& a, const std::type_identity_k<Vector3<T>>& b, const std::type_identity_k<Vector3<T>>& c, const std::type_identity_k<Vector3<T>>& d)
     {
         return { a, b, c, d };
     }

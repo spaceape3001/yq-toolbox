@@ -616,21 +616,21 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector4<T>::any_test(Pred pred) const noexcept
+    constexpr bool Vector4<T>::any_kest(Pred pred) const noexcept
     {
         return pred(x) || pred(y) || pred(z) || pred(w);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector4<T>::any_test(const Vector4& b, Pred pred) const noexcept
+    constexpr bool Vector4<T>::any_kest(const Vector4& b, Pred pred) const noexcept
     {
         return pred(x, b.x) || pred(y, b.y) || pred(z, b.z) || pred(w, b.w);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Vector4<T>::any_test(T b, Pred pred) const noexcept
+    constexpr bool Vector4<T>::any_kest(T b, Pred pred) const noexcept
     {
         return pred(x, b) || pred(y, b) || pred(z, b) || pred(w, b);
     }
@@ -946,7 +946,7 @@ namespace yq {
     }
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z,std::type_identity_t<T>w)
+    bool is_close(const R& compare, const Vector4<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z,std::type_identity_k<T>w)
     {
         return is_close(compare, actual, Vector4<T>(x, y, z, w) );
     }

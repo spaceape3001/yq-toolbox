@@ -37,7 +37,7 @@ namespace yq {
     struct cache_k {};
     struct cancel_k {};
     struct ccw_k {};
-    struct cerr_k {};
+    struct cerr_t {};
     struct circle_k {};
     struct class_k {};
     struct clock_arg_k {};
@@ -98,7 +98,7 @@ namespace yq {
     struct nan_k {};
     struct negative_k {};
     struct no_k {};
-    struct no_khrow_k {};
+    struct no_throw_k {};
     struct node_k {};
     struct none_k {};
     struct normal_k {};
@@ -196,7 +196,7 @@ namespace yq {
     static constexpr const cache_k          CACHE;
     static constexpr const cancel_k         CANCEL;
     static constexpr const ccw_k            CCW;
-    static constexpr const cerr_k           CERR;
+    static constexpr const cerr_t           CERR;
     static constexpr const circle_k         CIRCLE;
     static constexpr const class_k          CLASS;
     static constexpr const clear_k          CLEAR;
@@ -257,7 +257,7 @@ namespace yq {
     static constexpr const nan_k            NAN;
     static constexpr const negative_k       NEGATIVE;
     static constexpr const no_k             NO;
-    static constexpr const no_khrow_k       NO_THROW;
+    static constexpr const no_throw_k       NO_THROW;
     static constexpr const node_k           NODE;
     static constexpr const none_k           NONE;
     static constexpr const normal_k         NORMAL;

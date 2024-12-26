@@ -31,7 +31,7 @@ namespace yq {
         virtual uint8_t             count(dimensions_t) const = 0;
         
         //! Count of pixels in the I-axis
-        virtual size_t              count(i_t) const = 0;
+        virtual size_t              count(i_k) const = 0;
 
         //! Count of pixels in the J-axis
         virtual size_t              count(j_t) const = 0;
@@ -83,10 +83,10 @@ namespace yq {
         virtual bool                inside(index_span_t) const = 0;
 
         //! Gets a memory compatible object, bound in reference
-        virtual Memory              memory(ref_t) const = 0;
+        virtual Memory              memory(ref_k) const = 0;
         
         //! Gets a memory compatible object, a copy of the data
-        virtual Memory              memory(copy_t) const = 0;
+        virtual Memory              memory(copy_k) const = 0;
 
         //! Data pointer (warning, can be null if empty)
         virtual const void*         pointer(data_t) const = 0;

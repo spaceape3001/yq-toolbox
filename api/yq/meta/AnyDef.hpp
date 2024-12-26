@@ -53,10 +53,10 @@ namespace yq {
         explicit Any(const QString&);
     #endif
     
-        Any(parse_t, const TypeInfo&, std::string_view);
-        Any(parse_t, const TypeInfo&, std::string_view, throw_t);
-        Any(parse_t, const TypeInfo&, std::string_view, no_throw_t);
-        Any(parse_t, const TypeInfo&, std::string_view, std::error_code&);
+        Any(parse_k, const TypeInfo&, std::string_view);
+        Any(parse_k, const TypeInfo&, std::string_view, throw_k);
+        Any(parse_k, const TypeInfo&, std::string_view, no_throw_k);
+        Any(parse_k, const TypeInfo&, std::string_view, std::error_code&);
 
         /*! \brief Direct construction constructor
         
@@ -146,14 +146,14 @@ namespace yq {
             This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
             therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
         */
-        std::error_code     print(cout_t, std::string_view k={}) const;
+        std::error_code     print(cout_k, std::string_view k={}) const;
         
         /*! \brief Debug writing to stream
         
             This is meant for printing casually to the screen for the user's benefit (debugging, alerts, etc),
             therefore, we'll opt for being concise over precision (ie. missing lesser bits is alright).
         */
-        std::error_code     print(cout_t, string_view_initializer_list_t keys) const;
+        std::error_code     print(cout_k, string_view_initializer_list_t keys) const;
 
         /*! \brief "Printable" version for debugging/general-output
         

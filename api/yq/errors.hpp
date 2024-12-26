@@ -54,7 +54,7 @@ namespace yq::errors {
     using none                      = std::error_code;
     using not_read_enabled          = error_db::entry<"Not read enabled">;
     using not_write_enabled         = error_db::entry<"Not write enabled">;
-    using null_any_type             = error_db::entry<"Null type in Any detected" >;
+    using null_any_kype             = error_db::entry<"Null type in Any detected" >;
     using null_destination          = error_db::entry<"Destination is a NULL pointer">;
     using null_object               = error_db::entry<"Object is a NULL pointer" >;
     using null_pointer              = error_db::entry<"Null pointer not allowed" >;

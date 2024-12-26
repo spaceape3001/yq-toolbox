@@ -20,32 +20,32 @@ namespace yq {
         mv._zap();
     }
 
-    Memory::Memory(set_t, const void* pData, size_t byteCount) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount) : Memory()
     {
         set(pData, byteCount);
     }
 
-    Memory::Memory(set_t, const void* pData, size_t byteCount, size_t stride) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, size_t stride) : Memory()
     {
         set(pData, byteCount, stride);
     }
 
-    Memory::Memory(set_t, const void* pData, size_t byteCount, const TypeInfo& type) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type) : Memory()
     {
         set(pData, byteCount, type);
     }
 
-    Memory::Memory(set_t, const void* pData, size_t byteCount, Free&& free) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, Free&& free) : Memory()
     {
         set(pData, byteCount, std::move(free));
     }
 
-    Memory::Memory(set_t, const void* pData, size_t byteCount, size_t stride, Free&& free) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, size_t stride, Free&& free) : Memory()
     {
         set(pData, byteCount, stride, std::move(free));
     }
 
-    Memory::Memory(set_t, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free) : Memory()
     {
         set(pData, byteCount, type, std::move(free));
     }

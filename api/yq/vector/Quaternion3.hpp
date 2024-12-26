@@ -51,7 +51,7 @@ namespace yq {
         constexpr Quaternion3(T _w, T _x, T _y, T _z) : w(_w), x(_x), y(_y), z(_z) {}
         
         constexpr Quaternion3(all_k, T v) : w(v), x(v), y(v), z(v) {}
-        consteval Quaternion3(identity_t) : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
+        consteval Quaternion3(identity_k) : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
         consteval Quaternion3(nan_t) : Quaternion3(ALL, nan_v<T>) {}
         consteval Quaternion3(w_t) noexcept : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
         constexpr Quaternion3(w_t, T v) noexcept :  w(v), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
@@ -184,7 +184,7 @@ namespace yq {
     /*! \brief Creates a quaternion
     */
     template <typename T>
-    constexpr Quaternion3<T> quaternion(T w, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
+    constexpr Quaternion3<T> quaternion(T w, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z)
     {
         return {w,x,y,z};
     }

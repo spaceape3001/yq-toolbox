@@ -166,7 +166,7 @@ namespace yq {
     }
 
 
-    bool        PPromise::set(cancel_t)
+    bool        PPromise::set(cancel_k)
     {
         if(m_data){
             m_data -> fate  = Fate::Cancelled;
@@ -177,7 +177,7 @@ namespace yq {
         }
     }
 
-    bool        PPromise::set(done_t)
+    bool        PPromise::set(done_k)
     {
         if(m_data){
             m_data -> fate  = Fate::Done;

@@ -428,7 +428,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept;
+        constexpr bool any_kest(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -438,7 +438,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Vector3& b, Pred pred) const noexcept;
+        constexpr bool any_kest(const Vector3& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -448,7 +448,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept;
+        constexpr bool any_kest(T b, Pred pred) const noexcept;
         
         static bool less_x( const Vector3& a, const Vector3& b)
         { 
@@ -480,7 +480,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr Vector3<T> vector(T x, std::type_identity_t<T> y, std::type_identity_t<T> z) noexcept
+    constexpr Vector3<T> vector(T x, std::type_identity_k<T> y, std::type_identity_k<T> z) noexcept
     {
         return Vector3<T>( x,y,z );
     }
@@ -542,7 +542,7 @@ namespace yq {
     constexpr Vector2<T> xy( const Vector3<T>& a) noexcept;
 
     template <typename T>
-    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_t<T> z) noexcept;
+    constexpr Vector3<T> xy( const Vector2<T>& a, std::type_identity_k<T> z) noexcept;
     
     YQ_NAN_1(Vector3, Vector3<T>(NAN))
     YQ_ONE_1(Vector3, Vector3<T>(ONE))
@@ -723,7 +723,7 @@ namespace yq {
     bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected);
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z);
+    bool is_close(const R& compare, const Vector3<T>& actual, std::type_identity_k<T> x, std::type_identity_k<T> y, std::type_identity_k<T> z);
 
     template <typename T>
     constexpr Vector3<T>   max_elem(const Vector3<T>&a, const Vector3<T>&b) noexcept;

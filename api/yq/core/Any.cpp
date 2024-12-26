@@ -122,23 +122,23 @@ namespace yq {
         set<std::string>(to_string(z));
     }
     
-    Any::Any(parse_t, const TypeInfo&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
+    Any::Any(parse_k, const TypeInfo&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
     {
     }
     
-    Any::Any(parse_t, const TypeInfo&ti, std::string_view txt, no_throw_t) : Any()
+    Any::Any(parse_k, const TypeInfo&ti, std::string_view txt, no_throw_k) : Any()
     {
         parse(ti, txt);
     }
 
-    Any::Any(parse_t, const TypeInfo&ti, std::string_view txt, throw_t) : Any()
+    Any::Any(parse_k, const TypeInfo&ti, std::string_view txt, throw_k) : Any()
     {
         std::error_code ec  = parse(ti, txt);
         if(ec != std::error_code())
             throw ec;
     }
 
-    Any::Any(parse_t, const TypeInfo& ti, std::string_view txt, std::error_code&ec) : Any()
+    Any::Any(parse_k, const TypeInfo& ti, std::string_view txt, std::error_code&ec) : Any()
     {
         ec  = parse(ti, txt);
     }
@@ -226,7 +226,7 @@ namespace yq {
     {
         assert(m_type);
         if(!m_type)
-            return errors::null_any_type() ;
+            return errors::null_any_kype() ;
             
         if(&newType == m_type)
             return *this;
@@ -258,7 +258,7 @@ namespace yq {
     {   
         assert(m_type);
         if(!m_type)
-            return errors::null_any_type();
+            return errors::null_any_kype();
         
         if(&newType != m_type){
             assert(good(newType));
@@ -278,7 +278,7 @@ namespace yq {
     {
         assert(m_type);
         if(!m_type)
-            return errors::null_any_type();
+            return errors::null_any_kype();
         TypeInfo::FNFormat    fn  = m_type->printer(k);
         if(!fn)
             return errors::no_print_handler();
@@ -290,7 +290,7 @@ namespace yq {
     {
         assert(m_type);
         if(!m_type)
-            return errors::null_any_type();
+            return errors::null_any_kype();
         TypeInfo::FNFormat    fn  = m_type->printer(keys);
         if(!fn)
             return errors::no_print_handler();
@@ -310,13 +310,13 @@ namespace yq {
         return print(str, keys);
     }
     
-    std::error_code     Any::print(cout_t, std::string_view k) const
+    std::error_code     Any::print(cout_k, std::string_view k) const
     {
         stream::StdOutput  str;
         return print(str, k);
     }
     
-    std::error_code     Any::print(cout_t, string_view_initializer_list_t keys) const
+    std::error_code     Any::print(cout_k, string_view_initializer_list_t keys) const
     {
         stream::StdOutput  str;
         return print(str, keys);
@@ -365,7 +365,7 @@ namespace yq {
     {
         assert(m_type);
         if(!m_type)
-            return errors::null_any_type();
+            return errors::null_any_kype();
         if(!(m_type -> m_write))
             return errors::no_write_handler();
         (m_type->m_write)(str, raw_ptr());

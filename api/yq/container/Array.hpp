@@ -241,7 +241,7 @@ namespace yq {
 
         template <typename=void>
         requires (!ORIGIN && !GHOST)
-        Array(const coord_type& c, copy_t, const value_type* pValue)
+        Array(const coord_type& c, copy_k, const value_type* pValue)
         {
             assert(pValue);
             if(pValue){
@@ -522,12 +522,12 @@ namespace yq {
         }
         
 
-        Memory          memory(ref_t) const 
+        Memory          memory(ref_k) const 
         {
             return Memory(REF, m_data);
         }
         
-        Memory          memory(copy_t) const 
+        Memory          memory(copy_k) const 
         {
             return Memory(COPY, m_data);
         }

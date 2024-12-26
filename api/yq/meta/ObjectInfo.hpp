@@ -92,7 +92,7 @@ namespace yq {
 
         const MetaLookup<ObjectInfo>&    deriveds(all_k) const { return m_all.derived; }
         
-        const MetaLookup<ObjectInfo>&    deriveds(local_t) const { return m_local.derived; }
+        const MetaLookup<ObjectInfo>&    deriveds(local_k) const { return m_local.derived; }
         
         /*! \brief Base objects
         
@@ -104,7 +104,7 @@ namespace yq {
 
         const MetaLookup<ObjectInfo>&    bases(all_k) const { return m_all.bases; }
         
-        const MetaLookup<ObjectInfo>&    bases(local_t) const { return m_local.bases; }
+        const MetaLookup<ObjectInfo>&    bases(local_k) const { return m_local.bases; }
         
         /*! \brief Properties
         
@@ -116,7 +116,7 @@ namespace yq {
 
         const MetaLookup<PropertyInfo>&  properties(all_k) const { return m_all.properties; }
 
-        const MetaLookup<PropertyInfo>&  properties(local_t) const { return m_local.properties; }
+        const MetaLookup<PropertyInfo>&  properties(local_k) const { return m_local.properties; }
         
         /*! \brief Methods
             
@@ -128,7 +128,7 @@ namespace yq {
         
         const MetaLookup<MethodInfo>&   methods(all_k) const { return m_all.methods; }
         
-        const MetaLookup<MethodInfo>&   methods(local_t) const { return m_local.methods; }
+        const MetaLookup<MethodInfo>&   methods(local_k) const { return m_local.methods; }
     
     protected:
         friend class PropertyInfo;

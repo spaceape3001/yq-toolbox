@@ -199,7 +199,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept;
+        constexpr bool any_kest(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -209,7 +209,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Coord& b, Pred pred) const noexcept;
+        constexpr bool any_kest(const Coord& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -219,7 +219,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept;
+        constexpr bool any_kest(T b, Pred pred) const noexcept;
 
     };
 
@@ -233,7 +233,7 @@ namespace yq {
 
     /*! \brief Composes a six dimensional coordinate from arguments */
     template <typename T>
-    constexpr Coord6<T>    coord(T i, std::type_identity_t<T> j, std::type_identity_t<T> k, std::type_identity_t<T> l, std::type_identity_t<T> m, std::type_identity_t<T> n) noexcept
+    constexpr Coord6<T>    coord(T i, std::type_identity_k<T> j, std::type_identity_k<T> k, std::type_identity_k<T> l, std::type_identity_k<T> m, std::type_identity_k<T> n) noexcept
     {
         return { i, j, k, l, m, n };
     }

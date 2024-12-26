@@ -370,7 +370,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(Pred pred) const noexcept;
+        constexpr bool any_kest(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -379,7 +379,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(const Vector1& b, Pred pred) const noexcept;
+        constexpr bool any_kest(const Vector1& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -388,7 +388,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_test(T b, Pred pred) const noexcept;
+        constexpr bool any_kest(T b, Pred pred) const noexcept;
         
         static bool less_x( const Vector1& a, const Vector1& b) 
         {
@@ -563,7 +563,7 @@ namespace yq {
     }
 
     template <typename T, typename R>
-    bool is_close(const R& compare, const Vector1<T>& actual, std::type_identity_t<T> x)
+    bool is_close(const R& compare, const Vector1<T>& actual, std::type_identity_k<T> x)
     {
         return is_close(compare, actual, Vector1<T>(x) );
     }

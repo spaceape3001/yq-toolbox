@@ -155,7 +155,7 @@ namespace yq {
 
     //! Creates a sphere from a center and radius
     template <typename T>
-    constexpr Sphere3<T>  sphere(const Vector3<T>& center, std::type_identity_t<T> radius) noexcept
+    constexpr Sphere3<T>  sphere(const Vector3<T>& center, std::type_identity_k<T> radius) noexcept
     {
         return {center, radius};
     }

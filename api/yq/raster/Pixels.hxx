@@ -45,7 +45,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    Pixels<DIMS,C>::Pixels(coord_t cc, copy_t, const C* pValues) : array_t(cc, COPY, pValues)
+    Pixels<DIMS,C>::Pixels(coord_t cc, copy_k, const C* pValues) : array_t(cc, COPY, pValues)
     {
     }
     
@@ -73,7 +73,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(i_t) const 
+    size_t  Pixels<DIMS,C>::count(i_k) const 
     {
         return count().i;
     }
@@ -206,13 +206,13 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    Memory  Pixels<DIMS,C>::memory(ref_t) const
+    Memory  Pixels<DIMS,C>::memory(ref_k) const
     {
         return array_t::memory(REF);
     }
 
     template <uint8_t DIMS, class C>
-    Memory  Pixels<DIMS,C>::memory(copy_t) const 
+    Memory  Pixels<DIMS,C>::memory(copy_k) const 
     {
         return array_t::memory(COPY);
     }

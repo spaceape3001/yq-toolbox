@@ -56,7 +56,7 @@ namespace yq {
         the first argument.
     */
     template <typename T>
-    constexpr HSL<T> hsl(T h, std::type_identity_t<T> s, std::type_identity_t<T> l)
+    constexpr HSL<T> hsl(T h, std::type_identity_k<T> s, std::type_identity_k<T> l)
     {
         return {h,s,l};
     }
