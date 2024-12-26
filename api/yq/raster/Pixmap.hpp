@@ -22,36 +22,36 @@ namespace yq {
         using index_span_t  = raster::index_span_t;
     
         //! Bytes per pixel
-        virtual size_t              bytes(pixel_t) const = 0;
+        virtual size_t              bytes(pixel_k) const = 0;
         
         //! Total bytes of all the data
-        virtual size_t              bytes(total_t) const = 0;
+        virtual size_t              bytes(total_k) const = 0;
         
         //! Number of dimensions
-        virtual uint8_t             count(dimensions_t) const = 0;
+        virtual uint8_t             count(dimensions_k) const = 0;
         
         //! Count of pixels in the I-axis
         virtual size_t              count(i_k) const = 0;
 
         //! Count of pixels in the J-axis
-        virtual size_t              count(j_t) const = 0;
+        virtual size_t              count(j_k) const = 0;
 
         //! Count of pixels in the K-axis
-        virtual size_t              count(k_t) const = 0;
+        virtual size_t              count(k_k) const = 0;
 
         //! Count of pixels in the L-axis
-        virtual size_t              count(l_t) const = 0;
+        virtual size_t              count(l_k) const = 0;
 
         //! Count of pixels in the M-axis
-        virtual size_t              count(m_t) const = 0;
+        virtual size_t              count(m_k) const = 0;
 
         //! Count of pixels in the N-axis
-        virtual size_t              count(n_t) const = 0;
+        virtual size_t              count(n_k) const = 0;
 
         //! Count of pixels (total)
-        virtual size_t              count(pixels_t) const = 0;
+        virtual size_t              count(pixels_k) const = 0;
         
-        size_t                      count(total_t) const 
+        size_t                      count(total_k) const 
         { 
             return count(PIXELS); 
         }
@@ -89,14 +89,14 @@ namespace yq {
         virtual Memory              memory(copy_k) const = 0;
 
         //! Data pointer (warning, can be null if empty)
-        virtual const void*         pointer(data_t) const = 0;
+        virtual const void*         pointer(data_k) const = 0;
         
 
         //! Sets pixel (returns false if unable)
         virtual bool                set(std::span<const index_t>, const Any&) = 0;
         
         //! Pixel data meta type
-        virtual const TypeInfo&     type(pixel_t) const = 0;
+        virtual const TypeInfo&     type(pixel_k) const = 0;
         
         virtual ~Pixmap();
         

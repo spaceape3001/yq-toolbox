@@ -26,9 +26,9 @@ namespace yq {
     template <StringLiteral, unsigned, typename ... T>
     log4cpp::Priority::Value log_first(log4cpp::Priority::Value def, T ... args)
     {
-        using data_t   = std::tuple<T...>;
-        static FirstSeen<data_t> s_first;
-        if(s_first(data_t(args...))){
+        using data_k   = std::tuple<T...>;
+        static FirstSeen<data_k> s_first;
+        if(s_first(data_k(args...))){
             return def;
         }
         return log4cpp::Priority::NOTSET;

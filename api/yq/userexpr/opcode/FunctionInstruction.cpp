@@ -128,7 +128,7 @@ namespace yq::expr {
             return scored.size() - start;
         }
         
-        size_t        functions(global_t, std::string_view k)
+        size_t        functions(global_k, std::string_view k)
         {
             static const GlobalInfo& _g = GlobalInfo::instance();
             size_t  start = scored.size();

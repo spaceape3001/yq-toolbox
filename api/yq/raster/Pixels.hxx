@@ -55,19 +55,19 @@ namespace yq {
     }
 
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::bytes(pixel_t) const 
+    size_t  Pixels<DIMS,C>::bytes(pixel_k) const 
     { 
         return sizeof(C);
     }
         
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::bytes(total_t) const 
+    size_t  Pixels<DIMS,C>::bytes(total_k) const 
     {
         return count(PIXELS) * sizeof(C);
     }
     
     template <uint8_t DIMS, class C>
-    uint8_t Pixels<DIMS,C>::count(dimensions_t) const 
+    uint8_t Pixels<DIMS,C>::count(dimensions_k) const 
     {
         return kDimensions;
     }
@@ -79,7 +79,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(j_t) const 
+    size_t  Pixels<DIMS,C>::count(j_k) const 
     {
         if constexpr (kDimensions >= 2){
             return count().j;
@@ -89,7 +89,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(k_t) const 
+    size_t  Pixels<DIMS,C>::count(k_k) const 
     {
         if constexpr (kDimensions >= 3){
             return count().k;
@@ -99,7 +99,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(l_t) const 
+    size_t  Pixels<DIMS,C>::count(l_k) const 
     {
         if constexpr (kDimensions >= 4){
             return count().l;
@@ -109,7 +109,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(m_t) const 
+    size_t  Pixels<DIMS,C>::count(m_k) const 
     {
         if constexpr (kDimensions >= 5){
             return count().m;
@@ -119,7 +119,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(n_t) const 
+    size_t  Pixels<DIMS,C>::count(n_k) const 
     {
         if constexpr (kDimensions >= 6){
             return count().k;
@@ -129,7 +129,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    size_t  Pixels<DIMS,C>::count(pixels_t) const 
+    size_t  Pixels<DIMS,C>::count(pixels_k) const 
     {
         coord_t     cc  = count();
         size_t      ret = cc.i;
@@ -226,7 +226,7 @@ namespace yq {
     }
     
     template <uint8_t DIMS, class C>
-    const void*   Pixels<DIMS,C>::pointer(data_t) const 
+    const void*   Pixels<DIMS,C>::pointer(data_k) const 
     {
         return array_t::data();
     }
@@ -270,7 +270,7 @@ namespace yq {
     }
 
     template <uint8_t DIMS, class C>
-    const TypeInfo&  Pixels<DIMS,C>::type(pixel_t) const 
+    const TypeInfo&  Pixels<DIMS,C>::type(pixel_k) const 
     {
         return meta<C>();
     }

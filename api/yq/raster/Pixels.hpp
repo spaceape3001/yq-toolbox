@@ -32,17 +32,17 @@ namespace yq {
         Pixels(coord_t, copy_k, const C*);
         ~Pixels();
         
-        size_t          bytes(pixel_t) const override;
-        size_t          bytes(total_t) const override;
+        size_t          bytes(pixel_k) const override;
+        size_t          bytes(total_k) const override;
         bool            contains(const coord_t&) const;
-        uint8_t         count(dimensions_t) const override;
+        uint8_t         count(dimensions_k) const override;
         size_t          count(i_k) const override;
-        size_t          count(j_t) const override;
-        size_t          count(k_t) const override;
-        size_t          count(l_t) const override;
-        size_t          count(m_t) const override;
-        size_t          count(n_t) const override;
-        size_t          count(pixels_t) const override;
+        size_t          count(j_k) const override;
+        size_t          count(k_k) const override;
+        size_t          count(l_k) const override;
+        size_t          count(m_k) const override;
+        size_t          count(n_k) const override;
+        size_t          count(pixels_k) const override;
         index_span_t    dimensions() const override;
 
         bool            empty() const override;
@@ -61,12 +61,12 @@ namespace yq {
 
 
         C               pixel(const coord_t& coord) const;
-        const void*     pointer(data_t) const override;
+        const void*     pointer(data_k) const override;
         virtual bool    set(const coord_t& cc, const Any& val) override;
         virtual bool    set(index_span_t pix, const Any& val) override;
         
         bool            set(const coord_t& cc, const C& val) ;
 
-        const TypeInfo& type(pixel_t) const override;
+        const TypeInfo& type(pixel_k) const override;
     };
 }
