@@ -140,6 +140,8 @@ namespace yq {
         
         //! Adds vector to multivector, returns result
         constexpr Multivector3  operator+(const Vector3<T>&  b) const noexcept;
+        
+        //! Self adds vector to this multivector, returns reference
         Multivector3&           operator+=(const Vector3<T>& b) noexcept;
 
         constexpr Multivector3  operator-(T b) const noexcept;
