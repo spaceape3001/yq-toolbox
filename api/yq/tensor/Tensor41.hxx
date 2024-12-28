@@ -331,7 +331,7 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor41<T>::all_kest(Pred pred) const noexcept
+    constexpr bool Tensor41<T>::all_test(Pred pred) const noexcept
     {
         return 
             pred(xx) && 
@@ -343,7 +343,7 @@ namespace yq {
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor41<T>::all_kest(const Tensor41& b, Pred pred) const noexcept
+    constexpr bool Tensor41<T>::all_test(const Tensor41& b, Pred pred) const noexcept
     {
         return 
             pred(xx, b.xx) && 
@@ -355,7 +355,7 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor41<T>::all_kest(T b, Pred pred) const noexcept
+    constexpr bool Tensor41<T>::all_test(T b, Pred pred) const noexcept
     {
         return 
             pred(xx, b) && 
@@ -367,7 +367,7 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor41<T>::any_kest(Pred pred) const noexcept
+    constexpr bool Tensor41<T>::any_test(Pred pred) const noexcept
     {
         return 
             pred(xx) || 
@@ -379,7 +379,7 @@ namespace yq {
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor41<T>::any_kest(const Tensor41& b, Pred pred) const noexcept
+    constexpr bool Tensor41<T>::any_test(const Tensor41& b, Pred pred) const noexcept
     {
         return 
             pred(xx, b.xx) || 
@@ -391,7 +391,7 @@ namespace yq {
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Tensor41<T>::any_kest(T b, Pred pred) const noexcept
+    constexpr bool Tensor41<T>::any_test(T b, Pred pred) const noexcept
     {
         return 
             pred(xx, b) || 

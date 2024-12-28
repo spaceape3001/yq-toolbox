@@ -186,7 +186,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_kest(Pred pred) const noexcept;
+        constexpr bool all_test(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -196,7 +196,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_kest(const Size3& b, Pred pred) const noexcept;
+        constexpr bool all_test(const Size3& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -206,12 +206,12 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_kest(T b, Pred pred) const noexcept;
+        constexpr bool all_test(T b, Pred pred) const noexcept;
 
             //  ===================================================================================================
             //  AnyComponents Adapters
             //  
-            //  The following all_kest() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
             //  returning true if all elements are successful
             //  ===================================================================================================
         
@@ -222,7 +222,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_kest(Pred pred) const noexcept;
+        constexpr bool any_test(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -232,7 +232,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_kest(const Size3& b, Pred pred) const noexcept;
+        constexpr bool any_test(const Size3& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -242,7 +242,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_kest(T b, Pred pred) const noexcept;
+        constexpr bool any_test(T b, Pred pred) const noexcept;
 
         static bool less_x( const Size3& a, const Size3& b) 
         {

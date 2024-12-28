@@ -37,27 +37,27 @@ namespace yq {
 
         constexpr bool    operator<(const V& rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a < b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a < b; } );
         }
 
         constexpr bool    operator<(const AllComponents& rhs) const noexcept
         {
-            return value.all_kest(rhs.value, [](component_type a, component_type b) -> bool { return a < b; } );
+            return value.all_test(rhs.value, [](component_type a, component_type b) -> bool { return a < b; } );
         }
 
         constexpr bool    operator<(component_type rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a < b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a < b; } );
         }
 
         friend constexpr bool    operator<(component_type lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b < a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b < a; } );
         }
 
         friend constexpr bool    operator<(const value_type& lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b < a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b < a; } );
         }
 
         //  --------------------------------------------------------------------------------------------------------
@@ -66,27 +66,27 @@ namespace yq {
 
         constexpr bool    operator<=(const V& rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a <= b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a <= b; } );
         }
 
         constexpr bool    operator<=(const AllComponents& rhs) const noexcept
         {
-            return value.all_kest(rhs.value, [](component_type a, component_type b) -> bool { return a <= b; } );
+            return value.all_test(rhs.value, [](component_type a, component_type b) -> bool { return a <= b; } );
         }
 
         constexpr bool    operator<=(component_type rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a <= b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a <= b; } );
         }
 
         friend constexpr bool    operator<=(component_type lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b <= a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b <= a; } );
         }
 
         friend constexpr bool    operator<=(const value_type& lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b <= a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b <= a; } );
         }
 
         //  --------------------------------------------------------------------------------------------------------
@@ -95,27 +95,27 @@ namespace yq {
 
         constexpr bool    operator>(const V& rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a > b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a > b; } );
         }
 
         constexpr bool    operator>(const AllComponents& rhs) const noexcept
         {
-            return value.all_kest(rhs.value, [](component_type a, component_type b) -> bool { return a > b; } );
+            return value.all_test(rhs.value, [](component_type a, component_type b) -> bool { return a > b; } );
         }
 
         constexpr bool    operator>(component_type rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a > b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a > b; } );
         }
 
         friend constexpr bool    operator>(component_type lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b > a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b > a; } );
         }
 
         friend constexpr bool    operator>(const value_type& lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b > a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b > a; } );
         }    
 
         //  --------------------------------------------------------------------------------------------------------
@@ -124,27 +124,27 @@ namespace yq {
 
         constexpr bool    operator>=(const V& rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a >= b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a >= b; } );
         }
 
         constexpr bool    operator>=(const AllComponents& rhs) const noexcept
         {
-            return value.all_kest(rhs.value, [](component_type a, component_type b) -> bool { return a >= b; } );
+            return value.all_test(rhs.value, [](component_type a, component_type b) -> bool { return a >= b; } );
         }
 
         constexpr bool    operator>=(component_type rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a >= b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a >= b; } );
         }
 
         friend constexpr bool    operator>=(component_type lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b >= a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b >= a; } );
         }
 
         friend constexpr bool    operator>=(const value_type& lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b >= a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b >= a; } );
         }    
 
         //  --------------------------------------------------------------------------------------------------------
@@ -153,27 +153,27 @@ namespace yq {
 
         constexpr bool    operator==(const V& rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a == b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a == b; } );
         }
 
         constexpr bool    operator==(const AllComponents& rhs) const noexcept
         {
-            return value.all_kest(rhs.value, [](component_type a, component_type b) -> bool { return a == b; } );
+            return value.all_test(rhs.value, [](component_type a, component_type b) -> bool { return a == b; } );
         }
 
         constexpr bool    operator==(component_type rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a == b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a == b; } );
         }
 
         friend constexpr bool    operator==(component_type lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b == a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b == a; } );
         }
 
         friend constexpr bool    operator==(const value_type& lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b == a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b == a; } );
         }
 
         //  --------------------------------------------------------------------------------------------------------
@@ -182,27 +182,27 @@ namespace yq {
 
         constexpr bool    operator!=(const V& rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a != b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a != b; } );
         }
 
         constexpr bool    operator!=(const AllComponents& rhs) const noexcept
         {
-            return value.all_kest(rhs.value, [](component_type a, component_type b) -> bool { return a != b; } );
+            return value.all_test(rhs.value, [](component_type a, component_type b) -> bool { return a != b; } );
         }
 
         constexpr bool    operator!=(component_type rhs) const noexcept
         {
-            return value.all_kest(rhs, [](component_type a, component_type b) -> bool { return a != b; } );
+            return value.all_test(rhs, [](component_type a, component_type b) -> bool { return a != b; } );
         }
 
         friend constexpr bool    operator!=(component_type lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b != a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b != a; } );
         }
 
         friend constexpr bool    operator!=(const value_type& lhs, const AllComponents& rhs) noexcept
         {
-            return rhs.value.all_kest(lhs, [](component_type a, component_type b) -> bool { return b != a; } );
+            return rhs.value.all_test(lhs, [](component_type a, component_type b) -> bool { return b != a; } );
         }
 
         //  --------------------------------------------------------------------------------------------------------

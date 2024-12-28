@@ -273,6 +273,11 @@ namespace yq {
         return has(Flag::CURSOR);
     }
 
+    bool  Meta::is_delegate() const
+    {
+        return has(Flag::DELEGATE);
+    }
+
     bool  Meta::is_editor() const
     {
         return has(Flag::EDITOR);

@@ -152,42 +152,42 @@ namespace yq {
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Coord2<T>::all_kest(Pred pred) const noexcept
+    constexpr bool Coord2<T>::all_test(Pred pred) const noexcept
     {
         return pred(i) && pred(j);
     }
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Coord2<T>::all_kest(T b, Pred pred) const noexcept
+    constexpr bool Coord2<T>::all_test(T b, Pred pred) const noexcept
     {
         return pred(i, b) && pred(j, b);
     }
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Coord2<T>::all_kest(const Coord2<T>& b, Pred pred) const noexcept
+    constexpr bool Coord2<T>::all_test(const Coord2<T>& b, Pred pred) const noexcept
     {
         return pred(i, b.i) && pred(j, b.j);
     }
 
     template <typename T>
         template <typename Pred>
-    constexpr bool Coord2<T>::any_kest(Pred pred) const noexcept
+    constexpr bool Coord2<T>::any_test(Pred pred) const noexcept
     {
         return pred(i) || pred(j);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Coord2<T>::any_kest(const Coord2<T>& b, Pred pred) const noexcept
+    constexpr bool Coord2<T>::any_test(const Coord2<T>& b, Pred pred) const noexcept
     {
         return pred(i, b.i) || pred(j, b.j);
     }
     
     template <typename T>
         template <typename Pred>
-    constexpr bool Coord2<T>::any_kest(T b, Pred pred) const noexcept
+    constexpr bool Coord2<T>::any_test(T b, Pred pred) const noexcept
     {
         return pred(i, b) || pred(j, b);
     }

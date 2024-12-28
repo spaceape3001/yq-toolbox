@@ -157,7 +157,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_kest(Pred pred) const noexcept;
+        constexpr bool all_test(Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -167,7 +167,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_kest(const Coord& b, Pred pred) const noexcept;
+        constexpr bool all_test(const Coord& b, Pred pred) const noexcept;
 
         /*! Tests every element
             This applies the given test to every component, 
@@ -177,12 +177,12 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool all_kest(T b, Pred pred) const noexcept;
+        constexpr bool all_test(T b, Pred pred) const noexcept;
 
             //  ===================================================================================================
             //  AnyComponents Adapters
             //  
-            //  The following all_kest() are for the AllComponents Adapters, to apply the test on ALL components,
+            //  The following all_test() are for the AllComponents Adapters, to apply the test on ALL components,
             //  returning true if all elements are successful
             //  ===================================================================================================
         
@@ -193,7 +193,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_kest(Pred pred) const noexcept;
+        constexpr bool any_test(Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -203,7 +203,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_kest(const Coord& b, Pred pred) const noexcept;
+        constexpr bool any_test(const Coord& b, Pred pred) const noexcept;
         
         /*! Tests every element
             This applies the given test to every component, 
@@ -213,7 +213,7 @@ namespace yq {
             \param[in] pred The predicate (your test)
         */
         template <typename Pred>
-        constexpr bool any_kest(T b, Pred pred) const noexcept;
+        constexpr bool any_test(T b, Pred pred) const noexcept;
     };
 
     YQ_NAN_1(Coord3, Coord3<T>(ALL, nan_v<T> ))

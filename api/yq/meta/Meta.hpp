@@ -96,6 +96,7 @@ namespace yq {
             D4,             //!< Item has/supports four dimensional attributes (or is 4-dimensional object)
             D5,             //!< Item has/supports five dimensional attributes (or is 5-dimensional object)
             D6,             //!< Item has/supports six dimensional attributes (or is a 6-dimensional object)
+            DELEGATE,
             DISABLE_REG,    
             DOODLE,         //!< It's a doodle object
             EDITOR,         //!< It's an editor
@@ -287,6 +288,8 @@ namespace yq {
         bool                            is_constraint() const;
 
         bool                            is_cursor() const;
+
+        bool                            is_delegate() const;
 
         bool                            is_editor() const;
 
