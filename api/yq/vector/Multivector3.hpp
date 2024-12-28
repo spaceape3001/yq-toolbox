@@ -144,6 +144,7 @@ namespace yq {
         //! Self adds vector to this multivector, returns reference
         Multivector3&           operator+=(const Vector3<T>& b) noexcept;
 
+        //! Subtracts scalar from multivector, returns result
         constexpr Multivector3  operator-(T b) const noexcept;
         Multivector3&           operator-=(T b) noexcept;
         constexpr Multivector3  operator-(const Bivector3<T>& b) const noexcept;
