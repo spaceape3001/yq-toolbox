@@ -115,6 +115,13 @@ namespace yq {
             return { (U) x, (U) y, (U) z, (U) w };
         }
         
+        //! An explicit cast when its "ambiguous"
+        template <typename U>
+        constexpr Vector4<U>  cast() const
+        {
+            return { (U) x, (U) y, (U) z, (U) w };
+        }
+
         
         /*! \brief Creates a unit-vector in the x-dimension.
         */

@@ -127,6 +127,13 @@ namespace yq {
         {
             return Vector1<U>( U(x));
         }
+
+        //! An explicit cast when its "ambiguous"
+        template <typename U>
+        constexpr Vector1<U>  cast() const
+        {
+            return { (U) x };
+        }
         
 
         //! Affirmation operator

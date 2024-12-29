@@ -121,6 +121,13 @@ namespace yq {
             return Vector2(Y);
         }
 
+        //! An explicit cast when its "ambiguous"
+        template <typename U>
+        constexpr Vector2<U>  cast() const
+        {
+            return { (U) x, (U) y };
+        }
+        
         //! Equality operator (using default)
         constexpr bool operator==(const Vector2&) const noexcept = default;
 
