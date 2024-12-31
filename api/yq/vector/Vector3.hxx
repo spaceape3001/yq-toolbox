@@ -955,6 +955,12 @@ namespace yq {
     }
     #endif
 
+    template <typename T>
+    Vector3<ieee754_t<T>> ieee754(const Vector3<T>& v)
+    {
+        return Vector3<ieee754_t<T>>( ieee754(v.x), ieee754(v.y), ieee754(v.z) );
+    }
+
     template <typename T, typename R>
     bool is_close(const R& compare, const Vector3<T>& actual, const Vector3<T>& expected)
     {

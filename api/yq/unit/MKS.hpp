@@ -14,6 +14,7 @@
 #include <yq/trait/has_one.hpp>
 #include <yq/trait/has_sqrt.hpp>
 #include <yq/trait/has_zero.hpp>
+#include <yq/trait/ieee754.hpp>
 #include <yq/trait/is_basic_float.hpp>
 #include <yq/trait/product.hpp>
 #include <yq/trait/quotient.hpp>
@@ -135,6 +136,12 @@ namespace yq {
     auto operator^(const MKS<T,DIM>& v,three_k)
     {
         return MKS<cube_t<T>, typename DIM::template _pow_<3,1>>{ v.value * v.value * v.value };
+    }
+
+    template <typename T, typename DIM>
+    ieee754_t<T> ieee754(const MKS<T,DIM>& v)
+    {
+        return ieee754(v.value);
     }
 
     template <typename T, typename DIM>

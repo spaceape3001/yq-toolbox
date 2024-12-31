@@ -125,7 +125,7 @@ namespace yq {
     template <typename>
     requires std::is_floating_point_v<T>
     Quaternion3<T>::Quaternion3(ccw_k, const Vector3<MKS<T,dim::Angle>> ω) : 
-        Quaternion3(CCW, ~ω, length(ω)) 
+        Quaternion3(CCW, ~ieee754(ω), ω.length()) 
     {
     }
     #endif
@@ -140,11 +140,10 @@ namespace yq {
     #endif
 
     template <typename T>
-    template <typename>
-    requires std::is_floating_point_v<T>
     Quaternion3<T>::Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll) :
         Quaternion3(Quaternion3(CCW, Z, roll)*Quaternion3(CCW, Y,pitch)*Quaternion3(CCW, X,hdg_or_yaw))
     {
+        static_assert(std::is_floating_point_v<T>);
     }
 
     template <typename T>
