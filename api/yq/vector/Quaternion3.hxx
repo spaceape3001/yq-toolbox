@@ -120,6 +120,25 @@ namespace yq {
     }
     #endif
 
+    #ifdef YQ_MATH_VECTOR_3_HPP
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Quaternion3<T>::Quaternion3(ccw_k, const Vector3<MKS<T,dim::Angle>> ω) : 
+        Quaternion3(CCW, ~ω, length(ω)) 
+    {
+    }
+    #endif
+
+    #ifdef YQ_MATH_VECTOR_3_HPP
+    template <typename T>
+    template <typename>
+    requires std::is_floating_point_v<T>
+    Quaternion3<T>::Quaternion3(clockwise_k, const Vector3<MKS<T,dim::Angle>> ang) : Quaternion3(CCW, -ang)
+    {
+    }
+    #endif
+
     template <typename T>
     template <typename>
     requires std::is_floating_point_v<T>

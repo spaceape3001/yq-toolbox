@@ -100,6 +100,13 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3(clockwise_k, const Vector3<T>&, MKS<T,dim::Angle>);
         
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Quaternion3(ccw_k, const Vector3<MKS<T,dim::Angle>>);
+
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        Quaternion3(clockwise_k, const Vector3<MKS<T,dim::Angle>>);
         
         template <typename=void>
         requires std::is_floating_point_v<T>
