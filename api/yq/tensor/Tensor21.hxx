@@ -23,8 +23,8 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor21<T>::Tensor21(const glm::mat<2,1,T,Q>& t) noexcept :
-        xx(t.x.x),
-        yx(t.x.y)
+        xx(t[0][0]),
+        yx(t[0][1])
     {
     }
     #endif

@@ -42,8 +42,8 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor22<T>::Tensor22(const glm::mat<2,2,T,Q>& t) noexcept :
-        xx(t.x.x), xy(t.y.x),
-        yx(t.x.y), yy(t.y.y)
+        xx(t[0][0]), xy(t[1][0]),
+        yx(t[0][1]), yy(t[1][1])
     {
     }
     #endif

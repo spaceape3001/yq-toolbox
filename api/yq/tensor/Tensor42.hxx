@@ -23,10 +23,10 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor42<T>::Tensor42(const glm::mat<4,2,T,Q>& t) noexcept :
-        xx(t.x.x), xy(t.y.x),
-        yx(t.x.y), yy(t.y.y),
-        zx(t.x.z), zy(t.y.z),
-        wx(t.x.w), wy(t.y.w)
+        xx(t[0][0]), xy(t[1][0]),
+        yx(t[0][1]), yy(t[1][1]),
+        zx(t[0][2]), zy(t[1][2]),
+        wx(t[0][3]), wy(t[1][3])
     {
     }
     #endif

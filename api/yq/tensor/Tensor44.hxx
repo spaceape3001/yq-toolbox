@@ -35,10 +35,10 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor44<T>::Tensor44(const glm::mat<4,4,T,Q>& t) noexcept :
-        xx(t.x.x), xy(t.y.x), xz(t.z.x), xw(t.w.x),
-        yx(t.x.y), yy(t.y.y), yz(t.z.y), yw(t.w.y),
-        zx(t.x.z), zy(t.y.z), zz(t.z.z), zw(t.w.z),
-        wx(t.x.w), wy(t.y.w), wz(t.z.w), ww(t.w.w)
+        xx(t[0][0]), xy(t[1][0]), xz(t[2][0]), xw(t[3][0]),
+        yx(t[0][1]), yy(t[1][1]), yz(t[2][1]), yw(t[3][1]),
+        zx(t[0][2]), zy(t[1][2]), zz(t[2][2]), zw(t[3][2]),
+        wx(t[0][3]), wy(t[1][3]), wz(t[2][3]), ww(t[3][3])
     {
     }
     #endif

@@ -124,9 +124,9 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor33<T>::Tensor33(const glm::mat<3,3,T,Q>& t) noexcept :
-        xx(t.x.x), xy(t.y.x), xz(t.z.x),
-        yx(t.x.y), yy(t.y.y), yz(t.z.y),
-        zx(t.x.z), zy(t.y.z), zz(t.z.z)
+        xx(t[0][0]), xy(t[1][0]), xz(t[2][0]),
+        yx(t[0][1]), yy(t[1][1]), yz(t[2][1]),
+        zx(t[0][2]), zy(t[1][2]), zz(t[2][2])
     {
     }
     #endif

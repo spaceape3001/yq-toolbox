@@ -23,7 +23,7 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor12<T>::Tensor12(const glm::mat<1,2,T,Q>& t) noexcept :
-        xx(t.x.x), xy(t.y.x)
+        xx(t[0][0]), xy(t[1][0])
     {
     }
     #endif

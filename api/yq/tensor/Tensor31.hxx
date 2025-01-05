@@ -22,9 +22,9 @@ namespace yq {
     template <typename T>
         template <glm::qualifier Q>
     constexpr Tensor31<T>::Tensor31(const glm::mat<3,1,T,Q>& t) noexcept :
-        xx(t.x.x),
-        yx(t.x.y),
-        zx(t.x.z)
+        xx(t[0][0]),
+        yx(t[0][1]),
+        zx(t[0][2])
     {
     }
     #endif
