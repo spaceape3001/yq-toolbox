@@ -194,7 +194,7 @@ namespace yq {
         std::string              key;
         
         //! \brief KeyValue Value/data
-        //! This is the attribute's valueData.  If the command isa comment, then this is the contents of that comment.
+        //! This is the attribute's valueData.  If the command is a comment, then this is the contents of that comment.
         std::string              data;
 
         //! \brief Indent of the attribute
