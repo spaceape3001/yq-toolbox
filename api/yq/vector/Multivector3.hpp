@@ -170,8 +170,11 @@ namespace yq {
         
         //! Subtracts vector from multivector, returns result
         constexpr Multivector3  operator-(const Vector3<T>&  b) const noexcept;
+        
+        //! Self subtracts vector from this multivector, returns reference
         Multivector3&           operator-=(const Vector3<T>& b) noexcept;
 
+        //! Multiplies multivector by given scalar, returns result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector3<product_t<T,U>> operator*(U b) const noexcept;
