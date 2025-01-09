@@ -26,6 +26,7 @@
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
 #include <yq/trait/unity.hpp>
+#include <yq/unit/declare.hpp>
 #include <yq/unit/dims.hpp>
 
 #if YQ_USE_GLM
@@ -168,13 +169,35 @@ namespace yq {
         requires (is_arithmetic_v<T>)
         constexpr Quaternion3<quotient_t<T,U>>  operator/ (U b) const noexcept;
         
-        Vector3<unity_t<T>>  axis() const;
+        //template <typename>
+        //requires std::is_floating_point_v<T>
+        Radian                      angle() const;
         
-        constexpr Quaternion3    conj() const noexcept;
-        constexpr Quaternion3    conjugate() const noexcept;
+        Vector3<unity_t<T>>         axis() const;
+        
+        constexpr square_t<T>       cayley_norm() const;
+        
+        constexpr Quaternion3       conj() const noexcept;
+        constexpr Quaternion3       conjugate() const noexcept;
         constexpr Quaternion3<inverse_t<T>>   inverse() const noexcept;
         constexpr square_t<T>    length²() const noexcept;
         T                        length() const;
+        
+        //template <typename>
+        //requires std::is_floating_point_v<T>
+        Radian                      angle(zyx_k, x_k) const;
+
+        //template <typename>
+        //requires std::is_floating_point_v<T>
+        Radian                      angle(zyx_k, y_k) const;
+
+        //template <typename>
+        //requires std::is_floating_point_v<T>
+        Radian                      angle(zyx_k, z_k) const;
+
+        //template <typename>
+        //requires std::is_floating_point_v<T>
+        unit::Radian3D              angle(zyx_k) const;
     };
 
     YQ_IEEE754_1(Quaternion3)

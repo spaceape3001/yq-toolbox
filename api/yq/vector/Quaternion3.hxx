@@ -15,6 +15,7 @@
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/unit/literals.hpp>
 #include <yq/math/trigonometry.hpp>
+#include <algorithm>
 
 namespace yq {
 
@@ -140,10 +141,26 @@ namespace yq {
     #endif
 
     template <typename T>
-    Quaternion3<T>::Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll) :
-        Quaternion3(Quaternion3(CCW, Z, roll)*Quaternion3(CCW, Y,pitch)*Quaternion3(CCW, X,hdg_or_yaw))
+    Quaternion3<T>::Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll)
     {
         static_assert(std::is_floating_point_v<T>);
+
+        Radian  hx  = 0.5 * roll;
+        Radian  hy  = 0.5 * pitch;
+        Radian  hz  = 0.5 * hdg_or_yaw;
+        
+        T       shx = sin(hx);
+        T       shy = sin(hy);
+        T       shz = sin(hz);
+        
+        T       chx = cos(hx);
+        T       chy = cos(hy);
+        T       chz = cos(hz);
+        
+        w   = chx*chy*chz+shx*shy*shz;
+        x   = shx*chy*chz-chx*shy*shz;
+        y   = chx*shy*chz+shx*chy*shz;
+        z   = chx*chy*shz-shx*shy*chz;
     }
 
     template <typename T>
@@ -300,6 +317,75 @@ namespace yq {
         return *this;
     }
 
+    template <typename T>
+        //template <typename>
+    //requires std::is_floating_point_v<T>
+    Radian               Quaternion3<T>::angle() const
+    {
+        return 2. * atan( sqrt(x*x+y*y+z*z), w);
+    }
+
+    template <typename T>
+        //template <typename>
+    //requires std::is_floating_point_v<T>
+    Radian               Quaternion3<T>::angle(zyx_k, x_k) const
+    {
+        static constexpr const T    kSingularityEpsilon     = T{1e-5};
+        static constexpr const T    kSingularityThreshhold  = T{0.5} - kSingularityEpsilon;
+
+        double test = w*y-x*z;
+        if(fabs(test) > kSingularityThreshhold)
+            return ZERO;
+        return atan(2*(w*x+y*z), 1-2.*(x*x+y*y));
+    }
+
+    template <typename T>
+        //template <typename>
+    //requires std::is_floating_point_v<T>
+    Radian              Quaternion3<T>::angle(zyx_k, y_k) const
+    {
+        return asin(std::clamp(1.*(w*y-x*z),-1.,1.0));
+    }
+
+    template <typename T>
+        //template <typename>
+    //requires std::is_floating_point_v<T>
+    Radian              Quaternion3<T>::angle(zyx_k, z_k) const
+    {
+        static constexpr const T    kSingularityEpsilon     = T{1e-5};
+        static constexpr const T    kSingularityThreshhold  = T{0.5} - kSingularityEpsilon;
+        
+        double test = w*y-x*z;
+        if(fabs(test) > kSingularityThreshhold)
+            return std::copysign(2.,test)*atan(z,w);
+        return atan(2*(w*z+x*y),1-2.*(z*z+y*y));
+        
+    }
+
+    #ifdef YQ_MATH_VECTOR_3_HPP
+    template <typename T>
+        //template <typename>
+    //requires std::is_floating_point_v<T>
+    unit::Radian3D      Quaternion3<T>::angle(zyx_k) const
+    {
+        static constexpr const square_t<T>    kSingularityEpsilon     = square_t<T>{1e-5};
+        static constexpr const square_t<T>    kSingularityThreshhold  = square_t<T>{0.5} - kSingularityEpsilon;
+        
+        unit::Radian3D ret;
+        square_t<T> test = w*y-x*z;
+        if(fabs(test) > kSingularityThreshhold){
+            ret.x = ZERO;
+            ret.z = std::copysign(2.,test)*atan(z,w);
+        } else {
+            ret.z = atan(2*(w*z+x*y),1-2.*(z*z+y*y));
+            ret.x = atan(2*(w*x+y*z), 1-2.*(x*x+y*y));
+        }
+        ret.y = asin(std::clamp(1.*(w*y-x*z),-1.,1.0));;
+        return ret;
+    }
+    #endif
+
+
     #ifdef YQ_MATH_VECTOR_3_HPP
     template <typename T>
     Vector3<unity_t<T>>  Quaternion3<T>::axis() const
@@ -311,6 +397,12 @@ namespace yq {
         return ret / sqrt(l2);
     }
     #endif
+
+    template <typename T>
+    constexpr square_t<T>       Quaternion3<T>::cayley_norm() const
+    {
+        return (*this * conj()).w;
+    }
 
     template <typename T>
     constexpr Quaternion3<T>    Quaternion3<T>::conj() const noexcept

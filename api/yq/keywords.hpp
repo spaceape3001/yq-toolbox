@@ -185,6 +185,7 @@ namespace yq {
     struct zwx_k {};
     struct zx_k {};
     struct zy_k {};
+    struct zyx_k {};
     struct zz_k {};
 
     static constexpr const absolute_k       ABSOLUTE;
@@ -344,6 +345,7 @@ namespace yq {
     static constexpr const zwx_k            ZWX;
     static constexpr const zx_k             ZX;
     static constexpr const zy_k             ZY;
+    static constexpr const zyx_k            ZYX;
     static constexpr const zz_k             ZZ;
 
     static constexpr const two_k            ²;
