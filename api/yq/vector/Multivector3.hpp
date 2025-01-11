@@ -194,6 +194,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Multivector3& operator/=(U b) noexcept;
 
+        //! Extracts out the bivector component, returns it
         constexpr Bivector3<T>  bivector() const noexcept;
         constexpr Trivector3<T> trivector() const noexcept;
         constexpr Vector3<T>    vector() const noexcept;
