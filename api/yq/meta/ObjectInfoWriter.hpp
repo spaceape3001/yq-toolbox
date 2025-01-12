@@ -9,11 +9,42 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/ObjectInfo.hpp>
 #include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/UnsafePropGetter.hpp>
+#include <yq/meta/UnsafePropSetter.hpp>
 
 namespace yq {
     template <typename C>
     class ObjectInfo::Writer : public CompoundInfo::Dynamic<C> {
     public:
+    
+        using CompoundInfo::Dynamic<C>::property;
+    
+
+        /*! \brief Defines a property
+        
+            This defines a property for the type/object
+        
+            \tparam T       type
+            \param pointer          Pointer to class/type member
+            \param[in] isReadOnly   Set to TRUE to make this read-only property
+        */
+        template <typename C2, typename T>
+        PropertyInfo::Writer<T>     property(unsafe_k, std::string_view szName, T (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        {
+            assert(pointer);
+            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            ret -> set(Flag::STATE);
+            new UIPM_PropGetter<C,C2,T>(ret, sl, pointer);
+            if(!isReadOnly)
+                new UIPM_PropSetter<C,C2,T>(ret, sl, pointer);
+            return PropertyInfo::Writer<T>{ret};
+        }
+        
+        template <typename C2, typename T>
+        PropertyInfo::Writer<T>     property(unsafe_k, std::string_view szName, read_only_k, T (C2::*pointer), const std::source_location& sl=std::source_location::current())
+        {
+            return property(UNSAFE, szName, pointer, true, sl);
+        }
     
         /*! \brief Sets the base object (if not already set)
         */
@@ -34,7 +65,7 @@ namespace yq {
             return *this;
         }
         
-        Writer(ObjectInfo* obj) : CompoundInfo::Dynamic<C>(obj) 
+        Writer(ObjectInfo* obj) : CompoundInfo::Dynamic<C>(obj), m_meta(obj)
         {
             assert(obj);
             if constexpr ( std::is_abstract_v<C> ){
@@ -46,6 +77,9 @@ namespace yq {
         Writer(ObjectInfo& obj) : Writer(&obj)
         {
         }
+        
+    private:
+        ObjectInfo*  m_meta = nullptr;
     };
 
     /*! \brief Final type-specific info class

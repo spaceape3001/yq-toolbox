@@ -35,7 +35,7 @@ static void reg_quaternion3()
         w.property(szZ, &Quaternion3D::z).description(szZ_Quaternion);
         w.operate_self();
         w.operate_with<double>();
-        w.operate_with<Vector3D>();
+        //w.operate_with<Vector3D>(); // DISABLED due to bad template expansion causing weird compiler substitution issues
         w.print<print_quaternion3<double>>();
     }
 
@@ -53,7 +53,7 @@ static void reg_quaternion3()
         w.property(szZ, &Quaternion3F::z).description(szZ_Quaternion);
         w.operate_self();
         w.operate_with<float>();
-        w.operate_with<Vector3F>();
+        //w.operate_with<Vector3F>(); // DISABLED due to bad template expansion causing weird compiler substitution issues
         w.print<print_quaternion3<float>>();
     }
 

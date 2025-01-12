@@ -157,6 +157,7 @@ namespace yq {
     struct type_k {};
     struct union_k {};
     struct unit_k {};
+    struct unsafe_k {};
     struct up_k {};
     struct w_k {};
     struct ww_k {};
@@ -317,6 +318,7 @@ namespace yq {
     static constexpr const type_k           TYPE;
     static constexpr const union_k          UNION;
     static constexpr const unit_k           UNIT;
+    static constexpr const unsafe_k         UNSAFE;
     static constexpr const up_k             UP;
     static constexpr const w_k              W;
     static constexpr const ww_k             WW;
