@@ -196,6 +196,8 @@ namespace yq {
 
         //! Extracts out the bivector component, returns it
         constexpr Bivector3<T>  bivector() const noexcept;
+        
+        //! Extracts out the trivector component, returns it
         constexpr Trivector3<T> trivector() const noexcept;
         constexpr Vector3<T>    vector() const noexcept;
     };
