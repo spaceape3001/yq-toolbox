@@ -115,6 +115,12 @@ namespace yq {
         //! Returns the area
         constexpr square_t<T> area() const noexcept;
 
+        //! An explicit cast when its "ambiguous"
+        template <typename U>
+        constexpr Size2<U>  cast() const
+        {
+            return { (U) x, (U) y };
+        }
 
         //! Returns the most positive of the components
         constexpr T             cmax() const noexcept;

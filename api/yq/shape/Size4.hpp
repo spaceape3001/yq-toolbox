@@ -110,6 +110,12 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Size4& operator/=(U) noexcept;
 
+        //! An explicit cast when its "ambiguous"
+        template <typename U>
+        constexpr Size4<U>  cast() const
+        {
+            return { (U) x, (U) y, (U) z, (U) w };
+        }
 
         //! Returns the most positive of the components
         constexpr T             cmax() const noexcept;
