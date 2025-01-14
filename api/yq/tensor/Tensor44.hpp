@@ -543,6 +543,9 @@ namespace yq {
     requires is_arithmetic_v<T>
     constexpr Tensor44<product_t<T,U>>  operator*(T a, const Tensor44<U>& b) noexcept;
     
+    template <typename T, typename U>
+    requires has_nan_v<product_t<T,U>>
+    constexpr Tensor44<product_t<T,U>>  comingle(const Tensor44<T>& a, const Tensor44<U>& b, const Tensor44<product_t<T,U>>& c);
 
 
 //  --------------------------------------------------------
@@ -567,7 +570,6 @@ namespace yq {
     */
     template <typename T>
     constexpr T     trace(const Tensor44<T>& ten) noexcept;
-
 }
 
 YQ_TYPE_DECLARE(yq::Tensor44D)
