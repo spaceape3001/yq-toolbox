@@ -217,6 +217,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Extracts the bivector from the provided multivector
     template <typename T>
     constexpr Bivector3<T> bivector(const Multivector3<T>& a) noexcept;
 
