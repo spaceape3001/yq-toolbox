@@ -225,6 +225,7 @@ namespace yq {
     template <typename T>
     constexpr Trivector3<T> trivector(const Multivector3<T>& a) noexcept;
 
+    //! Extracts the vector from the provided multivector
     template <typename T>
     constexpr Vector3<T> vector(const Multivector3<T>& a) noexcept;
     
