@@ -34,7 +34,12 @@ namespace yq {
 
         //! Scalar component
         T       a;
-        T       x, y, z, w;
+        
+        //! X vector component
+        T       x;
+        T       y;
+        T       z;
+        T       w;
         T       xy, yz, zw, wx, xz, yw;
         T       xyz, yzw, zwx, wxy;
         T       xyzw;
