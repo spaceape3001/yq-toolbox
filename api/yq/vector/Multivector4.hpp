@@ -40,6 +40,8 @@ namespace yq {
 
         //! Y vector component
         T       y;
+
+        //! Z vector component
         T       z;
         T       w;
         T       xy, yz, zw, wx, xz, yw;
