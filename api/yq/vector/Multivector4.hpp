@@ -46,7 +46,20 @@ namespace yq {
 
         //! W vector component
         T       w;
-        T       xy, yz, zw, wx, xz, yw;
+        
+        //! XY bivector component
+        T       xy;
+        
+        T       yz;
+        
+        T       zw;
+        
+        T       wx;
+        
+        T       xz;
+        
+        T       yw;
+        
         T       xyz, yzw, zwx, wxy;
         T       xyzw;
         
