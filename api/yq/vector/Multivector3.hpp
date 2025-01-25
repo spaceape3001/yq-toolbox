@@ -217,12 +217,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  GETTERS
 
+    //! Extracts the bivector from the provided multivector
     template <typename T>
     constexpr Bivector3<T> bivector(const Multivector3<T>& a) noexcept;
 
+    //! Extracts the trivector from the provided multivector
     template <typename T>
     constexpr Trivector3<T> trivector(const Multivector3<T>& a) noexcept;
 
+    //! Extracts the vector from the provided multivector
     template <typename T>
     constexpr Vector3<T> vector(const Multivector3<T>& a) noexcept;
     
@@ -246,12 +249,15 @@ namespace yq {
 //  --------------------------------------------------------
 //  --------------------------------------------------------
 
-    
+    //! Adds scalar to multivector, returns result
     template <typename T>
     constexpr Multivector3<T> operator+(T a, const Multivector3<T>& b) noexcept;
+    
+    //! Subtracts multivector from scalar, returns result
     template <typename T>
     constexpr Multivector3<T> operator-(T a, const Multivector3<T>& b) noexcept;
 
+    //! Multiplies scalar with multivector, returns the result
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr Multivector3<product_t<T,U>> operator*(T a, const Multivector3<U>&b) noexcept;
