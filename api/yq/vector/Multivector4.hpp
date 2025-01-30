@@ -65,7 +65,15 @@ namespace yq {
         //! YW bivector component
         T       yw;
         
-        T       xyz, yzw, zwx, wxy;
+        //! XYZ trivector component
+        T       xyz;
+
+        T       yzw;
+
+        T       zwx;
+
+        T       wxy;
+
         T       xyzw;
         
         constexpr Multivector4() noexcept = default;
