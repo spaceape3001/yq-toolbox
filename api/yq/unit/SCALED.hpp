@@ -268,6 +268,27 @@ namespace yq {
     }
 
 //  --------------------------------------------------------
+//  COMPARISONS
+
+    template <typename T, typename DIM, double K1, double K2>
+    auto operator<=>(const SCALED<T,DIM,K1>&a, const SCALED<T,DIM,K2>&b) noexcept 
+    {
+        return a.value * K1 <=> b.value * K2;
+    }
+    
+    template <typename T, typename DIM, double K>
+    auto operator<=>(const MKS<T,DIM>& a, const SCALED<T,DIM,K>&b) noexcept 
+    {
+        return a.value <=> b.value * K;
+    }
+
+    template <typename T, typename DIM, double K>
+    auto operator<=>(const SCALED<T,DIM,K>& a, const MKS<T,DIM>&b) noexcept 
+    {
+        return a.value * K <=> b.value;
+    }
+
+//  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
     template <typename T, typename DIM, double K, typename R>
