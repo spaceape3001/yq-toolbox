@@ -213,6 +213,15 @@ namespace yq {
         return m_type->m_convert.has(&newType);
     }
 
+    bool        Any::can_print() const
+    {
+        if(!m_type)
+            return false;
+        if((m_type -> id() >= MT_String) && (m_type -> id() < M_USER))
+            return true;
+        return m_type -> can_print();
+    }
+
     void            Any::clear()
     {
         if(m_type){
@@ -750,6 +759,47 @@ namespace yq {
         if(v2.good)
             return v2.value;
         return errors::bad_conversion();
+    }
+
+    string_x    to_string(const Any&v)
+    {
+        switch(v.type().id()){
+        case MT_String:
+            return v.data().reference<std::string>();
+        case MT_Boolean:
+            return to_string(v.data().reference<bool>());
+        case MT_Float:
+            return to_string(v.data().reference<float>());
+        case MT_Double:
+            return to_string(v.data().reference<double>());
+        case MT_Int8:
+            return to_string( v.data().reference<int8_t>());
+        case MT_Int16:
+            return to_string( v.data().reference<int16_t>());
+        case MT_Int32:
+            return to_string( v.data().reference<int32_t>());
+        case MT_Int64:
+            return to_string( v.data().reference<int64_t>());
+        case MT_UInt8:
+            return to_string( v.data().reference<uint8_t>());
+        case MT_UInt16:
+            return to_string( v.data().reference<uint16_t>());
+        case MT_UInt32:
+            return to_string( v.data().reference<uint32_t>());
+        case MT_UInt64:
+            return to_string( v.data().reference<uint64_t>());
+        default:
+            break;
+        }
+        
+        auto v2   = v.value<std::string>();
+        if(v2.good)
+            return v2.value;
+        
+        if(!v.can_print())
+            return errors::bad_conversion();
+
+        return v.printable();
     }
 
     uint8_x     to_uint8(const Any&v)

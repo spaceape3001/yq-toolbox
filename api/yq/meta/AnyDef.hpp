@@ -88,6 +88,8 @@ namespace yq {
         bool        can_convert(const TypeInfo&) const;
         template <typename T>
         bool        can_convert() const;
+        
+        bool        can_print() const;
 
         //! Returns a variant that's been converted
         any_x       convert(const TypeInfo&) const;

@@ -11,6 +11,7 @@
 #include <ctime>
 #include <vector>
 #include <yq/typedef/string_sets.hpp>
+#include <concepts>
 
 namespace yq {
 
@@ -319,6 +320,11 @@ namespace yq {
     */
     std::string_view    to_time_string(std::time_t, const char* fmt="yyyy-MM-dd HH:mm:ss");
 
+    template <typename T>
+    concept StringViewable      = std::same_as<std::string_view, decltype(to_string_view(T()))>;
+
+    template <typename T>
+    concept Stringable          = StringViewable<T> || std::same_as<std::string_view, decltype(to_string(T()))>;
 
     template <typename T>
     static constexpr const bool     has_to_string_view_v    = std::is_same_v<std::string_view, decltype(to_string_view(T()))>;
