@@ -71,6 +71,7 @@ namespace yq {
         //! YZW trivector component
         T       yzw;
 
+        //! ZWX trivector component
         T       zwx;
 
         T       wxy;
