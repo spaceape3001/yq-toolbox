@@ -17,6 +17,7 @@
 
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>
+#include <sstream>
 
 namespace yq {
 
@@ -867,4 +868,18 @@ namespace yq {
     {
         return ten.z_row();
     }
+
+
+    template <typename T>
+    std::ostringstream& operator<<(std::ostringstream&oss, const Tensor44<T>&v)
+    {
+        oss << '[';
+        oss << '[' << v.xx << ',' << v.xy << ',' << v.xz << ',' << v.xw << ']';
+        oss << '[' << v.yx << ',' << v.yy << ',' << v.yz << ',' << v.yw << ']';
+        oss << '[' << v.zx << ',' << v.zy << ',' << v.zz << ',' << v.zw << ']';
+        oss << '[' << v.wx << ',' << v.wy << ',' << v.wz << ',' << v.ww << ']';
+        oss << ']';
+        return oss;
+    }
+
 }

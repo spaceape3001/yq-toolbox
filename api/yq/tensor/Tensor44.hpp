@@ -17,6 +17,7 @@
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/vector/Vector4.hpp>
+#include <iosfwd>
 
 namespace log4cpp { class CategoryStream; }
 
@@ -570,6 +571,9 @@ namespace yq {
     */
     template <typename T>
     constexpr T     trace(const Tensor44<T>& ten) noexcept;
+    
+    template <typename T>
+    std::ostringstream& operator<<(std::ostringstream&, const Tensor44<T>&);
 }
 
 YQ_TYPE_DECLARE(yq::Tensor44D)
