@@ -224,7 +224,7 @@ namespace yq {
         static const Vector<std::string_view>&        all_keys();
         
         //! All values of the enumeration
-        static Vector<EnumImpl>             all_values();
+        static const Vector<EnumImpl>&            all_values();
         
         //! Default value for the enumeration
         static typename E::enum_t           default_value();
@@ -391,7 +391,7 @@ namespace yq {
     }
 
     template <typename E>
-    Vector<EnumImpl<E>>    EnumImpl<E>::all_values()
+    const Vector<EnumImpl<E>>&    EnumImpl<E>::all_values()
     {
         static Vector<EnumImpl>   result = calcAllValues();
         return result;

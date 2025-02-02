@@ -261,12 +261,16 @@ namespace yq {
     static constexpr const no_k             NO;
     static constexpr const no_throw_k       NO_THROW;
     static constexpr const node_k           NODE;
+#ifndef YQ_KEYWORD_OMIT_NONE
     static constexpr const none_k           NONE;
+#endif
     static constexpr const normal_k         NORMAL;
     static constexpr const normalized_k     NORMALIZED;
     static constexpr const not_k            NOT;
     static constexpr const odd_k            ODD;
+#ifndef YQ_KEYWORD_OMIT_ONCE
     static constexpr const once_k           ONCE;
+#endif
     static constexpr const one_k            ONE;
     static constexpr const only_k           ONLY;
     static constexpr const opposite_k       OPPOSITE; 
