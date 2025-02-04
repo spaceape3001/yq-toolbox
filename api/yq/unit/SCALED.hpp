@@ -307,7 +307,7 @@ namespace yq {
     template <typename T, typename DIM, double K, typename R>
     bool is_close(const R& compare, SCALED<T,DIM,K> actual, std::type_identity_t<T> v)
     {
-        return compare(actual, SCALED<T,DIM,K>{v});
+        return is_close(compare, actual, SCALED<T,DIM,K>{v});
     }
 
 }

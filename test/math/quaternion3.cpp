@@ -87,7 +87,6 @@ int main()
         expect(true == is_close(tol, Quaternion3D(CCW, Z, -120._deg), 0.5, 0., 0., -0.8660254038));
     };
     
-    // Multiplication...
     "Rotor Multiplication"_test = [&](){
         expect(true == is_close(tol, Quaternion3D(CCW, Z, 0._deg) * Quaternion3D(CCW, X, 0._deg), Quaternion3D(HPR, 0._deg, 0._deg, 0._deg)));
         expect(true == is_close(tol, Quaternion3D(CCW, Z, 0._deg) * Quaternion3D(CCW, X, 10._deg), Quaternion3D(HPR, 0._deg, 0._deg, 10._deg)));
@@ -101,6 +100,21 @@ int main()
         expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, -10._deg), Quaternion3D(HPR, 10._deg,-10._deg, 0._deg)));
         expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, -45._deg), Quaternion3D(HPR, 10._deg, -45._deg, 0._deg)));
         expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, -45._deg) * Quaternion3D(CCW, X, -50._deg), Quaternion3D(HPR, 10._deg, -45._deg, -50._deg)));
+    };
+    
+    "Angles"_test = [&](){
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Z, 30._deg).angle(ZYX, Z)), 30. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Z, 60._deg).angle(ZYX, Z)), 60. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Y, 30._deg).angle(ZYX, Y)), 30. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Y, 60._deg).angle(ZYX, Y)), 60. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, X, 30._deg).angle(ZYX, X)), 30. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, X, 60._deg).angle(ZYX, X)), 60. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Z, -30._deg).angle(ZYX, Z)), -30. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Z, -60._deg).angle(ZYX, Z)), -60. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Y, -30._deg).angle(ZYX, Y)), -30. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, Y, -60._deg).angle(ZYX, Y)), -60. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, X, -30._deg).angle(ZYX, X)), -30. ));
+        expect(true == is_close(tol, unit::Degree(Quaternion3D(CCW, X, -60._deg).angle(ZYX, X)), -60. ));
     };
     
     return ut::cfg<>.run();
