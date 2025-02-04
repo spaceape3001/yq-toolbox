@@ -87,5 +87,21 @@ int main()
         expect(true == is_close(tol, Quaternion3D(CCW, Z, -120._deg), 0.5, 0., 0., -0.8660254038));
     };
     
+    // Multiplication...
+    "Rotor Multiplication"_test = [&](){
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 0._deg) * Quaternion3D(CCW, X, 0._deg), Quaternion3D(HPR, 0._deg, 0._deg, 0._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 0._deg) * Quaternion3D(CCW, X, 10._deg), Quaternion3D(HPR, 0._deg, 0._deg, 10._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, X, 10._deg), Quaternion3D(HPR, 10._deg, 0._deg, 10._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, X, 45._deg), Quaternion3D(HPR, 10._deg, 0._deg, 45._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, X, -10._deg), Quaternion3D(HPR, 10._deg, 0._deg, -10._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, X, -45._deg), Quaternion3D(HPR, 10._deg, 0._deg, -45._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 0._deg) * Quaternion3D(CCW, Y, 10._deg), Quaternion3D(HPR, 0._deg, 10._deg, 0._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, 10._deg), Quaternion3D(HPR, 10._deg, 10._deg, 0._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, 45._deg), Quaternion3D(HPR, 10._deg, 45._deg, 0._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, -10._deg), Quaternion3D(HPR, 10._deg,-10._deg, 0._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, -45._deg), Quaternion3D(HPR, 10._deg, -45._deg, 0._deg)));
+        expect(true == is_close(tol, Quaternion3D(CCW, Z, 10._deg) * Quaternion3D(CCW, Y, -45._deg) * Quaternion3D(CCW, X, -50._deg), Quaternion3D(HPR, 10._deg, -45._deg, -50._deg)));
+    };
+    
     return ut::cfg<>.run();
 }
