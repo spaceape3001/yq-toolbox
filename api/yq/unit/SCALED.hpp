@@ -253,6 +253,12 @@ namespace yq {
         return MKS<T,dim_t>( (a.value * K1) / (b.value * K2) );
     }
 
+    template <typename T, typename U, typename DIM, double K>
+    auto operator/(const SCALED<T,DIM,K>& a, U b) requires std::is_arithmetic_v<U>
+    {
+        return SCALED<quotient_t<T,U>,DIM,K>( a.value / b );
+    }
+
     template <typename T, typename DIM1, double K1, typename DIM2>
     auto operator/(const SCALED<T,DIM1,K1>& a, const MKS<T,DIM2>& b)
     {

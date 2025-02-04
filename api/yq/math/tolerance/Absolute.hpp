@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <yq/trait/has_is_finite.hpp>
+#include <yq/trait/has_abs.hpp>
 
 namespace yq {
     

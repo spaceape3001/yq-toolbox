@@ -39,6 +39,7 @@ namespace yq {
     template <typename, typename> struct MKS;
     template <typename> struct Tensor33;
     template <typename> struct Vector3;
+    class Stream;
 
     /*! \brief Quaternion (3D)
     */
@@ -310,7 +311,20 @@ namespace yq {
     Quaternion3<T>  hpr(const MKS<T,dim::Angle>& hdg, const MKS<T,dim::Angle>& pitch, const MKS<T,dim::Angle>& roll);
 
 
+    template <typename T, typename R>
+    bool is_close(const R& compare, const Quaternion3<T>& actual, const Quaternion3<T>& expected);
+    
+    template <typename T, typename R>
+    bool is_close(const R& compare, const Quaternion3<T>& actual, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z,std::type_identity_t<T>w);
 
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Quaternion3<T>& v);
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Quaternion3<T>& v);
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Quaternion3<T>& v);
 }
 
 

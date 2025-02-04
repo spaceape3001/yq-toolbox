@@ -344,7 +344,7 @@ namespace yq {
     //requires std::is_floating_point_v<T>
     Radian              Quaternion3<T>::angle(zyx_k, y_k) const
     {
-        return asin(std::clamp(1.*(w*y-x*z),-1.,1.0));
+        return asin(std::clamp(2.*(w*y-x*z),-2.,1.0));
     }
 
     template <typename T>
@@ -459,6 +459,18 @@ namespace yq {
         return Quaternion3<T>(HPR, hdg, pitch, roll);
     }
 
+    template <typename T, typename R>
+    bool is_close(const R& compare, const Quaternion3<T>& actual, const Quaternion3<T>& expected)
+    {
+        return compare(length(actual-expected), length(expected));
+    }
+    
+    template <typename T, typename R>
+    bool is_close(const R& compare, const Quaternion3<T>& actual, std::type_identity_t<T> w, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
+    {
+        return is_close(compare, actual, Quaternion3<T>(w, x, y, z) );
+    }
+
     template <typename T>
     constexpr square_t<T>  length²(const Quaternion3<T>&a)
     {
@@ -529,5 +541,25 @@ namespace yq {
         return Quaternion3<T>(CCW, Z, v);
     }
 
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Quaternion3<T>& v)
+    {
+        return s << "(" << v.w << "," << v.x << "," << v.y << "," << v.z << ")";
+    }
+    
+    #ifdef YQ_BASIC_STREAM_HPP_
+    template <typename T>
+    Stream& operator<<(Stream&s, const Quaternion3<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
 
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Quaternion3<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
 }
