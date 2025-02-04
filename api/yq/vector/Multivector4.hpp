@@ -77,8 +77,10 @@ namespace yq {
         //! WXY trivector component
         T       wxy;
 
+        //! XYZW quadvector component
         T       xyzw;
         
+        //! Default constructor
         constexpr Multivector4() noexcept = default;
         constexpr Multivector4(
             T _a, 
