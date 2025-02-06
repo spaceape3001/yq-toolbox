@@ -97,6 +97,7 @@ namespace yq {
             xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy),
             xyzw(_xyzw) {}
             
+        //! By component constructor (scalar, vector, bivector, trivector, & quadvector)
         constexpr Multivector4(T _a, const Vector4<T>& v, const Bivector4<T>& b, const Trivector4<T>& t, const Quadvector4<T>&q) noexcept : 
             a(_a), 
             x(v.x), y(v.y), z(v.z), w(v.w),
