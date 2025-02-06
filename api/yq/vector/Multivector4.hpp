@@ -82,6 +82,8 @@ namespace yq {
         
         //! Default constructor
         constexpr Multivector4() noexcept = default;
+        
+        //! Value-by-value constructor
         constexpr Multivector4(
             T _a, 
             T _x, T _y, T _z, T _w,
@@ -94,6 +96,8 @@ namespace yq {
             xy(_xy), yz(_yz), zw(_zw), wx(_wx), xz(_xz), yw(_yw),
             xyz(_xyz), yzw(_yzw), zwx(_zwx), wxy(_wxy),
             xyzw(_xyzw) {}
+            
+        //! By component constructor (scalar, vector, bivector, trivector, & quadvector)
         constexpr Multivector4(T _a, const Vector4<T>& v, const Bivector4<T>& b, const Trivector4<T>& t, const Quadvector4<T>&q) noexcept : 
             a(_a), 
             x(v.x), y(v.y), z(v.z), w(v.w),
