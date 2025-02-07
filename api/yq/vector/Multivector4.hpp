@@ -104,6 +104,8 @@ namespace yq {
             xy(b.xy), yz(b.yz), zw(b.zw), wx(b.wx), xz(b.xz), yw(b.yw),
             xyz(t.xyz), yzw(t.yzw), zwx(t.zwx), wxy(t.wxy),
             xyzw(q.xyzw) {}
+            
+        //! Sets ALL components to the same value
         constexpr Multivector4(all_k, T v) noexcept : 
             a(v), 
             x(v), y(v), z(v), 
