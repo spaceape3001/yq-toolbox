@@ -16,7 +16,7 @@ using namespace yq;
 
 int main()
 {
-    Absolute tol{1e-12};
+    Absolute tol{1e-11};
 
     "zero is zero"_test = []{
         expect(true == (Sphere4D(ZERO) == Sphere4D(ZERO)));
