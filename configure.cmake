@@ -106,6 +106,12 @@ if(NOT YOUR_QUILL_TOOLBOX)
         -fno-elide-type 
         -fdiagnostics-path-format=inline-events 
         -fdiagnostics-generate-patch
+
+        #   *WISH* I could use this... but gcc 14 is flagging default constructed std::variant
+        #   AND I tried cmake release-only generator expressions only to get linker errors all over 
+        #   the place.  So, it's being disabled.  (2025 Feb 8)
+        
+        -Wno-maybe-uninitialized 
     )
     
     if(Build_ASIO)
