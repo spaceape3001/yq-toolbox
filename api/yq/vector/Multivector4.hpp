@@ -105,13 +105,15 @@ namespace yq {
             xyz(t.xyz), yzw(t.yzw), zwx(t.zwx), wxy(t.wxy),
             xyzw(q.xyzw) {}
             
-        //! Sets ALL components to the same value
+        //! Constructor that sets ALL components to the same value
         constexpr Multivector4(all_k, T v) noexcept : 
             a(v), 
             x(v), y(v), z(v), 
             xy(v), yz(v), zw(v), wx(v), xz(v), yw(v),
             xyz(v), yzw(v), zwx(v), wxy(v),
             xyzw(v) {}
+            
+        //! Constructor that sets all components to NaN
         template <typename=void> requires has_nan_v<T>
         consteval Multivector4(nan_k) noexcept : Multivector4(ALL, nan_v<T>) {}
         consteval Multivector4(one_k) noexcept : Multivector4(ALL, one_v<T>) {}
