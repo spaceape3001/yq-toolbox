@@ -116,6 +116,8 @@ namespace yq {
         //! Constructor that sets all components to NaN
         template <typename=void> requires has_nan_v<T>
         consteval Multivector4(nan_k) noexcept : Multivector4(ALL, nan_v<T>) {}
+
+        //! Constructor that sets all components to one
         consteval Multivector4(one_k) noexcept : Multivector4(ALL, one_v<T>) {}
         consteval Multivector4(zero_k) noexcept : Multivector4(ALL, zero_v<T>) {}
 
