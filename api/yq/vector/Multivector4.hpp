@@ -119,6 +119,8 @@ namespace yq {
 
         //! Constructor that sets all components to one
         consteval Multivector4(one_k) noexcept : Multivector4(ALL, one_v<T>) {}
+
+        //! Constructor that sets all components to zero
         consteval Multivector4(zero_k) noexcept : Multivector4(ALL, zero_v<T>) {}
 
         template <typename U>
