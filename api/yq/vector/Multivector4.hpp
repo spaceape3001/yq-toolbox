@@ -123,6 +123,7 @@ namespace yq {
         //! Constructor that sets all components to zero
         consteval Multivector4(zero_k) noexcept : Multivector4(ALL, zero_v<T>) {}
 
+        //! Converts to another multivector of compatible type
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
         explicit constexpr operator Multivector4<U>() const noexcept
