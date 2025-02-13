@@ -154,6 +154,7 @@ namespace yq {
         //! Equality (defaulted) 
         constexpr bool operator==(const Multivector4&) const noexcept = default;
         
+        //! Positive/affirmation operator
         constexpr Multivector4  operator+() const noexcept;
         constexpr Multivector4  operator-() const noexcept;
         
