@@ -156,6 +156,8 @@ namespace yq {
         
         //! Positive/affirmation operator
         constexpr Multivector4  operator+() const noexcept;
+        
+        //! Negative/negation operator
         constexpr Multivector4  operator-() const noexcept;
         
         constexpr Multivector4  operator+(T b) const noexcept;
