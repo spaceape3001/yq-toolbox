@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <concepts>
+
 namespace yq {
     class Asset;
     class AssetCache;
@@ -20,4 +22,7 @@ namespace yq {
     
     using AssetPtr      = Ref<Asset>;
     using AssetCPtr     = Ref<const Asset>;
+
+    template <class E>
+    concept SomeAsset = std::derived_from<E,Asset>;
 }
