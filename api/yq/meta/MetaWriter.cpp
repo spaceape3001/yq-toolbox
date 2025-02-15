@@ -102,6 +102,13 @@ namespace yq {
         return *this;
     }
 
+    Meta::Writer&     Meta::Writer::set(Flag f)
+    {
+        if(m_meta && thread_safe_write())
+            m_meta -> set(f);
+        return *this;
+    }
+
     Meta::Writer&     Meta::Writer::tag(int k)
     {
         return tag(k, Any(true));

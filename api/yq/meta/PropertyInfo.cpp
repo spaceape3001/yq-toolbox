@@ -19,7 +19,8 @@
 
 namespace yq {
 
-    PropertyInfo::PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo&theType, Meta* parentMeta) : Meta(zName, parentMeta, sl), m_type(theType)
+    PropertyInfo::PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo&theType, Meta* parentMeta) : 
+        Meta(zName, parentMeta, sl), m_type(theType)
     {
         assert(parentMeta);
         set(Flag::PROPERTY);

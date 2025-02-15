@@ -71,10 +71,14 @@ namespace yq {
         */
         Writer&     name(std::string_view zName);
         
-        /*! \brief Applies new options 
+        /*! \brief Applies new options/flags
         */
         Writer&     options(options_t);
 
+        /*! \brief Sets one flag
+        */
+        Writer&     set(Flag);
+        
         /*! \brief Tags the meta
         
             This adds a tag to this meta, the value will be set to TRUE.
