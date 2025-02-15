@@ -108,6 +108,7 @@ namespace yq {
             GENERATOR,      //!< It's a generator (GeneratorInfo)
             GLOBAL,         //!< It's a global (GlobalInfo)
             HAS_SUBS,       
+            ID,             //!< It's an ID type
             IMAGE,          //!< It's an image
             IMGUI,          //!< ImGUI api enabled/similar usage
             INFORMATION,    //!< Information post class
