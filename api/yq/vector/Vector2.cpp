@@ -17,6 +17,9 @@
 #include <yq/vector/Bivector2.hpp>
 #include <yq/vector/Multivector2.hpp>
 #include <yq/vector/Vector3.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/split.hpp>
 
 #include "Vector2.hxx"
 #include "Multivector2.hxx"
@@ -41,6 +44,86 @@ void    print_vector2(Stream& str, const Vector2<T>& v)
     str << "(" << v.x << "," << v.y << ")";
 }
 
+static std::string_view write_vector2d(const Vector2D& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", kMaxDoubleDigits, v.x, kMaxDoubleDigits, v.y);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector2f(const Vector2F& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g", kMaxFloatDigits, v.x, kMaxFloatDigits, v.y);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector2i(const Vector2I& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%i,%i", v.x, v.y);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector2u(const Vector2U& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%u,%u", v.x, v.y);
+    return std::string_view(buffer, n);
+}
+
+static bool  parse_vector2d(Vector2D& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_double(bits[0]);
+    auto y = to_double(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2D(*x, *y);
+    return true;
+}
+
+static bool  parse_vector2f(Vector2F& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_float(bits[0]);
+    auto y = to_float(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2F(*x, *y);
+    return true;
+}
+
+static bool  parse_vector2i(Vector2I& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_int(bits[0]);
+    auto y = to_int(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2I(*x, *y);
+    return true;
+}
+
+static bool  parse_vector2u(Vector2U& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_unsigned(bits[0]);
+    auto y = to_unsigned(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2U(*x, *y);
+    return true;
+}
+
 static void reg_vector2()
 {
     {
@@ -60,6 +143,8 @@ static void reg_vector2()
         w.operate_with<Tensor23D>(Operator::Multiply);
         w.operate_with<Tensor24D>(Operator::Multiply);
         w.print<print_vector2<double>>();
+        w.format<write_vector2d>();
+        w.parse<parse_vector2d>();
     }
     
     {
@@ -84,6 +169,8 @@ static void reg_vector2()
         w.operate_with<Tensor23F>(Operator::Multiply);
         w.operate_with<Tensor24F>(Operator::Multiply);
         w.print<print_vector2<float>>();
+        w.format<write_vector2f>();
+        w.parse<parse_vector2f>();
     }
     
     {
@@ -100,6 +187,8 @@ static void reg_vector2()
         w.method(szZ, &Vector2I::z).description(szZ_Vector2);
         w.operate_self({Operator::Add, Operator::Subtract});
         w.print<print_vector2<int>>();
+        w.format<write_vector2i>();
+        w.parse<parse_vector2i>();
     }
 
     {
@@ -111,6 +200,8 @@ static void reg_vector2()
         w.method(szZ, &Vector2U::z).description(szZ_Vector2);
         w.operate_self({Operator::Add, Operator::Subtract});
         w.print<print_vector2<unsigned>>();
+        w.format<write_vector2u>();
+        w.parse<parse_vector2u>();
     }
 }
 

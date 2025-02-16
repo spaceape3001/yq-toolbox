@@ -15,6 +15,9 @@
 
 namespace yq {
 
+    static constexpr const int  kMaxDoubleDigits    = 19;
+    static constexpr const int  kMaxFloatDigits     = 7;
+
     /*! \brief Formats the given number as hexadecimal
     
         \note string_view points to internal (thread-local) buffer, it'll be overwritten on next call!
@@ -54,6 +57,12 @@ namespace yq {
         \result Formatted string
     */
     std::string_view  fmt_hex(uint64_t n, char f='0');
+    
+    //! Generalized write format of double
+    std::string_view    fmt_double(double, int digits=kMaxDoubleDigits);
+
+    //! Generalized write format of float
+    std::string_view    fmt_float(float, int digits=kMaxFloatDigits);
     
     /*! \brief Formats the given number as octal
     

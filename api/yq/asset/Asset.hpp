@@ -35,6 +35,8 @@ namespace yq {
         //! Loads the asset from native binary format (whatever that is)
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }
         
+        virtual AssetFactory*   factory() const { return nullptr; }
+        
     protected:
     };
     

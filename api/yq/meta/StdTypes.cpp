@@ -10,6 +10,7 @@
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/text/parse.hpp>
+#include <yq/text/format.hpp>
 //#include <0/basic/TextUtils.hpp>
 #include <yq/core/Any.hpp>
 
@@ -161,6 +162,29 @@ namespace yq {
             str << v;
         }
     
+        //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        template <typename T>
+        std::string_view    generic_write(T v)
+        {
+            return to_string_view(v);
+        }
+
+        std::string_view    write_double(double v)
+        {
+            return fmt_double(v);
+        }
+
+        std::string_view    write_float(float v)
+        {
+            return fmt_float(v);
+        }
+
+        std::string_view    write_string(const std::string& v)
+        {
+            return v;
+        }
+
 
         //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
@@ -177,10 +201,13 @@ namespace yq {
                 auto w = writer<bool>();
                 w.parse<parse_boolean>();
                 w.print<print_boolean>();
+                w.format<generic_write<bool>>();
             }
             {
                 auto w = writer<char32_t>();
                 w.print<print_char32>();
+                //w.parse<parse_char32>();
+                w.format<generic_write<char32_t>>();
             }
             
             {
@@ -188,6 +215,7 @@ namespace yq {
                 w.casts<float>();
                 w.parse<parse_double>();
                 w.print<print_double>();
+                w.format<write_double>();
                 w.operate_self();
                 w.operate(Operator::Power, double_power);
             }
@@ -195,6 +223,7 @@ namespace yq {
                 auto w = writer<float>();
                 w.parse<parse_float>();
                 w.print<print_float>();
+                w.format<write_float>();
                 w.operate_self();
             }
             {
@@ -204,6 +233,7 @@ namespace yq {
                 w.casts<int64_t>();
                 w.parse<parse_int8>();
                 w.print<print_int8>();
+                w.format<generic_write<int8_t>>();
                 w.operate_self();
             }
             {
@@ -212,6 +242,7 @@ namespace yq {
                 w.casts<int64_t>();
                 w.parse<parse_int16>();
                 w.print<print_int16>();
+                w.format<generic_write<int16_t>>();
                 w.operate_self();
             }
             {
@@ -220,12 +251,14 @@ namespace yq {
                 w.casts<int64_t>();
                 w.parse<parse_int32>();
                 w.print<print_int32>();
+                w.format<generic_write<int32_t>>();
                 w.operate_self();
             }
             {
                 auto w  = writer<int64_t>();
                 w.parse<parse_int64>();
                 w.print<print_int64>();
+                w.format<generic_write<int64_t>>();
                 w.operate_self();
             }
             {
@@ -238,6 +271,7 @@ namespace yq {
                 w.casts<uint64_t>();
                 w.parse<parse_uint8>();
                 w.print<print_uint8>();
+                w.format<generic_write<uint8_t>>();
                 w.operate_self();
             }
             {
@@ -248,6 +282,7 @@ namespace yq {
                 w.casts<uint64_t>();
                 w.parse<parse_uint16>();
                 w.print<print_uint16>();
+                w.format<generic_write<uint16_t>>();
                 w.operate_self();
             }
             {
@@ -256,12 +291,14 @@ namespace yq {
                 w.casts<uint64_t>();
                 w.parse<parse_uint32>();
                 w.print<print_uint32>();
+                w.format<generic_write<uint32_t>>();
                 w.operate_self();
             }
             {
                 auto w  = writer<uint64_t>();
                 w.parse<parse_uint64>();
                 w.print<print_uint64>();
+                w.format<generic_write<uint64_t>>();
                 w.operate_self();
             }
             {
@@ -269,6 +306,7 @@ namespace yq {
                 w.alias("String");
                 w.parse<parse_string>();
                 w.print<print_string>();
+                w.format<write_string>();
                 w.property("len", &std::string::size).description("Current length of this string");
                 w.method("sub", &std::string::substr);
             }

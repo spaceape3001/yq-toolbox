@@ -381,6 +381,31 @@ namespace yq {
                 };
             }
         }
+
+        
+        /*! \brief Registers IO text stream formatting handler
+        */
+        template <std::string_view(*FN)(T)>
+        void    format()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
+                    dst << FN(*(const T*) src);
+                };
+            }
+        }
+        
+        /*! \brief Registers IO text stream formatting handler
+        */
+        template <std::string_view(*FN)(const T&)>
+        void    format()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
+                    dst << FN(*(const T*) src);
+                };
+            }
+        }
         
         
         /*
@@ -499,9 +524,36 @@ namespace yq {
             }
         }
 
+        
+        /*! \brief Registers IO stream parsing handler
+        */
+        template <bool (*FN)(T&, std::string_view)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    if(! FN(*(T*) dst, src))
+                        return errors::parser_failed();
+                    return std::error_code();
+                };
+            }
+        }
+
         /*! \brief Registers IO stream parsing handler
         */
         template <std::error_code (*FN)(T&, const std::string_view&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    return FN(*(T*) dst, src);
+                };
+            }
+        }
+
+        /*! \brief Registers IO stream parsing handler
+        */
+        template <std::error_code (*FN)(T&, std::string_view)>
         void    parse()
         {
             if(thread_safe_write()){
@@ -525,7 +577,31 @@ namespace yq {
 
         /*! \brief Registers IO string parsing handler
         */
+        template <bool (*FN)(std::string_view, T&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    return FN(src, *(T*) dst) ? std::error_code() : errors::parser_failed();
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
         template <std::error_code (*FN)(const std::string_view&, T&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    return FN(src, *(T*) dst);
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
+        template <std::error_code (*FN)(std::string_view, T&)>
         void    parse()
         {
             if(thread_safe_write()){
@@ -551,7 +627,35 @@ namespace yq {
 
         /*! \brief Registers IO string parsing handler
         */
+        template <Result<T> (*FN)(std::string_view)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    Result<T>   r   = FN(src);
+                    *(T*) dst = std::move(r.value);
+                    return r.good ? std::error_code() : errors::parser_failed();
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
         template <std::pair<T,std::error_code> (*FN)(const std::string_view&)>
+        void    parse()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                    auto [ data, ec ] = FN(src);
+                    *(T*) dst = std::move(data);
+                    return ec;
+                };
+            }
+        }
+
+        /*! \brief Registers IO string parsing handler
+        */
+        template <std::pair<T,std::error_code> (*FN)(std::string_view)>
         void    parse()
         {
             if(thread_safe_write()){

@@ -17,6 +17,9 @@
 #include <yq/vector/Multivector4.hpp>
 #include <yq/vector/Quadvector4.hpp>
 #include <yq/vector/Trivector4.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/split.hpp>
 
 #include "Vector4.hxx"
 #include "Multivector4.hxx"
@@ -33,13 +36,100 @@ namespace yq {
     }
 }
 
-
 using namespace yq;
 
 template <typename T>
 void    print_vector4(Stream& str, const Vector4<T>& v)
 {
     str << "(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")";
+}
+
+static std::string_view write_vector4d(const Vector4D& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", kMaxDoubleDigits, v.x, kMaxDoubleDigits, v.y, kMaxDoubleDigits, v.z, kMaxDoubleDigits, v.w);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector4f(const Vector4F& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g,%.*g", kMaxFloatDigits, v.x, kMaxFloatDigits, v.y, kMaxFloatDigits, v.z, kMaxFloatDigits, v.w);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector4i(const Vector4I& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%i,%i,%i,%i", v.x, v.y, v.z, v.w);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector4u(const Vector4U& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%u,%u,%u,%u", v.x, v.y, v.z, v.w);
+    return std::string_view(buffer, n);
+}
+
+static bool  parse_vector4d(Vector4D& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto x = to_double(bits[0]);
+    auto y = to_double(bits[1]);
+    auto z = to_double(bits[2]);
+    auto w = to_double(bits[3]);
+    if(!(x && y && z && w)) 
+        return false;
+    v   = Vector4D(*x, *y, *z, *w);
+    return true;
+}
+
+static bool  parse_vector4f(Vector4F& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto x = to_float(bits[0]);
+    auto y = to_float(bits[1]);
+    auto z = to_float(bits[2]);
+    auto w = to_float(bits[3]);
+    if(!(x && y && z && w)) 
+        return false;
+    v   = Vector4F(*x, *y, *z, *w);
+    return true;
+}
+
+static bool  parse_vector4i(Vector4I& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto x = to_int(bits[0]);
+    auto y = to_int(bits[1]);
+    auto z = to_int(bits[2]);
+    auto w = to_int(bits[3]);
+    if(!(x && y && z && w)) 
+        return false;
+    v   = Vector4I(*x, *y, *z, *w);
+    return true;
+}
+
+static bool  parse_vector4u(Vector4U& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto x = to_unsigned(bits[0]);
+    auto y = to_unsigned(bits[1]);
+    auto z = to_unsigned(bits[2]);
+    auto w = to_unsigned(bits[3]);
+    if(!(x && y && z && w)) 
+        return false;
+    v   = Vector4U(*x, *y, *z, *w);
+    return true;
 }
 
 static void reg_vector4()
@@ -64,6 +154,8 @@ static void reg_vector4()
         w.operate_with<Tensor43D>(Operator::Multiply);
         w.operate_with<Tensor44D>(Operator::Multiply);
         w.print<print_vector4<double>>();
+        w.format<write_vector4d>();
+        w.parse<parse_vector4d>();
     }
     
     {
@@ -89,6 +181,8 @@ static void reg_vector4()
         w.operate_with<Tensor43F>(Operator::Multiply);
         w.operate_with<Tensor44F>(Operator::Multiply);
         w.print<print_vector4<float>>();
+        w.format<write_vector4f>();
+        w.parse<parse_vector4f>();
     }
     
     {
@@ -105,7 +199,14 @@ static void reg_vector4()
         w.property(szZ, &Vector4I::z).description(szZ_Vector);
         w.property(szW, &Vector4I::w).description(szW_Vector);
         w.print<print_vector4<int>>();
+        w.format<write_vector4i>();
+        w.parse<parse_vector4i>();
     }
+    
+    //{
+        //auto w = writer<int>();
+        //w.operate_with<Vector4I>();
+    //}
 
     {
         auto w = writer<Vector4U>();
@@ -116,7 +217,15 @@ static void reg_vector4()
         w.property(szZ, &Vector4U::z).description(szZ_Vector);
         w.property(szW, &Vector4U::w).description(szW_Vector);
         w.print<print_vector4<unsigned>>();
+        w.format<write_vector4u>();
+        w.parse<parse_vector4u>();
     }
+
+    //{
+        //auto w = writer<unsigned>();
+        //w.operate_with<Vector4U>();
+    //}
+
 }
 
 namespace {

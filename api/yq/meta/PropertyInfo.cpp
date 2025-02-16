@@ -24,6 +24,8 @@ namespace yq {
     {
         assert(parentMeta);
         set(Flag::PROPERTY);
+        
+        theType.m_ctorCopyB(m_default, theType.m_default);
 
         if(GlobalInfo* g = to_global(parentMeta)){
             assert(g == &meta<Global>());
@@ -56,6 +58,12 @@ namespace yq {
         return ret;
     }
 
+    bool            PropertyInfo::is_default(const Any& value) const
+    {
+        if(value.type().id() != m_type.id())
+            return false;
+        return m_type.m_equal(m_default, value.data());
+    }
     
     std::error_code PropertyInfo::print(const void*obj, Stream&str) const
     {
@@ -91,6 +99,4 @@ namespace yq {
             return errors::no_getter();
         return m_getter -> write(str, obj);
     }
-        
-
 }

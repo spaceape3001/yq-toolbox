@@ -58,6 +58,9 @@ namespace yq {
         
         //! TRUE if this type has a write function defined for it
         bool        can_write() const { return m_write != nullptr; }
+
+        //! TRUE if this type has write & parse functions defined for it
+        bool        can_write_and_parse() const { return m_write && m_parse; }
         
         //! TRUE if this type has a print function defined for it
         bool        can_print() const { return m_print != nullptr; }
@@ -106,7 +109,6 @@ namespace yq {
 
         size_t                                  operators_count() const;
         
-
         const PropertyInfo*                     property(std::string_view) const;
 
         //! Number of properties for this type
@@ -206,7 +208,6 @@ namespace yq {
 
         
         FNConvert           converter(const TypeInfo&) const;
-
 
     protected:
     

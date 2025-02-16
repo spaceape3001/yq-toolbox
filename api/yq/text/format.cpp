@@ -91,6 +91,21 @@ namespace yq {
         return std::string_view(buf+k, K-k);
     }
     
+    std::string_view    fmt_double(double v, int digits)
+    {
+        //  std::to_chars would be GREAT, if GCC implemented it.....
+        static thread_local char    buf[kMaxFormattingBuffer+1];
+        int n  = snprintf(buf, kMaxFormattingBuffer, "%.*lg", digits, v);
+        return std::string_view(buf, n);
+    }
+
+    std::string_view    fmt_float(float v, int digits)
+    {
+        //  std::to_chars would be GREAT, if GCC implemented it.....
+        static thread_local char    buf[kMaxFormattingBuffer+1];
+        int n  = snprintf(buf, kMaxFormattingBuffer, "%.*g", digits, v);
+        return std::string_view(buf, n);
+    }
 
     std::string_view  fmt_octal(uint8_t n)
     {
@@ -230,6 +245,7 @@ namespace yq {
         #endif
     }
     
+
     std::string_view   to_string_view(float v)
     {
         //  std::to_chars would be GREAT, if GCC implemented it.....

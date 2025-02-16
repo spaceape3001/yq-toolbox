@@ -91,18 +91,20 @@ namespace yq {
         
         bool        can_print() const;
 
+        bool        can_write() const;
+        bool        can_write_and_parse() const;
+
         //! Returns a variant that's been converted
         any_x       convert(const TypeInfo&) const;
 
         template <typename T>
         any_x       convert() const;
 
-
         bool            is_valid() const;
 
         //Any         get_field(const std::string&) const;
         
-        /*! \brief Parses into the variant, overwriting
+        /*! \brief Parses into the any, overwriting
         */
         std::error_code     parse(const TypeInfo&, const std::string_view&);
         
@@ -208,6 +210,8 @@ namespace yq {
             \brief TRUE if properly delegated
         */
         std::error_code write(Stream&) const;
+
+        std::string     writable() const;
 
 
         /*! \brief The "I-KNOW-WHAT-I'M-DOING" constructor

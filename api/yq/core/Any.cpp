@@ -6,6 +6,7 @@
 
 #include <yq/errors.hpp>
 #include <yq/core/Any.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/meta/ReservedIDs.hpp>
 #include <yq/stream/StdError.hpp>
@@ -201,7 +202,6 @@ namespace yq {
         return (m_type->m_equal)(m_data, b.m_data);
     }
     
-
     bool            Any::can_convert(const TypeInfo&newType) const
     {
         if(m_type == &newType)
@@ -217,9 +217,21 @@ namespace yq {
     {
         if(!m_type)
             return false;
-        if((m_type -> id() >= MT_String) && (m_type -> id() < M_USER))
-            return true;
         return m_type -> can_print();
+    }
+
+    bool        Any::can_write() const
+    {
+        if(!m_type)
+            return false;
+        return m_type -> can_write();
+    }
+    
+    bool        Any::can_write_and_parse() const
+    {
+        if(!m_type)
+            return false;
+        return m_type -> can_write_and_parse();
     }
 
     void            Any::clear()
@@ -256,7 +268,6 @@ namespace yq {
             return std::unexpected(ec);
         return ret;
     }
-
 
     bool            Any::is_valid() const
     {
@@ -381,6 +392,16 @@ namespace yq {
         return std::error_code();
     }
     
+    std::string     Any::writable() const
+    {
+        std::string  result;
+        stream::Text  buf(result);
+        write(buf);
+        buf.flush();
+yInfo() << "Any::writable " << result;
+        return result;  
+    }
+
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

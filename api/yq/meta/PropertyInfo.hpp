@@ -14,6 +14,7 @@ namespace yq {
     class PropGetter;
     class PropSetter;
     class Stream;
+    class Any;
 
     /*! \brief Attribute of a object/value
     
@@ -88,6 +89,8 @@ namespace yq {
             \param[in] opts     Options
         */
         PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo& type, Meta* parent);
+        
+        bool                is_default(const Any&) const;
         
     private:
         const PropSetter*   m_setter    = nullptr;
