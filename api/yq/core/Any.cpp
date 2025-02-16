@@ -398,7 +398,6 @@ namespace yq {
         stream::Text  buf(result);
         write(buf);
         buf.flush();
-yInfo() << "Any::writable " << result;
         return result;  
     }
 
