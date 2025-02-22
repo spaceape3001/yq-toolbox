@@ -129,6 +129,9 @@ namespace yq {
         const MetaLookup<MethodInfo>&   methods(all_k) const { return m_all.methods; }
         
         const MetaLookup<MethodInfo>&   methods(local_k) const { return m_local.methods; }
+        
+        //! Finds the specified property (ALL is implied)
+        const PropertyInfo*             property(std::string_view) const;
     
     protected:
         friend class PropertyInfo;

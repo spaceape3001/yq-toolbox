@@ -90,6 +90,11 @@ namespace yq {
     {
         return def(all).methods;
     }
+
+    const PropertyInfo*             ObjectInfo::property(std::string_view k) const
+    {
+        return m_all.properties.find(k);
+    }
     
     const MetaLookup<PropertyInfo>&  ObjectInfo::properties(bool all) const
     {
