@@ -8,6 +8,7 @@
 
 #include <yq/meta/Meta.hpp>
 #include <yq/meta/DataBlock.hpp>
+#include <yq/keywords.hpp>
 
 namespace yq {
 
@@ -70,6 +71,8 @@ namespace yq {
         //! \param[in,out]  pointer Pointer to the object (can be null for statics)
         //! \param[in]      value   String value to assign to the property
         std::error_code     set(void*obj, std::string_view value) const;
+        
+        std::error_code     set(void*obj, default_k) const;
         
         //! Our getter
         const PropGetter*   getter() const { return m_getter; }

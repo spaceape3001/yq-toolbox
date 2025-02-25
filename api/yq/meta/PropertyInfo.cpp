@@ -93,6 +93,13 @@ namespace yq {
         return m_setter -> set(obj, var);
     }
 
+    std::error_code  PropertyInfo::set(void*obj, default_k) const
+    {
+        if(!m_setter)
+            return errors::no_setter();
+        return m_setter -> set(obj, m_type.is_small() ? (const void*) m_default.Data : m_default.Pointer);
+    }
+
     std::error_code PropertyInfo::write(const void*obj, Stream&str) const
     {
         if(!m_getter)

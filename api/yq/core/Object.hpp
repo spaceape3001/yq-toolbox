@@ -8,6 +8,7 @@
 
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/meta/ObjectInfo.hpp>
+#include <yq/typedef/object.hpp>
 
 namespace yq {
 
