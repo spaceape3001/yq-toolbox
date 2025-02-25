@@ -36,6 +36,7 @@ namespace yq {
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }
         
         virtual AssetFactory*   factory() const { return nullptr; }
+        virtual AssetCPtr       load(std::string_view) const { return {}; }
         
     protected:
     };
@@ -52,9 +53,15 @@ namespace yq {
         
     */
     class Asset : public Object, public UniqueID, public RefCount {
+    public:
+        template <typename C> class Fixer;
+
+    private:
         YQ_OBJECT_INFO(AssetInfo)
+        YQ_OBJECT_FIXER(Fixer)
         YQ_OBJECT_DECLARE(Asset, Object)
     public:
+
         virtual size_t                  data_size() const = 0;
         
         //! Only works if cached, otherwise empty
@@ -98,6 +105,7 @@ namespace yq {
         //static std::filesystem::path            search(const path_vector_t& paths, const std::filesystem::path& file);
     
         static void init_info();
+        
     
     protected:
         friend class AssetFactory;
