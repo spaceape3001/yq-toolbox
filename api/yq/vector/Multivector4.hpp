@@ -162,15 +162,35 @@ namespace yq {
         
         //! Adds scalar to multivector, returns result
         constexpr Multivector4  operator+(T b) const noexcept;
+        
+        //! Adds scalar to this multivector, returns reference
         Multivector4&           operator+=(T b) noexcept;
+        
+        //! Adds bivector to multivector, returns result
         constexpr Multivector4  operator+(const Bivector4<T>& b) const noexcept;
+        
+        //! Adds bivector to this multivector, returns reference
         Multivector4&           operator+=(const Bivector4<T>& b) noexcept;
+        
+        //! Adds two multivectors together, returns result
         constexpr Multivector4  operator+(const Multivector4& b) const noexcept;
+        
+        //! Adds multivector to this multivector, returns reference
         Multivector4&           operator+=(const Multivector4& b) noexcept;
+        
+        //! Adds quadvector to multivector, returns result
         constexpr Multivector4  operator+(const Quadvector4<T>& b) const noexcept;
+        
+        //! Adds quadvector to this multivector, returns reference
         Multivector4&           operator+=(const Quadvector4<T>& b) noexcept;
+        
+        //! Adds trivector to multivector, returns result
         constexpr Multivector4  operator+(const Trivector4<T>& b) const noexcept;
+        
+        //! Adds trivector to this multivector, returns reference
         Multivector4&           operator+=(const Trivector4<T>& b) noexcept;
+        
+        //! Adds vector to multivector, returns result
         constexpr Multivector4  operator+(const Vector4<T>&  b) const noexcept;
         Multivector4&           operator+=(const Vector4<T>& b) noexcept;
         
