@@ -214,11 +214,13 @@ namespace yq {
         //! Subtracts right multivector from this multivector, returns reference
         Multivector4&           operator-=(const Multivector4& b) noexcept;
         
-        //! Subtracts quadvector from mutlivector, returns result
+        //! Subtracts quadvector from multivector, returns result
         constexpr Multivector4  operator-(const Quadvector4<T>& b) const noexcept;
         
         //! Subtracts quadvector from this multivector, returns reference
         Multivector4&           operator-=(const Quadvector4<T>& b) noexcept;
+        
+        //! Subtracts trivector from multivector, returns result
         constexpr Multivector4  operator-(const Trivector4<T>& b) const noexcept;
         Multivector4&           operator-=(const Trivector4<T>& b) noexcept;
         constexpr Multivector4  operator-(const Vector4<T>&  b) const noexcept;
