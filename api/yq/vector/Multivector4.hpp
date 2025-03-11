@@ -232,6 +232,7 @@ namespace yq {
         //! Subtracts vector from this multivector, returns reference
         Multivector4&           operator-=(const Vector4<T>& b) noexcept;
 
+        //! Scales multivector by given factor, returns result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector4<product_t<T,U>> operator*(U b) const noexcept;
