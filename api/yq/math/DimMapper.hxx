@@ -334,6 +334,91 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+    template <typename T> AxBox1<T> DimMapper::map1(const AxBox1<T>&v) const
+    {
+        return AxBox1<T>(SORT, map1(v.lo), map1(v.hi));
+    }
+    
+    template <typename T> AxBox1<T> DimMapper::map1(const AxBox2<T>&v) const
+    {
+        return AxBox1<T>(SORT, map1(v.lo), map1(v.hi));
+    }
+    
+    template <typename T> AxBox1<T> DimMapper::map1(const AxBox3<T>&v) const
+    {
+        return AxBox1<T>(SORT, map1(v.lo), map1(v.hi));
+    }
+    
+    template <typename T> AxBox1<T> DimMapper::map1(const AxBox4<T>&v) const
+    {
+        return AxBox1<T>(SORT, map1(v.lo), map1(v.hi));
+    }
+    
+    template <typename T> AxBox2<T> DimMapper::map2(const AxBox1<T>&v) const
+    {
+        return AxBox2<T>(SORT, map2(v.lo), map2(v.hi));
+    }
+
+    template <typename T> AxBox2<T> DimMapper::map2(const AxBox2<T>&v) const
+    {
+        return AxBox2<T>(SORT, map2(v.lo), map2(v.hi));
+    }
+
+    template <typename T> AxBox2<T> DimMapper::map2(const AxBox3<T>&v) const
+    {
+        return AxBox2<T>(SORT, map2(v.lo), map2(v.hi));
+    }
+
+    template <typename T> AxBox2<T> DimMapper::map2(const AxBox4<T>&v) const
+    {
+        return AxBox2<T>(SORT, map2(v.lo), map2(v.hi));
+    }
+
+    template <typename T> AxBox3<T> DimMapper::map3(const AxBox1<T>&v) const
+    {
+        return AxBox3<T>(SORT, map3(v.lo), map3(v.hi));
+    }
+
+    template <typename T> AxBox3<T> DimMapper::map3(const AxBox2<T>&v) const
+    {
+        return AxBox3<T>(SORT, map3(v.lo), map3(v.hi));
+    }
+
+    template <typename T> AxBox3<T> DimMapper::map3(const AxBox3<T>&v) const
+    {
+        return AxBox3<T>(SORT, map3(v.lo), map3(v.hi));
+    }
+
+    template <typename T> AxBox3<T> DimMapper::map3(const AxBox4<T>&v) const
+    {
+        return AxBox3<T>(SORT, map3(v.lo), map3(v.hi));
+    }
+
+    template <typename T> AxBox4<T> DimMapper::map4(const AxBox1<T>&v) const
+    {
+        return AxBox4<T>(SORT, map4(v.lo), map4(v.hi));
+    }
+
+    template <typename T> AxBox4<T> DimMapper::map4(const AxBox2<T>&v) const
+    {
+        return AxBox4<T>(SORT, map4(v.lo), map4(v.hi));
+    }
+
+    template <typename T> AxBox4<T> DimMapper::map4(const AxBox3<T>&v) const
+    {
+        return AxBox4<T>(SORT, map4(v.lo), map4(v.hi));
+    }
+
+    template <typename T> AxBox4<T> DimMapper::map4(const AxBox4<T>&v) const
+    {
+        return AxBox4<T>(SORT, map4(v.lo), map4(v.hi));
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+
     template <typename T> Size1<T>   DimMapper::map1(const Size1<T>&v) const
     {
         return Size1<T>(extract(v, axis.xx));

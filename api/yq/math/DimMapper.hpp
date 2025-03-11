@@ -47,6 +47,30 @@ namespace yq {
         ~DimMapper();
 
         ///////////////////////////////////////////////////////////////////////
+        template <typename T> AxBox1<T> map1(const AxBox1<T>&) const;
+        template <typename T> AxBox1<T> map1(const AxBox2<T>&) const;
+        template <typename T> AxBox1<T> map1(const AxBox3<T>&) const;
+        template <typename T> AxBox1<T> map1(const AxBox4<T>&) const;
+
+        template <typename T> AxBox2<T> map2(const AxBox1<T>&) const;
+        template <typename T> AxBox2<T> map2(const AxBox2<T>&) const;
+        template <typename T> AxBox2<T> map2(const AxBox3<T>&) const;
+        template <typename T> AxBox2<T> map2(const AxBox4<T>&) const;
+
+        template <typename T> AxBox3<T> map3(const AxBox1<T>&) const;
+        template <typename T> AxBox3<T> map3(const AxBox2<T>&) const;
+        template <typename T> AxBox3<T> map3(const AxBox3<T>&) const;
+        template <typename T> AxBox3<T> map3(const AxBox4<T>&) const;
+
+        template <typename T> AxBox4<T> map4(const AxBox1<T>&) const;
+        template <typename T> AxBox4<T> map4(const AxBox2<T>&) const;
+        template <typename T> AxBox4<T> map4(const AxBox3<T>&) const;
+        template <typename T> AxBox4<T> map4(const AxBox4<T>&) const;
+
+        ///////////////////////////////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////////////////////
 
         template <typename T> Size1<T> map1(const Size1<T>&) const;
         template <typename T> Size1<T> map1(const Size2<T>&) const;
