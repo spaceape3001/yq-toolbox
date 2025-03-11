@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace yq {
 
     //! Axis code... this'll be shared on usage

@@ -25,6 +25,7 @@ add_library(yq_math SHARED
 
     math/Complex.cpp
     math/Counter.cpp
+    math/DimMapper.cpp
     math/Fraction.cpp
     math/glm.cpp
     math/initialize.cpp
