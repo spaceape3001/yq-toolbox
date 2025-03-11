@@ -8,6 +8,11 @@
 
 #include <yq/math/DimMapper.hpp>
 
+#include <yq/shape/AxBox1.hpp>
+#include <yq/shape/AxBox2.hpp>
+#include <yq/shape/AxBox3.hpp>
+#include <yq/shape/AxBox4.hpp>
+
 #include <yq/shape/Size1.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/shape/Size3.hpp>
