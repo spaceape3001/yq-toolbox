@@ -63,6 +63,8 @@ namespace yq {
         */
         constexpr AxBox1(const Vector1<T>& _lo, const Vector1<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
         
+        constexpr AxBox1(identity_k) : lo(ZERO), hi(ONE) {}
+
         /*! \brief Construct as an intersection of points
         
             This takes the smallest box from the given low and high values.
