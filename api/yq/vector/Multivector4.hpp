@@ -237,6 +237,7 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Multivector4<product_t<T,U>> operator*(U b) const noexcept;
         
+        //! Scales this multivector by given factor, returns reference
         template <typename U>
         requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Multivector4& operator*=(U b) noexcept;
