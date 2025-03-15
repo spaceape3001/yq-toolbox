@@ -237,18 +237,22 @@ namespace yq {
         requires is_arithmetic_v<U>
         constexpr Multivector4<product_t<T,U>> operator*(U b) const noexcept;
         
+        //! Scales this multivector by given factor, returns reference
         template <typename U>
         requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Multivector4& operator*=(U b) noexcept;
 
+        //! Divides the multivector by the given scalar factor, returns result
         template <typename U>
         requires is_arithmetic_v<U>
         constexpr Multivector4<quotient_t<T,U>> operator/(U b) const noexcept;
 
+        //! Divides this multivector by given scalar factor, returns result
         template <typename U>
         requires (is_arithmetic_v<U> && self_divide_v<T,U>)
         Multivector4& operator/=(U b) noexcept;
 
+        //! Extracts the bivector component from this multivector
         constexpr Bivector4<T> bivector() const noexcept;
         constexpr Quadvector4<T> quadvector() const noexcept;
         constexpr Trivector4<T> trivector() const noexcept;
