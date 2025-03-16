@@ -254,6 +254,8 @@ namespace yq {
 
         //! Extracts the bivector component from this multivector
         constexpr Bivector4<T> bivector() const noexcept;
+        
+        //! Extracts the quadvector component from this multivector
         constexpr Quadvector4<T> quadvector() const noexcept;
         constexpr Trivector4<T> trivector() const noexcept;
         constexpr Vector4<T> vector() const noexcept;
