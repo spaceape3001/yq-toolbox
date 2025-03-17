@@ -283,6 +283,7 @@ namespace yq {
     static constexpr const pixels_k         PIXELS;
     static constexpr const pointer_k        POINTER;
     static constexpr const positive_k       POSITIVE;
+    static constexpr const pointer_k        PTR;
     static constexpr const pull_k           PULL;
     static constexpr const push_k           PUSH;
     static constexpr const read_only_k      READ_ONLY;
