@@ -260,6 +260,8 @@ namespace yq {
         
         //! Extracts the trivector component from this multivector
         constexpr Trivector4<T> trivector() const noexcept;
+        
+        //! Extracts the vector component from this multivector
         constexpr Vector4<T> vector() const noexcept;
     };
 
