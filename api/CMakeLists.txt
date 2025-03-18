@@ -8,4 +8,3 @@
 set(TOOLBOX_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory(yq)
-add_subdirectory(ys)
