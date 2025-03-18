@@ -11,8 +11,15 @@
 #   Numbers ① ② ③ ④
 
 add_library(yq_spatial SHARED
+
+    Py.cpp
     SDocument.cpp
     SObject.cpp
+    
+    0D/Py0.cpp
+    1D/Py1.cpp
+    3D/Py3.cpp
+    4D/Py4.cpp
     
     bit/SStringMap.cpp
     bit/ID.cpp

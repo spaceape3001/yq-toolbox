@@ -14,7 +14,7 @@ namespace yq::spatial {
     static void reg_id()
     {
         auto w = writer<ID>();
-        w.description("ID type");
+        w.description("Identifier");
     }
     
     YQ_INVOKE(reg_id();)

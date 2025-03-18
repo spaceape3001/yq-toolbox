@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include "SObject.hpp"
+#incldue "SDocument.hpp"
+
+namespace yq::spatial {
+    template <SomeSObject S>
+    S*      SDocument::create()
+    {
+        return static_cast<S*>(create(meta<S>()));
+    }
+}

@@ -63,6 +63,8 @@ namespace yq::spatial {
         void                attribute_set(const std::string&, std::string&&);
         const string_map_t& attributes() const;
         
+        const std::string&  description() const { return m_description; }
+        
         SDocument&          document() { return m_doc; }
         const SDocument&    document() const { return m_doc; }
 
@@ -77,6 +79,7 @@ namespace yq::spatial {
         const std::string&  title() const { return m_title; }
         const std::string&  uid() const { return m_uid; }
 
+        void    set_description(const std::string&);
         void    set_notes(const std::string&);
         void    set_uid(const std::string&);
         void    set_title(const std::string&);
@@ -88,6 +91,14 @@ namespace yq::spatial {
         
         revision_t  revision(all_k) const { return m_revision[ALL]; }
         revision_t  revision(local_k) const { return m_revision[LOCAL]; }
+        
+        SObject*    create(child_k, const SObjectInfo&);
+        
+        template <SomeSObject S>
+        S*          create(child_k)
+        {
+            return static_cast<S*>(create(CHILD, meta<S>()));
+        }
 
     protected:
     
@@ -112,11 +123,12 @@ namespace yq::spatial {
         ID                      m_parent;
         std::vector<ID>         m_children;
         std::string             m_title;
+        std::string             m_description;
         std::string             m_uid;
         std::string             m_notes;
         AllLocal<revision_t>    m_revision  = {};
         
-        
+        ID::id_t        get_id() const { return m_id.id; }
         
         uint64_t        get_revision() const { return m_revision.all; }
         

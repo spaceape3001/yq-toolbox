@@ -70,6 +70,12 @@ namespace yq::spatial {
     {
         auto w = writer<SObject>();
         w.description("Spatial Object");
+        w.property("description", &SObject::description).setter(&SObject::set_description);
+        w.property("uid", &SObject::uid).setter(&SObject::set_uid);
+        w.property("notes", &SObject::notes).setter(&SObject::set_notes);
+        w.property("title", &SObject::title).setter(&SObject::set_title);
+        w.property("id", &SObject::get_id);
+        w.property("revision", &SObject::get_revision);
     }
 
     SObject::SObject(SDocument& doc) : m_doc(doc), m_id(doc.insert(this))
@@ -147,9 +153,23 @@ namespace yq::spatial {
             ++(p->m_revision.all);
             i   = p->m_parent;
         }
+        
+        m_doc.bump();
+    }
+
+    SObject*    SObject::create(child_k, const SObjectInfo& sinfo)
+    {
+        SObject* obj = sinfo.create(m_doc);
+        if(!obj)
+            return nullptr;
+        
+        obj->m_parent   = id();
+        m_children.push_back(obj->id());
+        bump();
+        return obj;
     }
     
-    bool                    SObject::is_attribute(const std::string& k) const
+    bool                SObject::is_attribute(const std::string& k) const
     {
         return m_attributes.contains(k);
     }
@@ -175,6 +195,31 @@ namespace yq::spatial {
                 dob -> remap(theMap);
         }
     }
+
+    void    SObject::set_description(const std::string&v)
+    {
+        m_description   = v;
+        bump();
+    }
+    
+    void    SObject::set_notes(const std::string&v)
+    {
+        m_notes     = v;
+        bump();
+    }
+    
+    void    SObject::set_uid(const std::string&v)
+    {
+        m_uid       = v;
+        bump();
+    }
+    
+    void    SObject::set_title(const std::string&v)
+    {
+        m_title     = v;
+        bump();
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////

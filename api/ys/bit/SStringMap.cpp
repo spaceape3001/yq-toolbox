@@ -28,6 +28,26 @@ namespace yq::spatial {
             return i->second;
         return {};
     }
+
+    std::string_view    SStringMap::get(const std::initializer_list<std::string>& ks) const
+    {
+        for(auto& k : ks){
+            auto i = m_data.find(k);
+            if(i != m_data.end())
+                return i->second;
+        }
+        return {};
+    }
+
+    std::string_view    SStringMap::get(const std::span<const std::string>& ks) const
+    {
+        for(auto& k : ks){
+            auto i = m_data.find(k);
+            if(i != m_data.end())
+                return i->second;
+        }
+        return {};
+    }
     
     string_set_t        SStringMap::keys() const
     {
