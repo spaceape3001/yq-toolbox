@@ -112,9 +112,13 @@ add_library(yq_math SHARED
     vector/Trivector3.cpp
     vector/Trivector4.cpp
     vector/Vector1.cpp
+    vector/Vector1S.cpp
     vector/Vector2.cpp
+    vector/Vector2S.cpp
     vector/Vector3.cpp
+    vector/Vector3S.cpp
     vector/Vector4.cpp
+    vector/Vector4S.cpp
 )
 
 target_link_libraries(yq_math PUBLIC

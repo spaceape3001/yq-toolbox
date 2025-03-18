@@ -17,4 +17,6 @@ namespace yq {
     using Vector2M                  = Vector2<Meter>;
     using Vector2CM                 = Vector2<unit::Centimeter>;
     using Vector2MM                 = Vector2<unit::Millimeter>;
+    
+    struct Vector2S;
 }
