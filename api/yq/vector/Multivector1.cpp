@@ -7,6 +7,7 @@
 #include "Multivector1.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Vector1.hpp>
@@ -23,8 +24,8 @@ static void reg_multivector1()
     {
         auto w  = writer<Multivector1D>();
         w.description("1D Multivector in double");
-        w.property(szA, &Multivector1D::a).description(szA_Multivector);
-        w.property(szX, &Multivector1D::x).description(szX_Multivector);
+        w.property(szA, &Multivector1D::a).description(szA_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Multivector1D::x).description(szX_Multivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Vector1D>();
@@ -38,8 +39,8 @@ static void reg_multivector1()
     {
         auto w  = writer<Multivector1F>();
         w.description("1D Multivector in float");
-        w.property(szA, &Multivector1F::a).description(szA_Multivector);
-        w.property(szX, &Multivector1F::x).description(szX_Multivector);
+        w.property(szA, &Multivector1F::a).description(szA_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Multivector1F::x).description(szX_Multivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Vector1F>();

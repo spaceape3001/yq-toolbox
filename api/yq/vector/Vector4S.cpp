@@ -7,6 +7,7 @@
 #include "Vector4S.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/core/StreamOps.hpp>
@@ -25,10 +26,10 @@ namespace yq {
     {
         auto w = writer<Vector4S>();
         w.description("Vector in 4D using strings");
-        w.property(szX, &Vector4S::x).description(szX_Vector);
-        w.property(szY, &Vector4S::y).description(szY_Vector);
-        w.property(szZ, &Vector4S::z).description(szZ_Vector);
-        w.property(szW, &Vector4S::w).description(szW_Vector);
+        w.property(szX, &Vector4S::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector4S::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Vector4S::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szW, &Vector4S::w).description(szW_Vector).tag(kTag_Save).tag(kTag_Print);
         w.print<print_vector4s>();
     }
     

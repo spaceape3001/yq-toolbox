@@ -7,6 +7,7 @@
 #include "Vector1S.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/core/StreamOps.hpp>
@@ -23,7 +24,7 @@ namespace yq {
     {
         auto w = writer<Vector1S>();
         w.description("Vector in 1D using strings");
-        w.property(szX, &Vector1S::x).description(szX_Vector);
+        w.property(szX, &Vector1S::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.print<print_vector1s>();
     }
     

@@ -7,6 +7,7 @@
 #include "Multivector3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Bivector3.hpp>
@@ -25,14 +26,14 @@ static void reg_multivector3()
     {
         auto w  = writer<Multivector3D>();
         w.description("3D Multivector in double");
-        w.property(szA, &Multivector3D::a).description(szA_Multivector);
-        w.property(szX, &Multivector3D::x).description(szX_Multivector);
-        w.property(szY, &Multivector3D::y).description(szY_Multivector);
-        w.property(szZ, &Multivector3D::z).description(szZ_Multivector);
-        w.property(szXY, &Multivector3D::xy).description(szXY_Multivector);
-        w.property(szYZ, &Multivector3D::yz).description(szYZ_Multivector);
-        w.property(szZX, &Multivector3D::zx).description(szZX_Multivector);
-        w.property(szXYZ, &Multivector3D::xyz).description(szXYZ_Multivector);
+        w.property(szA, &Multivector3D::a).description(szA_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Multivector3D::x).description(szX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Multivector3D::y).description(szY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Multivector3D::z).description(szZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXY, &Multivector3D::xy).description(szXY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Multivector3D::yz).description(szYZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZX, &Multivector3D::zx).description(szZX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXYZ, &Multivector3D::xyz).description(szXYZ_Multivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Bivector3D>();
@@ -49,14 +50,14 @@ static void reg_multivector3()
     {
         auto w  = writer<Multivector3F>();
         w.description("3D Multivector in float");
-        w.property(szA, &Multivector3F::a).description(szA_Multivector);
-        w.property(szX, &Multivector3F::x).description(szX_Multivector);
-        w.property(szY, &Multivector3F::y).description(szY_Multivector);
-        w.property(szZ, &Multivector3F::z).description(szZ_Multivector);
-        w.property(szXY, &Multivector3F::xy).description(szXY_Multivector);
-        w.property(szYZ, &Multivector3F::yz).description(szYZ_Multivector);
-        w.property(szZX, &Multivector3F::zx).description(szZX_Multivector);
-        w.property(szXYZ, &Multivector3F::xyz).description(szXYZ_Multivector);
+        w.property(szA, &Multivector3F::a).description(szA_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Multivector3F::x).description(szX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Multivector3F::y).description(szY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Multivector3F::z).description(szZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXY, &Multivector3F::xy).description(szXY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Multivector3F::yz).description(szYZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZX, &Multivector3F::zx).description(szZX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXYZ, &Multivector3F::xyz).description(szXYZ_Multivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Bivector3F>();

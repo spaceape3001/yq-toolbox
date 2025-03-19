@@ -7,6 +7,7 @@
 #include "Vector3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor31.hpp>
@@ -136,9 +137,9 @@ static void reg_vector3()
         w.description("3D vector in double");
         w.property(szLength², &Vector3D::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector3D::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector3D::x).description(szX_Vector);
-        w.property(szY, &Vector3D::y).description(szY_Vector);
-        w.property(szZ, &Vector3D::z).description(szZ_Vector);
+        w.property(szX, &Vector3D::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector3D::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Vector3D::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Bivector3D>();
@@ -164,9 +165,9 @@ static void reg_vector3()
         w.description("3D vector in float");
         w.property(szLength², &Vector3F::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector3F::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector3F::x).description(szX_Vector);
-        w.property(szY, &Vector3F::y).description(szY_Vector);
-        w.property(szZ, &Vector3F::z).description(szZ_Vector);
+        w.property(szX, &Vector3F::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector3F::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Vector3F::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Bivector3F>();
@@ -191,9 +192,9 @@ static void reg_vector3()
         auto w = writer<Vector3I>();
         w.description("3D vector in integer");
         w.property(szLength², &Vector3I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector3I::x).description(szX_Vector);
-        w.property(szY, &Vector3I::y).description(szY_Vector);
-        w.property(szZ, &Vector3I::z).description(szZ_Vector);
+        w.property(szX, &Vector3I::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector3I::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Vector3I::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
         w.print<print_vector3<int>>();
         w.format<write_vector3i>();
         w.parse<parse_vector3i>();
@@ -203,9 +204,9 @@ static void reg_vector3()
         auto w = writer<Vector3U>();
         w.description("3D vector in unsigned integer");
         w.property(szLength², &Vector3U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector3U::x).description(szX_Vector);
-        w.property(szY, &Vector3U::y).description(szY_Vector);
-        w.property(szZ, &Vector3U::z).description(szZ_Vector);
+        w.property(szX, &Vector3U::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector3U::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Vector3U::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
         w.print<print_vector3<unsigned>>();
         w.format<write_vector3u>();
         w.parse<parse_vector3u>();

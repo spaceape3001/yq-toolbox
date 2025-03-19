@@ -7,6 +7,7 @@
 #include "Vector2.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/meta/Init.hpp>
@@ -131,8 +132,8 @@ static void reg_vector2()
         w.description("2D vector in double");
         w.property(szLength², &Vector2D::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector2D::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector2D::x).description(szX_Vector);
-        w.property(szY, &Vector2D::y).description(szY_Vector);
+        w.property(szX, &Vector2D::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2D::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.method(szZ, &Vector2D::z).description(szZ_Vector2);
         w.operate_self();
         w.operate_with<double>();
@@ -157,8 +158,8 @@ static void reg_vector2()
         w.description("2D vector in float");
         w.property(szLength², &Vector2F::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szLength, &Vector2F::length).description(szLength_Vector).alias(szLen);
-        w.property(szX, &Vector2F::x).description(szX_Vector);
-        w.property(szY, &Vector2F::y).description(szY_Vector);
+        w.property(szX, &Vector2F::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2F::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.method(szZ, &Vector2F::z).description(szZ_Vector2);
         w.operate_self();
         w.operate_with<float>();
@@ -182,8 +183,8 @@ static void reg_vector2()
         auto w = writer<Vector2I>();
         w.description("2D vector in integer");
         w.property(szLength², &Vector2I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector2I::x).description(szX_Vector);
-        w.property(szY, &Vector2I::y).description(szY_Vector);
+        w.property(szX, &Vector2I::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2I::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.method(szZ, &Vector2I::z).description(szZ_Vector2);
         w.operate_self({Operator::Add, Operator::Subtract});
         w.print<print_vector2<int>>();
@@ -195,8 +196,8 @@ static void reg_vector2()
         auto w = writer<Vector2U>();
         w.description("2D vector in unsigned integer");
         w.property(szLength², &Vector2U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector2U::x).description(szX_Vector);
-        w.property(szY, &Vector2U::y).description(szY_Vector);
+        w.property(szX, &Vector2U::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2U::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.method(szZ, &Vector2U::z).description(szZ_Vector2);
         w.operate_self({Operator::Add, Operator::Subtract});
         w.print<print_vector2<unsigned>>();

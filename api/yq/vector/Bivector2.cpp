@@ -7,6 +7,7 @@
 #include "Bivector2.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Multivector2.hpp>
@@ -24,7 +25,7 @@ static void reg_bivector2()
     {
         auto w = writer<Bivector2D>();
         w.description("2D Bivector in double");
-        w.property(szXY, &Bivector2D::xy).description(szXY_Bivector);
+        w.property(szXY, &Bivector2D::xy).description(szXY_Bivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Multivector2D>();
@@ -39,7 +40,7 @@ static void reg_bivector2()
     {
         auto w = writer<Bivector2F>();
         w.description("2D Bivector in float");
-        w.property(szXY, &Bivector2F::xy).description(szXY_Bivector);
+        w.property(szXY, &Bivector2F::xy).description(szXY_Bivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Multivector2F>();

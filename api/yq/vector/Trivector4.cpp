@@ -7,6 +7,7 @@
 #include "Trivector4.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Bivector4.hpp>
@@ -26,10 +27,10 @@ static void reg_trivector4()
     {
         auto w = writer<Trivector4D>();
         w.description("4D trivector in double");
-        w.property(szXYZ, &Trivector4D::xyz).description(szXYZ_Trivector);
-        w.property(szYZW, &Trivector4D::yzw).description(szYZW_Trivector);
-        w.property(szZWX, &Trivector4D::zwx).description(szZWX_Trivector);
-        w.property(szWXY, &Trivector4D::wxy).description(szWXY_Trivector);
+        w.property(szXYZ, &Trivector4D::xyz).description(szXYZ_Trivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZW, &Trivector4D::yzw).description(szYZW_Trivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZWX, &Trivector4D::zwx).description(szZWX_Trivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szWXY, &Trivector4D::wxy).description(szWXY_Trivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Bivector4D>();
@@ -46,10 +47,10 @@ static void reg_trivector4()
     {
         auto w = writer<Trivector4F>();
         w.description("4D trivector in float");
-        w.property(szXYZ, &Trivector4F::xyz).description(szXYZ_Trivector);
-        w.property(szYZW, &Trivector4F::yzw).description(szYZW_Trivector);
-        w.property(szZWX, &Trivector4F::zwx).description(szZWX_Trivector);
-        w.property(szWXY, &Trivector4F::wxy).description(szWXY_Trivector);
+        w.property(szXYZ, &Trivector4F::xyz).description(szXYZ_Trivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZW, &Trivector4F::yzw).description(szYZW_Trivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZWX, &Trivector4F::zwx).description(szZWX_Trivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szWXY, &Trivector4F::wxy).description(szWXY_Trivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Bivector4F>();
