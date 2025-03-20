@@ -325,8 +325,9 @@ namespace yq {
     template <typename T>
     constexpr Multivector4<T> operator+(T a, const Multivector4<T>& b) noexcept;
 
+    //! Subtract multivector from scalar, returns result
     template <typename T>
-    constexpr Multivector4<T> operator+(T a, const Multivector4<T>& b) noexcept;
+    constexpr Multivector4<T> operator-(T a, const Multivector4<T>& b) noexcept;
 
     template <typename T, typename U>
     requires is_arithmetic_v<T>
