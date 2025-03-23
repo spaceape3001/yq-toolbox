@@ -206,6 +206,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector4<T> operator-(T a, const Quadvector4<T>& b) noexcept;
 
+    //! Multiplies quadvector with scalar, returns quadvector result
     template <typename T, typename U>
     requires is_arithmetic_v<T>
     constexpr Quadvector4<product_t<T,U>> operator*(T a, const Quadvector4<U>& b) noexcept;
