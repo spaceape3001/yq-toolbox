@@ -47,7 +47,10 @@ namespace yq {
     struct Quaternion3 {
         using component_type = T;
 
-        T w, x, y, z;
+        T w;    //!< W component
+        T x;    //!< X component
+        T y;    //!< Y component
+        T z;    //!< Z component
 
         constexpr Quaternion3() noexcept = default;
         constexpr Quaternion3(T _w, T _x, T _y, T _z) : w(_w), x(_x), y(_y), z(_z) {}
