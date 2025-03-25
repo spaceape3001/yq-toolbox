@@ -17,4 +17,6 @@ namespace yq {
     using Vector3M                  = Vector3<Meter>;
     using Vector3CM                 = Vector3<unit::Centimeter>;
     using Vector3MM                 = Vector3<unit::Millimeter>;
+    
+    struct Vector3S;
 }

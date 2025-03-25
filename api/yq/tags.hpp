@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    //! Use this to capture state-save-data
+    static constexpr const int kTag_Save    = 1;
+
+    //! Use this to note this property as being print-friendly
+    static constexpr const int kTag_Print   = 2;
+}

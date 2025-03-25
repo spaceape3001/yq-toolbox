@@ -7,6 +7,7 @@
 #include "Bivector4.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Multivector4.hpp>
@@ -26,12 +27,12 @@ static void reg_bivector4()
     {
         auto w = writer<Bivector4D>();
         w.description("4D Bivector in double");
-        w.property(szXY, &Bivector4D::xy).description(szXY_Bivector);
-        w.property(szYZ, &Bivector4D::yz).description(szYZ_Bivector);
-        w.property(szZW, &Bivector4D::zw).description(szZW_Bivector);
-        w.property(szWX, &Bivector4D::wx).description(szWX_Bivector);
-        w.property(szXZ, &Bivector4D::xz).description(szXZ_Bivector);
-        w.property(szYW, &Bivector4D::yw).description(szYW_Bivector);
+        w.property(szXY, &Bivector4D::xy).description(szXY_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Bivector4D::yz).description(szYZ_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZW, &Bivector4D::zw).description(szZW_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szWX, &Bivector4D::wx).description(szWX_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXZ, &Bivector4D::xz).description(szXZ_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYW, &Bivector4D::yw).description(szYW_Bivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Multivector4D>();
@@ -48,12 +49,12 @@ static void reg_bivector4()
     {
         auto w = writer<Bivector4F>();
         w.description("4D Bivector in float");
-        w.property(szXY, &Bivector4F::xy).description(szXY_Bivector);
-        w.property(szYZ, &Bivector4F::yz).description(szYZ_Bivector);
-        w.property(szZW, &Bivector4F::zw).description(szZW_Bivector);
-        w.property(szWX, &Bivector4F::wx).description(szWX_Bivector);
-        w.property(szXZ, &Bivector4F::xz).description(szXZ_Bivector);
-        w.property(szYW, &Bivector4F::yw).description(szYW_Bivector);
+        w.property(szXY, &Bivector4F::xy).description(szXY_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Bivector4F::yz).description(szYZ_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZW, &Bivector4F::zw).description(szZW_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szWX, &Bivector4F::wx).description(szWX_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXZ, &Bivector4F::xz).description(szXZ_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYW, &Bivector4F::yw).description(szYW_Bivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Multivector4F>();

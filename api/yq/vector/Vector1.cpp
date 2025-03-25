@@ -7,6 +7,7 @@
 #include "Vector1.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor11.hpp>
@@ -46,7 +47,7 @@ static void reg_vector1()
         w.description("1D vector in double");
         w.property(szLength, &Vector1D::length).description(szLength_Vector).alias(szLen);
         w.property(szLength², &Vector1D::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1D::x).description(szX_Vector);
+        w.property(szX, &Vector1D::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Multivector1D>();
@@ -67,7 +68,7 @@ static void reg_vector1()
         w.description("1D vector in float");
         w.property(szLength, &Vector1F::length).description(szLength_Vector).alias(szLen);
         w.property(szLength², &Vector1F::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1F::x).description(szX_Vector);
+        w.property(szX, &Vector1F::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Multivector1F>();
@@ -87,7 +88,7 @@ static void reg_vector1()
         auto w = writer<Vector1I>();
         w.description("1D vector in integer");
         w.property(szLength², &Vector1I::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1I::x).description(szX_Vector);
+        w.property(szX, &Vector1I::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.print<print_vector1<int>>();
     }
@@ -96,7 +97,7 @@ static void reg_vector1()
         auto w = writer<Vector1U>();
         w.description("1D vector in unsigned integer");
         w.property(szLength², &Vector1U::length²).description(szLength²_Vector).alias(szLen²);
-        w.property(szX, &Vector1U::x).description(szX_Vector);
+        w.property(szX, &Vector1U::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.print<print_vector1<unsigned>>();
     }

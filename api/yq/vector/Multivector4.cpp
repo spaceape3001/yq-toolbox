@@ -7,6 +7,7 @@
 #include "Multivector4.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Bivector4.hpp>
@@ -25,22 +26,22 @@ static void reg_multivector4()
     {
         auto w  = writer<Multivector4D>();
         w.description("4D Multivector in double");
-        w.property(szA, &Multivector4D::a).description(szA_Multivector);
-        w.property(szX, &Multivector4D::x).description(szX_Multivector);
-        w.property(szY, &Multivector4D::y).description(szY_Multivector);
-        w.property(szZ, &Multivector4D::z).description(szZ_Multivector);
-        w.property(szW, &Multivector4D::w).description(szW_Multivector);
-        w.property(szXY, &Multivector4D::xy).description(szXY_Multivector);
-        w.property(szYZ, &Multivector4D::yz).description(szYZ_Multivector);
-        w.property(szZW, &Multivector4D::zw).description(szZW_Multivector);
-        w.property(szWX, &Multivector4D::wx).description(szWX_Multivector);
-        w.property(szXZ, &Multivector4D::xz).description(szXZ_Multivector);
-        w.property(szYW, &Multivector4D::yw).description(szYW_Multivector);
-        w.property(szXYZ, &Multivector4D::xyz).description(szXYZ_Multivector);
-        w.property(szYZW, &Multivector4D::yzw).description(szYZW_Multivector);
-        w.property(szZWX, &Multivector4D::zwx).description(szZWX_Multivector);
-        w.property(szWXY, &Multivector4D::wxy).description(szWXY_Multivector);
-        w.property(szXYZW, &Multivector4D::xyzw).description(szXYZW_Multivector);
+        w.property(szA, &Multivector4D::a).description(szA_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Multivector4D::x).description(szX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Multivector4D::y).description(szY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Multivector4D::z).description(szZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szW, &Multivector4D::w).description(szW_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXY, &Multivector4D::xy).description(szXY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Multivector4D::yz).description(szYZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZW, &Multivector4D::zw).description(szZW_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szWX, &Multivector4D::wx).description(szWX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXZ, &Multivector4D::xz).description(szXZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYW, &Multivector4D::yw).description(szYW_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXYZ, &Multivector4D::xyz).description(szXYZ_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZW, &Multivector4D::yzw).description(szYZW_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZWX, &Multivector4D::zwx).description(szZWX_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szWXY, &Multivector4D::wxy).description(szWXY_Multivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXYZW, &Multivector4D::xyzw).description(szXYZW_Multivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Bivector4D>();

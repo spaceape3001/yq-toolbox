@@ -15,4 +15,6 @@ namespace yq {
     using Vector1I                  = Vector1<int>;
     using Vector1U                  = Vector1<unsigned>;
     using Vector1M                  = Vector1<Meter>;
+    
+    struct Vector1S;
 }

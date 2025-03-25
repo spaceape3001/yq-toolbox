@@ -58,6 +58,8 @@ namespace yq {
             \note This result may be an invalid box with negative spans.
         */
         constexpr AxBox4(const Vector4<T>& _lo, const Vector4<T>& _hi)  noexcept : lo(_lo), hi(_hi) {}
+        
+        consteval AxBox4(identity_k) : lo(ZERO), hi(ONE) {}
 
         /*! \brief Construct as an intersection of points
         

@@ -7,6 +7,7 @@
 #include "Quaternion3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Vector3.hpp>
@@ -78,10 +79,10 @@ static void reg_quaternion3()
     {
         auto w = writer<Quaternion3D>();
         w.description("3D Quaternion in double");
-        w.property(szW, &Quaternion3D::w).description(szW_Quaternion);
-        w.property(szX, &Quaternion3D::x).description(szX_Quaternion);
-        w.property(szY, &Quaternion3D::y).description(szY_Quaternion);
-        w.property(szZ, &Quaternion3D::z).description(szZ_Quaternion);
+        w.property(szW, &Quaternion3D::w).description(szW_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Quaternion3D::x).description(szX_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Quaternion3D::y).description(szY_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Quaternion3D::z).description(szZ_Quaternion).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         //w.operate_with<Vector3D>(); // DISABLED due to bad template expansion causing weird compiler substitution issues
@@ -98,10 +99,10 @@ static void reg_quaternion3()
     {
         auto w = writer<Quaternion3F>();
         w.description("3D Quaternion in float");
-        w.property(szW, &Quaternion3F::w).description(szW_Quaternion);
-        w.property(szX, &Quaternion3F::x).description(szX_Quaternion);
-        w.property(szY, &Quaternion3F::y).description(szY_Quaternion);
-        w.property(szZ, &Quaternion3F::z).description(szZ_Quaternion);
+        w.property(szW, &Quaternion3F::w).description(szW_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szX, &Quaternion3F::x).description(szX_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Quaternion3F::y).description(szY_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZ, &Quaternion3F::z).description(szZ_Quaternion).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         //w.operate_with<Vector3F>(); // DISABLED due to bad template expansion causing weird compiler substitution issues

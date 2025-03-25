@@ -121,7 +121,11 @@ namespace yq {
         return ::access(iFile, F_OK | R_OK) != 0;
     }
 
-
+    bool        file_readable(const filesystem_path_t& pth)
+    {
+        return ::access(pth.c_str(), F_OK | R_OK) != 0;
+    }
+    
     size_t      file_size(const char* iFile)
     {
         struct stat buf;

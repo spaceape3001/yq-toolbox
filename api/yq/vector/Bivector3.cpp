@@ -7,6 +7,7 @@
 #include "Bivector3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Multivector3.hpp>
@@ -26,9 +27,9 @@ static void reg_bivector3()
     {
         auto w = writer<Bivector3D>();
         w.description("3D Bivector in double");
-        w.property(szXY, &Bivector3D::xy).description(szXY_Bivector);
-        w.property(szYZ, &Bivector3D::yz).description(szYZ_Bivector);
-        w.property(szZX, &Bivector3D::zx).description(szZX_Bivector);
+        w.property(szXY, &Bivector3D::xy).description(szXY_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Bivector3D::yz).description(szYZ_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZX, &Bivector3D::zx).description(szZX_Bivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Multivector3D>();
@@ -44,9 +45,9 @@ static void reg_bivector3()
     {
         auto w = writer<Bivector3F>();
         w.description("3D Bivector in float");
-        w.property(szXY, &Bivector3F::xy).description(szXY_Bivector);
-        w.property(szYZ, &Bivector3F::yz).description(szYZ_Bivector);
-        w.property(szZX, &Bivector3F::zx).description(szZX_Bivector);
+        w.property(szXY, &Bivector3F::xy).description(szXY_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szYZ, &Bivector3F::yz).description(szYZ_Bivector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szZX, &Bivector3F::zx).description(szZX_Bivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Multivector3F>();

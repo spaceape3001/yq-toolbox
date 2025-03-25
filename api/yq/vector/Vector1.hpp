@@ -68,6 +68,7 @@ namespace yq {
 
         T       x;
         
+        // TODO -- refactor these operators, methods back out of the structure        
         constexpr Vector1() noexcept = default;
         constexpr Vector1(T _x) noexcept : x(_x) {}
         constexpr Vector1(all_k, T v) noexcept : x(v) {}

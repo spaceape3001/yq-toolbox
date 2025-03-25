@@ -44,6 +44,7 @@ namespace yq {
     bool            file_exists(const filesystem_path_t&);
     std::string     file_modified(const char*);
     bool            file_readable(const char*);
+    bool            file_readable(const filesystem_path_t&);
     size_t          file_size(const char*);
     
     bool            file_write(const filesystem_path_t&, const char*, size_t);

@@ -7,6 +7,7 @@
 #include "Trivector3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Bivector3.hpp>
@@ -25,7 +26,7 @@ static void reg_trivector3()
     {
         auto w = writer<Trivector3D>();
         w.description("3D trivector in double");
-        w.property(szXYZ, &Trivector3D::xyz).description(szXYZ_Trivector);
+        w.property(szXYZ, &Trivector3D::xyz).description(szXYZ_Trivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Bivector3D>();
@@ -41,7 +42,7 @@ static void reg_trivector3()
     {
         auto w = writer<Trivector3F>();
         w.description("3D trivector in float");
-        w.property(szXYZ, &Trivector3F::xyz).description(szXYZ_Trivector);
+        w.property(szXYZ, &Trivector3F::xyz).description(szXYZ_Trivector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Bivector3F>();

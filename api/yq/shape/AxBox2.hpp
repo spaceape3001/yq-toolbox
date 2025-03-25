@@ -58,6 +58,8 @@ namespace yq {
         */
         constexpr AxBox2(const Vector2<T>& _lo, const Vector2<T>& _hi) noexcept : lo(_lo), hi(_hi) {}
 
+        consteval AxBox2(identity_k) : lo(ZERO), hi(ONE) {}
+
         /*! \brief Construct an axially aligned bounding box from the intersection of points
         
             This takes the smallest box from the given low and high values.
