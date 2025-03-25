@@ -52,6 +52,7 @@ namespace yq {
         T y;    //!< Y component
         T z;    //!< Z component
 
+        //! Default constructor (does nothing)
         constexpr Quaternion3() noexcept = default;
         constexpr Quaternion3(T _w, T _x, T _y, T _z) : w(_w), x(_x), y(_y), z(_z) {}
         
