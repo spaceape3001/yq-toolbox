@@ -60,6 +60,8 @@ namespace yq {
         
         //! Initializes to all components having the same value
         constexpr Quaternion3(all_k, T v) : w(v), x(v), y(v), z(v) {}
+        
+        //! Initializes to an identity quaternion
         consteval Quaternion3(identity_k) : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
         consteval Quaternion3(nan_k) : Quaternion3(ALL, nan_v<T>) {}
         consteval Quaternion3(w_k) noexcept : w(one_v<T>), x(zero_v<T>), y(zero_v<T>), z(zero_v<T>) {}
