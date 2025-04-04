@@ -47,6 +47,7 @@ namespace yq {
     struct copy_k {};
     struct cout_k {};
     struct count_k {};
+    struct create_k {};
     struct cursor_k {};
     struct data_k {};
     struct default_k {};
@@ -208,6 +209,7 @@ namespace yq {
     static constexpr const copy_k           COPY;
     static constexpr const count_k          COUNT;
     static constexpr const cout_k           COUT;
+    static constexpr const create_k           CREATE;
     static constexpr const cursor_k         CURSOR;
     static constexpr const data_k           DATA;
     static constexpr const default_k        DEFAULT;

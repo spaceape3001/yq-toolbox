@@ -5,11 +5,7 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.26.0)
-
-if("${PROJECT_NAME}" STREQUAL "")
-    project(YourQuill VERSION 0.0.0.3)
-endif()
-
+project(YQ_Toolbox VERSION 0.0.0.3 LANGUAGES CXX)
 include(local.cmake OPTIONAL)
 include(configure.cmake)
 

@@ -103,7 +103,24 @@ namespace yq {
         {
             return (m_value & mask(e))?true:false;
         }
+        
+        //! TRUE if any are set
+        bool any(Flags f) const noexcept
+        {
+            return (f.m_value & m_value) != T{};
+        }
 
+        //! TRUE if all are set
+        bool all(Flags f) const noexcept
+        {
+            return (f.m_value & m_value) == f.m_value;
+        }
+        
+        //! TRUE if none are set
+        bool none(Flags f) const noexcept
+        {
+            return (f.m_value & m_value) == T{};
+        }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  OPERATORS
@@ -132,13 +149,13 @@ namespace yq {
         }
         
         //! Equality operator
-        bool    operator==(const Flags& b) const
+        constexpr bool    operator==(const Flags& b) const noexcept
         {
             return m_value == b.m_value;
         }
 
         //! Inequality operator
-        bool    operator!=(const Flags& b) const
+        constexpr bool    operator!=(const Flags& b) const noexcept
         {
             return m_value != b.m_value;
         }
