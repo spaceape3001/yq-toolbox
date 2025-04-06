@@ -87,6 +87,8 @@ namespace yq {
         
         //! Initializes to a unit quaternion in Z
         consteval Quaternion3(z_k) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(one_v<T>) {}
+        
+        //! Initializes to a single value on the Z-component (rest are zero)
         constexpr Quaternion3(z_k, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
         consteval Quaternion3(zero_k) : Quaternion3(ALL, zero_v<T>) {}
         
