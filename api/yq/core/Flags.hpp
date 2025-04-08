@@ -86,10 +86,20 @@ namespace yq {
             }
         }
 
+        void    set(Flags f)
+        {
+            m_value |= f.m_value;
+        }
+
         //! Clears specified bit
         void    clear(E e)
         {
             m_value &= ~mask(e);
+        }
+
+        void    clear(Flags f)
+        {
+            m_value &= ~f.m_value;
         }
 
         //! TRUE if bit is set
