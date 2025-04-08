@@ -16,7 +16,7 @@
 
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>
-
+#include <yq/math/algorithm.hpp>
 
 namespace yq {
 
