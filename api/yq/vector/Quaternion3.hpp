@@ -90,9 +90,12 @@ namespace yq {
         
         //! Initializes to a single value on the Z-component (rest are zero)
         constexpr Quaternion3(z_k, T v) noexcept : w(zero_v<T>), x(zero_v<T>), y(zero_v<T>), z(v) {}
+        
+        //! Initializes to all zeros
         consteval Quaternion3(zero_k) : Quaternion3(ALL, zero_v<T>) {}
         
         #if YQ_USE_GLM
+        //! Initializes from a GLM quaternion
         template <glm::qualifier Q>
         explicit constexpr Quaternion3(const glm::qua<T, Q>& q) : w(q.w), x(q.x), y(q.y), z(q.z) {}
         #endif
