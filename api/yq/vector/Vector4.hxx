@@ -691,11 +691,23 @@ namespace yq {
     {
         return Vector4(max(x, b.x), max(y, b.y), max(z, b.z), max(w, b.w));
     }
+
+    template <typename T>
+    constexpr Vector4<T>   Vector4<T>::emax(T b) const noexcept
+    {
+        return Vector4(max(x, b), max(y, b), max(z, b), max(w, b));
+    }
     
     template <typename T>
     constexpr Vector4<T>   Vector4<T>::emin(const Vector4&b) const noexcept
     {
         return Vector4(min(x, b.x), min(y, b.y), min(z, b.z), min(w, b.w));
+    }
+
+    template <typename T>
+    constexpr Vector4<T>   Vector4<T>::emin(T b) const noexcept
+    {
+        return Vector4(min(x, b), min(y, b), min(z, b), min(w, b));
     }
 
     template <typename T>

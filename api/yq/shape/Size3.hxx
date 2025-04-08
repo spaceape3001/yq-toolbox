@@ -238,11 +238,23 @@ namespace yq {
     {
         return Size3(max(x, b.x), max(y, b.y), max(z, b.z));
     }
+
+    template <typename T>
+    constexpr Size3<T>   Size3<T>::emax(T b) const noexcept
+    {
+        return Size3(max(x, b), max(y, b), max(z, b));
+    }
     
     template <typename T>
     constexpr Size3<T>   Size3<T>::emin(const Size3&b) const noexcept
     {
         return Size3(min(x, b.x), min(y, b.y), min(z, b.z));
+    }
+
+    template <typename T>
+    constexpr Size3<T>   Size3<T>::emin(T b) const noexcept
+    {
+        return Size3(min(x, b), min(y, b), min(z, b));
     }
 
     template <typename T>

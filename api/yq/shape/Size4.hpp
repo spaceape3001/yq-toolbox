@@ -152,8 +152,12 @@ namespace yq {
         //! Maximum applied to each component
         constexpr Size4   emax(const Size4&b) const noexcept;
         
+        constexpr Size4   emax(T) const noexcept;
+        
         //! Minimum applied to each component
         constexpr Size4   emin(const Size4&b) const noexcept;
+
+        constexpr Size4   emin(T) const noexcept;
 
         //! Element by element multiplication
         template <typename U>

@@ -252,9 +252,21 @@ namespace yq {
     }
     
     template <typename T>
+    constexpr Size4<T>   Size4<T>::emax(T b) const noexcept
+    {
+        return Size4(max(x, b), max(y, b), max(z, b), max(w, b));
+    }
+
+    template <typename T>
     constexpr Size4<T>   Size4<T>::emin(const Size4&b) const noexcept
     {
         return Size4(min(x, b.x), min(y, b.y), min(z, b.z), min(w, b.w));
+    }
+
+    template <typename T>
+    constexpr Size4<T>   Size4<T>::emin(T b) const noexcept
+    {
+        return Size4(min(x, b), min(y, b), min(z, b), min(w, b));
     }
 
     template <typename T>

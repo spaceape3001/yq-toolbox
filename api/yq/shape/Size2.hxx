@@ -265,11 +265,23 @@ namespace yq {
     {
         return Size2(max(x, b.x), max(y, b.y));
     }
+
+    template <typename T>
+    constexpr Size2<T>   Size2<T>::emax(T b) const noexcept
+    {
+        return Size2(max(x, b), max(y, b));
+    }
     
     template <typename T>
     constexpr Size2<T>   Size2<T>::emin(const Size2&b) const noexcept
     {
         return Size2(min(x, b.x), min(y, b.y));
+    }
+
+    template <typename T>
+    constexpr Size2<T>   Size2<T>::emin(T b) const noexcept
+    {
+        return Size2(min(x, b), min(y, b));
     }
 
     template <typename T>

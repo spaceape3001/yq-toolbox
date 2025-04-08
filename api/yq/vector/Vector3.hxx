@@ -658,10 +658,22 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector3<T>   Vector3<T>::emax(T b) const noexcept
+    {
+        return Vector3(max(x, b), max(y, b), max(z, b));
+    }
+
+    template <typename T>
     constexpr Vector3<T>   Vector3<T>::emin(const Vector3&b) const noexcept
     {
         return Vector3<T>(min(x, b.x), min(y, b.y), min(z, b.z));
     }    
+
+    template <typename T>
+    constexpr Vector3<T>   Vector3<T>::emin(T b) const noexcept
+    {
+        return Vector3(min(x, b), min(y, b), min(z, b));
+    }
 
     template <typename T>
         template <typename U>
