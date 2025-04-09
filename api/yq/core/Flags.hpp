@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <cstddef>
 #include <cstdint>
 #include <yq/keywords.hpp>
 #include <initializer_list>
@@ -32,7 +33,6 @@ namespace yq {
         using DefEnum   = E;
         //! Captures the bit-field type parameter
         using DefType   = T;
-        
 
         static constexpr T  mask(E e) noexcept
         {
@@ -130,6 +130,16 @@ namespace yq {
         bool none(Flags f) const noexcept
         {
             return (f.m_value & m_value) == T{};
+        }
+        
+        size_t count() const 
+        {
+            size_t  cnt = 0;
+            for(T n = m_value; n; n >>= 1){
+                if(n & 1)
+                    ++cnt;
+            }
+            return cnt;
         }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
