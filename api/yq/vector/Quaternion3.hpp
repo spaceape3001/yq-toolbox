@@ -100,6 +100,7 @@ namespace yq {
         explicit constexpr Quaternion3(const glm::qua<T, Q>& q) : w(q.w), x(q.x), y(q.y), z(q.z) {}
         #endif
 
+        //! Creates a quaternion that effects a counter-clockwise rotation about the x-axis
         template <typename=void>
         requires std::is_floating_point_v<T>
         Quaternion3(ccw_k, x_k, MKS<T,dim::Angle>v);
