@@ -228,6 +228,7 @@ namespace yq::color {
     static constexpr const RGB3U8	DeepChampagne	             ={	250	,	214	,	165 };
     static constexpr const RGB3U8	DeepChestnut	             ={	185	,	78	,	72 };
     static constexpr const RGB3U8	DeepCoffee	                 ={	112	,	66	,	65 };
+    static constexpr const RGB3U8	DeepDarkGray                 ={	63	,	63	,	63 };
     static constexpr const RGB3U8	DeepFuchsia	                 ={	193	,	84	,	193 };
     static constexpr const RGB3U8	DeepJungleGreen	             ={	0	,	75	,	73 };
     static constexpr const RGB3U8	DeepLilac	                 ={	153	,	85	,	187 };
