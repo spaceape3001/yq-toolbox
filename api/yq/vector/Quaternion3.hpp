@@ -140,6 +140,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3(clockwise_k, const Vector3<T>&, MKS<T,dim::Angle>);
         
+        //! Creates a quaternion that effects a specified counter-clock wise rotation using the three axis angles provided
         template <typename=void>
         requires std::is_floating_point_v<T>
         Quaternion3(ccw_k, const Vector3<MKS<T,dim::Angle>>);
