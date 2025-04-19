@@ -150,6 +150,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3(clockwise_k, const Vector3<MKS<T,dim::Angle>>);
         
+        //! Creates a quaternion that effects a specified rotation using yaw/pitch/roll as the rubric
         Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
         
 
