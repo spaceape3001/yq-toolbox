@@ -153,7 +153,7 @@ namespace yq {
         //! Creates a quaternion that effects a specified rotation using yaw/pitch/roll as the rubric
         Quaternion3(hpr_k, MKS<T,dim::Angle> hdg_or_yaw, MKS<T,dim::Angle> pitch, MKS<T,dim::Angle> roll);
         
-
+        //! Creates a quaternion that effects the same rotation as the given 3x3 matrix
         template <typename=void>
         requires std::is_floating_point_v<T>
         explicit Quaternion3(const Tensor33<T>&);
