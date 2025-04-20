@@ -209,7 +209,7 @@ namespace yq {
     static constexpr const copy_k           COPY;
     static constexpr const count_k          COUNT;
     static constexpr const cout_k           COUT;
-    static constexpr const create_k           CREATE;
+    static constexpr const create_k         CREATE;
     static constexpr const cursor_k         CURSOR;
     static constexpr const data_k           DATA;
     static constexpr const default_k        DEFAULT;
