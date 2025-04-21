@@ -13,12 +13,14 @@
 
 #include <yq/keywords.hpp>
 #include <yq/trait/can_add.hpp>
+#include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/trait/ieee754.hpp>
 #include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/is_floating_point.hpp>
 #include <yq/trait/square.hpp>
 #include <cmath>
+#include <initializer_list>
 #include <span>
 #include <utility>
 #include <vector>
@@ -103,6 +105,17 @@ namespace yq {
     constexpr square_t<T>    operator^(T v, two_k) noexcept
     {
         return v*v;
+    }
+
+    template <typename T>
+    requires has_nan_v<T>
+    T  antinan(std::initializer_list<T> data, T def=zero_v<T>)
+    {
+        for(T t : data){
+            if(!is_nan(t))
+                return t;
+        }
+        return def;
     }
     
     template <typename T>
