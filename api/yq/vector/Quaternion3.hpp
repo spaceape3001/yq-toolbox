@@ -163,6 +163,8 @@ namespace yq {
         constexpr bool operator==(const Quaternion3&) const noexcept = default;
         
         #if YQ_USE_GLM
+        /*! \brief Casts to a GLM quaternion
+        */
         template <glm::qualifier Q>
         constexpr operator glm::qua<T,Q>() const noexcept 
         {
