@@ -172,6 +172,7 @@ namespace yq {
         }
         #endif
 
+        //! Postive affirmation operator
         Quaternion3             operator+() const;
         Quaternion3             operator-() const;
 
