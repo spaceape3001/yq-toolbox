@@ -127,6 +127,11 @@ namespace yq {
         {
             m_value &= ~mask(e);
         }
+        
+        void    toggle(E e)
+        {
+            m_value ^= mask(e);
+        }
 
         /*! Formats to string
             

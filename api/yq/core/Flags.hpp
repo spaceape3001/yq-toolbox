@@ -102,6 +102,11 @@ namespace yq {
             m_value &= ~f.m_value;
         }
 
+        void    toggle(E e)
+        {
+            m_value ^= mask(e);
+        }
+
         //! TRUE if bit is set
         bool is_set(E e) const
         {
