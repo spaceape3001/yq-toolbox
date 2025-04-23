@@ -18,29 +18,35 @@ namespace yq {
     YQ_ENUM(Tristate, ,
         
         //! Default is a "maybe", which means inherit and/or optional
-        Maybe       = 1,
+        Maybe           = 1,
         
-        MAYBE       = Maybe,
+        MAYBE           = Maybe,
         
         //! Assert a NO on this state, override the inheritance
-        No          = 0,
+        No              = 0,
         
-        NO          = No,
+        NO              = No,
         
         //! Assert a YES on this state, override the inheritance
-        Yes         = 2,
+        Yes             = 2,
         
-        YES         = Yes,
+        YES             = Yes,
         
         //! Synonym for "maybe"
-        Inherit     = Maybe,
+        Inherit         = Maybe,
         
-        INHERIT     = Inherit,
+        INHERIT         = Inherit,
 
         //! Synonym for "maybe"
-        Optional    = Maybe,
+        Optional        = Maybe,
         
-        OPTIONAL    = Optional
+        OPTIONAL        = Optional,
+        
+        //! Synonym for "maybe"
+        Indeterminant   = Maybe,
+
+        //! Synonym for "maybe"
+        INDETERMINANT   = Indeterminant
     );
 }
 
