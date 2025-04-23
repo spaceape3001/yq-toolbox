@@ -174,6 +174,8 @@ namespace yq {
 
         //! Postive affirmation operator
         Quaternion3             operator+() const;
+        
+        //! Negation operator
         Quaternion3             operator-() const;
 
         template <typename=void>
