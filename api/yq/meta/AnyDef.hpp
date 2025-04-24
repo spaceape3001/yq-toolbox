@@ -202,9 +202,9 @@ namespace yq {
         Result<const T&>    value() const;
         
         //! Calls value (or converts) as a predicate callback
-        //! \return FALSE if it can't (ie, bad type)
+        //! \return your result type, (a default {} if the value couldn't be used as desired)
         template <typename T, typename Pred>
-        bool    as(Pred&&) const;
+        auto    as(Pred&&) const;
         
         /*! \brief IO Writing to stream
         

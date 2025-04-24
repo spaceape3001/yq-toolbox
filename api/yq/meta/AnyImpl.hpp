@@ -11,6 +11,7 @@
 #include <yq/core/Result.hpp>
 #include <yq/meta/AnyDef.hpp>
 #include <yq/meta/TypeInfo.hpp>
+#include <type_traits>
 
     //  SKIPPING INCLUDES... done in order by others
 
@@ -62,22 +63,22 @@ namespace yq {
     }
 
     template <typename T, typename Pred>
-    bool    Any::as(Pred&& pred) const
+    auto    Any::as(Pred&& pred) const
     {
         static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
-        if(m_type == &meta<T>()){
-            pred(m_data.reference<T>());
-            return true;
-        }
+        using result_t  = decltype(pred(T{}));
+        
+        if(m_type == &meta<T>())
+            return pred(m_data.reference<T>());
         
         auto cvt = m_type -> m_convert.get(&meta<T>(), nullptr);
         if(cvt){
             T tmp;
             (*cvt)(&tmp, raw_ptr());
-            pred(tmp);
-            return true;
+            return pred(tmp);
         }
-        return false;
+        
+        return result_t{};
     }
 
     template <typename T>
