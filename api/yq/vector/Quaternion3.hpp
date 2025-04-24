@@ -178,6 +178,7 @@ namespace yq {
         //! Negation operator
         Quaternion3             operator-() const;
 
+        //! Normalization operator (ie, returns a normalized quaternion)
         template <typename=void>
         requires std::is_floating_point_v<T>
         Quaternion3<T>          operator~() const;
