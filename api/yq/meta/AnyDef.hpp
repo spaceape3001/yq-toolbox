@@ -201,6 +201,11 @@ namespace yq {
         template <typename T>
         Result<const T&>    value() const;
         
+        //! Calls value (or converts) as a predicate callback
+        //! \return FALSE if it can't (ie, bad type)
+        template <typename T, typename Pred>
+        bool    as(Pred&&) const;
+        
         /*! \brief IO Writing to stream
         
             This is meant to write the data out in a way that'll fully capture the input (ie better to have a thousand 

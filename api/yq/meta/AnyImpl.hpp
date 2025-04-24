@@ -61,6 +61,25 @@ namespace yq {
         return b.operator==(a);
     }
 
+    template <typename T, typename Pred>
+    bool    Any::as(Pred&& pred) const
+    {
+        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        if(m_type == &meta<T>()){
+            pred(m_data.reference<T>());
+            return true;
+        }
+        
+        auto cvt = m_type -> m_convert.get(&meta<T>(), nullptr);
+        if(cvt){
+            T tmp;
+            (*cvt)(&tmp, raw_ptr());
+            pred(tmp);
+            return true;
+        }
+        return false;
+    }
+
     template <typename T>
     bool        Any::can_convert() const
     {
