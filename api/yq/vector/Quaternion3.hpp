@@ -183,6 +183,7 @@ namespace yq {
         requires std::is_floating_point_v<T>
         Quaternion3<T>          operator~() const;
         
+        //! Operator for length (squared)
         constexpr square_t<T>   operator^(two_k) const noexcept;
 
         constexpr Quaternion3   operator+ (const Quaternion3<T>&b) const noexcept;
