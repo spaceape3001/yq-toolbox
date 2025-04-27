@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <type_traits>
+
+namespace yq {
+    template <typename T>
+    static constexpr bool is_trivial = std::is_trivially_default_constructible_v<T> && std::is_trivially_copyable_v<T>;
+}
