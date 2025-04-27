@@ -186,6 +186,7 @@ namespace yq {
         //! Operator for length (squared)
         constexpr square_t<T>   operator^(two_k) const noexcept;
 
+        //! Adds two quaternions, returns the result
         constexpr Quaternion3   operator+ (const Quaternion3<T>&b) const noexcept;
         Quaternion3&            operator+=(const Quaternion3<T>&b) noexcept;
         constexpr Quaternion3   operator- (const Quaternion3<T>&b) const noexcept;
