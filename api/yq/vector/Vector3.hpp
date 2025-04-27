@@ -504,32 +504,32 @@ namespace yq {
     }
     #endif
 
-    constexpr Vector3D operator "" _x3(unsigned long long int v) noexcept
+    constexpr Vector3D operator ""_x3(unsigned long long int v) noexcept
     {
         return Vector3D(X, (double) v);
     }
 
-    constexpr Vector3D operator "" _x3(long double v) noexcept
+    constexpr Vector3D operator ""_x3(long double v) noexcept
     {
         return Vector3D(X, (double) v);
     }
 
-    constexpr Vector3D operator "" _y3(unsigned long long int v) noexcept
+    constexpr Vector3D operator ""_y3(unsigned long long int v) noexcept
     {
         return Vector3D(Y, (double) v);
     }
 
-    constexpr Vector3D operator "" _y3(long double v) noexcept
+    constexpr Vector3D operator ""_y3(long double v) noexcept
     {
         return Vector3D(Y, (double) v);
     }
 
-    constexpr Vector3D operator "" _z3(unsigned long long int v) noexcept
+    constexpr Vector3D operator ""_z3(unsigned long long int v) noexcept
     {
         return Vector3D(Z, (double) v);
     }
 
-    constexpr Vector3D operator "" _z3(long double v) noexcept
+    constexpr Vector3D operator ""_z3(long double v) noexcept
     {
         return Vector3D(Z, (double) v);
     }

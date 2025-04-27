@@ -651,17 +651,17 @@ struct Trace {
     }
 };
 
-Trace operator"" _eq(unsigned long long i)
+Trace operator ""_eq(unsigned long long i)
 {
     return Trace{ yq::diff::Edit::Same, i };
 }
 
-Trace operator"" _a(unsigned long long i)
+Trace operator ""_a(unsigned long long i)
 {
     return Trace{ yq::diff::Edit::Add, i };
 }
 
-Trace operator"" _r(unsigned long long i)
+Trace operator ""_r(unsigned long long i)
 {
     return Trace{ yq::diff::Edit::Remove, i };
 }

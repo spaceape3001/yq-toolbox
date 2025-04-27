@@ -504,42 +504,42 @@ namespace yq {
     }
     #endif
 
-    constexpr Vector4D operator "" _x4(unsigned long long int v) noexcept
+    constexpr Vector4D operator ""_x4(unsigned long long int v) noexcept
     {
         return Vector4D(X, (double) v);
     }
 
-    constexpr Vector4D operator "" _x4(long double v) noexcept
+    constexpr Vector4D operator ""_x4(long double v) noexcept
     {
         return Vector4D(X, (double) v);
     }
 
-    constexpr Vector4D operator "" _y4(unsigned long long int v) noexcept
+    constexpr Vector4D operator ""_y4(unsigned long long int v) noexcept
     {
         return Vector4D(Y, (double) v);
     }
 
-    constexpr Vector4D operator "" _y4(long double v) noexcept
+    constexpr Vector4D operator ""_y4(long double v) noexcept
     {
         return Vector4D(Y, (double) v);
     }
 
-    constexpr Vector4D operator "" _z4(unsigned long long int v) noexcept
+    constexpr Vector4D operator ""_z4(unsigned long long int v) noexcept
     {
         return Vector4D(Z, (double) v);
     }
 
-    constexpr Vector4D operator "" _z4(long double v) noexcept
+    constexpr Vector4D operator ""_z4(long double v) noexcept
     {
         return Vector4D(Z, (double) v);
     }
 
-    constexpr Vector4D operator "" _w4(unsigned long long int v) noexcept
+    constexpr Vector4D operator ""_w4(unsigned long long int v) noexcept
     {
         return Vector4D(W, (double) v);
     }
 
-    constexpr Vector4D operator "" _w4(long double v) noexcept
+    constexpr Vector4D operator ""_w4(long double v) noexcept
     {
         return Vector4D(W, (double) v);
     }

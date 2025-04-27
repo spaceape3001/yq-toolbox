@@ -163,14 +163,14 @@ namespace yq {
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector3D   operator "" _xyz3(unsigned long long int v) noexcept
+    constexpr Trivector3D   operator ""_xyz3(unsigned long long int v) noexcept
     {
         return Trivector3D(XYZ, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector3D   operator "" _xyz3(long double v) noexcept
+    constexpr Trivector3D   operator ""_xyz3(long double v) noexcept
     {
         return Trivector3D(XYZ, (double) v);
     }

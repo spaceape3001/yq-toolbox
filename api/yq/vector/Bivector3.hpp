@@ -181,42 +181,42 @@ namespace yq {
     
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _xy3(unsigned long long int v) noexcept
+    constexpr Bivector3D   operator ""_xy3(unsigned long long int v) noexcept
     {
         return Bivector3D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _xy3(long double v) noexcept
+    constexpr Bivector3D   operator ""_xy3(long double v) noexcept
     {
         return Bivector3D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _yz3(unsigned long long int v) noexcept
+    constexpr Bivector3D   operator ""_yz3(unsigned long long int v) noexcept
     {
         return Bivector3D(YZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _yz3(long double v) noexcept
+    constexpr Bivector3D   operator ""_yz3(long double v) noexcept
     {
         return Bivector3D(YZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _zx3(unsigned long long int v) noexcept
+    constexpr Bivector3D   operator ""_zx3(unsigned long long int v) noexcept
     {
         return Bivector3D(ZX, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector3D   operator "" _zx3(long double v) noexcept
+    constexpr Bivector3D   operator ""_zx3(long double v) noexcept
     {
         return Bivector3D(ZX, (double) v);
     }

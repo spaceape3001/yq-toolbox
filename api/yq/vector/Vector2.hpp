@@ -486,22 +486,22 @@ namespace yq {
     }
     #endif
 
-    constexpr Vector2D operator "" _x2(unsigned long long int v) noexcept
+    constexpr Vector2D operator ""_x2(unsigned long long int v) noexcept
     {
         return Vector2D(X, (double) v);
     }
 
-    constexpr Vector2D operator "" _x2(long double v) noexcept
+    constexpr Vector2D operator ""_x2(long double v) noexcept
     {
         return Vector2D(X, (double) v);
     }
 
-    constexpr Vector2D operator "" _y2(unsigned long long int v) noexcept
+    constexpr Vector2D operator ""_y2(unsigned long long int v) noexcept
     {
         return Vector2D(Y, (double) v);
     }
 
-    constexpr Vector2D operator "" _y2(long double v) noexcept
+    constexpr Vector2D operator ""_y2(long double v) noexcept
     {
         return Vector2D(Y, (double) v);
     }

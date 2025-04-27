@@ -199,56 +199,56 @@ namespace yq {
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _xyz4(unsigned long long int v) noexcept
+    constexpr Trivector4D   operator ""_xyz4(unsigned long long int v) noexcept
     {
         return Trivector4D(XYZ, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _xyz4(long double v) noexcept
+    constexpr Trivector4D   operator ""_xyz4(long double v) noexcept
     {
         return Trivector4D(XYZ, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _yzw4(unsigned long long int v) noexcept
+    constexpr Trivector4D   operator ""_yzw4(unsigned long long int v) noexcept
     {
         return Trivector4D(YZW, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _yzw4(long double v) noexcept
+    constexpr Trivector4D   operator ""_yzw4(long double v) noexcept
     {
         return Trivector4D(YZW, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _zwx4(unsigned long long int v) noexcept
+    constexpr Trivector4D   operator ""_zwx4(unsigned long long int v) noexcept
     {
         return Trivector4D(ZWX, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _zwx4(long double v) noexcept
+    constexpr Trivector4D   operator ""_zwx4(long double v) noexcept
     {
         return Trivector4D(ZWX, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _wxy4(unsigned long long int v) noexcept
+    constexpr Trivector4D   operator ""_wxy4(unsigned long long int v) noexcept
     {
         return Trivector4D(WXY, (double) v);
     }
 
     /*! \brief Literal to construct a trivector
     */
-    constexpr Trivector4D   operator "" _wxy4(long double v) noexcept
+    constexpr Trivector4D   operator ""_wxy4(long double v) noexcept
     {
         return Trivector4D(WXY, (double) v);
     }

@@ -318,8 +318,8 @@ namespace yq {
             static bool less_zx( const Tensor42& a, const Tensor42& b) { return a.zx < b.zx; }
             static bool less_zy( const Tensor42& a, const Tensor42& b) { return a.zy < b.zy; }
 
-            static bool less_wx( const Tensor42& a, const Tensor42& b) { return a.x < b.x; }
-            static bool less_wy( const Tensor42& a, const Tensor42& b) { return a.y < b.y; }
+            static bool less_wx( const Tensor42& a, const Tensor42& b) { return a.wx < b.wx; }
+            static bool less_wy( const Tensor42& a, const Tensor42& b) { return a.wy < b.wy; }
     };
 
     YQ_IEEE754_1(Tensor42)

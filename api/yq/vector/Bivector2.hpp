@@ -157,14 +157,14 @@ namespace yq {
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector2D  operator "" _xy2(unsigned long long int v) noexcept
+    constexpr Bivector2D  operator ""_xy2(unsigned long long int v) noexcept
     {
         return Bivector2D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector2D  operator "" _xy2(long double v) noexcept
+    constexpr Bivector2D  operator ""_xy2(long double v) noexcept
     {
         return Bivector2D(XY, (double) v);
     }

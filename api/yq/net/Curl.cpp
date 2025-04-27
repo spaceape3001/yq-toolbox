@@ -6,9 +6,9 @@
 
 #include "Curl.hpp"
 #include <yq/container/ByteArray.hpp>
+#include <yq/net/json.hpp>
 #include <yq/net/Url.hpp>
 #include <curl/curl.h>
-#include <nlohmann/json.hpp>
 //#include <0/io/preamble.hpp>
 
 namespace yq {

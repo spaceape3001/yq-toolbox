@@ -384,10 +384,10 @@ namespace yq {
             static bool less_zz( const Tensor44& a, const Tensor44& b) { return a.zz < b.zz; }
             static bool less_zw( const Tensor44& a, const Tensor44& b) { return a.zw < b.zw; }
 
-            static bool less_wx( const Tensor44& a, const Tensor44& b) { return a.x < b.x; }
-            static bool less_wy( const Tensor44& a, const Tensor44& b) { return a.y < b.y; }
-            static bool less_wz( const Tensor44& a, const Tensor44& b) { return a.z < b.z; }
-            static bool less_ww( const Tensor44& a, const Tensor44& b) { return a.w < b.w; }
+            static bool less_wx( const Tensor44& a, const Tensor44& b) { return a.wx < b.wx; }
+            static bool less_wy( const Tensor44& a, const Tensor44& b) { return a.wy < b.wy; }
+            static bool less_wz( const Tensor44& a, const Tensor44& b) { return a.wz < b.wz; }
+            static bool less_ww( const Tensor44& a, const Tensor44& b) { return a.ww < b.ww; }
     };
         
     YQ_IEEE754_1(Tensor44)

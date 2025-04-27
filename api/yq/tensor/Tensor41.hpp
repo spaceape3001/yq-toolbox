@@ -299,7 +299,7 @@ namespace yq {
 
             static bool less_zx( const Tensor41& a, const Tensor41& b) { return a.zx < b.zx; }
 
-            static bool less_wx( const Tensor41& a, const Tensor41& b) { return a.x < b.x; }
+            static bool less_wx( const Tensor41& a, const Tensor41& b) { return a.wx < b.wx; }
 
     };
 

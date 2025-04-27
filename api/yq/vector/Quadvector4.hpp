@@ -170,14 +170,14 @@ namespace yq {
 
     /*! \brief Literal constructor
     */
-    constexpr Quadvector4D   operator "" _xyzw4(unsigned long long int v) noexcept
+    constexpr Quadvector4D   operator ""_xyzw4(unsigned long long int v) noexcept
     {
         return Quadvector4D(XYZW, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Quadvector4D   operator "" _xyzw4(long double v) noexcept
+    constexpr Quadvector4D   operator ""_xyzw4(long double v) noexcept
     {
         return Quadvector4D(XYZW, (double) v);
     }

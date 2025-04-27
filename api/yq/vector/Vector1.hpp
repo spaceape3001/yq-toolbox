@@ -433,12 +433,12 @@ namespace yq {
     }
     #endif
 
-    constexpr Vector1D operator "" _x1(unsigned long long int v) noexcept
+    constexpr Vector1D operator ""_x1(unsigned long long int v) noexcept
     {
         return Vector1D(X, (double) v);
     }
 
-    constexpr Vector1D operator "" _x1(long double v) noexcept
+    constexpr Vector1D operator ""_x1(long double v) noexcept
     {
         return Vector1D(X, (double) v);
     }

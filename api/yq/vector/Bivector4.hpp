@@ -206,84 +206,84 @@ namespace yq {
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _xy4(unsigned long long int v) noexcept
+    constexpr Bivector4D   operator ""_xy4(unsigned long long int v) noexcept
     {
         return Bivector4D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _xy4(long double v) noexcept
+    constexpr Bivector4D   operator ""_xy4(long double v) noexcept
     {
         return Bivector4D(XY, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _yz4(unsigned long long int v) noexcept
+    constexpr Bivector4D   operator ""_yz4(unsigned long long int v) noexcept
     {
         return Bivector4D(YZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _yz4(long double v) noexcept
+    constexpr Bivector4D   operator ""_yz4(long double v) noexcept
     {
         return Bivector4D(YZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _zw4(unsigned long long int v) noexcept
+    constexpr Bivector4D   operator ""_zw4(unsigned long long int v) noexcept
     {
         return Bivector4D(ZW, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _xw4(long double v) noexcept
+    constexpr Bivector4D   operator ""_xw4(long double v) noexcept
     {
         return Bivector4D(ZW, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _wx4(unsigned long long int v) noexcept
+    constexpr Bivector4D   operator ""_wx4(unsigned long long int v) noexcept
     {
         return Bivector4D(WX, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _wx4(long double v) noexcept
+    constexpr Bivector4D   operator ""_wx4(long double v) noexcept
     {
         return Bivector4D(WX, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _xz4(unsigned long long int v) noexcept
+    constexpr Bivector4D   operator ""_xz4(unsigned long long int v) noexcept
     {
         return Bivector4D(XZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _xz4(long double v) noexcept
+    constexpr Bivector4D   operator ""_xz4(long double v) noexcept
     {
         return Bivector4D(XZ, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _yw4(unsigned long long int v) noexcept
+    constexpr Bivector4D   operator ""_yw4(unsigned long long int v) noexcept
     {
         return Bivector4D(YW, (double) v);
     }
 
     /*! \brief Literal constructor
     */
-    constexpr Bivector4D   operator "" _yw4(long double v) noexcept
+    constexpr Bivector4D   operator ""_yw4(long double v) noexcept
     {
         return Bivector4D(YW, (double) v);
     }
