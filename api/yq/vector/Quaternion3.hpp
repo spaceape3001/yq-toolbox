@@ -45,6 +45,8 @@ namespace yq {
     */
     template <typename T>
     struct Quaternion3 {
+    
+        //! Capture our template parameter for the component type
         using component_type = T;
 
         T w;    //!< W component
