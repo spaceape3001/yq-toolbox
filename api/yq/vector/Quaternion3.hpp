@@ -190,8 +190,14 @@ namespace yq {
 
         //! Adds two quaternions, returns the result
         constexpr Quaternion3   operator+ (const Quaternion3<T>&b) const noexcept;
+        
+        //! Adds right hand quaternion to this one, returns reference
         Quaternion3&            operator+=(const Quaternion3<T>&b) noexcept;
+        
+        //! Subtracts right quaternion from the left, returns the result
         constexpr Quaternion3   operator- (const Quaternion3<T>&b) const noexcept;
+        
+        //! Subtracts right hand quaternion from this one, returns reference
         Quaternion3&            operator-=(const Quaternion3<T>&b) noexcept;
 
         template <typename U>
