@@ -200,6 +200,7 @@ namespace yq {
         //! Subtracts right hand quaternion from this one, returns reference
         Quaternion3&            operator-=(const Quaternion3<T>&b) noexcept;
 
+        //! Multiplies this quaternion by a scaling arithmetic type, returns the result
         template <typename U>
         requires (is_arithmetic_v<U>)
         constexpr Quaternion3<product_t<T,U>>  operator* (U b) const noexcept;
