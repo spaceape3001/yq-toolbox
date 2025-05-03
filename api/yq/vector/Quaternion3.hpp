@@ -200,11 +200,12 @@ namespace yq {
         //! Subtracts right hand quaternion from this one, returns reference
         Quaternion3&            operator-=(const Quaternion3<T>&b) noexcept;
 
-        //! Multiplies this quaternion by a scaling arithmetic type, returns the result
+        //! Multiplies quaternion by a scaling arithmetic type, returns the result
         template <typename U>
         requires (is_arithmetic_v<U>)
         constexpr Quaternion3<product_t<T,U>>  operator* (U b) const noexcept;
 
+        //! Self-multiplies this quaternion by the right hand term, returns reference
         template <typename U>
         requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Quaternion3& operator*=(U b) noexcept;
