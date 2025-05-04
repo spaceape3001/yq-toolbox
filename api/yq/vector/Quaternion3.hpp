@@ -210,6 +210,7 @@ namespace yq {
         requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
         Quaternion3& operator*=(U b) noexcept;
 
+        //! Multiplies two quaternions, returns the result
         template <typename U>
         constexpr Quaternion3<product_t<T,U>>  operator* (const Quaternion3<U>&b) const noexcept;
 
