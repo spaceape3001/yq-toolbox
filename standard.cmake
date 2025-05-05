@@ -82,13 +82,17 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     set(Build_Timing        ${Feature_BuildTime})
     set(Build_UnitTests     ${Feature_UnitTests})
 
-    include(${CMAKE_SOURCE_DIR}/yq-toolbox/configure.cmake)
+    if(NOT YOUR_QUILL_TOOLBOX_STANDALONE)
+        include(${CMAKE_SOURCE_DIR}/yq-toolbox/configure.cmake)
+    endif()
 
     if(${Build_UnitTests})
         enable_testing()
     endif()
 
-    add_subdirectory(${CMAKE_SOURCE_DIR}/yq-toolbox)
+    if(NOT YOUR_QUILL_TOOLBOX_STANDALONE)
+        add_subdirectory(${CMAKE_SOURCE_DIR}/yq-toolbox)
+    endif()
 
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
