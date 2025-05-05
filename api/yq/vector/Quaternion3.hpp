@@ -214,6 +214,7 @@ namespace yq {
         template <typename U>
         constexpr Quaternion3<product_t<T,U>>  operator* (const Quaternion3<U>&b) const noexcept;
 
+        //! Self-Multiplies this quaternion by the right hand one, returns reference
         template <typename U>
         requires self_multiply_v<T,U>
         Quaternion3<T>& operator*=(const Quaternion3<U>&b) noexcept;
