@@ -9,6 +9,7 @@
 #define YQ_MATH_RANGE_HPP 1
 
 #include <yq/keywords.hpp>
+#include <yq/units.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_nan.hpp>
@@ -322,5 +323,8 @@ YQ_TYPE_DECLARE(yq::RangeD)
 YQ_TYPE_DECLARE(yq::RangeF)
 YQ_TYPE_DECLARE(yq::RangeI)
 YQ_TYPE_DECLARE(yq::RangeU)
+YQ_TYPE_DECLARE(yq::RangeM)
+YQ_TYPE_DECLARE(yq::RangeCM)
+YQ_TYPE_DECLARE(yq::RangeMM)
 
 

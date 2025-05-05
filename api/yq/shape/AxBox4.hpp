@@ -20,6 +20,10 @@
 #include <yq/trait/unity.hpp>
 #include <yq/vector/Vector4.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {

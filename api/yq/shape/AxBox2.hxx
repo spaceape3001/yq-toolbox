@@ -355,6 +355,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr T             AxBox2<T>::east() const noexcept
+    {
+        return hi.x;
+    }
+
+    template <typename T>
     constexpr bool          AxBox2<T>::eclipses(const AxBox2<T>& b) const noexcept
     {
         return (all(lo) <= b.lo) && (all(b.hi) <= hi);
@@ -515,6 +521,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr T             AxBox2<T>::north() const noexcept
+    {
+        return hi.y;
+    }
+
+    template <typename T>
     constexpr Vector2<T>    AxBox2<T>::northeast() const noexcept 
     { 
         return hh(); 
@@ -561,6 +573,12 @@ namespace yq {
     #endif
 
     template <typename T>
+    constexpr T             AxBox2<T>::south() const noexcept
+    {
+        return lo.y;
+    }
+
+    template <typename T>
     constexpr Vector2<T>    AxBox2<T>::southeast() const noexcept 
     { 
         return hl();
@@ -597,6 +615,12 @@ namespace yq {
     constexpr bool          AxBox2<T>::valid() const noexcept 
     {
         return all(lo) <= hi;
+    }
+
+    template <typename T>
+    constexpr T             AxBox2<T>::west() const noexcept
+    {
+        return lo.x;
     }
 
     template <typename T>

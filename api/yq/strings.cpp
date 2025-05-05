@@ -84,6 +84,7 @@ namespace yq {
     const std::string_view     szDistance_Plane            = "Distance from origin, along normal, for plane";
     const std::string_view     szDuration                  = "duration";
     const std::string_view     szE                         = "e";
+    const std::string_view     szEast                      = "east";
     const std::string_view     szEclipses                  = "eclipses";
     const std::string_view     szEclipses_Box_Box          = "Tests if other box is inside/touching this box";
     const std::string_view     szEclipses_Box_Circle       = "Tests if circle is inside/touching this box";
@@ -160,6 +161,7 @@ namespace yq {
     const std::string_view     szNE                        = "ne";
     const std::string_view     szNormal                    = "normal";
     const std::string_view     szNormal_Plane              = "Normal to the plane";
+    const std::string_view     szNorth                     = "north";
     const std::string_view     szNortheast                 = "northeast";
     const std::string_view     szNortheast_Box             = "North-east corner of the box";
     const std::string_view     szNorthwest                 = "northwest";
@@ -213,6 +215,7 @@ namespace yq {
     const std::string_view     szSize                      = "size";
     const std::string_view     szSize_Box                  = "Size of the box";
     const std::string_view     szSize_Rectangle            = "Size of the rectangle";
+    const std::string_view     szSouth                     = "south";
     const std::string_view     szSoutheast                 = "southeast";
     const std::string_view     szSoutheast_Box             = "North-east corner of the box";
     const std::string_view     szSouthwest                 = "southwest";
@@ -240,6 +243,7 @@ namespace yq {
     const std::string_view     szW_Size                    = "W component of the size, commonly referred to as the duration";
     const std::string_view     szW_Vector                  = "W component of the vector";
     const std::string_view     szWidth                     = "width";
+    const std::string_view     szWest                      = "west";
     const std::string_view     szWW                        = "ww";
     const std::string_view     szWW_Tensor                 = "WW component of the tensor";
     const std::string_view     szWX                        = "wx";

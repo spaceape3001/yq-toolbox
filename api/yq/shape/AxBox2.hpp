@@ -19,6 +19,10 @@
 #include <yq/trait/unity.hpp>
 #include <yq/vector/Vector2.hpp>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
@@ -277,6 +281,8 @@ namespace yq {
         //! Distance² to box (zero if inside)
         constexpr square_t<T>   distance²(const Vector2<T>&) const noexcept;
 
+        constexpr T             east() const noexcept;
+
         /*! \brief Checks for full occlusion
         
             A small box is "eclipsed" if it's wholy contained (or touching edges) by this box.
@@ -399,6 +405,8 @@ namespace yq {
         //! Minimum inflation number on a valid box to keep it from going invalid
         constexpr T min_inflate() const noexcept;
             
+        constexpr T             north() const noexcept;
+
         //! Returns the northeast corner of the box
         constexpr Vector2<T>    northeast() const noexcept;
 
@@ -430,6 +438,7 @@ namespace yq {
         //! Size of this box, guarded against invalid boxes
         constexpr Size2<T> size(guard_k) const noexcept;
 
+        constexpr T             south() const noexcept;
 
         //! Returns the southeast corner of the box
         constexpr Vector2<T>    southeast() const noexcept;
@@ -459,6 +468,8 @@ namespace yq {
 
         //! Tests this box for validness
         constexpr bool          valid() const noexcept;
+
+        constexpr T             west() const noexcept;
 
         //! X Range of the box
         constexpr Range<T>      x_range() const noexcept;
@@ -565,4 +576,7 @@ YQ_TYPE_DECLARE(yq::AxBox2D)
 YQ_TYPE_DECLARE(yq::AxBox2F)
 YQ_TYPE_DECLARE(yq::AxBox2I)
 YQ_TYPE_DECLARE(yq::AxBox2U)
+YQ_TYPE_DECLARE(yq::AxBox2M)
+YQ_TYPE_DECLARE(yq::AxBox2CM)
+YQ_TYPE_DECLARE(yq::AxBox2MM)
 

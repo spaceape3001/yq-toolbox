@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
+#include <yq/units.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/meta/Init.hpp>
@@ -29,6 +30,9 @@ YQ_TYPE_IMPLEMENT(yq::Vector2D)
 YQ_TYPE_IMPLEMENT(yq::Vector2F)
 YQ_TYPE_IMPLEMENT(yq::Vector2I)
 YQ_TYPE_IMPLEMENT(yq::Vector2U)
+YQ_TYPE_IMPLEMENT(yq::Vector2M)
+YQ_TYPE_IMPLEMENT(yq::Vector2CM)
+YQ_TYPE_IMPLEMENT(yq::Vector2MM)
 
 namespace yq {
     Vector2I    iround(const Vector2D&v)
@@ -70,6 +74,27 @@ static std::string_view write_vector2u(const Vector2U& v)
 {
     static thread_local char    buffer [ 128 ];
     int n = snprintf(buffer, sizeof(buffer), "%u,%u", v.x, v.y);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector2m(const Vector2M& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", kMaxDoubleDigits, v.x.value, kMaxDoubleDigits, v.y.value);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector2cm(const Vector2CM& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", kMaxDoubleDigits, v.x.value, kMaxDoubleDigits, v.y.value);
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_vector2mm(const Vector2MM& v)
+{
+    static thread_local char    buffer [ 128 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", kMaxDoubleDigits, v.x.value, kMaxDoubleDigits, v.y.value);
     return std::string_view(buffer, n);
 }
 
@@ -122,6 +147,45 @@ static bool  parse_vector2u(Vector2U& v, std::string_view str)
     if(!(x && y)) 
         return false;
     v   = Vector2U(*x, *y);
+    return true;
+}
+
+static bool  parse_vector2m(Vector2M& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_double(bits[0]);
+    auto y = to_double(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2M(*x, *y);
+    return true;
+}
+
+static bool  parse_vector2cm(Vector2CM& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_double(bits[0]);
+    auto y = to_double(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2CM(*x, *y);
+    return true;
+}
+
+static bool  parse_vector2mm(Vector2MM& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 2)
+        return false;
+    auto x = to_double(bits[0]);
+    auto y = to_double(bits[1]);
+    if(!(x && y)) 
+        return false;
+    v   = Vector2MM(*x, *y);
     return true;
 }
 
@@ -203,6 +267,51 @@ static void reg_vector2()
         w.print<print_vector2<unsigned>>();
         w.format<write_vector2u>();
         w.parse<parse_vector2u>();
+    }
+
+    {
+        auto w = writer<Vector2M>();
+        w.description("2D vector in meters");
+        w.property(szLength², &Vector2M::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector2M::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector2M::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2M::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        //w.method(szZ, &Vector2M::z).description(szZ_Vector2);
+        w.operate_self();
+        //w.operate_with<double>();
+        w.print<print_vector2<unit::Meter>>();
+        w.format<write_vector2m>();
+        w.parse<parse_vector2m>();
+    }
+
+    {
+        auto w = writer<Vector2CM>();
+        w.description("2D vector in centimeters");
+        w.property(szLength², &Vector2CM::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector2CM::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector2CM::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2CM::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        //w.method(szZ, &Vector2CM::z).description(szZ_Vector2);
+        w.operate_self();
+        //w.operate_with<double>();
+        w.print<print_vector2<unit::Centimeter>>();
+        w.format<write_vector2cm>();
+        w.parse<parse_vector2cm>();
+    }
+
+    {
+        auto w = writer<Vector2MM>();
+        w.description("2D vector in millimeters");
+        w.property(szLength², &Vector2MM::length²).description(szLength²_Vector).alias(szLen²);
+        w.property(szLength, &Vector2MM::length).description(szLength_Vector).alias(szLen);
+        w.property(szX, &Vector2MM::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
+        w.property(szY, &Vector2MM::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
+        //w.method(szZ, &Vector2MM::z).description(szZ_Vector2);
+        w.operate_self();
+        //w.operate_with<double>();
+        w.print<print_vector2<unit::Millimeter>>();
+        w.format<write_vector2mm>();
+        w.parse<parse_vector2mm>();
     }
 }
 

@@ -236,7 +236,7 @@ namespace yq {
     static constexpr const gregorian_k      GREGORIAN;
     static constexpr const guard_k          GUARD;
     static constexpr const hpr_k            HPR;
-    static constexpr const high_k           HIGH;
+    static constexpr const high_k           HI, HIGH;
     static constexpr const i_k              I;
     static constexpr const identity_k       IDENTITY;
     static constexpr const if_k             IF;
@@ -253,7 +253,7 @@ namespace yq {
     static constexpr const layout_k         LAYOUT;
     static constexpr const line_k           LINE;
     static constexpr const local_k          LOCAL;
-    static constexpr const low_k            LOW;
+    static constexpr const low_k            LO, LOW;
     static constexpr const m_k              M;
     static constexpr const maybe_k          MAYBE;
     static constexpr const move_k           MOVE;

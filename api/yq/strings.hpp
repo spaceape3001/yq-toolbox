@@ -92,6 +92,7 @@ namespace yq {
     extern const std::string_view     szDistance_Plane;
     extern const std::string_view     szDuration;
     extern const std::string_view     szE;
+    extern const std::string_view     szEast;
     extern const std::string_view     szEclipses;
     extern const std::string_view     szEclipses_Box_Box;
     extern const std::string_view     szEclipses_Box_Circle;
@@ -168,6 +169,7 @@ namespace yq {
     extern const std::string_view     szNE;
     extern const std::string_view     szNormal;
     extern const std::string_view     szNormal_Plane;
+    extern const std::string_view     szNorth;
     extern const std::string_view     szNortheast;
     extern const std::string_view     szNortheast_Box;
     extern const std::string_view     szNorthwest;
@@ -221,6 +223,7 @@ namespace yq {
     extern const std::string_view     szSize;
     extern const std::string_view     szSize_Box;
     extern const std::string_view     szSize_Rectangle;
+    extern const std::string_view     szSouth;
     extern const std::string_view     szSoutheast;
     extern const std::string_view     szSoutheast_Box;
     extern const std::string_view     szSouthwest;
@@ -250,6 +253,7 @@ namespace yq {
     extern const std::string_view     szW_Quaternion;
     extern const std::string_view     szW_Size;
     extern const std::string_view     szW_Vector;
+    extern const std::string_view     szWest;
     extern const std::string_view     szWidth;
     extern const std::string_view     szWW;
     extern const std::string_view     szWW_Tensor;

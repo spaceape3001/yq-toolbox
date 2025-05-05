@@ -26,7 +26,6 @@ namespace log4cpp { class CategoryStream; }
 #undef NAN
 #endif
 
-
 namespace yq {
     struct Side;
     template <typename> struct AxCorners3;

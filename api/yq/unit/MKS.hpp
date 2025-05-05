@@ -21,6 +21,7 @@
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
 #include <yq/trait/square.hpp>
+#include <yq/core/StreamOps.hpp>
 
 #include <type_traits>
 
@@ -331,4 +332,12 @@ namespace yq {
 //  --------------------------------------------------------
 //  CONDITIONAL INCLUDES
     
+//  --------------------------------------------------------
+//  STREAMING
+    
+    template <typename T, typename DIM>
+    Stream& operator<<(Stream& stream, const MKS<T,DIM>& v)
+    {
+        return stream << v.value;
+    }
 }

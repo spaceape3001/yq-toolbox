@@ -14,6 +14,7 @@
 #include <yq/trait/quotient.hpp>
 #include <yq/trait/self_divide.hpp>
 #include <yq/trait/self_multiply.hpp>
+#include <yq/core/StreamOps.hpp>
 
 namespace yq {
     template <typename T, typename DIM, double K>
@@ -310,4 +311,13 @@ namespace yq {
         return is_close(compare, actual, SCALED<T,DIM,K>{v});
     }
 
+
+//  --------------------------------------------------------
+//  STREAMING
+
+    template <typename T, typename DIM, double K>
+    Stream& operator<<(Stream& stream, const SCALED<T,DIM,K>& v)
+    {
+        return stream << v.value;
+    }
 }

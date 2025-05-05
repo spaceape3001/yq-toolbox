@@ -21,6 +21,10 @@
 
 #include <initializer_list>
 
+#ifdef NAN
+#undef NAN
+#endif
+
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
