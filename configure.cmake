@@ -92,7 +92,7 @@ if(NOT YOUR_QUILL_TOOLBOX)
 
     message( "Build Type is " ${CMAKE_BUILD_TYPE})
 
-    #   WARNING DEFINITIONS
+    #   WARNING/OTHER DEFINITIONS
     add_definitions(
         -Wfatal-errors 
         -Wno-error=suggest-override

@@ -62,6 +62,14 @@ namespace yq {
         consteval Size2(one_k) : Size2(ALL, one_v<T>) {}
         
         explicit constexpr Size2(const Vector2<T>&) noexcept;
+        
+        #ifdef QSIZE_H
+        template <typename=void> requires (std::is_same_v<T,int>)
+        Size2(const QSize& Q) : Size2(Q.width(), Q.height()) {}
+        
+        template <typename=void> requires (std::is_floating_point_v<T>)
+        explicit Size2(const QSize& Q) : Size2((T) Q.width(), (T) Q.height()){}
+        #endif
 
         template <typename U>
         requires std::is_nothrow_convertible_v<T,U>
@@ -76,6 +84,15 @@ namespace yq {
         {
             return { (U) x, (U) y };
         }
+
+        #ifdef QSIZE_H
+        template <typename=void> requires (std::is_same_v<T,int>)
+        explicit operator QSize() const { return QSize(x,y); }
+        
+        template <typename=void> requires (std::is_floating_point_v<T>)
+        explicit operator QSizeF() const { return QSizeF((qreal) x, (qreal) y); }
+        #endif
+
 
         //! Defaulted comparsion operator
         constexpr bool    operator==(const Size2&) const noexcept = default;

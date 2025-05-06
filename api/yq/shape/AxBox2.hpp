@@ -138,6 +138,26 @@ namespace yq {
 
         //! Zero box
         consteval AxBox2(zero_k) : AxBox2(Vector2<T>(ZERO)) {}
+        
+        #ifdef QRECT_H
+        template <typename=void> requires std::is_same_v<T,int>
+        explicit AxBox2(const QRect& Q) : AxBox2({Q.x(), Q.y()}, { Q.x() + Q.width(), Q.y() + Q.height() }) {}
+        
+        template <typename=void> requires std::is_floating_point_v<T>
+        explicit AxBox2(const QRectF& Q) : AxBox2({(T) Q.x(), (T) Q.y()}, { (T)(Q.x() + Q.width()), (T) (Q.y() + Q.height()) }) {}
+
+        template <typename=void> requires std::is_same_v<T,int>
+        explicit operator QRect() const 
+        {
+            return QRect(lo.x, lo.y, hi.x-lo.x, hi.y-lo.y);
+        }
+
+        template <typename=void> requires std::is_floating_point_v<T>
+        explicit operator QRect() const 
+        {
+            return QRect((qreal) lo.x, (qreal) lo.y, (qreal) (hi.x-lo.x), (qreal) (hi.y-lo.y));
+        }
+        #endif
 
         //! Constructs using the bounding box of the given circle
         explicit constexpr AxBox2(const Circle2<T>&) noexcept;
