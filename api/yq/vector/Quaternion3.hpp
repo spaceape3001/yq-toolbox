@@ -219,6 +219,7 @@ namespace yq {
         requires self_multiply_v<T,U>
         Quaternion3<T>& operator*=(const Quaternion3<U>&b) noexcept;
 
+        //! Multiplies (or rotates) quaternion with vector, returns result
         template <typename U>
         requires (std::is_floating_point_v<T> && std::is_floating_point_v<U>)
         constexpr Vector3<product_t<T,U>>   operator* (const Vector3<U>&b) const noexcept;
