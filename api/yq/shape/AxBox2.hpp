@@ -370,6 +370,8 @@ namespace yq {
         template <typename=void>
         requires is_floating_point_v<T>
         Expect<unity_t<T>>    fraction_y(T y, T ep) const noexcept;
+        
+        constexpr T             height() const noexcept;
 
         //! Hi-hi corner of this box
         constexpr Vector2<T>    hh() const noexcept;
@@ -490,6 +492,8 @@ namespace yq {
         constexpr bool          valid() const noexcept;
 
         constexpr T             west() const noexcept;
+
+        constexpr T             width() const noexcept;
 
         //! X Range of the box
         constexpr Range<T>      x_range() const noexcept;

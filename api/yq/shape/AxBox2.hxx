@@ -425,6 +425,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr T             AxBox2<T>::height() const noexcept
+    {
+        return hi.y - lo.y;
+    }
+
+    template <typename T>
     constexpr Vector2<T>    AxBox2<T>::hh() const noexcept
     {
         return hi;
@@ -615,6 +621,12 @@ namespace yq {
     constexpr bool          AxBox2<T>::valid() const noexcept 
     {
         return all(lo) <= hi;
+    }
+
+    template <typename T>
+    constexpr T             AxBox2<T>::width() const noexcept
+    {
+        return hi.y - lo.y;
     }
 
     template <typename T>
