@@ -224,14 +224,16 @@ namespace yq {
         requires (std::is_floating_point_v<T> && std::is_floating_point_v<U>)
         constexpr Vector3<product_t<T,U>>   operator* (const Vector3<U>&b) const noexcept;
 
-        template <typename U>
-        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
-        Quaternion3<T>& operator/=(U b) noexcept;
-
+        //! Divides quaternion by scalar, returns result
         template <typename U>
         requires (is_arithmetic_v<T>)
         constexpr Quaternion3<quotient_t<T,U>>  operator/ (U b) const noexcept;
         
+        //! Self-divides this quaternion by the scalar, returns reference
+        template <typename U>
+        requires (is_arithmetic_v<U> && self_divide_v<T,U>)
+        Quaternion3<T>& operator/=(U b) noexcept;
+
         //template <typename>
         //requires std::is_floating_point_v<T>
         Radian                      angle() const;
