@@ -50,6 +50,15 @@ namespace yq {
         }
         #endif
 
+        #ifdef QCOLOR_H
+        template <typename=void>
+        requires std::is_same_v<T,uint8_t>
+        constexpr explicit operator QColor() const noexcept
+        {
+            return QColor((int) red, (int) green, (int) blue, (int) alpha);
+        }
+        #endif
+
         //! Converts normalized float RGBA to integer
         template <typename U>
         requires (std::is_floating_point_v<T> && std::is_integral_v<U>)
