@@ -238,6 +238,7 @@ namespace yq {
         //requires std::is_floating_point_v<T>
         Radian                      angle() const;
         
+        //! Extracts the effective axis of rotation from the quaternion, returns it
         Vector3<unity_t<T>>         axis() const;
         
         constexpr square_t<T>       cayley_norm() const;
