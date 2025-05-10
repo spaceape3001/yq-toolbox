@@ -173,6 +173,14 @@ namespace yq {
         return m_tagsByString.contains(k);
     }
 
+    std::string_view    Meta::icon(icon_size_t sz) const
+    {
+        auto itr = m_icons.find(sz);
+        if(itr != m_icons.end())    
+            return itr->second;
+        return {};
+    }
+
     bool  Meta::is_1d() const
     {
         return has(Flag::D1);

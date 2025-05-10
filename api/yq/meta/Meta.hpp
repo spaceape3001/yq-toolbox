@@ -180,7 +180,8 @@ namespace yq {
         };
         
     
-        
+        using icon_size_t       = uint16_t;
+        using icon_map_t        = std::map<icon_size_t, std::string_view>;
     
     
             //  I mean, really, 255 ain't enough?? Even in full-on UTF-8, that's over 40 characters.
@@ -250,10 +251,12 @@ namespace yq {
         //  TODO
         bool                            has_tag(std::string_view) const;
         
+        std::string_view                icon(icon_size_t) const;
+        
         //!     Internal UI icon mapping (assume data paths are valid)
         //!  0  implies SVG (or similar)
         //!  >0 imply nominal pixel size
-        const std::map<int,std::string_view>& icons() const { return m_icons; }
+        const icon_map_t&               icons() const { return m_icons; }
 
         //! \brief Our ID number
         id_t                            id() const { return m_id; }
@@ -458,7 +461,7 @@ namespace yq {
     
         string_view_any_map_t                   m_tagsByString;
         std::map<int,Any>                       m_tagsByInt;
-        std::map<int,std::string_view>          m_icons;
+        icon_map_t                              m_icons;
         string_view_xset_t                      m_aliases;
         std::string_view                        m_description;
         std::string_view                        m_label;

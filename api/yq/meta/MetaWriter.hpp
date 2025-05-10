@@ -49,7 +49,7 @@ namespace yq {
         */
         Writer&     description(std::string_view zDescription);
         
-        Writer&     icon(int, std::string_view zIcon);
+        Writer&     icon(icon_size_t, std::string_view zIcon);
         
         /*! \brief Sets a label
         
