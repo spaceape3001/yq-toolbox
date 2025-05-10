@@ -241,6 +241,7 @@ namespace yq {
         //! Extracts the effective axis of rotation from the quaternion, returns it
         Vector3<unity_t<T>>         axis() const;
         
+        //! Computes the cayley norm, returns it
         constexpr square_t<T>       cayley_norm() const;
         
         constexpr Quaternion3       conj() const noexcept;
