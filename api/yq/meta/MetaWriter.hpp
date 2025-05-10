@@ -49,6 +49,8 @@ namespace yq {
         */
         Writer&     description(std::string_view zDescription);
         
+        Writer&     icon(int, std::string_view zIcon);
+        
         /*! \brief Sets a label
         
             This defines a label for the meta, ie the human friendly version

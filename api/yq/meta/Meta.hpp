@@ -249,6 +249,11 @@ namespace yq {
 
         //  TODO
         bool                            has_tag(std::string_view) const;
+        
+        //!     Internal UI icon mapping (assume data paths are valid)
+        //!  0  implies SVG (or similar)
+        //!  >0 imply nominal pixel size
+        const std::map<int,std::string_view>& icons() const { return m_icons; }
 
         //! \brief Our ID number
         id_t                            id() const { return m_id; }
@@ -291,7 +296,7 @@ namespace yq {
         bool                            is_cursor() const;
 
         bool                            is_delegate() const;
-
+ 
         bool                            is_editor() const;
 
         bool                            is_execute() const;
@@ -453,6 +458,7 @@ namespace yq {
     
         string_view_any_map_t                   m_tagsByString;
         std::map<int,Any>                       m_tagsByInt;
+        std::map<int,std::string_view>          m_icons;
         string_view_xset_t                      m_aliases;
         std::string_view                        m_description;
         std::string_view                        m_label;

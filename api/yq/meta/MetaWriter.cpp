@@ -81,6 +81,13 @@ namespace yq {
         return *this;
     }
 
+    Meta::Writer&     Meta::Writer::icon(int n, std::string_view zIcon)
+    {
+        if(m_meta && thread_safe_write())
+            m_meta -> m_icons[n] = zIcon;
+        return *this;
+    }
+
     Meta::Writer&     Meta::Writer::label(std::string_view zLabel)
     {
         if(m_meta && thread_safe_write())

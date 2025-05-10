@@ -120,6 +120,9 @@ namespace yq {
         m_all.properties  += m_local.properties;
 
         if(m_base){
+            for(auto& i : m_base->m_icons)
+                m_icons.insert(i);
+        
             m_local.bases << m_base;
             m_base -> sweep();
             m_base -> m_local.derived << this;
