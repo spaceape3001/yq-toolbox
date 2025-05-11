@@ -244,6 +244,7 @@ namespace yq {
         //! Computes the cayley norm, returns it
         constexpr square_t<T>       cayley_norm() const;
         
+        //! Computes & returns the conjugate of this quaternion (abbreviated spelling)
         constexpr Quaternion3       conj() const noexcept;
         constexpr Quaternion3       conjugate() const noexcept;
         constexpr Quaternion3<inverse_t<T>>   inverse() const noexcept;
