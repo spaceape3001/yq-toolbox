@@ -246,6 +246,8 @@ namespace yq {
         
         //! Computes & returns the conjugate of this quaternion (abbreviated spelling)
         constexpr Quaternion3       conj() const noexcept;
+
+        //! Computes & returns the conjugate of this quaternion
         constexpr Quaternion3       conjugate() const noexcept;
         constexpr Quaternion3<inverse_t<T>>   inverse() const noexcept;
         constexpr square_t<T>    length²() const noexcept;
