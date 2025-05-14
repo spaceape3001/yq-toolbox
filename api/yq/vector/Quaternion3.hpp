@@ -252,6 +252,8 @@ namespace yq {
         
         //! Computes & returns the inverse for this quaternion
         constexpr Quaternion3<inverse_t<T>>   inverse() const noexcept;
+        
+        //! Computes the square of the length to this quaternion
         constexpr square_t<T>    length²() const noexcept;
         T                        length() const;
         
