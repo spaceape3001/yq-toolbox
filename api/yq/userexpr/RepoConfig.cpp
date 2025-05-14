@@ -260,6 +260,36 @@ namespace {
         return ::fabs(v);
     }
 
+    double   fn_acos(double v)
+    {
+        return yq::acos(v).value;
+    }
+
+    double   fn_acosd(double v)
+    {
+        return Degree(yq::acos(v)).value;
+    }
+
+    double   fn_asin(double v)
+    {
+        return yq::asin(v).value;
+    }
+
+    double   fn_asind(double v)
+    {
+        return Degree(yq::asin(v)).value;
+    }
+
+    double   fn_atan(double v)
+    {
+        return yq::atan(v).value;
+    }
+
+    double   fn_atand(double v)
+    {
+        return Degree(yq::atan(v)).value;
+    }
+
     double    fn_atan2(double y, double x)
     {
         return atan(y,x).value;
@@ -325,6 +355,16 @@ namespace {
         return ::sqrt(x);
     }
     
+    double  fn_tan(double v)
+    {
+        return tan(Radian(v));
+    }
+
+    double  fn_tand(double v)
+    {
+        return tan(Degree(v));
+    }
+
     double  fn_time() 
     {
         time_t  now;
@@ -348,8 +388,14 @@ namespace {
         w.operands(kStandardOperators);
         
         w.function("abs", fn_abs);
+        w.function("acos", fn_acos);
+        w.function("acosd", fn_acosd);
+        w.function("asin", fn_asin);
+        w.function("asind", fn_asind);
+        w.function("atan", fn_atan);
         w.function("atan2", fn_atan2);
         w.function("atan2d", fn_atan2d);
+        w.function("atand", fn_atand);
         w.function("cbrt", fn_cbrt);
         w.function("cos", fn_cos);
         w.function("cosd", fn_cosd);
@@ -361,6 +407,8 @@ namespace {
         w.function("sin", fn_sin);
         w.function("sind", fn_sind);
         w.function("sqrt", fn_sqrt);
+        w.function("tan", fn_tan);
+        w.function("tand", fn_tand);
         w.function("time", fn_time);
     }
 
