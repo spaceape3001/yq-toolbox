@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename> struct AxSide4;
+
+    using AxSide4D = AxSide4<double>;
+    using AxSide4F = AxSide4<float>;
+    using AxSide4I = AxSide4<int>;
+    using AxSide4U = AxSide4<unsigned>;
+}
