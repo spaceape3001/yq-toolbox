@@ -255,6 +255,9 @@ namespace yq {
         
         //! Computes the square of the length to this quaternion
         constexpr square_t<T>    length²() const noexcept;
+        
+        //! Computes the length to this quaternion, returns result
+        //! \note the square root must be valid for T^2
         T                        length() const;
         
         //template <typename>
