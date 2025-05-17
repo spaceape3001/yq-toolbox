@@ -268,6 +268,7 @@ namespace yq {
 
         //template <typename>
         //requires std::is_floating_point_v<T>
+        //! Returns the angle of rotation required around the Y-axis for the zyx rotation sequence
         Radian                      angle(zyx_k, y_k) const;
 
         //template <typename>
