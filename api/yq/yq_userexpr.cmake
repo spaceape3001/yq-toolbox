@@ -5,6 +5,7 @@
 ################################################################################
 
 add_library(yq_userexpr SHARED
+    userexpr/AlgebraString.cpp
     userexpr/RepoConfig.cpp
     userexpr/UserExpr.cpp
 

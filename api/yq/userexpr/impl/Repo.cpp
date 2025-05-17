@@ -16,6 +16,8 @@ namespace yq::expr {
     
     Repo::Repo() : CompoundInfo("yq::expr::Repo", std::source_location::current())
     {
+        m_punctText.insert('.');
+        m_punctText.insert('_');
     }
     
     Repo::~Repo()
