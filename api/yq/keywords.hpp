@@ -68,6 +68,7 @@ namespace yq {
     struct delete_k {};
     struct diagonal_k {};
     struct diameter_k {};
+    struct dimension_k {};
     struct dimensions_k {};
     struct disable_k {};
     struct disabled_k {};
@@ -325,6 +326,8 @@ namespace yq {
     static constexpr const default_k            DEFAULT;
     static constexpr const diagonal_k           DIAGONAL;
     static constexpr const diameter_k           DIAMETER;
+    static constexpr const dimension_k          DIM;
+    static constexpr const dimension_k          DIMENSION;
     static constexpr const dimensions_k         DIMENSIONS;
     static constexpr const disable_k            DISABLE;
     static constexpr const disabled_k           DISABLED;
