@@ -100,6 +100,8 @@ namespace yq {
         template <typename T>
         any_x       convert() const;
 
+        bool        invalid() const { return !is_valid(); }
+
         bool            is_valid() const;
 
         //Any         get_field(const std::string&) const;

@@ -17,7 +17,7 @@
 
 namespace yq {
 
-    inline Any::Any() : m_type(&invalid()), m_data{}
+    inline Any::Any() : m_type(&yq::invalid()), m_data{}
     {
     }
 
