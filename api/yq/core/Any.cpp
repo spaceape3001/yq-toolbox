@@ -127,6 +127,16 @@ namespace yq {
         set<std::string>(to_string(z));
     }
     
+    Any::Any(const std::string&z) : m_type(nullptr)
+    {
+        set<std::string>(z);
+    }
+    
+    Any::Any(std::string_view z) : m_type(nullptr)
+    {
+        set<std::string>(std::string(z));
+    }
+    
     Any::Any(parse_k, const TypeInfo&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
     {
     }

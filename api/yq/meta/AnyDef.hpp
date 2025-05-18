@@ -21,6 +21,9 @@
 namespace yq {
     class Stream;
     template <typename> struct Result;
+    
+    class Any;
+    template <typename T> constexpr bool is_any_v   = std::is_same_v<std::remove_cv_t<T>, Any>;
 
     /*! \brief Generic Data
 
@@ -49,6 +52,9 @@ namespace yq {
         explicit Any(const std::u8string&);
         explicit Any(const std::u32string&);
         explicit Any(const std::wstring&);
+        explicit Any(const std::string&);
+        explicit Any(std::string_view);
+        
     #ifdef ENABLE_QT
         explicit Any(const QString&);
     #endif
@@ -65,8 +71,12 @@ namespace yq {
             \note EXPLICIT is required to keep the compiler from getting greedy.
         */
         template <typename T>
-        requires (!std::is_same_v<T,Any>)
+        requires (is_type_v<std::remove_cv_t<T>> && !is_any_v<T>)
         explicit Any(T&&);
+
+        template <typename T>
+        requires (is_type_v<std::remove_cv_t<T>> && !is_any_v<T>)
+        explicit Any(const T&);
 
         ~Any();
 
@@ -74,13 +84,13 @@ namespace yq {
         Any&        operator=(Any&&);
         
         template <typename T>
-        requires (is_type_v<std::decay_t<T>> && !std::is_same_v<T,Any>)
+        requires (is_type_v<std::decay_t<T>> && !is_any_v<T>)
         Any&        operator=(T&&);
         
         bool            operator==(const Any&) const;
         
         template <typename T>
-        requires (is_type_v<std::decay_t<T>> && !std::is_same_v<T,Any>)
+        requires (is_type_v<std::decay_t<T>> && !is_any_v<T>)
         bool        operator==(const T&) const;
         //template <typename T>
         //bool        operator!=(const T&) const;
@@ -241,9 +251,11 @@ namespace yq {
         
         Any(const TypeInfo&&) = delete;
         
-        
         template <typename T>
         void    set(T&&val);
+
+        template <typename T>
+        void    set(const T&val);
         
         void    set(std::string&&);
         void    set(std::string_view);

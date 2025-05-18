@@ -65,7 +65,7 @@ namespace yq {
         using Info   = TypeInfo;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsCompound      = false;
-        static constexpr const bool IsType          = true;
+        static constexpr const bool IsType          = false;
         static constexpr const bool IsObject        = false;
         static constexpr const bool IsInterface     = false;
         static constexpr const bool IsProxy         = false;

@@ -31,14 +31,21 @@ namespace yq {
     }
 
     template <typename T>
-    requires (!std::is_same_v<T, Any>)
+    requires (is_type_v<std::remove_cv_t<T>> && !is_any_v<T>)
     Any::Any(T&& val) : m_type(nullptr)
     {
         set(val);
     }
 
     template <typename T>
-    requires (is_type_v<std::decay_t<T>> && !std::is_same_v<T,Any>)
+    requires (is_type_v<std::remove_cv_t<T>> && !is_any_v<T>)
+    Any::Any(const T& val) : m_type(nullptr)
+    {
+        set(val);
+    }
+
+    template <typename T>
+    requires (is_type_v<std::decay_t<T>> && !is_any_v<T>)
     Any&    Any::operator=(T&& cp)
     {
         set(cp);
@@ -46,7 +53,7 @@ namespace yq {
     }
 
     template <typename T>
-    requires (is_type_v<std::decay_t<T>> && !std::is_same_v<T,Any>)
+    requires (is_type_v<std::decay_t<T>> && !is_any_v<T>)
     bool        Any::operator==(const T&b) const
     {
         if(&meta<T>() != m_type)
@@ -143,6 +150,26 @@ namespace yq {
         } else {
             m_data.ctorCopy(val);
         }
+    }
+
+    template <typename T>
+    void Any::set(const T& val)
+    {
+        using U     = std::decay<T>::type;
+        static_assert( is_type_v<U>, "TypeInfo must be metatype defined!");
+        
+        const TypeInfo& newType  = meta<U>();
+        if(m_type){
+            if(&newType == m_type){
+                m_data.reference<U>() = val;
+                return;
+            }
+            (m_type->m_dtor)(m_data);
+        }
+        
+        assert(good(newType));
+        m_type      = &newType;
+        m_data.ctorCopy(val);
     }
 
     inline void    Any::set(std::string_view cp)
