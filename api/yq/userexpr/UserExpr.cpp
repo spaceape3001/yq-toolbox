@@ -8,8 +8,10 @@
 
 #include <yq/errors.hpp>
 #include <yq/core/Any.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/text/format32.hpp>
+#include <yq/userexpr/AlgebraString.hpp>
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/Context.hpp>
 #include <yq/userexpr/impl/Compiler.hpp>
@@ -18,6 +20,7 @@
 #include <yq/userexpr/impl/SymData.hpp>
 #include <yq/userexpr/impl/Tokenize.hpp>
 #include <yq/userexpr/impl/VirtualMachine.hpp>
+#include <yq/userexpr/opcode/VariableInstruction.hpp>
 
 namespace yq {
 
@@ -34,6 +37,10 @@ namespace yq {
 		std::u32string 	u32	= to_u32string(sv);
 		m_buildError = _init(u32);
 	}
+
+    UserExpr::UserExpr(const AlgebraString& as) : UserExpr(as.algebra)
+    {
+    }
 	
     UserExpr::UserExpr(std::u32string_view uin)
     {
@@ -60,6 +67,7 @@ namespace yq {
         ec      = builder.compile(m_algebra);
         if(ec)
             return ec;
+        m_definition    = std::u32string(uxpr);
         m_machine       = vm;
         return {};
 	}
@@ -84,6 +92,26 @@ namespace yq {
         if(values.size() > 1)
             return errors::mulitple_values();
         return values.pop();
+    }
+
+    void    UserExpr::get_variables_in_use(u32string_view_set_t& ret) const
+    {
+        if(!m_machine.valid())
+            return ;
+        
+        for(const auto& ins : m_machine->m_instructions){
+            if(const expr::VariableInstruction* var = dynamic_cast<const expr::VariableInstruction*>(ins.ptr())){
+                ret.insert(var->text());
+            }
+        }
+        
+    }
+
+    size_t  UserExpr::opcode_count() const
+    {
+        if(!m_machine.valid())
+            return 0;
+        return m_machine->m_instructions.size();
     }
 }
 

@@ -216,6 +216,7 @@ int main()
         expect(sdouble("2*pi", 2.0*std::numbers::pi_v<double>));
         expect(sdouble("sqrt(4)", 2.0));
         expect(sdouble("sqrt(25)", 5.0));
+        expect(sdouble("1", 1.));
     };
     
     #if 0

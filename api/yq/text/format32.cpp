@@ -253,4 +253,9 @@ namespace yq {
         return ret;
     }
 
+    std::u32string      to_u32string(const std::string& string)
+    {
+        return to_u32string((std::string_view) string);
+    }
+
 }

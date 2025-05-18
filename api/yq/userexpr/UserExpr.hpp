@@ -9,10 +9,13 @@
 #include <yq/core/Ref.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/userexpr/forward.hpp>
+#include <yq/typedef/string_sets.hpp>
 
 #include <system_error>
 
 namespace yq {
+
+    struct AlgebraString;
 
     /*! \brief User defined expressions
     
@@ -35,6 +38,8 @@ namespace yq {
 
         explicit UserExpr(std::string_view);
         explicit UserExpr(std::u32string_view);
+        
+        UserExpr(const AlgebraString&);
 
         const std::u32string&   definition() const { return m_definition; }
         const SymVector&        algebra() const { return m_algebra; }
@@ -44,6 +49,11 @@ namespace yq {
         
         any_x             evaluate() const;
         any_x             evaluate(expr::Context&) const;
+        
+        //  results will be good unless user expr is deleted/modified
+        void                get_variables_in_use(u32string_view_set_t&) const;
+        
+        size_t                  opcode_count() const;
         
 
     private:

@@ -18,6 +18,10 @@
 
 
 namespace yq {
+    
+    static const TypeInfo& invalidType() { return invalid(); }
+
+
     bool    Any::good(const TypeInfo&ti)
     {
         //  these are the function pointers that won't be checked at runtime
@@ -45,7 +49,7 @@ namespace yq {
     Any::Any(Any&&mv) : m_type(mv.m_type)
     {
         (m_type -> m_ctorMove)(m_data, std::move(mv.m_data));
-        mv.m_type   = &invalid();
+        mv.m_type   = &invalidType();
     }
     
     Any::Any(const TypeInfo* newTypePtr) 
@@ -123,6 +127,16 @@ namespace yq {
         set<std::string>(to_string(z));
     }
     
+    Any::Any(const std::string&z) : m_type(nullptr)
+    {
+        set<std::string>(z);
+    }
+    
+    Any::Any(std::string_view z) : m_type(nullptr)
+    {
+        set<std::string>(std::string(z));
+    }
+    
     Any::Any(parse_k, const TypeInfo&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
     {
     }
@@ -152,7 +166,7 @@ namespace yq {
         (m_type -> m_dtor)(m_data);
         
         #ifndef NDEBUG
-        m_type      = &invalid();
+        m_type      = &invalidType();
         #endif
     }
     
@@ -188,7 +202,7 @@ namespace yq {
                 m_type  = mv.m_type;
                 (m_type -> m_ctorMove)(m_data, std::move(mv.m_data));
             }
-            mv.m_type   = &invalid();
+            mv.m_type   = &invalidType();
         }
         return *this;
     }
@@ -206,7 +220,7 @@ namespace yq {
     {
         if(m_type == &newType)
             return true;
-        if(&newType == &invalid())
+        if(&newType == &invalidType())
             return true;
         if(&newType == &any())
             return true;
@@ -238,7 +252,7 @@ namespace yq {
     {
         if(m_type){
             m_type -> m_dtor(m_data);
-            m_type  = &invalid();
+            m_type  = &invalidType();
         }
     }
     
@@ -251,11 +265,11 @@ namespace yq {
             
         if(&newType == m_type)
             return *this;
-        if(&newType == &invalid())
+        if(&newType == &invalidType())
             return *this;
         if(&newType == &any())
             return *this;
-        if(m_type == &invalid())
+        if(m_type == &invalidType())
             return errors::invalid_conversion();
             
         auto fn = m_type -> m_convert.get(&newType, nullptr);
@@ -271,7 +285,7 @@ namespace yq {
 
     bool            Any::is_valid() const
     {
-        return m_type && (m_type != &invalid());
+        return m_type && (m_type != &invalidType());
     }
 
     std::error_code Any::parse(const TypeInfo&newType, const std::string_view&txt)

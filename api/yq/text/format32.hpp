@@ -151,6 +151,8 @@ namespace yq {
 
     std::u32string      to_u32string(std::string_view);
 
+    std::u32string      to_u32string(const std::string&);
+
     /*! Converts the u32string view to u32string u32string view
     
         Yes, there's a constructor, however, this is for the template (below);  Copy 
