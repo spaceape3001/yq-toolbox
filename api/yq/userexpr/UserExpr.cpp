@@ -8,6 +8,7 @@
 
 #include <yq/errors.hpp>
 #include <yq/core/Any.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/text/format32.hpp>
 #include <yq/userexpr/AlgebraString.hpp>
@@ -66,6 +67,7 @@ namespace yq {
         ec      = builder.compile(m_algebra);
         if(ec)
             return ec;
+        m_definition    = std::u32string(uxpr);
         m_machine       = vm;
         return {};
 	}
@@ -103,6 +105,13 @@ namespace yq {
             }
         }
         
+    }
+
+    size_t  UserExpr::opcode_count() const
+    {
+        if(!m_machine.valid())
+            return 0;
+        return m_machine->m_instructions.size();
     }
 }
 

@@ -52,6 +52,9 @@ namespace yq {
         
         //  results will be good unless user expr is deleted/modified
         void                get_variables_in_use(u32string_view_set_t&) const;
+        
+        size_t                  opcode_count() const;
+        
 
     private:
         SymVector			        m_algebra;
