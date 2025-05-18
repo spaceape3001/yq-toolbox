@@ -52,6 +52,8 @@ namespace yq::expr {
                     continue;
                 if(_r.is_punct_text(in[cnt]))
                     continue;
+                if((in[cnt] == '.') && (cnt+1<in.size()) && is_alpha(in[cnt+1])) // allow for a.x syntax
+                    continue;
                 break;
             }
             return ret;
