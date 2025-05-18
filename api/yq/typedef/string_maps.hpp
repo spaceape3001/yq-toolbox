@@ -31,5 +31,5 @@ namespace yq {
     using string_view_map_t         = std::map<std::string_view,std::string_view,IgCase>;
 
     using u32string_any_map_t       = std::map<std::u32string,Any,IgCase>;
-    using u32string_map_t          = std::map<std::u32string,std::u32string,IgCase>;
+    using u32string_map_t           = std::map<std::u32string,std::u32string,IgCase>;
 }
