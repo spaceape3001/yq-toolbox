@@ -278,6 +278,7 @@ namespace yq {
 
         //template <typename>
         //requires std::is_floating_point_v<T>
+        //! Angles around all three axis for the zyx rotation sequenece
         unit::Radian3D              angle(zyx_k) const;
     };
 
