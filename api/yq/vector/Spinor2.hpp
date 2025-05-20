@@ -158,7 +158,10 @@ namespace yq {
 
         //template <typename>
         //requires std::is_floating_point_v<T>
-        Radian                      angle() const;
+        Radian                  angle() const;
+        Radian                  angle(ccw_k) const;
+        Radian                  angle(clockwise_k) const;
+        Radian                  angle(heading_k) const;
         
                 //! Computes & returns the conjugate of this spinor (abbreviated spelling)
         constexpr Spinor2       conj() const noexcept;

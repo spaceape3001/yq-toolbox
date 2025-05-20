@@ -22,6 +22,8 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
+    template <typename> struct Spinor2;
+
     /*! \brief 2x2 second order tensor (ie a matrix)
     
         \tparam[T]  Data type to be used, recommended to be arithmetic in nature
@@ -103,6 +105,10 @@ namespace yq {
         explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;
         #endif
         
+        template <typename=void>
+        requires std::is_floating_point_v<T>
+        explicit Tensor22(const Spinor2<T>&);
+
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor22&) const noexcept = default;
 
@@ -110,7 +116,6 @@ namespace yq {
         //! Implicit conversion to GLM
         explicit operator glm::mat<2,2,T,glm::defaultp>() const noexcept;
         #endif
-
 
         //! Positive (affirmation) operator
         constexpr Tensor22  operator+() const noexcept;
@@ -486,6 +491,14 @@ namespace yq {
     template <typename T>
     constexpr T     trace(const Tensor22<T>& ten);
 
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Tensor22<T>& v);
+    
+    template <typename T>
+    Stream& operator<<(Stream&s, const Tensor22<T>& v);
+
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Tensor22<T>& v);
 }
 
 YQ_TYPE_DECLARE(yq::Tensor22D)

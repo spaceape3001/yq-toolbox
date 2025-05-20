@@ -49,6 +49,7 @@ namespace yq {
     template <typename> struct Rectangle2;
     template <typename> struct Segment2;
     template <typename> struct Size2;
+    template <typename> struct Spinor2;
     template <typename> struct Tensor21;
     template <typename> struct Tensor22;
     template <typename> struct Tensor23;

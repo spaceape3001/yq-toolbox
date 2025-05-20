@@ -38,6 +38,16 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Tensor22<T>::Tensor22(clockwise_k, MKS<T,dim::Angle>v) : Tensor22(CCW, -v) {}
 
+    #ifdef YQ_MATH_SPINOR2_HPP
+    template <typename T>
+        template <typename>
+    requires std::is_floating_point_v<T>
+    Tensor22<T>::Tensor22(const Spinor2<T>& q)  :
+        Tensor22(COLUMNS,  q * Vector2<T>(X), q * Vector2<T>(Y) )
+    {
+    }
+    #endif
+
     #ifdef YQ_USE_GLM
     template <typename T>
         template <glm::qualifier Q>
@@ -647,4 +657,26 @@ namespace yq {
     {
         return ten.y_row();
     }
+
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Tensor22<T>& v)
+    {
+        return s << "[" << v.xx << "," << v.xy << ";" << v.yx << "," << v.yy << "]";
+    }
+    
+    #ifdef YQ_BASIC_STREAM_HPP_
+    template <typename T>
+    Stream& operator<<(Stream&s, const Tensor22<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
+
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Tensor22<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
 }

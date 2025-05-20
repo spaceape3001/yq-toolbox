@@ -28,7 +28,6 @@ void    print_spinor2(Stream& str, const Spinor2<T>& v)
     str << "(" << v.w << "," << v.z << ")";
 }
 
-
 static std::string_view write_spinor2d(const Spinor2D& v)
 {
     static thread_local char    buffer [ 256 ];
@@ -111,3 +110,4 @@ static void reg_spinor2()
 }
 
 YQ_INVOKE(reg_spinor2();)
+

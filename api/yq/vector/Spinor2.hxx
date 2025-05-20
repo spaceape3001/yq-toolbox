@@ -166,18 +166,10 @@ namespace yq {
     requires (std::is_floating_point_v<T> && std::is_floating_point_v<U>)
     constexpr Vector2<product_t<T,U>>   Spinor2<T>::operator* (const Vector2<U>&b) const noexcept
     {
-        // Spinor2D Multiplication is Associative, i.e. Q1*Q2*Q3 == Q1*(Q2*Q3)
-        // We're going to do the vecAsQuat * ~a portion first, removing the portions of the multiply
-        // that would just equate to zero anyways
+        // TODO ... this routine is suspect....
+        product_t<T,U> qx  = w*b.x-z*b.y;
+        product_t<T,U> qy  = w*b.y+z*b.x;
 
-        // q will be the vector, represented as a quaternion, when multiplied with the conjugate of This
-        product_t<T,U> qx =  w*b.x - z*b.y; 
-        product_t<T,U> qy =  w*b.y + z*b.x; 
-        
-        // Next part is the a * q
-
-        // W will always be zero and since we return a Vec3D, we're not even using it -- don't need to calculate it
-        // If we throw out the calculations for W, we wind up with this for the multiply
         return Vector2<product_t<T,U>>(
             w*qx + z*qy,
             w*qy + z*qx
@@ -207,11 +199,27 @@ namespace yq {
 //  CLASS METHODS
 
     template <typename T>
-        //template <typename>
-    //requires std::is_floating_point_v<T>
     Radian               Spinor2<T>::angle() const
     {
-        return 2. * atan( abs(z), w);
+        return atan(2*w*z,1-2.*z*z);
+    }
+
+    template <typename T>
+    Radian               Spinor2<T>::angle(ccw_k) const
+    {
+        return angle();
+    }
+
+    template <typename T>
+    Radian               Spinor2<T>::angle(clockwise_k) const
+    {
+        return -angle();
+    }
+
+    template <typename T>
+    Radian               Spinor2<T>::angle(heading_k) const
+    {
+        return -angle();
     }
 
     template <typename T>
@@ -313,4 +321,25 @@ namespace yq {
     }
     #endif
     
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Spinor2<T>& v)
+    {
+        return s << "(" << v.w << "," << v.z << ")";
+    }
+    
+    #ifdef YQ_BASIC_STREAM_HPP_
+    template <typename T>
+    Stream& operator<<(Stream&s, const Spinor2<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
+
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Spinor2<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
 }

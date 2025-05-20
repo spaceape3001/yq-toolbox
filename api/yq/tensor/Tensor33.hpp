@@ -33,6 +33,7 @@ namespace yq {
     
     template <typename> struct Polygon3;
     template <typename> struct Polyline3;
+    template <typename> struct Quaternion3;
     template <typename> struct Segment3;
     template <typename> struct Triangle3;
 
