@@ -19,6 +19,9 @@
 
 namespace yq {
 
+//  --------------------------------------------------------
+//  CONSTRUCTORS
+
     #ifdef YQ_MATH_TENSOR_3_3_HPP
     template <typename T>
         template <typename>
@@ -162,6 +165,9 @@ namespace yq {
         y   = chx*shy*chz+shx*chy*shz;
         z   = chx*chy*shz-shx*shy*chz;
     }
+
+//  --------------------------------------------------------
+//  CLASS OPERATORS
 
     template <typename T>
     Quaternion3<T>      Quaternion3<T>::operator+() const
@@ -316,6 +322,9 @@ namespace yq {
         z /= b;
         return *this;
     }
+
+//  --------------------------------------------------------
+//  CLASS METHODS
 
     template <typename T>
         //template <typename>

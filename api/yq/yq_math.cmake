@@ -109,6 +109,7 @@ add_library(yq_math SHARED
     vector/Multivector4.cpp
     vector/Quadvector4.cpp
     vector/Quaternion3.cpp
+    vector/Spinor2.cpp
     vector/Trivector3.cpp
     vector/Trivector4.cpp
     vector/Vector1.cpp
