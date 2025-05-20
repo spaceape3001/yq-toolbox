@@ -299,6 +299,9 @@ namespace yq {
         return {w,x,y,z};
     }
 
+    //! \brief Creates an equivalent quaternion from a rotation tensor 
+    //! \note This is lossy in nature, so tensor(quaterion(tensor)) can lose information if the tensor is more than
+    //!       rotation/scaling.
     template <typename T>
     requires std::is_floating_point_v<T>
     Quaternion3<T>  quaternion(const Tensor33<T>& t);
