@@ -466,7 +466,8 @@ namespace yq {
     }
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Quaternion3<T>& actual, std::type_identity_t<T> w, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
+    bool is_close(const R& compare, const Quaternion3<T>& actual, std::type_identity_t<T> w, 
+        std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z)
     {
         return is_close(compare, actual, Quaternion3<T>(w, x, y, z) );
     }
