@@ -306,6 +306,7 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Quaternion3<T>  quaternion(const Tensor33<T>& t);
 
+    //! \brief Creates a quaternion rotor with the given counter clockwise angle, returns it
     template <typename T>
     Quaternion3<T>  rotor_x(MKS<T,dim::Angle> v);
 
