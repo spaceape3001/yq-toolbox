@@ -314,6 +314,7 @@ namespace yq {
     template <typename T>
     Quaternion3<T>  rotor_y(MKS<T,dim::Angle> v);
 
+    //! \brief Creates a quaternion rotor with the given counter clockwise angle around the Z-axis, returns it
     template <typename T>
     Quaternion3<T>  rotor_z(MKS<T,dim::Angle> v);
 
