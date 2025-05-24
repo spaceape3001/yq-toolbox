@@ -328,6 +328,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    //! Returns the conjugate of the given quaternion
     template <typename T>
     constexpr Quaternion3<T> conjugate(const Quaternion3<T>&a);
 
