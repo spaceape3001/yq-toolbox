@@ -306,12 +306,15 @@ namespace yq {
     requires std::is_floating_point_v<T>
     Quaternion3<T>  quaternion(const Tensor33<T>& t);
 
+    //! \brief Creates a quaternion rotor with the given counter clockwise angle around the X-axis, returns it
     template <typename T>
     Quaternion3<T>  rotor_x(MKS<T,dim::Angle> v);
 
+    //! \brief Creates a quaternion rotor with the given counter clockwise angle around the Y-axis, returns it
     template <typename T>
     Quaternion3<T>  rotor_y(MKS<T,dim::Angle> v);
 
+    //! \brief Creates a quaternion rotor with the given counter clockwise angle around the Z-axis, returns it
     template <typename T>
     Quaternion3<T>  rotor_z(MKS<T,dim::Angle> v);
 
@@ -325,6 +328,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  BASIC FUNCTIONS
 
+    //! Returns the conjugate of the given quaternion
     template <typename T>
     constexpr Quaternion3<T> conjugate(const Quaternion3<T>&a);
 
