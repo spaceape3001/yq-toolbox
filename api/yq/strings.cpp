@@ -11,6 +11,7 @@ namespace yq {
     const std::string_view     szA_Multivector             = "Scalar 'alpha' of the multivector";
     const std::string_view     szA_Quadrilateral           = "First point 'A' of the quadrilateral";
     const std::string_view     szA_Segment                 = "First point 'A' of the segment";
+    const std::string_view     szA_Spinor                  = "Scalar 'alpha' of the spinor";
     const std::string_view     szA_Tetrahedron             = "First point 'A' of the tetrahedron";
     const std::string_view     szA_Triangle                = "First point 'A' of the triangle";
     const std::string_view     szAlpha                     = "alpha";
@@ -273,6 +274,7 @@ namespace yq {
     const std::string_view     szXY                        = "xy";
     const std::string_view     szXY_Bivector               = "XY component of the bivector";
     const std::string_view     szXY_Multivector            = "XY component of the multivector";
+    const std::string_view     szXY_Spinor                 = "XY component of the spinor";
     const std::string_view     szXY_Tensor                 = "XY component of the tensor";
     const std::string_view     szXYZ                       = "xyz";
     const std::string_view     szXYZ_Multivector           = "XYZ component of the multivector";

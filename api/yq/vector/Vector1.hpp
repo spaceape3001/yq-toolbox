@@ -74,13 +74,17 @@ namespace yq {
         constexpr Vector1(all_k, T v) noexcept : x(v) {}
         template <typename=void> requires has_nan_v<T>
         consteval Vector1(nan_k) noexcept : Vector1(ALL, nan_v<T>) {}
+        template <typename=void> requires has_one_v<T>
         consteval Vector1(one_k) noexcept : Vector1(ALL, one_v<T>) {}
         constexpr Vector1(x_k, T v) noexcept : x(v) {}
+        template <typename=void> requires has_one_v<T>
         consteval Vector1(x_k) noexcept : x(one_v<T>) {}
+        template <typename=void> requires has_zero_v<T>
         consteval Vector1(zero_k) noexcept : Vector1(ALL, zero_v<T>) {}
 
         #if YQ_USE_GLM
         template <glm::qualifier Q>
+        requires std::is_floating_point_v<T>
         explicit constexpr Vector1(const glm::vec<1, T, Q>& v) : x(v.x) {}
         #endif
 
@@ -115,6 +119,7 @@ namespace yq {
         #ifdef YQ_USE_GLM
         //! Implicit conversion to GLM vector
         template <glm::qualifier Q>
+        requires std::is_floating_point_v<T>
         constexpr operator glm::vec<1, T, Q>() const noexcept
         {
             return glm::vec<1, T, Q>(x);
@@ -155,11 +160,13 @@ namespace yq {
         //! Addition with scalar
         constexpr Multivector1<T> operator+(T b) const noexcept;
 
+        //! Addition with a box
         constexpr AxBox1<T> operator+(const AxBox1<T>&) const noexcept;
 
         //! Addition with multivector
         constexpr Multivector1<T> operator+(const Multivector1<T>& b) const noexcept;
         
+        //! Addition with a segment
         constexpr Segment1<T> operator+(const Segment1<T>&) const noexcept;
         
         //! Addition
@@ -168,16 +175,19 @@ namespace yq {
         //! Self-addition
         Vector1& operator+=(const Vector1& b) noexcept;
 
+        //! Span-wise addition (results in a vector)
         std::vector<Vector1> operator+(std::span<const Vector1>) const;
 
         //! Subtraction with scalar
         constexpr Multivector1<T> operator-(T b) const noexcept;
         
+        //! Subtraction with a box
         constexpr AxBox1<T> operator-(const AxBox1<T>&) const noexcept;
 
         //! Subtraction with multivector
         constexpr Multivector1<T> operator-(const Multivector1<T>& b) const noexcept;
         
+        //! Subtraction with a segment
         constexpr Segment1<T> operator-(const Segment1<T>&) const noexcept;
 
         //! Subtraction
@@ -468,6 +478,9 @@ namespace yq {
     template <typename T>
     constexpr T  length(const Vector1<T>& vec) noexcept;
 
+//  --------------------------------------------------------
+//  IDENTITY
+
 
 //  --------------------------------------------------------
 //  ADDITION
@@ -476,7 +489,7 @@ namespace yq {
     constexpr Multivector1<T> operator+(T a, const Vector1<T>& b) noexcept;
     
     template <typename T>
-    std::vector<Vector1<T>>   operator+(std::span<Vector1<T>>, Vector1<T>);
+    std::vector<Vector1<T>>   operator+(std::span<const Vector1<T>>, Vector1<T>);
 
 //  --------------------------------------------------------
 //  SUBTRACTION
@@ -484,7 +497,7 @@ namespace yq {
     template <typename T>
     constexpr Multivector1<T> operator-(T a, const Vector1<T>& b) noexcept;
     template <typename T>
-    std::vector<Vector1<T>>   operator-(std::span<Vector1<T>>, Vector1<T>);
+    std::vector<Vector1<T>>   operator-(std::span<const Vector1<T>>, Vector1<T>);
 
 //  --------------------------------------------------------
 //  MULTIPLICATION
@@ -495,11 +508,11 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
-    std::vector<Vector1<product_t<T,U>>>   operator*(T a, std::span<Vector1<U>>);
+    std::vector<Vector1<product_t<T,U>>>   operator*(T a, std::span<const Vector1<U>>);
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector1<product_t<T,U>>>   operator*(std::span<Vector1<T>>, U b);
+    std::vector<Vector1<product_t<T,U>>> operator*(std::span<const Vector1<T>>, U b);
 
     template <typename T, typename U>
     std::vector<Vector1<product_t<T,U>>> operator*(std::span<const Vector1<T>>, const Tensor11<U>&);

@@ -25,6 +25,10 @@
 #include <algorithm>
 
 namespace yq {
+
+//  --------------------------------------------------------
+//  CONSTRUCTORS
+
     #ifdef YQ_MATH_SIZE1_HPP
     template <typename T>
     constexpr Vector1<T>::Vector1(const Size1<T>&v) noexcept : Vector1(v.x)
@@ -37,6 +41,9 @@ namespace yq {
     {
         return Vector1(-x );
     }
+    
+//  --------------------------------------------------------
+//  CLASS OPERATORS
 
     template <typename T>
     constexpr Vector1<T> Vector1<T>::operator~() const noexcept
@@ -51,6 +58,8 @@ namespace yq {
     {
         return x*x;
     }    
+    
+        //  +
 
     template <typename T>
     constexpr Multivector1<T> Vector1<T>::operator+(T b) const noexcept
@@ -95,19 +104,23 @@ namespace yq {
     }
 
     template <typename T>
-    Vector1<T>& Vector1<T>::operator+=(const Vector1& b) noexcept
-    {
-        x += b.x;
-        return *this;
-    }
-
-    template <typename T>
     std::vector<Vector1<T>> Vector1<T>::operator+(std::span<const Vector1>bs) const
     {
         return transform(bs, [&](const Vector1<T>& b) -> Vector1<T> {
             return *this + b;
         });
     }
+
+        //  +=
+
+    template <typename T>
+    Vector1<T>& Vector1<T>::operator+=(const Vector1& b) noexcept
+    {
+        x += b.x;
+        return *this;
+    }
+
+        //  -
 
     template <typename T>
     constexpr Multivector1<T> Vector1<T>::operator-(T b) const noexcept
@@ -152,13 +165,6 @@ namespace yq {
     }
 
     template <typename T>
-    Vector1<T>& Vector1<T>::operator-=(const Vector1& b) noexcept
-    {
-        x -= b.x;
-        return *this;
-    }
-
-    template <typename T>
     std::vector<Vector1<T>> Vector1<T>::operator-(std::span<const Vector1>bs) const
     {
         return transform(bs, [&](const Vector1<T>& b) -> Vector1<T> {
@@ -166,6 +172,16 @@ namespace yq {
         });
     }
 
+        //  -=
+
+    template <typename T>
+    Vector1<T>& Vector1<T>::operator-=(const Vector1& b) noexcept
+    {
+        x -= b.x;
+        return *this;
+    }
+
+        //  *
 
     template <typename T>
         template <typename U>
@@ -173,15 +189,6 @@ namespace yq {
     constexpr Vector1<product_t<T,U>> Vector1<T>::operator*(U b) const noexcept
     {
         return Vector1<product_t<T,U>>(x*b);
-    }
-
-    template <typename T>
-        template <typename U>
-    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
-    Vector1<T>& Vector1<T>::operator*=(U b) noexcept
-    {
-        x *= b;
-        return *this;
     }
 
     #ifdef YQ_MATH_MULTIVECTOR1_HPP
@@ -242,6 +249,25 @@ namespace yq {
         );
     }
     #endif
+
+    template <typename T>
+        template <typename U>
+    constexpr product_t<T,U> Vector1<T>::operator*(const Vector1<U>& b) const noexcept
+    {
+        return x*b.x;
+    }
+    
+        //  *=
+
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
+    Vector1<T>& Vector1<T>::operator*=(U b) noexcept
+    {
+        x *= b;
+        return *this;
+    }
+
     
     #ifdef YQ_MATH_TENSOR_1_1_HPP
     template <typename T>
@@ -254,12 +280,9 @@ namespace yq {
     }
     #endif
 
-    template <typename T>
-        template <typename U>
-    constexpr product_t<T,U> Vector1<T>::operator*(const Vector1<U>& b) const noexcept
-    {
-        return x*b.x;
-    }
+        //  ..................
+
+
 
     template <typename T>
         template <typename U>
@@ -368,6 +391,9 @@ namespace yq {
         return AxBox1<T>(UNION, *this, b);
     }
     #endif
+
+//  --------------------------------------------------------
+//  CLASS METHODS
 
     template <typename T>
     constexpr Vector1<T> Vector1<T>::all_add(T b) const noexcept
@@ -531,6 +557,33 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+//  --------------------------------------------------------
+//  COMPOSITION
+
+//  --------------------------------------------------------
+//  BASIC FUNCTIONS
+
+    template <typename T>
+    constexpr square_t<T> length²(const Vector1<T>& vec) noexcept
+    {
+        return vec.x*vec.x;
+    }    
+    
+
+    template <typename T>
+    constexpr T  length(const Vector1<T>& vec) noexcept
+    {
+        return sqrt(length²(vec));
+    }
+
+//  --------------------------------------------------------
+//  IDENTITY
+
+
+//  --------------------------------------------------------
+//  ADDITION
+
+
     #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
     constexpr Multivector1<T> operator+(T a, const Vector1<T>& b) noexcept
@@ -543,12 +596,15 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector1<T>>   operator+(std::span<Vector1<T>>as, Vector1<T>b)
+    std::vector<Vector1<T>>   operator+(std::span<const Vector1<T>>as, Vector1<T>b)
     {
         return transform(as, [&](const Vector1<T>&a) -> Vector1<T> {
             return a + b;
         });
     }
+
+//  --------------------------------------------------------
+//  SUBTRACTION
 
     #ifdef YQ_MATH_MULTIVECTOR1_HPP
     template <typename T>
@@ -562,12 +618,16 @@ namespace yq {
     #endif
 
     template <typename T>
-    std::vector<Vector1<T>>   operator-(std::span<Vector1<T>>as, Vector1<T>b)
+    std::vector<Vector1<T>>   operator-(std::span<const Vector1<T>>as, Vector1<T>b)
     {
         return transform(as, [&](const Vector1<T>&a) -> Vector1<T> {
             return a - b;
         });
     }
+
+
+//  --------------------------------------------------------
+//  --------------------------------------------------------
 
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
@@ -578,7 +638,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
-    std::vector<Vector1<product_t<T,U>>>   operator*(T a, std::span<Vector1<U>>bs)
+    std::vector<Vector1<product_t<T,U>>>   operator*(T a, std::span<const Vector1<U>>bs)
     {
         return transform(bs, [&](const Vector1<U>&b) -> Vector1<product_t<T,U>> {
             return a * b;
@@ -587,7 +647,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector1<product_t<T,U>>>   operator*(std::span<Vector1<T>>as, U b)
+    std::vector<Vector1<product_t<T,U>>>   operator*(std::span<const Vector1<T>>as, U b)
     {
         return transform(as, [&](const Vector1<T>&a) -> Vector1<product_t<T,U>> {
             return a * b;
@@ -643,7 +703,7 @@ namespace yq {
 
     template <typename T, typename U>
     requires (is_arithmetic_v<U>)
-    std::vector<Vector1<quotient_t<T,U>>>   operator/(std::span<Vector1<T>>as, U b)
+    std::vector<Vector1<quotient_t<T,U>>>   operator/(std::span<const Vector1<T>>as, U b)
     {
         return transform(as, [&](const Vector1<T>&a) -> Vector1<quotient_t<T,U>> {
             return a / b;
@@ -723,19 +783,6 @@ namespace yq {
         return { val };
     }
     #endif
-
-    template <typename T>
-    constexpr square_t<T> length²(const Vector1<T>& vec) noexcept
-    {
-        return vec.length²();
-    }    
-    
-
-    template <typename T>
-    constexpr T  length(const Vector1<T>& vec) noexcept
-    {
-        return vec.length();
-    }
 
     template <typename T>
     constexpr Vector1<T>   max_elem(const Vector1<T>&a, const Vector1<T>&b) noexcept

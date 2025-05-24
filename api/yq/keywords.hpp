@@ -39,6 +39,7 @@ namespace yq {
     struct all_k {};
     struct allocate_k {};
     struct always_k {};
+    struct alpha_k {};
     struct any_k {};
     struct asset_k {};
     struct box_k {};
@@ -297,6 +298,7 @@ namespace yq {
     static constexpr const adjustable_k         ADJUSTABLE;
     static constexpr const all_k                ALL;
     static constexpr const allocate_k           ALLOCATE;
+    static constexpr const alpha_k              ALPHA;
     static constexpr const always_k             ALWAYS;
     static constexpr const any_k                ANY;
     static constexpr const asset_k              ASSET;

@@ -19,6 +19,7 @@ namespace yq {
     extern const std::string_view     szA_Multivector;
     extern const std::string_view     szA_Quadrilateral;
     extern const std::string_view     szA_Segment;
+    extern const std::string_view     szA_Spinor;
     extern const std::string_view     szA_Tetrahedron;
     extern const std::string_view     szA_Triangle;
     extern const std::string_view     szAlpha;
@@ -281,6 +282,7 @@ namespace yq {
     extern const std::string_view     szXY;
     extern const std::string_view     szXY_Bivector;
     extern const std::string_view     szXY_Multivector;
+    extern const std::string_view     szXY_Spinor;
     extern const std::string_view     szXY_Tensor;
     extern const std::string_view     szXYZ;
     extern const std::string_view     szXYZ_Multivector;

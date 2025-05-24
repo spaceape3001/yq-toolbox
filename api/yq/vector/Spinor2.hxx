@@ -22,6 +22,26 @@ namespace yq {
 //  --------------------------------------------------------
 //  CONSTRUCTORS
 
+    #ifdef YQ_MATH_MULTIVECTOR_2_HPP
+    template <typename T>
+    constexpr Spinor2<T>::Spinor2(const Multivector2<T>&v) : a(v.a), xy(v.xy)
+    {
+    }
+    #endif
+
+    template <typename T>
+    Spinor2<T>::Spinor2(ccw_k, Radian v)
+    {
+        a   = cos(v);
+        xy  = sin(v);
+    }
+        
+    template <typename T>
+    Spinor2<T>::Spinor2(clockwise_k, Radian v) : Spinor2(CCW, -v)
+    {
+    }
+
+#if 0
     #ifdef YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
         template <typename>
@@ -34,29 +54,7 @@ namespace yq {
         z	= copysign(z, t.yx-t.xy);
     }
     #endif
-
-    template <typename T>
-    template <typename>
-    requires std::is_floating_point_v<T>
-    Spinor2<T>::Spinor2(ccw_k, MKS<T,dim::Angle>v)
-    {
-        w   = cos(T(0.5)*v);
-        z   = sin(T(0.5)*v);
-    }
-    
-    template <typename T>
-    template <typename>
-    requires std::is_floating_point_v<T>
-    Spinor2<T>::Spinor2(clockwise_k, MKS<T,dim::Angle>v) : Spinor2(CCW, -v)
-    {
-    }
-    
-    template <typename T>
-    template <typename>
-    requires std::is_floating_point_v<T>
-    Spinor2<T>::Spinor2(hpr_k, MKS<T,dim::Angle> hdg_or_yaw) : Spinor2(CLOCKWISE, hdg_or_yaw)
-    {
-    }
+#endif
 
 //  --------------------------------------------------------
 //  CLASS OPERATORS
@@ -70,128 +68,105 @@ namespace yq {
     template <typename T>
     Spinor2<T>      Spinor2<T>::operator-() const
     {
-        return {-w, -z};
+        return {-a, -xy};
     }
 
     template <typename T>
-    template <typename>
-    requires std::is_floating_point_v<T>
     Spinor2<T> Spinor2<T>::operator~() const
     {
         T l = 1./length();
-        return Spinor2<T>(w*l, z*l);
+        return Spinor2<T>(a*l, xy*l);
     }
 
     template <typename T>
-    constexpr square_t<T>  Spinor2<T>::operator^(two_k) const noexcept
+    constexpr Spinor2<T>  Spinor2<T>::operator^(two_k) const noexcept
     {
-        return length²();
+        return *this * *this;
     }
 
     template <typename T>
     constexpr Spinor2<T>  Spinor2<T>::operator+ (const Spinor2<T>&b) const noexcept
     {
-        return Spinor2(w+b.w,z+b.z);
+        return Spinor2(a+b.a,xy+b.xy);
     }
 
     template <typename T>
     Spinor2<T>& Spinor2<T>::operator+=(const Spinor2<T>&b) noexcept
     {
-        w += b.w;
-        z += b.z;
+        a  += b.a;
+        xy += b.xy;
         return *this;
     }
 
     template <typename T>
     constexpr Spinor2<T>  Spinor2<T>::operator- (const Spinor2<T>&b)  const noexcept
     {
-        return Spinor2(w-b.w,z-b.z);
+        return Spinor2(a-b.a,xy-b.xy);
     }
 
     template <typename T>
     Spinor2<T>& Spinor2<T>::operator-=(const Spinor2<T>&b) noexcept
     {
-        w -= b.w;
-        z -= b.z;
+        a  -= b.a;
+        xy -= b.xy;
         return *this;
     }
 
     template <typename T>
-        template <typename U>
-    requires (is_arithmetic_v<U>)
-    constexpr Spinor2<product_t<T,U>>  Spinor2<T>::operator* (U b) const noexcept
+    constexpr Spinor2<T>  Spinor2<T>::operator* (T b) const noexcept
     {
-        return Spinor2<product_t<T,U>>(w*b,z*b);
+        return Spinor2<T>(a*b,xy*b);
     }
 
     template <typename T>
-        template <typename U>
-    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
-    Spinor2<T>& Spinor2<T>::operator*=(U b) noexcept
+    Spinor2<T>& Spinor2<T>::operator*=(T b) noexcept
     {
-        w *= b;
-        z *= b;
+        a  *= b;
+        xy *= b;
         return *this;
     }
 
 
     template <typename T>
-        template <typename U>
-    constexpr Spinor2<product_t<T,U>>  Spinor2<T>::operator* (const Spinor2<U>&b) const noexcept
+    constexpr Spinor2<T>  Spinor2<T>::operator* (const Spinor2&b) const noexcept
     {
-        return Spinor2(
-            w*b.w -z*b.z,
-            w*b.z +z*b.w
-        );
+        return {
+            a*b.a-xy*b.xy,
+            xy*b.a+a*b.xy
+        };
     }
 
     template <typename T>
-        template <typename U>
-    requires self_multiply_v<T,U>
-    Spinor2<T>& Spinor2<T>::operator*=(const Spinor2<U>&b) noexcept
+    Spinor2<T>& Spinor2<T>::operator*=(const Spinor2&b) noexcept
     {
-        if constexpr (std::is_floating_point_v<T>){
-            post_mult(*this, b);
-        } else {
-            *this = *this * b;
-        }
+        *this = *this * b;
         return *this;
     }
-
 
     
     #ifdef YQ_MATH_VECTOR_2_HPP
     template <typename T>
         template <typename U>
-    requires (std::is_floating_point_v<T> && std::is_floating_point_v<U>)
     constexpr Vector2<product_t<T,U>>   Spinor2<T>::operator* (const Vector2<U>&b) const noexcept
     {
-        // TODO ... this routine is suspect....
-        product_t<T,U> qx  = w*b.x-z*b.y;
-        product_t<T,U> qy  = w*b.y+z*b.x;
-
-        return Vector2<product_t<T,U>>(
-            w*qx + z*qy,
-            w*qy + z*qx
-        );
+        return {
+            a*b.x - xy*b.y,
+            a*b.y + xy*b.x
+        };
     }
     #endif
 
     template <typename T>
-        template <typename U>
-    requires (is_arithmetic_v<T>)
-    constexpr Spinor2<quotient_t<T,U>>  Spinor2<T>::operator/ (U b) const noexcept
+    constexpr Spinor2<T>  Spinor2<T>::operator/ (T b) const noexcept
     {
-        return {w/b,z/b};
+        return {a/b,xy/b};
     }
 
     template <typename T>
-        template <typename U>
-    requires (is_arithmetic_v<U> && self_divide_v<T,U>)
-    Spinor2<T>& Spinor2<T>::operator/=(U b) noexcept
+    Spinor2<T>& Spinor2<T>::operator/=(T b) noexcept
     {
-        w /= b;
-        z /= b;
+        a /= b;
+        xy /= b;
         return *this;
     }
 
@@ -201,7 +176,7 @@ namespace yq {
     template <typename T>
     Radian               Spinor2<T>::angle() const
     {
-        return atan(2*w*z,1-2.*z*z);
+        return atan(xy, a);
     }
 
     template <typename T>
@@ -225,7 +200,7 @@ namespace yq {
     template <typename T>
     constexpr Spinor2<T>    Spinor2<T>::conj() const noexcept
     { 
-        return Spinor2(w,-z); 
+        return Spinor2(a,-xy); 
     }
 
     template <typename T>
@@ -243,7 +218,7 @@ namespace yq {
     template <typename T>
     constexpr square_t<T>    Spinor2<T>::length²() const noexcept
     {
-        return w*w+z*z;
+        return a*a+xy*xy;
     }
     
     template <typename T>
@@ -261,15 +236,14 @@ namespace yq {
     requires (is_arithmetic_v<T>)
     constexpr Spinor2<product_t<T,U>>  operator*(T a, const Spinor2<U>&b)
     {
-        return {a*b.w,a*b.z};
+        return {a*b.a,a*b.xy};
     }
 
     template <typename T>
     constexpr Spinor2<T> conjugate(const Spinor2<T>&a)  
     { 
-        return Spinor2(a.w,-a.z); 
+        return Spinor2(a.a,-a.xy); 
     }
-
 
     template <typename T, typename R>
     bool is_close(const R& compare, const Spinor2<T>& actual, const Spinor2<T>& expected)
@@ -278,9 +252,9 @@ namespace yq {
     }
     
     template <typename T, typename R>
-    bool is_close(const R& compare, const Spinor2<T>& actual, std::type_identity_t<T> w, std::type_identity_t<T> z)
+    bool is_close(const R& compare, const Spinor2<T>& actual, std::type_identity_t<T> a, std::type_identity_t<T> xy)
     {
-        return is_close(compare, actual, Spinor2<T>(w, z) );
+        return is_close(compare, actual, Spinor2<T>(a, xy) );
     }
 
     template <typename T>
@@ -295,24 +269,17 @@ namespace yq {
         return a.length();
     }
 
-
+    #ifdef YQ_MATH_MULTIVECTOR_2_HPP
     template <typename T>
-    requires std::is_floating_point_v<T>
-    void    pre_mult(const Spinor2<T>&a, Spinor2<T>&b)
+    Spinor2<T>      spinor(const Multivector2<T>& v)
     {
-        b.z = b.z*a.w + b.w*a.z;
-        b.w = b.w*a.w - b.z*a.z;
+        return { v.a, v.xy };
     }
+    #endif
 
-    template <typename T>
-    requires std::is_floating_point_v<T>
-    void    post_mult(Spinor2<T>&a, const Spinor2<T>&b)
-    {
-        a.z = a.w*b.z  + a.z*b.w;
-        a.w = a.w*b.w  - a.z*b.z;
-    }
-    
-    #if YQ_MATH_TENSOR_3_3_HPP
+    #if 0
+
+    #if YQ_MATH_TENSOR_2_2_HPP
     template <typename T>
     requires std::is_floating_point_v<T>
     Spinor2<T>  spinor(const Tensor22<T>& t)
@@ -320,11 +287,12 @@ namespace yq {
         return Spinor2<T>(t);
     }
     #endif
+    #endif
     
     template <typename S, typename T>
     S&  as_stream(S& s, const Spinor2<T>& v)
     {
-        return s << "(" << v.w << "," << v.z << ")";
+        return s << "(" << v.a << "," << v.xy << ")";
     }
     
     #ifdef YQ_BASIC_STREAM_HPP_

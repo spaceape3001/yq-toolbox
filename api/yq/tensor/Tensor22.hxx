@@ -40,10 +40,9 @@ namespace yq {
 
     #ifdef YQ_MATH_SPINOR2_HPP
     template <typename T>
-        template <typename>
-    requires std::is_floating_point_v<T>
-    Tensor22<T>::Tensor22(const Spinor2<T>& q)  :
-        Tensor22(COLUMNS,  q * Vector2<T>(X), q * Vector2<T>(Y) )
+    Tensor22<T>::Tensor22(const SqSpinor2<T>& q)  : 
+        xx(q.a), xy(-q.xy), // Verify the sign, might need to go on yx...
+        yx(q.xy), yy(q.a)
     {
     }
     #endif

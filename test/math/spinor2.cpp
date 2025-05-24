@@ -10,9 +10,9 @@
 
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/vector/Spinor2.hpp>
-#include <yq/tensor/Tensor22.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <yq/vector/Spinor2.hxx>
-#include <yq/tensor/Tensor22.hxx>
+#include <yq/vector/Vector2.hxx>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -27,6 +27,20 @@ int main()
         expect(true == is_close(tol, Spinor2D(IDENTITY), 1., 0.));
     };
     
+    "rotor1"_test = [&](){
+        Spinor2D    S(CCW, 30._deg);
+        expect(true == is_close(tol, S*Vector2D(X), 0.866025403784439, 0.50000));
+        expect(true == is_close(tol, S*Vector2D(Y), -0.5, 0.866025403784439));
+    };
+    
+    "rotor2"_test = [&](){
+        Spinor2D    S(CLOCKWISE, 30._deg);
+        expect(true == is_close(tol, S*Vector2D(X), 0.866025403784439, -0.50000));
+        expect(true == is_close(tol, S*Vector2D(Y), 0.5, 0.866025403784439));
+    };
+
+    
+    #if 0
     "hpr"_test = [&](){
         //Spinor2D Q( HPR, 30._deg, 0._deg, 0._deg);
         //yInfo() << "Q... " << Q;
@@ -57,6 +71,7 @@ int main()
         expect(true == is_close(tol, unit::Degree(Spinor2D(CCW, -30._deg).angle(CCW)), -30. ));
         expect(true == is_close(tol, unit::Degree(Spinor2D(CCW, -60._deg).angle(CCW)), -60. ));
     };
+    #endif
     
     #if 0
         //   disabling....

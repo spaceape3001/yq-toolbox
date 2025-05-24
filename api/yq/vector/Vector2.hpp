@@ -253,13 +253,38 @@ namespace yq {
         template <typename U>
         constexpr Multivector2<product_t<T,U>> operator*(const Vector2<U>&) const noexcept;
 
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Bivector2<U>&) const noexcept;
+
+        template <typename U>
+        requires self_multiply_v<T,U>
+        Vector2& operator*=(const Bivector2<U>&) noexcept;
+
+        template <typename U>
+        constexpr Multivector2<product_t<T,U>> operator*(const Multivector2<U>&) const noexcept;
+
+        template <typename U>
+        constexpr Vector2<product_t<T,U>> operator*(const Spinor2<U>&) const noexcept;
+
+        template <typename U>
+        requires self_multiply_v<T,U>
+        Vector2& operator*=(const Spinor2<U>&) noexcept;
+
         //! Dot product
         template <typename U>
         constexpr product_t<T,U> operator DOT (const Vector2<U>&b) const noexcept;
 
+
         //! Inner product
         template <typename U>
         constexpr product_t<T,U> operator INNER (const Vector2<U>&b) const noexcept;
+
+        template <typename U>
+        constexpr Vector2<product_t<T,U>>  operator INNER (const Bivector2<U>&b) const noexcept;
+
+        //! Cross product
+        //template <typename U>
+        //constexpr product_t<T,U> operator CROSS (const Vector2<U>&b) const noexcept;
 
         //! Cross product
         template <typename U>

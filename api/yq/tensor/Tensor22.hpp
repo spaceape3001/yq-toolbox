@@ -22,7 +22,7 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
-    template <typename> struct Spinor2;
+    template <typename> struct SqSpinor2;
 
     /*! \brief 2x2 second order tensor (ie a matrix)
     
@@ -105,9 +105,7 @@ namespace yq {
         explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;
         #endif
         
-        template <typename=void>
-        requires std::is_floating_point_v<T>
-        explicit Tensor22(const Spinor2<T>&);
+        explicit Tensor22(const SqSpinor2<T>&);
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor22&) const noexcept = default;

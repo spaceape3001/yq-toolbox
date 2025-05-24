@@ -13,6 +13,8 @@
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
 #include <yq/text/split.hpp>
+#include <yq/vector/Multivector2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 #include "Spinor2.hxx"
 
@@ -25,20 +27,20 @@ using namespace yq;
 template <typename T>
 void    print_spinor2(Stream& str, const Spinor2<T>& v)
 {
-    str << "(" << v.w << "," << v.z << ")";
+    str << "(" << v.a << "," << v.xy << ")";
 }
 
 static std::string_view write_spinor2d(const Spinor2D& v)
 {
     static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", kMaxDoubleDigits, v.w, kMaxDoubleDigits, v.z);
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", kMaxDoubleDigits, v.a, kMaxDoubleDigits, v.xy);
     return std::string_view(buffer, n);
 }
 
 static std::string_view write_spinor2f(const Spinor2F& v)
 {
     static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g", kMaxFloatDigits, v.w, kMaxFloatDigits, v.z);
+    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g", kMaxFloatDigits, v.a, kMaxFloatDigits, v.xy);
     return std::string_view(buffer, n);
 }
 
@@ -47,11 +49,11 @@ static bool  parse_spinor2d(Spinor2D& v, std::string_view str)
     auto bits = split(str, ',');
     if(bits.size() != 2)
         return false;
-    auto w = to_double(bits[0]);
-    auto z = to_double(bits[1]);
-    if(!(z && w)) 
+    auto a = to_double(bits[0]);
+    auto xy = to_double(bits[1]);
+    if(!(a && xy)) 
         return false;
-    v   = Spinor2D(*w, *z);
+    v   = Spinor2D(*a, *xy);
     return true;
 }
 
@@ -60,11 +62,11 @@ static bool  parse_spinor2f(Spinor2F& v, std::string_view str)
     auto bits = split(str, ',');
     if(bits.size() != 2)
         return false;
-    auto w = to_float(bits[0]);
-    auto z = to_float(bits[1]);
-    if(!(z && w)) 
+    auto a = to_float(bits[0]);
+    auto xy = to_float(bits[1]);
+    if(!(a && xy)) 
         return false;
-    v   = Spinor2F(*w, *z);
+    v   = Spinor2F(*a, *xy);
     return true;
 }
 
@@ -74,8 +76,8 @@ static void reg_spinor2()
     {
         auto w = writer<Spinor2D>();
         w.description("2D Spinor in double");
-        w.property(szW, &Spinor2D::w).description(szW_Quaternion).tag(kTag_Save).tag(kTag_Print);
-        w.property(szZ, &Spinor2D::z).description(szZ_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szA, &Spinor2D::a).description(szA_Spinor).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXY, &Spinor2D::xy).description(szXY_Spinor).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<double>();
         //w.operate_with<Vector3D>(); // DISABLED due to bad template expansion causing weird compiler substitution issues
@@ -92,8 +94,8 @@ static void reg_spinor2()
     {
         auto w = writer<Spinor2F>();
         w.description("2D Spinor in float");
-        w.property(szW, &Spinor2F::w).description(szW_Quaternion).tag(kTag_Save).tag(kTag_Print);
-        w.property(szZ, &Spinor2F::z).description(szZ_Quaternion).tag(kTag_Save).tag(kTag_Print);
+        w.property(szA, &Spinor2F::a).description(szA_Spinor).tag(kTag_Save).tag(kTag_Print);
+        w.property(szXY, &Spinor2F::xy).description(szXY_Spinor).tag(kTag_Save).tag(kTag_Print);
         w.operate_self();
         w.operate_with<float>();
         //w.operate_with<Vector3F>(); // DISABLED due to bad template expansion causing weird compiler substitution issues

@@ -26,6 +26,9 @@
 #include <cmath>
 
 namespace yq {
+//  --------------------------------------------------------
+//  CONSTRUCTORS
+
     #ifdef YQ_MATH_SIZE2_HPP
     template <typename T>
     constexpr Vector2<T>::Vector2(const Size2<T>&v) noexcept : Vector2(v.x, v.y)
@@ -33,6 +36,8 @@ namespace yq {
     }
     #endif
 
+//  --------------------------------------------------------
+//  CLASS OPERATORS
 
     //! Negation (negative) operator
     template <typename T>
@@ -53,6 +58,8 @@ namespace yq {
     {
         return x*x + y*y;
     }    
+
+    //  +
 
     template <typename T>
     constexpr Multivector2<T> Vector2<T>::operator+(T b) const noexcept
@@ -165,6 +172,16 @@ namespace yq {
     {
         return Vector2(x+b.x, y+b.y);
     }
+
+    template <typename T>
+    std::vector<Vector2<T>> Vector2<T>::operator+(std::span<const Vector2>bs) const
+    {
+        return transform(bs, [&](const Vector2<T>& b) -> Vector2<T> {
+            return *this + b;
+        });
+    }
+
+    //  +=
     
     template <typename T>
     Vector2<T>& Vector2<T>::operator+=(const Vector2& b) noexcept
@@ -174,13 +191,7 @@ namespace yq {
         return *this;
     }
 
-    template <typename T>
-    std::vector<Vector2<T>> Vector2<T>::operator+(std::span<const Vector2>bs) const
-    {
-        return transform(bs, [&](const Vector2<T>& b) -> Vector2<T> {
-            return *this + b;
-        });
-    }
+    //  -
 
     #ifdef YQ_MATH_MULTIVECTOR2_HPP
     template <typename T>
@@ -280,6 +291,15 @@ namespace yq {
         return Vector2(x-b.x, y-b.y);
     }
 
+    template <typename T>
+    std::vector<Vector2<T>> Vector2<T>::operator-(std::span<const Vector2>bs) const 
+    {
+        return transform(bs, [&](const Vector2<T>& b) -> Vector2<T> {
+            return *this - b;
+        });
+    }
+
+    //  -=
 
     template <typename T>
     Vector2<T>& Vector2<T>::operator-=(const Vector2& b) noexcept
@@ -289,13 +309,7 @@ namespace yq {
         return *this;
     }
 
-    template <typename T>
-    std::vector<Vector2<T>> Vector2<T>::operator-(std::span<const Vector2>bs) const 
-    {
-        return transform(bs, [&](const Vector2<T>& b) -> Vector2<T> {
-            return *this - b;
-        });
-    }
+    //  *
 
     template <typename T>
         template <typename U>
@@ -305,15 +319,32 @@ namespace yq {
         return Vector2<product_t<T,U>>(x*b, y*b);
     }
 
+    #if defined(YQ_MATH_BIVECTOR2_HPP)
     template <typename T>
         template <typename U>
-    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
-    Vector2<T>& Vector2<T>::operator*=(U b) noexcept
+    constexpr Vector2<product_t<T,U>> Vector2<T>::operator*(const Bivector2<U>& b) const noexcept
     {
-        x *= b;
-        y *= b;
-        return *this;
+        return { -y*b.xy, x*b.xy };
     }
+    #endif
+
+    #ifdef YQ_MATH_MULTIVECTOR2_HPP
+    template <typename T>
+        template <typename U>
+    constexpr Multivector2<product_t<T,U>> Vector2<T>::operator*(const Multivector2<U>&b) const noexcept
+    {
+        return { x*b.x+x*b.y, x+b.xy*y, y-b.xy*x, x*b.y-y*b.x };
+    }
+    #endif
+
+    #if 0 && defined(YQ_MATH_SPINOR2_HPP)
+    template <typename T>
+        template <typename U>
+    constexpr Vector2<product_t<T,U>> Vector2<T>::operator*(const SqSpinor2<U>&b) const noexcept
+    {
+        return { b.a*x+b.xy*y, b.a*y-b.xy*x };
+    }
+    #endif
     
     #if defined(YQ_MATH_VECTOR_1_HPP) && defined(YQ_MATH_TENSOR_2_1_HPP)
     template <typename T>
@@ -335,17 +366,6 @@ namespace yq {
             x*b.xx + y*b.yx,
             x*b.xy + y*b.yy
         );
-    }
-    #endif
-
-    #ifdef YQ_MATH_TENSOR_2_2_HPP
-    template <typename T>
-        template <typename U>
-    requires self_multiply_v<T,U>
-    Vector2<T>&  Vector2<T>::operator*=(const Tensor22<U>&b) noexcept
-    {
-        *this = *this * b;
-        return *this;
     }
     #endif
 
@@ -385,6 +405,53 @@ namespace yq {
     }
     #endif
 
+    //  *=
+
+    template <typename T>
+        template <typename U>
+    requires (is_arithmetic_v<U> && self_multiply_v<T,U>)
+    Vector2<T>& Vector2<T>::operator*=(U b) noexcept
+    {
+        x *= b;
+        y *= b;
+        return *this;
+    }
+    
+    #ifdef YQ_MATH_BIVECTOR2_HPP
+    template <typename T>
+        template <typename U>
+    requires self_multiply_v<T,U>
+    Vector2<T>&  Vector2<T>::operator*=(const Bivector2<U>&b) noexcept
+    {
+        *this = *this * b;
+        return *this;
+    }
+    #endif
+
+    #if 0 && defined(YQ_MATH_SPINOR2_HPP)
+    template <typename T>
+        template <typename U>
+    requires self_multiply_v<T,U>
+    Vector2<T>&  Vector2<T>::operator*=(const SqSpinor2<U>&b) noexcept
+    {
+        *this = *this * b;
+        return *this;
+    }
+    #endif
+
+    #ifdef YQ_MATH_TENSOR_2_2_HPP
+    template <typename T>
+        template <typename U>
+    requires self_multiply_v<T,U>
+    Vector2<T>&  Vector2<T>::operator*=(const Tensor22<U>&b) noexcept
+    {
+        *this = *this * b;
+        return *this;
+    }
+    #endif
+
+    //  .....
+
     template <typename T>
         template <typename U>
     constexpr product_t<T,U> Vector2<T>::operator DOT (const Vector2<U>&b) const noexcept
@@ -405,6 +472,15 @@ namespace yq {
     {
         return x*b.x + y*b.y;
     }
+
+    #if defined(YQ_MATH_BIVECTOR2_HPP)
+    template <typename T>
+    template <typename U>
+    constexpr Vector2<product_t<T,U>> Vector2<T>::operator INNER(const Bivector2<U>& b) const noexcept
+    {
+        return { -y*b.xy, x*b.xy };
+    }
+    #endif
 
     #ifdef YQ_MATH_BIVECTOR2_HPP
     template <typename T>
