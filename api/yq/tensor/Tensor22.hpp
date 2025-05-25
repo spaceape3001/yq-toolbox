@@ -22,7 +22,7 @@
 namespace log4cpp { class CategoryStream; }
 
 namespace yq {
-    template <typename> struct SqSpinor2;
+    template <typename> struct Spinor2;
 
     /*! \brief 2x2 second order tensor (ie a matrix)
     
@@ -105,7 +105,7 @@ namespace yq {
         explicit constexpr Tensor22(const glm::mat<2,2,T,Q>& t) noexcept;
         #endif
         
-        explicit Tensor22(const SqSpinor2<T>&);
+        explicit Tensor22(const Spinor2<T>&);
 
         //! Defaulted equality operator
         constexpr bool operator==(const Tensor22&) const noexcept = default;
@@ -384,6 +384,9 @@ namespace yq {
     template <typename T, glm::qualifier Q>
     constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t);
     #endif
+    
+    template <typename T>
+    constexpr Tensor22<T> tensor(const Spinor2<T>&);
 
     YQ_IDENTITY_1(Tensor22, Tensor22<T>(IDENTITY))
     YQ_NAN_1(Tensor22, Tensor22<T>(NAN))

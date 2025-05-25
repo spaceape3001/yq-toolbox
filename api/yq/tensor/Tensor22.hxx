@@ -40,7 +40,7 @@ namespace yq {
 
     #ifdef YQ_MATH_SPINOR2_HPP
     template <typename T>
-    Tensor22<T>::Tensor22(const SqSpinor2<T>& q)  : 
+    Tensor22<T>::Tensor22(const Spinor2<T>& q)  : 
         xx(q.a), xy(-q.xy), // Verify the sign, might need to go on yx...
         yx(q.xy), yy(q.a)
     {
@@ -616,6 +616,14 @@ namespace yq {
     #ifdef YQ_USE_GLM
     template <typename T, glm::qualifier Q>
     constexpr Tensor22<T> tensor(const glm::mat<2,2,T,Q>& t)
+    {
+        return Tensor22<T>(t);
+    }
+    #endif
+
+    #ifdef YQ_MATH_SPINOR2_HPP
+    template <typename T>
+    constexpr Tensor22<T> tensor(const Spinor2<T>& t)
     {
         return Tensor22<T>(t);
     }

@@ -28,6 +28,7 @@ namespace yq {
     #endif
 
         //  keywords
+    struct a_k {};
     struct actual_k {};
     struct abort_k {};
     struct absolute_k {};
@@ -288,6 +289,7 @@ namespace yq {
     using ptr_k     = pointer_k;
     using spec_k    = specification_k;
 
+    static constexpr const a_k                  A;
     static constexpr const abort_k              ABORT;
     static constexpr const absolute_k           ABSOLUTE;
     static constexpr const accept_k             ACCEPT;
