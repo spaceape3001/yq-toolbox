@@ -336,6 +336,7 @@ namespace yq {
     template <typename T>
     constexpr square_t<T>  length²(const Quaternion3<T>&a);
 
+    //! Returns the length of the given quaternion
     template <typename T>
     constexpr T  length(const Quaternion3<T>&a);
     
