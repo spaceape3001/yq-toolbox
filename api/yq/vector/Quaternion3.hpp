@@ -367,7 +367,7 @@ namespace yq {
     requires std::is_floating_point_v<T>
     void    post_mult(Quaternion3<T>&a, const Quaternion3<T>&b);
     
-
+    //! Multiplies right side quaternion with left scalar, returns result
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
     constexpr Quaternion3<product_t<T,U>>  operator*(T a, const Quaternion3<U>&b);
