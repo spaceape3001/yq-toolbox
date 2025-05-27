@@ -749,6 +749,16 @@ namespace yq {
         write_x(*xa, value);
     }
 
+    template <typename T>
+    void                write_attribute(XmlNode& xb, copy_k, std::string_view pszAttr, const T& value)
+    {
+        XmlDocument*    doc = xb.document();
+        assert(doc);
+        XmlAttribute*   xa  = doc -> allocate_attribute(doc->allocate_string(pszAttr));
+        xb.append_attribute(xa);
+        write_x(*xa, value);
+    }
+
     void                write_cdata(XmlNode&xb, std::string_view szTag, std::string_view szValue);
 
 
