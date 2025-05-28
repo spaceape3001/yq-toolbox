@@ -396,6 +396,7 @@ namespace yq {
 //  --------------------------------------------------------
 //  ADVANCED FUNCTIONS
 
+    //! Creates a quaternion using classic heading-pitch-roll (aviation style)
     template <typename T>
     requires std::is_floating_point_v<T>
     Quaternion3<T>  hpr(const MKS<T,dim::Angle>& hdg, const MKS<T,dim::Angle>& pitch, const MKS<T,dim::Angle>& roll);
