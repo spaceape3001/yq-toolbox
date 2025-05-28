@@ -102,21 +102,9 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     endif()
 
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
-
     if(Build_Vulkan)
-        set(VULKAN_DIR ${CMAKE_SOURCE_DIR}/yq-vulqan)
+        set(VULQAN_DIR ${CMAKE_SOURCE_DIR}/yq-vulqan)
         include(${CMAKE_SOURCE_DIR}/yq-vulqan/configure.cmake)
-        
-        #   Append for all vulkan based libraries
-        set(GLOBAL PROPERTY YQ_VULKAN_LIBRARIES)  
-        
-        #   Use this macro for non-tachyon libraries
-        macro(vulkan_library target)
-            get_property(tmp GLOBAL PROPERTY YQ_VULKAN_LIBRARIES)
-            list(APPEND tmp ${target})
-            set_property(GLOBAL PROPERTY YQ_VULKAN_LIBRARIES ${tmp})
-        endmacro()
-
         add_subdirectory(${CMAKE_SOURCE_DIR}/yq-vulqan)
     endif()
 
@@ -201,5 +189,8 @@ macro(YQRepo)
     endif()
     if(Feature_Experimental AND EXISTS ${CMAKE_CURRENT_LIST_DIR}/playx)
         add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/playx)
+    endif()
+    if(Build_Vulkan AND COMMAND vulkan_config)
+        vulkan_config()
     endif()
 endmacro()
