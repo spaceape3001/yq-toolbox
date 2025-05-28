@@ -13,6 +13,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <initializer_list>
 
 namespace yq {
 
@@ -335,7 +336,15 @@ namespace yq {
     {
         return std::set<T, std::less<T>, A>(data.begin(), data.end(), std::less<T>(), data.get_allocator());
     }
-    
+
+    //! \brief Make a set from an initializer list
+    template <typename T>
+    std::set<T>                 make_set(const std::initializer_list<T>& data)
+    {
+        return std::set<T>(data.begin(), data.end());
+    }
+
+
     //! \brief Make a set from a vector (with a custom comparison)
     template <typename T, typename C, typename A>
     std::set<T,C,A>      make_set(const std::vector<T, A>& data, const C& lesser)
@@ -343,6 +352,13 @@ namespace yq {
         return std::set<T,C,A>(data.begin(), data.end(), lesser, data.get_allocator());
     }
     
+    //! \brief Make a set from an initializer list (with a custom comparison)
+    template <typename T, typename C>
+    std::set<T,C>      make_set(const std::initializer_list<T>& data, const C& lesser)
+    {
+        return std::set<T,C>(data.begin(), data.end(), lesser);
+    }
+
     template <typename T, typename C, typename C2, typename A>
     std::set<T,C2,A>    make_set(const std::set<T,C,A>& data, const C2& lesser)
     {

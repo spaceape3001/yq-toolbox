@@ -17,6 +17,13 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     ####################
     #   User features
 
+    if(EXISTS ${CMAKE_SOURCE_DIR}/yq-atlas)
+        option(Feature_Atlas   "Enable the atlas API and features" ON)
+        set(Build_Atlas ${Feature_Atlas})
+    else()
+        set(Build_Atlas OFF)
+    endif()
+
     option(Feature_BuildTime    "Print out build times" OFF)
         
     if(EXISTS ${CMAKE_SOURCE_DIR}/yq-doodle)
@@ -97,12 +104,29 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
     if(Build_Vulkan)
+        set(VULKAN_DIR ${CMAKE_SOURCE_DIR}/yq-vulqan)
         include(${CMAKE_SOURCE_DIR}/yq-vulqan/configure.cmake)
+        
+        #   Append for all vulkan based libraries
+        set(GLOBAL PROPERTY YQ_VULKAN_LIBRARIES)  
+        
+        #   Use this macro for non-tachyon libraries
+        macro(vulkan_library target)
+            get_property(tmp GLOBAL PROPERTY YQ_VULKAN_LIBRARIES)
+            list(APPEND tmp ${target})
+            set_property(GLOBAL PROPERTY YQ_VULKAN_LIBRARIES ${tmp})
+        endmacro()
+
         add_subdirectory(${CMAKE_SOURCE_DIR}/yq-vulqan)
     endif()
 
     if(Build_Qt6)
         add_subdirectory(${CMAKE_SOURCE_DIR}/qt-utilities)
+    endif()
+
+    if(Build_Atlas)
+        include(${CMAKE_SOURCE_DIR}/yq-atlas/configure.cmake)
+        add_subdirectory(${CMAKE_SOURCE_DIR}/yq-atlas)
     endif()
 
     if(Build_Doodle)

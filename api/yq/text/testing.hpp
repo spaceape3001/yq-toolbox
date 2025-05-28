@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+#include <yq/typedef/string_sets.hpp>
+#include <initializer_list>
+
+namespace yq {
+    //! Used for unit tests
+    bool        is_similar(const string_view_set_t&, std::initializer_list<std::string_view>);
+}

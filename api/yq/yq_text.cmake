@@ -29,6 +29,7 @@ add_library(yq_text SHARED
     text/RevIgCase.cpp
     text/split.cpp
     text/split32.cpp
+    text/testing.cpp
     text/transform.cpp
     text/transform32.cpp
 )
