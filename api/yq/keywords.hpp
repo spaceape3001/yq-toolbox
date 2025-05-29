@@ -127,6 +127,7 @@ namespace yq {
     struct layout_k {};
     struct left_k {};
     struct line_k {};
+    struct load_k {};
     struct local_k {};
     struct lock_k {};
     struct locked_k {};
@@ -388,6 +389,7 @@ namespace yq {
     static constexpr const layout_k             LAYOUT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
+    static constexpr const load_k               LOAD;
     static constexpr const local_k              LOCAL;
     static constexpr const lock_k               LOCK;
     static constexpr const locked_k             LOCKED;
