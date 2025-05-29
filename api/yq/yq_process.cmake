@@ -6,6 +6,7 @@
 
 add_library(yq_process SHARED
     process/Execute.cpp
+    process/OSUtils.cpp
     process/PidFile.cpp
     process/PluginLoader.cpp
     process/Settings.cpp

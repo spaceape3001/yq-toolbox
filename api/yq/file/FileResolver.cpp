@@ -37,8 +37,9 @@ namespace yq {
 
     bool    FileResolver::has_path(const filesystem_path_t& p) const
     {
+        std::error_code ec; // swallow the exception
         for(auto& fp : m_paths){
-            if(std::filesystem::equivalent(fp, p))
+            if(std::filesystem::equivalent(fp, p, ec))
                 return true;
         }
         return false;
@@ -46,9 +47,10 @@ namespace yq {
     
     filesystem_path_t       FileResolver::resolve(std::string_view x) const
     {
+        std::error_code ec; // swallow the exception
         for(auto& fp : m_paths){
             filesystem_path_t   p   = fp / x;
-            if(std::filesystem::exists(p))
+            if(std::filesystem::exists(p, ec))
                 return p;
         }
         return filesystem_path_t();
@@ -57,14 +59,14 @@ namespace yq {
 
     filesystem_path_t       FileResolver::partial(std::string_view x) const
     {
-        std::error_code ec;
+        std::error_code ec; // swallow the exceptions
         for(auto& fp : m_paths){
             for(auto const& de : std::filesystem::recursive_directory_iterator(fp, ec)){
                 auto dd  = de.path();
-                if(!std::filesystem::is_directory(dd))
+                if(!std::filesystem::is_directory(dd, ec))
                     continue;
                 auto p  = dd / x;
-                if(std::filesystem::exists(p))
+                if(std::filesystem::exists(p, ec))
                     return p;
             }
         }
@@ -73,15 +75,15 @@ namespace yq {
 
     std::vector<filesystem_path_t>  FileResolver::all_partial(std::string_view x) const
     {
+        std::error_code ec; // swallow the exceptions
         std::vector<filesystem_path_t> ret;
-        std::error_code ec;
         for(auto& fp : m_paths){
             for(auto const& de : std::filesystem::directory_iterator(fp, ec)){
                 auto dd  = de.path();
-                if(!std::filesystem::is_directory(dd))
+                if(!std::filesystem::is_directory(dd, ec))
                     continue;
                 auto p  = dd / x;
-                if(std::filesystem::exists(p))
+                if(std::filesystem::exists(p, ec))
                     ret.push_back(p);
             }
         }
