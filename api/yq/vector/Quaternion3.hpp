@@ -402,6 +402,7 @@ namespace yq {
     Quaternion3<T>  hpr(const MKS<T,dim::Angle>& hdg, const MKS<T,dim::Angle>& pitch, const MKS<T,dim::Angle>& roll);
 
 
+    //! Compares two quaternions for closeness (used for unit tests)
     template <typename T, typename R>
     bool is_close(const R& compare, const Quaternion3<T>& actual, const Quaternion3<T>& expected);
     
