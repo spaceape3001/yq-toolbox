@@ -110,7 +110,7 @@ namespace yq {
         assert(thread_safe_write());
         
         set_name(zName);
-        m_label     = m_name;                       // default (can be overriden)
+        m_label     = m_stem;
         m_parent    = parent;
         m_source    = sl;
         
