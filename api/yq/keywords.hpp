@@ -43,6 +43,8 @@ namespace yq {
     struct alpha_k {};
     struct any_k {};
     struct asset_k {};
+    struct bigger_k {};
+    struct biggest_k {};
     struct box_k {};
     struct cache_k {};
     struct calculate_k {};
@@ -134,7 +136,9 @@ namespace yq {
     struct low_k {};
     struct m_k {};
     struct main_k {};
+    struct maximum_k {};
     struct maybe_k {};
+    struct minimum_k {};
     struct mismatch_k {};
     struct move_k {};
     struct moveable_k {};
@@ -142,6 +146,7 @@ namespace yq {
     struct multiply_k {};
     struct n_k {};
     struct nan_k {};
+    struct nearest_k {};
     struct negative_k {};
     struct nested_k {};
     struct next_k {};
@@ -210,6 +215,8 @@ namespace yq {
     struct set_k {};
     struct shared_k {};
     struct skip_k {};
+    struct smaller_k {};
+    struct smallest_k {};
     struct snoop_k {};
     struct soft_k {};
     struct sort_k {};
@@ -289,6 +296,13 @@ namespace yq {
     
     using ptr_k     = pointer_k;
     using spec_k    = specification_k;
+    
+    #ifdef MIN
+        #undef MIN
+    #endif
+    #ifdef MAX
+        #undef MAX
+    #endif
 
     static constexpr const a_k                  A;
     static constexpr const abort_k              ABORT;
@@ -305,6 +319,8 @@ namespace yq {
     static constexpr const always_k             ALWAYS;
     static constexpr const any_k                ANY;
     static constexpr const asset_k              ASSET;
+    static constexpr const bigger_k             BIGGER;
+    static constexpr const biggest_k            BIGGEST;
     static constexpr const box_k                BOX;
     static constexpr const cache_k              CACHE;
     static constexpr const calculate_k          CALC, CALCULATE;
@@ -396,7 +412,13 @@ namespace yq {
     static constexpr const low_k                LO, LOW;
     static constexpr const m_k                  M;
     static constexpr const main_k               MAIN;
+#ifndef YQ_KEYWORD_OMIT_MAX
+    static constexpr const maximum_k            MAX, MAXIMUM;
+#endif
     static constexpr const maybe_k              MAYBE;
+#ifndef YQ_KEYWORD_OMIT_MIN
+    static constexpr const minimum_k            MIN, MINIMUM;
+#endif
     static constexpr const mismatch_k           MISMATCH;
     static constexpr const move_k               MOVE;
     static constexpr const moveable_k           MOVEABLE;
@@ -404,6 +426,7 @@ namespace yq {
     static constexpr const multiply_k           MULTIPLY;
     static constexpr const n_k                  N;
     static constexpr const nan_k                NAN;
+    static constexpr const nearest_k            NEAREST;
     static constexpr const negative_k           NEGATIVE;
     static constexpr const nested_k             NESTED;
     static constexpr const next_k               NEXT;
@@ -477,6 +500,8 @@ namespace yq {
     static constexpr const set_k                SET;
     static constexpr const shared_k             SHARED;
     static constexpr const skip_k               SKIP;
+    static constexpr const smaller_k            SMALLER;
+    static constexpr const smallest_k           SMALLEST;
     static constexpr const soft_k               SOFT;
     static constexpr const sort_k               SORT;
     static constexpr const snoop_k              SNOOP;
@@ -508,7 +533,7 @@ namespace yq {
     static constexpr const types_k              TYPES;
     static constexpr const u_k                  U;
     static constexpr const union_k              UNION;
-    static constexpr const unique_k UNIQUE;
+    static constexpr const unique_k             UNIQUE;
     static constexpr const unit_k               UNIT;
     static constexpr const unlock_k             UNLOCK;
     static constexpr const unlocked_k           UNLOCKED;

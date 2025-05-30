@@ -253,6 +253,19 @@ namespace yq {
         
         std::string_view                icon(icon_size_t) const;
         
+        //! First icon same or bigger than given value
+        std::string_view                icon(bigger_k, icon_size_t) const;
+
+        //! Largest icon
+        std::string_view                icon(biggest_k) const;            
+
+        //! First icon same or smaller than given value
+        std::string_view                icon(smaller_k, icon_size_t) const;
+        
+        //! Smallest non-zero sized icon
+        std::string_view                icon(smallest_k) const;            
+        
+
         //!     Internal UI icon mapping (assume data paths are valid)
         //!  0  implies SVG (or similar)
         //!  >0 imply nominal pixel size

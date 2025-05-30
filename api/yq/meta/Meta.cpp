@@ -181,6 +181,35 @@ namespace yq {
         return {};
     }
 
+    std::string_view    Meta::icon(bigger_k, icon_size_t sz) const
+    {
+        auto itr = m_icons.lower_bound(sz);
+        if(itr != m_icons.end())
+            return itr->second;
+        return {};
+    }
+
+    std::string_view    Meta::icon(biggest_k) const
+    {
+        auto itr = m_icons.rbegin();
+        if(itr != m_icons.rend())
+            return itr->second;
+        return {};
+    }
+    
+    std::string_view    Meta::icon(smaller_k, icon_size_t sz) const
+    {
+        auto itr = m_icons.upper_bound(sz);
+        if((itr != m_icons.end()) && itr->first)
+            return itr->second;
+        return {};
+    }
+    
+    std::string_view    Meta::icon(smallest_k) const
+    {
+        return icon(BIGGER,1);
+    }
+
     bool  Meta::is_1d() const
     {
         return has(Flag::D1);
