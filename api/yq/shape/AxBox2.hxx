@@ -626,7 +626,7 @@ namespace yq {
     template <typename T>
     constexpr T             AxBox2<T>::width() const noexcept
     {
-        return hi.y - lo.y;
+        return hi.x - lo.x;
     }
 
     template <typename T>
