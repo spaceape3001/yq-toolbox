@@ -415,6 +415,7 @@ namespace yq {
     template <typename S, typename T>
     S&  as_stream(S& s, const Quaternion3<T>& v);
     
+    //! Prints the quaternion to the given stream
     template <typename T>
     Stream& operator<<(Stream&s, const Quaternion3<T>& v);
 
