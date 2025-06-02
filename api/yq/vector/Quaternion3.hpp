@@ -419,6 +419,7 @@ namespace yq {
     template <typename T>
     Stream& operator<<(Stream&s, const Quaternion3<T>& v);
 
+    //! Prints the quaternion to the given logger stream
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Quaternion3<T>& v);
 }
