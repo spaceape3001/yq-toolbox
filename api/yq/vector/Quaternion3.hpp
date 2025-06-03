@@ -410,12 +410,16 @@ namespace yq {
     template <typename T, typename R>
     bool is_close(const R& compare, const Quaternion3<T>& actual, std::type_identity_t<T>w, std::type_identity_t<T> x, std::type_identity_t<T> y, std::type_identity_t<T> z);
 
+    //! Streams the quaternion to the stream (generic) in w,x,y,z format
+    //! \tparam S   Stream type
     template <typename S, typename T>
     S&  as_stream(S& s, const Quaternion3<T>& v);
     
+    //! Prints the quaternion to the given stream
     template <typename T>
     Stream& operator<<(Stream&s, const Quaternion3<T>& v);
 
+    //! Prints the quaternion to the given logger stream
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Quaternion3<T>& v);
 }

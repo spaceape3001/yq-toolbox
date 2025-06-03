@@ -101,6 +101,7 @@ namespace yq {
         //! Operator for our square
         constexpr Spinor2   operator^(two_k) const noexcept;
 
+        //! Adds two spinors together, returns result
         constexpr Spinor2           operator+ (const Spinor2&b) const noexcept;
         
         //! Adds right hand spinor to this one, returns reference
