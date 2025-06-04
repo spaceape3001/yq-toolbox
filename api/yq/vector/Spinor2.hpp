@@ -53,7 +53,10 @@ namespace yq {
         //! Capture our template parameter for the component type
         using component_type = T;
 
+        //! Scalar component
         T   a;
+        
+        //! Bivector component
         T   xy;
 
         constexpr Spinor2(){}
