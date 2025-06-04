@@ -84,6 +84,14 @@ namespace yq {
     {
         return {r,g,b};
     }
+
+    #ifdef YQ_USE_GLM
+    template <typename T, glm::qualifier Q>
+    const RGB<T> rgb(const glm::vec<3,T,Q>& v)
+    {
+        return { v.r, v.g, v.b };
+    }
+    #endif
     
     YQ_NAN_1(RGB, {nan_v<T>, nan_v<T>, nan_v<T>})
     YQ_ZERO_1(RGB, {zero_v<T>, zero_v<T>, zero_v<T>})
