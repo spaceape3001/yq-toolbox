@@ -59,6 +59,7 @@ namespace yq {
         //! Bivector component
         T   xy;
 
+        //! Default constructor (which does nothing)
         constexpr Spinor2(){}
 
         //! Component wise constructor
