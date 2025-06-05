@@ -63,6 +63,32 @@ namespace yq {
     }
     
 
+    int     ObjectInfo::hops_to_base(const ObjectInfo& presumedBase) const
+    {
+        if(this == &presumedBase)
+            return 0;
+        int cnt = 0;
+        for(const ObjectInfo* b = m_base; b; b = b -> m_base){
+            ++cnt;
+            if(&presumedBase == b)
+                return cnt;
+        }
+        return -1;
+    }
+
+    int     ObjectInfo::hops_to_derived(const ObjectInfo& presumedDerived) const
+    {
+        if(this == &presumedDerived)
+            return 0;
+        int cnt = 0;
+        for(const ObjectInfo* b = presumedDerived.m_base; b; b = b -> m_base){
+            ++cnt;
+            if(b == this)
+                return cnt;
+        }
+        return -1;
+    }
+    
     bool    ObjectInfo::is_base(const ObjectInfo&oi) const
     {
         for(const ObjectInfo* b = m_base; b; b = b -> m_base){
@@ -80,7 +106,7 @@ namespace yq {
         }
         return false;
     }
-    
+
     bool    ObjectInfo::is_this(const ObjectInfo& presumedBase) const
     {
         return (this == &presumedBase) || is_base(presumedBase);

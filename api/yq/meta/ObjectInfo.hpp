@@ -79,6 +79,13 @@ namespace yq {
         */
         bool    is_derived(const ObjectInfo& presumedDerived) const;
         
+        //! Count of hops to the presumed base class, negative if it's not a base
+        int     hops_to_base(const ObjectInfo& presumedBase) const;
+
+        //! Count of hops to the presumed derived class, negative if it's not a base
+        int     hops_to_derived(const ObjectInfo& presumedDerived) const;
+        
+        
         //! Nominal size (in bytes) of the object (not including dynamic memory)
         virtual size_t          size() const;
         
