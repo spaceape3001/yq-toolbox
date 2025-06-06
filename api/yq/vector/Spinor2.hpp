@@ -91,6 +91,7 @@ namespace yq {
         //! Creates a spinor that effects a specified clockwise rotation 
         Spinor2(clockwise_k, Radian);
 
+        //! Defaulted equality operator
         constexpr bool operator==(const Spinor2&) const noexcept = default;
 
         //! Postive affirmation operator
