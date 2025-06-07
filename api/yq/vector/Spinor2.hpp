@@ -144,6 +144,8 @@ namespace yq {
 
         //template <typename>
         //requires std::is_floating_point_v<T>
+        
+        //! Computes/returns the angle of rotation for this spinor
         Radian                  angle() const;
         Radian                  angle(ccw_k) const;
         Radian                  angle(clockwise_k) const;
