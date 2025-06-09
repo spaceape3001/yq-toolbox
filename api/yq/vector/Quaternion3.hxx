@@ -353,7 +353,7 @@ namespace yq {
     //requires std::is_floating_point_v<T>
     Radian              Quaternion3<T>::angle(zyx_k, y_k) const
     {
-        return asin(std::clamp(2.*(w*y-x*z),-2.,1.0));
+        return asin(std::clamp(2.*(w*y-x*z),-1.,1.0));
     }
 
     template <typename T>
