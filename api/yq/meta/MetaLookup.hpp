@@ -26,6 +26,7 @@ namespace yq {
         std::vector<std::u32string*>    alts32;
         MM                              stem;
         MM32                            stem32;
+        Set<const MT*>                  set;
 
         using equal_range_t     = decltype(((const MetaLookup*) nullptr)->lut.equal_range(std::string_view()));
         using equal_range32_t   = decltype(((const MetaLookup*) nullptr)->lut32.equal_range(std::u32string_view()));
@@ -53,6 +54,7 @@ namespace yq {
             for(std::string*p : alts)
                 delete p;
             alts.clear();
+            set.clear();
         }
         
         //  Disable copy/move
@@ -71,6 +73,7 @@ namespace yq {
                 stem32.insert(p->stem32(), p);
                 keys << p->name();
                 keys32 << p->name32();
+                set.insert(p);
             }
             return *this;
         }
@@ -84,6 +87,7 @@ namespace yq {
             keys32 += b.keys32;
             stem   += b.stem;
             stem32 += b.stem32;
+            set    += b.set;
             return *this;
         }
         
@@ -95,6 +99,7 @@ namespace yq {
             lut.insert(k,d);
             keys += k;
             keys32 += *s;
+            set += d;
         }
 
         void    add_mapping(std::u32string_view k, const MT* d)
@@ -105,6 +110,7 @@ namespace yq {
             lut.insert(*s,d);
             keys   += *s;
             keys32 += k;
+            set += d;
         }
         
         const MT* find(const std::u32string_view k) const
@@ -126,6 +132,11 @@ namespace yq {
         {
             return stem.first(k, nullptr);
         }
+        
+        bool contains(const MT* mt) const
+        {
+            return set.contains(mt);
+        }
     };
 
     template <typename MT, typename K, K (MT::*FN)() const>
@@ -136,6 +147,7 @@ namespace yq {
         Vector<const MT*>           all;
         MM                          lut;
         Set<K>                      keys;
+        Set<const MT*>              set;
         
         using equal_range_t     = decltype(((const MetaLookup2*) nullptr)->lut.equal_range(K()));
 
@@ -145,6 +157,7 @@ namespace yq {
             K   k   = (p->*FN)();
             lut.insert(k, p);
             keys << k;
+            set.insert(p);
             return *this;
         }
         
@@ -153,12 +166,18 @@ namespace yq {
             all += b.all;
             lut += b.lut;
             keys += b.keys;
+            set  += b.set;
             return *this;
         }
         
         const MT* find(K k) const
         {
             return lut.first(k, nullptr);
+        }
+
+        bool contains(const MT* mt) const
+        {
+            return set.contains(mt);
         }
     };
 
