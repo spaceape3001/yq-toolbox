@@ -7,6 +7,8 @@
 #pragma once
 
 #include <yq/keywords.hpp>
+#include <yq/typedef/uvw.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
 
@@ -39,4 +41,10 @@ namespace yq {
         constexpr bool operator==(const UVW&) const noexcept = default;
     };
 }
+
+YQ_TYPE_DECLARE(yq::UVW3D)
+YQ_TYPE_DECLARE(yq::UVW3F)
+YQ_TYPE_DECLARE(yq::UVW3U)
+YQ_TYPE_DECLARE(yq::UVW3I)
+
 

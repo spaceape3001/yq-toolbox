@@ -7,6 +7,8 @@
 #pragma once
 
 #include <yq/keywords.hpp>
+#include <yq/typedef/uv.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     /*! \brief UV coordinate type
@@ -34,4 +36,10 @@ namespace yq {
         constexpr bool operator==(const UV&) const noexcept = default;
     };
 }
+
+YQ_TYPE_DECLARE(yq::UV2D)
+YQ_TYPE_DECLARE(yq::UV2F)
+YQ_TYPE_DECLARE(yq::UV2U)
+YQ_TYPE_DECLARE(yq::UV2I)
+
 

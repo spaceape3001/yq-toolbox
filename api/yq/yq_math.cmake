@@ -34,6 +34,8 @@ add_library(yq_math SHARED
     math/Random.cpp
     math/Range.cpp
     math/SimpleSpace.cpp
+    math/UV.cpp
+    math/UVW.cpp
 
     shape/AxBox1.cpp
     shape/AxBox2.cpp

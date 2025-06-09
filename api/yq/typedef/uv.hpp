@@ -13,5 +13,4 @@ namespace yq {
     using UV2F                  = UV<float>;
     using UV2I                  = UV<int>;
     using UV2U                  = UV<unsigned>;
-    using UV2M                  = UV<unit::Meter>;
 }
