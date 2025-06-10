@@ -155,20 +155,20 @@ namespace yq {
         Radian                  angle(clockwise_k) const;
         Radian                  angle(heading_k) const;
         
-                ////! Computes & returns the conjugate of this spinor (abbreviated spelling)
+        //! Computes & returns the conjugate of this spinor (abbreviated spelling)
         constexpr Spinor2       conj() const noexcept;
 
-        ////! Computes & returns the conjugate of this spinor
+        //! Computes & returns the conjugate of this spinor
         constexpr Spinor2       conjugate() const noexcept;
         
-        ////! Computes & returns the inverse for this spinor
+        //! Computes & returns the inverse for this spinor
         constexpr Spinor2<inverse_t<T>>   inverse() const noexcept;
         
-        ////! Computes the square of the length to this spinor
+        //! Computes the square of the length to this spinor
         constexpr square_t<T>    length²() const noexcept;
         
-        ////! Computes the length to this spinor, returns result
-        ////! \note the square root must be valid for T^2
+        //! Computes the length to this spinor, returns result
+        //! \note the square root must be valid for T^2
         T                        length() const;
 
     };
