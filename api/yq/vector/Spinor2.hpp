@@ -83,6 +83,7 @@ namespace yq {
         //! Initializes to all zeros
         consteval Spinor2(zero_k) : Spinor2(ALL, zero_v<T>) {}
         
+        //! Constructs spinor from multivector (vector bits will be lost)
         explicit constexpr Spinor2(const Multivector2<T>&);
         
         //! Creates a spinor that effects a specified counter-clockwise rotation 
