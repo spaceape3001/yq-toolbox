@@ -174,6 +174,7 @@ namespace yq {
 
     };
 
+    //! Creates a spinor from the two arguments
     template <typename T>
     constexpr Spinor2<T> spinor(T a, std::type_identity_t<T> xy)
     {
