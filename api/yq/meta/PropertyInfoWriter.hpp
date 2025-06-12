@@ -10,6 +10,7 @@
 #include <yq/meta/MetaWriter.hpp>
 #include <yq/meta/DynamicPropSetter.hpp>
 #include <yq/meta/StaticPropSetter.hpp>
+#include <concepts>
 
 namespace yq {
 
@@ -162,20 +163,23 @@ namespace yq {
     class PropertyInfo::PropW : public Writer<T> {
     public:
     
+    
         /*! \brief Attach a setter so the property can be modified
         
             \param[in] function Function to associate
             \param[in] sl       Source location (auto-deduced by default-initialization)
             \return Reference to this writer to allow for daisy chaining.
         */
-        Writer<T>&     setter(void (C::*function)(T), const std::source_location& sl = std::source_location::current())
+        template <typename B=C>
+        requires (std::is_base_of_v<B,C>)
+        Writer<T>&     setter(void (B::*function)(T), const std::source_location& sl = std::source_location::current())
         {
             assert(function);
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFV_PropSetter<C,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFV_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -186,14 +190,16 @@ namespace yq {
             \param[in] sl       Source location (auto-deduced by default-initialization)
             \return Reference to this writer to allow for daisy chaining.
         */
-        Writer<T>&     setter(void (C::*function)(const T&), const std::source_location& sl = std::source_location::current())
+        template <typename B=C>
+        requires (std::is_base_of_v<B,C>)
+        Writer<T>&     setter(void (B::*function)(const T&), const std::source_location& sl = std::source_location::current())
         {
             assert(function);
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFR_PropSetter<C,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFR_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -204,14 +210,16 @@ namespace yq {
             \param[in] sl       Source location (auto-deduced by default-initialization)
             \return Reference to this writer to allow for daisy chaining.
         */
-        Writer<T>&     setter(bool (C::*function)(T), const std::source_location& sl = std::source_location::current())
+        template <typename B=C>
+        requires (std::is_base_of_v<B,C>)
+        Writer<T>&     setter(bool (B::*function)(T), const std::source_location& sl = std::source_location::current())
         {
             assert(function);
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFBV_PropSetter<C,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFBV_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -222,14 +230,16 @@ namespace yq {
             \param[in] sl       Source location (auto-deduced by default-initialization)
             \return Reference to this writer to allow for daisy chaining.
         */
-        Writer<T>&     setter(bool (C::*function)(const T&), const std::source_location& sl = std::source_location::current())
+        template <typename B=C>
+        requires (std::is_base_of_v<B,C>)
+        Writer<T>&     setter(bool (B::*function)(const T&), const std::source_location& sl = std::source_location::current())
         {
             assert(function);
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFBR_PropSetter<C,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFBR_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
