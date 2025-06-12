@@ -119,6 +119,9 @@ namespace yq {
         Writer&     tag(int);
         Writer&     tag(int, Any&&value);
         Writer&     tag(int, const Any&);
+
+        //! Tags the meta with the given tags
+        Writer&     tag(std::initializer_list<int>);
         
         /*! \brief Mark the static global as being static thread_local instead
         */

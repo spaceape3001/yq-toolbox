@@ -121,6 +121,12 @@ namespace yq {
         return tag(k, Any(true));
     }
 
+    Meta::Writer&     Meta::Writer::tag(std::initializer_list<int> ks)
+    {
+        for(auto& k : ks)
+            tag(k);
+        return *this;
+    }
 
     Meta::Writer&     Meta::Writer::tag(int k, Any&&value)
     {
