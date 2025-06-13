@@ -9,6 +9,8 @@
 #include <yq/keywords.hpp>
 #include <yq/typedef/uvw.hpp>
 #include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
 
 namespace yq {
 
@@ -37,6 +39,20 @@ namespace yq {
         //! Constructs all data to same value
         constexpr UVW(all_k, const T& _val) noexcept : u(_val), v(_val), w(_val) {}
         
+        constexpr UVW(u_k, T _val) noexcept : UVW(_val, zero_v<T>, zero_v<T>) {}
+        
+        consteval UVW(u_k) noexcept : UVW(U, one_v<T>) {}
+        
+        constexpr UVW(v_k, T _val) noexcept : UVW(zero_v<T>, v(_val), zero_v<T>) {}
+
+        consteval UVW(v_k) noexcept : UVW(V, one_v<T>) {}
+
+        constexpr UVW(w_k, T _val) noexcept : UVW(zero_v<T>, zero_v<T>, v(_val)) {}
+
+        consteval UVW(w_k) noexcept : UVW(V, one_v<T>) {}
+
+        consteval UVW(zero_k) noexcept : UVW(zero_v<T>, zero_v<T>, zero_v<T>) {}
+
         //! Defaulted equality operator
         constexpr bool operator==(const UVW&) const noexcept = default;
     };

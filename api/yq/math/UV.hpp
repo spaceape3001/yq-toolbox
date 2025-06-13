@@ -9,6 +9,8 @@
 #include <yq/keywords.hpp>
 #include <yq/typedef/uv.hpp>
 #include <yq/meta/InfoBinder.hpp>
+#include <yq/trait/has_one.hpp>
+#include <yq/trait/has_zero.hpp>
 
 namespace yq {
     /*! \brief UV coordinate type
@@ -31,6 +33,16 @@ namespace yq {
         
         //! Construct with all components to same value
         constexpr UV(all_k, const T& _val) noexcept : u(_val), v(_val) {}
+        
+        constexpr UV(u_k, T _val) noexcept : u(_val), v(zero_v<T>) {}
+        
+        consteval UV(u_k) noexcept : UV(U, one_v<T>) {}
+        
+        constexpr UV(v_k, T _val) noexcept : u(zero_v<T>), v(_val) {}
+
+        consteval UV(v_k) noexcept : UV(V, one_v<T>) {}
+
+        consteval UV(zero_k) noexcept : UV(zero_v<T>, zero_v<T>) {}
         
         //! Defaulted equality operator
         constexpr bool operator==(const UV&) const noexcept = default;
