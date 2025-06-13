@@ -189,12 +189,14 @@ namespace yq {
         
         //! The value to name map
         const Val2Name&         val2name() const { return m_value2name; }
+        
+        //! The name to value map
+        const Name2Val&         name2val() const { return m_name2value; }
 
     protected:
 
     private:
         template <class> friend class EnumImpl;
-
 
         std::string_view            m_name;
         Name2Val                    m_name2value;
