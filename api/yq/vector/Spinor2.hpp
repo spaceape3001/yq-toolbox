@@ -154,6 +154,8 @@ namespace yq {
 
         //! Computes/returns the angle of rotation for this spinor in a clockwise fashion
         Radian                  angle(clockwise_k) const;
+
+        //! Computes/returns the angle of rotation for this spinor in a heading/clockwise fashion
         Radian                  angle(heading_k) const;
         
         //! Computes & returns the conjugate of this spinor (abbreviated spelling)
