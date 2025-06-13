@@ -15,6 +15,9 @@
 
 namespace yq {
 
+    template <typename T>
+    struct RGBA;
+
     /*! \brief Simple structure for RGB color
     */
     template <typename T>
@@ -69,6 +72,10 @@ namespace yq {
             static constexpr const U    mx  = U(std::numeric_limits<T>::max());
             return { U(red) / mx, U(green) / mx, U(blue) / mx };
         }
+
+        template <typename U>
+        requires (std::is_integral_v<T> && std::is_floating_point_v<U>)
+        constexpr explicit operator RGBA<U>() const noexcept;
     };
 
 //  --------------------------------------------------------

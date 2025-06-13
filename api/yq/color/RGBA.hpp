@@ -79,6 +79,15 @@ namespace yq {
         }
     };
 
+    template <typename T>
+    template <typename U>
+    requires (std::is_integral_v<T> && std::is_floating_point_v<U>)
+    constexpr RGB<T>::operator RGBA<U>() const noexcept
+    {
+        static constexpr const U    mx  = U(std::numeric_limits<T>::max());
+        return { U(red) / mx, U(green) / mx, U(blue) / mx, one_v<U> };
+    }
+
 //  --------------------------------------------------------
 //  COMPOSITION
 
