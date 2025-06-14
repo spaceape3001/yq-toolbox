@@ -187,6 +187,7 @@ namespace yq {
     //requires std::is_floating_point_v<T>
     //Spinor2<T>  spinor(const Tensor22<T>& t);
     
+    //! Extracts a spinor from the multivector
     template <typename T>
     Spinor2<T>      spinor(const Multivector2<T>&);
 
