@@ -191,6 +191,7 @@ namespace yq {
     template <typename T>
     Spinor2<T>      spinor(const Multivector2<T>&);
 
+    //! Conjugate of the given spinor
     template <typename T>
     constexpr Spinor2<T> conjugate(const Spinor2<T>&a);
 
