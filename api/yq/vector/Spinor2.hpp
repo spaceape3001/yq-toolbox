@@ -195,6 +195,7 @@ namespace yq {
     template <typename T>
     constexpr Spinor2<T> conjugate(const Spinor2<T>&a);
 
+    //! Length of the spinor (sum of squares of components)
     template <typename T>
     constexpr square_t<T>  length²(const Spinor2<T>&a);
 
