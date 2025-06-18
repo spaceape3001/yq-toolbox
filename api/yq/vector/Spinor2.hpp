@@ -207,6 +207,7 @@ namespace yq {
     YQ_IS_NAN_1(Spinor2, is_nan(v.a) || is_nan(v.xy))
     YQ_IS_FINITE_1(Spinor2, is_finite(v.a) && is_finite(v.xy))
         
+    //! Multiplies scalar with spinor, returns result
     template <typename T, typename U>
     requires (is_arithmetic_v<T>)
     constexpr Spinor2<product_t<T,U>>  operator*(T a, const Spinor2<U>&b);
