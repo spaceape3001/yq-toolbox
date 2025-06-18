@@ -212,6 +212,7 @@ namespace yq {
     requires (is_arithmetic_v<T>)
     constexpr Spinor2<product_t<T,U>>  operator*(T a, const Spinor2<U>&b);
 
+    //! Tests to see if two spinors are "close" to each other
     template <typename T, typename R>
     bool is_close(const R& compare, const Spinor2<T>& actual, const Spinor2<T>& expected);
     
