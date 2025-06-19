@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/errors.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/meta/TypeInfo.hpp>
@@ -288,14 +289,24 @@ namespace yq {
         //! Allows for an any conversion by cast
         //! \tparam[U] other type
         template <typename U>
-        requires std::is_nothrow_convertible_v<U,T>
         void casts()
         {
             static_assert( is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
                 static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
-                    *(U*) dst = U( *(const T*) src);
-                    return std::error_code();
+                    if constexpr (std::is_nothrow_convertible_v<U,T>){
+                        *(U*) dst = U( *(const T*) src);
+                        return std::error_code();
+                    } 
+                    if constexpr (!std::is_nothrow_convertible_v<U,T>){
+                        try {
+                            *(U*) dst = U( *(const T*) src);
+                            return std::error_code();
+                        }
+                        catch(...){
+                        }
+                        return errors::bad_conversion();
+                    };
                 };
             }
         }
