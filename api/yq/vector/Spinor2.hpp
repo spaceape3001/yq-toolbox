@@ -216,6 +216,7 @@ namespace yq {
     template <typename T, typename R>
     bool is_close(const R& compare, const Spinor2<T>& actual, const Spinor2<T>& expected);
     
+    //! Tests to see if the given spinor is close to the given components
     template <typename T, typename R>
     bool is_close(const R& compare, const Spinor2<T>& actual, std::type_identity_t<T>a, std::type_identity_t<T> xy);
 
