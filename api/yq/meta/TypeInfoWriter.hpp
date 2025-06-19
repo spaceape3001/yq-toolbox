@@ -315,7 +315,7 @@ namespace yq {
         ConstructorInfo::Writer<T, Args...> constructor(T(*function)(Args...), const std::source_location& sl=std::source_location::current())
         {
             if(function && thread_safe_write()){
-                ConstructorInfo* ret = new OperatorInfo::Static<T, Args...>(function, sl, Meta::Writer::m_meta);
+                ConstructorInfo* ret = new ConstructorInfo::Static<T, Args...>(function, sl, Meta::Writer::m_meta);
                 return ConstructorInfo::Writer<T, Args...>(ret, 0ULL);
             }
             
