@@ -11,6 +11,7 @@
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/meta/OperatorInfo.hpp>
 #include <yq/errors.hpp>
+#include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_initlists.hpp>
 #include <yq/typedef/xml.hpp>
 #include <unordered_map>
@@ -66,6 +67,9 @@ namespace yq {
         bool        can_print() const { return m_print != nullptr; }
         
         bool        can_convert_to(const TypeInfo& otherType) const;
+        
+        template <typename ... T>
+        any_x       construct(T ... args) const;
 
         const std::vector<const ConstructorInfo*>& constructors() const { return m_constructors; }
 
@@ -329,6 +333,9 @@ namespace yq {
         FNFormat        printer(string_view_initializer_list_t) const;
         
         void            add_printer(std::string_view, FNFormat);
+        
+    private:
+        any_x           contruct_impl(std::initializer_list<const TypeInfo*>, std::initializer_list<const void*>) const;
     };
     
     /*! \brief Converts meta to type, if it's valid

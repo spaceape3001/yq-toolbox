@@ -18,6 +18,8 @@ namespace yq {
         const Meta&         type() const { return m_type; }
         
         template <typename T> class Typed;
+        
+        const void*         default_argument() const { return m_default; }
     
     protected:
         ArgInfo(const std::source_location& sl, const Meta&, Meta*);
@@ -25,6 +27,6 @@ namespace yq {
     private:
         const Meta&     m_type;
         DataBlock       m_defaultData;
-        const void*     m_default;
+        const void*     m_default   = nullptr;
     };
 }

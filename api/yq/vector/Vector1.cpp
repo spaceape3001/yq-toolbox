@@ -34,6 +34,12 @@ namespace yq {
 using namespace yq;
 
 template <typename T>
+Vector1<T>    construct_vector1(T x)
+{
+    return Vector1<T>(x);
+}
+
+template <typename T>
 void    print_vector1(Stream& str, const Vector1<T>& v)
 {
     str << "(" << v.x << ")";
@@ -56,6 +62,7 @@ static void reg_vector1()
         w.operate_with<Tensor13D>(Operator::Multiply);
         w.operate_with<Tensor14D>(Operator::Multiply);
         w.print<print_vector1<double>>();
+        w.constructor(construct_vector1<double>);
     }
     
     {
@@ -77,6 +84,7 @@ static void reg_vector1()
         w.operate_with<Tensor13F>(Operator::Multiply);
         w.operate_with<Tensor14F>(Operator::Multiply);
         w.print<print_vector1<float>>();
+        w.constructor(construct_vector1<float>);
     }
     
     {
@@ -91,6 +99,7 @@ static void reg_vector1()
         w.property(szX, &Vector1I::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.print<print_vector1<int>>();
+        w.constructor(construct_vector1<int>);
     }
 
     {
@@ -100,6 +109,7 @@ static void reg_vector1()
         w.property(szX, &Vector1U::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self({ Operator::Add, Operator::Subtract });
         w.print<print_vector1<unsigned>>();
+        w.constructor(construct_vector1<unsigned>);
     }
 }
 

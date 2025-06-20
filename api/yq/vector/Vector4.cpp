@@ -40,6 +40,12 @@ namespace yq {
 using namespace yq;
 
 template <typename T>
+Vector4<T>    construct_vector4(T x, T y, T z, T w)
+{
+    return Vector4<T>(x,y,z,w);
+}
+
+template <typename T>
 void    print_vector4(Stream& str, const Vector4<T>& v)
 {
     str << "(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")";
@@ -157,6 +163,7 @@ static void reg_vector4()
         w.print<print_vector4<double>>();
         w.format<write_vector4d>();
         w.parse<parse_vector4d>();
+        w.constructor(construct_vector4<double>);
     }
     
     {
@@ -184,6 +191,7 @@ static void reg_vector4()
         w.print<print_vector4<float>>();
         w.format<write_vector4f>();
         w.parse<parse_vector4f>();
+        w.constructor(construct_vector4<float>);
     }
     
     {
@@ -202,6 +210,7 @@ static void reg_vector4()
         w.print<print_vector4<int>>();
         w.format<write_vector4i>();
         w.parse<parse_vector4i>();
+        w.constructor(construct_vector4<int>);
     }
     
     //{
@@ -220,6 +229,7 @@ static void reg_vector4()
         w.print<print_vector4<unsigned>>();
         w.format<write_vector4u>();
         w.parse<parse_vector4u>();
+        w.constructor(construct_vector4<unsigned>);
     }
 
     //{

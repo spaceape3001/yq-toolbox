@@ -4,12 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yq/core/Any.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/core/StreamOps.hpp>
+#include <yq/meta/ConstructorInfo.hpp>
 #include <yq/meta/MetaRepo.hpp>
 #include <yq/meta/TypeInfo.hpp>
 #include <yq/meta/ReservedIDs.hpp>
+#include <yq/container/initlist_utils.hpp>
 #include <cassert>
 
 namespace yq {
@@ -131,6 +134,27 @@ namespace yq {
     bool        TypeInfo::can_convert_to(const TypeInfo& otherType) const
     {
         return static_cast<bool>(m_convert.get(&otherType, nullptr));
+    }
+
+    any_x       TypeInfo::contruct_impl(std::initializer_list<const TypeInfo*> types, std::initializer_list<const void*> values) const
+    {
+        const ConstructorInfo*      best    = nullptr;
+        int                         score   = 0;
+        
+        for(const ConstructorInfo* ci : m_constructors){
+            int r   = ci -> type_match(span(types));
+            if(r < 0)
+                continue;
+            
+            if((r<score) || !best){
+                best    = ci;
+                score   = r;
+            }
+        }
+        if(!best)
+            return errors::bad_argument();
+        
+        return best->invoke(nullptr, span(types), span(values), false);
     }
     
     TypeInfo::FNConvert           TypeInfo::converter(const TypeInfo& otherType) const

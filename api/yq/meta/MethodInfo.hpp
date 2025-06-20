@@ -44,15 +44,17 @@ namespace yq {
         //! Computes the type match
         //!
         //! If there's a total mismatch, -1 is returned, 0 is a perfect match, higher numbers indicate it's possible but some conversion is required
-        int                     type_match(std::span<const TypeInfo*> args) const;
+        int                     type_match(std::span<const TypeInfo* const> args) const;
 
     protected:
+        friend class TypeInfo;
         const ArgInfo*              m_result;
         std::vector<const ArgInfo*> m_args;
 
         MethodInfo(std::string_view zName, const std::source_location& sl, Meta*);
 
-        Expect<Any>            invoke(void* obj, std::span<const Any> args, bool constPtr) const;
+        Expect<Any>             invoke(void* obj, std::span<const Any> args, bool constPtr) const;
+        Expect<Any>             invoke(void* obj, std::span<const TypeInfo* const> types, std::span<const void* const> args, bool constPtr) const;
 
         /*! Invoke with the exact types
         

@@ -6,6 +6,8 @@
 
 #include <boost/ut.hpp>
 #include <yq/vector/Vector3.hxx>
+#include <yq/meta/Meta.hpp>
+#include <yq/core/Any.hpp>
 
 namespace ut = boost::ut;
 using namespace ut;
@@ -13,6 +15,8 @@ using namespace yq;
 
 int main()
 {
+    Meta::freeze();
+
     "add 3D int"_test = [](){
         expect( Vector3I{1,1,1}+Vector3I{2,2,2} == Vector3I{3,3,3});
         expect( Vector3I{1,2,1}+Vector3I(2,2,2) == Vector3I(3,4,3));
@@ -43,6 +47,13 @@ int main()
         expect( false == ( any(v) < 0.5 ) );
         expect( true == ( all(v) < 3.5) );
         expect( false  == ( all(v) < 2.5) );
+    };
+    
+    "meta_construct"_test = [](){
+        any_x   x   = meta<Vector3I>().construct(1,2,3);
+        expect(true == x.has_value());
+        Vector3I    v   = x->value<Vector3I>();
+        expect( v == Vector3I(1,2,3));
     };
 
     return ut::cfg<>.run();

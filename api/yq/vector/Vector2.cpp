@@ -44,6 +44,12 @@ namespace yq {
 using namespace yq;
 
 template <typename T>
+Vector2<T>    construct_vector2(T x, T y)
+{
+    return Vector2<T>(x,y);
+}
+
+template <typename T>
 void    print_vector2(Stream& str, const Vector2<T>& v)
 {
     str << "(" << v.x << "," << v.y << ")";
@@ -210,6 +216,7 @@ static void reg_vector2()
         w.print<print_vector2<double>>();
         w.format<write_vector2d>();
         w.parse<parse_vector2d>();
+        w.constructor(construct_vector2<double>);
     }
     
     {
@@ -236,6 +243,7 @@ static void reg_vector2()
         w.print<print_vector2<float>>();
         w.format<write_vector2f>();
         w.parse<parse_vector2f>();
+        w.constructor(construct_vector2<float>);
     }
     
     {
@@ -254,6 +262,7 @@ static void reg_vector2()
         w.print<print_vector2<int>>();
         w.format<write_vector2i>();
         w.parse<parse_vector2i>();
+        w.constructor(construct_vector2<int>);
     }
 
     {
@@ -267,6 +276,7 @@ static void reg_vector2()
         w.print<print_vector2<unsigned>>();
         w.format<write_vector2u>();
         w.parse<parse_vector2u>();
+        w.constructor(construct_vector2<unsigned>);
     }
 
     {
@@ -282,6 +292,7 @@ static void reg_vector2()
         w.print<print_vector2<unit::Meter>>();
         w.format<write_vector2m>();
         w.parse<parse_vector2m>();
+        w.constructor(construct_vector2<unit::Meter>);
     }
 
     {
@@ -297,6 +308,7 @@ static void reg_vector2()
         w.print<print_vector2<unit::Centimeter>>();
         w.format<write_vector2cm>();
         w.parse<parse_vector2cm>();
+        w.constructor(construct_vector2<unit::Centimeter>);
     }
 
     {
@@ -312,6 +324,7 @@ static void reg_vector2()
         w.print<print_vector2<unit::Millimeter>>();
         w.format<write_vector2mm>();
         w.parse<parse_vector2mm>();
+        w.constructor(construct_vector2<unit::Millimeter>);
     }
 }
 

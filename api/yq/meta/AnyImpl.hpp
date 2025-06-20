@@ -207,4 +207,12 @@ namespace yq {
         }
         return { tmp, false };
     }
+
+    ///
+
+    template <typename ... T>
+    any_x       TypeInfo::construct(T ... args) const
+    {
+        return contruct_impl( std::initializer_list<const TypeInfo*>{ &meta<T>()... }, std::initializer_list<const void*>{ &args... });
+    }
 }
