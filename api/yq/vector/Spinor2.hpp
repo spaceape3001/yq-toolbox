@@ -220,6 +220,7 @@ namespace yq {
     template <typename T, typename R>
     bool is_close(const R& compare, const Spinor2<T>& actual, std::type_identity_t<T>a, std::type_identity_t<T> xy);
 
+    //! Generic print to a stream implementation
     template <typename S, typename T>
     S&  as_stream(S& s, const Spinor2<T>& v);
     
