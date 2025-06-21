@@ -224,6 +224,7 @@ namespace yq {
     template <typename S, typename T>
     S&  as_stream(S& s, const Spinor2<T>& v);
     
+    //! Prints spinor to given stream
     template <typename T>
     Stream& operator<<(Stream&s, const Spinor2<T>& v);
 
