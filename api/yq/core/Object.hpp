@@ -109,6 +109,36 @@ public:                                                 \
     {
         return typename T::MyInfo::template Writer<T>( const_cast<typename T::MyInfo&>( T::staticMetaInfo()));
     }
+
+    template <SomeObject Obj>
+    bool    ObjectInfo::is_base() const
+    {
+        return is_base(meta<Obj>());
+    }
+
+    template <SomeObject Obj>
+    bool    ObjectInfo::is_base_or_this() const
+    {
+        return is_base_or_this(meta<Obj>());
+    }
+
+    template <SomeObject Obj>
+    bool    ObjectInfo::is_derived() const
+    {
+        return is_derived(meta<Obj>());
+    }
+
+    template <SomeObject Obj>
+    bool    ObjectInfo::is_derived_or_this() const
+    {
+        return is_derived_or_this(meta<Obj>());
+    }
+
+    template <SomeObject Obj>
+    bool    ObjectInfo::is_this() const
+    {
+        return is_this(meta<Obj>());
+    }
 }
 
 /*! \brief IMPLEMENTS meta for the specified object

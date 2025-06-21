@@ -8,6 +8,7 @@
 
 #include <yq/meta/CompoundInfo.hpp>
 #include <yq/meta/MetaLookup.hpp>
+#include <yq/typedef/object.hpp>
 
 namespace yq {
 
@@ -65,8 +66,20 @@ namespace yq {
             \return TRUE if presumedBase is a correct assumption, and is a base class to this object.
         */
         bool    is_base(const ObjectInfo& presumedBase) const;
+        
+        template <SomeObject>
+        bool    is_base() const;
+
+        bool    is_base_or_this(const ObjectInfo& presumedBase) const;
+
+        template <SomeObject>
+        bool    is_base_or_this() const;
 
         bool    is_this(const ObjectInfo& presumedBase) const;
+        
+        //! TRUE if this matches (or derived from)
+        template <SomeObject>
+        bool    is_this() const;
         
         /*! \brief Tests for derived object
         
@@ -79,6 +92,14 @@ namespace yq {
         */
         bool    is_derived(const ObjectInfo& presumedDerived) const;
         
+        template <SomeObject>
+        bool    is_derived() const;
+        
+        bool    is_derived_or_this(const ObjectInfo& presumedDerived) const;
+        
+        template <SomeObject>
+        bool    is_derived_or_this() const;
+
         //! Count of hops to the presumed base class, negative if it's not a base
         int     hops_to_base(const ObjectInfo& presumedBase) const;
 

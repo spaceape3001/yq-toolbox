@@ -98,9 +98,27 @@ namespace yq {
         return false;
     }
     
+    bool    ObjectInfo::is_base_or_this(const ObjectInfo& oi) const
+    {
+        for(const ObjectInfo* b = this; b; b = b -> m_base){
+            if(&oi == b)
+                return true;
+        }
+        return false;
+    }
+
     bool    ObjectInfo::is_derived(const ObjectInfo& oi) const
     {
         for(const ObjectInfo* b = oi.m_base; b; b = b -> m_base){
+            if(b == this)
+                return true;
+        }
+        return false;
+    }
+
+    bool    ObjectInfo::is_derived_or_this(const ObjectInfo& oi) const
+    {
+        for(const ObjectInfo* b = &oi; b; b = b -> m_base){
             if(b == this)
                 return true;
         }
