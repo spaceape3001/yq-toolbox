@@ -228,6 +228,7 @@ namespace yq {
     template <typename T>
     Stream& operator<<(Stream&s, const Spinor2<T>& v);
 
+    //! Prints spinor to given log stream
     template <typename T>
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Spinor2<T>& v);
 
