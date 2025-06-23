@@ -28,6 +28,9 @@ namespace yq {
     */
     class AssetInfo : public ObjectInfo {
     public:
+        //! Writer of asset information 
+        //! \note This is to be used during initialization
+        //! \tparam C class being written to
         template <typename C> class Writer;
 
         AssetInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
