@@ -39,6 +39,8 @@ namespace yq {
         //! Loads the asset from native binary format (whatever that is)
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }
         
+        //! Gets the factory for this asset type
+        //! \note Don't DELETE the pointer!
         virtual AssetFactory*   factory() const { return nullptr; }
         virtual AssetCPtr       load(std::string_view) const { return {}; }
         
