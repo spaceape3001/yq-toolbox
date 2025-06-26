@@ -33,11 +33,21 @@ namespace yq {
         }
         return log4cpp::Priority::NOTSET;
     }
+
+    template <StringLiteral, unsigned, typename ... T>
+    bool first_seen(T ... args)
+    {
+        using data_k   = std::tuple<T...>;
+        static FirstSeen<data_k> s_first;
+        return s_first(data_k(args...));
+    }
 }
+
+#define yFirstSeen(...)    ::yq::first_seen<__FILE__, __LINE__>(__VA_ARGS__)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Log once and only once (per invocation)
-#define yLogOnce(pri, cat)              ::yq::log_category(cat).getStream(log_once<__FILE__, __LINE__>(pri))
+#define yLogOnce(pri, cat)              ::yq::log_category(cat).getStream(::yq::log_once<__FILE__, __LINE__>(pri))
 
 #define yLogOnceAlert(cat)              yLogOnce(log4cpp::Priority::ALERT, cat)
 #define yLogOnceCritical(cat)           yLogOnce(log4cpp::Priority::CRIT, cat)
@@ -62,7 +72,7 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Log the first time based on filter
-#define yLogFirst(pri, cat, ...)    ::yq::log_category(cat).getStream(log_first<__FILE__, __LINE__>(pri, __VA_ARGS__))
+#define yLogFirst(pri, cat, ...)    ::yq::log_category(cat).getStream(::yq::log_first<__FILE__, __LINE__>(pri, __VA_ARGS__))
 
 #define yLogFirstAlert(cat, ...)        yLogFirst(log4cpp::Priority::ALERT, cat, __VA_ARGS__ )
 #define yLogFirstCritical(cat, ...)     yLogFirst(log4cpp::Priority::CRIT, cat, __VA_ARGS__ )
