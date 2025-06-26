@@ -33,7 +33,7 @@ namespace yq::future {
         Done,                   //!< "Done" but no data present
         Cancelled,              //!< "Done" but cancelled
         Error,                  //!< "Done" but encountered the error code
-        Exception,              //!< "Done" but encountered excpetion
+        Exception,              //!< "Done" but encountered exception
         Fetched                 //!< "Done" with data, but data has already been retrieved
     };
     
