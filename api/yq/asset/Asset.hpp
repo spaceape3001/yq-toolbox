@@ -42,6 +42,8 @@ namespace yq {
         //! Gets the factory for this asset type
         //! \note Don't DELETE the pointer!
         virtual AssetFactory*   factory() const { return nullptr; }
+        
+        //! Uses the factory to do a load of the specified file/partial path of the asset
         virtual AssetCPtr       load(std::string_view) const { return {}; }
         
     protected:
