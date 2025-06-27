@@ -70,6 +70,7 @@ namespace yq {
         YQ_OBJECT_DECLARE(Asset, Object)
     public:
 
+        //! Current data size
         virtual size_t                  data_size() const = 0;
         
         //! Only works if cached, otherwise empty
