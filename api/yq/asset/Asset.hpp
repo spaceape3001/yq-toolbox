@@ -86,6 +86,7 @@ namespace yq {
         //! Can add multiple paths, splits on ';'
         static void  resolver_add_paths(std::string_view);
         
+        //! Non-writable reference to the asset system's file resolver (aka search paths)
         static const FileResolver&      resolver();
         
         static std::filesystem::path    resolve(std::string_view);
