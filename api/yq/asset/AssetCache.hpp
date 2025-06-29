@@ -13,6 +13,7 @@
 
 #include <yq/typedef/asset.hpp>
 #include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/url.hpp>
 
 namespace yq {
     
@@ -28,12 +29,13 @@ namespace yq {
             //  sweeps away old ones
         //void        prune();
         
-        //! TRUE if we contain the specified filepath (exact & full)
-        bool        contains(const std::filesystem::path&) const;
+        //bool        contains(const std::filesystem::path&) const;
+        //! TRUE if we contain the specified url (exact & full)
+        bool        contains(const Url&) const;
         bool        contains(uint64_t) const;
     
     protected:
-        AssetCPtr   _find(const std::filesystem::path&) const;
+        AssetCPtr   _find(const Url&) const;
         AssetCPtr   _find(uint64_t) const;
         
         //! Returns the other one if there's a collision on insert
@@ -46,7 +48,8 @@ namespace yq {
 
         mutable tbb::spin_rw_mutex                  m_mutex;
         std::unordered_map<uint64_t, AssetCPtr>     m_byId;
-        std::map<std::filesystem::path, uint64_t>   m_byPath;
+        //std::map<std::filesystem::path, uint64_t>   m_byPath;
+        std::map<Url, uint64_t>                     m_byUrl;
         
         AssetCache(const AssetCache&) = delete;
         AssetCache(AssetCache&&) = delete;

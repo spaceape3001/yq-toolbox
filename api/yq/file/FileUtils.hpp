@@ -8,6 +8,7 @@
 
 #include <yq/file/SizeTimestamp.hpp>
 #include <yq/typedef/filesystem_path.hpp>
+#include <yq/typedef/url.hpp>
 //#include <iosfwd>
 #include <vector>
 
@@ -83,6 +84,7 @@ namespace yq {
     
     //! Returns the LAST file extension (no leading '.') or empty if none
     std::string_view    file_extension(std::string_view);
+    std::string         file_extension(const Url&);
     
     
 }

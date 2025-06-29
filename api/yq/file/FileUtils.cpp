@@ -9,6 +9,7 @@
 #include <yq/core/Result.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/container/Vector.hpp>
+#include <yq/net/Url.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/IterUtf8.hpp>
 #include <yq/typedef/result.hpp>
@@ -248,5 +249,10 @@ namespace yq {
         if(p <= sl+1)   // hidden file, no-extension, return empty
             return std::string_view();
         return sv.substr(p+1);
+    }
+
+    std::string         file_extension(const Url& url)
+    {
+        return std::string(file_extension(url.path));
     }
 }

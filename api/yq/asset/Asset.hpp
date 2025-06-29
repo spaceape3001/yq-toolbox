@@ -13,6 +13,7 @@
 #include <yq/core/Ref.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/file/SizeTimestamp.hpp>
+#include <yq/net/Url.hpp>
 #include <yq/typedef/asset.hpp>
 
 #include <atomic>
@@ -21,6 +22,7 @@
 
 namespace yq {
     class FileResolver;
+    class AssetLibraryInfo;
 
     /*! \brief General asset information
     
@@ -46,7 +48,10 @@ namespace yq {
         //! Uses the factory to do a load of the specified file/partial path of the asset
         virtual AssetCPtr       load(std::string_view) const { return {}; }
         
+        const std::vector<const AssetLibraryInfo*>& libraries() const { return m_libraries; }
+        
     protected:
+        std::vector<const AssetLibraryInfo*>    m_libraries;
     };
     
     /*! \brief An asset of the graphics engine
@@ -74,7 +79,10 @@ namespace yq {
         virtual size_t                  data_size() const = 0;
         
         //! Only works if cached, otherwise empty
-        const std::filesystem::path&    filepath() const { return m_filepath; }
+        std::filesystem::path           filepath() const;
+        
+        //! Only works if cached, otherwise empty
+        const Url&                      url() const { return m_url; }
         
         //! Saves data to native binary format (whatever that is)
         //virtual bool        save_binary(const std::filesystem::path&) const = 0;
@@ -97,6 +105,9 @@ namespace yq {
         std::error_code                 save_to(const std::filesystem::path&) const;
         std::error_code                 save_to(const std::filesystem::path&, const AssetSaveOptions& options) const;
         
+        //std::error_code                 save_to(const Url&) const;
+        //std::error_code                 save_to(const Url&, const AssetSaveOptions& options) const;
+
         //static const path_vector_t&             search_path();
         //static const std::filesystem::path&     binary_root();
         //static std::filesystem::path            resolve(const std::filesystem::path&);
@@ -117,18 +128,22 @@ namespace yq {
     
         static void init_info();
         
+        void    set_url(const std::filesystem::path&);
+        void    set_url(const Url&);
+        
     
     protected:
         friend class AssetFactory;
         
         Asset();
-        Asset(const std::filesystem::path&);
+        [[deprecated]] Asset(const std::filesystem::path&);
         virtual ~Asset();
         
         virtual AssetFactory&       factory() const = 0;
         
     private:
-        std::filesystem::path           m_filepath;
+        Url                             m_url;
+        
         
         static FileResolver&            _resolver();
     };

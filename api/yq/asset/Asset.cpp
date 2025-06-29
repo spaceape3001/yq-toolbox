@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/errors.hpp>
+#include <yq/tags.hpp>
 #include <yq/asset/Asset.hpp>
 #include <yq/asset/AssetIO.hpp>
 #include <yq/asset/AssetFactory.hpp>
@@ -84,12 +85,18 @@ namespace yq {
     {
     }
 
-    Asset::Asset(const std::filesystem::path&p) : m_filepath(p)
+    Asset::Asset(const std::filesystem::path&fp)
     {
+        set_url(fp);
     }
     
     Asset::~Asset()
     {
+    }
+
+    std::filesystem::path           Asset::filepath() const
+    {
+        return m_url.path;
     }
     
     namespace errors {
@@ -141,12 +148,13 @@ namespace yq {
         }
         
         std::error_code     ec = errors::no_savers_applicable();
+        Url     saveUrl  = to_url(save_file);
         
         for(const AssetFactory::Saver* s : af.m_savers){
             if(!s->extensions.contains(x))
                 continue;
             try {
-                ec  = s -> save(*this, save_file, options);
+                ec  = s -> save(*this, saveUrl, options);
                 if(ec != std::error_code())
                     continue;
                 break;
@@ -175,11 +183,21 @@ namespace yq {
             rename(save_file.c_str(), fp.c_str());
         }
         
-        if(options.set_name && (fp != m_filepath) && !af.contains(id())){
-            const_cast<Asset*>(this) -> m_filepath  = fp;
+        if(options.set_name && (fp.string() != m_url.path) && !af.contains(id())){
+            const_cast<Asset*>(this) -> m_url  = to_url(fp);
         }
 
         return {};
+    }
+
+    void Asset::set_url(const std::filesystem::path&fp) 
+    {
+        m_url = to_url(fp);
+    }
+
+    void Asset::set_url(const Url& url) 
+    {
+        m_url = url;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,5 +206,6 @@ namespace yq {
     {
         auto w = writer<Asset>();
         w.description("Asset (ie texture, mesh, shader, etc)");
+        w.property("url", &Asset::m_url).tag({kTag_Save});
     }
 }

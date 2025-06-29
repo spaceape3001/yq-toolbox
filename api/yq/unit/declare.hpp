@@ -123,6 +123,7 @@ namespace yq {
 
     template <typename T, typename DIM>             struct MKS;
     template <typename T, typename DIM, double K>   struct SCALED;
+    
 
     //  Unit sizes double checked with wikipedia!
     namespace unit {
@@ -408,6 +409,8 @@ namespace yq {
         using Radian3D                  = Vector3<Radian>;
         using RadianPerSecond3D         = Vector3<RadianPerSecond>;
         using RadianPerSecond²3D        = Vector3<RadianPerSecond²>;
+        
+        
     }
     
     using unit::Radian;

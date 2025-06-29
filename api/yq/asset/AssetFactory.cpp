@@ -22,21 +22,22 @@ namespace yq {
     {
     }
 
-    AssetCPtr    AssetFactory::_load(const std::filesystem::path& fp, const AssetLoadOptions& options)
+    AssetCPtr    AssetFactory::_load(const Url& url, const AssetLoadOptions& options)
     {
-        AssetCPtr  ret = _find(fp);
+        AssetCPtr  ret = _find(url);
         if(ret)
             return ret;
             
-        if(!std::filesystem::exists(fp)){
-            assetInfo << "File does not exist (" << fp << ")";
+        std::error_code ecx;
+        if(!std::filesystem::exists(url.path, ecx)){
+            assetInfo << "File does not exist (" << to_string(url) << ")";
             return nullptr;
         }
 
-        std::string    x  = fp.extension().string();
-        if(x.empty())      // no extension... abort
+        std::string    x  = file_extension(url);
+        if(x.empty())     // no extension... abort
             return nullptr;
-        x   = x.substr(1);
+        //x   = x.substr(1);
         
         AssetPtr  loaded  = nullptr;
 
@@ -45,10 +46,10 @@ namespace yq {
                 continue;
             
             try {
-                loaded     = l->load(fp, options);
+                loaded     = l->load(url, options);
             } 
             catch(std::error_code ec) {
-                assetWarning << "Unable to load (" << fp << "): " << ec.message();
+                assetWarning << "Unable to load (" << to_string(url) << "): " << ec.message();
             }
             
             if(loaded)
@@ -58,7 +59,7 @@ namespace yq {
         if(!loaded)
             return nullptr;
             
-        loaded -> m_filepath   = fp;
+        loaded -> m_url   = url;
         _insert(loaded.ptr());
         return loaded;
     }
@@ -70,7 +71,7 @@ namespace yq {
             assetWarning << "Unable to resolve to file: " << pp;
             return nullptr;
         }
-        return _load(fp, options);
+        return _load(to_url(fp), options);
     }
     
     AssetCPtr    AssetFactory::_pfind(std::string_view pp) const
@@ -78,7 +79,7 @@ namespace yq {
         std::filesystem::path   fp   = Asset::resolver().resolve(pp);
         if(fp.empty())
             return nullptr;
-        return _find(fp);
+        return _find(to_url(fp));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,7 @@
 #include <yq/typedef/uv.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_one.hpp>
+#include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
 
 namespace yq {
@@ -34,6 +35,8 @@ namespace yq {
         //! Construct with all components to same value
         constexpr UV(all_k, const T& _val) noexcept : u(_val), v(_val) {}
         
+        consteval UV(nan_k) noexcept : UV(ALL, nan_v<T>) {}
+
         constexpr UV(u_k, T _val) noexcept : u(_val), v(zero_v<T>) {}
         
         consteval UV(u_k) noexcept : UV(U, one_v<T>) {}

@@ -45,8 +45,8 @@ namespace yq {
         AssetFactory(const AssetInfo&, const std::source_location& sl);
         ~AssetFactory();
 
-        //! Loads the specified file path (no resolution)
-        AssetCPtr    _load(const std::filesystem::path&, const AssetLoadOptions&);
+        //! Loads the specified URL (no resolution)
+        AssetCPtr    _load(const Url&, const AssetLoadOptions&);
         
         //! Resolves & loads a partial path
         AssetCPtr    _pload(std::string_view, const AssetLoadOptions&);
@@ -73,7 +73,7 @@ namespace yq {
     */
     struct AssetFactory::Loader {
         //! This abstraction loads the data from a filesystem path
-        virtual Asset*          load(const std::filesystem::path&, const AssetLoadOptions&) const = 0;
+        virtual Asset*          load(const Url&, const AssetLoadOptions&) const = 0;
         StringSet               extensions;
         std::source_location    location;
         
@@ -93,9 +93,9 @@ namespace yq {
             AssetFactory::Loader(exts, sl), fn(std::move(f)) {}
         
         //! Adapter to load the resource
-        A* load(const std::filesystem::path& p, const AssetLoadOptions&) const override
+        A* load(const Url& p, const AssetLoadOptions&) const override
         {
-            return fn(p);
+            return fn(p.path);
         }
     };
     
@@ -112,14 +112,14 @@ namespace yq {
             AssetFactory::Loader(exts, sl), fn(std::move(f)) {}
         
         //! Adapter to load the resource
-        A* load(const std::filesystem::path& p, const AssetLoadOptions& options) const override
+        A* load(const Url& p, const AssetLoadOptions& options) const override
         {
-            return fn(p, options);
+            return fn(p.path, options);
         }
     };
 
     struct AssetFactory::Saver {
-        virtual std::error_code save(const Asset&, const std::filesystem::path&, const AssetSaveOptions&) const = 0;
+        virtual std::error_code save(const Asset&, const Url&, const AssetSaveOptions&) const = 0;
         StringSet               extensions;
         std::source_location    location;
 
@@ -133,9 +133,9 @@ namespace yq {
         AssetSaver_Bool(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
             AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
         
-        virtual std::error_code save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions&) const override
+        virtual std::error_code save(const Asset& a, const Url& p, const AssetSaveOptions&) const override
         {
-            if(!fn(static_cast<const A&>(a), pth)){
+            if(!fn(static_cast<const A&>(a), p.path)){
                 return errors::asset_saving_failed();
             }
             return {};
@@ -149,9 +149,9 @@ namespace yq {
         AssetSaver_Error(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
             AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
         
-        virtual std::error_code            save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions&) const override
+        virtual std::error_code            save(const Asset& a, const Url& p, const AssetSaveOptions&) const override
         {
-            return fn(static_cast<const A&>(a), pth);
+            return fn(static_cast<const A&>(a), p.path);
         }
     };
 
@@ -162,9 +162,9 @@ namespace yq {
         AssetSaver_BoolWithOptions(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
             AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
         
-        virtual std::error_code save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions& options) const override
+        virtual std::error_code save(const Asset& a, const Url& p, const AssetSaveOptions& options) const override
         {
-            if(!fn(static_cast<const A&>(a), pth, options)){
+            if(!fn(static_cast<const A&>(a), p.path, options)){
                 return errors::asset_saving_failed();
             }
             return {};
@@ -178,9 +178,9 @@ namespace yq {
         AssetSaver_ErrorWithOptions(Function&& f, std::initializer_list<std::string_view> exts, const std::source_location& sl) :
             AssetFactory::Saver(exts, sl), fn(std::move(f)) {}
         
-        virtual std::error_code            save(const Asset& a, const std::filesystem::path& pth, const AssetSaveOptions& options) const override
+        virtual std::error_code            save(const Asset& a, const Url& p, const AssetSaveOptions& options) const override
         {
-            return fn(static_cast<const A&>(a), pth, options);
+            return fn(static_cast<const A&>(a), p.path, options);
         }
     };
 
@@ -201,11 +201,16 @@ namespace yq {
         }
     
         //! Gets the specific resource (resolved path) from the cache (if already loaded)
-        Ref<const A>    getx(const std::filesystem::path&p) const
+        Ref<const A>    getx(const Url& u) const
         {
-            return static_cast<const A*>(_find(p).ptr());
+            return static_cast<const A*>(_find(u).ptr());
         }
         
+        Ref<const A>    getx(const std::filesystem::path&p) const
+        {
+            return getx(to_url(p));
+        }
+
         //! Gets the specific resource (partial path) from the cache (if already loaded)
         Ref<const A>    get(std::string_view p) const
         {
@@ -220,11 +225,16 @@ namespace yq {
         }
 
         //! Loads exact path (no resolution)
-        Ref<const A>    loadx(const std::filesystem::path&p, const AssetLoadOptions& options={})
+        Ref<const A>    loadx(const Url&p, const AssetLoadOptions& options={})
         {
             return static_cast<const A*>(_load(p,options).ptr());
         }
         
+        Ref<const A>    loadx(const std::filesystem::path&p, const AssetLoadOptions& options={})
+        {
+            return static_cast<const A*>(_load(to_url(p),options).ptr());
+        }
+
         //! Loads the item
         Ref<const A>    load(std::string_view p, const AssetLoadOptions& options={})
         {

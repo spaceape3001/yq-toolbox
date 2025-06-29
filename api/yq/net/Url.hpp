@@ -10,6 +10,7 @@
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/result.hpp>
 #include <yq/typedef/expected.hpp>
+#include <yq/meta/InfoBinder.hpp>
 
 namespace yq {
     class Stream;
@@ -34,12 +35,13 @@ namespace yq {
             return { scheme, user, pwd, host, path, query, fragment, port };
         }
 
-        bool    operator==(const BasicUrl&) const = default;
         bool    empty() const 
         {
             return scheme.empty() && user.empty() && pwd.empty() && host.empty() && path.empty() && query.empty() && fragment.empty() && !port;
         }
         
+        // need equality & comparison (for maps)
+        auto    operator<=>(const BasicUrl&) const = default;
     };
 
     Url             copy(const UrlView&);
@@ -60,3 +62,6 @@ namespace yq {
     bool            is_valid(const UrlView&);
 
 }
+
+YQ_TYPE_DECLARE(yq::Url)
+

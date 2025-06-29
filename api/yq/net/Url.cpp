@@ -12,6 +12,9 @@
 #include <yq/text/copy.hpp>
 #include <yq/text/parse.hpp>
 #include <yq/text/chars.hpp>
+#include <yq/meta/Init.hpp>
+
+YQ_TYPE_IMPLEMENT(yq::Url)
 
 namespace yq {
     url_view_r      as_host_port(const char*sz, size_t cb)
@@ -478,4 +481,14 @@ namespace yq {
         txt << u;
         return ret;
     }
+
+    static void reg_url()
+    {
+        {
+            auto w = writer<Url>();
+                // TODO... (print, save, that sort)
+        }
+    }
+    
+    YQ_INVOKE(reg_url();)
 }

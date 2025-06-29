@@ -8,7 +8,8 @@ add_library(yq_net SHARED
     net/ContentType.cpp
     net/HttpParser.cpp
     net/HttpStatus.cpp
-    net/Url.cpp
+    
+    # net/Url.cpp   # now built into the core
     net/VersionSpec.cpp
 )
 

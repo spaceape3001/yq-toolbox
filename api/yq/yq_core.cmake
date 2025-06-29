@@ -52,6 +52,9 @@ add_library(yq_core SHARED
     meta/StdTypes.cpp
     meta/TypeInfo.cpp
     
+    #   Moving this here as many more need it than simply "net"
+    net/Url.cpp
+
     stream/Bytes.cpp
     stream/File.cpp
     stream/First.cpp

@@ -10,6 +10,7 @@
 #include <yq/typedef/uvw.hpp>
 #include <yq/meta/InfoBinder.hpp>
 #include <yq/trait/has_one.hpp>
+#include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
 
 namespace yq {
@@ -39,6 +40,8 @@ namespace yq {
         //! Constructs all data to same value
         constexpr UVW(all_k, const T& _val) noexcept : u(_val), v(_val), w(_val) {}
         
+        consteval UVW(nan_k) noexcept : UVW(ALL, nan_v<T>) {}
+
         constexpr UVW(u_k, T _val) noexcept : UVW(_val, zero_v<T>, zero_v<T>) {}
         
         consteval UVW(u_k) noexcept : UVW(U, one_v<T>) {}
