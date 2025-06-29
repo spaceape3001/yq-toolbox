@@ -89,6 +89,7 @@ namespace yq {
         //! Non-writable reference to the asset system's file resolver (aka search paths)
         static const FileResolver&      resolver();
         
+        //! Resolve the given string to a filename
         static std::filesystem::path    resolve(std::string_view);
         static std::filesystem::path    resolve(full_k, std::string_view);
         static std::filesystem::path    resolve(partial_k, std::string_view);
