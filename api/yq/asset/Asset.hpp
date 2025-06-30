@@ -99,6 +99,9 @@ namespace yq {
         
         //! Resolve the given string to a filename
         static std::filesystem::path    resolve(std::string_view);
+        
+        //! Resolve the given string to a filename (fully spec'd from the root)
+        //! \note This is the preference to use as this will have the best performance (ie... no recursive iterator)
         static std::filesystem::path    resolve(full_k, std::string_view);
         static std::filesystem::path    resolve(partial_k, std::string_view);
         
