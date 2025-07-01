@@ -27,7 +27,7 @@ namespace yq::expr {
     Instruction::result_t    ConstantInstruction::result() const
     {
         static const Repo& _repo    = repo();
-        const TypeInfo* type = _repo.constant_type(m_text);
+        const TypeMeta* type = _repo.constant_type(m_text);
         if(type)
             return type;
         return {};

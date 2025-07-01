@@ -4,26 +4,26 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "CompoundInfo.hpp"
+#include "CompoundMeta.hpp"
 
 #include <yq/meta/MetaLookup.hpp>
 
 namespace yq {
-    CompoundInfo::CompoundInfo(std::string_view zName, const std::source_location& sl, Meta* par, id_t i) : Meta(zName, par, sl, i)
+    CompoundMeta::CompoundMeta(std::string_view zName, const std::source_location& sl, Meta* par, id_t i) : Meta(zName, par, sl, i)
     {
         set(Flag::COMPOUND);
     }
     
-    CompoundInfo::~CompoundInfo()
+    CompoundMeta::~CompoundMeta()
     {
     }
 
-    void        CompoundInfo::sweep_impl() 
+    void        CompoundMeta::sweep_impl() 
     {
         Meta::sweep_impl();
     }
 
-    void        CompoundInfo::gather(MetaLookup<MethodInfo>& res)
+    void        CompoundMeta::gather(MetaLookup<MethodInfo>& res)
     {
         res.clear();
         for(const Meta* m : children()){
@@ -32,7 +32,7 @@ namespace yq {
         }
     }
     
-    void        CompoundInfo::gather(MetaLookup<PropertyInfo>& res)
+    void        CompoundMeta::gather(MetaLookup<PropertyInfo>& res)
     {
         res.clear();
         for(const Meta* m : children()){

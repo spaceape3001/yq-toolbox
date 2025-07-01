@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <yq/meta/ReservedIDs.hpp>
 #include <yq/meta/Init.hpp>
 

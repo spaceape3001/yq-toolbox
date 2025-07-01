@@ -81,10 +81,10 @@ namespace yq {
             ASSOCIATION,    //!< It's an association
             CACHE,          //!< It's a cache
             CAMERA,         //!< It's a camera (CameraInfo)
-            COLLECTION,     //!< It's a collection (TypeInfo)
+            COLLECTION,     //!< It's a collection (TypeMeta)
             COMMAND,        //!< It's a command
             COMPILER,       //!< It's a compiler
-            COMPOUND,       //!< It's a compound/struct (CompoundInfo)
+            COMPOUND,       //!< It's a compound/struct (CompoundMeta)
             CONST,          //!< Method/property is CONSTANT/READONLY
             CONSTRAINT,     //!< It's a constraint
             CONSTRUCTOR,    //!< It's a constructor
@@ -167,7 +167,7 @@ namespace yq {
             TODO,           //!< It's "TODO" later
             TOOL,           //!< It's a Tool
             TRIGGER,        //!< It's a trigger/detector
-            TYPE,           //!< Meta has TypeInfo
+            TYPE,           //!< Meta has TypeMeta
             VERBOSE,        //!< Enable to get verbose diagnostics (avoid for most things)
             VIEWER,         //!< Viewer related (tachyon library)
             VULKAN,         //!< Vulkan api enabled
@@ -442,13 +442,13 @@ namespace yq {
 
     protected:
         friend class ArgInfo;
-        friend class CompoundInfo;
+        friend class CompoundMeta;
         friend class GlobalInfo;
         friend class MethodInfo;
         friend class OperatorInfo;
         friend class ObjectInfo;
         friend class PropertyInfo;
-        friend class TypeInfo;
+        friend class TypeMeta;
     
         //! Used by the constructor's default to auto-assign an ID
         static constexpr const id_t AUTO_ID = ~(id_t) 0;

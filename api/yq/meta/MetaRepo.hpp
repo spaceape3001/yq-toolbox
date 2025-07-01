@@ -17,7 +17,7 @@ namespace yq {
         Vector<const Meta*>     all;
         Vector<const Meta*>     metas;
         MetaLookup<ObjectInfo>  objects;
-        MetaLookup<TypeInfo>    types;
+        MetaLookup<TypeMeta>    types;
                 
         Repo();
         ~Repo();

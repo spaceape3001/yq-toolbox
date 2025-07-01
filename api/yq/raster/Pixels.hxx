@@ -17,7 +17,7 @@
 #include <yq/coord/Coord5.hpp>
 #include <yq/coord/Coord6.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 
 namespace yq {
     template <uint8_t DIMS, class C>
@@ -240,13 +240,13 @@ namespace yq {
         static const auto&  kMeta   = meta<C>();
         static const auto   kId     = kMeta.id();
 
-        const TypeInfo&     type    = val.type();
+        const TypeMeta&     type    = val.type();
         const void*         ptr     = val.raw_ptr();
         
         if(type.id() == kId){
             array_t::edit(cc) = *(const C*) ptr;
         } else {
-            TypeInfo::FNConvert   cvt = type.converter(kMeta);
+            TypeMeta::FNConvert   cvt = type.converter(kMeta);
             if(!cvt)
                 return false;
             cvt(&array_t::edit(cc), ptr);
@@ -270,7 +270,7 @@ namespace yq {
     }
 
     template <uint8_t DIMS, class C>
-    const TypeInfo&  Pixels<DIMS,C>::type(pixel_k) const 
+    const TypeMeta&  Pixels<DIMS,C>::type(pixel_k) const 
     {
         return meta<C>();
     }

@@ -12,7 +12,7 @@
 #include <yq/meta/MetaWriter.hpp>
 #include <yq/meta/GlobalInfo.hpp>
 #include <yq/meta/ObjectInfo.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 
 namespace yq {
     MethodInfo::MethodInfo(std::string_view zName, const std::source_location& sl, Meta* parentMeta) : Meta(zName, parentMeta, sl)
@@ -30,7 +30,7 @@ namespace yq {
         
         if(ObjectInfo* obj = to_object(parentMeta))
             obj->m_local.methods << this;
-        if(TypeInfo* type = to_type(parentMeta))
+        if(TypeMeta* type = to_type(parentMeta))
             type->m_methods << this;
     }
     
@@ -70,7 +70,7 @@ namespace yq {
         return invoke(const_cast<void*>(obj), args, true);
     }
 
-    Expect<Any> MethodInfo::invoke(void* obj, std::span<const TypeInfo* const> types, std::span<const void* const> args, bool constPtr) const
+    Expect<Any> MethodInfo::invoke(void* obj, std::span<const TypeMeta* const> types, std::span<const void* const> args, bool constPtr) const
     {
         if(types.size() != args.size())
             return errors::internal_error();
@@ -93,11 +93,11 @@ namespace yq {
             if(types[ac]->id() == m_args[ac]->type().id()){
                 _args[ac]       = args[ac];
             } else if(m_args[ac]->type().is_type()){
-                TypeInfo::FNConvert   fn  = types[ac]->converter(static_cast<const TypeInfo&>(m_args[ac]->type()));
+                TypeMeta::FNConvert   fn  = types[ac]->converter(static_cast<const TypeMeta&>(m_args[ac]->type()));
                 if(!fn)
                     return errors::bad_argument();
             
-                _values[ac] = Any(static_cast<const TypeInfo&>(m_args[ac]->type()));
+                _values[ac] = Any(static_cast<const TypeMeta&>(m_args[ac]->type()));
                 _args[ac]   = _values[ac].raw_ptr();
                 ec = fn((void*) _args[ac], args[ac]);
                 if(ec != std::error_code())
@@ -123,7 +123,7 @@ namespace yq {
         void*                       rptr        = nullptr;
 
         if(m_result){
-            result  = std::move(Any(static_cast<const TypeInfo&>(m_result->type())));
+            result  = std::move(Any(static_cast<const TypeMeta&>(m_result->type())));
             rptr    = result.raw_ptr();
         }
 
@@ -138,7 +138,7 @@ namespace yq {
     
     any_x      MethodInfo::invoke(void* obj, std::span<const Any> args, bool constPtr) const 
     {
-        std::vector<const TypeInfo*>    types;
+        std::vector<const TypeMeta*>    types;
         std::vector<const void*>        values;
         
         types.reserve(args.size());
@@ -150,7 +150,7 @@ namespace yq {
         return invoke(obj, types, values, constPtr);
     }
 
-    const TypeInfo*         MethodInfo::result_type() const
+    const TypeMeta*         MethodInfo::result_type() const
     {
         if(!m_result)
             return nullptr;
@@ -159,14 +159,14 @@ namespace yq {
 
     int     MethodInfo::type_match(std::span<const Any> test) const
     {
-        std::vector<const TypeInfo*>    types;
+        std::vector<const TypeMeta*>    types;
         types.reserve(test.size());
         for(const Any& a : test)
             types.push_back(&a.type());
         return type_match(types);
     }
 
-    int     MethodInfo::type_match(std::span<const TypeInfo* const> test) const
+    int     MethodInfo::type_match(std::span<const TypeMeta* const> test) const
     {
         size_t  ac  = 0;
         int     r   = 0;
@@ -176,11 +176,11 @@ namespace yq {
             if(!test[ac])     [[unlikely]]
                 return -1;
             
-            const TypeInfo& ti = *(test[ac]);
+            const TypeMeta& ti = *(test[ac]);
             const Meta&     am = m_args[ac]->type();
             if(!am.is_type())
                 continue;
-            const TypeInfo& ai = static_cast<const TypeInfo&>(am);
+            const TypeMeta& ai = static_cast<const TypeMeta&>(am);
             if(ai.id() == ti.id()) // perfect match
                 continue;
             if(ai.id() == any().id()){

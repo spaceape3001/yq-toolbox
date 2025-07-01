@@ -8,7 +8,7 @@
 
 #include <yq/keywords.hpp>
 #include <yq/core/128-bit.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 
 #include <span>
 #include <functional>
@@ -66,7 +66,7 @@ namespace yq {
             size_t          stride() const { return m_stride; }
         
             //! Element Type
-            const TypeInfo* type() const { return m_type; }
+            const TypeMeta* type() const { return m_type; }
         
             //! Implicit test operator
             operator        bool() const { return has_data(); }
@@ -265,9 +265,9 @@ namespace yq {
                 
                 \param[in] pData        Pointer to data
                 \param[in] byteCount    Bytes of data
-                \param[in] type         TypeInfo for the data
+                \param[in] type         TypeMeta for the data
             */
-            void    set(const void* pData, size_t byteCount, const TypeInfo& type); 
+            void    set(const void* pData, size_t byteCount, const TypeMeta& type); 
 
             /*! \brief "set" for the memory
             
@@ -305,10 +305,10 @@ namespace yq {
                 
                 \param[in] pData        Pointer to data
                 \param[in] byteCount    Bytes of data
-                \param[in] type         TypeInfo for the data
+                \param[in] type         TypeMeta for the data
                 \param[in] Free         Lambda for clearing/freeing the data, in case of memory allocation. 
             */
-            void    set(const void* pData, size_t byteCount, const TypeInfo& type, Free&&free); 
+            void    set(const void* pData, size_t byteCount, const TypeMeta& type, Free&&free); 
 
         //  -------------------
         //  CONSTRUCTION/DESTRUCTION
@@ -409,13 +409,13 @@ namespace yq {
 
         Memory(set_k, const void* pData, size_t byteCount, size_t stride); 
 
-        Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type); 
+        Memory(set_k, const void* pData, size_t byteCount, const TypeMeta& type); 
 
         Memory(set_k, const void* pData, size_t byteCount, Free&& free); 
 
         Memory(set_k, const void* pData, size_t byteCount, size_t stride, Free&& free); 
 
-        Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free); 
+        Memory(set_k, const void* pData, size_t byteCount, const TypeMeta& type, Free&&free); 
 
 
         //! Move constructor
@@ -435,7 +435,7 @@ namespace yq {
         Free            m_free;         // 32
         const void*     m_data;
         size_t          m_bytes;
-        const TypeInfo* m_type;
+        const TypeMeta* m_type;
         size_t          m_stride;       // 64
 
         //! Copying is *NOT* allowed
@@ -453,10 +453,10 @@ namespace yq {
         //! Internal move
         void            _move(Memory&&);
     
-        void    _set(const void* pData, size_t byteCount, const TypeInfo* type, size_t stride, Free&& free); 
+        void    _set(const void* pData, size_t byteCount, const TypeMeta* type, size_t stride, Free&& free); 
 
         template <typename T>
-        static const TypeInfo* metaPtr()
+        static const TypeMeta* metaPtr()
         {
             if constexpr (is_type_v<T>)
                 return &meta_unsafe<T>();

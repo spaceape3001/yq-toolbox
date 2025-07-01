@@ -15,7 +15,7 @@ namespace yq::xfg {
         OutputPin();
         ~OutputPin();
     
-        void        publish(pin_id_t offset, const void*, const TypeInfo&);
+        void        publish(pin_id_t offset, const void*, const TypeMeta&);
     
     private:
         Node*       m_node      = nullptr;

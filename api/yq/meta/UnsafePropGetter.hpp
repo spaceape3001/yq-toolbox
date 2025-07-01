@@ -74,7 +74,7 @@ namespace yq {
             assert(c);
             if(!c)
                 return errors::null_object();
-            return TypeInfo::print(c->*m_data, str);
+            return TypeMeta::print(c->*m_data, str);
         }
         
         /*! \brief Writes the object's value to the given stream.
@@ -92,7 +92,7 @@ namespace yq {
             assert(c);
             if(!c)
                 return errors::null_object();
-            return TypeInfo::write(c->*m_data, str);
+            return TypeMeta::write(c->*m_data, str);
         }
         
         P       m_data;
@@ -162,7 +162,7 @@ namespace yq {
             if(!c)
                 return errors::null_object();
 
-            return TypeInfo::print((c->*m_function)(), str);
+            return TypeMeta::print((c->*m_function)(), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -180,7 +180,7 @@ namespace yq {
             assert(c);
             if(!c)
                 return errors::null_object();
-            return TypeInfo::write((c->*m_function)(), str);
+            return TypeMeta::write((c->*m_function)(), str);
         }
         
         FN      m_function;
@@ -245,7 +245,7 @@ namespace yq {
             assert(c);
             if(!c)
                 return errors::null_object();
-            return TypeInfo::print((c->*m_function)(), str);
+            return TypeMeta::print((c->*m_function)(), str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -263,7 +263,7 @@ namespace yq {
             assert(c);
             if(!c)
                 return errors::null_object();
-            return TypeInfo::write((c->*m_function)(), str);
+            return TypeMeta::write((c->*m_function)(), str);
         }
 
         FN      m_function;
@@ -335,7 +335,7 @@ namespace yq {
 
             T   data;
             (c->*m_function)(data);
-            return TypeInfo::print(data, str);
+            return TypeMeta::print(data, str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -356,7 +356,7 @@ namespace yq {
 
             T   data;
             (c->*m_function)(data);
-            return TypeInfo::write(data, str);
+            return TypeMeta::write(data, str);
         }
 
         FN      m_function;
@@ -429,7 +429,7 @@ namespace yq {
             T   data;
             if(!(c->*m_function)(data))
                 return errors::getter_failed();
-            return TypeInfo::print(data, str);
+            return TypeMeta::print(data, str);
         }
         
         /*! \brief Writes the object's property to the given stream.
@@ -451,7 +451,7 @@ namespace yq {
             T   data;
             if(!(c->*m_function)(data))
                 return errors::getter_failed();
-            return TypeInfo::write(data, str);
+            return TypeMeta::write(data, str);
         }
 
         FN      m_function;

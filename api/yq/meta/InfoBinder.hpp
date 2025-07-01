@@ -11,7 +11,7 @@
 #include <string>
 
 namespace yq {
-    class TypeInfo;
+    class TypeMeta;
     class Any;
 
     template <typename T> struct InfoBinder {
@@ -44,12 +44,12 @@ namespace yq {
     template <typename T>
     using info_t    = typename InfoBinder<T>::Info;
     
-    const TypeInfo&        invalid();
-    const TypeInfo&        any();
+    const TypeMeta&        invalid();
+    const TypeMeta&        any();
 
     template <>
     struct InfoBinder<void> {
-        using Info   = TypeInfo;
+        using Info   = TypeMeta;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsCompound      = false;
         static constexpr const bool IsType          = false;
@@ -57,12 +57,12 @@ namespace yq {
         static constexpr const bool IsInterface     = false;
         static constexpr const bool IsProxy         = false;
         static constexpr const bool IsTachyon       = false;
-        static const TypeInfo&  bind() { return invalid(); }
+        static const TypeMeta&  bind() { return invalid(); }
     };
 
     template <>
     struct InfoBinder<Any> {
-        using Info   = TypeInfo;
+        using Info   = TypeMeta;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsCompound      = false;
         static constexpr const bool IsType          = false;
@@ -70,7 +70,7 @@ namespace yq {
         static constexpr const bool IsInterface     = false;
         static constexpr const bool IsProxy         = false;
         static constexpr const bool IsTachyon       = false;
-        static const TypeInfo&  bind() { return any(); }
+        static const TypeMeta&  bind() { return any(); }
     };
 
     template <typename T>
@@ -103,7 +103,7 @@ namespace yq {
     namespace yq {                                                      \
         template <>                                                     \
         struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
-            using Info = TypeInfo;                                      \
+            using Info = TypeMeta;                                      \
             static constexpr const bool Defined         = true;         \
             static constexpr const bool IsObject        = false;        \
             static constexpr const bool IsType          = true;         \
@@ -111,8 +111,8 @@ namespace yq {
             static constexpr const bool IsInterface     = false;        \
             static constexpr const bool IsProxy         = false;        \
             static constexpr const bool IsTachyon       = false;        \
-            static const TypeInfo&   bind() { return edit(); }          \
-            static TypeInfo&         edit();                            \
+            static const TypeMeta&   bind() { return edit(); }          \
+            static TypeMeta&         edit();                            \
         };                                                              \
     } 
 

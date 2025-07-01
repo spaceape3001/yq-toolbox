@@ -14,7 +14,7 @@ namespace yq::expr {
     public:
         const std::string       m_text8;
         const uint16_t          m_argcnt;
-        const TypeInfo* const   m_type;
+        const TypeMeta* const   m_type;
         
         FunctionInstruction(const SymData& sd);
         std::error_code     execute(any_stack_t&values, Context&) const override;

@@ -32,15 +32,15 @@ namespace yq {
     class Any {
     public:
 
-        static any_error_t      parse_me(const TypeInfo&, std::string_view);
+        static any_error_t      parse_me(const TypeMeta&, std::string_view);
 
         Any();
         Any(const Any&);
         Any(Any&&);
         
         //! Creates a defaulted Any to the specified meta-type
-        explicit Any(const TypeInfo&);
-        explicit Any(const TypeInfo*);
+        explicit Any(const TypeMeta&);
+        explicit Any(const TypeMeta*);
         
         explicit Any(char);
         explicit Any(char8_t);
@@ -59,10 +59,10 @@ namespace yq {
         explicit Any(const QString&);
     #endif
     
-        Any(parse_k, const TypeInfo&, std::string_view);
-        Any(parse_k, const TypeInfo&, std::string_view, throw_k);
-        Any(parse_k, const TypeInfo&, std::string_view, no_throw_k);
-        Any(parse_k, const TypeInfo&, std::string_view, std::error_code&);
+        Any(parse_k, const TypeMeta&, std::string_view);
+        Any(parse_k, const TypeMeta&, std::string_view, throw_k);
+        Any(parse_k, const TypeMeta&, std::string_view, no_throw_k);
+        Any(parse_k, const TypeMeta&, std::string_view, std::error_code&);
 
         /*! \brief Direct construction constructor
         
@@ -95,7 +95,7 @@ namespace yq {
         //template <typename T>
         //bool        operator!=(const T&) const;
         
-        bool        can_convert(const TypeInfo&) const;
+        bool        can_convert(const TypeMeta&) const;
         template <typename T>
         bool        can_convert() const;
         
@@ -105,7 +105,7 @@ namespace yq {
         bool        can_write_and_parse() const;
 
         //! Returns a variant that's been converted
-        any_x       convert(const TypeInfo&) const;
+        any_x       convert(const TypeMeta&) const;
 
         template <typename T>
         any_x       convert() const;
@@ -118,7 +118,7 @@ namespace yq {
         
         /*! \brief Parses into the any, overwriting
         */
-        std::error_code     parse(const TypeInfo&, const std::string_view&);
+        std::error_code     parse(const TypeMeta&, const std::string_view&);
         
         
         /*! \brief Parses into the variant, overwriting
@@ -206,7 +206,7 @@ namespace yq {
 
         
 
-        const TypeInfo& type() const { return *m_type; }
+        const TypeMeta& type() const { return *m_type; }
 
         bool                valid() const { return is_valid(); }
 
@@ -236,7 +236,7 @@ namespace yq {
             This routine blindly assumes the caller knows what they're doing, so here's the type and here's a pointer
             to the data.  A null pointer will force a default construction.
         */
-        Any(const TypeInfo&, const void*);
+        Any(const TypeMeta&, const void*);
 
         const DataBlock&    data() const { return m_data; }
 
@@ -244,12 +244,12 @@ namespace yq {
         static Any  from(T&&);
 
     private:
-        Any(TypeInfo&&) = delete;   // prohibt temporary metatypes
+        Any(TypeMeta&&) = delete;   // prohibt temporary metatypes
 
-        const TypeInfo*     m_type;
+        const TypeMeta*     m_type;
         DataBlock           m_data;
         
-        Any(const TypeInfo&&) = delete;
+        Any(const TypeMeta&&) = delete;
         
         template <typename T>
         void    set(T&&val);
@@ -260,11 +260,11 @@ namespace yq {
         void    set(std::string&&);
         void    set(std::string_view);
         
-        void    set(const TypeInfo&, const void*);
+        void    set(const TypeMeta&, const void*);
         void    clear();
         
         //! Checks to make sure the type info is populated to the minimum specification
-        static bool    good(const TypeInfo&);
+        static bool    good(const TypeMeta&);
         
     };
 }

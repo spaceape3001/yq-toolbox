@@ -78,7 +78,7 @@ namespace yq {
             if(!c)
                 return errors::null_object();
 
-            return TypeInfo::parse(c->*m_data, value);
+            return TypeMeta::parse(c->*m_data, value);
         }
         
         P      m_data;
@@ -148,7 +148,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             (c->*m_function)(tmp);
@@ -225,7 +225,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             if(! (c->*m_function)(tmp))
@@ -301,7 +301,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             (c->*m_function)(tmp);
@@ -377,7 +377,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             if(! (c->*m_function)(tmp))

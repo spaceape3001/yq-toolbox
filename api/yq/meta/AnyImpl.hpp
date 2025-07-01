@@ -10,7 +10,7 @@
 #include <yq/errors.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/meta/AnyDef.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <type_traits>
 
     //  SKIPPING INCLUDES... done in order by others
@@ -72,7 +72,7 @@ namespace yq {
     template <typename T, typename Pred>
     auto    Any::as(Pred&& pred) const
     {
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         using result_t  = decltype(pred(T{}));
         
         if(m_type == &meta<T>())
@@ -91,21 +91,21 @@ namespace yq {
     template <typename T>
     bool        Any::can_convert() const
     {
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         return can_convert_to(&meta<T>());
     }
 
     template <typename T>
     any_x     Any::convert() const
     {
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         return convert_to(meta<T>());
     }
 
     template <typename T>
     T*          Any::ptr()
     {
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         return (m_type == &meta<T>()) ?  m_data.pointer<T>() : nullptr;
     }
 
@@ -113,14 +113,14 @@ namespace yq {
     template <typename T>
     const T*    Any::ptr() const
     {
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         return (m_type == &meta<T>()) ?  m_data.pointer<T>() : nullptr;
     }
 
     template <typename T>
     const T&            Any::ref(const T& bad) const
     {
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         return (m_type == &meta<T>()) ?  m_data.reference<T>() : bad;
     }
 
@@ -128,9 +128,9 @@ namespace yq {
     void Any::set(T&& val)
     {
         using U     = std::decay<T>::type;
-        static_assert( is_type_v<U>, "TypeInfo must be metatype defined!");
+        static_assert( is_type_v<U>, "TypeMeta must be metatype defined!");
         
-        const TypeInfo& newType  = meta<U>();
+        const TypeMeta& newType  = meta<U>();
         if(m_type){
             if(&newType == m_type){
                 if constexpr (std::is_rvalue_reference_v<T>){
@@ -156,9 +156,9 @@ namespace yq {
     void Any::set(const T& val)
     {
         using U     = std::decay<T>::type;
-        static_assert( is_type_v<U>, "TypeInfo must be metatype defined!");
+        static_assert( is_type_v<U>, "TypeMeta must be metatype defined!");
         
-        const TypeInfo& newType  = meta<U>();
+        const TypeMeta& newType  = meta<U>();
         if(m_type){
             if(&newType == m_type){
                 m_data.reference<U>() = val;
@@ -174,14 +174,14 @@ namespace yq {
 
     inline void    Any::set(std::string_view cp)
     {
-        static const TypeInfo*  mtString    = &meta<std::string>();
+        static const TypeMeta*  mtString    = &meta<std::string>();
         m_data.reference<std::string>() = std::string(cp);
         m_type  = mtString;
     }
 
     inline void    Any::set(std::string&&mv)
     {
-        static const TypeInfo*  mtString    = &meta<std::string>();
+        static const TypeMeta*  mtString    = &meta<std::string>();
         m_data.reference<std::string>() = std::move(mv);
         m_type  = mtString;
     }
@@ -196,7 +196,7 @@ namespace yq {
     Result<const T&>   Any::value() const
     {
         static thread_local T   tmp;
-        static_assert( is_type_v<T>, "TypeInfo T must be metatype defined!");
+        static_assert( is_type_v<T>, "TypeMeta T must be metatype defined!");
         if(m_type == &meta<T>())
             return {m_data.reference<T>(), true};
             
@@ -211,8 +211,8 @@ namespace yq {
     ///
 
     template <typename ... T>
-    any_x       TypeInfo::construct(T ... args) const
+    any_x       TypeMeta::construct(T ... args) const
     {
-        return contruct_impl( std::initializer_list<const TypeInfo*>{ &meta<T>()... }, std::initializer_list<const void*>{ &args... });
+        return contruct_impl( std::initializer_list<const TypeMeta*>{ &meta<T>()... }, std::initializer_list<const void*>{ &args... });
     }
 }

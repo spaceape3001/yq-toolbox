@@ -11,7 +11,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/meta/GlobalInfo.hpp>
 #include <yq/meta/ObjectInfo.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <yq/meta/PropGetter.hpp>
 #include <yq/meta/PropSetter.hpp>
 
@@ -19,7 +19,7 @@
 
 namespace yq {
 
-    PropertyInfo::PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo&theType, Meta* parentMeta) : 
+    PropertyInfo::PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeMeta&theType, Meta* parentMeta) : 
         Meta(zName, parentMeta, sl), m_type(theType)
     {
         assert(parentMeta);
@@ -40,7 +40,7 @@ namespace yq {
             obj->m_local.properties << this;
         }
         
-        if(TypeInfo* type = to_type(parentMeta)){
+        if(TypeMeta* type = to_type(parentMeta)){
             if(type -> m_properties.keys.has(zName))
                 yCritical() << "Duplicate property on type (" << type->name() << "): " << zName;
             type->m_properties << this;

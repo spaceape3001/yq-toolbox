@@ -67,6 +67,6 @@ namespace yq {
         
         bool            set(const coord_t& cc, const C& val) ;
 
-        const TypeInfo& type(pixel_k) const override;
+        const TypeMeta& type(pixel_k) const override;
     };
 }

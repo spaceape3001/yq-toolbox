@@ -106,7 +106,7 @@ namespace yq::xfg {
 
         struct Pin {
             void*           data    = nullptr;
-            const TypeInfo* type    = nullptr;
+            const TypeMeta* type    = nullptr;
         };
 
         std::vector<Pin>            make_inputs();
@@ -127,7 +127,7 @@ namespace yq::xfg {
     
     private:
         std::multimap<size_t, Pin>      m_outputs;
-        void        publish(size_t, const void*, const TypeInfo&);
+        void        publish(size_t, const void*, const TypeMeta&);
     };
 
     /*! \brief Multiple "INPUT" pins (1...n)

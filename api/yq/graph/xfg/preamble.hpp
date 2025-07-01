@@ -43,7 +43,7 @@ namespace yq::xfg {
 
     struct VarData {
         void*           data    = nullptr;
-        const TypeInfo* type    = nullptr;
+        const TypeMeta* type    = nullptr;
     };
 
     using pin_id_t  = uint16_t;

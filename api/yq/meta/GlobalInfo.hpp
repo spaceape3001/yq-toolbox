@@ -8,7 +8,7 @@
 
 #include <yq/meta/Meta.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/meta/MethodInfo.hpp>
 
@@ -19,7 +19,7 @@ namespace yq {
     //! \note this class is here for the API meta binding, not subsequently used, call namespace
     class Global { };
     
-    class GlobalInfo : public CompoundInfo {
+    class GlobalInfo : public CompoundMeta {
     public:
         
         template <typename> class Writer;   // which will only ever by GlobalInfo...however, consistency

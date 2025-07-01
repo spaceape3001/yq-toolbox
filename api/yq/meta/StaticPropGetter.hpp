@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/PropGetter.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <yq/core/StreamOps.hpp>
 
 namespace yq {
@@ -94,21 +94,21 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo print function returned true
+            \return TRUE if the TypeMeta print function returned true
         */
         virtual std::error_code     print(Stream&str, const void*) const override
         {
-            return TypeInfo::print(*m_data, str);
+            return TypeMeta::print(*m_data, str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo write function returned true
+            \return TRUE if the TypeMeta write function returned true
         */
         virtual std::error_code      write(Stream&str, const void*) const override
         {
-            return TypeInfo::write(*m_data, str);
+            return TypeMeta::write(*m_data, str);
         }
 
         P      m_data;
@@ -155,21 +155,21 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo print function returned true
+            \return TRUE if the TypeMeta print function returned true
         */
         virtual std::error_code     print(Stream&str, const void*) const override
         {
-            return TypeInfo::print(m_function(), str);
+            return TypeMeta::print(m_function(), str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo write function returned true
+            \return TRUE if the TypeMeta write function returned true
         */
         virtual std::error_code     write(Stream&str, const void*) const override
         {
-            return TypeInfo::write(m_function(), str);
+            return TypeMeta::write(m_function(), str);
         }
 
         FN      m_function;
@@ -216,21 +216,21 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo print function returned true
+            \return TRUE if the TypeMeta print function returned true
         */
         virtual std::error_code print(Stream&str, const void*) const override
         {
-            return TypeInfo::print(m_function(), str);
+            return TypeMeta::print(m_function(), str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo write function returned true
+            \return TRUE if the TypeMeta write function returned true
         */
         virtual std::error_code write(Stream&str, const void*) const override
         {
-            return TypeInfo::write(m_function(), str);
+            return TypeMeta::write(m_function(), str);
         }
 
         FN      m_function;
@@ -278,21 +278,21 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo print function returned true
+            \return TRUE if the TypeMeta print function returned true
         */
         virtual std::error_code print(Stream&str, const void*) const override
         {
-            return TypeInfo::print(m_function(), str);
+            return TypeMeta::print(m_function(), str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo write function returned true
+            \return TRUE if the TypeMeta write function returned true
         */
         virtual std::error_code write(Stream&str, const void*) const override
         {
-            return TypeInfo::write(m_function(), str);
+            return TypeMeta::write(m_function(), str);
         }
 
         FN      m_function;
@@ -340,25 +340,25 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo print function returned true
+            \return TRUE if the TypeMeta print function returned true
         */
         virtual std::error_code print(Stream&str, const void*) const override
         {
             T   tmp;
             m_function(tmp);
-            return TypeInfo::print(tmp, str);
+            return TypeMeta::print(tmp, str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the TypeInfo write function returned true
+            \return TRUE if the TypeMeta write function returned true
         */
         virtual std::error_code write(Stream&str, const void*) const override
         {
             T   tmp;
             m_function(tmp);
-            return TypeInfo::print(tmp, str);
+            return TypeMeta::print(tmp, str);
         }
 
         FN      m_function;
@@ -406,27 +406,27 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the getter function AND TypeInfo print function returned true
+            \return TRUE if the getter function AND TypeMeta print function returned true
         */
         virtual std::error_code print(Stream&str, const void*) const override
         {
             T   tmp;
             if(!m_function(tmp))
                 return errors::getter_failed();
-            return TypeInfo::print(tmp, str);
+            return TypeMeta::print(tmp, str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the getter function AND TypeInfo write function returned true
+            \return TRUE if the getter function AND TypeMeta write function returned true
         */
         virtual std::error_code write(Stream&str, const void*) const override
         {
             T   tmp;
             if(!m_function(tmp))
                 return errors::getter_failed();
-            return TypeInfo::print(tmp, str);
+            return TypeMeta::print(tmp, str);
         }
 
         FN      m_function;
@@ -472,7 +472,7 @@ namespace yq {
         /*! \brief Prints the data
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the getter function AND TypeInfo print function returned true
+            \return TRUE if the getter function AND TypeMeta print function returned true
         */
         virtual std::error_code print(Stream&str, const void*) const override
         {
@@ -480,13 +480,13 @@ namespace yq {
             std::error_code ec = m_function(tmp);
             if(ec != std::error_code())
                 return ec;
-            return TypeInfo::print(tmp, str);
+            return TypeMeta::print(tmp, str);
         }
         
         /*! \brief Writes the data for data I/O purposes
             \param[out] str Stream to print to.
             \note The const void* object pointer is ignored.
-            \return TRUE if the getter function AND TypeInfo write function returned true
+            \return TRUE if the getter function AND TypeMeta write function returned true
         */
         virtual std::error_code write(Stream&str, const void*) const override
         {
@@ -494,7 +494,7 @@ namespace yq {
             std::error_code ec = m_function(tmp);
             if(ec != std::error_code())
                 return ec;
-            return TypeInfo::print(tmp, str);
+            return TypeMeta::print(tmp, str);
         }
 
         FN      m_function;

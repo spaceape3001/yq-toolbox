@@ -9,9 +9,9 @@
 #include <yq/errors.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/core/StreamOps.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/CompoundMetaDynamic.hpp>
 #include <yq/meta/ConstructorInfoImpl.hpp>
 #include <yq/meta/ConstructorInfoWriter.hpp>
 #include <yq/meta/OperatorInfoImpl.hpp>
@@ -41,12 +41,12 @@ namespace yq {
 
     
     template <typename T>
-    struct TypeInfoFor {
-        using Type  = TypeInfo;
+    struct TypeMetaFor {
+        using Type  = TypeMeta;
     };
     
     template <typename T>
-    using type_info_t  = TypeInfoFor<T>::Type;
+    using type_info_t  = TypeMetaFor<T>::Type;
     
     #if 0
     /*! \brief Gathers Types
@@ -55,7 +55,7 @@ namespace yq {
         \return One always one for this specialization of the function.
     */
     template <typename T>
-    unsigned    gather_types(Vector<const TypeInfo*>& ret)
+    unsigned    gather_types(Vector<const TypeMeta*>& ret)
     {
         if constexpr (is_type_v<T>){
             ret << &meta<T>();
@@ -69,14 +69,14 @@ namespace yq {
         This breaks down a template parameter pack for its type infos
     */
     template <typename T, typename... Args>
-    unsigned gather_types(Vector<const TypeInfo*>& ret)
+    unsigned gather_types(Vector<const TypeMeta*>& ret)
     {
         gather_types<T>(ret);
         return 1 + gather_types<Args...>(ret);
     }
     
     template <typename> struct GatherTemplateArgs { 
-        unsigned operator()(Vector<const TypeInfo*>& ret)
+        unsigned operator()(Vector<const TypeMeta*>& ret)
         {
             return 0;
         }
@@ -85,7 +85,7 @@ namespace yq {
 
     template <template <typename...> class Tmpl, typename ...Args> 
     struct GatherTemplateArgs<Tmpl<Args...>> {
-        static unsigned   gather(Vector<const TypeInfo*>& ret) 
+        static unsigned   gather(Vector<const TypeMeta*>& ret) 
         {
             return gather_types<Args...>(ret);
         }
@@ -99,7 +99,7 @@ namespace yq {
         
     */
     template <typename T>
-    class TypeInfo::Typed : public type_info_t<T> {
+    class TypeMeta::Typed : public type_info_t<T> {
     protected:
     
         /*! \brief Constructor, protected
@@ -110,62 +110,62 @@ namespace yq {
         */
         Typed(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : type_info_t<T>(zName, sl, i)
         {
-            TypeInfo::m_default.ctorCopy(T{});
-            TypeInfo::m_copyB         = [](DataBlock& dst, const DataBlock&src){
+            TypeMeta::m_default.ctorCopy(T{});
+            TypeMeta::m_copyB         = [](DataBlock& dst, const DataBlock&src){
                 dst.reference<T>()  = src.reference<T>();
             };
-            TypeInfo::m_copyR        = [](DataBlock& dst, const void* src){
+            TypeMeta::m_copyR        = [](DataBlock& dst, const void* src){
                 dst.reference<T>()  = *(const T*) src;
             };
-            TypeInfo::m_copyRR      = [](void* dst, const void* src){
+            TypeMeta::m_copyRR      = [](void* dst, const void* src){
                 *(T*) dst           = *(const T*) src;
             };
-            TypeInfo::m_ctorCopyR     = [](DataBlock& dst, const void* src){ 
+            TypeMeta::m_ctorCopyR     = [](DataBlock& dst, const void* src){ 
                 dst.ctorCopy(*(const T*) src); 
             };
-            TypeInfo::m_ctorCopyB     = [](DataBlock& dst, const DataBlock& src){ 
+            TypeMeta::m_ctorCopyB     = [](DataBlock& dst, const DataBlock& src){ 
                 dst.ctorCopy( src.reference<T>());
             };
-            TypeInfo::m_ctorMove      = [](DataBlock& dst, DataBlock&& src){
+            TypeMeta::m_ctorMove      = [](DataBlock& dst, DataBlock&& src){
                 if constexpr (sizeof(T) <= sizeof(DataBlock))
                     dst.ctorMove( std::move(src.reference<T>()));
                 else
                     dst.Pointer = src.Pointer;
             };
-            TypeInfo::m_dtor          = [](DataBlock& tgt)
+            TypeMeta::m_dtor          = [](DataBlock& tgt)
             {
                 tgt.dtor<T>();
             };
-            TypeInfo::m_equal         = [](const DataBlock& a, const DataBlock& b) -> bool 
+            TypeMeta::m_equal         = [](const DataBlock& a, const DataBlock& b) -> bool 
             {
                 return a.reference<T>() == b.reference<T>();
             };
             
             if constexpr (has_less_v<T>){
-                TypeInfo::m_less      = [](const DataBlock& a, const DataBlock& b) -> bool 
+                TypeMeta::m_less      = [](const DataBlock& a, const DataBlock& b) -> bool 
                 {
                     return a.reference<T>() < b.reference<T>();
                 };
                 Meta::set(Flag::LESS);
             }
             
-            TypeInfo::m_moveB         = [](DataBlock& a, DataBlock&&b) 
+            TypeMeta::m_moveB         = [](DataBlock& a, DataBlock&&b) 
             {
                 a.reference<T>() = std::move( b.reference<T>());
             };
             
-            TypeInfo::m_size          = sizeof(T);
+            TypeMeta::m_size          = sizeof(T);
             
             if constexpr ( is_template_v<T>) {
             #if 0
-                TypeInfo::m_template.params     = GatherTemplateArgs<T>()(TypeInfo::m_template.args);
-                if(!TypeInfo::m_template.args.empty())  // only flag it as a template if any parameters trigger
+                TypeMeta::m_template.params     = GatherTemplateArgs<T>()(TypeMeta::m_template.args);
+                if(!TypeMeta::m_template.args.empty())  // only flag it as a template if any parameters trigger
                     Meta::set(Flag::TEMPLATE);
             #endif
             }
             
             if constexpr ( has_stream_v<T>) {
-                TypeInfo::m_print   = TypeInfo::m_write = [](Stream& dst, const void* src){
+                TypeMeta::m_print   = TypeMeta::m_write = [](Stream& dst, const void* src){
                     dst << *(const T*) src;
                 };
             }
@@ -181,13 +181,13 @@ namespace yq {
         on the template type, like hashes, lists, etc
     */
     template <typename T>
-    class TypeInfo::Special : public Typed<T> {
+    class TypeMeta::Special : public Typed<T> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<T>(zName, sl, i) {}
     };
     
     template <typename K, typename V, typename H, class KQ, class A>
-    class TypeInfo::Special<std::unordered_map<K,V,H,KQ,A>> : public Typed<std::unordered_map<K,V,H,KQ,A>> {
+    class TypeMeta::Special<std::unordered_map<K,V,H,KQ,A>> : public Typed<std::unordered_map<K,V,H,KQ,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<Hash<K,V>>(zName, sl, i)
         {
@@ -196,7 +196,7 @@ namespace yq {
     };
 
     template <typename T, typename A>
-    class TypeInfo::Special<std::list<T,A>> : public Typed<std::list<T,A>> {
+    class TypeMeta::Special<std::list<T,A>> : public Typed<std::list<T,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::list<T,A>>(zName, sl, i) 
         {
@@ -205,7 +205,7 @@ namespace yq {
     };
     
     template <typename K, typename V, typename C, typename A>
-    class TypeInfo::Special<std::map<K,V,C,A>> : public Typed<std::map<K,V,C,A>> {
+    class TypeMeta::Special<std::map<K,V,C,A>> : public Typed<std::map<K,V,C,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::map<K,V,C,A>>(zName, sl, i)
         {
@@ -214,7 +214,7 @@ namespace yq {
     };
 
     template <typename K, typename V, typename C, typename A>
-    class TypeInfo::Special<std::multimap<K,V,C,A>> : public Typed<std::multimap<K,V,C,A>> {
+    class TypeMeta::Special<std::multimap<K,V,C,A>> : public Typed<std::multimap<K,V,C,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::multimap<K,V,C,A>>(zName, sl, i)
         {
@@ -223,7 +223,7 @@ namespace yq {
     };
 
     template <typename T, typename C, typename A>
-    class TypeInfo::Special<std::set<T,C,A>> : public Typed<std::set<T,C,A>> {
+    class TypeMeta::Special<std::set<T,C,A>> : public Typed<std::set<T,C,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::set<T,C,A>>(zName, sl, i) 
         {
@@ -232,7 +232,7 @@ namespace yq {
     };
 
     template <typename T, typename A>
-    class TypeInfo::Special<std::vector<T,A>> : public Typed<std::vector<T,A>> {
+    class TypeMeta::Special<std::vector<T,A>> : public Typed<std::vector<T,A>> {
     protected:
         Special(std::string_view zName, const std::source_location&sl, id_t i=AUTO_ID) : Typed<std::vector<T,A>>(zName, sl, i) 
         {
@@ -247,11 +247,11 @@ namespace yq {
         the infobinder to access it.
     */
     template <typename T>
-    class TypeInfo::Final : public Special<T> {
+    class TypeMeta::Final : public Special<T> {
     private:
         friend class InfoBinder<T>;
         Final(std::string_view zName, id_t i=AUTO_ID, const std::source_location& sl=std::source_location::current()) : Special<T>(zName, sl, i) {}
-        static TypeInfo&       s_save;
+        static TypeMeta&       s_save;
     };
 
     /*! \brief Conditional writer base
@@ -260,7 +260,7 @@ namespace yq {
         base type, allows for the rest of the code to be the same.
     */
     template <typename T>
-    using TypeInfoWriterBase    = std::conditional<std::is_class_v<T>, CompoundInfo::Dynamic<T>, Meta::Writer>::type;
+    using TypeMetaWriterBase    = std::conditional<std::is_class_v<T>, CompoundMeta::Dynamic<T>, Meta::Writer>::type;
 
 
     /*! \brief Basic type information writer
@@ -271,7 +271,7 @@ namespace yq {
         but might not be perfect.
     */
     template <typename T>
-    class TypeInfo::Writer : public TypeInfoWriterBase<T> {
+    class TypeMeta::Writer : public TypeMetaWriterBase<T> {
     public:
         static_assert( InfoBinder<T>::IsType, "T must be meta-type declared!");
     
@@ -282,7 +282,7 @@ namespace yq {
         void    alias(std::string_view a)
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta) -> add_alias(a);
+                static_cast<TypeMeta*>(Meta::Writer::m_meta) -> add_alias(a);
             }
         }
     
@@ -293,7 +293,7 @@ namespace yq {
         {
             static_assert( is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     if constexpr (std::is_nothrow_convertible_v<U,T>){
                         *(U*) dst = U( *(const T*) src);
                         return std::error_code();
@@ -330,7 +330,7 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = FN( *(const T*) src);
                     return std::error_code();
                 };
@@ -346,7 +346,7 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = FN( *(const T*) src);
                     return std::error_code();
                 };
@@ -362,7 +362,7 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src)  -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src)  -> std::error_code {
                     FN(*(U*) dst,  *(const T*) src);
                     return std::error_code();
                 };
@@ -375,7 +375,7 @@ namespace yq {
         void    format()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
                 };
             }
@@ -387,7 +387,7 @@ namespace yq {
         void    format()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
                 };
             }
@@ -400,7 +400,7 @@ namespace yq {
         void    format()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
                 };
             }
@@ -412,7 +412,7 @@ namespace yq {
         void    format()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_write   = [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
                 };
             }
@@ -527,7 +527,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     if(! FN(*(T*) dst, src))
                         return errors::parser_failed();
                     return std::error_code();
@@ -542,7 +542,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     if(! FN(*(T*) dst, src))
                         return errors::parser_failed();
                     return std::error_code();
@@ -556,7 +556,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(*(T*) dst, src);
                 };
             }
@@ -568,7 +568,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(*(T*) dst, src);
                 };
             }
@@ -580,7 +580,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(src, *(T*) dst) ? std::error_code() : errors::parser_failed();
                 };
             }
@@ -592,7 +592,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(src, *(T*) dst) ? std::error_code() : errors::parser_failed();
                 };
             }
@@ -604,7 +604,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(src, *(T*) dst);
                 };
             }
@@ -616,7 +616,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     return FN(src, *(T*) dst);
                 };
             }
@@ -628,7 +628,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     Result<T>   r   = FN(src);
                     *(T*) dst = std::move(r.value);
                     return r.good ? std::error_code() : errors::parser_failed();
@@ -642,7 +642,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     Result<T>   r   = FN(src);
                     *(T*) dst = std::move(r.value);
                     return r.good ? std::error_code() : errors::parser_failed();
@@ -656,7 +656,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     auto [ data, ec ] = FN(src);
                     *(T*) dst = std::move(data);
                     return ec;
@@ -670,7 +670,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     auto [ data, ec ] = FN(src);
                     *(T*) dst = std::move(data);
                     return ec;
@@ -684,7 +684,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     auto data = FN(src);
                     if(!data)
                         return data.error();
@@ -700,7 +700,7 @@ namespace yq {
         void    parse()
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_parse     = [](void* dst, const std::string_view&src) -> std::error_code {
                     auto data = FN(src);
                     if(!data)
                         return data.error();
@@ -716,7 +716,7 @@ namespace yq {
         void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
                 });
             }
@@ -728,7 +728,7 @@ namespace yq {
         void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     dst << FN(*(const T*) src);
                 });
             }
@@ -742,7 +742,7 @@ namespace yq {
         void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     FN(dst, *(const T*) src);
                 });
             }
@@ -756,7 +756,7 @@ namespace yq {
         void    print(std::string_view sv={})
         {
             if(thread_safe_write()){
-                static_cast<TypeInfo*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->add_printer(sv, [](Stream& dst, const void* src)  {
                     FN(dst, *(const T*) src);
                 });
             }
@@ -764,9 +764,9 @@ namespace yq {
         
 
         //! Construct from pointer
-        Writer(TypeInfo* ti) : TypeInfoWriterBase<T>(ti) {}
+        Writer(TypeMeta* ti) : TypeMetaWriterBase<T>(ti) {}
         
         //! Construct from reference (common)
-        Writer(TypeInfo& ti) : TypeInfoWriterBase<T>(&ti) {}
+        Writer(TypeMeta& ti) : TypeMetaWriterBase<T>(&ti) {}
     };
 }

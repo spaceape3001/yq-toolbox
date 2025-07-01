@@ -12,7 +12,7 @@
 
 namespace yq {
     class Any;
-    class TypeInfo;
+    class TypeMeta;
 
     //! Root for generic pixel data handling (note, *ANYTHING* can be used here for pixels)
     class Pixmap {
@@ -96,7 +96,7 @@ namespace yq {
         virtual bool                set(std::span<const index_t>, const Any&) = 0;
         
         //! Pixel data meta type
-        virtual const TypeInfo&     type(pixel_k) const = 0;
+        virtual const TypeMeta&     type(pixel_k) const = 0;
         
         virtual ~Pixmap();
         

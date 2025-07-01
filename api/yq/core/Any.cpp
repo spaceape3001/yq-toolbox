@@ -19,10 +19,10 @@
 
 namespace yq {
     
-    static const TypeInfo& invalidType() { return invalid(); }
+    static const TypeMeta& invalidType() { return invalid(); }
 
 
-    bool    Any::good(const TypeInfo&ti)
+    bool    Any::good(const TypeMeta&ti)
     {
         //  these are the function pointers that won't be checked at runtime
         return ti.m_copyB && ti.m_copyR && ti.m_ctorCopyR && ti.m_ctorCopyB 
@@ -30,7 +30,7 @@ namespace yq {
     }
 
 
-    any_error_t  Any::parse_me(const TypeInfo& ti, std::string_view txt)
+    any_error_t  Any::parse_me(const TypeMeta& ti, std::string_view txt)
     {
         Any ret;
         std::error_code ec   = ret.parse(ti, txt);
@@ -52,7 +52,7 @@ namespace yq {
         mv.m_type   = &invalidType();
     }
     
-    Any::Any(const TypeInfo* newTypePtr) 
+    Any::Any(const TypeMeta* newTypePtr) 
     {
         assert(newTypePtr && good(*newTypePtr));
         m_type  = newTypePtr;
@@ -60,13 +60,13 @@ namespace yq {
     }
     
     //! Creates a defaulted Any to the specified meta-type
-    Any::Any(const TypeInfo&newType) : m_type(&newType)
+    Any::Any(const TypeMeta&newType) : m_type(&newType)
     {
         assert(good(newType));
         (m_type -> m_ctorCopyB)(m_data, m_type -> m_default);
     }
     
-    Any::Any(const TypeInfo&newType, const void* dp) : m_type(&newType)
+    Any::Any(const TypeMeta&newType, const void* dp) : m_type(&newType)
     {
         assert(good(newType));
 
@@ -137,23 +137,23 @@ namespace yq {
         set<std::string>(std::string(z));
     }
     
-    Any::Any(parse_k, const TypeInfo&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
+    Any::Any(parse_k, const TypeMeta&ti, std::string_view txt) : Any(PARSE, ti, txt, THROW)
     {
     }
     
-    Any::Any(parse_k, const TypeInfo&ti, std::string_view txt, no_throw_k) : Any()
+    Any::Any(parse_k, const TypeMeta&ti, std::string_view txt, no_throw_k) : Any()
     {
         parse(ti, txt);
     }
 
-    Any::Any(parse_k, const TypeInfo&ti, std::string_view txt, throw_k) : Any()
+    Any::Any(parse_k, const TypeMeta&ti, std::string_view txt, throw_k) : Any()
     {
         std::error_code ec  = parse(ti, txt);
         if(ec != std::error_code())
             throw ec;
     }
 
-    Any::Any(parse_k, const TypeInfo& ti, std::string_view txt, std::error_code&ec) : Any()
+    Any::Any(parse_k, const TypeMeta& ti, std::string_view txt, std::error_code&ec) : Any()
     {
         ec  = parse(ti, txt);
     }
@@ -216,7 +216,7 @@ namespace yq {
         return (m_type->m_equal)(m_data, b.m_data);
     }
     
-    bool            Any::can_convert(const TypeInfo&newType) const
+    bool            Any::can_convert(const TypeMeta&newType) const
     {
         if(m_type == &newType)
             return true;
@@ -257,7 +257,7 @@ namespace yq {
     }
     
 
-    any_x     Any::convert(const TypeInfo& newType) const
+    any_x     Any::convert(const TypeMeta& newType) const
     {
         assert(m_type);
         if(!m_type)
@@ -288,7 +288,7 @@ namespace yq {
         return m_type && (m_type != &invalidType());
     }
 
-    std::error_code Any::parse(const TypeInfo&newType, const std::string_view&txt)
+    std::error_code Any::parse(const TypeMeta&newType, const std::string_view&txt)
     {   
         assert(m_type);
         if(!m_type)
@@ -313,7 +313,7 @@ namespace yq {
         assert(m_type);
         if(!m_type)
             return errors::null_any_kype();
-        TypeInfo::FNFormat    fn  = m_type->printer(k);
+        TypeMeta::FNFormat    fn  = m_type->printer(k);
         if(!fn)
             return errors::no_print_handler();
         (fn)(str, raw_ptr());
@@ -325,7 +325,7 @@ namespace yq {
         assert(m_type);
         if(!m_type)
             return errors::null_any_kype();
-        TypeInfo::FNFormat    fn  = m_type->printer(keys);
+        TypeMeta::FNFormat    fn  = m_type->printer(keys);
         if(!fn)
             return errors::no_print_handler();
         (fn)(str, raw_ptr());
@@ -376,7 +376,7 @@ namespace yq {
         return m_type -> is_small() ? (void*) m_data.Data : m_data.Pointer;
     };
 
-    void    Any::set(const TypeInfo&newType, const void*val)
+    void    Any::set(const TypeMeta&newType, const void*val)
     {
         if(m_type){
             if(&newType == m_type){

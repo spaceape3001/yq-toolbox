@@ -8,9 +8,9 @@
 
 #include <yq/userexpr/forward.hpp>
 #include <yq/core/Any.hpp>
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/CompoundMetaStatic.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/userexpr/impl/OpData.hpp>
 #include <unordered_set>
@@ -23,7 +23,7 @@ namespace yq::expr {
         Variable ... repo static properties, can change with time
         Function ... repo methods
     */
-    class Repo : public CompoundInfo {
+    class Repo : public CompoundMeta {
     public:
         template <typename> class Writer;
     
@@ -32,7 +32,7 @@ namespace yq::expr {
         any_x     constant(std::string_view) const;
         any_x     constant(std::u32string_view) const;
         
-        const TypeInfo* constant_type(string_view_t) const;
+        const TypeMeta* constant_type(string_view_t) const;
 
         bool            has_constant(std::string_view) const;
         bool            has_constant(std::u32string_view) const;
@@ -89,9 +89,9 @@ namespace yq::expr {
     Repo&   repo();
 
     template <typename>
-    class Repo::Writer : public CompoundInfo::Static {
+    class Repo::Writer : public CompoundMeta::Static {
     public:
-        Writer(Repo& p) : CompoundInfo::Static(&p), m_repo(p)
+        Writer(Repo& p) : CompoundMeta::Static(&p), m_repo(p)
         {
         }
 

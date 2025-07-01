@@ -15,14 +15,14 @@ namespace yq {
         return *s_ret;
     }
 
-    GlobalInfo::GlobalInfo(std::string_view name, const std::source_location& sl) : CompoundInfo(name, sl, nullptr, MC_Global)
+    GlobalInfo::GlobalInfo(std::string_view name, const std::source_location& sl) : CompoundMeta(name, sl, nullptr, MC_Global)
     {
         set(Flag::GLOBAL);
     }
 
     void     GlobalInfo::sweep_impl() 
     {   
-        CompoundInfo::sweep_impl();
+        CompoundMeta::sweep_impl();
         gather(m_properties);
         gather(m_methods);
         for(const Meta* m : m_methods.all)

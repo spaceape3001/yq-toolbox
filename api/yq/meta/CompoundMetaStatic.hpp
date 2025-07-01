@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaWriter.hpp>
 #include <yq/meta/MethodInfoImpl.hpp>
 #include <yq/meta/MethodInfoWriter.hpp>
@@ -18,7 +18,7 @@
 namespace yq {
 
 
-    class CompoundInfo::Static : public Meta::Writer {
+    class CompoundMeta::Static : public Meta::Writer {
     public:
         
         /*! \brief Defines a global variable
@@ -159,6 +159,6 @@ namespace yq {
             return MethodInfo::Writer<R, Args...>();
         }
 
-        Static( CompoundInfo* compound ) : Meta::Writer(compound) {}
+        Static( CompoundMeta* compound ) : Meta::Writer(compound) {}
     };
 }

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/PropSetter.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 
 namespace yq {
 
@@ -95,7 +95,7 @@ namespace yq {
         */
         virtual std::error_code set(void*, std::string_view value) const override
         {
-            return TypeInfo::parse(*m_data, value);
+            return TypeMeta::parse(*m_data, value);
         }
 
         P      m_data;
@@ -147,7 +147,7 @@ namespace yq {
         virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            std::error_code  ec = TypeInfo::parse(tmp, value);
+            std::error_code  ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             (*m_function)(tmp);
@@ -203,7 +203,7 @@ namespace yq {
         virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             if(!(*m_function)(tmp))
@@ -259,7 +259,7 @@ namespace yq {
         virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             return (*m_function)(tmp);
@@ -312,7 +312,7 @@ namespace yq {
         virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             (*m_function)(tmp);
@@ -369,7 +369,7 @@ namespace yq {
         virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             if(! (*m_function)(tmp))
@@ -424,7 +424,7 @@ namespace yq {
         virtual std::error_code set(void*, std::string_view value) const override
         {
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             return (*m_function)(tmp);

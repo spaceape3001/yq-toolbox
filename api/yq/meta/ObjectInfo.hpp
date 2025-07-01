@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/typedef/object.hpp>
 
@@ -17,7 +17,7 @@ namespace yq {
 
     /*! \brief Represents info for an object thats intrusively bound
     */
-    class ObjectInfo : public CompoundInfo {
+    class ObjectInfo : public CompoundMeta {
         template <typename> friend struct InfoBinder;
         friend class Object;
     public:

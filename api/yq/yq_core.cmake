@@ -37,7 +37,7 @@ add_library(yq_core SHARED
 
     meta/AnyArgHelper.cpp
     meta/ArgInfo.cpp
-    meta/CompoundInfo.cpp
+    meta/CompoundMeta.cpp
     meta/ConstructorInfo.cpp
     meta/Generator.cpp
     meta/GlobalInfo.cpp
@@ -50,7 +50,7 @@ add_library(yq_core SHARED
     meta/PropGetter.cpp
     meta/PropSetter.cpp
     meta/StdTypes.cpp
-    meta/TypeInfo.cpp
+    meta/TypeMeta.cpp
     
     #   Moving this here as many more need it than simply "net"
     net/Url.cpp

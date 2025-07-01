@@ -44,7 +44,7 @@ namespace yq {
         template <typename C, typename T> class PropW;
     
         //! Our type information
-        const TypeInfo&     type() const { return m_type; }
+        const TypeMeta&     type() const { return m_type; }
         
         //! Gets the property/variable
         //! \param[in]  pointer Pointer to the object (can be null for statics)
@@ -91,14 +91,14 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeInfo& type, Meta* parent);
+        PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeMeta& type, Meta* parent);
         
         bool                is_default(const Any&) const;
         
     private:
         const PropSetter*   m_setter    = nullptr;
         const PropGetter*   m_getter    = nullptr;
-        const TypeInfo&     m_type;
+        const TypeMeta&     m_type;
         DataBlock           m_default;
     };
 }

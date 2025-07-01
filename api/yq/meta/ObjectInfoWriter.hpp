@@ -8,16 +8,16 @@
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/ObjectInfo.hpp>
-#include <yq/meta/CompoundInfoDynamic.hpp>
+#include <yq/meta/CompoundMetaDynamic.hpp>
 #include <yq/meta/UnsafePropGetter.hpp>
 #include <yq/meta/UnsafePropSetter.hpp>
 
 namespace yq {
     template <typename C>
-    class ObjectInfo::Writer : public CompoundInfo::Dynamic<C> {
+    class ObjectInfo::Writer : public CompoundMeta::Dynamic<C> {
     public:
     
-        using CompoundInfo::Dynamic<C>::property;
+        using CompoundMeta::Dynamic<C>::property;
     
 
         /*! \brief Defines a property
@@ -65,7 +65,7 @@ namespace yq {
             return *this;
         }
         
-        Writer(ObjectInfo* obj) : CompoundInfo::Dynamic<C>(obj), m_meta(obj)
+        Writer(ObjectInfo* obj) : CompoundMeta::Dynamic<C>(obj), m_meta(obj)
         {
             assert(obj);
             if constexpr ( std::is_abstract_v<C> ){

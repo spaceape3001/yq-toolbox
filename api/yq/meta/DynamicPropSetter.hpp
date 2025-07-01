@@ -97,7 +97,7 @@ namespace yq {
             assert(obj);
             if(!obj)
                 return errors::null_object();
-            return TypeInfo::parse(((C*) obj)->*m_data, value);
+            return TypeMeta::parse(((C*) obj)->*m_data, value);
         }
         
         P      m_data;
@@ -159,7 +159,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             (((C*) obj)->*m_function)(tmp);
@@ -227,7 +227,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             if(! (((C*) obj)->*m_function)(tmp))
@@ -294,7 +294,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             (((C*) obj)->*m_function)(tmp);
@@ -361,7 +361,7 @@ namespace yq {
                 return errors::null_object();
 
             T   tmp;
-            std::error_code ec = TypeInfo::parse(tmp, value);
+            std::error_code ec = TypeMeta::parse(tmp, value);
             if(ec != std::error_code())
                 return ec;
             if(! (((C*) obj)->*m_function)(tmp))

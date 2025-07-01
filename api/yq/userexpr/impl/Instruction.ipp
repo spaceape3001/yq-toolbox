@@ -21,7 +21,7 @@ namespace yq::expr {
     }
     
         
-    Instruction::result_t    Instruction::result(std::span<const TypeInfo*>) const
+    Instruction::result_t    Instruction::result(std::span<const TypeMeta*>) const
     {
         return result();
     }

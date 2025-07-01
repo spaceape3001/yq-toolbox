@@ -12,7 +12,7 @@
 
 namespace yq::expr {
     const OperatorInfo*     find_operator(std::span<const Any>, Operator opCode);
-    const OperatorInfo*     find_operator(std::span<const TypeInfo*>, Operator opCode);
+    const OperatorInfo*     find_operator(std::span<const TypeMeta*>, Operator opCode);
 
 
     

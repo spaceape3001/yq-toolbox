@@ -15,7 +15,7 @@ namespace yq {
         This is here to facilitate sharing method/properties between both types & objects & global.
     
     */
-    class CompoundInfo : public Meta {
+    class CompoundMeta : public Meta {
     public:
 
         class Static;
@@ -29,10 +29,10 @@ namespace yq {
         //! \param[in] sl       Source location of declaration
         //! \param[in] par      Parent meta
         //! \param[in] i        Initial ID
-        CompoundInfo(std::string_view zName, const std::source_location& sl, Meta* par=nullptr, id_t i=AUTO_ID);
+        CompoundMeta(std::string_view zName, const std::source_location& sl, Meta* par=nullptr, id_t i=AUTO_ID);
         
         //! Destructor
-        ~CompoundInfo();
+        ~CompoundMeta();
 
         //! Implementation of the sweep step
         virtual void            sweep_impl() override;

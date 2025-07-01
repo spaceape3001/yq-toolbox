@@ -8,7 +8,7 @@
 
 #include <yq/meta/AnyDef.hpp>
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <yq/meta/AnyImpl.hpp>
 #include <yq/typedef/expected.hpp>
 

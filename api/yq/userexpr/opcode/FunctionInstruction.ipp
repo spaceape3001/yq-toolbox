@@ -22,7 +22,7 @@
 #include <yq/meta/GlobalInfo.hpp>
 #include <yq/meta/MethodInfo.hpp>
 #include <yq/meta/OperatorInfo.hpp>
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 
 namespace yq::expr {
         /*
@@ -51,14 +51,14 @@ namespace yq::expr {
         */
 
     using conditional_t     = std::variant<std::monostate, std::error_code>;
-    using span_typeinfo_t   = std::span<const TypeInfo*>;
+    using span_typeinfo_t   = std::span<const TypeMeta*>;
 
     struct converter_t {
-        const TypeInfo* type    = nullptr;
+        const TypeMeta* type    = nullptr;
     };
 
     struct default_t {
-        const TypeInfo* type    = nullptr;
+        const TypeMeta* type    = nullptr;
     };
 
     
@@ -68,9 +68,9 @@ namespace yq::expr {
         using scored_function_t     = std::pair<function_t, int>;
     
         std::vector<scored_function_t>  scored;
-        std::span<const TypeInfo*>      types;
+        std::span<const TypeMeta*>      types;
         
-        MethodScanner(std::span<const TypeInfo*> _types) :  types(_types) 
+        MethodScanner(std::span<const TypeMeta*> _types) :  types(_types) 
         {
         }
 
@@ -92,7 +92,7 @@ namespace yq::expr {
             return ret;
         }
 
-        size_t        constructors(const TypeInfo& type)
+        size_t        constructors(const TypeMeta& type)
         {
             size_t  start = scored.size();
             for(const ConstructorInfo* ci : type.constructors()){
@@ -104,9 +104,9 @@ namespace yq::expr {
             return scored.size() - start;
         }
 
-        bool         conversions(const TypeInfo& type, std::string_view k)
+        bool         conversions(const TypeMeta& type, std::string_view k)
         {
-            const TypeInfo*     ti  = TypeInfo::find(STEM, k);
+            const TypeMeta*     ti  = TypeMeta::find(STEM, k);
             if(ti){
                 scored.push_back({converter_t{ti}, 1});
                 return true;
@@ -141,7 +141,7 @@ namespace yq::expr {
             return scored.size() - start;
         }
         
-        size_t     methods(const TypeInfo& type, std::string_view k)
+        size_t     methods(const TypeMeta& type, std::string_view k)
         {
             size_t  start = scored.size();
             type.all_functions(k, [&](const MethodInfo* mi){
@@ -153,7 +153,7 @@ namespace yq::expr {
             return scored.size() - start;
         }
         
-        bool      properties(const TypeInfo& type, std::string_view k)
+        bool      properties(const TypeMeta& type, std::string_view k)
         {
             const PropertyInfo* pi  = type.property(k);
             if(pi){
@@ -164,7 +164,7 @@ namespace yq::expr {
         }
         
         
-        bool        default_(const TypeInfo* type)
+        bool        default_(const TypeMeta* type)
         {
             if(type){
                 scored.push_back({default_t{type}, 0});
@@ -174,9 +174,9 @@ namespace yq::expr {
         }
     };
     
-    std::vector<const TypeInfo*>    extract_types(std::span<const Any> anys)
+    std::vector<const TypeMeta*>    extract_types(std::span<const Any> anys)
     {
-        std::vector<const TypeInfo*>    ret;
+        std::vector<const TypeMeta*>    ret;
         ret.reserve(anys.size());
         for(const Any& a : anys)
             ret.push_back(&a.type());
@@ -185,15 +185,15 @@ namespace yq::expr {
     
     FunctionInstruction::FunctionInstruction(const SymData& sd) : 
         Instruction(sd.text), m_text8(to_string(sd.text)), m_argcnt(sd.argcnt),
-        m_type(TypeInfo::find(STEM, m_text8))
+        m_type(TypeMeta::find(STEM, m_text8))
     {
     }
 
     std::error_code     FunctionInstruction::execute(any_stack_t&values, Context&) const 
     {
         std::span<const Any>            args    = values.top_cspan(m_argcnt);
-        std::vector<const TypeInfo*>    types   = extract_types(args);
-        const TypeInfo*                 type0   = nullptr;
+        std::vector<const TypeMeta*>    types   = extract_types(args);
+        const TypeMeta*                 type0   = nullptr;
         
         struct {
             size_t      repo            = 0;
@@ -248,14 +248,14 @@ namespace yq::expr {
             }
             
             if(auto p = std::get_if<converter_t>(&fn.first)){
-                const TypeInfo* ti  = p->type;
+                const TypeMeta* ti  = p->type;
                 if(!ti)
                     continue;
                 x   = args[0].convert(*ti);
             }
             
             if(auto p = std::get_if<default_t>(&fn.first)){
-                const TypeInfo* ti  = p->type;
+                const TypeMeta* ti  = p->type;
                 if(!ti)
                     continue;
                 x   = Any(*ti);
@@ -269,7 +269,7 @@ namespace yq::expr {
         }
         
         yInfo() << 
-           "Function " << m_text8 << (std::span<const TypeInfo*>) types << " could not resolve/execute with " << scanner.scored.size() << " candidate(s)\n"
+           "Function " << m_text8 << (std::span<const TypeMeta*>) types << " could not resolve/execute with " << scanner.scored.size() << " candidate(s)\n"
            "   repo functions:   " << stat.repo << '\n' <<
            "   global functions: " << stat.global << '\n' <<
            "   type methods:     " << stat.methods << '\n' <<

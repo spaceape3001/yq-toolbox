@@ -20,7 +20,7 @@ namespace yq::expr {
         const OperatorInfo* best    = nullptr;
         int                 score   = 0;
         
-        const TypeInfo& ti  = span[0].type();
+        const TypeMeta& ti  = span[0].type();
         auto er             = ti.operators(opCode);
         for(auto itr=er.first; itr != er.second; ++itr){
             const OperatorInfo* op  = itr->second;
@@ -42,11 +42,11 @@ namespace yq::expr {
         return best;
     }
 
-    const OperatorInfo*     find_operator(std::span<const TypeInfo*> span, Operator opCode)
+    const OperatorInfo*     find_operator(std::span<const TypeMeta*> span, Operator opCode)
     {
         if(span.size() == 0)
             return nullptr;
-        for(const TypeInfo* ti : span){
+        for(const TypeMeta* ti : span){
             if(!ti)
                 return nullptr;
         }
@@ -54,7 +54,7 @@ namespace yq::expr {
         const OperatorInfo* best    = nullptr;
         int                 score   = 0;
         
-        const TypeInfo& ti  = *(span[0]);
+        const TypeMeta& ti  = *(span[0]);
         auto er             = ti.operators(opCode);
         for(auto itr=er.first; itr != er.second; ++itr){
             const OperatorInfo* op  = itr->second;
@@ -111,7 +111,7 @@ namespace yq::expr {
     OperatorFixed::OperatorFixed(const SymData& sym, const OperatorInfo* opinfo) : Instruction(sym.text), 
         m_opInfo(opinfo), m_args(sym.argcnt)
     {
-        const TypeInfo* ar  = opinfo->result_type();
+        const TypeMeta* ar  = opinfo->result_type();
         if(ar){
             m_result        = ar;
         }

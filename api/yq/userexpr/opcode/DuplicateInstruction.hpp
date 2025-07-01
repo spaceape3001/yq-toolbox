@@ -17,7 +17,7 @@ namespace yq::expr {
         virtual std::error_code     execute(any_stack_t&values, Context&) const override;
         
         virtual result_t   result() const override;
-        virtual result_t    result(std::span<const TypeInfo*>) const;
+        virtual result_t    result(std::span<const TypeMeta*>) const;
 
         uint16_t            pop_count() const override { return 0; }
         uint16_t            push_count() const override { return 1; }

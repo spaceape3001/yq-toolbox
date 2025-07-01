@@ -14,7 +14,7 @@ namespace yq::expr {
         return *s_repo;
     }
     
-    Repo::Repo() : CompoundInfo("yq::expr::Repo", std::source_location::current())
+    Repo::Repo() : CompoundMeta("yq::expr::Repo", std::source_location::current())
     {
         //m_punctText.insert('.');
         //m_punctText.insert('_');
@@ -50,7 +50,7 @@ namespace yq::expr {
         return errors::bad_argument();
     }
 
-    const TypeInfo* Repo::constant_type(string_view_t k) const
+    const TypeMeta* Repo::constant_type(string_view_t k) const
     {
         auto i = m_constants.find(string_t(k));
         if(i != m_constants.end())

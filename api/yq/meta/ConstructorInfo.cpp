@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ConstructorInfo.hpp"
-#include <yq/meta/TypeInfo.hpp>
+#include <yq/meta/TypeMeta.hpp>
 #include <cassert>
 
 namespace yq {
@@ -15,7 +15,7 @@ namespace yq {
         assert(parentMeta);
         set(Flag::CONSTRUCTOR);
         
-        if(TypeInfo* type = to_type(parentMeta))
+        if(TypeMeta* type = to_type(parentMeta))
             type->m_constructors.push_back(this);
     }
 }

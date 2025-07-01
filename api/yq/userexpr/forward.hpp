@@ -17,7 +17,7 @@ namespace log4cpp { class CategoryStream; }
 namespace yq {
     template <typename> class Ref;
     template <typename> class Stack;
-    class TypeInfo;
+    class TypeMeta;
     struct IgCase;
     class UserExpr;
 }
@@ -35,8 +35,8 @@ namespace yq::expr {
     using TokenFN               = std::function<std::error_code(SymCode,std::u32string_view)>;
     using InstructionCPtr       = Ref<const Instruction>;
     
-    using u32string_type_map_t  = std::map<string_t, const TypeInfo*,IgCase>;
-    using string_type_map_t     = std::map<string_t, const TypeInfo*,IgCase>;
+    using u32string_type_map_t  = std::map<string_t, const TypeMeta*,IgCase>;
+    using string_type_map_t     = std::map<string_t, const TypeMeta*,IgCase>;
     
     struct Context;
     struct Analysis;

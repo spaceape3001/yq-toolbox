@@ -12,7 +12,7 @@
 #include <variant>
 
 namespace yq {
-    class TypeInfo;
+    class TypeMeta;
 }
 
 namespace yq::expr {
@@ -28,8 +28,8 @@ namespace yq::expr {
         using result_t  = std::variant<
             std::monostate, 
             std::error_code, 
-            const TypeInfo*, 
-            std::vector<const TypeInfo*>
+            const TypeMeta*, 
+            std::vector<const TypeMeta*>
         >;
 
         // Defining text
@@ -42,7 +42,7 @@ namespace yq::expr {
         virtual result_t    result() const;
         
         //! Expected result for argument types
-        virtual result_t    result(std::span<const TypeInfo*>) const;
+        virtual result_t    result(std::span<const TypeMeta*>) const;
         
         virtual uint16_t     pop_count() const { return 0xFFFF; }
         virtual uint16_t     push_count() const { return 0xFFFF; }

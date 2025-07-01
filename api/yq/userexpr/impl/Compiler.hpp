@@ -24,7 +24,7 @@ namespace yq::expr {
         Ref<VirtualMachine>             m_machine;
         Analysis&                       m_analysis;
         SymDataStack                    m_pending;
-        //Stack<const TypeInfo*>          m_types;
+        //Stack<const TypeMeta*>          m_types;
         int                             m_stack     = 0;
         
         

@@ -30,7 +30,7 @@ namespace yq::expr {
         return errors::insufficient_information(); 
     }
 
-    Instruction::result_t    DuplicateInstruction::result(std::span<const TypeInfo*>types) const
+    Instruction::result_t    DuplicateInstruction::result(std::span<const TypeMeta*>types) const
     {
         if(types.size() != 1){
             if(types.size()){

@@ -18,6 +18,6 @@ namespace yq {
     class ObjectInfo;   // Obtrusive data type
     class OperatorInfo;
     class PropertyInfo; // a object property
-    class CompoundInfo; // CompoundInfo type (with properties & methods)   
-    class TypeInfo;     // Unobtrusive data type
+    class CompoundMeta; // CompoundMeta type (with properties & methods)   
+    class TypeMeta;     // Unobtrusive data type
 }

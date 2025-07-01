@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/CompoundInfoStatic.hpp>
+#include <yq/meta/CompoundMetaStatic.hpp>
 #include <yq/meta/DynamicPropGetter.hpp>
 #include <yq/meta/DynamicPropSetter.hpp>
 #include <yq/meta/PropertyInfoWriter.hpp>
@@ -14,7 +14,7 @@
 
 namespace yq {
     template <typename C>
-    class CompoundInfo::Dynamic : public CompoundInfo::Static {
+    class CompoundMeta::Dynamic : public CompoundMeta::Static {
     public:
     
         /*! \brief Defines a property
@@ -261,6 +261,6 @@ namespace yq {
             return method(szName, (R (B::*)(Args...) const) function, sl);
         }
         
-        Dynamic(CompoundInfo* c) : Static(c) {}
+        Dynamic(CompoundMeta* c) : Static(c) {}
     };
 }

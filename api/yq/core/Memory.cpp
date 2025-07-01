@@ -30,7 +30,7 @@ namespace yq {
         set(pData, byteCount, stride);
     }
 
-    Memory::Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, const TypeMeta& type) : Memory()
     {
         set(pData, byteCount, type);
     }
@@ -45,7 +45,7 @@ namespace yq {
         set(pData, byteCount, stride, std::move(free));
     }
 
-    Memory::Memory(set_k, const void* pData, size_t byteCount, const TypeInfo& type, Free&&free) : Memory()
+    Memory::Memory(set_k, const void* pData, size_t byteCount, const TypeMeta& type, Free&&free) : Memory()
     {
         set(pData, byteCount, type, std::move(free));
     }
@@ -81,7 +81,7 @@ namespace yq {
         m_free      = std::move(mv.m_free);
     }
 
-    void    Memory::_set(const void* p, size_t n, const TypeInfo* type, size_t s, Free&& free)
+    void    Memory::_set(const void* p, size_t n, const TypeMeta* type, size_t s, Free&& free)
     {
         clear();
         if(p && n){
@@ -136,7 +136,7 @@ namespace yq {
         _set(pData, byteCount, nullptr, s, {});
     }
 
-    void    Memory::set(const void* pData, size_t byteCount, const TypeInfo& type)
+    void    Memory::set(const void* pData, size_t byteCount, const TypeMeta& type)
     {
         _set(pData, byteCount, &type, type.size(), {});
     }
@@ -151,7 +151,7 @@ namespace yq {
         _set(pData, byteCount, nullptr, stride, std::move(free));
     }
     
-    void    Memory::set(const void* pData, size_t byteCount, const TypeInfo& type, Free&& free)
+    void    Memory::set(const void* pData, size_t byteCount, const TypeMeta& type, Free&& free)
     {
         _set(pData, byteCount, &type, type.size(), std::move(free));
     }

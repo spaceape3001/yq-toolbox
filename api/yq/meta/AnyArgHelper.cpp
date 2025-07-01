@@ -49,7 +49,7 @@ namespace yq {
                     continue;
                 }
 
-                auto v      = arg.convert(static_cast<const TypeInfo&>(ai.type()));
+                auto v      = arg.convert(static_cast<const TypeMeta&>(ai.type()));
                 if(!v)
                     return errors::bad_argument();
                 

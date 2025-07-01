@@ -36,7 +36,7 @@ namespace yq {
     }
 
     ObjectInfo::ObjectInfo(std::string_view zName, ObjectInfo* myBase, const std::source_location& sl) : 
-        CompoundInfo(zName, sl), m_base(myBase)
+        CompoundMeta(zName, sl), m_base(myBase)
     {
         set(Flag::OBJECT);
         Repo& r    = repo();
@@ -152,7 +152,7 @@ namespace yq {
 
     void    ObjectInfo::sweep_impl() 
     {
-        CompoundInfo::sweep_impl();
+        CompoundMeta::sweep_impl();
         
         m_all.clear();
         m_local.clear();

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/CompoundInfo.hpp>
+#include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/meta/OperatorInfo.hpp>
 #include <yq/errors.hpp>
@@ -22,13 +22,13 @@ namespace log4cpp { class CategoryStream; }
 namespace yq {
     /* \brief Declares a type that can be stored unobtrusively
     */
-    class TypeInfo : public CompoundInfo {
+    class TypeMeta : public CompoundMeta {
         friend class Any;
     public:
         using MethodLUC     = MetaLookup<MethodInfo>;
         using OperatorLUC   = MetaLookup2<OperatorInfo,Operator,&OperatorInfo::code>;
         using PropertyLUC   = MetaLookup<PropertyInfo>;
-        using TypeInfoLUC   = MetaLookup<TypeInfo>;
+        using TypeMetaLUC   = MetaLookup<TypeMeta>;
     
             // WARNING UNSAFE IN UNLOCKED MULTITHREADED MODE!
             
@@ -36,20 +36,20 @@ namespace yq {
             \note WARNING Unsafe in unlocked multithreaded mode (as this isn't a copy, 
                     its the actual list that could be changing.)
         */
-        static const std::vector<const TypeInfo*>&   all();
+        static const std::vector<const TypeMeta*>&   all();
         
         //! Finds the type info by ID
-        static const TypeInfo*                  find(id_t);
+        static const TypeMeta*                  find(id_t);
 
         //! Finds the type info by name
-        static const TypeInfo*                  find(std::string_view);
+        static const TypeMeta*                  find(std::string_view);
         
         //! Finds the type info of a set
         //! \param[in] Noisy    TRUE will dump failures-to-find to the log
-        static std::vector<const TypeInfo*>     find_all(const string_set_t&, bool noisy=false);
+        static std::vector<const TypeMeta*>     find_all(const string_set_t&, bool noisy=false);
         
         //! Returns the *FIRST* match
-        static const TypeInfo*                  find(stem_k, std::string_view);
+        static const TypeMeta*                  find(stem_k, std::string_view);
     
         //! All aliases for this type info
         //const std::vector<std::string_view>&    aliases() const { return m_aliases; }
@@ -66,7 +66,7 @@ namespace yq {
         //! TRUE if this type has a print function defined for it
         bool        can_print() const { return m_print != nullptr; }
         
-        bool        can_convert_to(const TypeInfo& otherType) const;
+        bool        can_convert_to(const TypeMeta& otherType) const;
         
         template <typename ... T>
         any_x       construct(T ... args) const;
@@ -77,7 +77,7 @@ namespace yq {
         std::error_code copy(void*dst, const void*src) const;
         
         //! Copy (checking src type)
-        std::error_code copy(void*dst, const void*src, const TypeInfo& srcType) const;
+        std::error_code copy(void*dst, const void*src, const TypeMeta& srcType) const;
         
         template <typename T>
         std::error_code copy(void* dst, const T&src) const
@@ -211,7 +211,7 @@ namespace yq {
         typedef std::error_code (*FNXmlNodeRead)(void*, const XmlNode*);
 
         
-        FNConvert           converter(const TypeInfo&) const;
+        FNConvert           converter(const TypeMeta&) const;
 
     protected:
     
@@ -228,10 +228,10 @@ namespace yq {
             \param[in] sl           Source location it's being done
             \param[in] i            Any assigned ID override
         */
-        TypeInfo(std::string_view zName, const std::source_location& sl, id_t i=AUTO_ID);
+        TypeMeta(std::string_view zName, const std::source_location& sl, id_t i=AUTO_ID);
         
         //! Destructor that should never fire
-        virtual ~TypeInfo();
+        virtual ~TypeMeta();
 
         //! Adds an alias to the type (note view is NOT copied, so should come from program strings "" )
         virtual void    add_alias(std::string_view) override;
@@ -241,7 +241,7 @@ namespace yq {
 
 
         //! Converter hash
-        using ConvertHash   = Hash<const TypeInfo*, FNConvert>;
+        using ConvertHash   = Hash<const TypeMeta*, FNConvert>;
         
         //! Constructors for this type
         std::vector<const ConstructorInfo*> m_constructors;
@@ -262,7 +262,7 @@ namespace yq {
         
         struct {
             //! Template arguments for this type
-            std::vector<const TypeInfo*> args;
+            std::vector<const TypeMeta*> args;
             
             //!  total number of parameters (typed or not)
             unsigned                params          = 0;
@@ -335,38 +335,38 @@ namespace yq {
         void            add_printer(std::string_view, FNFormat);
         
     private:
-        any_x           contruct_impl(std::initializer_list<const TypeInfo*>, std::initializer_list<const void*>) const;
+        any_x           contruct_impl(std::initializer_list<const TypeMeta*>, std::initializer_list<const void*>) const;
     };
     
     /*! \brief Converts meta to type, if it's valid
     
-        \return TypeInfo pointer, if valid, NULL otherwise
+        \return TypeMeta pointer, if valid, NULL otherwise
     */
-    const TypeInfo* to_type(const Meta* m);
+    const TypeMeta* to_type(const Meta* m);
 
-    const TypeInfo* to_type(const Meta& m);
+    const TypeMeta* to_type(const Meta& m);
     
     /*! \brief Converts meta to type, if it's valid
     
-        \return TypeInfo pointer, if valid, NULL otherwise
+        \return TypeMeta pointer, if valid, NULL otherwise
     */
-    TypeInfo* to_type(Meta* m);
+    TypeMeta* to_type(Meta* m);
 
     template <typename T>
-    std::error_code TypeInfo::parse(T&value, std::string_view sv)
+    std::error_code TypeMeta::parse(T&value, std::string_view sv)
     {
         static_assert( is_defined_v<T>, "T must be meta-type capable!");
-        const TypeInfo& ti  = meta<T>();
+        const TypeMeta& ti  = meta<T>();
         if(!ti.m_parse)
             return errors::no_handler();
         return ti.m_parse(&value, sv);
     }
 
     template <typename T>
-    std::error_code TypeInfo::print(const T&value, Stream&str)
+    std::error_code TypeMeta::print(const T&value, Stream&str)
     {
         static_assert( is_defined_v<T>, "T must be meta-type capable!");
-        const TypeInfo& ti  = meta<T>();
+        const TypeMeta& ti  = meta<T>();
         if(!ti.m_print)
             return errors::no_handler();
         ti.m_print(str, &value);
@@ -374,10 +374,10 @@ namespace yq {
     }
 
     template <typename T>
-    std::error_code TypeInfo::write(const T&value, Stream&str)
+    std::error_code TypeMeta::write(const T&value, Stream&str)
     {
         static_assert( is_defined_v<T>, "T must be meta-type capable!");
-        const TypeInfo& ti  = meta<T>();
+        const TypeMeta& ti  = meta<T>();
         if(!ti.m_write)
             return errors::no_handler();
         ti.m_write(str, &value);
@@ -385,7 +385,7 @@ namespace yq {
     }
     
     template <typename Pred>
-    auto            TypeInfo::all_functions(std::string_view k, Pred pred) const
+    auto            TypeMeta::all_functions(std::string_view k, Pred pred) const
     {
         using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
         if constexpr (!std::is_same_v<pred_result_t, void>){
@@ -409,5 +409,5 @@ namespace yq {
         }
     }    
 
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, std::span<const TypeInfo*>);
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, std::span<const TypeMeta*>);
 }

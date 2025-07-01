@@ -12,7 +12,7 @@ namespace yq::xfg {
     OutputPin::OutputPin() = default;
     OutputPin::~OutputPin() = default;
 
-    void        publish(pin_id_t off, const void* src, const TypeInfo&type)
+    void        publish(pin_id_t off, const void* src, const TypeMeta&type)
     {
         //   TODO
     }
