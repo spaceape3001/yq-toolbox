@@ -39,7 +39,7 @@ namespace yq {
         AssetCPtr   _find(uint64_t) const;
         
         //! Returns the other one if there's a collision on insert
-        void                _insert(const Asset*);
+        void        _insert(const Asset*);
         
         AssetCache();
         ~AssetCache();

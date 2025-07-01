@@ -11,13 +11,13 @@
 
 namespace yq {
     template <typename C>
-    class AssetInfo::Writer : public ObjectInfo::Writer<C> {
+    class AssetMeta::Writer : public ObjectInfo::Writer<C> {
     public:
-        Writer(AssetInfo* assetInfoPtr) : ObjectInfo::Writer<C>(assetInfoPtr)
+        Writer(AssetMeta* assetInfoPtr) : ObjectInfo::Writer<C>(assetInfoPtr)
         {
         }
         
-        Writer(AssetInfo& assetInfoRef) : Writer(&assetInfoRef)
+        Writer(AssetMeta& assetInfoRef) : Writer(&assetInfoRef)
         {
         }
     };

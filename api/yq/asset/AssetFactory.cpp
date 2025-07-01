@@ -13,8 +13,33 @@
 #include <filesystem>
 
 namespace yq {
+
+    /*
+        Assets (Version 2)
+        
+        Terminology
+            Asset       Anything that can be loaded (aka Resource)
+            Factory     Loading from file
+            Info        Information (unfortunately, the term was taken first by Meta and we're not rewriting)
+            Library     Collection of Assets
     
-    AssetFactory::AssetFactory(const AssetInfo&ai, const std::source_location& sl) : m_asset(&ai), m_source(sl)
+    */
+
+#if 0
+    struct AssetFactory::Per {
+        std::vector<loader_t>   loaders;
+        std::vector<saver_t>    savers;
+    };
+
+    struct AssetFactory::Common {
+        std::map<std::string_view, Per>     byExts;
+    };
+    
+    struct AssetFactory::Impl {
+    };
+#endif
+    
+    AssetFactory::AssetFactory(const AssetMeta&ai, const std::source_location& sl) : m_asset(&ai), m_source(sl) //, m(std::make_unique<Impl>())
     {
     }
     

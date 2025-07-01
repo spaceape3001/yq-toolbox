@@ -14,12 +14,45 @@
 #include <yq/core/Ref.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/text/IgCase.hpp>
+#include <yq/typedef/json.hpp>
 #include <yq/typedef/string_sets.hpp>
+#include <yq/typedef/xml.hpp>
+#include <filesystem>
 #include <functional>
 #include <source_location>
 #include <system_error>
+#include <memory>
 
 namespace yq {
+    struct ByteArray;
+    
+    struct AssetFileLoader;
+    struct AssetFileSaver;
+    struct AssetBufferLoader;
+    struct AssetBufferSaver;
+    struct AssetJsonLoader;
+    struct AssetJsonSaver;
+    struct AssetXmlLoader;
+    struct AssetXmlSaver;
+    struct AssetSchemeLoader;
+    struct AssetSchemeSaver;
+    
+    using AssetFileLoaderUPtr   = std::unique_ptr<AssetFileLoader>;
+    using AssetFileSaverUPtr    = std::unique_ptr<AssetFileSaver>;
+    using AssetBufferLoaderUPtr = std::unique_ptr<AssetBufferLoader>;
+    using AssetBufferSaverUPtr  = std::unique_ptr<AssetBufferSaver>;
+    using AssetJsonLoaderUPtr   = std::unique_ptr<AssetJsonLoader>;
+    using AssetJsonSaverUPtr    = std::unique_ptr<AssetJsonSaver>;
+    using AssetXmlLoaderUPtr    = std::unique_ptr<AssetXmlLoader>;
+    using AssetXmlSaverUPtr     = std::unique_ptr<AssetXmlSaver>;
+    using AssetSchemeLoaderUPtr = std::unique_ptr<AssetSchemeLoader>;
+    using AssetSchemeSaverUPtr  = std::unique_ptr<AssetSchemeSaver>;
+
+    struct AssetMatchOptions {
+        std::initializer_list<std::string_view>     extensions;
+        std::initializer_list<std::string_view>     schemes;
+    };
+
     namespace errors {
         using asset_saving_failed   = error_db::entry<"Unable to save asset">;
     }
@@ -39,10 +72,13 @@ namespace yq {
         struct Loader;
         struct Saver;
 
+        //static void   add_loader(std::initializer_list<std::string_view> exts, std::function<A*(const std::filesystem::path&)>&& fn, const std::source_location& sl=std::source_location::current())
+
+
     protected:
         friend class Asset;
         
-        AssetFactory(const AssetInfo&, const std::source_location& sl);
+        AssetFactory(const AssetMeta&, const std::source_location& sl);
         ~AssetFactory();
 
         //! Loads the specified URL (no resolution)
@@ -56,9 +92,42 @@ namespace yq {
     
         std::vector<Loader*>        m_loaders;
         std::vector<Saver*>         m_savers;
-        const AssetInfo*            m_asset;
-    
+        const AssetMeta*            m_asset;
+
+#if 0
+        using loader_t  = std::variant<std::monostate, const AssetFileLoader*, const AssetBufferLoader*, const AssetJsonLoader*, const AssetXmlLoader*>;
+        using saver_t   = std::variant<std::monostate, const AssetFileSaver*,  const AssetBufferSaver*,  const AssetJsonSaver*,  const AssetXmlSaver*>;
+#endif
+        
     private:
+        
+        #if 0
+        void    sweep_impl();
+
+        struct Per;
+        struct Common;
+        static Common& common();
+        
+        struct Impl;
+        std::unique_ptr<Impl>       m;
+        
+        
+        struct {
+            std::multimap<std::string_view, FileLoader*, IgCase>    asFiles;
+            std::multimap<std::string_view, DataLoader*, IgCase>    asData;
+        } m_loaders;
+        
+        struct {
+            std::multimap<std::string_view, FileSaver*, IgCase>     asFiles;
+            std::multimap<std::string_view, DataSaver*, IgCase>     asData;
+        } m_savers;
+        
+        std::multimap<std::string_view, FileLoader*, IgCase>    m_loaders2;
+        std::multimap<std::string_view, Saver*,  IgCase>    m_savers2;
+        //std::multimap<std::string_view, AssetFactory*,  IgCase>    m_libraries;
+    
+        #endif
+    
         AssetFactory(const AssetFactory&) = delete;
         AssetFactory(AssetFactory&&) = delete;
         AssetFactory& operator=(const AssetFactory&) = delete;

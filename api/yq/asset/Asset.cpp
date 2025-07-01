@@ -9,7 +9,7 @@
 #include <yq/asset/Asset.hpp>
 #include <yq/asset/AssetIO.hpp>
 #include <yq/asset/AssetFactory.hpp>
-#include <yq/asset/AssetInfoWriter.hpp>
+#include <yq/asset/AssetMetaWriter.hpp>
 #include <yq/asset/AssetLogging.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Meta.hpp>
@@ -28,7 +28,7 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    AssetInfo::AssetInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
+    AssetMeta::AssetMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
         ObjectInfo(zName, base, sl)
     {
         set(Flag::ASSET);

@@ -11,7 +11,7 @@
 namespace yq {
     class Asset;
     class AssetCache;
-    class AssetInfo;
+    class AssetMeta;
     class AssetFactory;
     
     template <typename> class Ref;
