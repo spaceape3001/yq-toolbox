@@ -27,8 +27,8 @@ namespace yq::xfg {
 
     class Executive;
     class Node;
-    class NodeInfo;
-    struct PinInfo;
+    class NodeMeta;
+    struct PinMeta;
 
     template <typename>             class SingleInputPin;
     template <typename>             class VectorInputPin;

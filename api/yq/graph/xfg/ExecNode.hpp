@@ -11,15 +11,15 @@
 
 namespace yq::xfg {
 
-    class ExecNodeInfo : public ObjectMeta {
+    class ExecNodeMeta : public ObjectMeta {
     public:
 
         template <typename C> class Writer;
-        ExecNodeInfo(std::string_view, const ObjectMeta&, const std::source_location& sl = std::source_location::current());
+        ExecNodeMeta(std::string_view, const ObjectMeta&, const std::source_location& sl = std::source_location::current());
     };
 
     class ExecNode : public Object {
-        YQ_OBJECT_INFO(ExecNodeInfo)
+        YQ_OBJECT_META(ExecNodeMeta)
         YQ_OBJECT_DECLARE(ExecNode, Object)
     public:
     

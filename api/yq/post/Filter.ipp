@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Filter.hpp"
-#include "FilterInfoWriter.hpp"
+#include "FilterMetaWriter.hpp"
 
 YQ_OBJECT_IMPLEMENT(yq::post::Filter)
 
 namespace yq::post {
-    FilterInfo::FilterInfo(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+    FilterMeta::FilterMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
         set(Flag::POST);

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "NotFilter.hpp"
-#include <yq/post/FilterInfoWriter.hpp>
+#include <yq/post/FilterMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::post::NotFilter)
 

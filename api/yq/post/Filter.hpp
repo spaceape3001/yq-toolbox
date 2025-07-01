@@ -25,11 +25,11 @@ namespace yq::post {
     //! Flags to encapsulate how the filter mismatches
     using FilterResult      = std::variant<bool,MismatchFlags>;
     
-    class FilterInfo : public ObjectMeta {
+    class FilterMeta : public ObjectMeta {
     public:
         template <typename C> class Writer;
         
-        FilterInfo(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
+        FilterMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         //! \note This can be NULL (and valid as such)
         const ObjectMeta*   sender_info() const { return m_sender; }
@@ -58,7 +58,7 @@ namespace yq::post {
         template <typename> class Fixer;
 
     private:
-        YQ_OBJECT_INFO(FilterInfo)
+        YQ_OBJECT_META(FilterMeta)
         YQ_OBJECT_FIXER(Fixer)
         YQ_OBJECT_DECLARE(Filter, Object)
         template <typename> friend class Ref;

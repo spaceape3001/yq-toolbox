@@ -5,12 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include "PinInfo.ipp"
+#include "PinMeta.ipp"
 #include "Node.ipp"
 
 #include "Executive.ipp"
 
-#include "NodeInfo.ipp"
+#include "NodeMeta.ipp"
 #include "OutputPin.ipp"
 
 #include <yq/core/DelayInit.hpp>

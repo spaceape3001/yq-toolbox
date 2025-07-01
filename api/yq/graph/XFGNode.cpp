@@ -7,19 +7,19 @@
 #pragma once
 
 #include "XFGNode.hpp"
-#include "XFGNodeInfoWriter.hpp"
+#include "XFGNodeMetaWriter.hpp"
 
 namespace yq::xfg {
-    XFGNodeInfo::XFGNodeInfo(std::string_view sv, ObjectMeta& obj, const std::source_location& sl) : 
+    XFGNodeMeta::XFGNodeMeta(std::string_view sv, ObjectMeta& obj, const std::source_location& sl) : 
         ObjectMeta(sv, obj, sl)
     {
     }
     
-    void    XFGNodeInfo::sweep_impl() 
+    void    XFGNodeMeta::sweep_impl() 
     {
     }
 
-    const XFGNodeInfo::D& XFGNodeInfo::_def(bool all) const 
+    const XFGNodeMeta::D& XFGNodeMeta::_def(bool all) const 
     { 
         return all ? m_all : m_local; 
     }

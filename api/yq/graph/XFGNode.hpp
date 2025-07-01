@@ -10,23 +10,23 @@
 
 namespace yq::xfg {
 
-    class XFGPinInfo;
+    class XFGPinMeta;
 
-    class XFGNodeInfo : public ObjectMeta {
+    class XFGNodeMeta : public ObjectMeta {
     public:
         template <typename C> class Writer;
-        XFGNodeInfo(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
+        XFGNodeMeta(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
         
-        const LUC<XFGPinInfo>&  inputs(bool all=false) const;
-        const LUC<XFGPinInfo>&  outputs(bool all=false) const;
+        const LUC<XFGPinMeta>&  inputs(bool all=false) const;
+        const LUC<XFGPinMeta>&  outputs(bool all=false) const;
     
     protected:
         //! Sweeps on the type (ie gathers properties/methdos)
         virtual void    sweep_impl() override;
     private:
         struct D {
-            LUC<XFGPinInfo>     m_inputs;
-            LUC<XFGPinInfo>     m_outputs;
+            LUC<XFGPinMeta>     m_inputs;
+            LUC<XFGPinMeta>     m_outputs;
         };
 
         //! What's defined on this object
@@ -38,10 +38,10 @@ namespace yq::xfg {
     };
     
 
-    class XFGPinInfo : public Meta {
+    class XFGPinMeta : public Meta {
     public:
         class Writer;
-        XFGPinInfo(std::string_view, XFGNodeInfo&, const std::source_location& sl = std::source_location::current());
+        XFGPinMeta(std::string_view, XFGNodeMeta&, const std::source_location& sl = std::source_location::current());
         
         bool    is_input() const { return (flags() & INPUT) != 0; }
         bool    is_output() const { return (flags() & OUTPUT) != 0; }
@@ -58,7 +58,7 @@ namespace yq::xfg {
     };
 
     class XFGNode : public Object {
-        YQ_OBJECT_INFO(XFGNodeInfo)
+        YQ_OBJECT_META(XFGNodeMeta)
         YQ_OBJECT_DECLARE(XFGNode, Object)
     public:
     

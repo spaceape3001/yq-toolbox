@@ -38,7 +38,7 @@ namespace yq {
         \note Copy & Move capabilities have been disabled
     */
     class MetaObject : public Object, public RefCount, public UniqueID, public Revision {
-        YQ_OBJECT_INFO(MetaObjectMeta)
+        YQ_OBJECT_META(MetaObjectMeta)
         YQ_OBJECT_DECLARE(MetaObject, Object)
     public:
     

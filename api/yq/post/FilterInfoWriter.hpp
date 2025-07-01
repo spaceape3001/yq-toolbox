@@ -72,13 +72,13 @@ namespace yq::post {
         {
             if constexpr (has_accept){
                 if constexpr (is_object_v<sender_t>){
-                    FilterInfo::m_sender    = &meta_unsafe<sender_t>();
+                    FilterMeta::m_sender    = &meta_unsafe<sender_t>();
                 }
                 if constexpr (is_object_v<receiver_t>){
-                    FilterInfo::m_receiver  = &meta_unsafe<receiver_t>();
+                    FilterMeta::m_receiver  = &meta_unsafe<receiver_t>();
                 }
                 if constexpr (!std::is_same_v<post_t, Post>){
-                    FilterInfo::m_postInfo  = &meta<post_t>();
+                    FilterMeta::m_postInfo  = &meta<post_t>();
                 }
             } else {
                 Meta::set(Meta::Flag::ABSTRACT);
@@ -133,20 +133,20 @@ namespace yq::post {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class FilterInfo::Writer : public ObjectMeta::Writer<C> {
+    class FilterMeta::Writer : public ObjectMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(FilterInfo* pInfo) : ObjectMeta::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(FilterMeta* pInfo) : ObjectMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         
         //! Constructor of widget info (this is used by the writer<T>() methods)
-        Writer(FilterInfo& pInfo) : Writer(&pInfo)
+        Writer(FilterMeta& pInfo) : Writer(&pInfo)
         {
         }
 
     private:
-        FilterInfo* m_meta;
+        FilterMeta* m_meta;
     };
 }

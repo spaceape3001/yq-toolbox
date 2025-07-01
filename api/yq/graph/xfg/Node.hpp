@@ -8,7 +8,7 @@
 
 #include <0/graph/xfg/preamble.hpp>
 
-#include <0/graph/xfg/NodeInfo.hpp>
+#include <0/graph/xfg/NodeMeta.hpp>
 #include <0/graph/xfg/ArrayInputPin.hpp>
 #include <0/graph/xfg/ArrayOutputPin.hpp>
 #include <0/graph/xfg/SingleInputPin.hpp>
@@ -23,7 +23,7 @@
 namespace yq::xfg {
 
     class Node : public Object {
-        YQ_OBJECT_INFO(NodeInfo)
+        YQ_OBJECT_META(NodeMeta)
         YQ_OBJECT_DECLARE(Node, Object)
     public:
     

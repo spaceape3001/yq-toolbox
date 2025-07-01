@@ -39,7 +39,7 @@ namespace yq::post {
         
     */
     class PBX : public Object, public Dispatcher {
-        YQ_OBJECT_INFO(PBXInfo);
+        YQ_OBJECT_META(PBXInfo);
         YQ_OBJECT_DECLARE(PBX, Object)
     public:
     

@@ -70,7 +70,7 @@ namespace yq {
         template <typename C> class Fixer;
 
     private:
-        YQ_OBJECT_INFO(AssetMeta)
+        YQ_OBJECT_META(AssetMeta)
         YQ_OBJECT_FIXER(Fixer)
         YQ_OBJECT_DECLARE(Asset, Object)
     public:

@@ -7,10 +7,10 @@
 #pragma once
 
 #include <0/xfg/ExecNode.hpp>
-#include <0/xfg/ExecNodeInfoWriter.hpp>
+#include <0/xfg/ExecNodeMetaWriter.hpp>
 
 namespace yq::xfg {
-    ExecNodeInfo::ExecNodeInfo(std::string_view name, const ObjectMeta&par, const std::source_location& sl) : 
+    ExecNodeMeta::ExecNodeMeta(std::string_view name, const ObjectMeta&par, const std::source_location& sl) : 
         ObjectMeta(name, par, sl)
     {
     }

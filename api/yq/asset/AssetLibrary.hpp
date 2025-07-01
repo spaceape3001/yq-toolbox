@@ -26,7 +26,7 @@ namespace yq {
     };
 
     class AssetLibrary : public Asset {
-        YQ_OBJECT_INFO(AssetLibraryInfo)
+        YQ_OBJECT_META(AssetLibraryInfo)
         YQ_OBJECT_DECLARE(AssetLibrary, Asset)
     public:
     

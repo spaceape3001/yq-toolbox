@@ -11,17 +11,17 @@
 
 namespace yq::xfg {
     template <typename C>
-    class ExecNodeInfo::Writer : public ObjectMeta::Writer<C> {
+    class ExecNodeMeta::Writer : public ObjectMeta::Writer<C> {
     public:
-        Writer(ExecNodeInfo* widgetInfo) : ObjectMeta::Writer<C>(widgetInfo), m_meta(widgetInfo)
+        Writer(ExecNodeMeta* widgetInfo) : ObjectMeta::Writer<C>(widgetInfo), m_meta(widgetInfo)
         {
         }
         
-        Writer(ExecNodeInfo& widgetInfo) : Writer(&widgetInfo)
+        Writer(ExecNodeMeta& widgetInfo) : Writer(&widgetInfo)
         {
         }
     private:
-        ExecNodeInfo* m_meta;
+        ExecNodeMeta* m_meta;
     };
     
     

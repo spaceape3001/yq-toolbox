@@ -16,7 +16,7 @@ namespace yq {
 
     This overrides the "MyInfo" for a class (& base) to be the new type.
 */
-#define YQ_OBJECT_INFO( info )      public: using MyInfo    = info;
+#define YQ_OBJECT_META( info )      public: using MyInfo    = info;
 
 /*! \brief Macro to override the fixer
 

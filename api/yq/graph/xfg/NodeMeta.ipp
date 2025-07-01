@@ -6,33 +6,33 @@
 
 #pragma once
 
-#include <0/graph/xfg/NodeInfo.hpp>
-#include <0/graph/xfg/PinInfo.hpp>
+#include <0/graph/xfg/NodeMeta.hpp>
+#include <0/graph/xfg/PinMeta.hpp>
 
 namespace yq::xfg {
-    NodeInfo::NodeInfo(std::string_view kname, const ObjectMeta&par, const std::source_location& sl) : 
+    NodeMeta::NodeMeta(std::string_view kname, const ObjectMeta&par, const std::source_location& sl) : 
         ObjectMeta(kname, par, sl)
     {
         set({Flag::NODE, Flag::XFG});
-        m_base  = const_cast<NodeInfo*>(to_node(&par));
+        m_base  = const_cast<NodeMeta*>(to_node(&par));
     }
     
-    const NodeInfo::D& NodeInfo::_def(bool all) const 
+    const NodeMeta::D& NodeMeta::_def(bool all) const 
     { 
         return all ? m_all : m_local; 
     }
 
-    const MetaLookup<PinInfo>&  NodeInfo::inputs(bool all) const
+    const MetaLookup<PinMeta>&  NodeMeta::inputs(bool all) const
     {
         return _def(all).inputs;
     }
     
-    const MetaLookup<PinInfo>&  NodeInfo::outputs(bool all) const
+    const MetaLookup<PinMeta>&  NodeMeta::outputs(bool all) const
     {
         return _def(all).outputs;
     }
 
-    void    NodeInfo::sweep_impl() 
+    void    NodeMeta::sweep_impl() 
     {
         ObjectMeta::sweep_impl();
 
@@ -43,7 +43,7 @@ namespace yq::xfg {
         }
         
         for(const Meta* m : children()){
-            const PinInfo* pin  = to_pin(m);
+            const PinMeta* pin  = to_pin(m);
             if(!pin)
                 continue;
             if(pin -> is_input())
@@ -56,9 +56,9 @@ namespace yq::xfg {
         m_all.outputs += m_local.outputs;
     }
 
-    const NodeInfo*     to_node(const Meta* m)
+    const NodeMeta*     to_node(const Meta* m)
     {
-        return (m && m->is_node() && m->is_xfg()) ? static_cast<const NodeInfo*>(m) : nullptr;
+        return (m && m->is_node() && m->is_xfg()) ? static_cast<const NodeMeta*>(m) : nullptr;
     }
 }
 

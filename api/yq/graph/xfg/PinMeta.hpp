@@ -10,10 +10,10 @@
 #include <yq/meta/Meta.hpp>
 
 namespace yq::xfg {
-    class PinInfo : public Meta {
+    class PinMeta : public Meta {
     public:
         class Writer;
-        PinInfo(std::string_view, NodeInfo&, const std::source_location& sl = std::source_location::current());
+        PinMeta(std::string_view, NodeMeta&, const std::source_location& sl = std::source_location::current());
         
         size_t  connect_max() const { return m_connectMax; }
         size_t  count_max() const { return m_countMax; }
@@ -26,7 +26,7 @@ namespace yq::xfg {
         size_t  m_connectMax    = 0;
     };
     
-    const PinInfo*  to_pin(const Meta*);
+    const PinMeta*  to_pin(const Meta*);
 }
 
 
