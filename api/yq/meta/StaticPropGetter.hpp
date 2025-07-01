@@ -46,7 +46,7 @@ namespace yq {
             \param[in] propInfo Property information
             \param[in] sl       Source location
         */
-        StaticPropGetter(PropertyInfo* propInfo, const std::source_location& sl) : PropGetter(propInfo, sl) 
+        StaticPropGetter(PropertyMeta* propInfo, const std::source_location& sl) : PropGetter(propInfo, sl) 
         {
         }
     };
@@ -70,7 +70,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] pointer  Pointer to variable
         */
-        XPV_PropGetter(PropertyInfo*propInfo, const std::source_location& sl, P pointer) : StaticPropGetter<T>(propInfo, sl), m_data(pointer) 
+        XPV_PropGetter(PropertyMeta*propInfo, const std::source_location& sl, P pointer) : StaticPropGetter<T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
@@ -132,7 +132,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] function Function pointer
         */
-        XFV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
+        XFV_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -192,7 +192,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] function Function pointer
         */
-        XFR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
+        XFR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -254,7 +254,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] function Function pointer
         */
-        XFCR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
+        XFCR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -316,7 +316,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] function Function pointer
         */
-        XFVR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
+        XFVR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -382,7 +382,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] function Function pointer
         */
-        XFBR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
+        XFBR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -450,7 +450,7 @@ namespace yq {
             \param[in] sl       Source location
             \param[in] function Function pointer
         */
-        XFER_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
+        XFER_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : StaticPropGetter<T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }

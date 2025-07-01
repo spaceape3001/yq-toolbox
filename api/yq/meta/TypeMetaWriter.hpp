@@ -10,12 +10,12 @@
 #include <yq/core/Result.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/meta/TypeMeta.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/CompoundMetaDynamic.hpp>
-#include <yq/meta/ConstructorInfoImpl.hpp>
-#include <yq/meta/ConstructorInfoWriter.hpp>
-#include <yq/meta/OperatorInfoImpl.hpp>
-#include <yq/meta/OperatorInfoWriter.hpp>
+#include <yq/meta/ConstructorMetaImpl.hpp>
+#include <yq/meta/ConstructorMetaWriter.hpp>
+#include <yq/meta/OperatorMetaImpl.hpp>
+#include <yq/meta/OperatorMetaWriter.hpp>
 #include <yq/trait/can_add.hpp>
 #include <yq/trait/can_affirm.hpp>
 #include <yq/trait/can_divide.hpp>
@@ -249,7 +249,7 @@ namespace yq {
     template <typename T>
     class TypeMeta::Final : public Special<T> {
     private:
-        friend class InfoBinder<T>;
+        friend class MetaBinder<T>;
         Final(std::string_view zName, id_t i=AUTO_ID, const std::source_location& sl=std::source_location::current()) : Special<T>(zName, sl, i) {}
         static TypeMeta&       s_save;
     };
@@ -273,7 +273,7 @@ namespace yq {
     template <typename T>
     class TypeMeta::Writer : public TypeMetaWriterBase<T> {
     public:
-        static_assert( InfoBinder<T>::IsType, "T must be meta-type declared!");
+        static_assert( MetaBinder<T>::IsType, "T must be meta-type declared!");
     
         using type_t    = T;
     
@@ -293,7 +293,7 @@ namespace yq {
         {
             static_assert( is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &MetaBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     if constexpr (std::is_nothrow_convertible_v<U,T>){
                         *(U*) dst = U( *(const T*) src);
                         return std::error_code();
@@ -312,14 +312,14 @@ namespace yq {
         }
         
         template <typename ... Args>
-        ConstructorInfo::Writer<T, Args...> constructor(T(*function)(Args...), const std::source_location& sl=std::source_location::current())
+        ConstructorMeta::Writer<T, Args...> constructor(T(*function)(Args...), const std::source_location& sl=std::source_location::current())
         {
             if(function && thread_safe_write()){
-                ConstructorInfo* ret = new ConstructorInfo::Static<T, Args...>(function, sl, Meta::Writer::m_meta);
-                return ConstructorInfo::Writer<T, Args...>(ret, 0ULL);
+                ConstructorMeta* ret = new ConstructorMeta::Static<T, Args...>(function, sl, Meta::Writer::m_meta);
+                return ConstructorMeta::Writer<T, Args...>(ret, 0ULL);
             }
             
-            return ConstructorInfo::Writer<T, Args...>();
+            return ConstructorMeta::Writer<T, Args...>();
         }
         
         /*! \brief Conversion with routine
@@ -330,7 +330,7 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &MetaBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = FN( *(const T*) src);
                     return std::error_code();
                 };
@@ -346,7 +346,7 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &MetaBinder<U>::bind()] = [](void* dst, const void* src) -> std::error_code {
                     *(U*) dst = FN( *(const T*) src);
                     return std::error_code();
                 };
@@ -362,7 +362,7 @@ namespace yq {
         {
             static_assert(is_type_v<U>, "U must be meta-type declared!");
             if(thread_safe_write()){
-                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &InfoBinder<U>::bind()] = [](void* dst, const void* src)  -> std::error_code {
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_convert[ &MetaBinder<U>::bind()] = [](void* dst, const void* src)  -> std::error_code {
                     FN(*(U*) dst,  *(const T*) src);
                     return std::error_code();
                 };
@@ -430,25 +430,25 @@ namespace yq {
             \note, the name is "operate" rather than "operator" due to naming conflicts with C++ keyword "operator"
         */
         template <typename R, typename ... Args>
-        OperatorInfo::Writer<R, const T&, Args...>  operate(Operator opId, R (*function)(const T&, Args...), const std::source_location& sl=std::source_location::current())
+        OperatorMeta::Writer<R, const T&, Args...>  operate(Operator opId, R (*function)(const T&, Args...), const std::source_location& sl=std::source_location::current())
         {
             if(function && thread_safe_write()){
-                OperatorInfo* ret = new OperatorInfo::Static<R,const T&, Args...>(function, opId, sl, Meta::Writer::m_meta);
-                return OperatorInfo::Writer<R,const T&, Args...>(ret, 0ULL);
+                OperatorMeta* ret = new OperatorMeta::Static<R,const T&, Args...>(function, opId, sl, Meta::Writer::m_meta);
+                return OperatorMeta::Writer<R,const T&, Args...>(ret, 0ULL);
             }
             
-            return OperatorInfo::Writer<R,const T&, Args...>();
+            return OperatorMeta::Writer<R,const T&, Args...>();
         }
         
         template <typename R, typename ... Args>
-        OperatorInfo::Writer<R, T, Args...>  operate(Operator opId, R (*function)(T, Args...), const std::source_location& sl=std::source_location::current())
+        OperatorMeta::Writer<R, T, Args...>  operate(Operator opId, R (*function)(T, Args...), const std::source_location& sl=std::source_location::current())
         {
             if(function && thread_safe_write()){
-                OperatorInfo* ret = new OperatorInfo::Static<R,T,Args...>(function, opId, sl, Meta::Writer::m_meta);
-                return OperatorInfo::Writer<R,T,Args...>(ret, 0ULL);
+                OperatorMeta* ret = new OperatorMeta::Static<R,T,Args...>(function, opId, sl, Meta::Writer::m_meta);
+                return OperatorMeta::Writer<R,T,Args...>(ret, 0ULL);
             }
             
-            return OperatorInfo::Writer<R,T,Args...>();
+            return OperatorMeta::Writer<R,T,Args...>();
         }
         
         /*! \brief Convenience methods for defining common binary operations with right term

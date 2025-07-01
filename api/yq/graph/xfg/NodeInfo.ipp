@@ -10,8 +10,8 @@
 #include <0/graph/xfg/PinInfo.hpp>
 
 namespace yq::xfg {
-    NodeInfo::NodeInfo(std::string_view kname, const ObjectInfo&par, const std::source_location& sl) : 
-        ObjectInfo(kname, par, sl)
+    NodeInfo::NodeInfo(std::string_view kname, const ObjectMeta&par, const std::source_location& sl) : 
+        ObjectMeta(kname, par, sl)
     {
         set({Flag::NODE, Flag::XFG});
         m_base  = const_cast<NodeInfo*>(to_node(&par));
@@ -34,7 +34,7 @@ namespace yq::xfg {
 
     void    NodeInfo::sweep_impl() 
     {
-        ObjectInfo::sweep_impl();
+        ObjectMeta::sweep_impl();
 
         if(m_base){
             m_base -> sweep();

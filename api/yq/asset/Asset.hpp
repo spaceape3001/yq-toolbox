@@ -28,7 +28,7 @@ namespace yq {
     
         This is the information to the particular asset.
     */
-    class AssetMeta : public ObjectInfo {
+    class AssetMeta : public ObjectMeta {
     public:
         //! Writer of asset information 
         //! \note This is to be used during initialization
@@ -36,7 +36,7 @@ namespace yq {
         template <typename C> class Writer;
 
         //! Constructor of asset info, used by the meta system to initialize the thing (so... don't need to call this outside of that context)
-        AssetMeta(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        AssetMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         //! Loads the asset from native binary format (whatever that is)
         //virtual Ref<Asset>  load_binary(const std::filesystem::path&) { return nullptr; }

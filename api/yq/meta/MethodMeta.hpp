@@ -6,11 +6,11 @@
 
 #pragma once
 #include <yq/meta/Meta.hpp>
-#include <yq/meta/ArgInfo.hpp>
+#include <yq/meta/ArgMeta.hpp>
 #include <span>
 
 namespace yq {
-    class MethodInfo : public Meta {
+    class MethodMeta : public Meta {
     public:
     
         template <typename R, typename... Args> class Writer;
@@ -19,10 +19,10 @@ namespace yq {
         template <typename R, typename Obj, typename... Args> class Dynamic;
         template <typename R, typename... Args> class Static;
     
-        const std::vector<const ArgInfo*>&  args() const { return m_args; }
+        const std::vector<const ArgMeta*>&  args() const { return m_args; }
         
         //! Result (if any), otherwise null
-        const ArgInfo*          result() const { return m_result; }
+        const ArgMeta*          result() const { return m_result; }
         
         const TypeMeta*         result_type() const;
     
@@ -48,10 +48,10 @@ namespace yq {
 
     protected:
         friend class TypeMeta;
-        const ArgInfo*              m_result;
-        std::vector<const ArgInfo*> m_args;
+        const ArgMeta*              m_result;
+        std::vector<const ArgMeta*> m_args;
 
-        MethodInfo(std::string_view zName, const std::source_location& sl, Meta*);
+        MethodMeta(std::string_view zName, const std::source_location& sl, Meta*);
 
         Expect<Any>             invoke(void* obj, std::span<const Any> args, bool constPtr) const;
         Expect<Any>             invoke(void* obj, std::span<const TypeMeta* const> types, std::span<const void* const> args, bool constPtr) const;

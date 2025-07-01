@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/core/Object.hpp>
-#include <yq/meta/ObjectInfo.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMeta.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Revision.hpp>
 #include <yq/core/UniqueID.hpp>
@@ -17,7 +17,7 @@ namespace yq {
 
     /*! \brief Information for a meta object
     */
-    class MetaObjectInfo : public ObjectInfo {
+    class MetaObjectMeta : public ObjectMeta {
     public:
         template <typename C> class Writer;
         
@@ -27,7 +27,7 @@ namespace yq {
             \param[in] base     Base object
             \param[in] sl       Source location of being instantiated
         */
-        MetaObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        MetaObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
     };
 
     /*! \brief Abstract Meta Object
@@ -38,7 +38,7 @@ namespace yq {
         \note Copy & Move capabilities have been disabled
     */
     class MetaObject : public Object, public RefCount, public UniqueID, public Revision {
-        YQ_OBJECT_INFO(MetaObjectInfo)
+        YQ_OBJECT_INFO(MetaObjectMeta)
         YQ_OBJECT_DECLARE(MetaObject, Object)
     public:
     

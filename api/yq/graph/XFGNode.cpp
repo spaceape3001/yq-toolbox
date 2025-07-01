@@ -10,8 +10,8 @@
 #include "XFGNodeInfoWriter.hpp"
 
 namespace yq::xfg {
-    XFGNodeInfo::XFGNodeInfo(std::string_view sv, ObjectInfo& obj, const std::source_location& sl) : 
-        ObjectInfo(sv, obj, sl)
+    XFGNodeInfo::XFGNodeInfo(std::string_view sv, ObjectMeta& obj, const std::source_location& sl) : 
+        ObjectMeta(sv, obj, sl)
     {
     }
     

@@ -36,17 +36,17 @@ add_library(yq_core SHARED
     hash/MD5.cpp
 
     meta/AnyArgHelper.cpp
-    meta/ArgInfo.cpp
+    meta/ArgMeta.cpp
     meta/CompoundMeta.cpp
-    meta/ConstructorInfo.cpp
+    meta/ConstructorMeta.cpp
     meta/Generator.cpp
-    meta/GlobalInfo.cpp
+    meta/GlobalMeta.cpp
     meta/Meta.cpp
     meta/MetaWriter.cpp
-    meta/MethodInfo.cpp
-    meta/ObjectInfo.cpp
-    meta/OperatorInfo.cpp
-    meta/PropertyInfo.cpp
+    meta/MethodMeta.cpp
+    meta/ObjectMeta.cpp
+    meta/OperatorMeta.cpp
+    meta/PropertyMeta.cpp
     meta/PropGetter.cpp
     meta/PropSetter.cpp
     meta/StdTypes.cpp

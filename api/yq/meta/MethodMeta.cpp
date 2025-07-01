@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MethodInfo.hpp"
+#include "MethodMeta.hpp"
 #include <yq/errors.hpp>
 #include <yq/core/Any.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/meta/AnyArgHelper.hpp>
 #include <yq/meta/MetaWriter.hpp>
-#include <yq/meta/GlobalInfo.hpp>
-#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/GlobalMeta.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 
 namespace yq {
-    MethodInfo::MethodInfo(std::string_view zName, const std::source_location& sl, Meta* parentMeta) : Meta(zName, parentMeta, sl)
+    MethodMeta::MethodMeta(std::string_view zName, const std::source_location& sl, Meta* parentMeta) : Meta(zName, parentMeta, sl)
     {
         assert(parentMeta);
 
         set(Flag::METHOD);
 
-        if(GlobalInfo* g = to_global(parentMeta)){
+        if(GlobalMeta* g = to_global(parentMeta)){
             assert(g == &meta<Global>());
             if(g->m_methods.keys.has(zName))
                 yCritical() << "Duplicate method on GLOBAL: " << zName;
             g->m_methods << this;
         }
         
-        if(ObjectInfo* obj = to_object(parentMeta))
+        if(ObjectMeta* obj = to_object(parentMeta))
             obj->m_local.methods << this;
         if(TypeMeta* type = to_type(parentMeta))
             type->m_methods << this;
     }
     
-    void    MethodInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription)
+    void    MethodMeta::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription)
     {
         if(n < m_args.size()){
-            Meta::Writer w{ const_cast<ArgInfo*>(m_args[n])};
+            Meta::Writer w{ const_cast<ArgMeta*>(m_args[n])};
             if(!zName.empty())
                 w.name(zName);
             if(!zDescription.empty())
@@ -45,9 +45,9 @@ namespace yq {
         }
     }
 
-    void    MethodInfo::fill_result_info(std::string_view zName, std::string_view zDescription)
+    void    MethodMeta::fill_result_info(std::string_view zName, std::string_view zDescription)
     {
-        Meta::Writer w{ const_cast<ArgInfo*>(m_result) };
+        Meta::Writer w{ const_cast<ArgMeta*>(m_result) };
         if(!zName.empty())
             w.name(zName);
         if(!zDescription.empty())
@@ -55,22 +55,22 @@ namespace yq {
     }
 
     //  INVOKATION
-    any_x      MethodInfo::invoke(std::span<const Any> args) const
+    any_x      MethodMeta::invoke(std::span<const Any> args) const
     {
         return invoke(nullptr, args, false);
     }
 
-    any_x      MethodInfo::invoke(void* obj, std::span<const Any> args) const
+    any_x      MethodMeta::invoke(void* obj, std::span<const Any> args) const
     {
         return invoke(obj, args, false);
     }
     
-    any_x      MethodInfo::invoke(const void* obj, std::span<const Any> args) const
+    any_x      MethodMeta::invoke(const void* obj, std::span<const Any> args) const
     {
         return invoke(const_cast<void*>(obj), args, true);
     }
 
-    Expect<Any> MethodInfo::invoke(void* obj, std::span<const TypeMeta* const> types, std::span<const void* const> args, bool constPtr) const
+    Expect<Any> MethodMeta::invoke(void* obj, std::span<const TypeMeta* const> types, std::span<const void* const> args, bool constPtr) const
     {
         if(types.size() != args.size())
             return errors::internal_error();
@@ -136,7 +136,7 @@ namespace yq {
             return Any();
     }
     
-    any_x      MethodInfo::invoke(void* obj, std::span<const Any> args, bool constPtr) const 
+    any_x      MethodMeta::invoke(void* obj, std::span<const Any> args, bool constPtr) const 
     {
         std::vector<const TypeMeta*>    types;
         std::vector<const void*>        values;
@@ -150,14 +150,14 @@ namespace yq {
         return invoke(obj, types, values, constPtr);
     }
 
-    const TypeMeta*         MethodInfo::result_type() const
+    const TypeMeta*         MethodMeta::result_type() const
     {
         if(!m_result)
             return nullptr;
         return to_type(m_result->type());
     }
 
-    int     MethodInfo::type_match(std::span<const Any> test) const
+    int     MethodMeta::type_match(std::span<const Any> test) const
     {
         std::vector<const TypeMeta*>    types;
         types.reserve(test.size());
@@ -166,7 +166,7 @@ namespace yq {
         return type_match(types);
     }
 
-    int     MethodInfo::type_match(std::span<const TypeMeta* const> test) const
+    int     MethodMeta::type_match(std::span<const TypeMeta* const> test) const
     {
         size_t  ac  = 0;
         int     r   = 0;

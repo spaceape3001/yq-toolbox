@@ -11,11 +11,11 @@
 
 namespace yq::xfg {
 
-    class ExecNodeInfo : public ObjectInfo {
+    class ExecNodeInfo : public ObjectMeta {
     public:
 
         template <typename C> class Writer;
-        ExecNodeInfo(std::string_view, const ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        ExecNodeInfo(std::string_view, const ObjectMeta&, const std::source_location& sl = std::source_location::current());
     };
 
     class ExecNode : public Object {

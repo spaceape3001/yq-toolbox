@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/xml/XmlObject.hpp>
 
 namespace yq {

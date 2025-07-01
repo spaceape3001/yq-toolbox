@@ -11,8 +11,8 @@
 #include <yq/userexpr/impl/Instruction.hpp>
 
 namespace yq::expr {
-    const OperatorInfo*     find_operator(std::span<const Any>, Operator opCode);
-    const OperatorInfo*     find_operator(std::span<const TypeMeta*>, Operator opCode);
+    const OperatorMeta*     find_operator(std::span<const Any>, Operator opCode);
+    const OperatorMeta*     find_operator(std::span<const TypeMeta*>, Operator opCode);
 
 
     
@@ -32,7 +32,7 @@ namespace yq::expr {
     
     class OperatorFixed : public Instruction {
     public:
-        OperatorFixed(const SymData& sym, const OperatorInfo* opinfo);
+        OperatorFixed(const SymData& sym, const OperatorMeta* opinfo);
         std::error_code     execute(any_stack_t&values, Context&ctx) const override;
         uint16_t            pop_count() const override { return m_args; }
         uint16_t            push_count() const override { return 1; }
@@ -40,7 +40,7 @@ namespace yq::expr {
         
     private:
         result_t                m_result;
-        const OperatorInfo*     m_opInfo;
+        const OperatorMeta*     m_opInfo;
         const unsigned int      m_args;
     };
     

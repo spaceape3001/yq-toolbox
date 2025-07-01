@@ -27,7 +27,7 @@ namespace yq {
         be in a method (or static method);
         
     */
-    class PropertyInfo : public Meta {
+    class PropertyMeta : public Meta {
         friend class PropGetter;
         friend class PropSetter;
     public:
@@ -91,7 +91,7 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
             \param[in] opts     Options
         */
-        PropertyInfo(std::string_view zName, const std::source_location& sl, const TypeMeta& type, Meta* parent);
+        PropertyMeta(std::string_view zName, const std::source_location& sl, const TypeMeta& type, Meta* parent);
         
         bool                is_default(const Any&) const;
         

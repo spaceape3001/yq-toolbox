@@ -12,14 +12,14 @@
 #include <yq/core/Logging.hpp>
 
 namespace yq {
-    struct GeneratorInfo::Repo {
+    struct GeneratorMeta::Repo {
         std::string                                                 name;
-        std::vector<const GeneratorInfo*>                           all;
-        std::map<std::string_view, const GeneratorInfo*, IgCase>    byName;
+        std::vector<const GeneratorMeta*>                           all;
+        std::map<std::string_view, const GeneratorMeta*, IgCase>    byName;
         Repo*                                                       next    = nullptr;
     };
 
-    GeneratorInfo::Repo*    GeneratorInfo::addRepo(Repo* r)
+    GeneratorMeta::Repo*    GeneratorMeta::addRepo(Repo* r)
     {
         static Repo*        s_top   = nullptr;
         if(r){
@@ -29,7 +29,7 @@ namespace yq {
         return s_top;
     }
     
-    GeneratorInfo::Repo*    GeneratorInfo::newRepo(const char* name)
+    GeneratorMeta::Repo*    GeneratorMeta::newRepo(const char* name)
     {
         Repo*r  = new Repo;
         r->name = name;
@@ -38,12 +38,12 @@ namespace yq {
     }
 
     
-    const std::vector<const GeneratorInfo*>&     GeneratorInfo::all(const Repo& r)
+    const std::vector<const GeneratorMeta*>&     GeneratorMeta::all(const Repo& r)
     {
         return r.all;
     }
     
-    const GeneratorInfo*                         GeneratorInfo::find(const Repo&r, std::string_view k)
+    const GeneratorMeta*                         GeneratorMeta::find(const Repo&r, std::string_view k)
     {
         auto i = r.byName.find(k);
         if(i != r.byName.end())
@@ -51,7 +51,7 @@ namespace yq {
         return nullptr;
     }
 
-    std::vector<std::string_view> GeneratorInfo::generator_types()
+    std::vector<std::string_view> GeneratorMeta::generator_types()
     {
         std::vector<std::string_view>    ret;
         for(Repo* r = addRepo(nullptr);r; r = r -> next)
@@ -59,7 +59,7 @@ namespace yq {
         return ret;
     }
     
-    void                                         GeneratorInfo::register_me(Repo&r, const GeneratorInfo*gi)
+    void                                         GeneratorMeta::register_me(Repo&r, const GeneratorMeta*gi)
     {
         r.all.push_back(gi);
         auto [i,f]  = r.byName.try_emplace(gi->name(), gi);
@@ -70,12 +70,12 @@ namespace yq {
     
     ////////////////////////////////////////////////////////////////////////////////
 
-    GeneratorInfo::GeneratorInfo(std::string_view zName, const std::source_location& sl) : Meta(zName, sl)
+    GeneratorMeta::GeneratorMeta(std::string_view zName, const std::source_location& sl) : Meta(zName, sl)
     {
         set(Flag::GENERATOR);
     }
 
-    std::error_code         GeneratorInfo::create(void*ret, std::span<const Any> args) const
+    std::error_code         GeneratorMeta::create(void*ret, std::span<const Any> args) const
     {
         if(args.size() < m_arguments.size())
             return errors::insufficient_arguments();
@@ -88,10 +88,10 @@ namespace yq {
         return _create(ret, aaa);
     }
 
-    void    GeneratorInfo::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription)
+    void    GeneratorMeta::fill_argument_info(size_t n, std::string_view zName, std::string_view zDescription)
     {
         if(n < m_arguments.size()){
-            ArgInfo*    ai  = const_cast<ArgInfo*>(m_arguments[n]);
+            ArgMeta*    ai  = const_cast<ArgMeta*>(m_arguments[n]);
             Meta::Writer w{ ai };
             if( ai->name().empty() && !zName.empty())
                 w.name(zName);
@@ -101,19 +101,19 @@ namespace yq {
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    GeneratorInfo::Writer::Writer(GeneratorInfo* obj) : Meta::Writer(obj) 
+    GeneratorMeta::Writer::Writer(GeneratorMeta* obj) : Meta::Writer(obj) 
     {
         assert(obj);
     }
     
-    GeneratorInfo::Writer::Writer(GeneratorInfo& obj) : Writer(&obj)
+    GeneratorMeta::Writer::Writer(GeneratorMeta& obj) : Writer(&obj)
     {
     }
 
-    GeneratorInfo::Writer  GeneratorInfo::Writer::argument(std::string_view zName, std::string_view zDescription)
+    GeneratorMeta::Writer  GeneratorMeta::Writer::argument(std::string_view zName, std::string_view zDescription)
     {
         if(Meta::Writer::m_meta){
-            static_cast<GeneratorInfo*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription);
+            static_cast<GeneratorMeta*>(Meta::Writer::m_meta) -> fill_argument_info(m_arg, zName, zDescription);
             ++m_arg;
         }
         return *this;

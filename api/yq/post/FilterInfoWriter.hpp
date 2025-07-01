@@ -9,7 +9,7 @@
 #include <yq/post/Dispatcher.hpp>
 #include <yq/post/Filter.hpp>
 #include <yq/post/Post.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 namespace yq::post {
     
@@ -133,11 +133,11 @@ namespace yq::post {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class FilterInfo::Writer : public ObjectInfo::Writer<C> {
+    class FilterInfo::Writer : public ObjectMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(FilterInfo* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(FilterInfo* pInfo) : ObjectMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         

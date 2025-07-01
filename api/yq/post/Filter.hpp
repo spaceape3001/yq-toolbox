@@ -25,24 +25,24 @@ namespace yq::post {
     //! Flags to encapsulate how the filter mismatches
     using FilterResult      = std::variant<bool,MismatchFlags>;
     
-    class FilterInfo : public ObjectInfo {
+    class FilterInfo : public ObjectMeta {
     public:
         template <typename C> class Writer;
         
-        FilterInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        FilterInfo(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         //! \note This can be NULL (and valid as such)
-        const ObjectInfo*   sender_info() const { return m_sender; }
+        const ObjectMeta*   sender_info() const { return m_sender; }
 
         //! \note This can be NULL (and valid as such)
-        const ObjectInfo*   receiver_info() const { return m_receiver; }
+        const ObjectMeta*   receiver_info() const { return m_receiver; }
         
         //! \note NULL means it's generic post, not refined
         const PostInfo*     post_info() const { return m_postInfo; }
         
     protected:
-        const ObjectInfo*   m_sender        = nullptr;
-        const ObjectInfo*   m_receiver      = nullptr;
+        const ObjectMeta*   m_sender        = nullptr;
+        const ObjectMeta*   m_receiver      = nullptr;
         const PostInfo*     m_postInfo      = nullptr;
 
         friend class Filter;

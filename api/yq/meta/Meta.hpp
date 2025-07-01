@@ -76,11 +76,11 @@ namespace yq {
         enum class Flag {
 
             ABSTRACT,       //!< It's abstract (ie can't be created)
-            ARG,            //!< It's an argument (ArgInfo)
+            ARG,            //!< It's an argument (ArgMeta)
             ASSET,          //!< It's an asset (AssetInfo)
             ASSOCIATION,    //!< It's an association
             CACHE,          //!< It's a cache
-            CAMERA,         //!< It's a camera (CameraInfo)
+            CAMERA,         //!< It's a camera (CameraMeta)
             COLLECTION,     //!< It's a collection (TypeMeta)
             COMMAND,        //!< It's a command
             COMPILER,       //!< It's a compiler
@@ -105,8 +105,8 @@ namespace yq {
             EXECUTE,        //!< Execute permission/capabilty
             EXPLICIT,       //!< Must be explicitly invoked
             FILTER,         //!< It's a filter
-            GENERATOR,      //!< It's a generator (GeneratorInfo)
-            GLOBAL,         //!< It's a global (GlobalInfo)
+            GENERATOR,      //!< It's a generator (GeneratorMeta)
+            GLOBAL,         //!< It's a global (GlobalMeta)
             HAS_SUBS,       
             ID,             //!< It's an ID type
             IMAGE,          //!< It's an image
@@ -124,14 +124,14 @@ namespace yq {
             MANAGER,        //!< We're a manager
             MANIPULATOR,    //!< It's a manipulator
             MENU_BAR,       //!< Item has a menu bar (EditorInfo)
-            METHOD,         //!< It's a method/function (MethodInfo)
+            METHOD,         //!< It's a method/function (MethodMeta)
             MESSAGE,        //!< Tachyon's way of communicating
             MONITOR,        //!< Monitor involved
             MOTION,         //!< It's a motion item
             MOUSE,          //!< Mouse related
             NODE,           //!< It's a node
             NO_EXPAND,      //!< Do not expand
-            OBJECT,         //!< Meta has ObjectInfo
+            OBJECT,         //!< Meta has ObjectMeta
             OPERATOR,       //!< It's an operator
             OUTPUT,         //!< It's flagged as output (graphs)
             PAGE,           //!< A (web) page
@@ -143,7 +143,7 @@ namespace yq {
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
             PHYSICAL,       //!< Physical doodle item
             PROJECT,        //!< A project type of object
-            PROPERTY,       //!< Meta has PropertyInfo
+            PROPERTY,       //!< Meta has PropertyMeta
             PROXY,          //!< It's a proxy
             RASTER,         //!< Raster (iamge) related
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
@@ -441,13 +441,13 @@ namespace yq {
         class Writer;
 
     protected:
-        friend class ArgInfo;
+        friend class ArgMeta;
         friend class CompoundMeta;
-        friend class GlobalInfo;
-        friend class MethodInfo;
-        friend class OperatorInfo;
-        friend class ObjectInfo;
-        friend class PropertyInfo;
+        friend class GlobalMeta;
+        friend class MethodMeta;
+        friend class OperatorMeta;
+        friend class ObjectMeta;
+        friend class PropertyMeta;
         friend class TypeMeta;
     
         //! Used by the constructor's default to auto-assign an ID

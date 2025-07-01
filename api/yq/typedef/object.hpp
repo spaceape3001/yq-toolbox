@@ -10,7 +10,7 @@
 
 namespace yq {
     class Object;
-    class ObjectInfo;
+    class ObjectMeta;
     
     template <class Obj>
     concept SomeObject        = std::derived_from<Obj,Object>;

@@ -5,11 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "MetaObject.hpp"
-#include <yq/meta/MetaObjectInfoWriter.hpp>
+#include <yq/meta/MetaObjectMetaWriter.hpp>
 
 namespace yq {
-    MetaObjectInfo::MetaObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) : 
-        ObjectInfo(zName, base, sl)
+    MetaObjectMeta::MetaObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) : 
+        ObjectMeta(zName, base, sl)
     {
     }
 

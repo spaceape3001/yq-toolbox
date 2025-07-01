@@ -8,7 +8,7 @@
 
 #include <yq/keywords.hpp>
 #include <yq/date/CalendarType.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
     struct Date;

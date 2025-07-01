@@ -7,10 +7,10 @@
 #pragma once
 
 #include <yq/meta/Meta.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
-#include <yq/meta/MethodInfo.hpp>
+#include <yq/meta/MethodMeta.hpp>
 
 namespace yq {
 
@@ -19,39 +19,39 @@ namespace yq {
     //! \note this class is here for the API meta binding, not subsequently used, call namespace
     class Global { };
     
-    class GlobalInfo : public CompoundMeta {
+    class GlobalMeta : public CompoundMeta {
     public:
         
-        template <typename> class Writer;   // which will only ever by GlobalInfo...however, consistency
+        template <typename> class Writer;   // which will only ever by GlobalMeta...however, consistency
         
-        static GlobalInfo&          instance();
+        static GlobalMeta&          instance();
 
-        const MetaLookup<MethodInfo>&    methods() const { return m_methods; }
-        const MetaLookup<PropertyInfo>&  properties() const { return m_properties; }
+        const MetaLookup<MethodMeta>&    methods() const { return m_methods; }
+        const MetaLookup<PropertyMeta>&  properties() const { return m_properties; }
         
         template <typename Pred>
         auto                        all_functions(std::string_view k, Pred pred) const;
 
     protected:
-        GlobalInfo(std::string_view name="Global", const std::source_location& sl = std::source_location::current());
+        GlobalMeta(std::string_view name="Global", const std::source_location& sl = std::source_location::current());
         virtual void                sweep_impl() override;
 
-        friend class PropertyInfo;
-        friend class MethodInfo;
+        friend class PropertyMeta;
+        friend class MethodMeta;
 
         
         //! Lookup/Container for the methods
-        MetaLookup<MethodInfo>         m_methods;
+        MetaLookup<MethodMeta>         m_methods;
         
         //! Lookup/Container for the properties
-        MetaLookup<PropertyInfo>       m_properties;
+        MetaLookup<PropertyMeta>       m_properties;
 
     };
 
     template <typename Pred>
-    auto    GlobalInfo::all_functions(std::string_view k, Pred pred) const
+    auto    GlobalMeta::all_functions(std::string_view k, Pred pred) const
     {
-        using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
+        using pred_result_t = decltype(pred((const MethodMeta*) nullptr));
         if constexpr (!std::is_same_v<pred_result_t, void>){
             auto R  = m_methods.lut.equal_range(k);
             for(auto r = R.first; r!=R.second; ++r){
@@ -74,18 +74,18 @@ namespace yq {
     }
     
     template <>
-    struct InfoBinder<Global>  {
-        using Info  = GlobalInfo;
+    struct MetaBinder<Global>  {
+        using Info  = GlobalMeta;
         static constexpr const bool     Defined     = true;
         static constexpr const bool     IsCompound  = true;     
         static constexpr const bool     IsType      = false;
         static constexpr const bool     IsObject    = false;
-        static const GlobalInfo&        bind();
-        static GlobalInfo&              edit();
+        static const GlobalMeta&        bind();
+        static GlobalMeta&              edit();
     };
     
-    GlobalInfo*  to_global(Meta*);
+    GlobalMeta*  to_global(Meta*);
     
-    const GlobalInfo*  to_global(const Meta*m);
+    const GlobalMeta*  to_global(const Meta*m);
 }
 

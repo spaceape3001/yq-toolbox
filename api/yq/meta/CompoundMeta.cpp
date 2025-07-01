@@ -23,21 +23,21 @@ namespace yq {
         Meta::sweep_impl();
     }
 
-    void        CompoundMeta::gather(MetaLookup<MethodInfo>& res)
+    void        CompoundMeta::gather(MetaLookup<MethodMeta>& res)
     {
         res.clear();
         for(const Meta* m : children()){
             if(m && m->has(Flag::METHOD))
-                res << static_cast<const MethodInfo*>(m);
+                res << static_cast<const MethodMeta*>(m);
         }
     }
     
-    void        CompoundMeta::gather(MetaLookup<PropertyInfo>& res)
+    void        CompoundMeta::gather(MetaLookup<PropertyMeta>& res)
     {
         res.clear();
         for(const Meta* m : children()){
             if(m && m->has(Flag::PROPERTY))
-                res << static_cast<const PropertyInfo*>(m);
+                res << static_cast<const PropertyMeta*>(m);
         }
     }
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <string>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
     //! This is the user expression (for any/meta binding purposes)

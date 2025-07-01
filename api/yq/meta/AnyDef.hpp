@@ -13,7 +13,7 @@
 #include <yq/keywords.hpp>
 #include <yq/meta/forward.hpp>
 #include <yq/meta/DataBlock.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/typedef/any.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_initlists.hpp>

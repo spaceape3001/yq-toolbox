@@ -16,7 +16,7 @@
 #include <yq/coord/Coord4.hpp>
 #include <yq/coord/Coord5.hpp>
 #include <yq/coord/Coord6.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/TypeMeta.hpp>
 
 namespace yq {

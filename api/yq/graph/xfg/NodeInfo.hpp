@@ -7,14 +7,14 @@
 #pragma once
 
 #include <0/graph/xfg/preamble.hpp>
-#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
 
 namespace yq::xfg {
-    class NodeInfo : public ObjectInfo {
+    class NodeInfo : public ObjectMeta {
     public:
         template <typename C> class Writer;
-        NodeInfo(std::string_view, const ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        NodeInfo(std::string_view, const ObjectMeta&, const std::source_location& sl = std::source_location::current());
         
         const MetaLookup<PinInfo>&  inputs(bool all=false) const;
         const MetaLookup<PinInfo>&  outputs(bool all=false) const;

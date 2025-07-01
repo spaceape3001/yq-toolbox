@@ -28,10 +28,10 @@ namespace yq::expr {
     {
         for(const Meta* m : children()){
             if(m && m->has(Flag::METHOD)){
-                m_functions << static_cast<const MethodInfo*>(m);
+                m_functions << static_cast<const MethodMeta*>(m);
             }
             if(m && m->has(Flag::PROPERTY)){
-                m_variables << static_cast<const PropertyInfo*>(m);
+                m_variables << static_cast<const PropertyMeta*>(m);
             }
         }
     }
@@ -141,12 +141,12 @@ namespace yq::expr {
 }
 
 namespace yq {
-    const expr::Repo&        InfoBinder<expr::Repo>::bind()
+    const expr::Repo&        MetaBinder<expr::Repo>::bind()
     {
         return expr::Repo::instance();
     }
     
-    expr::Repo&       InfoBinder<expr::Repo>::edit()
+    expr::Repo&       MetaBinder<expr::Repo>::edit()
     {
         return expr::Repo::instance();
     }

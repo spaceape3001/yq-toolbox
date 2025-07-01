@@ -9,7 +9,7 @@
 #include <yq/meta/Meta.hpp>
 
 namespace yq {
-    class PropertyInfo;
+    class PropertyMeta;
 
     /*! \brief Abstract PropGetter
         
@@ -38,7 +38,7 @@ namespace yq {
         virtual const Meta&     object() const = 0;
         
         //! Property info this belongs to
-        const PropertyInfo* property() const;
+        const PropertyMeta* property() const;
     protected:
     
         /*! \brief Constructor
@@ -46,6 +46,6 @@ namespace yq {
             \param[in] propInfo Property to attach this setter to
             \param[in] sl       Source location it's defined
         */
-        PropSetter(PropertyInfo* propInfo, const std::source_location& sl);
+        PropSetter(PropertyMeta* propInfo, const std::source_location& sl);
     };
 }

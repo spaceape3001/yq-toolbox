@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/meta/MethodInfo.hpp>
-#include <yq/meta/TypedArgInfo.hpp>
+#include <yq/meta/MethodMeta.hpp>
+#include <yq/meta/TypedArgMeta.hpp>
 #include <yq/trait/indices.hpp>
 #include <yq/errors.hpp>
 #include <type_traits>
@@ -18,27 +18,27 @@ namespace yq {
     static constexpr bool is_returnable_v   = !(std::is_same_v<T,void> || std::is_same_v<T,std::error_code>);
 
     template <typename...> 
-    struct MethodInfo::DefineArg {
+    struct MethodMeta::DefineArg {
         static void    define(const std::source_location&, Meta*)
         {
         }
     };
     
     template <typename T, typename... Args> 
-    struct MethodInfo::DefineArg<T, Args...> {
+    struct MethodMeta::DefineArg<T, Args...> {
         static void    define(const std::source_location&sl, Meta*parent)
         {
             using act_type  = std::remove_cvref_t<T>;
-            static_cast<MethodInfo*>(parent)->m_args.push_back( new ArgInfo::Typed<act_type>(sl, parent));
+            static_cast<MethodMeta*>(parent)->m_args.push_back( new ArgMeta::Typed<act_type>(sl, parent));
             DefineArg<Args...>::define(sl, parent);
         }
     };
 
     template <typename R, typename...Args> 
-    void MethodInfo::define_signature()
+    void MethodMeta::define_signature()
     {
         if constexpr (is_returnable_v<R>){
-            m_result    = new ArgInfo::Typed<R>(source(), this);
+            m_result    = new ArgMeta::Typed<R>(source(), this);
         }
     
         DefineArg<Args...>::define(source(), this);
@@ -64,7 +64,7 @@ namespace yq {
     }
 
     template <typename R, typename Obj, typename... Args>
-    class MethodInfo::Const : public MethodInfo {
+    class MethodMeta::Const : public MethodMeta {
     public:
 
         static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
@@ -80,7 +80,7 @@ namespace yq {
             \param[in] opts     Options
         */
         Const(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
-            MethodInfo(zName, sl, parent), m_function(function)
+            MethodMeta(zName, sl, parent), m_function(function)
         {
             set(Flag::CONST);
             define_signature<std::remove_cvref_t<R>,Args...>();
@@ -128,7 +128,7 @@ namespace yq {
     }
 
     template <typename R, typename Obj, typename... Args>
-    class MethodInfo::Dynamic : public MethodInfo {
+    class MethodMeta::Dynamic : public MethodMeta {
     public:
 
         static constexpr const size_t   ARG_COUNT   = sizeof...(Args);
@@ -143,7 +143,7 @@ namespace yq {
             \param[in] opts     Options
         */
         Dynamic(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
-            MethodInfo(zName, sl, parent), m_function(function)
+            MethodMeta(zName, sl, parent), m_function(function)
         {
             define_signature<std::remove_cvref_t<R>,Args...>();
         }
@@ -191,7 +191,7 @@ namespace yq {
     }
     
     template <typename R, typename... Args>
-    class MethodInfo::Static : public MethodInfo {
+    class MethodMeta::Static : public MethodMeta {
     public:
     
         typedef R (*FN)(Args...);
@@ -205,7 +205,7 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
         */
         Static(FN function, std::string_view zName, const std::source_location& sl, Meta* parent) : 
-            MethodInfo(zName, sl, parent), m_function(function)
+            MethodMeta(zName, sl, parent), m_function(function)
         {
             set(Flag::STATIC);
             define_signature<std::remove_cvref_t<R>,Args...>();

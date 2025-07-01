@@ -12,18 +12,18 @@
 #include <yq/userexpr/impl/SymData.hpp>
 
 namespace yq::expr {
-    const OperatorInfo*     find_operator(std::span<const Any> span, Operator opCode)
+    const OperatorMeta*     find_operator(std::span<const Any> span, Operator opCode)
     {
         if(span.size() == 0)
             return nullptr;
             
-        const OperatorInfo* best    = nullptr;
+        const OperatorMeta* best    = nullptr;
         int                 score   = 0;
         
         const TypeMeta& ti  = span[0].type();
         auto er             = ti.operators(opCode);
         for(auto itr=er.first; itr != er.second; ++itr){
-            const OperatorInfo* op  = itr->second;
+            const OperatorMeta* op  = itr->second;
             if(!op)
                 continue;
                 
@@ -42,7 +42,7 @@ namespace yq::expr {
         return best;
     }
 
-    const OperatorInfo*     find_operator(std::span<const TypeMeta*> span, Operator opCode)
+    const OperatorMeta*     find_operator(std::span<const TypeMeta*> span, Operator opCode)
     {
         if(span.size() == 0)
             return nullptr;
@@ -51,13 +51,13 @@ namespace yq::expr {
                 return nullptr;
         }
             
-        const OperatorInfo* best    = nullptr;
+        const OperatorMeta* best    = nullptr;
         int                 score   = 0;
         
         const TypeMeta& ti  = *(span[0]);
         auto er             = ti.operators(opCode);
         for(auto itr=er.first; itr != er.second; ++itr){
-            const OperatorInfo* op  = itr->second;
+            const OperatorMeta* op  = itr->second;
             if(!op)
                 continue;
                 
@@ -93,7 +93,7 @@ namespace yq::expr {
             return errors::insufficient_arguments();
         }
     
-        const OperatorInfo* op  = find_operator(args, m_operator);
+        const OperatorMeta* op  = find_operator(args, m_operator);
         if(!op)
             return create_error<"bad user expression (unable to find operator)">();
     
@@ -108,7 +108,7 @@ namespace yq::expr {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    OperatorFixed::OperatorFixed(const SymData& sym, const OperatorInfo* opinfo) : Instruction(sym.text), 
+    OperatorFixed::OperatorFixed(const SymData& sym, const OperatorMeta* opinfo) : Instruction(sym.text), 
         m_opInfo(opinfo), m_args(sym.argcnt)
     {
         const TypeMeta* ar  = opinfo->result_type();

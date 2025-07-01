@@ -11,7 +11,7 @@
 #include <yq/typedef/size4.hpp>
 
 #include <yq/keywords.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/trait/fourth.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_nan.hpp>

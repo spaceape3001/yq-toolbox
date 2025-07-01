@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/meta/ConstructorInfo.hpp>
-#include <yq/meta/MethodInfoImpl.hpp>
+#include <yq/meta/ConstructorMeta.hpp>
+#include <yq/meta/MethodMetaImpl.hpp>
 
 namespace yq {
     template <typename R, typename... Args>
-    class ConstructorInfo::Static : public ConstructorInfo {
+    class ConstructorMeta::Static : public ConstructorMeta {
     public:
     
         typedef R (*FN)(Args...);
@@ -25,7 +25,7 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
         */
         Static(FN function, const std::source_location& sl, Meta* parent) : 
-            ConstructorInfo(sl, parent), m_function(function)
+            ConstructorMeta(sl, parent), m_function(function)
         {
             set(Flag::STATIC);
             define_signature<std::remove_cvref_t<R>,Args...>();

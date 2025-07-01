@@ -12,10 +12,10 @@ namespace yq::xfg {
 
     class XFGPinInfo;
 
-    class XFGNodeInfo : public ObjectInfo {
+    class XFGNodeInfo : public ObjectMeta {
     public:
         template <typename C> class Writer;
-        XFGNodeInfo(std::string_view, ObjectInfo&, const std::source_location& sl = std::source_location::current());
+        XFGNodeInfo(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
         
         const LUC<XFGPinInfo>&  inputs(bool all=false) const;
         const LUC<XFGPinInfo>&  outputs(bool all=false) const;

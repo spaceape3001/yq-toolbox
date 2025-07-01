@@ -5,37 +5,37 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/meta/MetaRepo.hpp>
-#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/core/Object.hpp>
 
 namespace yq {
-    const Vector<const ObjectInfo*>&   ObjectInfo::all()
+    const Vector<const ObjectMeta*>&   ObjectMeta::all()
     {
         return repo().objects.all;
     }
 
-    const ObjectInfo*        ObjectInfo::find(std::string_view k)
+    const ObjectMeta*        ObjectMeta::find(std::string_view k)
     {
         return repo().objects.find(k);
     }
 
-    const ObjectInfo*        ObjectInfo::find(id_t i)
+    const ObjectMeta*        ObjectMeta::find(id_t i)
     {
         const Meta* m   = repo().all.value(i, nullptr);
-        return (m && m->is_object()) ? static_cast<const ObjectInfo*>(m) : nullptr;
+        return (m && m->is_object()) ? static_cast<const ObjectMeta*>(m) : nullptr;
     }
 
-    ObjectInfo::ObjectInfo(std::string_view zName, const std::source_location& sl) : ObjectInfo(zName, nullptr, sl)
+    ObjectMeta::ObjectMeta(std::string_view zName, const std::source_location& sl) : ObjectMeta(zName, nullptr, sl)
     {
     }
     
-    ObjectInfo::ObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, &base, sl)
+    ObjectMeta::ObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, &base, sl)
     {
     }
 
-    ObjectInfo::ObjectInfo(std::string_view zName, ObjectInfo* myBase, const std::source_location& sl) : 
+    ObjectMeta::ObjectMeta(std::string_view zName, ObjectMeta* myBase, const std::source_location& sl) : 
         CompoundMeta(zName, sl), m_base(myBase)
     {
         set(Flag::OBJECT);
@@ -46,29 +46,29 @@ namespace yq {
     }
 
     /* TODO
-    Object* ObjectInfo::create(std::span<const Any>) const
+    Object* ObjectMeta::create(std::span<const Any>) const
     {
         return nullptr;
     }
     */
 
-    const MetaLookup<ObjectInfo>&    ObjectInfo::bases(bool all) const
+    const MetaLookup<ObjectMeta>&    ObjectMeta::bases(bool all) const
     {
         return def(all).bases;
     }
 
-    const MetaLookup<ObjectInfo>&    ObjectInfo::deriveds(bool all) const
+    const MetaLookup<ObjectMeta>&    ObjectMeta::deriveds(bool all) const
     {
         return def(all).derived;
     }
     
 
-    int     ObjectInfo::hops_to_base(const ObjectInfo& presumedBase) const
+    int     ObjectMeta::hops_to_base(const ObjectMeta& presumedBase) const
     {
         if(this == &presumedBase)
             return 0;
         int cnt = 0;
-        for(const ObjectInfo* b = m_base; b; b = b -> m_base){
+        for(const ObjectMeta* b = m_base; b; b = b -> m_base){
             ++cnt;
             if(&presumedBase == b)
                 return cnt;
@@ -76,12 +76,12 @@ namespace yq {
         return -1;
     }
 
-    int     ObjectInfo::hops_to_derived(const ObjectInfo& presumedDerived) const
+    int     ObjectMeta::hops_to_derived(const ObjectMeta& presumedDerived) const
     {
         if(this == &presumedDerived)
             return 0;
         int cnt = 0;
-        for(const ObjectInfo* b = presumedDerived.m_base; b; b = b -> m_base){
+        for(const ObjectMeta* b = presumedDerived.m_base; b; b = b -> m_base){
             ++cnt;
             if(b == this)
                 return cnt;
@@ -89,68 +89,68 @@ namespace yq {
         return -1;
     }
     
-    bool    ObjectInfo::is_base(const ObjectInfo&oi) const
+    bool    ObjectMeta::is_base(const ObjectMeta&oi) const
     {
-        for(const ObjectInfo* b = m_base; b; b = b -> m_base){
+        for(const ObjectMeta* b = m_base; b; b = b -> m_base){
             if(&oi == b)
                 return true;
         }
         return false;
     }
     
-    bool    ObjectInfo::is_base_or_this(const ObjectInfo& oi) const
+    bool    ObjectMeta::is_base_or_this(const ObjectMeta& oi) const
     {
-        for(const ObjectInfo* b = this; b; b = b -> m_base){
+        for(const ObjectMeta* b = this; b; b = b -> m_base){
             if(&oi == b)
                 return true;
         }
         return false;
     }
 
-    bool    ObjectInfo::is_derived(const ObjectInfo& oi) const
+    bool    ObjectMeta::is_derived(const ObjectMeta& oi) const
     {
-        for(const ObjectInfo* b = oi.m_base; b; b = b -> m_base){
+        for(const ObjectMeta* b = oi.m_base; b; b = b -> m_base){
             if(b == this)
                 return true;
         }
         return false;
     }
 
-    bool    ObjectInfo::is_derived_or_this(const ObjectInfo& oi) const
+    bool    ObjectMeta::is_derived_or_this(const ObjectMeta& oi) const
     {
-        for(const ObjectInfo* b = &oi; b; b = b -> m_base){
+        for(const ObjectMeta* b = &oi; b; b = b -> m_base){
             if(b == this)
                 return true;
         }
         return false;
     }
 
-    bool    ObjectInfo::is_this(const ObjectInfo& presumedBase) const
+    bool    ObjectMeta::is_this(const ObjectMeta& presumedBase) const
     {
         return (this == &presumedBase) || is_base(presumedBase);
     }
 
-    const MetaLookup<MethodInfo>&    ObjectInfo::methods(bool all) const
+    const MetaLookup<MethodMeta>&    ObjectMeta::methods(bool all) const
     {
         return def(all).methods;
     }
 
-    const PropertyInfo*             ObjectInfo::property(std::string_view k) const
+    const PropertyMeta*             ObjectMeta::property(std::string_view k) const
     {
         return m_all.properties.find(k);
     }
     
-    const MetaLookup<PropertyInfo>&  ObjectInfo::properties(bool all) const
+    const MetaLookup<PropertyMeta>&  ObjectMeta::properties(bool all) const
     {
         return def(all).properties;
     }
     
-    size_t  ObjectInfo::size() const
+    size_t  ObjectMeta::size() const
     {
         return sizeof(Object);
     }
 
-    void    ObjectInfo::sweep_impl() 
+    void    ObjectMeta::sweep_impl() 
     {
         CompoundMeta::sweep_impl();
         
@@ -171,7 +171,7 @@ namespace yq {
             m_base -> sweep();
             m_base -> m_local.derived << this;
 
-            for(ObjectInfo* b = m_base; b; b = b -> m_base){
+            for(ObjectMeta* b = m_base; b; b = b -> m_base){
                 b->m_all.derived << this;
                 m_all.bases << b;
             }
@@ -182,14 +182,14 @@ namespace yq {
     }
 
 
-    const ObjectInfo* to_object(const Meta* m)
+    const ObjectMeta* to_object(const Meta* m)
     {
-        return (m && m->is_object()) ? static_cast<const ObjectInfo*>(m) : nullptr;
+        return (m && m->is_object()) ? static_cast<const ObjectMeta*>(m) : nullptr;
     }
     
-    ObjectInfo* to_object(Meta* m)
+    ObjectMeta* to_object(Meta* m)
     {
-        return (m && m->is_object()) ? static_cast<ObjectInfo*>(m) : nullptr;
+        return (m && m->is_object()) ? static_cast<ObjectMeta*>(m) : nullptr;
     }
 
 }

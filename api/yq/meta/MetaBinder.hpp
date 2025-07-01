@@ -14,7 +14,7 @@ namespace yq {
     class TypeMeta;
     class Any;
 
-    template <typename T> struct InfoBinder {
+    template <typename T> struct MetaBinder {
         using Info  = void;
         static constexpr const bool Defined     = false;
         static constexpr const bool IsCompound  = false;
@@ -27,28 +27,28 @@ namespace yq {
     };
     
     template <typename T>
-    static constexpr const bool     is_defined_v    = InfoBinder<T>::Defined;
+    static constexpr const bool     is_defined_v    = MetaBinder<T>::Defined;
     
     template <typename T>
-    static constexpr const bool     is_type_v       = InfoBinder<T>::IsType;
+    static constexpr const bool     is_type_v       = MetaBinder<T>::IsType;
 
     template <typename T>
-    static constexpr const bool     is_object_v     = InfoBinder<T>::IsObject;
+    static constexpr const bool     is_object_v     = MetaBinder<T>::IsObject;
 
     template <typename T>
-    static constexpr const bool     is_interface_v   = InfoBinder<T>::IsInterface;
+    static constexpr const bool     is_interface_v   = MetaBinder<T>::IsInterface;
 
     template <typename T>
-    static constexpr const bool     is_compound_v   = InfoBinder<T>::IsCompound;
+    static constexpr const bool     is_compound_v   = MetaBinder<T>::IsCompound;
 
     template <typename T>
-    using info_t    = typename InfoBinder<T>::Info;
+    using info_t    = typename MetaBinder<T>::Info;
     
     const TypeMeta&        invalid();
     const TypeMeta&        any();
 
     template <>
-    struct InfoBinder<void> {
+    struct MetaBinder<void> {
         using Info   = TypeMeta;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsCompound      = false;
@@ -61,7 +61,7 @@ namespace yq {
     };
 
     template <>
-    struct InfoBinder<Any> {
+    struct MetaBinder<Any> {
         using Info   = TypeMeta;
         static constexpr const bool Defined         = true;
         static constexpr const bool IsCompound      = false;
@@ -76,21 +76,21 @@ namespace yq {
     template <typename T>
     const auto&    meta()
     {
-        static_assert(InfoBinder<T>::Defined, "Must be meta-declared!");
-        return InfoBinder<T>::bind();
+        static_assert(MetaBinder<T>::Defined, "Must be meta-declared!");
+        return MetaBinder<T>::bind();
     }
 
     template <typename T>
     const auto&    meta_unsafe()
     {
-        return InfoBinder<T>::bind();
+        return MetaBinder<T>::bind();
     }
 
     template <typename T>
     auto           writer()
     {
-        static_assert(InfoBinder<T>::Defined, "Must be meta-declared!");
-        return typename info_t<T>::Writer<T>( InfoBinder<T>::edit() );
+        static_assert(MetaBinder<T>::Defined, "Must be meta-declared!");
+        return typename info_t<T>::Writer<T>( MetaBinder<T>::edit() );
     }
 }
 
@@ -102,7 +102,7 @@ namespace yq {
 #define YQ_TYPE_DECLARE(...)                                            \
     namespace yq {                                                      \
         template <>                                                     \
-        struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
+        struct MetaBinder<__VA_ARGS__>  : public std::true_type {       \
             using Info = TypeMeta;                                      \
             static constexpr const bool Defined         = true;         \
             static constexpr const bool IsObject        = false;        \

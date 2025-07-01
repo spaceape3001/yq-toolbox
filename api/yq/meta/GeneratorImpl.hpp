@@ -7,31 +7,31 @@
 #pragma once
 
 #include <yq/meta/Generator.hpp>
-#include <yq/meta/TypedArgInfo.hpp>
+#include <yq/meta/TypedArgMeta.hpp>
 #include <yq/meta/MetaWriter.hpp>
 #include <yq/trait/indices.hpp>
 
 namespace yq {
     
     template <typename...> 
-    struct GeneratorInfo::DefineArg {
-        static void    define(const std::source_location&, GeneratorInfo*)
+    struct GeneratorMeta::DefineArg {
+        static void    define(const std::source_location&, GeneratorMeta*)
         {
         }
     };
     
     template <typename T, typename... Args> 
-    struct GeneratorInfo::DefineArg<T, Args...> {
-        static void    define(const std::source_location&sl, GeneratorInfo*parent)
+    struct GeneratorMeta::DefineArg<T, Args...> {
+        static void    define(const std::source_location&sl, GeneratorMeta*parent)
         {
             using act_type  = std::remove_cvref_t<T>;
-            parent->m_arguments.push_back( new ArgInfo::Typed<act_type>(sl, parent));
+            parent->m_arguments.push_back( new ArgMeta::Typed<act_type>(sl, parent));
             DefineArg<Args...>::define(sl, parent);
         }
     };
 
     template <typename...Args> 
-    void GeneratorInfo::define_signature()
+    void GeneratorMeta::define_signature()
     {
         DefineArg<Args...>::define(source(), this);
     }
@@ -61,7 +61,7 @@ namespace yq {
         SpecificGenerator(std::string_view zName, FN fn, const std::source_location& sl) : 
             Generator<G>(zName, sl), m_function(fn)
         {
-            GeneratorInfo::define_signature<Args...>();
+            GeneratorMeta::define_signature<Args...>();
         }
         
     private:
@@ -73,21 +73,21 @@ namespace yq {
         FN  m_function;
     };
     
-    class GeneratorInfo::Writer : public Meta::Writer {
+    class GeneratorMeta::Writer : public Meta::Writer {
     public:
         
         Writer  argument(std::string_view zName, std::string_view zDescription=std::string_view());
-        Writer(GeneratorInfo* obj);
-        Writer(GeneratorInfo& obj);
+        Writer(GeneratorMeta* obj);
+        Writer(GeneratorMeta& obj);
         
     private:
         size_t  m_arg   = 0;
     };
 
     template <typename G, typename ... Args>
-    GeneratorInfo::Writer   register_generator(std::string_view n, G (*fn)(Args...), const std::source_location&sl=std::source_location::current())
+    GeneratorMeta::Writer   register_generator(std::string_view n, G (*fn)(Args...), const std::source_location&sl=std::source_location::current())
     {
-        return GeneratorInfo::Writer(new SpecificGenerator<G,Args...>(n, fn, sl));
+        return GeneratorMeta::Writer(new SpecificGenerator<G,Args...>(n, fn, sl));
     }
         
 }

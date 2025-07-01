@@ -5,17 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Object.hpp"
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 namespace yq {
-    const ObjectInfo&    Object::metaInfo() const 
+    const ObjectMeta&    Object::metaInfo() const 
     {
         return staticMetaInfo();
     }
     
-    const ObjectInfo&    Object::staticMetaInfo()
+    const ObjectMeta&    Object::staticMetaInfo()
     {
-        static ObjectInfo   *s_info = new ObjectInfo("Object");
+        static ObjectMeta   *s_info = new ObjectMeta("Object");
         return *s_info;
     }
 

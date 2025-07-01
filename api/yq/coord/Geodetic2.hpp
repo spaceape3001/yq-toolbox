@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/typedef/geodetic2.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/units.hpp>
 
 namespace yq {

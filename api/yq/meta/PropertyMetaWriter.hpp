@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/PropertyInfo.hpp>
+#include <yq/meta/PropertyMeta.hpp>
 #include <yq/meta/MetaWriter.hpp>
 #include <yq/meta/DynamicPropSetter.hpp>
 #include <yq/meta/StaticPropSetter.hpp>
@@ -19,7 +19,7 @@ namespace yq {
         This is a writer for property information.
     */
     template <typename T>
-    class PropertyInfo::Writer : public Meta::Writer {
+    class PropertyMeta::Writer : public Meta::Writer {
     public:
     
         /*! \brief Sets the default value
@@ -34,7 +34,7 @@ namespace yq {
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
             if(Meta::Writer::m_meta && thread_safe_write()){
-                static_cast<PropertyInfo*>(Meta::Writer::m_meta) -> m_default.reference<T>() = val;
+                static_cast<PropertyMeta*>(Meta::Writer::m_meta) -> m_default.reference<T>() = val;
             }
             return *this;
         }
@@ -51,7 +51,7 @@ namespace yq {
             assert(Meta::Writer::m_meta);
             assert(thread_safe_write());
             if(Meta::Writer::m_meta && thread_safe_write()){
-                static_cast<PropertyInfo*>(Meta::Writer::m_meta) -> m_default.reference<T>() = std::move(val);
+                static_cast<PropertyMeta*>(Meta::Writer::m_meta) -> m_default.reference<T>() = std::move(val);
             }
             return *this;
         }
@@ -61,7 +61,7 @@ namespace yq {
             \note While public for implementation reasons, it's intended for most sitautions
             to use the ".property" methods on the type/object informations.
         */
-        Writer(PropertyInfo* pi) : Meta::Writer(pi) {}
+        Writer(PropertyMeta* pi) : Meta::Writer(pi) {}
     };
     
  //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -73,7 +73,7 @@ namespace yq {
         to any object... ie, it's a global configuration variable for the class.
     */
     template <typename T>
-    class PropertyInfo::VarW : public Writer<T> {
+    class PropertyMeta::VarW : public Writer<T> {
     public:
     
         /*! \brief Attach a setter so the property can be modified
@@ -88,7 +88,7 @@ namespace yq {
             assert(Meta::Writer::m_meta);
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new XFV_PropSetter<T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new XFV_PropSetter<T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -106,7 +106,7 @@ namespace yq {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new XFR_PropSetter<T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new XFR_PropSetter<T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -124,7 +124,7 @@ namespace yq {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new XFBV_PropSetter<T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new XFBV_PropSetter<T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -142,7 +142,7 @@ namespace yq {
             assert(thread_safe_write());
             
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new XFBR_PropSetter<T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new XFBR_PropSetter<T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -152,7 +152,7 @@ namespace yq {
             \note public for implementation reasons, most callers are better suited to using the other
             provided methods.
         */
-        VarW(PropertyInfo* pi) : Writer<T>(pi) {}
+        VarW(PropertyMeta* pi) : Writer<T>(pi) {}
     };
 
     /*! \brief Writer for a member variable property
@@ -160,7 +160,7 @@ namespace yq {
         This creates a writer for a member variable property, attached to an instance of the property.
     */
     template <typename C, typename T>
-    class PropertyInfo::PropW : public Writer<T> {
+    class PropertyMeta::PropW : public Writer<T> {
     public:
     
     
@@ -179,7 +179,7 @@ namespace yq {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFV_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFV_PropSetter<B,T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -199,7 +199,7 @@ namespace yq {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFR_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFR_PropSetter<B,T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -219,7 +219,7 @@ namespace yq {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFBV_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFBV_PropSetter<B,T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -239,7 +239,7 @@ namespace yq {
             assert(thread_safe_write());
 
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                new IFBR_PropSetter<B,T>(static_cast<PropertyInfo*>(Meta::Writer::m_meta), sl, function);
+                new IFBR_PropSetter<B,T>(static_cast<PropertyMeta*>(Meta::Writer::m_meta), sl, function);
             }
             return *this;
         }
@@ -249,6 +249,6 @@ namespace yq {
             \note public for implementation reasons, most callers are better suited to using the other
             provided methods.
         */
-        PropW(PropertyInfo* pi) : Writer<T>(pi) {}
+        PropW(PropertyMeta* pi) : Writer<T>(pi) {}
     };
 }

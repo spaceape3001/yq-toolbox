@@ -27,7 +27,7 @@ namespace yq {
             \param[in] pointer      The member variable pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        UIPM_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, P pointer) : DynamicPropSetter<O,T>(propInfo, sl), m_data(pointer) 
+        UIPM_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, P pointer) : DynamicPropSetter<O,T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
@@ -40,7 +40,7 @@ namespace yq {
         */
         virtual std::error_code      set(void*p, const void*value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(p);
             if(!p)
@@ -67,7 +67,7 @@ namespace yq {
         */
         virtual std::error_code set(void*p, std::string_view value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(p);
             if(!p)
@@ -101,7 +101,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        UIFV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
+        UIFV_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -176,7 +176,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        UIFBV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
+        UIFBV_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -253,7 +253,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        UIFR_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
+        UIFR_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -328,7 +328,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        UIFBR_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
+        UIFBR_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<O,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }

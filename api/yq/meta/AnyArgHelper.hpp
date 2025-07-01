@@ -13,7 +13,7 @@
 namespace yq {
     
     class Any;
-    class ArgInfo;
+    class ArgMeta;
 
     /*! \brief Any Argument Helper
     
@@ -28,7 +28,7 @@ namespace yq {
         AnyArgHelper();
         ~AnyArgHelper();
     
-        std::error_code     construct(std::span<const ArgInfo* const> spec, const std::span<const Any> data);
+        std::error_code     construct(std::span<const ArgMeta* const> spec, const std::span<const Any> data);
     
         operator const void* const *() const { return m_pointers.data(); }
         size_t      size() const { return m_pointers.size(); }

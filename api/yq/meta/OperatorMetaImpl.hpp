@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/meta/OperatorInfo.hpp>
-#include <yq/meta/MethodInfoImpl.hpp>
+#include <yq/meta/OperatorMeta.hpp>
+#include <yq/meta/MethodMetaImpl.hpp>
 
 namespace yq {
     template <typename R, typename... Args>
-    class OperatorInfo::Static : public OperatorInfo {
+    class OperatorMeta::Static : public OperatorMeta {
     public:
     
         typedef R (*FN)(Args...);
@@ -25,7 +25,7 @@ namespace yq {
             \param[in] parent   Parent object this is apart of
         */
         Static(FN function, Operator opId, const std::source_location& sl, Meta* parent) : 
-            OperatorInfo(opId, sl, parent), m_function(function)
+            OperatorMeta(opId, sl, parent), m_function(function)
         {
             set(Flag::STATIC);
             define_signature<std::remove_cvref_t<R>,Args...>();

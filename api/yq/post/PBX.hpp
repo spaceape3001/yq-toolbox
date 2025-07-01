@@ -23,11 +23,11 @@ namespace yq::post {
     struct PBXDispatch;
     class PBX;
     
-    class PBXInfo : public ObjectInfo {
+    class PBXInfo : public ObjectMeta {
     public:
         template <typename> class Writer;
         
-        PBXInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        PBXInfo(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
 
     private:
         friend class PBX;

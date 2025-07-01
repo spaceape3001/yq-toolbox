@@ -16,7 +16,7 @@ namespace yq {
         bool                    openReg     = true;
         Vector<const Meta*>     all;
         Vector<const Meta*>     metas;
-        MetaLookup<ObjectInfo>  objects;
+        MetaLookup<ObjectMeta>  objects;
         MetaLookup<TypeMeta>    types;
                 
         Repo();

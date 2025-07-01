@@ -30,7 +30,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        UIPM_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, P pointer) : DynamicPropGetter<O,T>(propInfo, sl), m_data(pointer) 
+        UIPM_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, P pointer) : DynamicPropGetter<O,T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
@@ -117,7 +117,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        UIFV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
+        UIFV_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -204,7 +204,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        UIFR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
+        UIFR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -288,7 +288,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        UIFP_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
+        UIFP_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -381,7 +381,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        UIFPB_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
+        UIFPB_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<O,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }

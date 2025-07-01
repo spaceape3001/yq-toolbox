@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/meta/ArgInfo.hpp>
+#include <yq/meta/ArgMeta.hpp>
 
 namespace yq {
-    ArgInfo::ArgInfo(const std::source_location& sl, const Meta&t, Meta*par) : 
+    ArgMeta::ArgMeta(const std::source_location& sl, const Meta&t, Meta*par) : 
         Meta({}, par, sl), m_type(t), m_default(nullptr)
     {
         set(Flag::ARG);

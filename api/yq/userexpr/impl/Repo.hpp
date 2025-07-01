@@ -9,7 +9,7 @@
 #include <yq/userexpr/forward.hpp>
 #include <yq/core/Any.hpp>
 #include <yq/meta/CompoundMeta.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/CompoundMetaStatic.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/userexpr/impl/OpData.hpp>
@@ -78,8 +78,8 @@ namespace yq::expr {
         void    sweep_impl() override;
         
         u32string_any_map_t             m_constants;
-        MetaLookup<PropertyInfo>        m_variables;
-        MetaLookup<MethodInfo>          m_functions;
+        MetaLookup<PropertyMeta>        m_variables;
+        MetaLookup<MethodMeta>          m_functions;
         op_data_map_t                   m_operators;
         char32_set_t                    m_punctText;
         bool                            m_digitsText        = true;
@@ -160,7 +160,7 @@ namespace yq::expr {
     template <typename Pred>
     auto            Repo::all_functions(std::u32string_view k, Pred pred) const
     {
-        using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
+        using pred_result_t = decltype(pred((const MethodMeta*) nullptr));
         if constexpr (!std::is_same_v<pred_result_t, void>){
             auto R  = m_functions.lut32.equal_range(k);
             for(auto r = R.first; r!=R.second; ++r){
@@ -213,7 +213,7 @@ namespace yq::expr {
 
 namespace yq {
     template <>
-    struct InfoBinder<expr::Repo> {
+    struct MetaBinder<expr::Repo> {
         using Info = expr::Repo;
         
         static constexpr const bool     Defined     = true;

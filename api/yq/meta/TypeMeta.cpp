@@ -8,7 +8,7 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/core/StreamOps.hpp>
-#include <yq/meta/ConstructorInfo.hpp>
+#include <yq/meta/ConstructorMeta.hpp>
 #include <yq/meta/MetaRepo.hpp>
 #include <yq/meta/TypeMeta.hpp>
 #include <yq/meta/ReservedIDs.hpp>
@@ -138,10 +138,10 @@ namespace yq {
 
     any_x       TypeMeta::contruct_impl(std::initializer_list<const TypeMeta*> types, std::initializer_list<const void*> values) const
     {
-        const ConstructorInfo*      best    = nullptr;
+        const ConstructorMeta*      best    = nullptr;
         int                         score   = 0;
         
-        for(const ConstructorInfo* ci : m_constructors){
+        for(const ConstructorMeta* ci : m_constructors){
             int r   = ci -> type_match(span(types));
             if(r < 0)
                 continue;
@@ -199,13 +199,13 @@ namespace yq {
         return m_methods.all.size();
     }
 
-    const std::vector<const MethodInfo*>&    TypeMeta::methods() const
+    const std::vector<const MethodMeta*>&    TypeMeta::methods() const
     {
         return m_methods.all;
     }
 
     //! List of operators for this type
-    const std::vector<const OperatorInfo*>& TypeMeta::operators() const
+    const std::vector<const OperatorMeta*>& TypeMeta::operators() const
     {
         return m_operators.all;
     }
@@ -248,13 +248,13 @@ namespace yq {
         return m_write;
     }
 
-    const PropertyInfo*  TypeMeta::property(std::string_view k) const
+    const PropertyMeta*  TypeMeta::property(std::string_view k) const
     {
         return m_properties.lut.first(k, nullptr);
     }
 
     
-    const std::vector<const PropertyInfo*>&  TypeMeta::properties() const
+    const std::vector<const PropertyMeta*>&  TypeMeta::properties() const
     {
         return m_properties.all;
     }

@@ -21,7 +21,7 @@ namespace yq {
     class DynamicPropGetter : public PropGetter {
     public:
     
-        static_assert(InfoBinder<T>::Defined, "Type must be meta defined!");
+        static_assert(MetaBinder<T>::Defined, "Type must be meta defined!");
         static_assert(is_defined_v<T>, "Type must be meta defined!");
 
         //! Data meta type
@@ -44,7 +44,7 @@ namespace yq {
             \param[in] propInfo The property we're being associated with.
             \param[in] sl       Source location where this property getter is being associated at.
         */
-        DynamicPropGetter(PropertyInfo* propInfo, const std::source_location& sl) : PropGetter(propInfo, sl) 
+        DynamicPropGetter(PropertyMeta* propInfo, const std::source_location& sl) : PropGetter(propInfo, sl) 
         {
         }
     };
@@ -69,7 +69,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        IPM_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, P pointer) : DynamicPropGetter<C,T>(propInfo, sl), m_data(pointer) 
+        IPM_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, P pointer) : DynamicPropGetter<C,T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
@@ -144,7 +144,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        IFV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        IFV_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -217,7 +217,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        IFR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        IFR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -289,7 +289,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        IFP_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        IFP_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -364,7 +364,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        IFPB_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        IFPB_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -442,7 +442,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        ZFRV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        ZFRV_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -512,7 +512,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        ZFVV_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        ZFVV_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -582,7 +582,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        ZFRR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        ZFRR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }
@@ -652,7 +652,7 @@ namespace yq {
         
             \note This is only public to avoid thorny friend statements.  Don't create it directly outside of the meta-classes.
         */
-        ZFVR_PropGetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
+        ZFVR_PropGetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropGetter<C,T>(propInfo, sl), m_function(function)
         {
             assert(function);
         }

@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/meta/MethodInfo.hpp>
-#include <yq/meta/PropertyInfo.hpp>
+#include <yq/meta/MethodMeta.hpp>
+#include <yq/meta/PropertyMeta.hpp>
 
 namespace yq {
 
@@ -38,10 +38,10 @@ namespace yq {
         virtual void            sweep_impl() override;
         
         //! Used to gather the methods from the children meta
-        void        gather(MetaLookup<MethodInfo>&);
+        void        gather(MetaLookup<MethodMeta>&);
 
         //! Used to gather the properties from the children meta
-        void        gather(MetaLookup<PropertyInfo>&);
+        void        gather(MetaLookup<PropertyMeta>&);
         
 
     };

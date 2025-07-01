@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <yq/meta/GlobalInfo.hpp>
+#include <yq/meta/GlobalMeta.hpp>
 #include <yq/meta/CompoundMetaStatic.hpp>
 
 namespace yq {
     template <typename T>
-    class GlobalInfo::Writer : public CompoundMeta::Static {
+    class GlobalMeta::Writer : public CompoundMeta::Static {
     public:
     
-        Writer(GlobalInfo& p) : CompoundMeta::Static(&p) 
+        Writer(GlobalMeta& p) : CompoundMeta::Static(&p) 
         {
         }
     };

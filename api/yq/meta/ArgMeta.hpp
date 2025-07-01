@@ -11,7 +11,7 @@
 namespace yq {
     /*! \brief Information about an argument
     */
-    class ArgInfo : public Meta {
+    class ArgMeta : public Meta {
     public:
     
         //! Type of the argument
@@ -22,7 +22,7 @@ namespace yq {
         const void*         default_argument() const { return m_default; }
     
     protected:
-        ArgInfo(const std::source_location& sl, const Meta&, Meta*);
+        ArgMeta(const std::source_location& sl, const Meta&, Meta*);
         
     private:
         const Meta&     m_type;

@@ -10,8 +10,8 @@
 #include <0/xfg/ExecNodeInfoWriter.hpp>
 
 namespace yq::xfg {
-    ExecNodeInfo::ExecNodeInfo(std::string_view name, const ObjectInfo&par, const std::source_location& sl) : 
-        ObjectInfo(name, par, sl)
+    ExecNodeInfo::ExecNodeInfo(std::string_view name, const ObjectMeta&par, const std::source_location& sl) : 
+        ObjectMeta(name, par, sl)
     {
     }
 

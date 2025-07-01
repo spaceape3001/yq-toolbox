@@ -10,7 +10,7 @@
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/result.hpp>
 #include <yq/typedef/expected.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
     class Stream;

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/Enum.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
 

@@ -18,13 +18,13 @@ namespace yq::global {
     namespace function {
     
         //! FIRST function of name
-        const MethodInfo*                       info(std::string_view);
+        const MethodMeta*                       info(std::string_view);
         
         //! ALL infos to all functions
-        const std::vector<const MethodInfo*>&   infos();
+        const std::vector<const MethodMeta*>&   infos();
 
         //! ALL infos of named functions
-        std::vector<const MethodInfo*>          infos(std::string_view);
+        std::vector<const MethodMeta*>          infos(std::string_view);
         
         //! Invokes the specified name
         any_x invoke(std::string_view);
@@ -44,10 +44,10 @@ namespace yq::global {
         const string_view_set_t&        names();
         
         //! Gets the variable information
-        const PropertyInfo*             info(std::string_view);
+        const PropertyMeta*             info(std::string_view);
 
         //! Information to ALL variables
-        const std::vector<const PropertyInfo*>& infos();
+        const std::vector<const PropertyMeta*>& infos();
 
         //! Sets the variable
         std::error_code                 set(std::string_view, const Any&);

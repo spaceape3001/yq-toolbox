@@ -9,7 +9,7 @@
 #define YQ_MATH_LATLON_HPP 1
 
 #include <yq/typedef/latlon.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
 

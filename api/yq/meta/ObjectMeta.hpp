@@ -13,17 +13,17 @@
 namespace yq {
 
     class Object;
-    class ConstructorInfo;
+    class ConstructorMeta;
 
     /*! \brief Represents info for an object thats intrusively bound
     */
-    class ObjectInfo : public CompoundMeta {
-        template <typename> friend struct InfoBinder;
+    class ObjectMeta : public CompoundMeta {
+        template <typename> friend struct MetaBinder;
         friend class Object;
     public:
     
         //! Base class
-        const ObjectInfo*   base() const { return m_base; }
+        const ObjectMeta*   base() const { return m_base; }
     
         template <typename C> class Writer;
 
@@ -33,7 +33,7 @@ namespace yq {
             \param[in] base     Base object
             \param[in] sl       Source location (defaulted)
         */
-        ObjectInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl=std::source_location::current());
+        ObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         /*! Creates the object
         
@@ -46,16 +46,16 @@ namespace yq {
         //  Object* create(std::span<const Any>) const;
 
         //! Vector of all object infos
-        static const Vector<const ObjectInfo*>&   all();
+        static const Vector<const ObjectMeta*>&   all();
         
         //! Finds the specified object by key
-        static const ObjectInfo*        find(std::string_view);
+        static const ObjectMeta*        find(std::string_view);
         
         //! Finds the specified object by ID
-        static const ObjectInfo*        find(id_t);
+        static const ObjectMeta*        find(id_t);
         
         // TODO
-        //  const std::vector<const ConstructorInfo*>& constructors() const { return m_constructors; }
+        //  const std::vector<const ConstructorMeta*>& constructors() const { return m_constructors; }
 
         /*! \brief  Tests for base object
         
@@ -65,17 +65,17 @@ namespace yq {
             \param[in]  presumedBase    What we're assuming is a base object
             \return TRUE if presumedBase is a correct assumption, and is a base class to this object.
         */
-        bool    is_base(const ObjectInfo& presumedBase) const;
+        bool    is_base(const ObjectMeta& presumedBase) const;
         
         template <SomeObject>
         bool    is_base() const;
 
-        bool    is_base_or_this(const ObjectInfo& presumedBase) const;
+        bool    is_base_or_this(const ObjectMeta& presumedBase) const;
 
         template <SomeObject>
         bool    is_base_or_this() const;
 
-        bool    is_this(const ObjectInfo& presumedBase) const;
+        bool    is_this(const ObjectMeta& presumedBase) const;
         
         //! TRUE if this matches (or derived from)
         template <SomeObject>
@@ -90,21 +90,21 @@ namespace yq {
             \param[in] presumedDerived  What we're assuming is a derived object
             \return TRUE if presumedDerived is a correct assumpition, and is derived to this object
         */
-        bool    is_derived(const ObjectInfo& presumedDerived) const;
+        bool    is_derived(const ObjectMeta& presumedDerived) const;
         
         template <SomeObject>
         bool    is_derived() const;
         
-        bool    is_derived_or_this(const ObjectInfo& presumedDerived) const;
+        bool    is_derived_or_this(const ObjectMeta& presumedDerived) const;
         
         template <SomeObject>
         bool    is_derived_or_this() const;
 
         //! Count of hops to the presumed base class, negative if it's not a base
-        int     hops_to_base(const ObjectInfo& presumedBase) const;
+        int     hops_to_base(const ObjectMeta& presumedBase) const;
 
         //! Count of hops to the presumed derived class, negative if it's not a base
-        int     hops_to_derived(const ObjectInfo& presumedDerived) const;
+        int     hops_to_derived(const ObjectMeta& presumedDerived) const;
         
         
         //! Nominal size (in bytes) of the object (not including dynamic memory)
@@ -116,11 +116,11 @@ namespace yq {
             
             \param[in] all  TRUE to get all sub-derived objects
         */
-        const MetaLookup<ObjectInfo>&    deriveds(bool all=false) const;
+        const MetaLookup<ObjectMeta>&    deriveds(bool all=false) const;
 
-        const MetaLookup<ObjectInfo>&    deriveds(all_k) const { return m_all.derived; }
+        const MetaLookup<ObjectMeta>&    deriveds(all_k) const { return m_all.derived; }
         
-        const MetaLookup<ObjectInfo>&    deriveds(local_k) const { return m_local.derived; }
+        const MetaLookup<ObjectMeta>&    deriveds(local_k) const { return m_local.derived; }
         
         /*! \brief Base objects
         
@@ -128,11 +128,11 @@ namespace yq {
             
             \param[in] all      TRUE to get all base objects (all the way to Object)
         */
-        const MetaLookup<ObjectInfo>&    bases(bool all=false) const;
+        const MetaLookup<ObjectMeta>&    bases(bool all=false) const;
 
-        const MetaLookup<ObjectInfo>&    bases(all_k) const { return m_all.bases; }
+        const MetaLookup<ObjectMeta>&    bases(all_k) const { return m_all.bases; }
         
-        const MetaLookup<ObjectInfo>&    bases(local_k) const { return m_local.bases; }
+        const MetaLookup<ObjectMeta>&    bases(local_k) const { return m_local.bases; }
         
         /*! \brief Properties
         
@@ -140,11 +140,11 @@ namespace yq {
             
             \param[in] all      TRUE to get all properties on all base objects too.
         */
-        const MetaLookup<PropertyInfo>&  properties(bool all=false) const;
+        const MetaLookup<PropertyMeta>&  properties(bool all=false) const;
 
-        const MetaLookup<PropertyInfo>&  properties(all_k) const { return m_all.properties; }
+        const MetaLookup<PropertyMeta>&  properties(all_k) const { return m_all.properties; }
 
-        const MetaLookup<PropertyInfo>&  properties(local_k) const { return m_local.properties; }
+        const MetaLookup<PropertyMeta>&  properties(local_k) const { return m_local.properties; }
         
         /*! \brief Methods
             
@@ -152,18 +152,18 @@ namespace yq {
             
             \param[in] all      TRUE to get all the methods across all base objects too.
         */
-        const MetaLookup<MethodInfo>&   methods(bool all=false) const;
+        const MetaLookup<MethodMeta>&   methods(bool all=false) const;
         
-        const MetaLookup<MethodInfo>&   methods(all_k) const { return m_all.methods; }
+        const MetaLookup<MethodMeta>&   methods(all_k) const { return m_all.methods; }
         
-        const MetaLookup<MethodInfo>&   methods(local_k) const { return m_local.methods; }
+        const MetaLookup<MethodMeta>&   methods(local_k) const { return m_local.methods; }
         
         //! Finds the specified property (ALL is implied)
-        const PropertyInfo*             property(std::string_view) const;
+        const PropertyMeta*             property(std::string_view) const;
     
     protected:
-        friend class PropertyInfo;
-        friend class MethodInfo;
+        friend class PropertyMeta;
+        friend class MethodMeta;
         
         /*! \brief Constructor
         
@@ -172,23 +172,23 @@ namespace yq {
             \param[in] zName    Name of the object
             \param[in] sl       Source location, let the default work its magic
         */
-        ObjectInfo(std::string_view zName, const std::source_location& sl=std::source_location::current());
+        ObjectMeta(std::string_view zName, const std::source_location& sl=std::source_location::current());
         
         //! Sweeping in all the based/deriveds/properties/methods/etc
         virtual void                    sweep_impl() override;
 
-        ObjectInfo*     m_base; // defined/declared base
+        ObjectMeta*     m_base; // defined/declared base
         
         //! General definitions to what it's an object
         struct D {
             //! Base classes
-            MetaLookup<ObjectInfo>     bases;
+            MetaLookup<ObjectMeta>     bases;
             //! Derived classes
-            MetaLookup<ObjectInfo>     derived;
+            MetaLookup<ObjectMeta>     derived;
             //! Properties
-            MetaLookup<PropertyInfo>   properties;
+            MetaLookup<PropertyMeta>   properties;
             //! Methods
-            MetaLookup<MethodInfo>     methods;
+            MetaLookup<MethodMeta>     methods;
             
             void                    clear()
             {
@@ -204,24 +204,24 @@ namespace yq {
         //! What's defiend across all relevant objects
         D               m_all;
 
-        //std::vector<const ConstructorInfo*> m_constructors;
+        //std::vector<const ConstructorMeta*> m_constructors;
         
         const D& def(bool all) const { return all ? m_all : m_local; }
     
     private:
-        ObjectInfo(std::string_view zName, ObjectInfo* base, const std::source_location& sl);
+        ObjectMeta(std::string_view zName, ObjectMeta* base, const std::source_location& sl);
     };
 
 
     /*! \brief Converts meta to object, if it's valid
     
-        \return ObjectInfo pointer, if valid, NULL otherwise
+        \return ObjectMeta pointer, if valid, NULL otherwise
     */
-    const ObjectInfo* to_object(const Meta* m);
+    const ObjectMeta* to_object(const Meta* m);
     
     /*! \brief Converts meta to object, if it's valid
     
-        \return ObjectInfo pointer, if valid, NULL otherwise
+        \return ObjectMeta pointer, if valid, NULL otherwise
     */
-    ObjectInfo* to_object(Meta* m);
+    ObjectMeta* to_object(Meta* m);
 }

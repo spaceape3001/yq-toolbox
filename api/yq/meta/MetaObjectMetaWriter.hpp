@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/core/MetaObject.hpp>
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 namespace yq {
 
@@ -17,13 +17,13 @@ namespace yq {
         API to modify/set the meta properties, methods, etc.
     */
     template <typename C>
-    class MetaObjectInfo::Writer : public ObjectInfo::Writer<C> {
+    class MetaObjectMeta::Writer : public ObjectMeta::Writer<C> {
     public:
-        Writer(MetaObjectInfo* metaObjInfo) : ObjectInfo::Writer<C>(metaObjInfo)
+        Writer(MetaObjectMeta* metaObjInfo) : ObjectMeta::Writer<C>(metaObjInfo)
         {
         }
         
-        Writer(MetaObjectInfo& metaObjInfo) : Writer(&metaObjInfo)
+        Writer(MetaObjectMeta& metaObjInfo) : Writer(&metaObjInfo)
         {
         }
     };

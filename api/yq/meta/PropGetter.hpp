@@ -10,7 +10,7 @@
 
 namespace yq {
 
-    class PropertyInfo;
+    class PropertyMeta;
     class Stream;
 
     /*! \brief Abstract PropGetter
@@ -53,10 +53,10 @@ namespace yq {
         
         /*! \brief Property this is associated with.
         */
-        const PropertyInfo* property() const;
+        const PropertyMeta* property() const;
 
     protected:
-        PropGetter(PropertyInfo*, const std::source_location& sl);
+        PropGetter(PropertyMeta*, const std::source_location& sl);
     };
     
 }

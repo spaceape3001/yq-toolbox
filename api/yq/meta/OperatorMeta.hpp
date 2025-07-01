@@ -5,10 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/meta/MethodInfo.hpp>
+#include <yq/math/Operator.hpp>
+#include <yq/meta/MethodMeta.hpp>
 
 namespace yq {
-    class ConstructorInfo : public MethodInfo {
+    class OperatorMeta : public MethodMeta {
     public:
     
         template <typename R, typename... Args> class Writer;
@@ -17,9 +18,20 @@ namespace yq {
         //template <typename R, typename Obj, typename... Args> class Dynamic;
         template <typename R, typename... Args> class Static;
 
+        /*
+            OPERATORS will *NOT* be self-modifying... that'll be an action
+            for expression evaluation instead.  These will basically be 
+            static methods.
+        */
+    
+
+        constexpr Operator    code() const { return m_code; }
+
     private:
     
-        ConstructorInfo(const std::source_location&sl, Meta*);
+        OperatorMeta(Operator, const std::source_location&sl, Meta*);
+    
+        const Operator    m_code;
     };
 }
 

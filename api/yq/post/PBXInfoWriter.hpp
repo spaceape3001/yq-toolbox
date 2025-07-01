@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/meta/ObjectInfoWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/post/PBX.hpp>
 #include <yq/post/Trigger.hpp>
 #include <yq/core/Required.hpp>
@@ -215,11 +215,11 @@ namespace yq::post {
     /*! \brief Writer of event information
     */
     template <typename C>
-    class PBXInfo::Writer : public ObjectInfo::Writer<C> {
+    class PBXInfo::Writer : public ObjectMeta::Writer<C> {
     public:
     
         //! Constructor of widget info (this is used by derived classes and this classes other constructor)
-        Writer(PBXInfo* pInfo) : ObjectInfo::Writer<C>(pInfo), m_meta(pInfo)
+        Writer(PBXInfo* pInfo) : ObjectMeta::Writer<C>(pInfo), m_meta(pInfo)
         {
         }
         

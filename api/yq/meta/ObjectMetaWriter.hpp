@@ -7,14 +7,14 @@
 #pragma once
 
 #include <yq/core/DelayInit.hpp>
-#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/CompoundMetaDynamic.hpp>
 #include <yq/meta/UnsafePropGetter.hpp>
 #include <yq/meta/UnsafePropSetter.hpp>
 
 namespace yq {
     template <typename C>
-    class ObjectInfo::Writer : public CompoundMeta::Dynamic<C> {
+    class ObjectMeta::Writer : public CompoundMeta::Dynamic<C> {
     public:
     
         using CompoundMeta::Dynamic<C>::property;
@@ -29,19 +29,19 @@ namespace yq {
             \param[in] isReadOnly   Set to TRUE to make this read-only property
         */
         template <typename C2, typename T>
-        PropertyInfo::Writer<T>     property(unsafe_k, std::string_view szName, T (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::Writer<T>     property(unsafe_k, std::string_view szName, T (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             ret -> set(Flag::STATE);
             new UIPM_PropGetter<C,C2,T>(ret, sl, pointer);
             if(!isReadOnly)
                 new UIPM_PropSetter<C,C2,T>(ret, sl, pointer);
-            return PropertyInfo::Writer<T>{ret};
+            return PropertyMeta::Writer<T>{ret};
         }
         
         template <typename C2, typename T>
-        PropertyInfo::Writer<T>     property(unsafe_k, std::string_view szName, read_only_k, T (C2::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::Writer<T>     property(unsafe_k, std::string_view szName, read_only_k, T (C2::*pointer), const std::source_location& sl=std::source_location::current())
         {
             return property(UNSAFE, szName, pointer, true, sl);
         }
@@ -52,7 +52,7 @@ namespace yq {
         Writer&     base()
         {
             static_assert( std::is_base_of_v<B, C>, "T must derive from B!" );
-            ObjectInfo*     obj = static_cast<ObjectInfo*>(Meta::Writer::m_meta);
+            ObjectMeta*     obj = static_cast<ObjectMeta*>(Meta::Writer::m_meta);
             assert(!obj->m_base);
             obj->m_base = &meta<B>();
             return *this; 
@@ -65,7 +65,7 @@ namespace yq {
             return *this;
         }
         
-        Writer(ObjectInfo* obj) : CompoundMeta::Dynamic<C>(obj), m_meta(obj)
+        Writer(ObjectMeta* obj) : CompoundMeta::Dynamic<C>(obj), m_meta(obj)
         {
             assert(obj);
             if constexpr ( std::is_abstract_v<C> ){
@@ -74,12 +74,12 @@ namespace yq {
             
         }
         
-        Writer(ObjectInfo& obj) : Writer(&obj)
+        Writer(ObjectMeta& obj) : Writer(&obj)
         {
         }
         
     private:
-        ObjectInfo*  m_meta = nullptr;
+        ObjectMeta*  m_meta = nullptr;
     };
 
     /*! \brief Final type-specific info class
@@ -117,7 +117,7 @@ namespace yq {
         virtual Obj*    create() const override
         {
             if constexpr (std::is_default_constructible_v<Obj> && !std::is_abstract_v<Obj>) {
-                if(ObjectInfo::is_abstract())
+                if(ObjectMeta::is_abstract())
                     return nullptr;
                 return new Obj;
             } else

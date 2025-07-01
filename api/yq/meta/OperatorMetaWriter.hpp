@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include "MethodInfoWriter.hpp"
-#include <yq/meta/OperatorInfo.hpp>
+#include "MethodMetaWriter.hpp"
+#include <yq/meta/OperatorMeta.hpp>
 
 namespace yq {
     template <typename R, typename... Args> 
-    class OperatorInfo::Writer : public MethodInfo::Writer<R, Args...> {
+    class OperatorMeta::Writer : public MethodMeta::Writer<R, Args...> {
     public:
-        Writer(OperatorInfo* m, size_t z) : MethodInfo::Writer<R, Args...>(m, z) {}
-        Writer() : MethodInfo::Writer<R, Args...>() {}
+        Writer(OperatorMeta* m, size_t z) : MethodMeta::Writer<R, Args...>(m, z) {}
+        Writer() : MethodMeta::Writer<R, Args...>() {}
     };
 }
 

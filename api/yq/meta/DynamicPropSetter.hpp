@@ -40,7 +40,7 @@ namespace yq {
             \param[in] propInfo     Property that we're a setter on
             \param[in] sl           Source location that it was declared
         */
-        DynamicPropSetter(PropertyInfo* propInfo, const std::source_location& sl) : PropSetter(propInfo, sl) {}
+        DynamicPropSetter(PropertyMeta* propInfo, const std::source_location& sl) : PropSetter(propInfo, sl) {}
     };
 
     /*! \brief  Setter for member variable
@@ -60,7 +60,7 @@ namespace yq {
             \param[in] pointer      The member variable pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        IPM_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, P pointer) : DynamicPropSetter<C,T>(propInfo, sl), m_data(pointer) 
+        IPM_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, P pointer) : DynamicPropSetter<C,T>(propInfo, sl), m_data(pointer) 
         {
             assert(pointer);
         }
@@ -73,7 +73,7 @@ namespace yq {
         */
         virtual std::error_code      set(void*obj, const void*value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
             if(!obj)
@@ -120,7 +120,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        IFV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
+        IFV_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -133,7 +133,7 @@ namespace yq {
         */
         virtual std::error_code set(void* obj, const void* value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
             if(!obj)
@@ -187,7 +187,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        IFBV_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
+        IFBV_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -200,7 +200,7 @@ namespace yq {
         */
         virtual std::error_code set(void* obj, const void* value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
             if(!obj)
@@ -255,7 +255,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        IFR_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
+        IFR_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -268,7 +268,7 @@ namespace yq {
         */
         virtual std::error_code set(void* obj, const void* value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
             if(!obj)
@@ -321,7 +321,7 @@ namespace yq {
             \param[in] function     The member function pointer
             \note Consumers shouldn't be directly creating these, it's public to avoid thorny friend statements.
         */
-        IFBR_PropSetter(PropertyInfo* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
+        IFBR_PropSetter(PropertyMeta* propInfo, const std::source_location& sl, FN function) : DynamicPropSetter<C,T>(propInfo, sl), m_function(function) 
         {
             assert(function);
         }
@@ -334,7 +334,7 @@ namespace yq {
         */
         virtual std::error_code set(void* obj, const void* value) const override
         {
-            //  In correct usage, pointer checks have already been done by the PropertyInfo base's setter call
+            //  In correct usage, pointer checks have already been done by the PropertyMeta base's setter call
             //  therefore these don't need to be checked here.  Asserts to verify in debug
             assert(obj);
             if(!obj)

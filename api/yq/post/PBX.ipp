@@ -15,8 +15,8 @@ YQ_OBJECT_IMPLEMENT(yq::post::PBX)
 
 namespace yq::post {
 
-    PBXInfo::PBXInfo(std::string_view zName, ObjectInfo& base, const std::source_location& sl) :
-        ObjectInfo(zName, base, sl)
+    PBXInfo::PBXInfo(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, base, sl)
     {
         //set(Flag::PBX);
     }
@@ -53,7 +53,7 @@ namespace yq::post {
         if(!ppi)
             ppi = &meta<Post>();
         ranked.push_back({depth, ppi, fn});
-        for(const ObjectInfo* derv : ppi->deriveds(true).all){
+        for(const ObjectMeta* derv : ppi->deriveds(true).all){
             const PostInfo* ppd = static_cast<const PostInfo*>(derv);   // should *NEVER* be wrong given the inheritance
             if(!ppd->is_abstract()){
                 ranked.push_back({depth, ppd, fn});
@@ -65,7 +65,7 @@ namespace yq::post {
     {
         for(const PBXDispatch*fn : info.m_dispatches)
             _add(ranked, fn, depth);
-        const ObjectInfo* p   = info.base();
+        const ObjectMeta* p   = info.base();
         if(p && p->is_base(meta<Post>())){
             _add(ranked, *static_cast<const PBXInfo*>(p), depth+1);
         }

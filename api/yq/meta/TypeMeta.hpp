@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
-#include <yq/meta/OperatorInfo.hpp>
+#include <yq/meta/OperatorMeta.hpp>
 #include <yq/errors.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_initlists.hpp>
@@ -25,9 +25,9 @@ namespace yq {
     class TypeMeta : public CompoundMeta {
         friend class Any;
     public:
-        using MethodLUC     = MetaLookup<MethodInfo>;
-        using OperatorLUC   = MetaLookup2<OperatorInfo,Operator,&OperatorInfo::code>;
-        using PropertyLUC   = MetaLookup<PropertyInfo>;
+        using MethodLUC     = MetaLookup<MethodMeta>;
+        using OperatorLUC   = MetaLookup2<OperatorMeta,Operator,&OperatorMeta::code>;
+        using PropertyLUC   = MetaLookup<PropertyMeta>;
         using TypeMetaLUC   = MetaLookup<TypeMeta>;
     
             // WARNING UNSAFE IN UNLOCKED MULTITHREADED MODE!
@@ -71,7 +71,7 @@ namespace yq {
         template <typename ... T>
         any_x       construct(T ... args) const;
 
-        const std::vector<const ConstructorInfo*>& constructors() const { return m_constructors; }
+        const std::vector<const ConstructorMeta*>& constructors() const { return m_constructors; }
 
         //! Copy (trusting)
         std::error_code copy(void*dst, const void*src) const;
@@ -103,23 +103,23 @@ namespace yq {
         size_t                                  method_count() const;
         
         //! List of methods for this type
-        const std::vector<const MethodInfo*>&   methods() const;
+        const std::vector<const MethodMeta*>&   methods() const;
 
         //! List of operators for this type
-        const std::vector<const OperatorInfo*>& operators() const;
+        const std::vector<const OperatorMeta*>& operators() const;
         
         //! All operators for the specified operator
         const OperatorLUC::equal_range_t        operators(Operator) const;
 
         size_t                                  operators_count() const;
         
-        const PropertyInfo*                     property(std::string_view) const;
+        const PropertyMeta*                     property(std::string_view) const;
 
         //! Number of properties for this type
         size_t                                  property_count() const;
         
         //! List of properties for this type
-        const std::vector<const PropertyInfo*>&  properties() const;
+        const std::vector<const PropertyMeta*>&  properties() const;
 
         PropertyLUC::equal_range_t              properties(std::string_view) const;
 
@@ -215,10 +215,10 @@ namespace yq {
 
     protected:
     
-        friend class PropertyInfo;
-        friend class MethodInfo;
-        friend class OperatorInfo;
-        friend class ConstructorInfo;
+        friend class PropertyMeta;
+        friend class MethodMeta;
+        friend class OperatorMeta;
+        friend class ConstructorMeta;
 
         /*! \brief Constructor 
         
@@ -244,7 +244,7 @@ namespace yq {
         using ConvertHash   = Hash<const TypeMeta*, FNConvert>;
         
         //! Constructors for this type
-        std::vector<const ConstructorInfo*> m_constructors;
+        std::vector<const ConstructorMeta*> m_constructors;
 
         //! Default for this type
         DataBlock                   m_default;
@@ -387,7 +387,7 @@ namespace yq {
     template <typename Pred>
     auto            TypeMeta::all_functions(std::string_view k, Pred pred) const
     {
-        using pred_result_t = decltype(pred((const MethodInfo*) nullptr));
+        using pred_result_t = decltype(pred((const MethodMeta*) nullptr));
         if constexpr (!std::is_same_v<pred_result_t, void>){
             auto R  = m_methods.lut.equal_range(k);
             for(auto r = R.first; r!=R.second; ++r){

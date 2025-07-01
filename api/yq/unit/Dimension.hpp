@@ -8,7 +8,7 @@
 
 #include <yq/math/Fraction.hpp>
 #include <yq/unit/dims.hpp>
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <string_view>
 #include <vector>
 

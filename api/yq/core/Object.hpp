@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/meta/InfoBinder.hpp>
-#include <yq/meta/ObjectInfo.hpp>
+#include <yq/meta/MetaBinder.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <yq/typedef/object.hpp>
 
 namespace yq {
@@ -58,7 +58,7 @@ public:                                                 \
         
         Should *ALWAYS* be the most specific info for the class
         */
-        using MyInfo        = ObjectInfo;
+        using MyInfo        = ObjectMeta;
         
         /*! \brief Base Class
         
@@ -76,13 +76,13 @@ public:                                                 \
         using MyFixer       = ObjectFixer<T>;
         
         
-        /*! \brief ObjectInfo applicaable to the derived class
+        /*! \brief ObjectMeta applicaable to the derived class
         */
-        virtual const ObjectInfo&   metaInfo() const = 0;
+        virtual const ObjectMeta&   metaInfo() const = 0;
         
         /*! \brief Object Info applicable to *THIS* class
         */
-        static const ObjectInfo&    staticMetaInfo();
+        static const ObjectMeta&    staticMetaInfo();
         
         //! Destructor, virtual given the nature of this base class
         virtual ~Object(){}
@@ -92,7 +92,7 @@ public:                                                 \
 
     template <typename Obj>
     requires std::is_base_of_v<Object, Obj>
-    struct InfoBinder<Obj> {
+    struct MetaBinder<Obj> {
         using Info  = typename Obj::MyInfo;    
         static constexpr const bool Defined         = true;                 
         static constexpr const bool IsObject        = true;                 
@@ -111,31 +111,31 @@ public:                                                 \
     }
 
     template <SomeObject Obj>
-    bool    ObjectInfo::is_base() const
+    bool    ObjectMeta::is_base() const
     {
         return is_base(meta<Obj>());
     }
 
     template <SomeObject Obj>
-    bool    ObjectInfo::is_base_or_this() const
+    bool    ObjectMeta::is_base_or_this() const
     {
         return is_base_or_this(meta<Obj>());
     }
 
     template <SomeObject Obj>
-    bool    ObjectInfo::is_derived() const
+    bool    ObjectMeta::is_derived() const
     {
         return is_derived(meta<Obj>());
     }
 
     template <SomeObject Obj>
-    bool    ObjectInfo::is_derived_or_this() const
+    bool    ObjectMeta::is_derived_or_this() const
     {
         return is_derived_or_this(meta<Obj>());
     }
 
     template <SomeObject Obj>
-    bool    ObjectInfo::is_this() const
+    bool    ObjectMeta::is_this() const
     {
         return is_this(meta<Obj>());
     }
@@ -149,7 +149,7 @@ public:                                                 \
 #define YQ_OBJECT_IMPLEMENT(name)                                                                                   \
     const name::MyInfo&     name::staticMetaInfo()                                                                  \
     {                                                                                                               \
-        static name::MyFixer<name>*  s_info = new name::MyFixer<name>(#name, yq::InfoBinder<MyBase>::edit());   \
+        static name::MyFixer<name>*  s_info = new name::MyFixer<name>(#name, yq::MetaBinder<MyBase>::edit());   \
         return *s_info;                                                                                             \
     }                                                                                                               \
     const name::MyInfo&     name::metaInfo() const                                                                  \
@@ -166,7 +166,7 @@ public:                                                 \
 #define YQ_OBJECT_FORCE(...)                                            \
     namespace yq {                                                      \
         template <>                                                     \
-        struct InfoBinder<__VA_ARGS__>  : public std::true_type {       \
+        struct MetaBinder<__VA_ARGS__>  : public std::true_type {       \
             using Info = __VA_ARGS__::MyInfo;                           \
             static constexpr const bool Defined         = true;         \
             static constexpr const bool IsObject        = true;         \

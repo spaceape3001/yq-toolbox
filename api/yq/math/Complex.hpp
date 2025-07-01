@@ -8,7 +8,7 @@
 
 #include <yq/typedef/complex.hpp>
 
-#include <yq/meta/InfoBinder.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/trait/has_abs.hpp>
 #include <yq/trait/has_identity.hpp>
 #include <yq/trait/has_is_finite.hpp>

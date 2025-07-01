@@ -17,11 +17,11 @@
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
 #include <yq/userexpr/impl/SymData.hpp>
-#include <yq/meta/ArgInfo.hpp>
-#include <yq/meta/ConstructorInfo.hpp>
-#include <yq/meta/GlobalInfo.hpp>
-#include <yq/meta/MethodInfo.hpp>
-#include <yq/meta/OperatorInfo.hpp>
+#include <yq/meta/ArgMeta.hpp>
+#include <yq/meta/ConstructorMeta.hpp>
+#include <yq/meta/GlobalMeta.hpp>
+#include <yq/meta/MethodMeta.hpp>
+#include <yq/meta/OperatorMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 
 namespace yq::expr {
@@ -64,7 +64,7 @@ namespace yq::expr {
     
     struct MethodScanner {
     
-        using function_t            = std::variant<std::monostate, const MethodInfo*, const PropertyInfo*, converter_t, default_t>;
+        using function_t            = std::variant<std::monostate, const MethodMeta*, const PropertyMeta*, converter_t, default_t>;
         using scored_function_t     = std::pair<function_t, int>;
     
         std::vector<scored_function_t>  scored;
@@ -81,7 +81,7 @@ namespace yq::expr {
             });
         }
         
-        int         score(const MethodInfo* mi, bool dynamic_allowed=false) const
+        int         score(const MethodMeta* mi, bool dynamic_allowed=false) const
         {
             int     ret = -1;
             if(mi -> is_static()){
@@ -95,10 +95,10 @@ namespace yq::expr {
         size_t        constructors(const TypeMeta& type)
         {
             size_t  start = scored.size();
-            for(const ConstructorInfo* ci : type.constructors()){
+            for(const ConstructorMeta* ci : type.constructors()){
                 int     sc  = score(ci);
                 if(sc >= 0){
-                    scored.push_back({ (const MethodInfo*) ci, sc });
+                    scored.push_back({ (const MethodMeta*) ci, sc });
                 }
             }
             return scored.size() - start;
@@ -119,7 +119,7 @@ namespace yq::expr {
         {
             static const Repo& _r  = Repo::instance();
             size_t  start = scored.size();
-            _r.all_functions(k, [&](const MethodInfo* mi){
+            _r.all_functions(k, [&](const MethodMeta* mi){
                 int     sc  = score(mi);
                 if(sc >= 0) {
                     scored.push_back({mi, sc});
@@ -130,9 +130,9 @@ namespace yq::expr {
         
         size_t        functions(global_k, std::string_view k)
         {
-            static const GlobalInfo& _g = GlobalInfo::instance();
+            static const GlobalMeta& _g = GlobalMeta::instance();
             size_t  start = scored.size();
-            _g.all_functions(k, [&](const MethodInfo* mi){
+            _g.all_functions(k, [&](const MethodMeta* mi){
                 int sc  = score(mi);
                 if(sc >= 0){
                     scored.push_back({mi, sc});
@@ -144,7 +144,7 @@ namespace yq::expr {
         size_t     methods(const TypeMeta& type, std::string_view k)
         {
             size_t  start = scored.size();
-            type.all_functions(k, [&](const MethodInfo* mi){
+            type.all_functions(k, [&](const MethodMeta* mi){
                 int sc  = score(mi, true);
                 if(sc >= 0){
                     scored.push_back({mi, sc});
@@ -155,7 +155,7 @@ namespace yq::expr {
         
         bool      properties(const TypeMeta& type, std::string_view k)
         {
-            const PropertyInfo* pi  = type.property(k);
+            const PropertyMeta* pi  = type.property(k);
             if(pi){
                 scored.push_back({pi, 0});
                 return true;
@@ -229,8 +229,8 @@ namespace yq::expr {
         
         any_x     x;
         for(auto& fn : scanner.scored){
-            if(auto p = std::get_if<const MethodInfo*>(&fn.first)){
-                const MethodInfo* mi = *p;
+            if(auto p = std::get_if<const MethodMeta*>(&fn.first)){
+                const MethodMeta* mi = *p;
                 if(!mi)
                     continue;
                 if(mi->is_static()){
@@ -240,8 +240,8 @@ namespace yq::expr {
                 }
             }
             
-            if(auto p = std::get_if<const PropertyInfo*>(&fn.first)){
-                const PropertyInfo* pi = *p;
+            if(auto p = std::get_if<const PropertyMeta*>(&fn.first)){
+                const PropertyMeta* pi = *p;
                 if(!pi)
                     continue;
                 x   = pi->get(args[0].raw_ptr());

@@ -9,7 +9,7 @@
 #include <yq/meta/CompoundMetaStatic.hpp>
 #include <yq/meta/DynamicPropGetter.hpp>
 #include <yq/meta/DynamicPropSetter.hpp>
-#include <yq/meta/PropertyInfoWriter.hpp>
+#include <yq/meta/PropertyMetaWriter.hpp>
 #include <concepts>
 
 namespace yq {
@@ -27,20 +27,20 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::Writer<T>     property(std::string_view szName, T (B::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::Writer<T>     property(std::string_view szName, T (B::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             ret -> set(Flag::STATE);
             new IPM_PropGetter<B,T>(ret, sl, pointer);
             if(!isReadOnly)
                 new IPM_PropSetter<B,T>(ret, sl, pointer);
-            return PropertyInfo::Writer<T>{ret};
+            return PropertyMeta::Writer<T>{ret};
         }
         
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_k, T (B::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::Writer<T>     property(std::string_view szName, read_only_k, T (B::*pointer), const std::source_location& sl=std::source_location::current())
         {
             return property(szName, pointer, true, sl);
         }
@@ -55,18 +55,18 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::Writer<T>     property(std::string_view szName, const T (B::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::Writer<T>     property(std::string_view szName, const T (B::*pointer), const std::source_location& sl=std::source_location::current())
         {
             assert(pointer);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             ret -> set(Flag::STATE);
             new IPM_PropGetter<B,T>(ret, sl, pointer);
-            return PropertyInfo::Writer<T>{ret};
+            return PropertyMeta::Writer<T>{ret};
         }
 
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::Writer<T>     property(std::string_view szName, read_only_k, const T (B::*pointer), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::Writer<T>     property(std::string_view szName, read_only_k, const T (B::*pointer), const std::source_location& sl=std::source_location::current())
         {
             return property(szName, pointer, sl);
         }
@@ -81,12 +81,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (B::*function)() const, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, T (B::*function)() const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new IFV_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
         
 
@@ -99,7 +99,7 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (B::*function)() const noexcept, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, T (B::*function)() const noexcept, const std::source_location& sl=std::source_location::current())
         {
             return property(szName, (T (B::*)() const) function, sl);
         }
@@ -113,12 +113,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (B::*function)() const, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, const T& (B::*function)() const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new IFR_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
 
         /*! \brief Defines a property
@@ -130,7 +130,7 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (B::*function)() const noexcept, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, const T& (B::*function)() const noexcept, const std::source_location& sl=std::source_location::current())
         {
             return property(szName, (const T& (B::*)() const) function, sl);
         }
@@ -144,12 +144,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, void (B::*function)(T&) const, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, void (B::*function)(T&) const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new IFP_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
         
     
@@ -162,12 +162,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, bool (B::*function)(T&) const, const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, bool (B::*function)(T&) const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new IFPB_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
         
         /*! \brief Defines a property
@@ -179,12 +179,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (*function)(B), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, T (*function)(B), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new ZFVV_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
 
         /*! \brief Defines a property
@@ -196,12 +196,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, T (*function)(const B&), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, T (*function)(const B&), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new ZFRV_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
 
         /*! \brief Defines a property
@@ -213,12 +213,12 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (*function)(B), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, const T& (*function)(B), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new ZFVR_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
 
         /*! \brief Defines a property
@@ -230,33 +230,33 @@ namespace yq {
         */
         template <typename T, typename B=C>
         requires (std::is_base_of_v<B,C>)
-        PropertyInfo::PropW<C,T>    property(std::string_view szName, const T& (*function)(const B&), const std::source_location& sl=std::source_location::current())
+        PropertyMeta::PropW<C,T>    property(std::string_view szName, const T& (*function)(const B&), const std::source_location& sl=std::source_location::current())
         {
             assert(function);
-            PropertyInfo*ret  = new PropertyInfo(szName, sl, meta<T>(), m_meta);
+            PropertyMeta*ret  = new PropertyMeta(szName, sl, meta<T>(), m_meta);
             new ZFRR_PropGetter<B,T>(ret, sl, function);
-            return PropertyInfo::PropW<C,T>{ret};
+            return PropertyMeta::PropW<C,T>{ret};
         }
 
         template <typename B, typename R, typename ... Args>
         requires (std::is_base_of_v<B,C>)
-        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (B::*function)(Args...), const std::source_location& sl=std::source_location::current());
+        MethodMeta::Writer<R,Args...>   method(std::string_view szName, R (B::*function)(Args...), const std::source_location& sl=std::source_location::current());
 
         template <typename B, typename R, typename ... Args>
         requires (std::is_base_of_v<B,C>)
-        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (B::*function)(Args...) const, const std::source_location& sl=std::source_location::current())
+        MethodMeta::Writer<R,Args...>   method(std::string_view szName, R (B::*function)(Args...) const, const std::source_location& sl=std::source_location::current())
         {
             assert(function);
             if(function && Meta::Writer::m_meta && thread_safe_write()){
-                MethodInfo* ret = new MethodInfo::Const<R,C,Args...>(function, szName, sl, Meta::Writer::m_meta);
-                return MethodInfo::Writer<R, Args...>(ret, 0ULL);
+                MethodMeta* ret = new MethodMeta::Const<R,C,Args...>(function, szName, sl, Meta::Writer::m_meta);
+                return MethodMeta::Writer<R, Args...>(ret, 0ULL);
             }
-            return MethodInfo::Writer<R, Args...>();
+            return MethodMeta::Writer<R, Args...>();
         }
         
         template <typename B, typename R, typename ... Args>
         requires (std::is_base_of_v<B,C>)
-        MethodInfo::Writer<R,Args...>   method(std::string_view szName, R (B::*function)(Args...) const noexcept, const std::source_location& sl=std::source_location::current())
+        MethodMeta::Writer<R,Args...>   method(std::string_view szName, R (B::*function)(Args...) const noexcept, const std::source_location& sl=std::source_location::current())
         {
             return method(szName, (R (B::*)(Args...) const) function, sl);
         }
