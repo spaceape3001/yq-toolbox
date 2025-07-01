@@ -27,7 +27,7 @@ namespace yq::post {
         return true;
     }
     
-    void AndFilter::init_info()
+    void AndFilter::init_meta()
     {
         auto w = writer<AndFilter>();
         w.description("An AND post filter based on other filters");

@@ -25,7 +25,7 @@ namespace yq::post {
         return (&cInfo == &m_info) || cInfo.is_base(m_info);
     }
     
-    void OnReply::init_info()
+    void OnReply::init_meta()
     {
         auto w = writer<OnReply>();
         w.description("Trigger for a particular reply class");

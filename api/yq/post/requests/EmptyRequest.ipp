@@ -16,7 +16,7 @@ namespace yq::post {
     {
     }
     
-    void EmptyRequest::init_info()
+    void EmptyRequest::init_meta()
     {
         auto w = writer<EmptyRequest>();
         w.description("Empty Request");

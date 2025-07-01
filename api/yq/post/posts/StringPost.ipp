@@ -20,7 +20,7 @@ namespace yq::post {
     {
     }
     
-    void StringPost::init_info()
+    void StringPost::init_meta()
     {
         auto w = writer<StringPost>();
         w.description("Text Post");

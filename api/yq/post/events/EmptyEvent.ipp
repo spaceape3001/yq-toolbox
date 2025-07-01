@@ -17,7 +17,7 @@ namespace yq::post {
     {
     }
     
-    void EmptyEvent::init_info()
+    void EmptyEvent::init_meta()
     {
         auto w = writer<EmptyEvent>();
         w.description("Empty Event");

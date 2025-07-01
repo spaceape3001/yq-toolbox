@@ -66,7 +66,7 @@ namespace yq::post {
     
         using post_type = Post;
 
-        static void init_info();
+        static void init_meta();
     
         using MismatchConfig = std::variant<std::monostate, bool, MismatchPolicy, MismatchFlags>;
     

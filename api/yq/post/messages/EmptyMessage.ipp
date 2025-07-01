@@ -16,7 +16,7 @@ namespace yq::post {
     {
     }
     
-    void EmptyMessage::init_info()
+    void EmptyMessage::init_meta()
     {
         auto w = writer<EmptyMessage>();
         w.description("Empty Message");

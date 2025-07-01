@@ -17,7 +17,7 @@ namespace yq::post {
     {
     }
     
-    void EmptyCommand::init_info()
+    void EmptyCommand::init_meta()
     {
         auto w = writer<EmptyCommand>();
         w.description("Empty Command");

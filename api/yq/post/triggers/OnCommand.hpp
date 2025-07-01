@@ -24,7 +24,7 @@ namespace yq::post {
         OnCommand(const Param& p = {}) : OnCommand(meta<C>(), p) {}
         OnCommand(const CommandInfo&, const Param& p={});
 
-        static void init_info();
+        static void init_meta();
 
     private:
         ~OnCommand();

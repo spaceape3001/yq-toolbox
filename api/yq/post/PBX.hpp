@@ -49,7 +49,7 @@ namespace yq::post {
         
         virtual void    receive(const PostCPtr&) override;  // If you override this, you *MUST* call the PBX
         
-        static void init_info();
+        static void init_meta();
 
     protected:
     

@@ -27,7 +27,7 @@ namespace yq::post {
         return !m_original->passed(src, tgt, pp);
     }
 
-    void NotFilter::init_info()
+    void NotFilter::init_meta()
     {
         auto w = writer<NotFilter>();
         w.description("NOT post filter (ie, negates the given filter's test)");

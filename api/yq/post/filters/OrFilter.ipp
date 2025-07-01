@@ -27,7 +27,7 @@ namespace yq::post {
         return false;
     }
     
-    void OrFilter::init_info()
+    void OrFilter::init_meta()
     {
         auto w = writer<OrFilter>();
         w.description("An OR post filter based on other filters");

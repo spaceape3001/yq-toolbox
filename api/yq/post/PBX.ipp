@@ -171,7 +171,7 @@ namespace yq::post {
         }
     }
 
-    void PBX::init_info()
+    void PBX::init_meta()
     {
         auto w = writer<PBX>();
         w.description("Abstract PBX Object");

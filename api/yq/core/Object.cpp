@@ -19,7 +19,7 @@ namespace yq {
         return *s_info;
     }
 
-    void Object::init_info()
+    void Object::init_meta()
     {
         auto w = writer<Object>();
         w.description("Abstract object class (root of all objects)");

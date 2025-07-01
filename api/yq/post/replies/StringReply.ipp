@@ -20,7 +20,7 @@ namespace yq::post {
     {
     }
     
-    void StringReply::init_info()
+    void StringReply::init_meta()
     {
         auto w = writer<StringReply>();
         w.description("Text Reply");

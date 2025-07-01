@@ -27,7 +27,7 @@ namespace yq::post {
         return true;
     }
     
-    void AndTrigger::init_info()
+    void AndTrigger::init_meta()
     {
         auto w = writer<AndTrigger>();
         w.description("An AND post trigger based on other triggers");

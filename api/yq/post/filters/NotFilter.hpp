@@ -26,7 +26,7 @@ namespace yq::post {
         ~NotFilter();
         bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const;
     
-        static void init_info();
+        static void init_meta();
     
     private:
         FilterCPtr m_original;

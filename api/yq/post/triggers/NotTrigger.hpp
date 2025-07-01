@@ -26,7 +26,7 @@ namespace yq::post {
         ~NotTrigger();
         bool    accept(const Post&) const;
         
-        static void init_info();
+        static void init_meta();
     
     private:
         TriggerCPtr m_original;

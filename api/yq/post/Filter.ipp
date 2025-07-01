@@ -17,7 +17,7 @@ namespace yq::post {
         set(Flag::FILTER);
     }
     
-    void Filter::init_info()
+    void Filter::init_meta()
     {
         static std::atomic_flag     seen;
         if(seen.test_and_set())

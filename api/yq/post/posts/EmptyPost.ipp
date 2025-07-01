@@ -16,7 +16,7 @@ namespace yq::post {
     {
     }
     
-    void EmptyPost::init_info()
+    void EmptyPost::init_meta()
     {
         auto w = writer<EmptyPost>();
         w.description("Empty Post");

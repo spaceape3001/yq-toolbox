@@ -33,7 +33,7 @@ namespace yq::post {
         ~OrTrigger();
         bool    accept(const Post&) const;
     
-        static void init_info();
+        static void init_meta();
 
     private:
         std::vector<TriggerCPtr> m_triggers;

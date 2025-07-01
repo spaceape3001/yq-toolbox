@@ -202,7 +202,7 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void Asset::init_info()
+    void Asset::init_meta()
     {
         auto w = writer<Asset>();
         w.description("Asset (ie texture, mesh, shader, etc)");

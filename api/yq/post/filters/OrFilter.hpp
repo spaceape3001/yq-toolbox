@@ -33,7 +33,7 @@ namespace yq::post {
         ~OrFilter();
         bool    accept(const Dispatcher&, const Dispatcher&, const Post&) const;
         
-        static void init_info();
+        static void init_meta();
     
     private:
         std::vector<FilterCPtr> m_filters;

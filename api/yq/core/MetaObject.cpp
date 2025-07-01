@@ -25,7 +25,7 @@ namespace yq {
     {
     }
 
-    void MetaObject::init_info()
+    void MetaObject::init_meta()
     {
         auto mo = writer<MetaObject>();
         mo.property("id",       &MetaObject::id).description("ID");

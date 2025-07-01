@@ -28,7 +28,7 @@ namespace yq::post {
     
         const std::string&    text() const { return m_text; }
         
-        static void init_info();
+        static void init_meta();
     
     private:
         std::string     m_text;

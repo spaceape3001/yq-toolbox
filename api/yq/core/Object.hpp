@@ -87,7 +87,7 @@ public:                                                 \
         //! Destructor, virtual given the nature of this base class
         virtual ~Object(){}
         
-        static void init_info();
+        static void init_meta();
     };
 
     template <typename Obj>

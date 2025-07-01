@@ -23,7 +23,7 @@ class SampleCommand : public Command {
     YQ_OBJECT_DECLARE(SampleCommand, Command)
 public:
 
-    static void init_info()
+    static void init_meta()
     {
     }
 };
@@ -42,7 +42,7 @@ public:
         ++ m_command1;
     }
 
-    static void init_info()
+    static void init_meta()
     {
         auto w = writer<TestPBX1>();
         w.receive(&TestPBX1::command1, new OnCommand);
@@ -59,8 +59,8 @@ int main(int argc, char* argv[])
 {
     log_to_std_output();
     Meta::init();
-    TestPBX1::init_info();
-    SampleCommand::init_info();
+    TestPBX1::init_meta();
+    SampleCommand::init_meta();
     Meta::freeze();
 
     "Command1"_test = []{

@@ -24,7 +24,7 @@ namespace yq::post {
         OnReply(const Param& p = {}) : OnReply(meta<C>(), p) {}
         OnReply(const ReplyInfo&, const Param& p={});
 
-        static void init_info();
+        static void init_meta();
 
     private:
         ~OnReply();

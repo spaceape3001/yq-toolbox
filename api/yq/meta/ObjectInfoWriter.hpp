@@ -100,8 +100,8 @@ namespace yq {
         virtual void initialize() override
         {
             if constexpr (!std::is_same_v<typename Obj::MyBase, void>){
-                if constexpr (&Obj::init_info != &Obj::MyBase::init_info){
-                    Obj::init_info();
+                if constexpr (&Obj::init_meta != &Obj::MyBase::init_meta){
+                    Obj::init_meta();
                 }
             }
         }

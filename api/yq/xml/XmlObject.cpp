@@ -19,7 +19,7 @@ namespace yq {
         return true;
     }
     
-    void    XmlObject::init_info()
+    void    XmlObject::init_meta()
     {
         auto w = writer<XmlObject>();
         w.abstract();

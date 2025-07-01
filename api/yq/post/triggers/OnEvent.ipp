@@ -25,7 +25,7 @@ namespace yq::post {
         return (&cInfo == &m_info) || cInfo.is_base(m_info);
     }
     
-    void OnEvent::init_info()
+    void OnEvent::init_meta()
     {
         auto w = writer<OnEvent>();
         w.description("Trigger for a particular event class");

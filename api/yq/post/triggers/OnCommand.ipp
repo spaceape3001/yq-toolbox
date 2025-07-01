@@ -25,7 +25,7 @@ namespace yq::post {
         return (&cInfo == &m_info) || cInfo.is_base(m_info);
     }
     
-    void OnCommand::init_info()
+    void OnCommand::init_meta()
     {
         auto w = writer<OnCommand>();
         w.description("Trigger for a particular command class");

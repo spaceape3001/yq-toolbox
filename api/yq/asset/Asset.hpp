@@ -132,7 +132,7 @@ namespace yq {
         */
         //static std::filesystem::path            search(const path_vector_t& paths, const std::filesystem::path& file);
     
-        static void init_info();
+        static void init_meta();
         
         void    set_url(const std::filesystem::path&);
         void    set_url(const Url&);

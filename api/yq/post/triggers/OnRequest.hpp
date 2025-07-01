@@ -24,7 +24,7 @@ namespace yq::post {
         OnRequest(const Param& p = {}) : OnRequest(meta<C>(), p) {}
         OnRequest(const RequestInfo&, const Param& p={});
 
-        static void init_info();
+        static void init_meta();
 
     private:
         ~OnRequest();

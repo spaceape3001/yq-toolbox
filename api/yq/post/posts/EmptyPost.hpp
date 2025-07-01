@@ -21,6 +21,6 @@ namespace yq::post {
         EmptyPost(const Param& p = {});
         ~EmptyPost();
         
-        static void init_info();
+        static void init_meta();
     };
 }
