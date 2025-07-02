@@ -37,7 +37,7 @@ namespace yq {
     }
     #endif
     
-
+    //! Renames an existing file to a "backup" file, clearing the way for a save w/o clobbering
     bool            file_backup(const char*, const char* suffix="bck");
     ByteArray       file_bytes(const filesystem_path_t&);
     std::string     file_string(const filesystem_path_t&);
