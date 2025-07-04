@@ -42,6 +42,8 @@ namespace yq {
     
     //! Loads up the contents of the file as a byte array.
     ByteArray       file_bytes(const filesystem_path_t&);
+    
+    //! Loads up the contents of the file as a string
     std::string     file_string(const filesystem_path_t&);
     bool            file_exists(const char*);
     bool            file_exists(const filesystem_path_t&);
