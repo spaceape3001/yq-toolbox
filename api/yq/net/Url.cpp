@@ -486,6 +486,7 @@ namespace yq {
     {
         {
             auto w = writer<Url>();
+            w.description("Basic URL");
                 // TODO... (print, save, that sort)
         }
     }

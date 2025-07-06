@@ -5,10 +5,8 @@
 ################################################################################
 
 add_library(yq_asset SHARED
-    asset/Asset.cpp
-    asset/AssetCache.cpp
-    asset/AssetFactory.cpp
-    #asset/AssetLibrary.cpp
+    asset/asset.cpp
+    asset/KVTreeDriver.cpp
 )
 
 target_link_libraries(yq_asset 
@@ -16,6 +14,9 @@ target_link_libraries(yq_asset
         yq_core 
     PRIVATE
         yq_file
+        yq_keyv
+        yq_json
+        yq_xml
 )
 
 LinkTest(yq_asset)

@@ -49,7 +49,7 @@ namespace yq {
             if(recursive_attributes())
                 opts |= KVTree::RECURSIVE;
             
-                // which will e boolean until key-values return std::error_code
+                // which will be boolean until key-values return std::error_code
             auto ret    = tree.parse(buffer.as_view(), fname, opts);
             if(ret.ec != std::error_code()) [[unlikely]]
                 return ret.ec;

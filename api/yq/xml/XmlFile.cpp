@@ -32,7 +32,7 @@ namespace yq {
         try {
             doc.parse<0>(chars.data());
         } catch(const rapidxml::parse_error& pe){
-            size_t  pt  = pe.where<char>() - buffer.data();
+            size_t  pt  = pe.where<char>() - chars.data();
             yError() << "Xml parse error: " << pe.what() << " (at byte " << pt << ") : " << fname;
             return errors::xml_bad_syntax();
         }

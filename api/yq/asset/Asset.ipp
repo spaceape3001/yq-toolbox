@@ -4,8 +4,246 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/errors.hpp>
+#pragma once
+
+#include "Asset.hpp"
+#include "AssetMetaWriter.hpp"
+
 #include <yq/tags.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/transform.hpp>
+#include <yq/text/vsplit.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::Asset)
+
+namespace yq {
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+    AssetMeta::AssetMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
+        ObjectMeta(zName, base, sl)
+    {
+        set(Flag::ASSET);
+        Asset::repo().assets.push_back(this);
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+    void Asset::add_infoer(Infoer*d) 
+    {
+        if(Meta::thread_safe_write()){
+            repo().inject(d);
+        } else if(d)
+            delete d;
+    }
+    
+    void Asset::add_loader(Loader*d)
+    {
+        if(Meta::thread_safe_write()){
+            repo().inject(d);
+        } else if(d)
+            delete d;
+    }
+
+    void    Asset::add_library(const AssetLibraryCPtr& alp)
+    {
+        if(!alp)
+            return;
+        if(!Meta::thread_safe_write())
+            return ;
+        repo().search.push_back(alp);
+    }
+    
+    void    Asset::add_path(const std::filesystem::path& fp)
+    {
+        if(!Meta::thread_safe_write())
+            return ;
+        repo().inject(fp);
+    }
+        
+    void    Asset::add_paths(std::string_view dd)
+    {
+        if(!Meta::thread_safe_write())
+            return ;
+
+        Repo&    _r = repo();
+        vsplit(dd, ';', [&](std::string_view x){
+            _r.inject(std::filesystem::path(trimmed(x)));
+        });
+    }
+
+    void    Asset::add_saver(Saver*d)
+    {
+        if(Meta::thread_safe_write()){
+            repo().inject(d);
+        } else if(d)
+            delete d;
+    }
+
+    void Asset::init_meta()
+    {
+        auto w = writer<Asset>();
+        w.description("Asset (ie texture, mesh, shader, etc)");
+        w.property("url", &Asset::m_url).tag({kTag_Save});
+    }
+
+
+    Url  Asset::resolve(std::string_view u)
+    {
+        u = trimmed(u);
+        if(u.empty())
+            return {};
+    
+        Url         ret;
+        auto    colon  = u.find_first_of(':');
+
+        if(colon != std::string_view::npos){
+            auto uv = to_url_view(u);
+            if(!uv.good)
+                return {};
+            if(!is_similar(ret.scheme, "file"))
+                return copy(uv.value);
+            ret     = copy(uv.value);
+        } else {
+            auto hash   = u.find_first_of('#');
+            if(hash != std::string_view::npos){
+                ret.path        = std::string(u.substr(0, hash));
+                ret.fragment    = std::string(u.substr(hash+1));
+            } else
+                ret.path        = u;
+            ret.scheme  = "file";
+        }
+        
+        if(ret.path.empty())
+            return {};
+        
+        if(ret.path[0] != '/'){
+            for(auto& sp : repo().search){
+                if(auto p = std::get_if<std::filesystem::path>(&sp)){
+                    std::filesystem::path   fp  = *p / ret.path;
+                    if(file_exists(fp)){
+                        ret.path    = fp.string();
+                        return ret;
+                    }
+                }
+                
+                if(auto p = std::get_if<AssetLibraryCPtr>(&sp)){
+                    if(!ret.fragment.empty())  // not doing multple libraries deep....
+                        continue;
+                    if((*p) && (*p)->contains(ret.path)){
+                        Url u2   = (*p) -> url();
+                        u2.fragment  = ret.path;
+                        return u2;
+                    }
+                }
+            }
+        }
+        
+        return ret;
+    }
+
+
+    Asset::Asset()
+    {
+    }
+
+    Asset::~Asset()
+    {
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+
+}
+
+
+
+#if 0
+
+#include "Asset.hpp"
+#include <yq/keywords.hpp>
+#include <variant>
+#include <tbb/spin_rw_mutex.hpp>
+#include <map>
+#include <unordered_map>
+#include <yq/container/set_utils.hpp>
+#include <yq/errors.hpp>
+
+
+namespace yq {
+
+    namespace errors {
+    }
+
+
+    
+////////////////////////////////////////////////////////////////////////////////
+
+    
+    
+    AssetCPtr       Asset::_load(const AssetMeta& am, const Url& url, bool autoCache)
+    {
+        static Repo& _r = repo();
+        bool isLibType  = am.is_derived_or_this(meta<AssetLibrary>());
+        
+        
+        return {};  // TODO
+    }
+    
+    
+    struct SimpleURL {
+        std::string_view    filepath;
+        std::string_view    fragment;
+    };
+    
+    std::variant<url_k, std::string_view, SimpleURL> simplex(std::string_view u)
+    {
+        auto hash   = u.find_first_of('#');
+        auto colon  = u.find_first_of(':');
+        
+        if((colon != std::string_view::npos) && ((hash == std::string_view::npos) || (hash > colon))
+            return URL;
+        if(hash != std::string_view::npos){
+            return SimpleURL{ u.substr(0, hash), u.substr(hash+1) };
+        } else
+            return u;
+    }
+    
+
+    Url             Asset::_resolve(std::string_view partial)
+    {
+        if(partial.empty())
+            return {};
+    
+        // alright... this needs to do it by parts...
+        UrlView     u = urlview(partial);
+
+        static Repo& _r = repo();
+        return {}; // TODO
+    }
+
+    Asset::Repo& Asset::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+}
+
+
+
+
+#include <yq/errors.hpp>
 #include <yq/asset/Asset.hpp>
 #include <yq/asset/AssetIO.hpp>
 #include <yq/asset/AssetFactory.hpp>
@@ -20,7 +258,6 @@
 
 #include <unistd.h>
 
-YQ_OBJECT_IMPLEMENT(yq::Asset)
 
 namespace yq {
 
@@ -28,11 +265,6 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    AssetMeta::AssetMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
-        ObjectMeta(zName, base, sl)
-    {
-        set(Flag::ASSET);
-    }
     
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,19 +313,11 @@ namespace yq {
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Asset::Asset()
-    {
-    }
-
     Asset::Asset(const std::filesystem::path&fp)
     {
         set_url(fp);
     }
     
-    Asset::~Asset()
-    {
-    }
-
     std::filesystem::path           Asset::filepath() const
     {
         return m_url.path;
@@ -202,10 +426,5 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void Asset::init_meta()
-    {
-        auto w = writer<Asset>();
-        w.description("Asset (ie texture, mesh, shader, etc)");
-        w.property("url", &Asset::m_url).tag({kTag_Save});
-    }
 }
+#endif

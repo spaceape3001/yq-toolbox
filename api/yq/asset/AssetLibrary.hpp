@@ -10,35 +10,34 @@
 #include <yq/text/IgCase.hpp>
 
 namespace yq {
-    class AssetLibraryInfo : public AssetMeta {
+    class AssetLibraryMeta : public AssetMeta {
     public:
     
         template <typename C> class Writer;
 
         //! Constructor of asset library info, used by the meta system to initialize the thing (so... don't need to call this outside of that context)
-        AssetLibraryInfo(std::string_view zName, AssetMeta& base, const std::source_location& sl=std::source_location::current());
+        AssetLibraryMeta(std::string_view zName, AssetMeta& base, const std::source_location& sl=std::source_location::current());
         
-        //! Base type of the library asset
-        const AssetMeta*    asset() const { return m_asset; }
+        //! Asset types this library can contain (empty implies all)
+        const std::vector<const AssetMeta*>& assets() const { return m_assets; }
     
     private:
-        const AssetMeta*    m_asset = nullptr;
+        std::vector<const AssetMeta*>   m_assets;
     };
 
     class AssetLibrary : public Asset {
-        YQ_OBJECT_META(AssetLibraryInfo)
+        YQ_OBJECT_META(AssetLibraryMeta)
         YQ_OBJECT_DECLARE(AssetLibrary, Asset)
     public:
     
+        bool    contains(const std::string&) const;
+    
+        static void init_meta();
+    
     protected:
         AssetLibrary();
-        ~AssetLibrary();
+        virtual ~AssetLibrary();
         
-        std::multimap<std::string,AssetCPtr,IgCase>    m_assets;
-    
-    };
-    
-    template <typename A>
-    class TypedAssetLibrary : public AssetLibrary {
+        std::map<std::string,AssetCPtr,IgCase>    m_assets;
     };
 }

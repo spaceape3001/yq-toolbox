@@ -216,6 +216,10 @@ namespace yq {
         
     };
     
+    struct KVDocument : public KVTree {
+        std::string         body;
+    };
+    
     /*! \brief Namespace for classes (& creator functions for them) that can match key-value as predicates
     */
     namespace kv {

@@ -6,10 +6,64 @@
 
 #pragma once
 
+#include "Asset.hpp"
+#include "AssetLibrary.hpp"
+
+#include <tbb/spin_rw_mutex.h>
+
+namespace yq {
+    struct Asset::Cache {
+        using mutex_t   = tbb::spin_rw_mutex;
+        using lock_t    = tbb::spin_rw_mutex::scoped_lock;
+    
+        mutable tbb::spin_rw_mutex                      mutex;
+        std::unordered_map<uint64_t, AssetCPtr>         byId;       //!< Asset cache (by ID)
+        std::map<UrlView, AssetCPtr>                    byUrl;      //!< Asset cache (by URL)
+        std::map<UrlView, AssetLibraryCPtr>             libraries;  //!< Currently loaded libraries
+        
+        void    inject(AssetLibraryCPtr alp)
+        {
+            if(!alp)
+                return;
+        
+            {
+                lock_t  _lock(mutex, true);
+                auto [i,f]  = libraries.insert({alp->url(), alp});
+                if(!f)
+                    std::swap(i->second, alp);
+            }
+        }
+        
+        void    inject(AssetCPtr ap)
+        {
+            if(!ap)
+                return;
+                
+            {
+                lock_t  _lock(mutex, true);
+                byId[ap->id()]  = ap;
+                auto [i,f]  = byUrl.insert({ap->url(), ap});
+                if(!f)
+                    std::swap(i->second, ap);
+            }
+        }
+    };
+    
+    Asset::Cache&   Asset::cache()
+    {
+        static Cache s_cache;
+        return s_cache;
+    }
+    
+}
+
+
+#if 0
+
+
 #include <filesystem>
 #include <map>
 #include <unordered_map>
-#include <tbb/spin_rw_mutex.h>
 
 #include <yq/typedef/asset.hpp>
 #include <yq/typedef/filesystem_path.hpp>
@@ -20,8 +74,6 @@ namespace yq {
     /*! \brief An asset cache retains the data
     
         Most all engine components will query the cache for the data, if not present, loads it.  (Compiling first, if necessary)
-        
-        WARNING... this thing will LEAK if things are reloaded as the asset won't delete
     */
     class AssetCache {
     public:
@@ -57,3 +109,4 @@ namespace yq {
         AssetCache& operator=(AssetCache&&) = delete;
     };
 }
+#endif

@@ -14,9 +14,9 @@ namespace yq {
 
 /*! \brief Macro to override the info
 
-    This overrides the "MyInfo" for a class (& base) to be the new type.
+    This overrides the "MyMeta" for a class (& base) to be the new type.
 */
-#define YQ_OBJECT_META( info )      public: using MyInfo    = info;
+#define YQ_OBJECT_META( info )      public: using MyMeta    = info;
 
 /*! \brief Macro to override the fixer
 
@@ -29,8 +29,8 @@ namespace yq {
 #define YQ_OBJECT_DECLARE_BASELESS( cls )               \
 public:                                                 \
     using MyObject = cls;                               \
-    virtual const MyInfo& metaInfo() const override;    \
-    static const MyInfo&  staticMetaInfo();
+    virtual const MyMeta& metaInfo() const override;    \
+    static const MyMeta&  staticMetaInfo();
 
 /*! \brief Declares an object type
 
@@ -58,7 +58,7 @@ public:                                                 \
         
         Should *ALWAYS* be the most specific info for the class
         */
-        using MyInfo        = ObjectMeta;
+        using MyMeta        = ObjectMeta;
         
         /*! \brief Base Class
         
@@ -93,7 +93,7 @@ public:                                                 \
     template <typename Obj>
     requires std::is_base_of_v<Object, Obj>
     struct MetaBinder<Obj> {
-        using Info  = typename Obj::MyInfo;    
+        using Info  = typename Obj::MyMeta;    
         static constexpr const bool Defined         = true;                 
         static constexpr const bool IsObject        = true;                 
         static constexpr const bool IsCompound      = true;                 
@@ -107,7 +107,7 @@ public:                                                 \
     template <SomeObject T>
     auto writer(unsafe_k)
     {
-        return typename T::MyInfo::template Writer<T>( const_cast<typename T::MyInfo&>( T::staticMetaInfo()));
+        return typename T::MyMeta::template Writer<T>( const_cast<typename T::MyMeta&>( T::staticMetaInfo()));
     }
 
     template <SomeObject Obj>
@@ -147,12 +147,12 @@ public:                                                 \
     \note Undefined linker errors will result if this macro isn't used in a SOURCE file.
 */
 #define YQ_OBJECT_IMPLEMENT(name)                                                                                   \
-    const name::MyInfo&     name::staticMetaInfo()                                                                  \
+    const name::MyMeta&     name::staticMetaInfo()                                                                  \
     {                                                                                                               \
         static name::MyFixer<name>*  s_info = new name::MyFixer<name>(#name, yq::MetaBinder<MyBase>::edit());   \
         return *s_info;                                                                                             \
     }                                                                                                               \
-    const name::MyInfo&     name::metaInfo() const                                                                  \
+    const name::MyMeta&     name::metaInfo() const                                                                  \
     {                                                                                                               \
         return staticMetaInfo();                                                                                    \
     }                                                                                                               \
@@ -167,7 +167,7 @@ public:                                                 \
     namespace yq {                                                      \
         template <>                                                     \
         struct MetaBinder<__VA_ARGS__>  : public std::true_type {       \
-            using Info = __VA_ARGS__::MyInfo;                           \
+            using Info = __VA_ARGS__::MyMeta;                           \
             static constexpr const bool Defined         = true;         \
             static constexpr const bool IsObject        = true;         \
             static constexpr const bool IsType          = false;        \

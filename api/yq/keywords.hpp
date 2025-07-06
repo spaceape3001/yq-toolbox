@@ -45,6 +45,7 @@ namespace yq {
     struct asset_k {};
     struct bigger_k {};
     struct biggest_k {};
+    struct binary_k {};
     struct box_k {};
     struct cache_k {};
     struct calculate_k {};
@@ -255,6 +256,7 @@ namespace yq {
     struct unlocked_k {};
     struct unsafe_k {};
     struct up_k {};
+    struct url_k {};
     struct use_k {};
     struct v_k {};
     struct value_k {};
@@ -321,6 +323,7 @@ namespace yq {
     static constexpr const asset_k              ASSET;
     static constexpr const bigger_k             BIGGER;
     static constexpr const biggest_k            BIGGEST;
+    static constexpr const binary_k             BINARY;
     static constexpr const box_k                BOX;
     static constexpr const cache_k              CACHE;
     static constexpr const calculate_k          CALC, CALCULATE;
@@ -539,6 +542,7 @@ namespace yq {
     static constexpr const unlocked_k           UNLOCKED;
     static constexpr const unsafe_k             UNSAFE;
     static constexpr const up_k                 UP;
+    static constexpr const url_k                URL;
     static constexpr const use_k                USE;
     static constexpr const v_k                  V;
     static constexpr const value_k              VALUE;

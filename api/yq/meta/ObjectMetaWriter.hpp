@@ -88,9 +88,9 @@ namespace yq {
         It's ultimate purpose is to make sure the template object can be created (if it's capable)
     */
     template <typename Obj>
-    struct ObjectFixer  : public Obj::MyInfo, public DelayInit {
-        ObjectFixer(std::string_view szName, typename Obj::MyBase::MyInfo& myBase, std::source_location sl=std::source_location::current()) :
-            Obj::MyInfo(szName, myBase, sl)
+    struct ObjectFixer  : public Obj::MyMeta, public DelayInit {
+        ObjectFixer(std::string_view szName, typename Obj::MyBase::MyMeta& myBase, std::source_location sl=std::source_location::current()) :
+            Obj::MyMeta(szName, myBase, sl)
         {
             if constexpr ( std::is_abstract_v<Obj> ){
                 Meta::set(Meta::Flag::ABSTRACT);
