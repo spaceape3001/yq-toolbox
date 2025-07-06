@@ -48,6 +48,8 @@ namespace yq {
     
     //! Faster (OS-api based) test for file existence
     bool            file_exists(const char*);
+
+    //! Faster (OS-api based) test for file existence
     bool            file_exists(const filesystem_path_t&);
     std::string     file_modified(const char*);
     bool            file_readable(const char*);
