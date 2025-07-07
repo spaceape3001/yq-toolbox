@@ -6,7 +6,6 @@
 
 add_library(yq_asset SHARED
     asset/asset.cpp
-    asset/KVTreeDriver.cpp
 )
 
 target_link_libraries(yq_asset 

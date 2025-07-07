@@ -126,6 +126,7 @@ namespace yq {
         add_loader(new TypedUrlLoaderNoAPI<A>(exts, std::move(fn), sl));
     }
     
+////////////////////////////////////////////////////////////////////////////////
 
     template <SomeAsset A> 
     class Asset::TypedUrlSaver : public UrlSaver {
@@ -192,5 +193,75 @@ namespace yq {
     void    Asset::add_saver(string_view_initializer_list_t exts, std::function<std::error_code(const A&, const UrlView&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedUrlSaverNoAPI<A>(exts, std::move(fn), sl));
+    }
+
+
+    template <SomeAsset A> 
+    class Asset::TypedUrlSaverBool : public UrlSaver {
+    public:
+    
+        using FN    = std::function<bool(const A&, const UrlView&, const AssetSaveAPI&)>;
+
+        TypedUrlSaverBool(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            UrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedUrlSaverBool()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, const UrlView& fp, const AssetSaveAPI& api) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, fp, api))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, const UrlView&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedUrlSaverBool<A>(exts, std::move(fn), sl));
+    }
+        
+    
+    template <SomeAsset A> 
+    class Asset::TypedUrlSaverBoolNoAPI : public UrlSaver {
+        using FN    = std::function<bool(const A&, const UrlView&)>;
+
+        TypedUrlSaverBoolNoAPI(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            UrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedUrlSaverBoolNoAPI()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, const UrlView& fp, const AssetSaveAPI&) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, fp))
+                return errors::asset_saving_failed();
+            return {};
+        }
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, const UrlView&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedUrlSaverBoolNoAPI<A>(exts, std::move(fn), sl));
     }
 }

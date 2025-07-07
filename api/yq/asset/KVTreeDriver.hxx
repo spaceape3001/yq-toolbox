@@ -152,6 +152,8 @@ namespace yq {
         add_loader(new TypedKVTreeLoaderNoAPI<A>(exts, std::move(fn), true, sl));
     }
 
+////////////////////////////////////////////////////////////////////////////////
+
     template <SomeAsset A> 
     class Asset::TypedKVTreeSaver : public KVTreeSaver {
     public:
@@ -217,5 +219,77 @@ namespace yq {
     void    Asset::add_saver(string_view_initializer_list_t exts, std::function<std::error_code(const A&, KVTree&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedKVTreeSaverNoAPI<A>(exts, std::move(fn), sl));
+    }
+
+
+    template <SomeAsset A> 
+    class Asset::TypedKVTreeSaverBool : public KVTreeSaver {
+    public:
+    
+        using FN    = std::function<bool(const A&, KVTree&, const AssetSaveAPI&)>;
+
+        TypedKVTreeSaverBool(string_view_initializer_list_t exts, FN&& fn, bool recurse, const std::source_location& sl) :
+            KVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedKVTreeSaverBool()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, KVTree& bytes, const AssetSaveAPI& api) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, bytes, api))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVTree&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedKVTreeSaverBool<A>(exts, std::move(fn), sl));
+    }
+        
+    
+    template <SomeAsset A> 
+    class Asset::TypedKVTreeSaverBoolNoAPI : public KVTreeSaver {
+        using FN    = std::function<bool(const A&, KVTree&)>;
+
+        TypedKVTreeSaverBoolNoAPI(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            ByteSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedKVTreeSaverBoolNoAPI()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, KVTree& bytes, const AssetSaveAPI&) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, bytes))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVTree&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedKVTreeSaverBoolNoAPI<A>(exts, std::move(fn), sl));
     }
 }

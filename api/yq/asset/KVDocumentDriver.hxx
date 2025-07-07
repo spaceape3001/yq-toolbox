@@ -152,6 +152,8 @@ namespace yq {
         add_loader(new TypedKVDocumentLoaderNoAPI<A>(exts, std::move(fn), true, sl));
     }
 
+////////////////////////////////////////////////////////////////////////////////
+
     template <SomeAsset A> 
     class Asset::TypedKVDocumentSaver : public KVDocumentSaver {
     public:
@@ -217,5 +219,77 @@ namespace yq {
     void    Asset::add_saver(string_view_initializer_list_t exts, std::function<std::error_code(const A&, KVDocument&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedKVDocumentSaverNoAPI<A>(exts, std::move(fn), sl));
+    }
+
+
+    template <SomeAsset A> 
+    class Asset::TypedKVDocumentSaverBool : public KVDocumentSaver {
+    public:
+    
+        using FN    = std::function<bool(const A&, KVDocument&, const AssetSaveAPI&)>;
+
+        TypedKVDocumentSaverBool(string_view_initializer_list_t exts, FN&& fn, bool recurse, const std::source_location& sl) :
+            KVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedKVDocumentSaverBool()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, KVDocument& bytes, const AssetSaveAPI& api) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, bytes, api))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVDocument&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedKVDocumentSaverBool<A>(exts, std::move(fn), sl));
+    }
+        
+    
+    template <SomeAsset A> 
+    class Asset::TypedKVDocumentSaverBoolNoAPI : public KVDocumentSaver {
+        using FN    = std::function<bool(const A&, KVDocument&)>;
+
+        TypedKVDocumentSaverBoolNoAPI(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            ByteSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedKVDocumentSaverBoolNoAPI()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, KVDocument& bytes, const AssetSaveAPI&) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, bytes))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVDocument&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedKVDocumentSaverBoolNoAPI<A>(exts, std::move(fn), sl));
     }
 }

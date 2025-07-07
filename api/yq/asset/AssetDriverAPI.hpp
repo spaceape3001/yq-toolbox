@@ -65,7 +65,6 @@ namespace yq {
     class AssetSaveAPI {
     public:
     
-        std::string_view            spec() const { return m_spec; }
         const Url&                  url() const { return m_url; }
         
         bool                        contains(uint32_t) const;
@@ -85,7 +84,6 @@ namespace yq {
         ~AssetSaveAPI();
 
         const AssetSaveOptions&     m_options;
-        std::string_view            m_spec;
         Url                         m_url;
     };
 

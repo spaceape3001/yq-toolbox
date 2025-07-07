@@ -126,6 +126,7 @@ namespace yq {
         add_loader(new TypedByteLoaderNoAPI<A>(exts, std::move(fn), sl));
     }
     
+////////////////////////////////////////////////////////////////////////////////
 
     template <SomeAsset A> 
     class Asset::TypedByteSaver : public ByteSaver {
@@ -192,5 +193,76 @@ namespace yq {
     void    Asset::add_saver(string_view_initializer_list_t exts, std::function<std::error_code(const A&, ByteArray&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedByteSaverNoAPI<A>(exts, std::move(fn), sl));
+    }
+
+    template <SomeAsset A> 
+    class Asset::TypedByteSaverBool : public ByteSaver {
+    public:
+    
+        using FN    = std::function<bool(const A&, ByteArray&, const AssetSaveAPI&)>;
+
+        TypedByteSaverBool(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            ByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedByteSaverBool()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, ByteArray& bytes, const AssetSaveAPI& api) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, bytes, api))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, ByteArray&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedByteSaverBool<A>(exts, std::move(fn), sl));
+    }
+        
+    
+    template <SomeAsset A> 
+    class Asset::TypedByteSaverBoolNoAPI : public ByteSaver {
+        using FN    = std::function<bool(const A&, ByteArray&)>;
+
+        TypedByteSaverBoolNoAPI(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            ByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedByteSaverBoolNoAPI()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, ByteArray& bytes, const AssetSaveAPI&) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, bytes))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, ByteArray&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedByteSaverBoolNoAPI<A>(exts, std::move(fn), sl));
     }
 }

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/keywords.hpp>
+#include <yq/asset/AssetIO.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/UniqueID.hpp>
@@ -58,11 +59,31 @@ namespace yq {
     #define YQ_ASSET_DECLARE(asset, base) \
         YQ_OBJECT_DECLARE(asset, base) \
     public:\
-        static Ref<const asset> load(std::string_view u) { return load_as<asset>(u); } \
-        static Ref<const asset> load(const std::filesystem::path& u) { return load_as<asset>(u); } \
-        static Ref<const asset> load(const UrlView& u) { return load_as<asset>(u); } 
+        static Ref<const asset> load(std::string_view u, const AssetLoadOptions& options={}) { return load_as<asset>(u, options); } \
+        static Ref<const asset> load(const std::filesystem::path& u, const AssetLoadOptions& options={}) { return load_as<asset>(u, options); } \
+        static Ref<const asset> load(const UrlView& u, const AssetLoadOptions& options={}) { return load_as<asset>(u, options); } 
     
     #define YQ_ASSET_IMPLEMENT(asset) YQ_OBJECT_IMPLEMENT(asset)
+    
+    class AssetInfo : public Object, public RefCount {
+        YQ_OBJECT_DECLARE(AssetInfo, Object)
+        
+        friend class Asset;
+    public:
+        
+        const Url&  url() const { return m_url; }
+    
+        static void init_meta();
+    
+    protected:
+        AssetInfo();
+        virtual ~AssetInfo();
+    
+    private:
+        Url     m_url;
+    
+    };
+    
     
     /*! \brief An asset of the graphics engine
     
@@ -121,6 +142,8 @@ namespace yq {
         template <SomeAsset> class TypedByteLoaderNoAPI;
         template <SomeAsset> class TypedByteSaver;
         template <SomeAsset> class TypedByteSaverNoAPI;
+        template <SomeAsset> class TypedByteSaverBool;
+        template <SomeAsset> class TypedByteSaverBoolNoAPI;
 
         template <SomeAsset> class TypedFileInfoer;
         template <SomeAsset> class TypedFileInfoerNoAPI;
@@ -128,6 +151,8 @@ namespace yq {
         template <SomeAsset> class TypedFileLoaderNoAPI;
         template <SomeAsset> class TypedFileSaver;
         template <SomeAsset> class TypedFileSaverNoAPI;
+        template <SomeAsset> class TypedFileSaverBool;
+        template <SomeAsset> class TypedFileSaverBoolNoAPI;
 
         template <SomeAsset> class TypedJsonInfoer;
         template <SomeAsset> class TypedJsonInfoerNoAPI;
@@ -135,6 +160,8 @@ namespace yq {
         template <SomeAsset> class TypedJsonLoaderNoAPI;
         template <SomeAsset> class TypedJsonSaver;
         template <SomeAsset> class TypedJsonSaverNoAPI;
+        template <SomeAsset> class TypedJsonSaverBool;
+        template <SomeAsset> class TypedJsonSaverBoolNoAPI;
 
         template <SomeAsset> class TypedKVInfoer;
         template <SomeAsset> class TypedKVInfoerNoAPI;
@@ -149,6 +176,8 @@ namespace yq {
         template <SomeAsset> class TypedKVTreeLoaderNoAPI;
         template <SomeAsset> class TypedKVTreeSaver;
         template <SomeAsset> class TypedKVTreeSaverNoAPI;
+        template <SomeAsset> class TypedKVTreeSaverBool;
+        template <SomeAsset> class TypedKVTreeSaverBoolNoAPI;
 
         template <SomeAsset> class TypedKVDocumentInfoer;
         template <SomeAsset> class TypedKVDocumentInfoerNoAPI;
@@ -156,6 +185,8 @@ namespace yq {
         template <SomeAsset> class TypedKVDocumentLoaderNoAPI;
         template <SomeAsset> class TypedKVDocumentSaver;
         template <SomeAsset> class TypedKVDocumentSaverNoAPI;
+        template <SomeAsset> class TypedKVDocumentSaverBool;
+        template <SomeAsset> class TypedKVDocumentSaverBoolNoAPI;
 
         template <SomeAsset> class TypedStreamInfoer;
         template <SomeAsset> class TypedStreamInfoerNoAPI;
@@ -163,6 +194,8 @@ namespace yq {
         template <SomeAsset> class TypedStreamLoaderNoAPI;
         template <SomeAsset> class TypedStreamSaver;
         template <SomeAsset> class TypedStreamSaverNoAPI;
+        template <SomeAsset> class TypedStreamSaverBool;
+        template <SomeAsset> class TypedStreamSaverBoolNoAPI;
 
         template <SomeAsset> class TypedStringInfoer;
         template <SomeAsset> class TypedStringInfoerNoAPI;
@@ -170,6 +203,8 @@ namespace yq {
         template <SomeAsset> class TypedStringLoaderNoAPI;
         template <SomeAsset> class TypedStringSaver;
         template <SomeAsset> class TypedStringSaverNoAPI;
+        template <SomeAsset> class TypedStringSaverBool;
+        template <SomeAsset> class TypedStringSaverBoolNoAPI;
 
         template <SomeAsset> class TypedUrlInfoer;
         template <SomeAsset> class TypedUrlInfoerNoAPI;
@@ -177,6 +212,8 @@ namespace yq {
         template <SomeAsset> class TypedUrlLoaderNoAPI;
         template <SomeAsset> class TypedUrlSaver;
         template <SomeAsset> class TypedUrlSaverNoAPI;
+        template <SomeAsset> class TypedUrlSaverBool;
+        template <SomeAsset> class TypedUrlSaverBoolNoAPI;
 
         template <SomeAsset> class TypedXmlInfoer;
         template <SomeAsset> class TypedXmlInfoerNoAPI;
@@ -184,6 +221,8 @@ namespace yq {
         template <SomeAsset> class TypedXmlLoaderNoAPI;
         template <SomeAsset> class TypedXmlSaver;
         template <SomeAsset> class TypedXmlSaverNoAPI;
+        template <SomeAsset> class TypedXmlSaverBool;
+        template <SomeAsset> class TypedXmlSaverBoolNoAPI;
 
         static void         add_infoer(Infoer*);
         static void         add_loader(Loader*);
@@ -360,6 +399,65 @@ namespace yq {
         static void             add_paths(std::string_view);
         
 
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, const std::filesystem::path&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, const std::filesystem::path&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, const UrlView&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, const UrlView&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, ByteArray&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, ByteArray&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+    
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, XmlDocument&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, XmlDocument&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+    
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, json&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, json&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVDocument&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVDocument&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVTree&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, KVTree&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::string&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::string&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::ostream&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, binary_k, std::function<bool(const A&, std::ostream&)>&&, const std::source_location& sl=std::source_location::current());
+        
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
+
+        template <SomeAsset A>
+        static void             add_saver(string_view_initializer_list_t exts, binary_k, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
 
 
         template <SomeAsset A>
@@ -423,113 +521,70 @@ namespace yq {
         static void             add_saver(string_view_initializer_list_t exts, binary_k, std::function<std::error_code(const A&, std::ostream&, const AssetSaveAPI&)>&&, const std::source_location& sl=std::source_location::current());
 
 
-        static AssetInfoCPtr    info(std::string_view);
+        static AssetInfoCPtr    info(std::string_view, const AssetInfoOptions& options={});
         
-        static AssetInfoCPtr    info(const AssetMeta&, std::string_view);
+        static AssetInfoCPtr    info(const AssetMeta&, std::string_view, const AssetInfoOptions& options={});
 
-        static AssetInfoCPtr    info(const UrlView&);
+        static AssetInfoCPtr    info(const UrlView&, const AssetInfoOptions& options={});
 
         //! Loads from the specific URL
-        static AssetInfoCPtr    info(const AssetMeta&, const UrlView&);
+        static AssetInfoCPtr    info(const AssetMeta&, const UrlView&, const AssetInfoOptions& options={});
         
         //! Loads from the specific file
-        static AssetInfoCPtr    info(const std::filesystem::path&);
+        static AssetInfoCPtr    info(const std::filesystem::path&, const AssetInfoOptions& options={});
 
         //! Loads from the specific file
-        static AssetInfoCPtr    info(const AssetMeta&, const std::filesystem::path&);
+        static AssetInfoCPtr    info(const AssetMeta&, const std::filesystem::path&, const AssetInfoOptions& options={});
     
         //! Loads from the specific library
-        static AssetInfoCPtr    info(const std::filesystem::path&, std::string_view);
+        static AssetInfoCPtr    info(const std::filesystem::path&, std::string_view, const AssetInfoOptions& options={});
 
         //! Loads from the specific library
-        static AssetInfoCPtr    info(const AssetMeta&, const std::filesystem::path&, std::string_view);
-
-
-
-        //! Common, loads from the short specification
-        static AssetCPtr        load(std::string_view);
-
-        //! Common, loads from the short specification
-        static AssetCPtr        load(const AssetMeta&, std::string_view);
-
-        //! Loads from the specific URL
-        static AssetCPtr        load(const UrlView&);
-
-        //! Loads from the specific URL
-        static AssetCPtr        load(const AssetMeta&, const UrlView&);
-        
-        //! Loads from the specific file
-        static AssetCPtr        load(const std::filesystem::path&);
-
-        //! Loads from the specific file
-        static AssetCPtr        load(const AssetMeta&, const std::filesystem::path&);
-    
-        //! Loads from the specific library
-        static AssetCPtr        load(const std::filesystem::path&, std::string_view);
-
-        //! Loads from the specific library
-        static AssetCPtr        load(const AssetMeta&, const std::filesystem::path&, std::string_view);
-        
-        template <SomeAsset A>
-        static Ref<const A>     load_as(std::string_view);
+        static AssetInfoCPtr    info(const AssetMeta&, const std::filesystem::path&, std::string_view, const AssetInfoOptions& options={});
 
         template <SomeAsset A>
-        static Ref<const A>     load_as(const UrlView&);
+        static Ref<const typename A::MyInfo>     info_as(std::string_view, const AssetInfoOptions& options={});
+
+        template <SomeAsset A>
+        static Ref<const typename A::MyInfo>     info_as(const UrlView&, const AssetInfoOptions& options={});
         
         template <SomeAsset A>
-        static Ref<const A>     load_as(const std::filesystem::path&);
-        
+        static Ref<const typename A::MyInfo>     info_as(const std::filesystem::path&, const AssetInfoOptions& options={});
+
 
         //! Common, loads from the short specification
-        static AssetCPtr        reload(std::string_view);
+        static AssetCPtr        load(std::string_view, const AssetLoadOptions& options={});
 
         //! Common, loads from the short specification
-        static AssetCPtr        reload(const AssetMeta&, std::string_view);
+        static AssetCPtr        load(const AssetMeta&, std::string_view, const AssetLoadOptions& options={});
 
         //! Loads from the specific URL
-        static AssetCPtr        reload(const UrlView&);
+        static AssetCPtr        load(const UrlView&, const AssetLoadOptions& options={});
 
         //! Loads from the specific URL
-        static AssetCPtr        reload(const AssetMeta&, const UrlView&);
+        static AssetCPtr        load(const AssetMeta&, const UrlView&, const AssetLoadOptions& options={});
         
         //! Loads from the specific file
-        static AssetCPtr        reload(const std::filesystem::path&);
+        static AssetCPtr        load(const std::filesystem::path&, const AssetLoadOptions& options={});
 
         //! Loads from the specific file
-        static AssetCPtr        reload(const AssetMeta&, const std::filesystem::path&);
+        static AssetCPtr        load(const AssetMeta&, const std::filesystem::path&, const AssetLoadOptions& options={});
     
         //! Loads from the specific library
-        static AssetCPtr        reload(const std::filesystem::path&, std::string_view);
+        static AssetCPtr        load(const std::filesystem::path&, std::string_view, const AssetLoadOptions& options={});
 
         //! Loads from the specific library
-        static AssetCPtr        reload(const AssetMeta&, const std::filesystem::path&, std::string_view);
+        static AssetCPtr        load(const AssetMeta&, const std::filesystem::path&, std::string_view, const AssetLoadOptions& options={});
+        
+        template <SomeAsset A>
+        static Ref<const A>     load_as(std::string_view, const AssetLoadOptions& options={});
 
-
-            //! Resolves & loads w/o cache
-        static AssetCPtr        sload(std::string_view);
-
-            //! Resolves & loads w/o cache
-        static AssetCPtr        sload(const AssetMeta&, std::string_view);
-
-            //! Resolves & loads w/o cache
-        static AssetCPtr        sload(const UrlView&);
-
-            //! Resolves & loads w/o cache
-        static AssetCPtr        sload(const AssetMeta&, const UrlView&);
-
-            //! Loads from the specific file w/o cache
-        static AssetCPtr        sload(const std::filesystem::path&);
-
-            //! Loads from the specific file w/o cache
-        static AssetCPtr        sload(const AssetMeta&, const std::filesystem::path&);
-    
-            //! Loads from the specific library/sub-component w/o cache
-        static AssetCPtr        sload(const std::filesystem::path&, std::string_view);
-
-            //! Loads from the specific library/sub-component w/o cache
-        static AssetCPtr        sload(const AssetMeta&, const std::filesystem::path&, std::string_view);
-
-
+        template <SomeAsset A>
+        static Ref<const A>     load_as(const UrlView&, const AssetLoadOptions& options={});
+        
+        template <SomeAsset A>
+        static Ref<const A>     load_as(const std::filesystem::path&, const AssetLoadOptions& options={});
+        
 
             //! Does what it says, wipes the cache
         static void         wipe_cache();
@@ -539,15 +594,16 @@ namespace yq {
         };
 
 
-
-    
-    
-    
-    
+        bool                            read_only() const { return m_readonly; }
 
 
         //! Current data size
         virtual size_t                  data_size() const = 0;
+        
+        std::string_view                extension() const;
+        
+        //! Injects into the cache (& sets to readonly)
+        void                            inject();
         
         //! Only works if cached, otherwise empty
         const Url&                      url() const { return m_url; }
@@ -565,11 +621,13 @@ namespace yq {
         //! \note This will be a tad slower as it'll require a recurvsive search
         //static std::filesystem::path    resolve(partial_k, std::string_view);
         
-        std::error_code                 save_to(const std::filesystem::path&) const;
-        std::error_code                 save_to(const std::filesystem::path&, const AssetSaveOptions& options) const;
+        //! Saves the file to the original URL (if able to)
+        std::error_code                 save(const AssetSaveOptions& options={}) const;
+
+        std::error_code                 save_to(const std::filesystem::path&, const AssetSaveOptions& options={}) const;
         
-        std::error_code                 save_to(const Url&) const;
-        std::error_code                 save_to(const Url&, const AssetSaveOptions& options) const;
+        std::error_code                 save_to(const UrlView&, const AssetSaveOptions& options={}) const;
+
 
         //static const path_vector_t&             search_path();
         //static const std::filesystem::path&     binary_root();
@@ -604,6 +662,7 @@ namespace yq {
         
     private:
         Url                             m_url;      // URL
+        bool                            m_readonly  = false;
         
         struct Cache;
         static Cache&   cache();
@@ -611,33 +670,48 @@ namespace yq {
         struct Repo;
         static Repo&    repo();
         
-        enum class CacheOption : uint8_t {
-            Auto,
-            ForcedLoad,
-            NoCache
-        };
-        
-        static AssetInfoCPtr            _info(const AssetMeta&, const UrlView&, CacheOption autoCache=CacheOption::Auto);
-        static AssetCPtr                _load(const AssetMeta&, const UrlView&, CacheOption autoCache=CacheOption::Auto);
-        static std::error_code          _save(const Asset&, const Url&, const AssetSaveOptions& options);
+        static AssetInfoCPtr            _info(const AssetMeta&, AssetInfoAPI&);
+        static AssetCPtr                _load(const AssetMeta&, AssetLoadAPI&);
+        static AssetCPtr                _load_file(const AssetMeta&, AssetLoadAPI&);
+        static AssetCPtr                _load_fragment(const AssetMeta&, AssetLoadAPI&);
+        static std::error_code          _save(const Asset&, AssetSaveAPI&);
+        static std::error_code          _save_file(const Asset&, AssetSaveAPI&);
         
     };
 
     template <SomeAsset A>
-    Ref<const A> Asset::load_as(std::string_view u)
+    Ref<const typename A::MyInfo> Asset::info_as(std::string_view u, const AssetInfoOptions& options)
     {
-        return static_cast<const A*>(load(meta<A>(), u));
+        return static_cast<const A*>(info(meta<A>(), u, options));
     }
     
     template <SomeAsset A>
-    static Ref<const A> load_as(const UrlView&u)
+    static Ref<const typename A::MyInfo> info_as(const UrlView&u, const AssetInfoOptions& options)
     {
-        return static_cast<const A*>(load(meta<A>(), u));
+        return static_cast<const A*>(info(meta<A>(), u, options));
     }
     
     template <SomeAsset A>
-    static Ref<const A> load_as(const std::filesystem::path& fp)
+    static Ref<const typename A::MyInfo> info_as(const std::filesystem::path& fp, const AssetInfoOptions& options)
     {
-        return static_cast<const A*>(load(meta<A>(), fp));
+        return static_cast<const A*>(info(meta<A>(), fp, options));
+    }
+
+    template <SomeAsset A>
+    Ref<const A> Asset::load_as(std::string_view u, const AssetLoadOptions& options)
+    {
+        return static_cast<const A*>(load(meta<A>(), u, options));
+    }
+    
+    template <SomeAsset A>
+    static Ref<const A> load_as(const UrlView&u, const AssetLoadOptions& options)
+    {
+        return static_cast<const A*>(load(meta<A>(), u, options));
+    }
+    
+    template <SomeAsset A>
+    static Ref<const A> load_as(const std::filesystem::path& fp, const AssetLoadOptions& options)
+    {
+        return static_cast<const A*>(load(meta<A>(), fp, options));
     }
 }

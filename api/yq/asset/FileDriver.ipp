@@ -54,13 +54,13 @@ namespace yq {
     Asset* Asset::FileLoader::load(const UrlView& url, const AssetLoadAPI& api) const
     {
         if(url.path.empty()){
-            assetWarning << "URL from " << api.spec() << " has no path!";
+            assetWarning << "URL '" << to_string(api.url()) << "' has no path!";
             return nullptr;
         }
         
         std::filesystem::path fp(url.path);
         if(!file_exists(fp)){
-            assetWarning << "URL's file from " << api.spec() << " does not exist!";
+            assetWarning << "URL '" << to_string(api.url()) << "' does not exist!";
             return nullptr;
         }
         
@@ -81,7 +81,7 @@ namespace yq {
     std::error_code  Asset::FileSaver::save(const Asset&asset, const UrlView&url, const AssetSaveAPI&api) const
     {
         if(url.path.empty()){
-            assetWarning << "URL from " << api.spec() << " has no path!";
+            assetWarning << "URL '" << to_string(api.url()) << "' has no path!";
             return errors::bad_argument();
         }
         

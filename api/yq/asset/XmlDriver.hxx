@@ -126,6 +126,7 @@ namespace yq {
         add_loader(new TypedXmlLoaderNoAPI<A>(exts, std::move(fn), sl));
     }
     
+////////////////////////////////////////////////////////////////////////////////
 
     template <SomeAsset A> 
     class Asset::TypedXmlSaver : public XmlSaver {
@@ -192,5 +193,77 @@ namespace yq {
     void    Asset::add_saver(string_view_initializer_list_t exts, std::function<std::error_code(const A&, XmlDocument&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedXmlSaverNoAPI<A>(exts, std::move(fn), sl));
+    }
+
+
+    template <SomeAsset A> 
+    class Asset::TypedXmlSaverBool : public XmlSaver {
+    public:
+    
+        using FN    = std::function<bool(const A&, XmlDocument&, const AssetSaveAPI&)>;
+
+        TypedXmlSaverBool(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            XmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedXmlSaverBool()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, XmlDocument& fp, const AssetSaveAPI& api) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, fp, api))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, XmlDocument&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedXmlSaverBool<A>(exts, std::move(fn), sl));
+    }
+        
+    
+    template <SomeAsset A> 
+    class Asset::TypedXmlSaverBoolNoAPI : public XmlSaver {
+        using FN    = std::function<bool(const A&, XmlDocument&)>;
+
+        TypedXmlSaverBoolNoAPI(string_view_initializer_list_t exts, FN&& fn, const std::source_location& sl) :
+            XmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedXmlSaverBoolNoAPI()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, XmlDocument& fp, const AssetSaveAPI&) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, fp))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, XmlDocument&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedXmlSaverBoolNoAPI<A>(exts, std::move(fn), sl));
     }
 }

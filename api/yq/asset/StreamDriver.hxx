@@ -151,6 +151,7 @@ namespace yq {
         add_loader(new TypedStreamLoaderNoAPI<A>(exts, std::move(fn), true, sl));
     }
     
+////////////////////////////////////////////////////////////////////////////////
 
     template <SomeAsset A> 
     class Asset::TypedStreamSaver : public StreamSaver {
@@ -229,5 +230,89 @@ namespace yq {
     void    Asset::add_saver(string_view_initializer_list_t exts, binary_k, std::function<std::error_code(const A&, std::ostream&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedStreamSaverNoAPI<A>(exts, std::move(fn), true, sl));
+    }
+
+
+    template <SomeAsset A> 
+    class Asset::TypedStreamSaverBool : public StreamSaver {
+    public:
+    
+        using FN    = std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>;
+
+        TypedStreamSaverBool(string_view_initializer_list_t exts, FN&& fn, bool binary, const std::source_location& sl) :
+            StreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedStreamSaverBool()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, std::ostream& str, const AssetSaveAPI& api) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, str, api))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedStreamSaverBool<A>(exts, std::move(fn), false, sl));
+    }
+        
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, binary_k, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedStreamSaverBool<A>(exts, std::move(fn), true, sl));
+    }
+        
+    
+    template <SomeAsset A> 
+    class Asset::TypedStreamSaverBoolNoAPI : public StreamSaver {
+        using FN    = std::function<bool(const A&, std::ostream&)>;
+
+        TypedStreamSaverBoolNoAPI(string_view_initializer_list_t exts, FN&& fn, bool binary, const std::source_location& sl) :
+            StreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        {
+        }
+
+        ~TypedStreamSaverBoolNoAPI()
+        {
+        }
+
+        std::error_code  save(const Asset& asset, std::ostream& str, const AssetSaveAPI&) const override
+        {
+            const A*    a   = dynamic_cast<const A*>(&asset);
+            if(!a)
+                return errors::bad_argument();
+            if(!m_function(*a, str))
+                return errors::asset_saving_failed();
+            return {};
+        }
+        
+
+    private:
+        FN          m_function;
+    };
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::ostream&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedStreamSaverBoolNoAPI<A>(exts, std::move(fn), false, sl));
+    }
+
+    template <SomeAsset A>
+    void    Asset::add_saver(string_view_initializer_list_t exts, binary_k, std::function<bool(const A&, std::ostream&)>&&fn, const std::source_location& sl)
+    {
+        add_saver(new TypedStreamSaverBoolNoAPI<A>(exts, std::move(fn), true, sl));
     }
 }

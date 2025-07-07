@@ -7,11 +7,7 @@
 #pragma once
 
 #include <yq/asset/Asset.hpp>
-//#include <yq/typedef/filesystem_path.hpp>
-//#include <yq/typedef/json.hpp>
-//#include <yq/typedef/string_sets.hpp>
-//#include <yq/typedef/xml.hpp>
-//#include <iosfwd>
+#include <yq/core/ErrorDB.hpp>
 
 namespace yq {
 
@@ -84,4 +80,7 @@ namespace yq {
         virtual ~Saver();
     };
     
+    namespace errors {
+        using asset_saving_failed   = error_db::entry<"Unable to save asset">;
+    }
 }

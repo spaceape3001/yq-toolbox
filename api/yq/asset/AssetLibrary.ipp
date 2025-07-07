@@ -32,6 +32,14 @@ namespace yq {
     {
     }
         
+    AssetCPtr   AssetLibrary::asset(const std::string& k) const
+    {
+        auto x = m_assets.find(k);
+        if(x == m_assets.end())
+            return {};
+        return x->second;
+    }
+
     bool    AssetLibrary::contains(const std::string&k) const
     {
         return m_assets.contains(k);

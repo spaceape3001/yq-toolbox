@@ -33,8 +33,12 @@ namespace yq {
         bool    contains(const std::string&) const;
     
         static void init_meta();
+        
+        AssetCPtr   asset(const std::string&) const;
     
     protected:
+        friend class Asset;
+        
         AssetLibrary();
         virtual ~AssetLibrary();
         

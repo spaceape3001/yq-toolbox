@@ -26,7 +26,12 @@
         of scheme handler will be employed, to download the 
         contents of the request, and hand off the parsing to
         a more dedicated byte/buffer based loader.
-        
+
+        Terminology
+            Asset       Anything that can be loaded (aka Resource)
+            Info        Information about the specific asset (by url)
+            Library     Collection of Assets
+            Meta        Meta information/reflection about the asset's C++ class
     */
 
 

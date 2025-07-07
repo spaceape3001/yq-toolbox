@@ -10,16 +10,27 @@
 #include "AssetMetaWriter.hpp"
 
 #include <yq/tags.hpp>
+#include <yq/file/FileUtils.hpp>
 #include <yq/text/match.hpp>
 #include <yq/text/transform.hpp>
 #include <yq/text/vsplit.hpp>
+#include <yq/util/Iterable.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::Asset)
+YQ_OBJECT_IMPLEMENT(yq::AssetInfo)
 
 namespace yq {
+    namespace errors {
+        using filepath_existing             = error_db::entry<"Filepath already exists">;
+        using invalid_collision_strategy    = error_db::entry<"File collision strategy is invalid">;
+        using loading_exception             = error_db::entry<"Exception thrown during loading">;
+        using no_file_extension             = error_db::entry<"No file extension provided to file">;
+        using no_savers_defined             = error_db::entry<"Asset class has NO saving functions defined">;
+        using no_savers_applicable          = error_db::entry<"No file savers defined for given output">;
+        using saving_exception              = error_db::entry<"Exception thrown during saving">;
+    }
 
 ////////////////////////////////////////////////////////////////////////////////
-
 
     AssetMeta::AssetMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
@@ -28,8 +39,255 @@ namespace yq {
         Asset::repo().assets.push_back(this);
     }
 
+    void Asset::init_meta()
+    {
+        auto w = writer<Asset>();
+        w.description("Asset (ie texture, mesh, shader, etc)");
+        w.property("url", &Asset::m_url).tag({kTag_Save});
+        w.abstract();
+    }
+
 ////////////////////////////////////////////////////////////////////////////////
 
+    AssetInfo::AssetInfo() = default;
+    AssetInfo::~AssetInfo() = default;
+
+    void AssetInfo::init_meta()
+    {
+        auto w = writer<AssetInfo>();
+        w.description("Asset Information");
+        w.property("url", &AssetInfo::m_url);
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+
+    AssetInfoCPtr            Asset::_info(const AssetMeta&am, AssetInfoAPI&api)
+    {
+        static const Repo& _r   = repo();
+        return {};  // TODO
+    }
+    
+    AssetCPtr                Asset::_load(const AssetMeta&am, AssetLoadAPI&api)
+    {
+        static Cache& _c        = cache();
+        
+        if(api.m_options.load != Tristate::YES){
+            AssetCPtr   ap  = _c.lookup(api.m_url);
+            if(ap)
+                return ap;
+        }
+        
+        AssetCPtr       ret;
+        if(!api.m_url.fragment.empty()){
+            ret = _load_fragment(am, api);
+        } else if(is_similar(api.m_url.scheme, "file")){
+            ret = _load_file(am, api);
+        } else {
+        }
+
+        // right now, non files aren't supported... (TODO)
+        if(!ret){
+            assetWarning << "Unable to load (" << to_string(api.m_url) << "): no suitable libraries/loaders loaded it.";
+            return {};
+        }
+        
+        Asset* ass      = const_cast<Asset*>(ret.ptr());
+        ass -> m_url    = api.m_url;
+
+        if(AssetLibrary* lib = dynamic_cast<AssetLibrary*>(ass)){
+            for(auto& itr : lib->m_assets){
+                if(!itr.second)
+                    continue;
+                    
+                Asset* ass2             = const_cast<Asset*>(itr.second.ptr());
+                ass2->m_url             = api.m_url;
+                ass2->m_url.fragment    = std::string(itr.first);
+                if(api.m_options.cache != Tristate::NO){
+                    ass2 -> m_readonly   = true;
+                    _c.inject(itr.second);
+                }
+            }
+        }
+
+        if(api.m_options.cache != Tristate::NO){
+            ass -> m_readonly    = true;
+            _c.inject(ret);
+        }
+            
+        return ret;
+    }
+
+    AssetCPtr                Asset::_load_file(const AssetMeta&am, AssetLoadAPI&api)
+    {
+        static const Repo& _r   = repo();
+        std::string_view    ext = file_extension(api.m_url.path);
+        if(ext.empty()){
+            assetWarning << "Unable to load (" << to_string(api.m_url) << "): no file extension";
+            return {};
+        }
+        
+        AssetCPtr ret;
+        
+        for(auto& itr : as_iterable(_r.loaders.equal_range(ext))){
+            const Loader* ld    = itr.second;
+            if(!ld)
+                continue;
+            if(!ld->asset().is_base_or_this(am))    // (unrelated) so total skip
+                continue;
+                
+            std::error_code ec;
+            try {
+                ret = ld -> load(api.m_url, api);
+            } 
+            catch(std::error_code ex)
+            {
+                ec  = ex;
+            }
+            #ifdef NDEBUG
+            catch(...)
+            {
+                ec  = errors::loading_exception();
+            }
+            #endif
+            
+            if(ec != std::error_code()){
+                ret = {};
+                assetWarning << "Unable to load (" << to_string(api.m_url) << "): " << ec.message();
+                continue;
+            }
+            
+            if(ret)
+                break;
+        }
+
+        return ret;
+    }
+    
+    AssetCPtr                Asset::_load_fragment(const AssetMeta&am, AssetLoadAPI&api)
+    {
+        static const AssetLoadOptions   s_default;
+        
+        AssetLoadAPI    api2( api.m_options.library ? *api.m_options.library : s_default);
+        api2.m_url          = api.m_url;
+        api2.m_url.fragment = {};       // zap the fragment
+        
+        AssetCPtr   libAss   = _load(meta<AssetLibrary>(), api2);
+        if(!libAss)
+            return {};
+        
+        AssetLibraryCPtr    asslib  = dynamic_cast<const AssetLibrary*>(libAss.ptr());
+        if(!asslib) [[unlikely]]
+            return {};
+            
+        AssetCPtr ret = asslib -> asset(api.m_url.fragment);
+        
+        if(!ret){
+            assetWarning << "Unable to load (" << to_string(api.m_url) << "): no suitable libraries/loaders loaded it.";
+            return {};
+        }
+        
+        if(!ret->metaInfo().is_derived_or_this(am)){
+            assetWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable asset type.";
+            return {};
+        }
+        
+        return ret;
+    }
+    
+    std::error_code          Asset::_save(const Asset& asset, AssetSaveAPI&api)
+    {
+        if(!api.m_url.fragment.empty()){
+            assetWarning << "Asset saving to '" << to_string(api.m_url) << "' does not support saving into libraries.";
+            return errors::todo();
+        }
+        
+        if(!is_similar(api.m_url.scheme, "file")){
+            assetWarning << "Asset saving to '" << to_string(api.m_url) << "' does not support saving to non-files.";
+            return errors::todo();
+        }
+        
+        return _save_file(asset, api);
+    }
+
+    std::error_code          Asset::_save_file(const Asset& asset, AssetSaveAPI& api)
+    {
+        static Repo& _r     = repo();
+        static Cache& _c    = cache();
+        
+        const AssetMeta&    am  = asset.metaInfo();
+
+        std::string_view    ext = file_extension(api.m_url.path);
+        if(ext.empty()){
+            return errors::no_file_extension();
+        }
+
+        Url                     orig        = api.m_url;
+        bool                    existing    = file_exists(api.m_url.path.c_str());
+        bool                    backup      = false;
+
+        if(existing){
+            switch(api.m_options.collision){
+            case FileCollisionStrategy::Abort:
+                return errors::filepath_existing();
+            case FileCollisionStrategy::Backup:
+                backup  = true;
+                // fall through is deliberate (annotate to get rid of warnings)
+            case FileCollisionStrategy::Overwrite:
+                api.m_url.path += "~tmp";
+                break;
+            default:
+                return errors::invalid_collision_strategy();
+            }
+        }
+
+        bool        saved   = false;
+        for(auto& itr : as_iterable(_r.savers.equal_range(ext))){
+            const Saver* sv = itr.second;
+            if(!sv)
+                continue;
+            if(!sv->asset().is_base_or_this(am))
+                continue;
+                
+            std::error_code ec;
+            try {
+                ec = sv -> save(asset, api.m_url, api);
+            }
+            catch(const std::error_code& ec2){
+                ec  = ec2;
+            }
+            #ifndef NDEBUG
+            catch(...)
+            {
+                ec  = errors::saving_exception();
+            }
+            #endif
+
+            if(ec == std::error_code()){
+                assetInfo << "Asset saved '" << to_string(api.m_url) << "'";
+                saved = true;
+                break;
+            }
+
+            assetWarning << "Asset unable to save to '" << to_string(api.m_url) << "': " << ec.message();
+        }
+        
+        if(!saved)
+            return errors::no_savers_applicable(); 
+            
+        
+        if(existing){
+            if(backup){
+                file_backup(orig.path.c_str());
+            }
+            rename(api.m_url.path.c_str(), orig.path.c_str());
+        }
+
+        if(api.m_options.set_name && !asset.m_readonly && (asset.m_url != orig) && !_c.contains(asset.id())){
+            const_cast<Asset&>(asset).m_url   = orig;
+        }
+
+        return {};
+    }
 
     void Asset::add_infoer(Infoer*d) 
     {
@@ -82,14 +340,117 @@ namespace yq {
             delete d;
     }
 
-    void Asset::init_meta()
+
+    AssetInfoCPtr    Asset::info(std::string_view spec, const AssetInfoOptions& options)
     {
-        auto w = writer<Asset>();
-        w.description("Asset (ie texture, mesh, shader, etc)");
-        w.property("url", &Asset::m_url).tag({kTag_Save});
+        return info(meta<Asset>(), spec, options);
+    }
+    
+    AssetInfoCPtr    Asset::info(const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
+    {
+        AssetInfoAPI    api(options);
+        api.m_url       = resolve(spec);
+        api.m_spec      = spec;
+        return _info(am, api);
     }
 
+    AssetInfoCPtr    Asset::info(const UrlView& url, const AssetInfoOptions& options)
+    {
+        return info(meta<Asset>(), url, options);
+    }
 
+    AssetInfoCPtr    Asset::info(const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
+    {
+        AssetInfoAPI    api(options);
+        api.m_url   = copy(url);
+        api.m_spec  = to_string(url);
+        return _info(am, api);
+    }
+    
+    AssetInfoCPtr    Asset::info(const std::filesystem::path& fp, const AssetInfoOptions& options)
+    {
+        return info(meta<Asset>(), fp, options);
+    }
+
+    AssetInfoCPtr    Asset::info(const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
+    {
+        AssetInfoAPI    api(options);
+        api.m_url.scheme    = "file";
+        api.m_url.path      = fp.string();
+        api.m_spec  = to_string(api.m_url);
+        return _info(am, api);
+    }
+
+    AssetInfoCPtr    Asset::info(const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
+    {
+        return info(meta<Asset>(), fp, frag, options);
+    }
+
+    AssetInfoCPtr    Asset::info(const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
+    {
+        AssetInfoAPI    api(options);
+        api.m_url.scheme    = "file";
+        api.m_url.path      = fp.string();
+        api.m_url.fragment  = std::string(frag);
+        api.m_spec  = to_string(api.m_url);
+        return _info(am, api);
+    }
+
+    AssetCPtr        Asset::load(std::string_view spec, const AssetLoadOptions& options)
+    {
+        return load(meta<Asset>(), spec, options);
+    }
+
+    AssetCPtr        Asset::load(const AssetMeta&am, std::string_view spec, const AssetLoadOptions& options)
+    {
+        AssetLoadAPI        api(options);
+        api.m_url       = resolve(spec);
+        api.m_spec      = spec;
+        return _load(am, api);
+    }
+
+    AssetCPtr        Asset::load(const UrlView&url, const AssetLoadOptions& options)
+    {
+        return load(meta<Asset>(), url, options);
+    }
+
+    AssetCPtr        Asset::load(const AssetMeta&am, const UrlView&url, const AssetLoadOptions& options)
+    {
+        AssetLoadAPI    api(options);
+        api.m_url   = copy(url);
+        api.m_spec  = to_string(url);
+        return _load(am, api);
+    }
+        
+    AssetCPtr        Asset::load(const std::filesystem::path&fp, const AssetLoadOptions& options)
+    {
+        return load(meta<Asset>(), fp, options);
+    }
+
+    AssetCPtr        Asset::load(const AssetMeta&am, const std::filesystem::path& fp, const AssetLoadOptions& options)
+    {
+        AssetLoadAPI    api(options);
+        api.m_url.scheme    = "file";
+        api.m_url.path      = fp.string();
+        api.m_spec  = to_string(api.m_url);
+        return _load(am, api);
+    }
+    
+    AssetCPtr        Asset::load(const std::filesystem::path& fp, std::string_view frag, const AssetLoadOptions& options)
+    {
+        return load(meta<Asset>(), fp, frag, options);
+    }
+
+    AssetCPtr        Asset::load(const AssetMeta&am, const std::filesystem::path&fp, std::string_view frag, const AssetLoadOptions& options)
+    {
+        AssetLoadAPI    api(options);
+        api.m_url.scheme    = "file";
+        api.m_url.path      = fp.string();
+        api.m_url.fragment  = std::string(frag);
+        api.m_spec  = to_string(api.m_url);
+        return _load(am, api);
+    }
+        
     Url  Asset::resolve(std::string_view u)
     {
         u = trimmed(u);
@@ -145,6 +506,8 @@ namespace yq {
     }
 
 
+/////////////////
+
     Asset::Asset()
     {
     }
@@ -153,278 +516,57 @@ namespace yq {
     {
     }
 
-////////////////////////////////////////////////////////////////////////////////
-
-}
-
-
-
-#if 0
-
-#include "Asset.hpp"
-#include <yq/keywords.hpp>
-#include <variant>
-#include <tbb/spin_rw_mutex.hpp>
-#include <map>
-#include <unordered_map>
-#include <yq/container/set_utils.hpp>
-#include <yq/errors.hpp>
-
-
-namespace yq {
-
-    namespace errors {
-    }
-
-
-    
-////////////////////////////////////////////////////////////////////////////////
-
-    
-    
-    AssetCPtr       Asset::_load(const AssetMeta& am, const Url& url, bool autoCache)
+    std::string_view Asset::extension() const
     {
-        static Repo& _r = repo();
-        bool isLibType  = am.is_derived_or_this(meta<AssetLibrary>());
-        
-        
-        return {};  // TODO
-    }
-    
-    
-    struct SimpleURL {
-        std::string_view    filepath;
-        std::string_view    fragment;
-    };
-    
-    std::variant<url_k, std::string_view, SimpleURL> simplex(std::string_view u)
-    {
-        auto hash   = u.find_first_of('#');
-        auto colon  = u.find_first_of(':');
-        
-        if((colon != std::string_view::npos) && ((hash == std::string_view::npos) || (hash > colon))
-            return URL;
-        if(hash != std::string_view::npos){
-            return SimpleURL{ u.substr(0, hash), u.substr(hash+1) };
-        } else
-            return u;
-    }
-    
-
-    Url             Asset::_resolve(std::string_view partial)
-    {
-        if(partial.empty())
-            return {};
-    
-        // alright... this needs to do it by parts...
-        UrlView     u = urlview(partial);
-
-        static Repo& _r = repo();
-        return {}; // TODO
-    }
-
-    Asset::Repo& Asset::repo()
-    {
-        static Repo s_repo;
-        return s_repo;
-    }
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-}
-
-
-
-
-#include <yq/errors.hpp>
-#include <yq/asset/Asset.hpp>
-#include <yq/asset/AssetIO.hpp>
-#include <yq/asset/AssetFactory.hpp>
-#include <yq/asset/AssetMetaWriter.hpp>
-#include <yq/asset/AssetLogging.hpp>
-#include <yq/core/DelayInit.hpp>
-#include <yq/meta/Meta.hpp>
-#include <yq/file/FileUtils.hpp>
-#include <yq/file/FileResolver.hpp>
-#include <yq/text/transform.hpp>
-#include <yq/text/vsplit.hpp>
-
-#include <unistd.h>
-
-
-namespace yq {
-
-    //  If done, binary Cache will be SQLite based....
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    FileResolver&            Asset::_resolver()
-    {
-        static FileResolver s_ret;
-        return s_ret;
-    }
-
-    const FileResolver&      Asset::resolver()
-    {
-        return _resolver();
-    }
-
-    void  Asset::resolver_add_path(const std::filesystem::path&fp)
-    {
-        if(Meta::thread_safe_write()){
-            _resolver().add_path(fp);
-        }
-    }
-    
-    void  Asset::resolver_add_paths(std::string_view dd)
-    {
-        if(Meta::thread_safe_write()){
-            auto& _r = _resolver();
-            vsplit(dd, ';', [&](std::string_view x){
-                _r.add_path(trimmed(dd));
-            });
-        }
-    }
-    
-    std::filesystem::path    Asset::resolve(std::string_view x)
-    {
-        return resolver().resolve(x);
-    }
-    
-    std::filesystem::path    Asset::resolve(full_k, std::string_view x)
-    {
-        return resolver().resolve(x);
-    }
-    
-    std::filesystem::path    Asset::resolve(partial_k, std::string_view x)
-    {
-        return resolver().partial(x);
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    Asset::Asset(const std::filesystem::path&fp)
-    {
-        set_url(fp);
-    }
-    
-    std::filesystem::path           Asset::filepath() const
-    {
-        return m_url.path;
-    }
-    
-    namespace errors {
-        using filepath_existing             = error_db::entry<"Filepath already exists">;
-        using no_file_extension             = error_db::entry<"No file extension provided to file">;
-        using invalid_collision_strategy    = error_db::entry<"File collision strategy is invalid">;
-        using no_savers_defined             = error_db::entry<"Asset class has NO saving functions defined">;
-        using no_savers_applicable          = error_db::entry<"No file savers defined for given output">;
-        using saving_exception              = error_db::entry<"Exception thrown during saving">;
-    }
-
-    std::error_code Asset::save_to(const std::filesystem::path& fp) const
-    {
-        return save_to(fp, AssetSaveOptions());
-    }
-
-    std::error_code Asset::save_to(const std::filesystem::path& fp, const AssetSaveOptions& options) const
-    {
-        if(fp.empty())
-            return errors::filepath_empty();
-            
-        AssetFactory&   af = factory();
-        if(af.m_savers.empty()){
-            return errors::no_savers_defined();
-        }
-        
-        std::string    x  = fp.extension().string();
-        if(x.empty())      // no extension... abort
-            return errors::no_file_extension();
-        x   = x.substr(1);
-        if(x.empty())      // no extension... abort
-            return errors::no_file_extension();
-        
-        std::filesystem::path   save_file;
-        bool    existing    = std::filesystem::exists(fp);
-        if(existing){
-            switch(options.collision){
-            case FileCollisionStrategy::Abort:
-                return errors::filepath_existing();
-            case FileCollisionStrategy::Overwrite:
-            case FileCollisionStrategy::Backup:
-                save_file   = fp.string() + "~tmp";
-                break;
-            default:
-                return errors::invalid_collision_strategy();
-            }
-        } else {
-            save_file   = fp;
-        }
-        
-        std::error_code     ec = errors::no_savers_applicable();
-        Url     saveUrl  = to_url(save_file);
-        
-        for(const AssetFactory::Saver* s : af.m_savers){
-            if(!s->extensions.contains(x))
-                continue;
-            try {
-                ec  = s -> save(*this, saveUrl, options);
-                if(ec != std::error_code())
-                    continue;
-                break;
-            }
-            catch(std::error_code ec2)
-            {
-                ec2 = ec;
-            }
-            #ifndef NDEBUG
-            catch(...)
-            {
-                ec  = errors::saving_exception();
-            }
-            #endif
-        }
-        
-        if(ec != std::error_code()){
-            assetWarning << "Unable to save to file " << save_file << " (" << ec.message() << ")";
-            return ec;
-        }
-        
-        if(existing){
-            if(options.collision == FileCollisionStrategy::Backup){
-                file_backup(fp.c_str());
-            }
-            rename(save_file.c_str(), fp.c_str());
-        }
-        
-        if(options.set_name && (fp.string() != m_url.path) && !af.contains(id())){
-            const_cast<Asset*>(this) -> m_url  = to_url(fp);
-        }
-
+        if(!m_url.fragment.empty())
+            return file_extension(m_url.fragment);
+        if(!m_url.path.empty())
+            return file_extension(m_url.path);
         return {};
+    }
+
+    void              Asset::inject()
+    {
+        m_readonly  = true;
+        cache().inject(this);
+    }
+
+    std::error_code   Asset::save(const AssetSaveOptions& options) const
+    {
+        AssetSaveAPI    api(options);
+        api.m_url      = m_url;
+        return _save(*this, api);
+    }
+
+    std::error_code Asset::save_to(const std::filesystem::path&fp, const AssetSaveOptions& options) const
+    {
+        AssetSaveAPI    api(options);
+        api.m_url.scheme    = "file";
+        api.m_url.path      = fp.string();
+        return _save(*this, api);
+    }
+    
+    std::error_code Asset::save_to(const UrlView&url, const AssetSaveOptions& options) const
+    {
+        AssetSaveAPI    api(options);
+        api.m_url      = copy(url);
+        return _save(*this, api);
     }
 
     void Asset::set_url(const std::filesystem::path&fp) 
     {
-        m_url = to_url(fp);
+        if(m_readonly)
+            return;
+        m_url.scheme    = "file";
+        m_url.path = fp.string();
     }
 
-    void Asset::set_url(const Url& url) 
+    void Asset::set_url(const UrlView& url) 
     {
-        m_url = url;
+        if(m_readonly)
+            return;
+        m_url = copy(url);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////
 }
-#endif
