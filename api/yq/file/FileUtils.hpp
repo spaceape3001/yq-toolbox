@@ -51,6 +51,8 @@ namespace yq {
 
     //! Faster (OS-api based) test for file existence
     bool            file_exists(const filesystem_path_t&);
+    
+    //! Returns the file's last modification date as a string (YYYYMMDD-HHMMSS.ZZZZZZZZZ)
     std::string     file_modified(const char*);
     bool            file_readable(const char*);
     bool            file_readable(const filesystem_path_t&);
