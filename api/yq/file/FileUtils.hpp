@@ -54,6 +54,8 @@ namespace yq {
     
     //! Returns the file's last modification date as a string (YYYYMMDD-HHMMSS.ZZZZZZZZZ)
     std::string     file_modified(const char*);
+    
+    //! Faster (OS-api based) test for whether a file is readable
     bool            file_readable(const char*);
     bool            file_readable(const filesystem_path_t&);
     size_t          file_size(const char*);
