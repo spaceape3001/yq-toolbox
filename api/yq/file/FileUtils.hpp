@@ -57,6 +57,8 @@ namespace yq {
     
     //! Faster (OS-api based) test for whether a file is readable
     bool            file_readable(const char*);
+
+    //! Faster (OS-api based) test for whether a file is readable
     bool            file_readable(const filesystem_path_t&);
     size_t          file_size(const char*);
     
