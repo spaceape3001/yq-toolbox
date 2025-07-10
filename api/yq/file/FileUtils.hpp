@@ -60,6 +60,8 @@ namespace yq {
 
     //! Faster (OS-api based) test for whether a file is readable
     bool            file_readable(const filesystem_path_t&);
+    
+    //! Returns the byte count for the given file
     size_t          file_size(const char*);
     
     bool            file_write(const filesystem_path_t&, const char*, size_t);
