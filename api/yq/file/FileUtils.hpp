@@ -54,11 +54,20 @@ namespace yq {
     
     //! Returns the file's last modification date as a string (YYYYMMDD-HHMMSS.ZZZZZZZZZ)
     std::string     file_modified(const char*);
+    
+    //! Faster (OS-api based) test for whether a file is readable
     bool            file_readable(const char*);
+
+    //! Faster (OS-api based) test for whether a file is readable
     bool            file_readable(const filesystem_path_t&);
+    
+    //! Returns the byte count for the given file
     size_t          file_size(const char*);
     
+    //! Writes the given data block to the specified file
     bool            file_write(const filesystem_path_t&, const char*, size_t);
+
+    //! Writes the given data block to the specified file
     bool            file_write(const filesystem_path_t&, std::string_view);
     bool            file_write(const filesystem_path_t&, const ByteArray&);
     bool            file_write(const filesystem_path_t&, const std::vector<char>&);
