@@ -341,12 +341,12 @@ namespace yq {
     }
 
 
-    AssetInfoCPtr    Asset::info(std::string_view spec, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, std::string_view spec, const AssetInfoOptions& options)
     {
-        return info(meta<Asset>(), spec, options);
+        return load(INFO, meta<Asset>(), spec, options);
     }
     
-    AssetInfoCPtr    Asset::info(const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url       = resolve(spec);
@@ -354,12 +354,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetInfoCPtr    Asset::info(const UrlView& url, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const UrlView& url, const AssetInfoOptions& options)
     {
-        return info(meta<Asset>(), url, options);
+        return load(INFO, meta<Asset>(), url, options);
     }
 
-    AssetInfoCPtr    Asset::info(const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url   = copy(url);
@@ -367,12 +367,12 @@ namespace yq {
         return _info(am, api);
     }
     
-    AssetInfoCPtr    Asset::info(const std::filesystem::path& fp, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const std::filesystem::path& fp, const AssetInfoOptions& options)
     {
-        return info(meta<Asset>(), fp, options);
+        return load(INFO, meta<Asset>(), fp, options);
     }
 
-    AssetInfoCPtr    Asset::info(const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url.scheme    = "file";
@@ -381,12 +381,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetInfoCPtr    Asset::info(const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
     {
-        return info(meta<Asset>(), fp, frag, options);
+        return load(INFO, meta<Asset>(), fp, frag, options);
     }
 
-    AssetInfoCPtr    Asset::info(const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::load(info_k, const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url.scheme    = "file";
