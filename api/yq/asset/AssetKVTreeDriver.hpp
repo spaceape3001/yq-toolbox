@@ -6,47 +6,47 @@
 
 #pragma once
 
-#include <yq/asset/ByteDriver.hpp>
+#include <yq/asset/AssetByteDriver.hpp>
 
 namespace yq {
-    class Asset::KVTreeInfoer : public ByteInfoer {
+    class AssetKVTreeInfoer : public AssetByteInfoer {
     public:
     
-        using ByteInfoer::info;
+        using AssetByteInfoer::info;
         virtual AssetInfo* info(const ByteArray&, const AssetInfoAPI&) const override final;
         virtual AssetInfo* info(const KVTree&, const AssetInfoAPI&) const = 0;
         
     protected:
-        KVTreeInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
-        virtual ~KVTreeInfoer();
+        AssetKVTreeInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        virtual ~AssetKVTreeInfoer();
         
     private:
         unsigned int m_options;
     };
     
-    class Asset::KVTreeLoader : public ByteLoader {
+    class AssetKVTreeLoader : public AssetByteLoader {
     public:
 
-        using ByteLoader::load;
+        using AssetByteLoader::load;
         virtual Asset* load(const ByteArray&, const AssetLoadAPI&) const override final;
         virtual Asset* load(const KVTree&, const AssetLoadAPI&) const = 0;
         
     protected:
-        KVTreeLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
-        virtual ~KVTreeLoader();
+        AssetKVTreeLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        virtual ~AssetKVTreeLoader();
     private:
         unsigned int m_options;
     };
 
-    class Asset::KVTreeSaver : public ByteSaver {
+    class AssetKVTreeSaver : public AssetByteSaver {
     public:
 
-        using ByteSaver::save;
+        using AssetByteSaver::save;
         virtual std::error_code  save(const Asset&, ByteArray&, const AssetSaveAPI&) const override final;
         virtual std::error_code  save(const Asset&, KVTree&, const AssetSaveAPI&) const = 0;
 
     protected:
-        KVTreeSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::kvdoc);
-        virtual ~KVTreeSaver();
+        AssetKVTreeSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::kvdoc);
+        virtual ~AssetKVTreeSaver();
     };
 }

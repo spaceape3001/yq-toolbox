@@ -51,4 +51,9 @@ namespace yq {
     //template <typename> class TypedAssetFactory;
 
     template <class A> class AssetRef;
+    
+    class AssetDriver;
+    class AssetLoader;
+    class AssetInfoer;
+    class AssetSaver;
 }

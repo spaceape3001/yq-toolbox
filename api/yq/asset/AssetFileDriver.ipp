@@ -4,8 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "FileDriver.hpp"
-#include "FileDriver.hxx"
+#pragma once
+
+#include "AssetFileDriver.hpp"
+//#include "FileDriver.hxx"
 #include "AssetLogging.hpp"
 #include "AssetDriverAPI.hpp"
 
@@ -15,16 +17,16 @@
 namespace yq {
     ///////////////////////////////////
 
-    Asset::FileInfoer::FileInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
-        Infoer(meta, exts, sl, type)
+    AssetFileInfoer::AssetFileInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+        AssetInfoer(meta, exts, sl, type)
     {
     }
 
-    Asset::FileInfoer::~FileInfoer()
+    AssetFileInfoer::~AssetFileInfoer()
     {
     }
     
-    AssetInfo* Asset::FileInfoer::info(const UrlView&url, const AssetInfoAPI&api) const 
+    AssetInfo* AssetFileInfoer::info(const UrlView&url, const AssetInfoAPI&api) const 
     {
         if(url.path.empty()){
             assetWarning << "URL from " << api.spec() << " has no path!";
@@ -42,16 +44,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::FileLoader::FileLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
-        Loader(meta, exts, sl, type)
+    AssetFileLoader::AssetFileLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+        AssetLoader(meta, exts, sl, type)
     {
     }
     
-    Asset::FileLoader::~FileLoader()
+    AssetFileLoader::~AssetFileLoader()
     {
     }
 
-    Asset* Asset::FileLoader::load(const UrlView& url, const AssetLoadAPI& api) const
+    Asset* AssetFileLoader::load(const UrlView& url, const AssetLoadAPI& api) const
     {
         if(url.path.empty()){
             assetWarning << "URL '" << to_string(api.url()) << "' has no path!";
@@ -69,16 +71,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::FileSaver::FileSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
-        Saver(meta, exts, sl, type)
+    AssetFileSaver::AssetFileSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+        AssetSaver(meta, exts, sl, type)
     {
     }
     
-    Asset::FileSaver::~FileSaver()
+    AssetFileSaver::~AssetFileSaver()
     {
     }
 
-    std::error_code  Asset::FileSaver::save(const Asset&asset, const UrlView&url, const AssetSaveAPI&api) const
+    std::error_code  AssetFileSaver::save(const Asset&asset, const UrlView&url, const AssetSaveAPI&api) const
     {
         if(url.path.empty()){
             assetWarning << "URL '" << to_string(api.url()) << "' has no path!";

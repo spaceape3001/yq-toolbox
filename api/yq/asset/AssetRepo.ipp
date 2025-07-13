@@ -29,16 +29,16 @@ namespace yq {
         */
     
         using search_t          = std::variant<std::monostate, std::filesystem::path, AssetLibraryCPtr>;
-        using infoer_mmap_t     = std::multimap<std::string_view, const Infoer*, IgCase>;
-        using loader_mmap_t     = std::multimap<std::string_view, const Loader*, IgCase>;
-        using saver_mmap_t      = std::multimap<std::string_view, const Saver*, IgCase>;
+        using infoer_mmap_t     = std::multimap<std::string_view, const AssetInfoer*, IgCase>;
+        using loader_mmap_t     = std::multimap<std::string_view, const AssetLoader*, IgCase>;
+        using saver_mmap_t      = std::multimap<std::string_view, const AssetSaver*, IgCase>;
         // ditto once we have the idea of "skimming" or similar
         
         std::vector<search_t>                   search;         //!< Search
         std::vector<const AssetMeta*>           assets;         //!< All registered asset classes
         std::vector<const AssetLibraryMeta*>    libraries;      //!< All registered library classes
         
-        std::vector<const Driver*>              drivers;        //!< Drivers
+        std::vector<const AssetDriver*>         drivers;        //!< Drivers
         infoer_mmap_t                           infoers;        //!< Infoing drivers
         loader_mmap_t                           loaders;        //!< Loading drivers
         saver_mmap_t                            savers;         //!< Saving drivers
@@ -47,7 +47,7 @@ namespace yq {
 
         Repo(){}
 
-        void    inject(Infoer* d)
+        void    inject(AssetInfoer* d)
         {
             if(!d)
                 return;
@@ -56,7 +56,7 @@ namespace yq {
                 infoers.insert({ ext, d });
         }
 
-        void    inject(Loader* d)
+        void    inject(AssetLoader* d)
         {
             if(!d)
                 return;
@@ -65,7 +65,7 @@ namespace yq {
                 loaders.insert({ ext, d });
         }
         
-        void    inject(Saver*d)
+        void    inject(AssetSaver*d)
         {
             if(!d)
                 return;

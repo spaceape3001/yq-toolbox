@@ -11,7 +11,7 @@
 
 namespace yq {
 
-    class Asset::Driver {
+    class AssetDriver {
         friend class Asset;
     public:
     
@@ -35,8 +35,8 @@ namespace yq {
         constexpr const std::source_location& location() const { return m_location; }
         
     protected:
-        Driver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
-        virtual ~Driver();
+        AssetDriver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        virtual ~AssetDriver();
         
     private:
         const AssetMeta&        m_asset;
@@ -45,7 +45,7 @@ namespace yq {
         Type                    m_type;
     };
 
-    class Asset::Infoer : public Driver {
+    class AssetInfoer : public AssetDriver {
     public:
 
         virtual AssetInfo* info(const UrlView&, const AssetInfoAPI&) const = 0;
@@ -53,11 +53,11 @@ namespace yq {
     protected:
         friend class Asset;
         
-        Infoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
-        virtual ~Infoer();
+        AssetInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        virtual ~AssetInfoer();
     };
     
-    class Asset::Loader : public Driver {
+    class AssetLoader : public AssetDriver {
     public:
 
         virtual Asset* load(const UrlView&, const AssetLoadAPI&) const = 0;
@@ -65,19 +65,19 @@ namespace yq {
     protected:
         friend class Asset;
 
-        Loader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
-        virtual ~Loader();
+        AssetLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        virtual ~AssetLoader();
     };
 
-    class Asset::Saver : public Driver {
+    class AssetSaver : public AssetDriver {
     public:
         virtual std::error_code  save(const Asset&, const UrlView&, const AssetSaveAPI&) const = 0;
         
     protected:
         friend class Asset;
 
-        Saver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
-        virtual ~Saver();
+        AssetSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        virtual ~AssetSaver();
     };
     
     namespace errors {

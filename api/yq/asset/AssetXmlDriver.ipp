@@ -4,10 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "XmlDriver.hpp"
-#include "XmlDriver.hxx"
-#include "AssetLogging.hpp"
-#include "AssetDriverAPI.hpp"
+#pragma once
+
+#include <yq/asset/AssetDriverAPI.hpp>
+#include <yq/asset/AssetLogging.hpp>
+#include <yq/asset/AssetXmlDriver.hpp>
 
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
@@ -16,16 +17,16 @@
 namespace yq {
     ///////////////////////////////////
 
-    Asset::XmlInfoer::XmlInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
-        StringInfoer(meta, exts, sl, type)
+    AssetXmlInfoer::AssetXmlInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+        AssetStringInfoer(meta, exts, sl, type)
     {
     }
 
-    Asset::XmlInfoer::~XmlInfoer()
+    AssetXmlInfoer::~AssetXmlInfoer()
     {
     }
     
-    AssetInfo* Asset::XmlInfoer::info(const std::string& file, const AssetInfoAPI&api) const 
+    AssetInfo* AssetXmlInfoer::info(const std::string& file, const AssetInfoAPI&api) const 
     {
         std::string     buffer = file;
         XmlDocument     doc;
@@ -42,16 +43,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::XmlLoader::XmlLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
-        StringLoader(meta, exts, sl, type)
+    AssetXmlLoader::AssetXmlLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+        AssetStringLoader(meta, exts, sl, type)
     {
     }
     
-    Asset::XmlLoader::~XmlLoader()
+    AssetXmlLoader::~AssetXmlLoader()
     {
     }
 
-    Asset* Asset::XmlLoader::load(const std::string& file, const AssetLoadAPI& api) const
+    Asset* AssetXmlLoader::load(const std::string& file, const AssetLoadAPI& api) const
     {
         std::string     buffer = file;
         XmlDocument     doc;
@@ -68,16 +69,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::XmlSaver::XmlSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
-        StringSaver(meta, exts, sl, type)
+    AssetXmlSaver::AssetXmlSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+        AssetStringSaver(meta, exts, sl, type)
     {
     }
     
-    Asset::XmlSaver::~XmlSaver()
+    AssetXmlSaver::~AssetXmlSaver()
     {
     }
 
-    std::error_code  Asset::XmlSaver::save(const Asset&asset, std::string& data, const AssetSaveAPI&api) const
+    std::error_code  AssetXmlSaver::save(const Asset&asset, std::string& data, const AssetSaveAPI&api) const
     {
         XmlDocument     doc;
         XmlNode*        x   = doc.allocate_node(rapidxml::node_pi, "xml", "version=\"1.0\" encoding=\"UTF-8\"");

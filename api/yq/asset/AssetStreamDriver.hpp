@@ -6,50 +6,50 @@
 
 #pragma once
 
-#include <yq/asset/FileDriver.hpp>
+#include <yq/asset/AssetFileDriver.hpp>
 #include <iosfwd>
 
 namespace yq {
-    class Asset::StreamInfoer : public FileInfoer {
+    class AssetStreamInfoer : public AssetFileInfoer {
     public:
     
-        using FileInfoer::info;
+        using AssetFileInfoer::info;
         virtual AssetInfo* info(const std::filesystem::path&, const AssetInfoAPI&) const override final;
         virtual AssetInfo* info(std::istream&, const AssetInfoAPI&) const = 0;
         
     protected:
-        StreamInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
-        virtual ~StreamInfoer();
+        AssetStreamInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
+        virtual ~AssetStreamInfoer();
         
     private:
         bool m_binary;
     };
     
-    class Asset::StreamLoader : public FileLoader {
+    class AssetStreamLoader : public AssetFileLoader {
     public:
 
-        using FileLoader::load;
+        using AssetFileLoader::load;
         virtual Asset* load(const std::filesystem::path&, const AssetLoadAPI&) const override final;
         virtual Asset* load(std::istream&, const AssetLoadAPI&) const = 0;
         
     protected:
-        StreamLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
-        virtual ~StreamLoader();
+        AssetStreamLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
+        virtual ~AssetStreamLoader();
         
     private:
         bool m_binary;
     };
 
-    class Asset::StreamSaver : public FileSaver {
+    class AssetStreamSaver : public AssetFileSaver {
     public:
 
-        using FileSaver::save;
+        using AssetFileSaver::save;
         virtual std::error_code  save(const Asset&, const std::filesystem::path&, const AssetSaveAPI&) const override final;
         virtual std::error_code  save(const Asset&, std::ostream&, const AssetSaveAPI&) const = 0;
 
     protected:
-        StreamSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
-        virtual ~StreamSaver();
+        AssetStreamSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
+        virtual ~AssetStreamSaver();
         
     private:
         bool m_binary;

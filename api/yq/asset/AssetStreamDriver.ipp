@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "StreamDriver.hpp"
-#include "StreamDriver.hxx"
+#include "AssetStreamDriver.hpp"
+//#include "StreamDriver.hxx"
 #include "AssetLogging.hpp"
 #include "AssetDriverAPI.hpp"
 
@@ -15,16 +15,16 @@
 namespace yq {
     ///////////////////////////////////
 
-    Asset::StreamInfoer::StreamInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) :
-        FileInfoer(meta, exts, sl, type), m_binary(binary)
+    AssetStreamInfoer::AssetStreamInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) :
+        AssetFileInfoer(meta, exts, sl, type), m_binary(binary)
     {
     }
 
-    Asset::StreamInfoer::~StreamInfoer()
+    AssetStreamInfoer::~AssetStreamInfoer()
     {
     }
     
-    AssetInfo* Asset::StreamInfoer::info(const std::filesystem::path& fp, const AssetInfoAPI&api) const 
+    AssetInfo* AssetStreamInfoer::info(const std::filesystem::path& fp, const AssetInfoAPI&api) const 
     {
         if(!file_exists(fp)){
             assetWarning << "URL's file from " << api.spec() << " does not exist!";
@@ -46,16 +46,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::StreamLoader::StreamLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) : 
-        FileLoader(meta, exts, sl, type), m_binary(binary)
+    AssetStreamLoader::AssetStreamLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) : 
+        AssetFileLoader(meta, exts, sl, type), m_binary(binary)
     {
     }
     
-    Asset::StreamLoader::~StreamLoader()
+    AssetStreamLoader::~AssetStreamLoader()
     {
     }
 
-    Asset* Asset::StreamLoader::load(const std::filesystem::path& fp, const AssetLoadAPI& api) const
+    Asset* AssetStreamLoader::load(const std::filesystem::path& fp, const AssetLoadAPI& api) const
     {
         if(!file_exists(fp)){
             assetWarning << "URL's file from " << api.spec() << " does not exist!";
@@ -77,16 +77,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::StreamSaver::StreamSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) : 
-        FileSaver(meta, exts, sl, type), m_binary(binary)
+    AssetStreamSaver::AssetStreamSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) : 
+        AssetFileSaver(meta, exts, sl, type), m_binary(binary)
     {
     }
     
-    Asset::StreamSaver::~StreamSaver()
+    AssetStreamSaver::~AssetStreamSaver()
     {
     }
 
-    std::error_code  Asset::StreamSaver::save(const Asset&asset, const std::filesystem::path&fp, const AssetSaveAPI&api) const
+    std::error_code  AssetStreamSaver::save(const Asset&asset, const std::filesystem::path&fp, const AssetSaveAPI&api) const
     {
         std::ios_base::openmode     mode    = std::ios_base::out | std::ios_base::trunc ;
         if(m_binary)

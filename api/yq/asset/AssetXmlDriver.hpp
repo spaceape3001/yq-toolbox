@@ -6,42 +6,42 @@
 
 #pragma once
 
-#include <yq/asset/StringDriver.hpp>
+#include <yq/asset/AssetStringDriver.hpp>
 
 namespace yq {
-    class Asset::XmlInfoer : public StringInfoer {
+    class AssetXmlInfoer : public AssetStringInfoer {
     public:
     
-        using StringInfoer::info;
+        using AssetStringInfoer::info;
         virtual AssetInfo* info(const std::string&, const AssetInfoAPI&) const override final;
         virtual AssetInfo* info(const XmlDocument&, const AssetInfoAPI&) const = 0;
         
     protected:
-        XmlInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
-        virtual ~XmlInfoer();
+        AssetXmlInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
+        virtual ~AssetXmlInfoer();
     };
     
-    class Asset::XmlLoader : public StringLoader {
+    class AssetXmlLoader : public AssetStringLoader {
     public:
 
-        using StringLoader::load;
+        using AssetStringLoader::load;
         virtual Asset* load(const std::string&, const AssetLoadAPI&) const override final;
         virtual Asset* load(const XmlDocument&, const AssetLoadAPI&) const = 0;
         
     protected:
-        XmlLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
-        virtual ~XmlLoader();
+        AssetXmlLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
+        virtual ~AssetXmlLoader();
     };
 
-    class Asset::XmlSaver : public StringSaver {
+    class AssetXmlSaver : public AssetStringSaver {
     public:
 
-        using StringSaver::save;
+        using AssetStringSaver::save;
         virtual std::error_code  save(const Asset&, std::string&, const AssetSaveAPI&) const override final;
         virtual std::error_code  save(const Asset&, XmlDocument&, const AssetSaveAPI&) const = 0;
 
     protected:
-        XmlSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
-        virtual ~XmlSaver();
+        AssetXmlSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
+        virtual ~AssetXmlSaver();
     };
 }

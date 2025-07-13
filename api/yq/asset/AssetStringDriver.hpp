@@ -6,42 +6,42 @@
 
 #pragma once
 
-#include <yq/asset/FileDriver.hpp>
+#include <yq/asset/AssetFileDriver.hpp>
 
 namespace yq {
-    class Asset::StringInfoer : public FileInfoer {
+    class AssetStringInfoer : public AssetFileInfoer {
     public:
     
-        using FileInfoer::info;
+        using AssetFileInfoer::info;
         virtual AssetInfo* info(const std::filesystem::path&, const AssetInfoAPI&) const override final;
         virtual AssetInfo* info(const std::string&, const AssetInfoAPI&) const = 0;
         
     protected:
-        StringInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::string);
-        virtual ~StringInfoer();
+        AssetStringInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::string);
+        virtual ~AssetStringInfoer();
     };
     
-    class Asset::StringLoader : public FileLoader {
+    class AssetStringLoader : public AssetFileLoader {
     public:
 
-        using FileLoader::load;
+        using AssetFileLoader::load;
         virtual Asset* load(const std::filesystem::path&, const AssetLoadAPI&) const override final;
         virtual Asset* load(const std::string&, const AssetLoadAPI&) const = 0;
         
     protected:
-        StringLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::string);
-        virtual ~StringLoader();
+        AssetStringLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::string);
+        virtual ~AssetStringLoader();
     };
 
-    class Asset::StringSaver : public FileSaver {
+    class AssetStringSaver : public AssetFileSaver {
     public:
 
-        using FileSaver::save;
+        using AssetFileSaver::save;
         virtual std::error_code  save(const Asset&, const std::filesystem::path&, const AssetSaveAPI&) const override final;
         virtual std::error_code  save(const Asset&, std::string&, const AssetSaveAPI&) const = 0;
 
     protected:
-        StringSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::string);
-        virtual ~StringSaver();
+        AssetStringSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::string);
+        virtual ~AssetStringSaver();
     };
 }

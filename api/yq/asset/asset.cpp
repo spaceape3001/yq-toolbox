@@ -36,20 +36,22 @@
 
 
 #include "Asset.hpp"
-
 #include "AssetCache.ipp"
 #include "AssetRepo.ipp"
-
 #include "AssetDriver.ipp"
-#include "ByteDriver.ipp"
-#include "FileDriver.ipp"
-#include "JsonDriver.ipp"
-#include "KVDocumentDriver.ipp"
-#include "KVTreeDriver.ipp"
-#include "StreamDriver.ipp"
-#include "StringDriver.ipp"
-#include "UrlDriver.ipp"
-#include "XmlDriver.ipp"
+
+#include "AssetByteDriver.ipp"
+#include "AssetFileDriver.ipp"
+#include "AssetJsonDriver.ipp"
+#include "AssetKVDocumentDriver.ipp"
+#include "AssetKVTreeDriver.ipp"
+#include "AssetStreamDriver.ipp"
+#include "AssetStringDriver.ipp"
+#include "AssetUrlDriver.ipp"
+#include "AssetXmlDriver.ipp"
 
 #include "Asset.ipp"
 #include "AssetLibrary.ipp"
+
+#include "Asset.hxx"
+

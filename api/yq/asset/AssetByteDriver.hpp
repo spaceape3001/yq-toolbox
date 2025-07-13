@@ -6,42 +6,42 @@
 
 #pragma once
 
-#include <yq/asset/FileDriver.hpp>
+#include <yq/asset/AssetFileDriver.hpp>
 
 namespace yq {
-    class Asset::ByteInfoer : public FileInfoer {
+    class AssetByteInfoer : public AssetFileInfoer {
     public:
     
-        using FileInfoer::info;
+        using AssetFileInfoer::info;
         virtual AssetInfo* info(const std::filesystem::path&, const AssetInfoAPI&) const override final;
         virtual AssetInfo* info(const ByteArray&, const AssetInfoAPI&) const = 0;
         
     protected:
-        ByteInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
-        virtual ~ByteInfoer();
+        AssetByteInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
+        virtual ~AssetByteInfoer();
     };
     
-    class Asset::ByteLoader : public FileLoader {
+    class AssetByteLoader : public AssetFileLoader {
     public:
 
-        using FileLoader::load;
+        using AssetFileLoader::load;
         virtual Asset* load(const std::filesystem::path&, const AssetLoadAPI&) const override final;
         virtual Asset* load(const ByteArray&, const AssetLoadAPI&) const = 0;
         
     protected:
-        ByteLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
-        virtual ~ByteLoader();
+        AssetByteLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
+        virtual ~AssetByteLoader();
     };
 
-    class Asset::ByteSaver : public FileSaver {
+    class AssetByteSaver : public AssetFileSaver {
     public:
 
-        using FileSaver::save;
+        using AssetFileSaver::save;
         virtual std::error_code  save(const Asset&, const std::filesystem::path&, const AssetSaveAPI&) const override final;
         virtual std::error_code  save(const Asset&, ByteArray&, const AssetSaveAPI&) const = 0;
 
     protected:
-        ByteSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
-        virtual ~ByteSaver();
+        AssetByteSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
+        virtual ~AssetByteSaver();
     };
 }

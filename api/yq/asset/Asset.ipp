@@ -7,6 +7,8 @@
 #pragma once
 
 #include "Asset.hpp"
+#include "AssetDriverAPI.hpp"
+#include "AssetLogging.hpp"
 #include "AssetMetaWriter.hpp"
 
 #include <yq/tags.hpp>
@@ -129,7 +131,7 @@ namespace yq {
         AssetCPtr ret;
         
         for(auto& itr : as_iterable(_r.loaders.equal_range(ext))){
-            const Loader* ld    = itr.second;
+            const AssetLoader* ld    = itr.second;
             if(!ld)
                 continue;
             if(!ld->asset().is_base_or_this(am))    // (unrelated) so total skip
@@ -242,7 +244,7 @@ namespace yq {
 
         bool        saved   = false;
         for(auto& itr : as_iterable(_r.savers.equal_range(ext))){
-            const Saver* sv = itr.second;
+            const AssetSaver* sv = itr.second;
             if(!sv)
                 continue;
             if(!sv->asset().is_base_or_this(am))
@@ -289,7 +291,7 @@ namespace yq {
         return {};
     }
 
-    void Asset::add_infoer(Infoer*d) 
+    void Asset::add_infoer(AssetInfoer*d) 
     {
         if(Meta::thread_safe_write()){
             repo().inject(d);
@@ -297,7 +299,7 @@ namespace yq {
             delete d;
     }
     
-    void Asset::add_loader(Loader*d)
+    void Asset::add_loader(AssetLoader*d)
     {
         if(Meta::thread_safe_write()){
             repo().inject(d);
@@ -332,7 +334,7 @@ namespace yq {
         });
     }
 
-    void    Asset::add_saver(Saver*d)
+    void    Asset::add_saver(AssetSaver*d)
     {
         if(Meta::thread_safe_write()){
             repo().inject(d);
@@ -341,12 +343,12 @@ namespace yq {
     }
 
 
-    AssetInfoCPtr    Asset::load(info_k, std::string_view spec, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, std::string_view spec, const AssetInfoOptions& options)
     {
-        return load(INFO, meta<Asset>(), spec, options);
+        return asset_load(INFO, meta<Asset>(), spec, options);
     }
     
-    AssetInfoCPtr    Asset::load(info_k, const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url       = resolve(spec);
@@ -354,12 +356,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetInfoCPtr    Asset::load(info_k, const UrlView& url, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const UrlView& url, const AssetInfoOptions& options)
     {
-        return load(INFO, meta<Asset>(), url, options);
+        return asset_load(INFO, meta<Asset>(), url, options);
     }
 
-    AssetInfoCPtr    Asset::load(info_k, const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url   = copy(url);
@@ -367,12 +369,12 @@ namespace yq {
         return _info(am, api);
     }
     
-    AssetInfoCPtr    Asset::load(info_k, const std::filesystem::path& fp, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const std::filesystem::path& fp, const AssetInfoOptions& options)
     {
-        return load(INFO, meta<Asset>(), fp, options);
+        return asset_load(INFO, meta<Asset>(), fp, options);
     }
 
-    AssetInfoCPtr    Asset::load(info_k, const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url.scheme    = "file";
@@ -381,12 +383,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetInfoCPtr    Asset::load(info_k, const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
     {
-        return load(INFO, meta<Asset>(), fp, frag, options);
+        return asset_load(INFO, meta<Asset>(), fp, frag, options);
     }
 
-    AssetInfoCPtr    Asset::load(info_k, const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url.scheme    = "file";
@@ -396,12 +398,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetCPtr        Asset::load(std::string_view spec, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(std::string_view spec, const AssetLoadOptions& options)
     {
-        return load(meta<Asset>(), spec, options);
+        return asset_load(meta<Asset>(), spec, options);
     }
 
-    AssetCPtr        Asset::load(const AssetMeta&am, std::string_view spec, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const AssetMeta&am, std::string_view spec, const AssetLoadOptions& options)
     {
         AssetLoadAPI        api(options);
         api.m_url       = resolve(spec);
@@ -409,12 +411,12 @@ namespace yq {
         return _load(am, api);
     }
 
-    AssetCPtr        Asset::load(const UrlView&url, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const UrlView&url, const AssetLoadOptions& options)
     {
-        return load(meta<Asset>(), url, options);
+        return asset_load(meta<Asset>(), url, options);
     }
 
-    AssetCPtr        Asset::load(const AssetMeta&am, const UrlView&url, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const AssetMeta&am, const UrlView&url, const AssetLoadOptions& options)
     {
         AssetLoadAPI    api(options);
         api.m_url   = copy(url);
@@ -422,12 +424,12 @@ namespace yq {
         return _load(am, api);
     }
         
-    AssetCPtr        Asset::load(const std::filesystem::path&fp, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const std::filesystem::path&fp, const AssetLoadOptions& options)
     {
-        return load(meta<Asset>(), fp, options);
+        return asset_load(meta<Asset>(), fp, options);
     }
 
-    AssetCPtr        Asset::load(const AssetMeta&am, const std::filesystem::path& fp, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const AssetMeta&am, const std::filesystem::path& fp, const AssetLoadOptions& options)
     {
         AssetLoadAPI    api(options);
         api.m_url.scheme    = "file";
@@ -436,12 +438,12 @@ namespace yq {
         return _load(am, api);
     }
     
-    AssetCPtr        Asset::load(const std::filesystem::path& fp, std::string_view frag, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const std::filesystem::path& fp, std::string_view frag, const AssetLoadOptions& options)
     {
-        return load(meta<Asset>(), fp, frag, options);
+        return asset_load(meta<Asset>(), fp, frag, options);
     }
 
-    AssetCPtr        Asset::load(const AssetMeta&am, const std::filesystem::path&fp, std::string_view frag, const AssetLoadOptions& options)
+    AssetCPtr        Asset::asset_load(const AssetMeta&am, const std::filesystem::path&fp, std::string_view frag, const AssetLoadOptions& options)
     {
         AssetLoadAPI    api(options);
         api.m_url.scheme    = "file";
@@ -523,6 +525,11 @@ namespace yq {
         if(!m_url.path.empty())
             return file_extension(m_url.path);
         return {};
+    }
+
+    std::filesystem::path   Asset::filepath() const
+    {
+        return std::filesystem::path(m_url.path);
     }
 
     void              Asset::inject()

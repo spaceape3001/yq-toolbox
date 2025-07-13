@@ -4,30 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "JsonDriver.hpp"
-#include "JsonDriver.hxx"
-#include "AssetLogging.hpp"
-#include "AssetDriverAPI.hpp"
+#pragma once
+
+#include <yq/asset/AssetJsonDriver.hpp>
+#include <yq/asset/AssetLogging.hpp>
+#include <yq/asset/AssetDriverAPI.hpp>
 
 #include <yq/net/json.hpp>
-
-#include "rapidxml.hpp"
-#include "rapidxml_print.hpp"
-#include "rapidxml_utils.hpp"
 
 namespace yq {
     ///////////////////////////////////
 
-    Asset::JsonInfoer::JsonInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
-        StringInfoer(meta, exts, sl, type)
+    AssetJsonInfoer::AssetJsonInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+        AssetStringInfoer(meta, exts, sl, type)
     {
     }
 
-    Asset::JsonInfoer::~JsonInfoer()
+    AssetJsonInfoer::~AssetJsonInfoer()
     {
     }
     
-    AssetInfo* Asset::JsonInfoer::info(const std::string& file, const AssetInfoAPI&api) const 
+    AssetInfo* AssetJsonInfoer::info(const std::string& file, const AssetInfoAPI&api) const 
     {
         json        j;
         try {
@@ -44,16 +41,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::JsonLoader::JsonLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
-        StringLoader(meta, exts, sl, type)
+    AssetJsonLoader::AssetJsonLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+        AssetStringLoader(meta, exts, sl, type)
     {
     }
     
-    Asset::JsonLoader::~JsonLoader()
+    AssetJsonLoader::~AssetJsonLoader()
     {
     }
 
-    Asset* Asset::JsonLoader::load(const std::string& file, const AssetLoadAPI& api) const
+    Asset* AssetJsonLoader::load(const std::string& file, const AssetLoadAPI& api) const
     {
         json        j;
         try {
@@ -70,16 +67,16 @@ namespace yq {
 
     ///////////////////////////////////
 
-    Asset::JsonSaver::JsonSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
-        StringSaver(meta, exts, sl, type)
+    AssetJsonSaver::AssetJsonSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+        AssetStringSaver(meta, exts, sl, type)
     {
     }
     
-    Asset::JsonSaver::~JsonSaver()
+    AssetJsonSaver::~AssetJsonSaver()
     {
     }
 
-    std::error_code  Asset::JsonSaver::save(const Asset&asset, std::string& data, const AssetSaveAPI&api) const
+    std::error_code  AssetJsonSaver::save(const Asset&asset, std::string& data, const AssetSaveAPI&api) const
     {
         json    j;
         std::error_code ec = save(asset, j, api);

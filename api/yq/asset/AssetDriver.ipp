@@ -23,46 +23,46 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    Asset::Driver::Driver(const AssetMeta&asset, string_view_initializer_list_t exts, const std::source_location& loc, Type type) :
+    AssetDriver::AssetDriver(const AssetMeta&asset, string_view_initializer_list_t exts, const std::source_location& loc, Type type) :
         m_asset(asset), m_extensions(make_set(exts)), m_location(loc), m_type(type)
     {
     }
     
-    Asset::Driver::~Driver()
+    AssetDriver::~AssetDriver()
     {
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    Asset::Infoer::Infoer(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
-        Driver(asset, exts, sl, type)
+    AssetInfoer::AssetInfoer(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+        AssetDriver(asset, exts, sl, type)
     {
     }
     
-    Asset::Infoer::~Infoer()
+    AssetInfoer::~AssetInfoer()
     {
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    Asset::Loader::Loader(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
-        Driver(asset, exts, sl, type)
+    AssetLoader::AssetLoader(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+        AssetDriver(asset, exts, sl, type)
     {
     }
     
-    Asset::Loader::~Loader()
+    AssetLoader::~AssetLoader()
     {
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-    Asset::Saver::Saver(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
-        Driver(asset, exts, sl, type)
+    AssetSaver::AssetSaver(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+        AssetDriver(asset, exts, sl, type)
     {
     }
     
-    Asset::Saver::~Saver()
+    AssetSaver::~AssetSaver()
     {
     }
 

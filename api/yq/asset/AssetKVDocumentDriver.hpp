@@ -6,47 +6,47 @@
 
 #pragma once
 
-#include <yq/asset/ByteDriver.hpp>
+#include <yq/asset/AssetByteDriver.hpp>
 
 namespace yq {
-    class Asset::KVDocumentInfoer : public ByteInfoer {
+    class AssetKVDocumentInfoer : public AssetByteInfoer {
     public:
     
-        using ByteInfoer::info;
+        using AssetByteInfoer::info;
         virtual AssetInfo* info(const ByteArray&, const AssetInfoAPI&) const override final;
         virtual AssetInfo* info(const KVDocument&, const AssetInfoAPI&) const = 0;
         
     protected:
-        KVDocumentInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
-        virtual ~KVDocumentInfoer();
+        AssetKVDocumentInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        virtual ~AssetKVDocumentInfoer();
         
     private:
         unsigned int m_options;
     };
     
-    class Asset::KVDocumentLoader : public ByteLoader {
+    class AssetKVDocumentLoader : public AssetByteLoader {
     public:
 
-        using ByteLoader::load;
+        using AssetByteLoader::load;
         virtual Asset* load(const ByteArray&, const AssetLoadAPI&) const override final;
         virtual Asset* load(const KVDocument&, const AssetLoadAPI&) const = 0;
         
     protected:
-        KVDocumentLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
-        virtual ~KVDocumentLoader();
+        AssetKVDocumentLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        virtual ~AssetKVDocumentLoader();
     private:
         unsigned int m_options;
     };
 
-    class Asset::KVDocumentSaver : public ByteSaver {
+    class AssetKVDocumentSaver : public AssetByteSaver {
     public:
 
-        using ByteSaver::save;
+        using AssetByteSaver::save;
         virtual std::error_code  save(const Asset&, ByteArray&, const AssetSaveAPI&) const override final;
         virtual std::error_code  save(const Asset&, KVDocument&, const AssetSaveAPI&) const = 0;
 
     protected:
-        KVDocumentSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::kvdoc);
-        virtual ~KVDocumentSaver();
+        AssetKVDocumentSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::kvdoc);
+        virtual ~AssetKVDocumentSaver();
     };
 }
