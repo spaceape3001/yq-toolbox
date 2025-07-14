@@ -72,6 +72,8 @@ namespace yq {
 
     //! Writes the given data block to the specified file
     bool            file_write(const filesystem_path_t&, const ByteArray&);
+
+    //! Writes the given data block to the specified file
     bool            file_write(const filesystem_path_t&, const std::vector<char>&);
 
 
