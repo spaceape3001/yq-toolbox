@@ -59,10 +59,12 @@ namespace yq {
     #define YQ_ASSET_DECLARE(asset, base)       \
         YQ_OBJECT_DECLARE(asset, base)          \
         public:\
-            using IO    = Asset::IO<asset>;
+            using IO    = AssetIO<asset>;
     
     #define YQ_ASSET_IMPLEMENT(asset) \
         YQ_OBJECT_IMPLEMENT(asset)
+        
+    template <typename> class AssetIO;
     
     class AssetInfo : public Object, public RefCount {
         YQ_OBJECT_DECLARE(AssetInfo, Object)
@@ -110,6 +112,11 @@ namespace yq {
 
 
     private:
+    
+        template <typename> friend class AssetIO;
+    public:
+
+        // unfortunately, with all the C++ shennigans, can't make these private...
 
         //! \note Takes ownership of the pointer (not going the unique_ptr route here...)
         static void         add_infoer(AssetInfoer*);
@@ -120,10 +127,7 @@ namespace yq {
         //! \note Takes ownership of the pointer (not going the unique_ptr route here...)
         static void         add_saver(AssetSaver*);
 
-    public:
 
-        template <SomeAsset> class IO;
-    
         using MyInfo            = AssetInfo;
     
         //! Resolve the given string to a filename
@@ -142,6 +146,8 @@ namespace yq {
         //! Can add multiple paths, splits on ';'
         //! \note INITIALIZATION ONLY AS IT'S NOT THREAD SAFE
         static void             add_paths(std::string_view);
+        
+        static std::vector<std::filesystem::path>   all_paths();
    
         static AssetInfoCPtr    asset_load(info_k, std::string_view, const AssetInfoOptions& options={});
         
@@ -285,8 +291,8 @@ namespace yq {
         
     };
 
-    template <SomeAsset A>
-    class Asset::IO {
+    template <typename A>
+    class AssetIO {
     public:
         static Ref<const typename A::MyInfo> load(info_k, std::string_view u, const AssetInfoOptions& options={})
         {

@@ -20,9 +20,9 @@
 #include <type_traits>
 
 namespace yq {
-    template <SomeAsset A>
+    template <typename A>
         template <typename Pred>
-    void Asset::IO<A>::add_infoer(const AssetIOSpec&sp, Pred&&fn, const std::source_location& sl)
+    void AssetIO<A>::add_infoer(const AssetIOSpec&sp, Pred&&fn, const std::source_location& sl)
     {
         if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const ByteArray&, const AssetInfoAPI&>){
             Asset::add_loader( new TypedAssetByteInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
@@ -65,9 +65,9 @@ namespace yq {
         }
     }
 
-    template <SomeAsset A>
+    template <typename A>
         template <typename Pred>
-    void Asset::IO<A>::add_loader(const AssetIOSpec&sp, Pred&& fn, const std::source_location& sl)
+    void AssetIO<A>::add_loader(const AssetIOSpec&sp, Pred&& fn, const std::source_location& sl)
     {
         if constexpr (std::is_invocable_r_v<A*, Pred, const ByteArray&, const AssetLoadAPI&>){
             Asset::add_loader( new TypedAssetByteLoader<A,Pred>(sp.extensions, std::move(fn), sl));
@@ -110,9 +110,9 @@ namespace yq {
         }
     }
 
-    template <SomeAsset A>
+    template <typename A>
         template <typename Pred>
-    void Asset::IO<A>::add_saver(const AssetIOSpec&sp, Pred&&fn, const std::source_location& sl)
+    void AssetIO<A>::add_saver(const AssetIOSpec&sp, Pred&&fn, const std::source_location& sl)
     {
         if constexpr (std::is_invocable_r_v<std::error_code, Pred, const A&, ByteArray&, const AssetSaveAPI&>){
             Asset::add_saver( new TypedAssetByteSaver<A,Pred>(sp.extensions, std::move(fn), sl));

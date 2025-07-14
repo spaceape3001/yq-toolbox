@@ -94,7 +94,7 @@ namespace yq {
         {
         }
 
-        Asset* info(const std::filesystem::path& file, const AssetLoadAPI&) const override
+        Asset* load(const std::filesystem::path& file, const AssetLoadAPI&) const override
         {
             return m_function(file);
         }
@@ -137,6 +137,7 @@ namespace yq {
     
     template <SomeAsset A, typename Pred> 
     class TypedAssetFileSaverNoAPI : public AssetFileSaver {
+    public:
         //using Pred    = std::function<std::error_code(const A&, const std::filesystem::path&)>;
 
         TypedAssetFileSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
@@ -193,6 +194,7 @@ namespace yq {
     
     template <SomeAsset A, typename Pred> 
     class TypedAssetFileSaverBoolNoAPI : public AssetFileSaver {
+    public:
         //using Pred    = std::function<bool(const A&, const std::filesystem::path&)>;
 
         TypedAssetFileSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :

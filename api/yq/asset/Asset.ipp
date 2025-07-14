@@ -342,6 +342,17 @@ namespace yq {
             delete d;
     }
 
+    std::vector<std::filesystem::path>   Asset::all_paths()
+    {
+        std::vector<std::filesystem::path> ret;
+        for(auto& sp : repo().search){
+            if(auto p = std::get_if<std::filesystem::path>(&sp)){
+                ret.push_back(*p);
+            }
+        }
+        return ret;
+    }
+
 
     AssetInfoCPtr    Asset::asset_load(info_k, std::string_view spec, const AssetInfoOptions& options)
     {
