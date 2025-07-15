@@ -56,6 +56,8 @@ namespace yq {
     #define YQ_ASSET_INFO(info) \
         using MyInfo = info;
     
+    #define YQ_ASSET_META(meta) YQ_OBJECT_META(meta)
+
     #define YQ_ASSET_DECLARE(asset, base)       \
         YQ_OBJECT_DECLARE(asset, base)          \
         public:\
@@ -141,6 +143,7 @@ namespace yq {
         //! Add resolver paths
         //! Adds a singular path
         //! \note INITIALIZATION ONLY AS IT'S NOT THREAD SAFE
+        //! \note This does a path search first, to avoid duplicates, means O(N^2) behavior for large counts of paths
         static void             add_path(const std::filesystem::path&);
         
         //! Can add multiple paths, splits on ';'
@@ -148,27 +151,30 @@ namespace yq {
         static void             add_paths(std::string_view);
         
         static std::vector<std::filesystem::path>   all_paths();
-   
-        static AssetInfoCPtr    asset_load(info_k, std::string_view, const AssetInfoOptions& options={});
         
-        static AssetInfoCPtr    asset_load(info_k, const AssetMeta&, std::string_view, const AssetInfoOptions& options={});
+        //! \note Linear search as we're assuming a short one
+        static bool             has_path(const std::filesystem::path&);
+   
+        static AssetInfoCPtr    asset_info(std::string_view, const AssetInfoOptions& options={});
+        
+        static AssetInfoCPtr    asset_info(const AssetMeta&, std::string_view, const AssetInfoOptions& options={});
 
-        static AssetInfoCPtr    asset_load(info_k, const UrlView&, const AssetInfoOptions& options={});
+        static AssetInfoCPtr    asset_info(const UrlView&, const AssetInfoOptions& options={});
 
         //! Loads from the specific URL
-        static AssetInfoCPtr    asset_load(info_k, const AssetMeta&, const UrlView&, const AssetInfoOptions& options={});
+        static AssetInfoCPtr    asset_info(const AssetMeta&, const UrlView&, const AssetInfoOptions& options={});
         
         //! Loads from the specific file
-        static AssetInfoCPtr    asset_load(info_k, const std::filesystem::path&, const AssetInfoOptions& options={});
+        static AssetInfoCPtr    asset_info(const std::filesystem::path&, const AssetInfoOptions& options={});
 
         //! Loads from the specific file
-        static AssetInfoCPtr    asset_load(info_k, const AssetMeta&, const std::filesystem::path&, const AssetInfoOptions& options={});
+        static AssetInfoCPtr    asset_info(const AssetMeta&, const std::filesystem::path&, const AssetInfoOptions& options={});
     
         //! Loads from the specific library
-        static AssetInfoCPtr    asset_load(info_k, const std::filesystem::path&, std::string_view, const AssetInfoOptions& options={});
+        static AssetInfoCPtr    asset_info(const std::filesystem::path&, std::string_view, const AssetInfoOptions& options={});
 
         //! Loads from the specific library
-        static AssetInfoCPtr    asset_load(info_k, const AssetMeta&, const std::filesystem::path&, std::string_view, const AssetInfoOptions& options={});
+        static AssetInfoCPtr    asset_info(const AssetMeta&, const std::filesystem::path&, std::string_view, const AssetInfoOptions& options={});
 
 
         //! Common, loads from the short specification
@@ -294,31 +300,31 @@ namespace yq {
     template <typename A>
     class AssetIO {
     public:
-        static Ref<const typename A::MyInfo> load(info_k, std::string_view u, const AssetInfoOptions& options={})
+        static Ref<const typename A::MyInfo> info( std::string_view u, const AssetInfoOptions& options={})
         {
-            AssetInfoCPtr       ret = Asset::asset_load(INFO, meta<A>(), u, options);
+            AssetInfoCPtr       ret = Asset::asset_info(meta<A>(), u, options);
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
         
-        static Ref<const typename A::MyInfo> load(info_k, const std::string& u, const AssetInfoOptions& options={})
+        static Ref<const typename A::MyInfo> info( const std::string& u, const AssetInfoOptions& options={})
         {
-            return load(INFO, (std::string_view) u, options);
+            return info( (std::string_view) u, options);
         }
         
-        static Ref<const typename A::MyInfo> load(info_k, const char* u, const AssetInfoOptions& options={})
+        static Ref<const typename A::MyInfo> info( const char* u, const AssetInfoOptions& options={})
         {
-            return load(INFO, (std::string_view) u, options);
+            return info( (std::string_view) u, options);
         }
         
-        static Ref<const typename A::MyInfo> load(info_k, const std::filesystem::path& u, const AssetInfoOptions& options={})
+        static Ref<const typename A::MyInfo> info( const std::filesystem::path& u, const AssetInfoOptions& options={})
         {
-            AssetInfoCPtr       ret = Asset::asset_load(INFO, meta<A>(), u, options);
+            AssetInfoCPtr       ret = Asset::asset_info(meta<A>(), u, options);
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
         
-        static Ref<const typename A::MyInfo> load(info_k, const UrlView& u, const AssetInfoOptions& options={})
+        static Ref<const typename A::MyInfo> info( const UrlView& u, const AssetInfoOptions& options={})
         {
-            AssetInfoCPtr       ret = Asset::asset_load(INFO, meta<A>(), u, options);
+            AssetInfoCPtr       ret = Asset::asset_info(meta<A>(), u, options);
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
 
@@ -349,7 +355,6 @@ namespace yq {
             AssetCPtr       ret = Asset::asset_load(meta<A>(), u, options);
             return static_cast<const A*>(ret.ptr());
         }
-        
         
         ///////////////////////////////////////
         //  These definitions are in Asset.hxx

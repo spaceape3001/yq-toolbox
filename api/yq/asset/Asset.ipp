@@ -321,17 +321,15 @@ namespace yq {
     {
         if(!Meta::thread_safe_write())
             return ;
+        if(has_path(fp))
+            return ;
         repo().inject(fp);
     }
         
     void    Asset::add_paths(std::string_view dd)
     {
-        if(!Meta::thread_safe_write())
-            return ;
-
-        Repo&    _r = repo();
         vsplit(dd, ';', [&](std::string_view x){
-            _r.inject(std::filesystem::path(trimmed(x)));
+            add_path(std::filesystem::path(trimmed(x)));
         });
     }
 
@@ -355,12 +353,12 @@ namespace yq {
     }
 
 
-    AssetInfoCPtr    Asset::asset_load(info_k, std::string_view spec, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(std::string_view spec, const AssetInfoOptions& options)
     {
-        return asset_load(INFO, meta<Asset>(), spec, options);
+        return asset_info(meta<Asset>(), spec, options);
     }
     
-    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const AssetMeta&am, std::string_view spec, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url       = resolve(spec);
@@ -368,12 +366,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetInfoCPtr    Asset::asset_load(info_k, const UrlView& url, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const UrlView& url, const AssetInfoOptions& options)
     {
-        return asset_load(INFO, meta<Asset>(), url, options);
+        return asset_info(meta<Asset>(), url, options);
     }
 
-    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const AssetMeta& am, const UrlView& url, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url   = copy(url);
@@ -381,12 +379,12 @@ namespace yq {
         return _info(am, api);
     }
     
-    AssetInfoCPtr    Asset::asset_load(info_k, const std::filesystem::path& fp, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const std::filesystem::path& fp, const AssetInfoOptions& options)
     {
-        return asset_load(INFO, meta<Asset>(), fp, options);
+        return asset_info(meta<Asset>(), fp, options);
     }
 
-    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const AssetMeta&am, const std::filesystem::path&fp, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url.scheme    = "file";
@@ -395,12 +393,12 @@ namespace yq {
         return _info(am, api);
     }
 
-    AssetInfoCPtr    Asset::asset_load(info_k, const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const std::filesystem::path&fp, std::string_view frag, const AssetInfoOptions& options)
     {
-        return asset_load(INFO, meta<Asset>(), fp, frag, options);
+        return asset_info(meta<Asset>(), fp, frag, options);
     }
 
-    AssetInfoCPtr    Asset::asset_load(info_k, const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
+    AssetInfoCPtr    Asset::asset_info(const AssetMeta&am, const std::filesystem::path& fp, std::string_view frag, const AssetInfoOptions& options)
     {
         AssetInfoAPI    api(options);
         api.m_url.scheme    = "file";
@@ -517,6 +515,17 @@ namespace yq {
         }
         
         return ret;
+    }
+
+    bool             Asset::has_path(const std::filesystem::path& fp)
+    {
+        for(auto& sp : repo().search){
+            if(auto p = std::get_if<std::filesystem::path>(&sp)){
+                if(*p == fp)
+                    return true;
+            }
+        }
+        return false;
     }
 
 
