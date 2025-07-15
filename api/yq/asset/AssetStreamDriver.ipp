@@ -15,7 +15,7 @@
 namespace yq {
     ///////////////////////////////////
 
-    AssetStreamInfoer::AssetStreamInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) :
+    AssetStreamInfoer::AssetStreamInfoer(const AssetMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool binary, Type type) :
         AssetFileInfoer(meta, exts, sl, type), m_binary(binary)
     {
     }
@@ -46,7 +46,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetStreamLoader::AssetStreamLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) : 
+    AssetStreamLoader::AssetStreamLoader(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool binary, Type type) : 
         AssetFileLoader(meta, exts, sl, type), m_binary(binary)
     {
     }
@@ -77,7 +77,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetStreamSaver::AssetStreamSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool binary, Type type) : 
+    AssetStreamSaver::AssetStreamSaver(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool binary, Type type) : 
         AssetFileSaver(meta, exts, sl, type), m_binary(binary)
     {
     }

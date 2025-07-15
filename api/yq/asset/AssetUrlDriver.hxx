@@ -15,7 +15,7 @@ namespace yq {
     public:
         // using Pred    = std::function<typename A::MyInfo*(const UrlView&, const AssetInfoAPI&)>;
     
-        TypedAssetUrlInfoer(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -38,7 +38,7 @@ namespace yq {
     public:
         // using Pred    = std::function<typename A::MyInfo*(const UrlView&)>;
     
-        TypedAssetUrlInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -61,7 +61,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const UrlView&, const AssetLoadAPI&)>;
         
-        TypedAssetUrlLoader(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -84,7 +84,7 @@ namespace yq {
     public:
         // using Pred    = std::function<A*(const UrlView&)>;
     
-        TypedAssetUrlLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -110,7 +110,7 @@ namespace yq {
     
         // using Pred    = std::function<std::error_code(const A&, const UrlView&, const AssetSaveAPI&)>;
 
-        TypedAssetUrlSaver(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -136,7 +136,7 @@ namespace yq {
     class TypedAssetUrlSaverNoAPI : public AssetUrlSaver {
         // using Pred    = std::function<std::error_code(const A&, const UrlView&)>;
 
-        TypedAssetUrlSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -161,7 +161,7 @@ namespace yq {
     template <SomeAsset A, typename Pred> 
     class TypedAssetUrlSaverBool : public AssetUrlSaver {
     public:
-        TypedAssetUrlSaverBool(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -188,7 +188,7 @@ namespace yq {
     class TypedAssetUrlSaverBoolNoAPI : public AssetUrlSaver {
         //using Pred    = std::function<bool(const A&, const UrlView&)>;
 
-        TypedAssetUrlSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetUrlSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }

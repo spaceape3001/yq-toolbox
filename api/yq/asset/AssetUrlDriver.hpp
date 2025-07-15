@@ -15,7 +15,7 @@ namespace yq {
         using AssetInfoer::info;
         
     protected:
-        AssetUrlInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::url);
+        AssetUrlInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::url);
         virtual ~AssetUrlInfoer();
     };
     
@@ -25,7 +25,7 @@ namespace yq {
         using AssetLoader::load;
         
     protected:
-        AssetUrlLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::url);
+        AssetUrlLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::url);
         virtual ~AssetUrlLoader();
     };
 
@@ -35,7 +35,7 @@ namespace yq {
         using AssetSaver::save;
 
     protected:
-        AssetUrlSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::url);
+        AssetUrlSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::url);
         virtual ~AssetUrlSaver();
     };
 }

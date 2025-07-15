@@ -14,7 +14,7 @@
 namespace yq {
     ///////////////////////////////////
 
-    AssetStringInfoer::AssetStringInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+    AssetStringInfoer::AssetStringInfoer(const AssetMeta& meta, const string_vector_t& exts, const std::source_location& sl, Type type) :
         AssetFileInfoer(meta, exts, sl, type)
     {
     }
@@ -36,7 +36,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetStringLoader::AssetStringLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetStringLoader::AssetStringLoader(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetFileLoader(meta, exts, sl, type)
     {
     }
@@ -58,7 +58,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetStringSaver::AssetStringSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetStringSaver::AssetStringSaver(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetFileSaver(meta, exts, sl, type)
     {
     }

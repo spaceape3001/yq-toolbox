@@ -127,10 +127,10 @@ namespace yq {
             assetWarning << "Unable to load (" << to_string(api.m_url) << "): no file extension";
             return {};
         }
-        
+
         AssetCPtr ret;
-        
-        for(auto& itr : as_iterable(_r.loaders.equal_range(ext))){
+
+        for(auto& itr : as_iterable(_r.loaders.equal_range(std::string(ext)))){
             const AssetLoader* ld    = itr.second;
             if(!ld)
                 continue;
@@ -243,7 +243,7 @@ namespace yq {
         }
 
         bool        saved   = false;
-        for(auto& itr : as_iterable(_r.savers.equal_range(ext))){
+        for(auto& itr : as_iterable(_r.savers.equal_range(std::string(ext)))){
             const AssetSaver* sv = itr.second;
             if(!sv)
                 continue;
@@ -303,8 +303,9 @@ namespace yq {
     {
         if(Meta::thread_safe_write()){
             repo().inject(d);
-        } else if(d)
+        } else {
             delete d;
+        }
     }
 
     void    Asset::add_library(const AssetLibraryCPtr& alp)

@@ -12,19 +12,8 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    static string_set_t    make_set(const string_view_initializer_list_t& svs)
-    {
-        string_set_t ret;
-        for(auto& sv : ret)
-            ret.insert(std::string(sv));
-        return ret;
-    }
-    
-
-////////////////////////////////////////////////////////////////////////////////
-
-    AssetDriver::AssetDriver(const AssetMeta&asset, string_view_initializer_list_t exts, const std::source_location& loc, Type type) :
-        m_asset(asset), m_extensions(make_set(exts)), m_location(loc), m_type(type)
+    AssetDriver::AssetDriver(const AssetMeta&asset, const string_vector_t& exts, const std::source_location& loc, Type type) :
+        m_asset(asset), m_extensions(exts), m_location(loc), m_type(type)
     {
     }
     
@@ -34,7 +23,7 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    AssetInfoer::AssetInfoer(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+    AssetInfoer::AssetInfoer(const AssetMeta& asset, const string_vector_t& exts, const std::source_location& sl, Type type) :
         AssetDriver(asset, exts, sl, type)
     {
     }
@@ -45,7 +34,7 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    AssetLoader::AssetLoader(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+    AssetLoader::AssetLoader(const AssetMeta& asset, const string_vector_t& exts, const std::source_location& sl, Type type) :
         AssetDriver(asset, exts, sl, type)
     {
     }
@@ -57,7 +46,7 @@ namespace yq {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-    AssetSaver::AssetSaver(const AssetMeta& asset, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+    AssetSaver::AssetSaver(const AssetMeta& asset, const string_vector_t& exts, const std::source_location& sl, Type type) :
         AssetDriver(asset, exts, sl, type)
     {
     }

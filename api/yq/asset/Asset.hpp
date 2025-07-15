@@ -86,7 +86,7 @@ namespace yq {
     };
     
     struct AssetIOSpec {
-        string_view_initializer_list_t  extensions;
+        std::vector<std::string>        extensions;
         bool                            binary      = false;
         bool                            recursive   = false;
     };

@@ -17,7 +17,7 @@ namespace yq {
         virtual AssetInfo* info(const KVDocument&, const AssetInfoAPI&) const = 0;
         
     protected:
-        AssetKVDocumentInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        AssetKVDocumentInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
         virtual ~AssetKVDocumentInfoer();
         
     private:
@@ -32,7 +32,7 @@ namespace yq {
         virtual Asset* load(const KVDocument&, const AssetLoadAPI&) const = 0;
         
     protected:
-        AssetKVDocumentLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        AssetKVDocumentLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
         virtual ~AssetKVDocumentLoader();
     private:
         unsigned int m_options;
@@ -46,7 +46,7 @@ namespace yq {
         virtual std::error_code  save(const Asset&, KVDocument&, const AssetSaveAPI&) const = 0;
 
     protected:
-        AssetKVDocumentSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::kvdoc);
+        AssetKVDocumentSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::kvdoc);
         virtual ~AssetKVDocumentSaver();
     };
 }

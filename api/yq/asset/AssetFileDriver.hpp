@@ -16,7 +16,7 @@ namespace yq {
         virtual AssetInfo* info(const std::filesystem::path&, const AssetInfoAPI&) const = 0;
         
     protected:
-        AssetFileInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::file);
+        AssetFileInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
         virtual ~AssetFileInfoer();
     };
     
@@ -27,7 +27,7 @@ namespace yq {
         virtual Asset* load(const std::filesystem::path&, const AssetLoadAPI&) const = 0;
         
     protected:
-        AssetFileLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::file);
+        AssetFileLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
         virtual ~AssetFileLoader();
     };
 
@@ -38,7 +38,7 @@ namespace yq {
         virtual std::error_code  save(const Asset&, const std::filesystem::path&, const AssetSaveAPI&) const = 0;
 
     protected:
-        AssetFileSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::file);
+        AssetFileSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
         virtual ~AssetFileSaver();
     };
 }

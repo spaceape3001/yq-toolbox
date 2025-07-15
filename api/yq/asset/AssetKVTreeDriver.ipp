@@ -21,7 +21,7 @@
 namespace yq {
     ///////////////////////////////////
 
-    AssetKVTreeInfoer::AssetKVTreeInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, bool recurse, Type type) :
+    AssetKVTreeInfoer::AssetKVTreeInfoer(const AssetMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) :
         AssetByteInfoer(meta, exts, sl, type), m_options(0)
     {
         if(recurse)
@@ -45,7 +45,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetKVTreeLoader::AssetKVTreeLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool recurse, Type type) : 
+    AssetKVTreeLoader::AssetKVTreeLoader(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) : 
         AssetByteLoader(meta, exts, sl, type), m_options(0)
     {
         if(recurse)
@@ -69,7 +69,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetKVTreeSaver::AssetKVTreeSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetKVTreeSaver::AssetKVTreeSaver(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetByteSaver(meta, exts, sl, type)
     {
     }

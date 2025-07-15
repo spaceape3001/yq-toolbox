@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVDocument&, const AssetInfoAPI&)>;
     
-        TypedAssetKVDocumentInfoer(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVDocumentInfoer(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVDocumentInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -38,7 +38,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVDocument&)>;
     
-        TypedAssetKVDocumentInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVDocumentInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVDocumentInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -62,7 +62,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVDocument&, const AssetLoadAPI&)>;
         
-        TypedAssetKVDocumentLoader(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVDocumentLoader(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVDocumentLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -86,7 +86,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVDocument&)>;
     
-        TypedAssetKVDocumentLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVDocumentLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVDocumentLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -105,13 +105,13 @@ namespace yq {
     };
     
     //template <SomeAsset A>
-    //void    Asset::add_loader(string_view_initializer_list_t exts, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
+    //void    Asset::add_loader(const string_vector_t& exts, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
     //{
         //add_loader(new TypedAssetKVDocumentLoaderNoAPI<A>(exts, std::move(fn), false, sl));
     //}
     
     //template <SomeAsset A>
-    //void    Asset::add_loader(string_view_initializer_list_t exts, recursive_k, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
+    //void    Asset::add_loader(const string_vector_t& exts, recursive_k, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
     //{
         //add_loader(new TypedAssetKVDocumentLoaderNoAPI<A>(exts, std::move(fn), true, sl));
     //}
@@ -124,7 +124,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, KVDocument&, const AssetSaveAPI&)>;
 
-        TypedAssetKVDocumentSaver(string_view_initializer_list_t exts, Pred&& fn, bool recurse, const std::source_location& sl) :
+        TypedAssetKVDocumentSaver(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
             AssetKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -151,7 +151,7 @@ namespace yq {
     class TypedAssetKVDocumentSaverNoAPI : public AssetKVDocumentSaver {
         //using Pred    = std::function<std::error_code(const A&, KVDocument&)>;
 
-        TypedAssetKVDocumentSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetKVDocumentSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetKVDocumentSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -180,7 +180,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, KVDocument&, const AssetSaveAPI&)>;
 
-        TypedAssetKVDocumentSaverBool(string_view_initializer_list_t exts, Pred&& fn, bool recurse, const std::source_location& sl) :
+        TypedAssetKVDocumentSaverBool(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
             AssetKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -209,7 +209,7 @@ namespace yq {
     class TypedAssetKVDocumentSaverBoolNoAPI : public AssetKVDocumentSaver {
 //        using Pred    = std::function<bool(const A&, KVDocument&)>;
 
-        TypedAssetKVDocumentSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetKVDocumentSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetKVDocumentSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }

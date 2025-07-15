@@ -17,7 +17,7 @@ namespace yq {
         virtual AssetInfo* info(const json&, const AssetInfoAPI&) const = 0;
         
     protected:
-        AssetJsonInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::json);
+        AssetJsonInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
         virtual ~AssetJsonInfoer();
     };
     
@@ -29,7 +29,7 @@ namespace yq {
         virtual Asset* load(const json&, const AssetLoadAPI&) const = 0;
         
     protected:
-        AssetJsonLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::json);
+        AssetJsonLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
         virtual ~AssetJsonLoader();
     };
 
@@ -41,7 +41,7 @@ namespace yq {
         virtual std::error_code  save(const Asset&, json&, const AssetSaveAPI&) const = 0;
 
     protected:
-        AssetJsonSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::json);
+        AssetJsonSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
         virtual ~AssetJsonSaver();
     };
 }

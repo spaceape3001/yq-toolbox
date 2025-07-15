@@ -17,7 +17,7 @@ namespace yq {
         virtual AssetInfo* info(const XmlDocument&, const AssetInfoAPI&) const = 0;
         
     protected:
-        AssetXmlInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
+        AssetXmlInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::xml);
         virtual ~AssetXmlInfoer();
     };
     
@@ -29,7 +29,7 @@ namespace yq {
         virtual Asset* load(const XmlDocument&, const AssetLoadAPI&) const = 0;
         
     protected:
-        AssetXmlLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
+        AssetXmlLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::xml);
         virtual ~AssetXmlLoader();
     };
 
@@ -41,7 +41,7 @@ namespace yq {
         virtual std::error_code  save(const Asset&, XmlDocument&, const AssetSaveAPI&) const = 0;
 
     protected:
-        AssetXmlSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::xml);
+        AssetXmlSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::xml);
         virtual ~AssetXmlSaver();
     };
 }

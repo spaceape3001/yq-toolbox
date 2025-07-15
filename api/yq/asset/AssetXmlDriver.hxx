@@ -13,7 +13,7 @@ namespace yq {
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlInfoer : public AssetXmlInfoer {
     public:
-        TypedAssetXmlInfoer(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlInfoer(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -34,7 +34,7 @@ namespace yq {
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlInfoerNoAPI : public AssetXmlInfoer {
     public:
-        TypedAssetXmlInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlInfoer(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -55,7 +55,7 @@ namespace yq {
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlLoader : public AssetXmlLoader {
     public:
-        TypedAssetXmlLoader(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlLoader(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -76,7 +76,7 @@ namespace yq {
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlLoaderNoAPI : public AssetXmlLoader {
     public:
-        TypedAssetXmlLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlLoader(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -99,7 +99,7 @@ namespace yq {
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlSaver : public AssetXmlSaver {
     public:
-        TypedAssetXmlSaver(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -123,7 +123,7 @@ namespace yq {
     
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlSaverNoAPI : public AssetXmlSaver {
-        TypedAssetXmlSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -149,7 +149,7 @@ namespace yq {
     class TypedAssetXmlSaverBool : public AssetXmlSaver {
     public:
     
-        TypedAssetXmlSaverBool(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -175,7 +175,7 @@ namespace yq {
     
     template <SomeAsset A, typename Pred> 
     class TypedAssetXmlSaverBoolNoAPI : public AssetXmlSaver {
-        TypedAssetXmlSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetXmlSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }

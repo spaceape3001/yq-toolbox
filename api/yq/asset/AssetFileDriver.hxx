@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::filesystem::path&, const AssetInfoAPI&)>;
     
-        TypedAssetFileInfoer(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileInfoer(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -39,7 +39,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::filesystem::path&)>;
     
-        TypedAssetFileInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -62,7 +62,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::filesystem::path&, const AssetLoadAPI&)>;
         
-        TypedAssetFileLoader(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -85,7 +85,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::filesystem::path&)>;
     
-        TypedAssetFileLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -112,7 +112,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, const std::filesystem::path&, const AssetSaveAPI&)>;
 
-        TypedAssetFileSaver(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -140,7 +140,7 @@ namespace yq {
     public:
         //using Pred    = std::function<std::error_code(const A&, const std::filesystem::path&)>;
 
-        TypedAssetFileSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -168,7 +168,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, const std::filesystem::path&, const AssetSaveAPI&)>;
 
-        TypedAssetFileSaverBool(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -197,7 +197,7 @@ namespace yq {
     public:
         //using Pred    = std::function<bool(const A&, const std::filesystem::path&)>;
 
-        TypedAssetFileSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetFileSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }

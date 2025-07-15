@@ -21,7 +21,7 @@
 namespace yq {
     ///////////////////////////////////
 
-    AssetKVDocumentInfoer::AssetKVDocumentInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, bool recurse, Type type) :
+    AssetKVDocumentInfoer::AssetKVDocumentInfoer(const AssetMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) :
         AssetByteInfoer(meta, exts, sl, type), m_options(KVTree::BODY)
     {
         if(recurse)
@@ -46,7 +46,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetKVDocumentLoader::AssetKVDocumentLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, bool recurse, Type type) : 
+    AssetKVDocumentLoader::AssetKVDocumentLoader(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) : 
         AssetByteLoader(meta, exts, sl, type), m_options(KVTree::BODY)
     {
         if(recurse)
@@ -71,7 +71,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetKVDocumentSaver::AssetKVDocumentSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetKVDocumentSaver::AssetKVDocumentSaver(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetByteSaver(meta, exts, sl, type)
     {
     }

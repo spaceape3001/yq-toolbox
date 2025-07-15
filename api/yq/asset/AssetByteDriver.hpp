@@ -17,7 +17,7 @@ namespace yq {
         virtual AssetInfo* info(const ByteArray&, const AssetInfoAPI&) const = 0;
         
     protected:
-        AssetByteInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
+        AssetByteInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::byte);
         virtual ~AssetByteInfoer();
     };
     
@@ -29,7 +29,7 @@ namespace yq {
         virtual Asset* load(const ByteArray&, const AssetLoadAPI&) const = 0;
         
     protected:
-        AssetByteLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
+        AssetByteLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::byte);
         virtual ~AssetByteLoader();
     };
 
@@ -41,7 +41,7 @@ namespace yq {
         virtual std::error_code  save(const Asset&, ByteArray&, const AssetSaveAPI&) const = 0;
 
     protected:
-        AssetByteSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type type=Type::byte);
+        AssetByteSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::byte);
         virtual ~AssetByteSaver();
     };
 }

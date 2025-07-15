@@ -18,7 +18,7 @@ namespace yq {
         virtual AssetInfo* info(std::istream&, const AssetInfoAPI&) const = 0;
         
     protected:
-        AssetStreamInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
+        AssetStreamInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
         virtual ~AssetStreamInfoer();
         
     private:
@@ -33,7 +33,7 @@ namespace yq {
         virtual Asset* load(std::istream&, const AssetLoadAPI&) const = 0;
         
     protected:
-        AssetStreamLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
+        AssetStreamLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
         virtual ~AssetStreamLoader();
         
     private:
@@ -48,7 +48,7 @@ namespace yq {
         virtual std::error_code  save(const Asset&, std::ostream&, const AssetSaveAPI&) const = 0;
 
     protected:
-        AssetStreamSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, bool binary, Type type=Type::stream);
+        AssetStreamSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
         virtual ~AssetStreamSaver();
         
     private:

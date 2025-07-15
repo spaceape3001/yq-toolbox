@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const json&, const AssetInfoAPI&)>;
     
-        TypedAssetJsonInfoer(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -38,7 +38,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const json&)>;
     
-        TypedAssetJsonInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -61,7 +61,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const json&, const AssetLoadAPI&)>;
         
-        TypedAssetJsonLoader(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -84,7 +84,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const json&)>;
     
-        TypedAssetJsonLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -110,7 +110,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, json&, const AssetSaveAPI&)>;
 
-        TypedAssetJsonSaver(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -136,7 +136,7 @@ namespace yq {
     class TypedAssetJsonSaverNoAPI : public AssetJsonSaver {
         //using Pred    = std::function<std::error_code(const A&, json&)>;
 
-        TypedAssetJsonSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -165,7 +165,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, json&, const AssetSaveAPI&)>;
 
-        TypedAssetJsonSaverBool(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -193,7 +193,7 @@ namespace yq {
     class TypedAssetJsonSaverBoolNoAPI : public AssetJsonSaver {
         //using Pred    = std::function<bool(const A&, json&)>;
 
-        TypedAssetJsonSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetJsonSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }

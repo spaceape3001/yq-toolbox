@@ -8,6 +8,7 @@
 
 #include <yq/asset/Asset.hpp>
 #include <yq/core/ErrorDB.hpp>
+#include <yq/typedef/string_vectors.hpp>
 
 namespace yq {
 
@@ -31,16 +32,16 @@ namespace yq {
         Type                type() const { return m_type; }
         const AssetMeta&    asset() const { return m_asset; }
 
-        constexpr const string_set_t& extensions() const { return m_extensions; }
+        constexpr const string_vector_t& extensions() const { return m_extensions; }
         constexpr const std::source_location& location() const { return m_location; }
         
     protected:
-        AssetDriver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        AssetDriver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type);
         virtual ~AssetDriver();
         
     private:
         const AssetMeta&        m_asset;
-        string_set_t            m_extensions;
+        string_vector_t         m_extensions;
         std::source_location    m_location;
         Type                    m_type;
     };
@@ -53,7 +54,7 @@ namespace yq {
     protected:
         friend class Asset;
         
-        AssetInfoer(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        AssetInfoer(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type);
         virtual ~AssetInfoer();
     };
     
@@ -65,7 +66,7 @@ namespace yq {
     protected:
         friend class Asset;
 
-        AssetLoader(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        AssetLoader(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type);
         virtual ~AssetLoader();
     };
 
@@ -76,7 +77,7 @@ namespace yq {
     protected:
         friend class Asset;
 
-        AssetSaver(const AssetMeta&, string_view_initializer_list_t exts, const std::source_location&, Type);
+        AssetSaver(const AssetMeta&, const string_vector_t& exts, const std::source_location&, Type);
         virtual ~AssetSaver();
     };
     

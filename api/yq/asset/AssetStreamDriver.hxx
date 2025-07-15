@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(std::istream&, const AssetInfoAPI&)>;
     
-        TypedAssetStreamInfoer(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamInfoer(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamInfoer(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -38,7 +38,7 @@ namespace yq {
     public:
 //        using Pred    = std::function<typename A::MyInfo*(std::istream&)>;
     
-        TypedAssetStreamInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamInfoer(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -61,7 +61,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(std::istream&, const AssetLoadAPI&)>;
         
-        TypedAssetStreamLoader(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamLoader(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamLoader(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -84,7 +84,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(std::istream&)>;
     
-        TypedAssetStreamLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamLoader(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -110,7 +110,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, std::ostream&, const AssetSaveAPI&)>;
 
-        TypedAssetStreamSaver(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamSaver(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -136,7 +136,7 @@ namespace yq {
     class TypedAssetStreamSaverNoAPI : public AssetStreamSaver {
         //using Pred    = std::function<std::error_code(const A&, std::ostream&)>;
 
-        TypedAssetStreamSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamSaverNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -164,7 +164,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>;
 
-        TypedAssetStreamSaverBool(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamSaverBool(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }
@@ -190,13 +190,13 @@ namespace yq {
 
 #if 0
     template <SomeAsset A>
-    void    Asset::add_saver(string_view_initializer_list_t exts, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    void    Asset::add_saver(const string_vector_t& exts, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedAssetStreamSaverBool<A>(exts, std::move(fn), false, sl));
     }
         
     template <SomeAsset A>
-    void    Asset::add_saver(string_view_initializer_list_t exts, binary_k, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
+    void    Asset::add_saver(const string_vector_t& exts, binary_k, std::function<bool(const A&, std::ostream&, const AssetSaveAPI&)>&&fn, const std::source_location& sl)
     {
         add_saver(new TypedAssetStreamSaverBool<A>(exts, std::move(fn), true, sl));
     }
@@ -206,7 +206,7 @@ namespace yq {
     class TypedAssetStreamSaverBoolNoAPI : public AssetStreamSaver {
         //using Pred    = std::function<bool(const A&, std::ostream&)>;
 
-        TypedAssetStreamSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool binary, const std::source_location& sl) :
+        TypedAssetStreamSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
             AssetStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
         {
         }

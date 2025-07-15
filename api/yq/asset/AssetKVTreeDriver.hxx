@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVTree&, const AssetInfoAPI&)>;
     
-        TypedAssetKVTreeInfoer(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVTreeInfoer(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVTreeInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -38,7 +38,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVTree&)>;
     
-        TypedAssetKVTreeInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVTreeInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVTreeInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -62,7 +62,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVTree&, const AssetLoadAPI&)>;
         
-        TypedAssetKVTreeLoader(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVTreeLoader(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVTreeLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -86,7 +86,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVTree&)>;
     
-        TypedAssetKVTreeLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, bool recursive, const std::source_location& sl) :
+        TypedAssetKVTreeLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
             AssetKVTreeLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
         {
         }
@@ -112,7 +112,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, KVTree&, const AssetSaveAPI&)>;
 
-        TypedAssetKVTreeSaver(string_view_initializer_list_t exts, Pred&& fn, bool recurse, const std::source_location& sl) :
+        TypedAssetKVTreeSaver(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
             AssetKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -139,7 +139,7 @@ namespace yq {
     class TypedAssetKVTreeSaverNoAPI : public AssetKVTreeSaver {
         //using Pred    = std::function<std::error_code(const A&, KVTree&)>;
 
-        TypedAssetKVTreeSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetKVTreeSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetKVTreeSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }
@@ -168,7 +168,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, KVTree&, const AssetSaveAPI&)>;
 
-        TypedAssetKVTreeSaverBool(string_view_initializer_list_t exts, Pred&& fn, bool recurse, const std::source_location& sl) :
+        TypedAssetKVTreeSaverBool(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
             AssetKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -198,7 +198,7 @@ namespace yq {
     class TypedAssetKVTreeSaverBoolNoAPI : public AssetKVTreeSaver {
         //using Pred    = std::function<bool(const A&, KVTree&)>;
 
-        TypedAssetKVTreeSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetKVTreeSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetKVTreeSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
         }

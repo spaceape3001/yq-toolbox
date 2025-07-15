@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const ByteArray&, const AssetInfoAPI&)>;
     
-        TypedAssetByteInfoer(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -39,7 +39,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const ByteArray&)>;
     
-        TypedAssetByteInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -63,7 +63,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const ByteArray&, const AssetLoadAPI&)>;
         
-        TypedAssetByteLoader(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -87,7 +87,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const ByteArray&)>;
     
-        TypedAssetByteLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -114,7 +114,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, ByteArray&, const AssetSaveAPI&)>;
 
-        TypedAssetByteSaver(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -140,7 +140,7 @@ namespace yq {
     class TypedAssetByteSaverNoAPI : public AssetByteSaver {
         //using Pred    = std::function<std::error_code(const A&, ByteArray&)>;
 
-        TypedAssetByteSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -168,7 +168,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, ByteArray&, const AssetSaveAPI&)>;
 
-        TypedAssetByteSaverBool(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -196,7 +196,7 @@ namespace yq {
     class TypedAssetByteSaverBoolNoAPI : public AssetByteSaver {
         //using Pred    = std::function<bool(const A&, ByteArray&)>;
 
-        TypedAssetByteSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetByteSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }

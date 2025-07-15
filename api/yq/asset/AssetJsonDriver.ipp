@@ -15,7 +15,7 @@
 namespace yq {
     ///////////////////////////////////
 
-    AssetJsonInfoer::AssetJsonInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+    AssetJsonInfoer::AssetJsonInfoer(const AssetMeta& meta, const string_vector_t& exts, const std::source_location& sl, Type type) :
         AssetStringInfoer(meta, exts, sl, type)
     {
     }
@@ -41,7 +41,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetJsonLoader::AssetJsonLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetJsonLoader::AssetJsonLoader(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetStringLoader(meta, exts, sl, type)
     {
     }
@@ -67,7 +67,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetJsonSaver::AssetJsonSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetJsonSaver::AssetJsonSaver(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetStringSaver(meta, exts, sl, type)
     {
     }

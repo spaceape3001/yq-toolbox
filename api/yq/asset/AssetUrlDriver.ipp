@@ -12,7 +12,7 @@
 namespace yq {
     ///////////////////////////////////
 
-    AssetUrlInfoer::AssetUrlInfoer(const AssetMeta& meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) :
+    AssetUrlInfoer::AssetUrlInfoer(const AssetMeta& meta, const string_vector_t& exts, const std::source_location& sl, Type type) :
         AssetInfoer(meta, exts, sl, type)
     {
     }
@@ -23,7 +23,7 @@ namespace yq {
     
     ///////////////////////////////////
 
-    AssetUrlLoader::AssetUrlLoader(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetUrlLoader::AssetUrlLoader(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetLoader(meta, exts, sl, type)
     {
     }
@@ -34,7 +34,7 @@ namespace yq {
 
     ///////////////////////////////////
 
-    AssetUrlSaver::AssetUrlSaver(const AssetMeta&meta, string_view_initializer_list_t exts, const std::source_location& sl, Type type) : 
+    AssetUrlSaver::AssetUrlSaver(const AssetMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
         AssetSaver(meta, exts, sl, type)
     {
     }

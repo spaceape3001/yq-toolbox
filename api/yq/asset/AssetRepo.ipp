@@ -29,9 +29,9 @@ namespace yq {
         */
     
         using search_t          = std::variant<std::monostate, std::filesystem::path, AssetLibraryCPtr>;
-        using infoer_mmap_t     = std::multimap<std::string_view, const AssetInfoer*, IgCase>;
-        using loader_mmap_t     = std::multimap<std::string_view, const AssetLoader*, IgCase>;
-        using saver_mmap_t      = std::multimap<std::string_view, const AssetSaver*, IgCase>;
+        using infoer_mmap_t     = std::multimap<std::string, const AssetInfoer*, IgCase>;
+        using loader_mmap_t     = std::multimap<std::string, const AssetLoader*, IgCase>;
+        using saver_mmap_t      = std::multimap<std::string, const AssetSaver*, IgCase>;
         // ditto once we have the idea of "skimming" or similar
         
         std::vector<search_t>                   search;         //!< Search

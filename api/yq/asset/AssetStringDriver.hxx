@@ -15,7 +15,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::string&, const AssetInfoAPI&)>;
     
-        TypedAssetStringInfoer(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -38,7 +38,7 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::string&)>;
     
-        TypedAssetStringInfoerNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -61,7 +61,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::string&, const AssetLoadAPI&)>;
         
-        TypedAssetStringLoader(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -84,7 +84,7 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::string&)>;
     
-        TypedAssetStringLoaderNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringLoader(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -110,7 +110,7 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, std::string&, const AssetSaveAPI&)>;
 
-        TypedAssetStringSaver(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -137,7 +137,7 @@ namespace yq {
     class TypedAssetStringSaverNoAPI : public AssetStringSaver {
         //using Pred    = std::function<std::error_code(const A&, std::string&)>;
 
-        TypedAssetStringSaverNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -166,7 +166,7 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, std::string&, const AssetSaveAPI&)>;
 
-        TypedAssetStringSaverBool(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
@@ -194,7 +194,7 @@ namespace yq {
     class TypedAssetStringSaverBoolNoAPI : public AssetStringSaver {
         //using Pred    = std::function<bool(const A&, std::string&)>;
 
-        TypedAssetStringSaverBoolNoAPI(string_view_initializer_list_t exts, Pred&& fn, const std::source_location& sl) :
+        TypedAssetStringSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             AssetStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
