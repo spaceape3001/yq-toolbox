@@ -107,6 +107,8 @@ namespace yq {
     
     //! Returns the LAST file extension (no leading '.') or empty if none
     std::string_view    file_extension(std::string_view);
+
+    //! Returns the LAST file extension (no leading '.') from the path or empty if none
     std::string         file_extension(const Url&);
     
     
