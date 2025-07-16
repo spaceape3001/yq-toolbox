@@ -23,6 +23,7 @@ namespace yq {
     class AbstractFile {
     public:
 
+        //! Filepath that we loaded as.
         const filesystem_path_t&    file() const { return m_file; }
 
         void            clear();
