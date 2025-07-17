@@ -26,6 +26,7 @@ namespace yq {
         //! Filepath that we loaded as.
         const filesystem_path_t&    file() const { return m_file; }
 
+        //! Clear/reset contents of the in-memory file data-structure
         void            clear();
 
         std::error_code load(const filesystem_path_t&);
