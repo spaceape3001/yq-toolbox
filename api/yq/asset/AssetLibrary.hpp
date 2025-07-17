@@ -24,10 +24,17 @@ namespace yq {
     private:
         std::vector<const AssetMeta*>   m_assets;
     };
+    
+    class AssetLibraryInfo : public AssetInfo {
+        YQ_OBJECT_DECLARE(AssetLibraryInfo, AssetInfo)
+    public:
+        
+    };
 
     class AssetLibrary : public Asset {
-        YQ_OBJECT_META(AssetLibraryMeta)
-        YQ_OBJECT_DECLARE(AssetLibrary, Asset)
+        YQ_ASSET_META(AssetLibraryMeta)
+        YQ_ASSET_INFO(AssetLibraryInfo)
+        YQ_ASSET_DECLARE(AssetLibrary, Asset)
     public:
     
         bool    contains(const std::string&) const;
@@ -35,6 +42,8 @@ namespace yq {
         static void init_meta();
         
         AssetCPtr   asset(const std::string&) const;
+    
+        void        add(std::string_view, AssetPtr);
     
     protected:
         friend class Asset;

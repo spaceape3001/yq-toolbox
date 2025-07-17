@@ -18,8 +18,10 @@ namespace yq {
     class AssetLibrary;         //< Collection of assets, keyed by integers and/or strings
     class AssetLibraryMeta;     //< Asset Library class meta inforamtion
     
-    struct AssetInfo;           //< Asset information (for the specific)
+    class AssetInfo;            //< Asset information (for the specific)
     struct AssetRepo;           //< Internal repository for asset information
+
+    class AssetInfoMeta;
 
     
     struct AssetInfoOptions;    //< Asset load options

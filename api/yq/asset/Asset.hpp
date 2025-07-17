@@ -48,9 +48,13 @@ namespace yq {
 
         //! Constructor of asset info, used by the meta system to initialize the thing (so... don't need to call this outside of that context)
         AssetMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
-        
+
     protected:
         std::vector<const AssetLibraryMeta*>    m_libraries;
+
+    private:
+        friend class Asset;
+        virtual AssetInfo*  createInfo() const { return nullptr; }
     };
     
     #define YQ_ASSET_INFO(info) \
@@ -68,30 +72,13 @@ namespace yq {
         
     template <typename> class AssetIO;
     
-    class AssetInfo : public Object, public RefCount {
-        YQ_OBJECT_DECLARE(AssetInfo, Object)
-        
-        friend class Asset;
-    public:
-        
-        const Url&  url() const { return m_url; }
-    
-        static void init_meta();
-    
-    protected:
-        AssetInfo();
-        virtual ~AssetInfo();
-    
-    private:
-        Url     m_url;
-    
-    };
-    
     struct AssetIOSpec {
         std::vector<std::string>        extensions;
         bool                            binary      = false;
         bool                            recursive   = false;
     };
+    
+    template <typename> class AssetFixer;
     
     
     /*! \brief An asset of the graphics engine
@@ -271,12 +258,18 @@ namespace yq {
         void    set_url(const UrlView&);
         
     
+        //  INFO... TODO
+        //  LIBRARY (somewhat TODO)
+    
     protected:
         friend class AssetMeta;
         friend class AssetLibraryMeta;
+        friend class AssetLibrary;
         
         Asset();
         virtual ~Asset();
+        
+        //bool        extract(AssetInfo&);
         
     private:
         Url                             m_url;      // URL

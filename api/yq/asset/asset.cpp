@@ -34,6 +34,8 @@
             Meta        Meta information/reflection about the asset's C++ class
     */
 
+#include "AssetInfo.ipp"
+
 
 #include "Asset.hpp"
 #include "AssetCache.ipp"

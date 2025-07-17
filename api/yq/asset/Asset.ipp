@@ -19,7 +19,6 @@
 #include <yq/util/Iterable.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::Asset)
-YQ_OBJECT_IMPLEMENT(yq::AssetInfo)
 
 namespace yq {
     namespace errors {
@@ -47,18 +46,6 @@ namespace yq {
         w.description("Asset (ie texture, mesh, shader, etc)");
         w.property("url", &Asset::m_url).tag({kTag_Save});
         w.abstract();
-    }
-
-////////////////////////////////////////////////////////////////////////////////
-
-    AssetInfo::AssetInfo() = default;
-    AssetInfo::~AssetInfo() = default;
-
-    void AssetInfo::init_meta()
-    {
-        auto w = writer<AssetInfo>();
-        w.description("Asset Information");
-        w.property("url", &AssetInfo::m_url);
     }
 
 ////////////////////////////////////////////////////////////////////////////////

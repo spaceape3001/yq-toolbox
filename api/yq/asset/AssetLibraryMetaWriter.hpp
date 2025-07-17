@@ -22,9 +22,10 @@ namespace yq {
         }
         
         template <SomeAsset A>
-        Writer& supports()
+        Writer& asset()
         {
             if(m_myMeta && thread_safe_write()){
+                m_myMeta -> m_assets.push_back(&meta<A>());
             }
         
             return *this;

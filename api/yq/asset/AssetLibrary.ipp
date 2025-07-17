@@ -31,6 +31,17 @@ namespace yq {
     AssetLibrary::~AssetLibrary()
     {
     }
+
+    void        AssetLibrary::add(std::string_view k, AssetPtr ap)
+    {
+        if(!ap)
+            return;
+            
+        Url u2  = url();
+        u2.fragment = std::string(k);
+        ap->m_url   = u2;
+        m_assets[u2.fragment] = (AssetCPtr) ap;
+    }
         
     AssetCPtr   AssetLibrary::asset(const std::string& k) const
     {
