@@ -29,6 +29,7 @@ namespace yq {
         //! Clear/reset contents of the in-memory file data-structure
         void            clear();
 
+        //! Loads via the specified file name
         std::error_code load(const filesystem_path_t&);
         std::error_code load(std::istream&, const filesystem_path_t& fp=filesystem_path_t());
         //bool            load(u8_istream&, const filesystem_path_t& fp=filesystem_path_t());
