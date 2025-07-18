@@ -20,6 +20,8 @@
     euler-angle based rotator can be created using the HPR keyword.
 */
 
+#include <limits>
+
 namespace yq {
 
     // Problematic macros...
@@ -146,7 +148,10 @@ namespace yq {
     struct multipliable_k {};
     struct multiply_k {};
     struct n_k {};
-    struct nan_k {};
+    struct nan_k {
+        consteval operator float() const noexcept { return std::numeric_limits<float>::quiet_NaN(); }
+        consteval operator double() const noexcept { return std::numeric_limits<double>::quiet_NaN(); }
+    };
     struct nearest_k {};
     struct negative_k {};
     struct nested_k {};
