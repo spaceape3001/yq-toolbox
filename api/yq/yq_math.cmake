@@ -58,6 +58,7 @@ add_library(yq_math SHARED
     shape/Polyline3.cpp
     shape/Polyline4.cpp
     shape/PolylineData.cpp
+    shape/Polymesh3.cpp
     shape/Quadrilateral2.cpp
     shape/QuadrilateralData.cpp
     shape/Ray2.cpp
