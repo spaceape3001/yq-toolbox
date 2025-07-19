@@ -150,6 +150,7 @@ namespace yq {
             RENDERED,       //!< It's a rendered (RenderedInfo)
             REPLY,          //!< It's a reply (message API)
             REQUEST,        //!< A request of some sort (message API)
+            RESOURCE,       //!< It's a resource
             SAMPLER,        //!< It's a sampler (in vulqan)
             SEALED,         //!< Registration sealed (WebPage)
             SELF,           //!< Self-modifying (operator)
@@ -368,6 +369,8 @@ namespace yq {
         bool                            is_render3d() const;
 
         bool                            is_rendered() const;
+        
+        bool                            is_resource() const;
         
         bool                            is_sampler() const;
 

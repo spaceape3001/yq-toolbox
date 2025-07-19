@@ -16,7 +16,7 @@ include(yq_file.cmake)
 include(yq_net.cmake)
 
 #   SECOND STEP
-include(yq_asset.cmake)
+include(yq_resource.cmake)
 include(yq_chemistry.cmake)
 include(yq_color.cmake)
 include(yq_process.cmake)

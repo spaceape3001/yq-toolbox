@@ -455,6 +455,11 @@ namespace yq {
         return has(Flag::RENDERED);
     }
 
+    bool  Meta::is_resource() const
+    {
+        return has(Flag::RESOURCE);
+    }
+
     bool  Meta::is_sampler() const
     {
         return has(Flag::SAMPLER);

@@ -1,0 +1,96 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "ResourceKVTreeDriver.hpp"
+//#include "KVTreeDriver.hxx"
+#include "ResourceLogging.hpp"
+#include "ResourceDriverAPI.hpp"
+
+#include <yq/container/ByteArray.hpp>
+#include <yq/core/StreamOps.hpp>
+#include <yq/keyv/KeyValue.hpp>
+#include <yq/stream/Bytes.hpp>
+
+/*
+    PENDING -- TO FINISH (LATER)
+*/
+
+namespace yq {
+    ///////////////////////////////////
+
+    ResourceKVTreeInfoer::ResourceKVTreeInfoer(const ResourceMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) :
+        ResourceByteInfoer(meta, exts, sl, type), m_options(0)
+    {
+        if(recurse)
+            m_options |= KVTree::RECURSIVE;
+    }
+
+    ResourceKVTreeInfoer::~ResourceKVTreeInfoer()
+    {
+    }
+    
+    ResourceInfo* ResourceKVTreeInfoer::info(const ByteArray& file, const ResourceInfoAPI&api) const 
+    {
+        KVTree      doc;
+            
+            // which will be boolean until key-values return std::error_code
+        auto ret    = doc.parse(file.as_view(), api.spec(), m_options);
+        if(ret.ec != std::error_code()) [[unlikely]]
+            return nullptr;
+        return info(doc, api);
+    }
+
+    ///////////////////////////////////
+
+    ResourceKVTreeLoader::ResourceKVTreeLoader(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) : 
+        ResourceByteLoader(meta, exts, sl, type), m_options(0)
+    {
+        if(recurse)
+            m_options |= KVTree::RECURSIVE;
+    }
+    
+    ResourceKVTreeLoader::~ResourceKVTreeLoader()
+    {
+    }
+
+    Resource* ResourceKVTreeLoader::load(const ByteArray& file, const ResourceLoadAPI& api) const
+    {
+        KVTree      doc;
+            
+            // which will be boolean until key-values return std::error_code
+        auto ret    = doc.parse(file.as_view(), api.spec(), m_options);
+        if(ret.ec != std::error_code()) [[unlikely]]
+            return nullptr;
+        return load(doc, api);
+    }
+
+    ///////////////////////////////////
+
+    ResourceKVTreeSaver::ResourceKVTreeSaver(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
+        ResourceByteSaver(meta, exts, sl, type)
+    {
+    }
+    
+    ResourceKVTreeSaver::~ResourceKVTreeSaver()
+    {
+    }
+
+    std::error_code  ResourceKVTreeSaver::save(const Resource&resource, ByteArray& data, const ResourceSaveAPI&api) const
+    {
+        KVTree     doc;
+        std::error_code ec  = save(resource, doc, api);
+        if(ec != std::error_code())
+            return ec;
+            
+        stream::Bytes   bytes(data);
+        doc.write(bytes);
+        bytes.flush();
+        bytes.close();
+        return std::error_code();
+    }
+
+    ///////////////////////////////////
+}

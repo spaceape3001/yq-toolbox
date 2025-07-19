@@ -205,6 +205,7 @@ namespace yq {
     struct request_k {};
     struct required_k {};
     struct reset_k {};
+    struct resource_k {};
     struct resume_k {};
     struct return_k {};
     struct right_k {};
@@ -492,6 +493,7 @@ namespace yq {
     static constexpr const request_k            REQUEST;
     static constexpr const required_k           REQUIRED;
     static constexpr const reset_k              RESET;
+    static constexpr const resource_k           RESOURCE;
     static constexpr const resume_k             RESUME;
     static constexpr const return_k             RETURN;
     static constexpr const right_k              RIGHT;

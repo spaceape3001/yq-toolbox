@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/resource/ResourceStringDriver.hpp>
+
+namespace yq {
+    class ResourceJsonInfoer : public ResourceStringInfoer {
+    public:
+    
+        using ResourceStringInfoer::info;
+        virtual ResourceInfo* info(const std::string&, const ResourceInfoAPI&) const override final;
+        virtual ResourceInfo* info(const json&, const ResourceInfoAPI&) const = 0;
+        
+    protected:
+        ResourceJsonInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
+        virtual ~ResourceJsonInfoer();
+    };
+    
+    class ResourceJsonLoader : public ResourceStringLoader {
+    public:
+
+        using ResourceStringLoader::load;
+        virtual Resource* load(const std::string&, const ResourceLoadAPI&) const override final;
+        virtual Resource* load(const json&, const ResourceLoadAPI&) const = 0;
+        
+    protected:
+        ResourceJsonLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
+        virtual ~ResourceJsonLoader();
+    };
+
+    class ResourceJsonSaver : public ResourceStringSaver {
+    public:
+
+        using ResourceStringSaver::save;
+        virtual std::error_code  save(const Resource&, std::string&, const ResourceSaveAPI&) const override final;
+        virtual std::error_code  save(const Resource&, json&, const ResourceSaveAPI&) const = 0;
+
+    protected:
+        ResourceJsonSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
+        virtual ~ResourceJsonSaver();
+    };
+}
