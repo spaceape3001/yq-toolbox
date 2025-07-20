@@ -267,6 +267,7 @@ namespace yq {
     struct v_k {};
     struct value_k {};
     struct variable_k {};
+    struct vertex_k {};
     struct vertical_k {};
     struct visible_k {};
     struct w_k {};
@@ -554,6 +555,7 @@ namespace yq {
     static constexpr const v_k                  V;
     static constexpr const value_k              VALUE;
     static constexpr const variable_k           VARIABLE;
+    static constexpr const vertex_k             VERTEX;
     static constexpr const vertical_k           VERTICAL, VERT;
     static constexpr const visible_k            VISIBLE;
     static constexpr const w_k                  W;

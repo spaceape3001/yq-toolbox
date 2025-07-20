@@ -37,6 +37,7 @@ namespace yq {
         std::vector<point_type>     vertices;
         std::vector<Face>           faces;
         std::vector<Line>           lines;
+        std::vector<I>              points;
         
         Polymesh3(){}
         ~Polymesh3(){}
