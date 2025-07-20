@@ -47,12 +47,13 @@ namespace yq {
         */
         std::error_code reload();
 
+        //! Saves to the existing file name
         std::error_code save();
         
-        //  Saves to the specified file and changes the filename (if different)
+        //!  Saves to the specified file and changes the filename (if different)
         std::error_code save_as(const filesystem_path_t&);
         
-        //  Saves to the specified file WITHOUT changing the file
+        //!  Saves to the specified file WITHOUT changing the file
         std::error_code save_to(const filesystem_path_t&) const;
 
         std::error_code save_to(yq::Stream&) const;
