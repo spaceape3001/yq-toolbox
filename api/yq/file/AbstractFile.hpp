@@ -56,6 +56,7 @@ namespace yq {
         //!  Saves to the specified file WITHOUT changing the file
         std::error_code save_to(const filesystem_path_t&) const;
 
+        //! Saves to the specified output stream
         std::error_code save_to(yq::Stream&) const;
         //bool            save_to(Vector<char>&);
         
