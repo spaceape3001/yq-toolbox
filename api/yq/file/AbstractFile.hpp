@@ -24,22 +24,22 @@ namespace yq {
     public:
 
         //! Filepath that we loaded as.
-        const filesystem_path_t&    file() const { return m_file; }
+        const std::filesystem::path&    file() const { return m_file; }
 
         //! Clear/reset contents of the in-memory file data-structure
         void            clear();
 
         //! Loads via the specified file name
-        std::error_code load(const filesystem_path_t&);
+        std::error_code load(const std::filesystem::path&);
 
         //! Loads via the specified file name/istream
-        std::error_code load(std::istream&, const filesystem_path_t& fp=filesystem_path_t());
-        //bool            load(u8_istream&, const filesystem_path_t& fp=filesystem_path_t());
+        std::error_code load(std::istream&, const std::filesystem::path& fp=std::filesystem::path());
+        //bool            load(u8_istream&, const std::filesystem::path& fp=std::filesystem::path());
         /*! \brief Loads the data
         
             \note   This may/will be DESTRUCTIVE to the buffer, if important, make a copy.
         */
-        std::error_code load(ByteArray&& buffer, const filesystem_path_t& fp=filesystem_path_t());
+        std::error_code load(ByteArray&& buffer, const std::filesystem::path& fp=std::filesystem::path());
         
         /*! \brief Reloads
         
@@ -51,21 +51,22 @@ namespace yq {
         std::error_code save();
         
         //!  Saves to the specified file and changes the filename (if different)
-        std::error_code save_as(const filesystem_path_t&);
+        std::error_code save_as(const std::filesystem::path&);
         
         //!  Saves to the specified file WITHOUT changing the file
-        std::error_code save_to(const filesystem_path_t&) const;
+        std::error_code save_to(const std::filesystem::path&) const;
 
         //! Saves to the specified output stream
         std::error_code save_to(yq::Stream&) const;
         //bool            save_to(Vector<char>&);
         
-        void            set_file(const filesystem_path_t&);
+        //! Sets the filename/filepath for this abstract file
+        void            set_file(const std::filesystem::path&);
         
         
     protected:
         virtual void    reset() {}
-        virtual bool    can_change_to(const filesystem_path_t&) { return true; }
+        virtual bool    can_change_to(const std::filesystem::path&) { return true; }
         
         /*! \brief  Sub-classes extend this for "reading" the data
         
@@ -83,7 +84,7 @@ namespace yq {
         ~AbstractFile();
 
     private:
-        filesystem_path_t   m_file;
+        std::filesystem::path   m_file;
     };
 
 
