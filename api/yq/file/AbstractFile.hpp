@@ -65,6 +65,8 @@ namespace yq {
         
         
     protected:
+    
+        //! Called to reset/clear any file contents
         virtual void    reset() {}
         virtual bool    can_change_to(const std::filesystem::path&) { return true; }
         
