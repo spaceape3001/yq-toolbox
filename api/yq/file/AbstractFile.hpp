@@ -68,6 +68,8 @@ namespace yq {
     
         //! Called to reset/clear any file contents
         virtual void    reset() {}
+        
+        //! Used to ask the sub-class if the filename change is good to do (default is YES)
         virtual bool    can_change_to(const std::filesystem::path&) { return true; }
         
         /*! \brief  Sub-classes extend this for "reading" the data
