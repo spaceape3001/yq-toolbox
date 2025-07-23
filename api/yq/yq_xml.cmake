@@ -5,6 +5,7 @@
 ################################################################################
 
 add_library(yq_xml SHARED
+    xml/XmlAny.cpp
     xml/XmlFile.cpp
     xml/XmlObject.cpp
     xml/XmlUtils.cpp

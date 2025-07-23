@@ -85,7 +85,7 @@ namespace yq {
         {
         }
 
-        Resource* info(const XmlDocument& file, const ResourceLoadAPI&) const override
+        Resource* load(const XmlDocument& file, const ResourceLoadAPI&) const override
         {
             return m_function(file);
         }
@@ -123,6 +123,7 @@ namespace yq {
     
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlSaverNoAPI : public ResourceXmlSaver {
+    public:
         TypedResourceXmlSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             ResourceXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {
@@ -175,6 +176,8 @@ namespace yq {
     
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlSaverBoolNoAPI : public ResourceXmlSaver {
+    public:
+    
         TypedResourceXmlSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
             ResourceXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
         {

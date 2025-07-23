@@ -199,19 +199,39 @@ namespace yq {
         typedef std::error_code  (*FNParse)(void*, const std::string_view&);
 
         //! Function to write to XML
-        typedef void        (*FNXmlBaseWrite)(XmlBase*, const void*);
+        typedef void        (*FNXmlBaseWrite)(XmlBase&, const void*);
         
         //! Function to read from XML
-        typedef std::error_code  (*FNXmlBaseRead)(void*, const XmlBase*);
+        typedef std::error_code  (*FNXmlBaseRead)(void*, const XmlBase&);
+
+        //! Function to write to XML
+        typedef void        (*FNXmlAttrWrite)(XmlAttribute&, const void*);
+        
+        //! Function to read from XML
+        typedef std::error_code  (*FNXmlAttrRead)(void*, const XmlAttribute&);
+
 
         //! Function to write to XML Node
-        typedef void        (*FNXmlNodeWrite)(XmlNode*, const void*);
+        typedef void        (*FNXmlNodeWrite)(XmlNode&, const void*);
         
         //! Function to read from XML Node
-        typedef std::error_code (*FNXmlNodeRead)(void*, const XmlNode*);
+        typedef std::error_code (*FNXmlNodeRead)(void*, const XmlNode&);
 
         
         FNConvert           converter(const TypeMeta&) const;
+        
+        FNXmlAttrWrite      xml_attr_writer() const { return m_xawrite; }
+        FNXmlBaseWrite      xml_base_writer() const { return m_xbwrite; }
+        FNXmlNodeWrite      xml_node_writer() const { return m_xnwrite; }
+        
+        FNXmlAttrRead       xml_attr_reader() const { return m_xaread; }
+        FNXmlBaseRead       xml_base_reader() const { return m_xbread; }
+        FNXmlNodeRead       xml_node_reader() const { return m_xnread; }
+
+
+        FNFormat            printer() const { return m_print; }
+        FNFormat            writer() const { return m_write; }
+        FNParse             parser() const { return m_parse; }
 
     protected:
     
@@ -322,6 +342,12 @@ namespace yq {
         //! XML reading from base as value
         FNXmlBaseRead           m_xbread        = nullptr;
         
+        //! XML writing to attribute as value
+        FNXmlAttrWrite          m_xawrite       = nullptr;
+
+        //! XML reading from attribute as value
+        FNXmlAttrRead           m_xaread        = nullptr;
+
         //! XML writing to node as value
         FNXmlNodeWrite          m_xnwrite       = nullptr;
 

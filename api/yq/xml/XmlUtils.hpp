@@ -856,4 +856,6 @@ namespace yq {
     
     std::error_code     read_file(XmlDocument&, const filesystem_path_t&);
     std::error_code     save_file(const XmlDocument&, const filesystem_path_t&);
+    
 }
+

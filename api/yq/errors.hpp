@@ -68,6 +68,6 @@ namespace yq::errors {
     using too_many_arguments        = error_db::entry<"Too many arguments">;
     using wrong_format              = error_db::entry<"Format specifier does not match expectations">;
     using xml_bad_syntax            = error_db::entry<"XML syntax failure">;
-    using xml_no_root_element       = error_db::entry<"XML document has no sutable root element">;
+    using xml_no_root_element       = error_db::entry<"XML document has no suitable root element">;
     using xml_wrong_document_node   = error_db::entry<"XML document type does not match expectations">;
 }

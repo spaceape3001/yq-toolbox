@@ -418,6 +418,143 @@ namespace yq {
             }
         }
         
+        template <std::error_code(*FN)(T&, const XmlNode&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xnread = [](void* dst, const XmlNode& src){
+                    return FN(*(T*) dst, src);
+                };
+            }
+        }
+        
+        template <T (*FN)(const XmlNode&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xnread = [](void* dst, const XmlNode& src){
+                    *(T*) dst = FN(src);
+                    return {};
+                };
+            }
+        }
+
+        template <Expect<T> (*FN)(const XmlNode&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xnread = [](void* dst, const XmlNode& src){
+                    auto x  = FN(src);
+                    if(x){
+                        *(T*) dst = std::move(x);
+                        return {};
+                    }
+                    return x.error();
+                };
+            }
+        }
+
+        template <std::error_code(*FN)(T&, const XmlAttribute&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xaread = [](void* dst, const XmlAttribute& src){
+                    return FN(*(T*) dst, src);
+                };
+            }
+        }
+        
+        template <T (*FN)(const XmlAttribute&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xaread = [](void* dst, const XmlAttribute& src){
+                    *(T*) dst = FN(src);
+                    return {};
+                };
+            }
+        }
+
+        template <Expect<T> (*FN)(const XmlAttribute&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xaread = [](void* dst, const XmlAttribute& src){
+                    auto x  = FN(src);
+                    if(x){
+                        *(T*) dst = std::move(x);
+                        return {};
+                    }
+                    return x.error();
+                };
+            }
+        }
+
+        template <std::error_code(*FN)(T&, const XmlBase&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xbread = [](void* dst, const XmlBase& src){
+                    return FN(*(T*) dst, src);
+                };
+            }
+        }
+        
+        template <T (*FN)(const XmlBase&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xbread = [](void* dst, const XmlBase& src){
+                    *(T*) dst = FN(src);
+                    return {};
+                };
+            }
+        }
+
+        template <Expect<T> (*FN)(const XmlBase&)>
+        void    reader()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xbread = [](void* dst, const XmlBase& src){
+                    auto x  = FN(src);
+                    if(x){
+                        *(T*) dst = std::move(x);
+                        return {};
+                    }
+                    return x.error();
+                };
+            }
+        }
+
+        template <void(*FN)(XmlNode&, const T&)>
+        void    writer()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xnwrite   = [](XmlNode& dst, const void* src)  {
+                    FN(dst, *(const T*) src);
+                };
+            }
+        }
+
+        template <void(*FN)(XmlAttribute&, const T&)>
+        void    writer()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xawrite   = [](XmlNode& dst, const void* src)  {
+                    FN(dst, *(const T*) src);
+                };
+            }
+        }
+
+        template <void(*FN)(XmlBase&, const T&)>
+        void    writer()
+        {
+            if(thread_safe_write()){
+                static_cast<TypeMeta*>(Meta::Writer::m_meta)->m_xbwrite   = [](XmlNode& dst, const void* src)  {
+                    FN(dst, *(const T*) src);
+                };
+            }
+        }
         
         /*
         void operate()
