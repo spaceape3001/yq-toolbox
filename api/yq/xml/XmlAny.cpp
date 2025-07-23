@@ -109,6 +109,8 @@ namespace yq {
             return {};
         }
         
+        //  *MIGHT* do something with properties/iterables here
+
         return errors::no_handler();
     }
 
@@ -180,6 +182,8 @@ namespace yq {
         auto fn3    = type.xml_base_reader();
         if(fn3)
             return fn3(val, x);
+
+        //  *MIGHT* do something with properties/iterables here
         
         return errors::no_handler();
     }
