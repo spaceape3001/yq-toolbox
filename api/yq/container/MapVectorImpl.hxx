@@ -12,27 +12,6 @@
 
 namespace yq {
 
-    template <typename K, typename V, typename C>
-    Vector<K>   Map<K,V,C>::keys() const
-    {
-        Vector<K> ret;
-        ret.reserve(Map<K,V,C>::size());
-        for(auto& itr : *this){
-            ret << itr.first;
-        }
-        return ret;
-    }
-
-    template <typename K, typename V, typename C>
-    Vector<V>   Map<K,V,C>::values() const
-    {
-        Vector<V> ret;
-        ret.reserve(base_map::size());
-        for(auto& itr : *this){
-            ret << itr.second;
-        }
-        return ret;
-    }
 
     template <typename K, typename V>
     Map<K,V>       makeMap(const Vector<std::pair<K,V>>&src)
@@ -48,7 +27,7 @@ namespace yq {
 
     template <typename K>
     struct MapReport {
-        Vector<K>       added, changed, removed;
+        std::vector<K>       added, changed, removed;
         
         bool    empty() const { return added.empty() && changed.empty() && removed.empty(); }
     };
