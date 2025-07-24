@@ -78,6 +78,8 @@ namespace yq {
                         could easily have MULTIPLE null values.
         */
         virtual std::error_code read(ByteArray&&, std::string_view fname) = 0;
+        
+        //! Sub-classes extend this for "writing" the data to the given stream
         virtual std::error_code write(yq::Stream&) const = 0;
         virtual bool    is_binary() const { return false; }
 
