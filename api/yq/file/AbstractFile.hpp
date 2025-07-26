@@ -82,9 +82,10 @@ namespace yq {
         //! Sub-classes extend this for "writing" the data to the given stream
         virtual std::error_code write(yq::Stream&) const = 0;
         
-        //! Sub-classes extend this for binary capability
+        //! Sub-classes extend this to indicate binary capability
         virtual bool    is_binary() const { return false; }
 
+        //! Sub-classes extend this to indicate if it can read files
         virtual bool    read_enabled() const { return true; }
         virtual bool    write_enabled() const { return true; }
 
