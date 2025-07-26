@@ -6,6 +6,6 @@
 
 // Auto-generated file
 
-#include "AlgebraString.ipp"
+#include "Algebra.ipp"
 #include "RepoConfig.ipp"
 #include "UserExpr.ipp"

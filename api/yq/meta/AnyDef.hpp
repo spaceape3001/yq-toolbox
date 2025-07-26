@@ -208,6 +208,8 @@ namespace yq {
 
         const TypeMeta& type() const { return *m_type; }
 
+        uint64_t            type_id() const;
+
         bool                valid() const { return is_valid(); }
 
         template <typename T>

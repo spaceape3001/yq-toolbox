@@ -11,7 +11,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/text/format32.hpp>
-#include <yq/userexpr/AlgebraString.hpp>
+#include <yq/userexpr/Algebra.hpp>
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/Context.hpp>
 #include <yq/userexpr/impl/Compiler.hpp>
@@ -38,7 +38,7 @@ namespace yq {
 		m_buildError = _init(u32);
 	}
 
-    UserExpr::UserExpr(const AlgebraString& as) : UserExpr(as.algebra)
+    UserExpr::UserExpr(const Algebra& as) : UserExpr(as.algebra)
     {
     }
 	

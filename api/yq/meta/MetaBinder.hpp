@@ -79,6 +79,13 @@ namespace yq {
         static_assert(MetaBinder<T>::Defined, "Must be meta-declared!");
         return MetaBinder<T>::bind();
     }
+    
+    template <typename T>
+    uint64_t      meta_id()
+    {
+        static_assert(MetaBinder<T>::Defined, "Must be meta-declared!");
+        return MetaBinder<T>::bind().id();
+    }
 
     template <typename T>
     const auto&    meta_unsafe()

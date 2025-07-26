@@ -395,6 +395,13 @@ namespace yq {
             m_type -> m_ctorCopyB(m_data, m_type->m_default);
     }
 
+    uint64_t  Any::type_id() const
+    {
+        if(!m_type)
+            return 0;
+        return m_type -> id();
+    }
+
     std::error_code Any::write(Stream&str) const
     {
         assert(m_type);
