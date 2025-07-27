@@ -87,6 +87,8 @@ namespace yq {
 
         //! Sub-classes extend this to indicate if it can read files
         virtual bool    read_enabled() const { return true; }
+
+        //! Sub-classes extend this to indicate if it can write files
         virtual bool    write_enabled() const { return true; }
 
         AbstractFile();
