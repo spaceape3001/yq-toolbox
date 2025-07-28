@@ -91,8 +91,11 @@ namespace yq {
         //! Sub-classes extend this to indicate if it can write files
         virtual bool    write_enabled() const { return true; }
 
+        //! Constructor
         AbstractFile();
-        ~AbstractFile();
+        
+        //! Destructor
+        virtual~AbstractFile();
 
     private:
         std::filesystem::path   m_file;
