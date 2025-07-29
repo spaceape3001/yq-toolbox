@@ -12,6 +12,7 @@
 #include <filesystem>
 
 namespace yq {
+    //! List all files in given directory
     string_vector_t  dir_files(const char*);
     string_vector_t  dir_directories(const char*);
 
