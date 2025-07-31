@@ -77,6 +77,12 @@ namespace yq {
 
     BasicApp*   BasicApp::s_app  = nullptr;
 
+    std::filesystem::path    BasicApp::app_dir()
+    {
+        // TODO....
+        return current_working_dir();
+    }
+
     std::string_view         BasicApp::app_name()
     {
         if(s_app) [[likely]]
