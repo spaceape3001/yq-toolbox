@@ -19,4 +19,6 @@ namespace yq {
 
     using u32string_vector_t        = std::vector<std::u32string>;
     using u32string_view_vector_t   = std::vector<std::u32string_view>;
+    
+    using StringVector              = Vector<std::string>;
 }
