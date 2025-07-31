@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/keywords.hpp>
 #include <yq/file/SizeTimestamp.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/url.hpp>
@@ -110,6 +111,15 @@ namespace yq {
 
     //! Returns the LAST file extension (no leading '.') from the path or empty if none
     std::string         file_extension(const Url&);
+    
+    //! Redoes all extensions
+    std::filesystem::path   remap_extension(const std::filesystem::path&, all_k, std::string_view);
+    
+    //! Redoes final suffix
+    std::filesystem::path   remap_extension(const std::filesystem::path&, last_k, std::string_view);
+    
+    //! Adds to the "stem" or the stuff before extensions
+    std::filesystem::path   append_stem(const std::filesystem::path&, std::string_view);
     
     
 }

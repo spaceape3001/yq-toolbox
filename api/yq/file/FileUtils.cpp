@@ -255,4 +255,53 @@ namespace yq {
     {
         return std::string(file_extension(url.path));
     }
+
+    //! Redoes all extensions
+    std::filesystem::path   remap_extension(const std::filesystem::path& path, all_k, std::string_view newExts)
+    {
+        std::filesystem::path parent      = path.parent_path();
+        std::string     filename    = path.filename().string();
+        
+        int n=0;
+        for(; (n<(int) filename.size()) && (filename[n] == '.'); ++n)
+            ;
+        
+        auto x = filename.find_first_of('.', n);
+        if(x != std::string::npos){
+            filename    = filename.substr(0, n);
+        } 
+        
+        filename    = filename + '.' + newExts;
+        return parent / filename;
+    }
+    
+    //! Redoes final suffix
+    std::filesystem::path   remap_extension(const std::filesystem::path& path, last_k, std::string_view newExt)
+    {
+        std::filesystem::path parent     = path.parent_path();
+        std::string stem        = path.stem().string();
+        std::string filename = stem + '.' + newExt;
+        return parent / filename;
+    }
+
+    std::filesystem::path   append_stem(const std::filesystem::path& path, std::string_view extra)
+    {
+        std::filesystem::path parent      = path.parent_path();
+        std::string     filename    = path.filename().string();
+        std::string     extensions;
+        
+        int n=0;
+        for(; (n<(int) filename.size()) && (filename[n] == '.'); ++n)
+            ;
+        
+        auto x = filename.find_first_of('.', n);
+        if(x != std::string::npos){
+            extensions  = filename.substr(n);
+            filename    = filename.substr(0, n);
+        } 
+        
+        filename += extra;
+        filename += extensions;
+        return parent / filename;
+    }
 }

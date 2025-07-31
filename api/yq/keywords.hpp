@@ -25,6 +25,12 @@
 namespace yq {
 
     // Problematic macros...
+    #ifdef MIN
+        #undef MIN
+    #endif
+    #ifdef MAX
+        #undef MAX
+    #endif
     #ifdef NAN
         #undef NAN
     #endif
@@ -129,6 +135,7 @@ namespace yq {
     struct julian_k {};
     struct k_k {};
     struct l_k {};
+    struct last_k {};
     struct layout_k {};
     struct left_k {};
     struct line_k {};
@@ -306,13 +313,6 @@ namespace yq {
     using ptr_k     = pointer_k;
     using spec_k    = specification_k;
     
-    #ifdef MIN
-        #undef MIN
-    #endif
-    #ifdef MAX
-        #undef MAX
-    #endif
-
     static constexpr const a_k                  A;
     static constexpr const abort_k              ABORT;
     static constexpr const absolute_k           ABSOLUTE;
@@ -412,6 +412,7 @@ namespace yq {
     static constexpr const julian_k             JULIAN;
     static constexpr const k_k                  K;
     static constexpr const l_k                  L;
+    static constexpr const last_k               LAST;
     static constexpr const layout_k             LAYOUT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
