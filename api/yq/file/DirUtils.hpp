@@ -43,10 +43,10 @@ namespace yq {
 
         using   path_vec_t    = std::vector<filesystem_path_t>;
         
-        //  supposed to find all children with specfieid name
+        //!  Finds all children with specfied name (case insensitive)
         path_vec_t          all_children(const filesystem_path_t& dir, std::string_view name);
 
-        //  supposed to find all children with specfieid name
+        //!  Finds all children with specfied name (case insensitive) across provided directories
         path_vec_t          all_children(const std::vector<filesystem_path_t>& dir, std::string_view name);
 
         filesystem_path_t           first_child(const filesystem_path_t& dir, std::string_view name);
