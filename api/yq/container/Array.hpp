@@ -581,10 +581,10 @@ namespace yq {
         */
         template <typename=void>
         requires (ORIGIN && !GHOST)
-        void    resize(const coord_type&a, const coord_type& b, const value_type& v = {})
+        bool    resize(const coord_type&a, const coord_type& b, const value_type& v = {})
         {
             set_limits(a, b);
-            build(v);
+            return build(v);
         }
 
         /*! \brief Resizes a vector array
@@ -593,10 +593,10 @@ namespace yq {
         */
         template <typename=void>
         requires (!ORIGIN && !GHOST)
-        void    resize(const coord_type&sz, const value_type& v = {})
+        bool    resize(const coord_type&sz, const value_type& v = {})
         {
             set_count(sz);
-            build(v);
+            return build(v);
         }
 
         template <typename=void>
