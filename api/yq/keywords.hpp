@@ -95,6 +95,7 @@ namespace yq {
     struct enable_k {};
     struct enabled_k {};
     struct end_k {};
+    struct erase_k {};
     struct error_k {};
     struct euler_k {};
     struct even_k {};
@@ -375,6 +376,7 @@ namespace yq {
     static constexpr const enable_k             ENABLE;
     static constexpr const enabled_k            ENABLED;
     static constexpr const end_k                END;
+    static constexpr const erase_k              ERASE;
     static constexpr const error_k              ERROR;
     static constexpr const euler_k              EULER;
     static constexpr const even_k               EVEN;
