@@ -107,7 +107,7 @@ namespace yq {
             for(uint8_t n=0;n<N;++n){
                 uint8_t i = rote[n].first;
                 values[i]  = z;
-                z *= get(sizes, i);
+                z *= yq::get(sizes, i);
             }
             
             return ret;
@@ -520,7 +520,7 @@ namespace yq {
         value_type  linear(const coord_type& c, const Coord<F,DIMS>& frac) const
         {
             value_type  ret = {};
-            linear_march(index(c), frac, 0, (F) 1., [&](size_t idx, F f){
+            linear_march(index(c), 0, frac, (F) 1., [&](size_t idx, F f){
                 ret += f * m_data[idx];
             });
             return ret;
@@ -1149,12 +1149,12 @@ namespace yq {
         
         template <typename F, typename Pred>
         requires (std::is_floating_point_v<F> && can_add_v<value_type> && can_two_multiply_v<value_type,F>)
-        void    linear_march(uint64_t idx, const Coord<F, DIMS>& frac, uint8_t n, F prod, Pred pred)
+        void    linear_march(uint64_t idx, uint8_t n, const Coord<F, DIMS>& frac, F prod, Pred pred) const
         {
             if(n<DIMS){
-                F   g   = get(frac, n);
-                linear_march<F,Pred>(idx, n+1, prod*((F) 1.-g), pred);
-                linear_march<F,Pred>(idx+get(m_calc.stride, n), n+1, prod*g, pred);
+                F   g   = yq::get(frac, n);
+                linear_march<F,Pred>(idx, n+1, frac, prod*((F) 1.-g), pred);
+                linear_march<F,Pred>(idx+ yq::get(m_calc.stride, n), n+1, frac, prod*g, pred);
             } else {
                 pred(idx, prod);
             }
