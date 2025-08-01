@@ -283,6 +283,11 @@ namespace yq {
             }
         }
         
+        size_t  bytes() const 
+        {
+            return size() * sizeof(value_type);
+        }
+        
         /*! \brief Clears & resets the structure
         */
         void    clear()
@@ -485,7 +490,7 @@ namespace yq {
             return (m_data.size() >= m_calc.total) && !m_calc.stale;
         }
 
-        /*! \brief Tests that coordinate is either interior or ghots
+        /*! \brief Tests that coordinate is either interior or ghosts
         */
         constexpr bool  is_valid(const coord_type& c) const noexcept
         {

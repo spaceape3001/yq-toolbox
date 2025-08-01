@@ -69,6 +69,16 @@ namespace yq {
         
         bool    has(const T&) const;
         bool    has_any(const Set<T,C>&) const;
+        
+        const T&   first() const
+        {
+            return *base_set::begin();
+        }
+        
+        const T&    last() const
+        {
+            return *base_set::rbegin();
+        }
     };
 
 
