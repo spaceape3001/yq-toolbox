@@ -169,6 +169,7 @@ namespace yq {
             TOOL,           //!< It's a Tool
             TRIGGER,        //!< It's a trigger/detector
             TYPE,           //!< Meta has TypeMeta
+            UNTYPE,         //!< Meta has UntypeMeta
             VERBOSE,        //!< Enable to get verbose diagnostics (avoid for most things)
             VIEWER,         //!< Viewer related (tachyon library)
             VULKAN,         //!< Vulkan api enabled
@@ -402,6 +403,8 @@ namespace yq {
         bool                            is_tool() const;
         
         bool                            is_type() const;
+
+        bool                            is_untype() const;
         
         bool                            is_verbose() const;
         
@@ -452,6 +455,7 @@ namespace yq {
         friend class ObjectMeta;
         friend class PropertyMeta;
         friend class TypeMeta;
+        friend class UntypeMeta;
     
         //! Used by the constructor's default to auto-assign an ID
         static constexpr const id_t AUTO_ID = ~(id_t) 0;

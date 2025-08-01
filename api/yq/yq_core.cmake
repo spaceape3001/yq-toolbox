@@ -51,6 +51,7 @@ add_library(yq_core SHARED
     meta/PropSetter.cpp
     meta/StdTypes.cpp
     meta/TypeMeta.cpp
+    meta/UntypeMeta.cpp
     
     #   Moving this here as many more need it than simply "net"
     net/Url.cpp

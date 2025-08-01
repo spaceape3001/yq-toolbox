@@ -11,6 +11,7 @@
 #include <string>
 
 namespace yq {
+    class UntypeMeta;
     class TypeMeta;
     class Any;
 
@@ -120,6 +121,29 @@ namespace yq {
             static constexpr const bool IsTachyon       = false;        \
             static const TypeMeta&   bind() { return edit(); }          \
             static TypeMeta&         edit();                            \
+        };                                                              \
+    } 
+
+
+/*! \brief Declares meta w/o type meta
+    
+    More for generic types that aren't going to be stored in an any, 
+    but still needs type identifiers (for whatever reason)
+*/
+#define YQ_UNTYPE_DECLARE(...)  \
+    namespace yq {                                                      \
+        template <>                                                     \
+        struct MetaBinder<__VA_ARGS__>  : public std::true_type {       \
+            using Info = UntypeMeta;                                    \
+            static constexpr const bool Defined         = true;         \
+            static constexpr const bool IsObject        = false;        \
+            static constexpr const bool IsType          = false;        \
+            static constexpr const bool IsCompound      = false;        \
+            static constexpr const bool IsInterface     = false;        \
+            static constexpr const bool IsProxy         = false;        \
+            static constexpr const bool IsTachyon       = false;        \
+            static const UntypeMeta&   bind() { return edit(); }        \
+            static UntypeMeta&         edit();                          \
         };                                                              \
     } 
 

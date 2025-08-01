@@ -515,6 +515,11 @@ namespace yq {
         return has(Flag::TYPE); 
     }
 
+    bool  Meta::is_untype() const
+    {
+        return has(Flag::UNTYPE);
+    }
+
     bool  Meta::is_verbose() const
     {
         return has(Flag::VERBOSE);

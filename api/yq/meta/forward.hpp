@@ -20,4 +20,5 @@ namespace yq {
     class PropertyMeta; // a object property
     class CompoundMeta; // CompoundMeta type (with properties & methods)   
     class TypeMeta;     // Unobtrusive data type
+    class UntypeMeta;   // For those cases where it's not an object, nor any storable
 }
