@@ -51,6 +51,7 @@ namespace yq {
     struct alpha_k {};
     struct any_k {};
     struct asset_k {};
+    struct begin_k {};
     struct bigger_k {};
     struct biggest_k {};
     struct binary_k {};
@@ -93,6 +94,7 @@ namespace yq {
     struct empty_k {};
     struct enable_k {};
     struct enabled_k {};
+    struct end_k {};
     struct error_k {};
     struct euler_k {};
     struct even_k {};
@@ -272,6 +274,7 @@ namespace yq {
     struct url_k {};
     struct use_k {};
     struct v_k {};
+    struct valid_k {};
     struct value_k {};
     struct variable_k {};
     struct vertex_k {};
@@ -328,6 +331,7 @@ namespace yq {
     static constexpr const always_k             ALWAYS;
     static constexpr const any_k                ANY;
     static constexpr const asset_k              ASSET;
+    static constexpr const begin_k              BEGIN;
     static constexpr const bigger_k             BIGGER;
     static constexpr const biggest_k            BIGGEST;
     static constexpr const binary_k             BINARY;
@@ -370,6 +374,7 @@ namespace yq {
     static constexpr const empty_k              EMPTY;
     static constexpr const enable_k             ENABLE;
     static constexpr const enabled_k            ENABLED;
+    static constexpr const end_k                END;
     static constexpr const error_k              ERROR;
     static constexpr const euler_k              EULER;
     static constexpr const even_k               EVEN;
@@ -554,6 +559,7 @@ namespace yq {
     static constexpr const url_k                URL;
     static constexpr const use_k                USE;
     static constexpr const v_k                  V;
+    static constexpr const valid_k              VALID;
     static constexpr const value_k              VALUE;
     static constexpr const variable_k           VARIABLE;
     static constexpr const vertex_k             VERTEX;
