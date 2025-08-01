@@ -55,7 +55,7 @@ namespace yq {
                     if(ret != return_t{})
                         return ret;
                 } else
-                    pred(*val);
+                    pred(val);
             }
             if constexpr (!is_void)
                 return return_t{};
