@@ -193,6 +193,7 @@ namespace yq {
     struct pixel_k {};
     struct pixels_k {};
     struct pointer_k {};
+    struct pop_k {};
     struct port_k {};
     struct positive_k {};
     struct property_k {};
@@ -479,6 +480,7 @@ namespace yq {
     static constexpr const pixel_k              PIXEL;
     static constexpr const pixels_k             PIXELS;
     static constexpr const pointer_k            POINTER;
+    static constexpr const pop_k                POP;
     static constexpr const positive_k           POSITIVE;
     static constexpr const port_k               PORT;
     static constexpr const pointer_k            PTR;
