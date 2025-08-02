@@ -49,7 +49,10 @@ namespace yq {
         //!  Finds all children with specfied name (case insensitive) across provided directories
         path_vec_t          all_children(const std::vector<filesystem_path_t>& dir, std::string_view name);
 
+        //! Returns the first child with the specified case insensitive name
         filesystem_path_t           first_child(const filesystem_path_t& dir, std::string_view name);
+
+        //! Returns the first child with the specified case insensitive name in the given directories
         filesystem_path_t           first_child(const std::vector<filesystem_path_t>&, std::string_view name);
         
         //  Finds all chlidren (not hidden)
