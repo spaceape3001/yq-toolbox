@@ -8,6 +8,7 @@
 
 #include <yq/meta/UntypeMeta.hpp>
 #include <yq/meta/MetaBinder.hpp>
+#include <yq/meta/MetaWriter.hpp>
 
 namespace yq {
 
@@ -19,8 +20,8 @@ namespace yq {
         
     */
     template <typename T>
-    class UntypeMeta::Final : public Meta {
-    protected:
+    class UntypeMeta::Final : public UntypeMeta {
+    public:
     
         /*! \brief Constructor, protected
         
@@ -28,7 +29,7 @@ namespace yq {
             \param[in] sl       Source location to the instantiation (final uses default-parameter to get it)
             \param[in] i        ID to override, but most types will use AUTO
         */
-        Final(std::string_view zName, const std::source_location&sl) : Meta(zName, sl)
+        Final(std::string_view zName, const std::source_location&sl=std::source_location::current()) : UntypeMeta(zName, sl)
         {
         }
 
@@ -44,12 +45,12 @@ namespace yq {
         but might not be perfect.
     */
     template <typename T>
-    class UntypeMeta::Writer : public Meta::Writer<T> {
+    class UntypeMeta::Writer : public Meta::Writer {
     public:
         static_assert( MetaBinder<T>::IsDefined, "T must be meta-type declared!");
     
         //! Construct from pointer
-        Writer(UntypeMeta* ti) : Meta::Writer<T>(ti) {}
+        Writer(UntypeMeta* ti) : Meta::Writer(ti) {}
         
         //! Construct from reference (common)
         Writer(UntypeMeta& ti) : Writer(&ti) {}
@@ -62,6 +63,6 @@ namespace yq {
             static auto* s_ret   = new UntypeMeta::Final<__VA_ARGS__>(#__VA_ARGS__);                          \
             return *s_ret;                                                                                  \
         }                                                                                                   \
-        template <> TypeMeta& UntypeMeta::Final<__VA_ARGS__>::s_save  = MetaBinder<__VA_ARGS__>::edit();      \
+        template <> UntypeMeta& UntypeMeta::Final<__VA_ARGS__>::s_save  = MetaBinder<__VA_ARGS__>::edit();      \
     }
 

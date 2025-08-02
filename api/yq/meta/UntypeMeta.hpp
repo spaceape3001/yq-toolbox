@@ -46,8 +46,6 @@ namespace yq {
 
         //! Helper for registering type information
         template <typename T> class Writer;
-        
-        template <typename T> class Typed;      //  Base type
         template <typename T> class Final;      //  Final one for storing the type info
 
 
