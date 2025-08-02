@@ -690,6 +690,12 @@ namespace yq {
     }
 
     template <typename T>
+    constexpr Vector2<T>   Vector2<T>::eadd(T b) const noexcept
+    {
+        return Vector2( x+b, y+b );
+    }
+
+    template <typename T>
         template <typename U>
     constexpr Vector2<quotient_t<T,U>>    Vector2<T>::ediv(const Vector2<U>&b) const noexcept
     {
@@ -725,6 +731,12 @@ namespace yq {
     constexpr Vector2<product_t<T,U>>    Vector2<T>::emul(const Vector2<U>&b) const noexcept
     {
         return Vector2<product_t<T,U>>(x*b.x, y*b.y);
+    }
+
+    template <typename T>
+    constexpr Vector2<T>   Vector2<T>::esub(T b) const noexcept
+    {
+        return Vector2( x-b, y-b );
     }
 
     template <typename T>

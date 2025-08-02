@@ -346,9 +346,11 @@ namespace yq {
 
         //! Returns the sum of the components
         constexpr T   csum() const noexcept;
-
+        
         //! Element by element absolute value
         constexpr Vector2   eabs() const noexcept;
+        
+        constexpr Vector2   eadd(T) const noexcept;
 
         //! Element by element division
         template <typename U>
@@ -369,6 +371,8 @@ namespace yq {
         //! Element by element multiplication
         template <typename U>
         constexpr Vector2<product_t<T,U>>    emul(const Vector2<U>&b) const noexcept;
+
+        constexpr Vector2   esub(T) const noexcept;
 
         /*! \brief Square of the vector's length
         
