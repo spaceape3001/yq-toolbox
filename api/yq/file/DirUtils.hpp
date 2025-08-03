@@ -31,10 +31,10 @@ namespace yq {
             //  No extensions
             NO_EXT      = 0x1,
             
-            //  Allow hidden
+            //! Allow hidden files
             HIDDEN      = 0x2,
             
-            //  Allow dot & dot-dot
+            //! Allow dot & dot-dot
             DOT_OR_DDOT = 0x4,
             
             NO_DIRS     = 0x8,
@@ -55,7 +55,7 @@ namespace yq {
         //! Returns the first child with the specified case insensitive name in the given directories
         filesystem_path_t           first_child(const std::vector<filesystem_path_t>&, std::string_view name);
         
-        //  Finds all chlidren (not hidden)
+        //!  Finds all chlidren (not hidden unless HIDDEN option is used)
         string_vector_t     subdirectory_names(const filesystem_path_t&, unsigned options=0) ;
         string_vector_t     subdirectory_names(const std::vector<filesystem_path_t>&, unsigned options=0) ;
 
