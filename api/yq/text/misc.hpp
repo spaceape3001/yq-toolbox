@@ -11,6 +11,19 @@
 #include <yq/typedef/string_maps.hpp>
 
 namespace yq {
+
+    //! Number of digits to a string representation
+    uint8_t         digits(uint8_t);
+
+    //! Number of digits to a string representation
+    uint8_t         digits(uint16_t);
+
+    //! Number of digits to a string representation
+    uint8_t         digits(uint32_t);
+
+    //! Number of digits to a string representation
+    uint8_t         digits(uint64_t);
+
     //! Concatenates the given 32-bit UTF character on to the string as UTF-8
     std::string&  operator+=(std::string&, char32_t);
 

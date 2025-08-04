@@ -61,7 +61,7 @@ namespace yq {
         {
         }
 
-        consteval Tensor24(identity_k) : 
+        constexpr Tensor24(identity_k) : 
             xx(one_v<T>),  xy(zero_v<T>), xz(zero_v<T>), xw(zero_v<T>),
             yx(zero_v<T>), yy(one_v<T>),  yz(zero_v<T>), yw(zero_v<T>)
         {

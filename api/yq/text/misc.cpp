@@ -14,6 +14,94 @@
 #include <cuchar>
 
 namespace yq {
+    uint8_t         digits(uint8_t v)
+    {
+        if(v<10)
+            return 1;
+        if(v<100)
+            return 2;
+        return 3;
+    }
+
+    uint8_t         digits(uint16_t v)
+    {
+        if(v<10)
+            return 1;
+        if(v<100)
+            return 2;
+        if(v<1'000)
+            return 3;
+        if(v<10'000)
+            return 4;
+        return 5;
+    }
+
+    uint8_t         digits(uint32_t v)
+    {
+        if(v<10UL)
+            return 1;
+        if(v<100UL)
+            return 2;
+        if(v<1'000UL)
+            return 3;
+        if(v<10'000UL)
+            return 4;
+        if(v<100'000UL)
+            return 5;
+        if(v<1'000'000UL)
+            return 6;
+        if(v<10'000'000UL)
+            return 7;
+        if(v<100'000'000UL)
+            return 8;
+        if(v<1'000'000'000UL)
+            return 9;
+        return 10;
+    }
+
+    uint8_t         digits(uint64_t v)
+    {
+        if(v<10ULL)
+            return 1;
+        if(v<100ULL)
+            return 2;
+        if(v<1'000ULL)
+            return 3;
+        if(v<10'000ULL)
+            return 4;
+        if(v<100'000ULL)
+            return 5;
+        if(v<1'000'000ULL)
+            return 6;
+        if(v<10'000'000ULL)
+            return 7;
+        if(v<100'000'000ULL)
+            return 8;
+        if(v<1'000'000'000ULL)
+            return 9;
+        if(v<10'000'000'000ULL)
+            return 10;
+        if(v<100'000'000'000ULL)
+            return 11;
+        if(v<1'000'000'000'000ULL)
+            return 12;
+        if(v<10'000'000'000'000ULL)
+            return 13;
+        if(v<100'000'000'000'000ULL)
+            return 14;
+        if(v<1'000'000'000'000'000ULL)
+            return 15;
+        if(v<10'000'000'000'000'000ULL)
+            return 16;
+        if(v<100'000'000'000'000'000ULL)
+            return 17;
+        if(v<1'000'000'000'000'000'000ULL)
+            return 18;
+        if(v<10'000'000'000'000'000'000ULL)
+            return 19;
+        return 20;
+    }
+
     std::string&  operator+=(std::string&str, char32_t ch)
     {
         std::mbstate_t  state{};
