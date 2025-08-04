@@ -30,6 +30,7 @@ namespace yq {
     template <typename> struct AxCorners2;
     template <typename> struct Data2;
     template <typename> struct Range;
+    template <typename> struct Size2;
 
     /*! \brief Axially aligned box in 2 dimension(s).
     

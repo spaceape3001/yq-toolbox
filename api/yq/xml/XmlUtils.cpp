@@ -443,4 +443,11 @@ namespace yq {
         return errors::none();
     }
 
+    ByteArray           save_bytes(const XmlDocument& doc)
+    {
+        ByteArray       ret;
+        rapidxml::print(std::back_inserter(ret.m_data), doc, 0);
+        return ret;
+    }
+
 }

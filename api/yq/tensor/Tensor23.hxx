@@ -585,6 +585,26 @@ namespace yq {
         return ten.z_column();
     }
 
+    template <typename S, typename T>
+    S&  as_stream(S& s, const Tensor23<T>& v)
+    {
+        return s << "[" << v.xx << "," << v.xy << "," << v.xz << ";" 
+                        << v.yx << "," << v.yy << "," << v.yz << "]";
+    }
+    
+    #ifdef YQ_BASIC_STREAM_HPP_
+    template <typename T>
+    Stream& operator<<(Stream&s, const Tensor23<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
 
-
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
+    template <typename T>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const Tensor23<T>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
 }
