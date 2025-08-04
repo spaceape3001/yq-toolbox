@@ -51,6 +51,7 @@ namespace yq {
     struct alpha_k {};
     struct any_k {};
     struct asset_k {};
+    struct base_k {};
     struct begin_k {};
     struct bigger_k {};
     struct biggest_k {};
@@ -333,6 +334,7 @@ namespace yq {
     static constexpr const always_k             ALWAYS;
     static constexpr const any_k                ANY;
     static constexpr const asset_k              ASSET;
+    static constexpr const base_k               BASE;
     static constexpr const begin_k              BEGIN;
     static constexpr const bigger_k             BIGGER;
     static constexpr const biggest_k            BIGGEST;
