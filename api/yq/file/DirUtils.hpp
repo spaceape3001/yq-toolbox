@@ -61,7 +61,8 @@ namespace yq {
         //!  Finds all chlidren for vector of directories (not hidden unless HIDDEN option is used)
         string_vector_t     subdirectory_names(const std::vector<filesystem_path_t>&, unsigned options=0) ;
 
-        //  Finds all chlidren (not hidden)
+        //! Finds all children (not hidden unless HIDDEN option is used)
+        //! \return Set of names
         string_xset_t       subdirectory_names_set(const filesystem_path_t&, unsigned options=0) ;
         string_xset_t       subdirectory_names_set(const std::vector<filesystem_path_t>&, unsigned options=0) ;
 
