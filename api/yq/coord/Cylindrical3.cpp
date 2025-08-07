@@ -7,6 +7,7 @@
 #include "Cylindrical3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/units.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/unit/MKS.hpp>
@@ -15,6 +16,7 @@
 #include "Cylindrical3.hpp"
 
 YQ_TYPE_IMPLEMENT(yq::Cylindrical3D)
+YQ_TYPE_IMPLEMENT(yq::Cylindrical3H)
 YQ_TYPE_IMPLEMENT(yq::Cylindrical3M)
 
 using namespace yq;
@@ -27,6 +29,14 @@ static void reg_cylindrical3()
         w.property(szAngle, &Cylindrical3D::angle).description(szAngle_Cylindrical).alias({szAng, szA});
         w.property(szRadius, &Cylindrical3D::radius).description(szRadius_Cylindrical).alias({szRad, szR, szDistance, szDist});
         w.property(szZ, &Cylindrical3D::z).description(szZ_Cylindrical);
+    }
+    
+    {
+        auto w = writer<Cylindrical3H>();
+        w.description("3D Cylindrical coordinate in double/degrees");
+        w.property(szAngle, &Cylindrical3H::angle).description(szAngle_Cylindrical).alias({szAng, szA});
+        w.property(szRadius, &Cylindrical3H::radius).description(szRadius_Cylindrical).alias({szRad, szR, szDistance, szDist});
+        w.property(szZ, &Cylindrical3H::z).description(szZ_Cylindrical);
     }
     
     {

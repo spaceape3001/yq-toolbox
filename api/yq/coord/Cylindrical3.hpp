@@ -117,4 +117,5 @@ namespace yq {
 
 YQ_TYPE_DECLARE(yq::Cylindrical3D)
 YQ_TYPE_DECLARE(yq::Cylindrical3M)
+YQ_TYPE_DECLARE(yq::Cylindrical3H)
 

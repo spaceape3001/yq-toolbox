@@ -28,6 +28,9 @@ endif()
 include(yq_userexpr.cmake)
 include(yq_xml.cmake)
 
+
+include(yq_art.cmake)
+
 #   REMAINDER
 include(yq_graph.cmake)
 include(yq_keyv.cmake)

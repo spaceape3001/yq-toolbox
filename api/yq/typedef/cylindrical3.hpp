@@ -13,4 +13,5 @@ namespace yq {
 
     using Cylindrical3D         = Cylindrical3<unit::Radian,double>;
     using Cylindrical3M         = Cylindrical3<unit::Radian,unit::Meter>;
+    using Cylindrical3H         = Cylindrical3<unit::Degree,double>;
 }

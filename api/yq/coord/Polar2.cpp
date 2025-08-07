@@ -16,11 +16,19 @@
 
 YQ_TYPE_IMPLEMENT(yq::Polar2D)
 YQ_TYPE_IMPLEMENT(yq::Polar2M)
+YQ_TYPE_IMPLEMENT(yq::Polar2H)
 
 using namespace yq;
 
 static void reg_polar2()
 {
+    {
+        auto w = writer<Polar2H>();
+        w.description("2D Polar coordinate in double with degrees");
+        w.property(szAngle, &Polar2H::angle).description(szAngle_Polar).alias({szAng, szA});
+        w.property(szRadius, &Polar2H::radius).description(szRadius_Polar).alias({szRad, szR, szDistance, szDist});
+    }
+
     {
         auto w = writer<Polar2D>();
         w.description("2D Polar coordinate in double");

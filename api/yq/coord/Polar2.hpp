@@ -116,4 +116,4 @@ namespace yq {
 
 YQ_TYPE_DECLARE(yq::Polar2D)
 YQ_TYPE_DECLARE(yq::Polar2M)
-
+YQ_TYPE_DECLARE(yq::Polar2H)

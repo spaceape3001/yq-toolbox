@@ -50,6 +50,8 @@ namespace yq {
     struct always_k {};
     struct alpha_k {};
     struct any_k {};
+    struct append_k {};
+    struct appendable_k {};
     struct asset_k {};
     struct base_k {};
     struct begin_k {};
@@ -96,6 +98,7 @@ namespace yq {
     struct enable_k {};
     struct enabled_k {};
     struct end_k {};
+    struct erasable_k {};
     struct erase_k {};
     struct error_k {};
     struct euler_k {};
@@ -232,6 +235,7 @@ namespace yq {
     struct self_k {};
     struct sender_k {};
     struct set_k {};
+    struct settable_k {};
     struct shared_k {};
     struct skip_k {};
     struct smaller_k {};
@@ -333,6 +337,8 @@ namespace yq {
     static constexpr const alpha_k              ALPHA;
     static constexpr const always_k             ALWAYS;
     static constexpr const any_k                ANY;
+    static constexpr const append_k             APPEND;
+    static constexpr const appendable_k         APPENDABLE;
     static constexpr const asset_k              ASSET;
     static constexpr const base_k               BASE;
     static constexpr const begin_k              BEGIN;
@@ -379,6 +385,7 @@ namespace yq {
     static constexpr const enable_k             ENABLE;
     static constexpr const enabled_k            ENABLED;
     static constexpr const end_k                END;
+    static constexpr const erasable_k           ERASABLE;
     static constexpr const erase_k              ERASE;
     static constexpr const error_k              ERROR;
     static constexpr const euler_k              EULER;
@@ -521,6 +528,7 @@ namespace yq {
     static constexpr const self_k               SELF;
     static constexpr const sender_k             SENDER;
     static constexpr const set_k                SET;
+    static constexpr const settable_k           SETTABLE;
     static constexpr const shared_k             SHARED;
     static constexpr const skip_k               SKIP;
     static constexpr const smaller_k            SMALLER;
