@@ -71,6 +71,8 @@ namespace yq {
 
         //! Gets all subdirectories
         path_vec_t          subdirectories(const filesystem_path_t&, unsigned options=0);
+
+        //! Gets all subdirectories
         path_vec_t          subdirectories(const std::vector<filesystem_path_t>&, unsigned options=0);
         
         bool            child_exists(const filesystem_path_t&, std::string_view name);
