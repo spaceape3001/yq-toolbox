@@ -74,7 +74,8 @@ namespace yq {
 
         //! Gets all subdirectories
         path_vec_t          subdirectories(const std::vector<filesystem_path_t>&, unsigned options=0);
-        
+  
+        //! Recursively checks to see if a directory or a subdirectory has a specific name
         bool            child_exists(const filesystem_path_t&, std::string_view name);
         bool            child_exists(const std::vector<filesystem_path_t>&, std::string_view name);
         
