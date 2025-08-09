@@ -77,6 +77,8 @@ namespace yq {
   
         //! Recursively checks to see if a directory or a subdirectory has a specific name
         bool            child_exists(const filesystem_path_t&, std::string_view name);
+
+        //! Recursively checks to see if a directory or a subdirectory has a specific name
         bool            child_exists(const std::vector<filesystem_path_t>&, std::string_view name);
         
         template <typename P>
