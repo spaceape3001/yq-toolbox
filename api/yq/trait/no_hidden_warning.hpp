@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#ifdef __GNUC__
+        //  While the "is hidden" warnings can be nice... it's burdening the
+        //  adaptive API
+    #pragma GCC diagnostic ignored "-Woverloaded-virtual="
+#endif
+
+//  TODO: MSVC version
+
+
