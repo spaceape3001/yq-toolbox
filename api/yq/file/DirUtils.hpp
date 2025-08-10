@@ -81,6 +81,7 @@ namespace yq {
         //! Recursively checks to see if a directory or a subdirectory has a specific name
         bool            child_exists(const std::vector<filesystem_path_t>&, std::string_view name);
         
+        //! Recursively iterates the directory (and subdirectories) calling your given lambda
         template <typename P>
         auto    for_all_children(const filesystem_path_t& d, unsigned options, P pred)
         {
