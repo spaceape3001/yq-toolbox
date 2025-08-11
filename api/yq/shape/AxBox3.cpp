@@ -9,6 +9,9 @@
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/split.hpp>
 
 #include "AxBox3.hxx"
 
@@ -18,6 +21,137 @@ YQ_TYPE_IMPLEMENT(yq::AxBox3I)
 YQ_TYPE_IMPLEMENT(yq::AxBox3U)
 
 using namespace yq;
+
+template <typename T>
+void    print_axbox3(Stream& str, const AxBox3<T>& v)
+{
+    as_stream(str, v);
+}
+
+static std::string_view write_axbox3d(const AxBox3D& v)
+{
+    static thread_local char    buffer [ 512 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg,%.*lg,%.*lg", 
+        kMaxDoubleDigits, v.lo.x, 
+        kMaxDoubleDigits, v.lo.y, 
+        kMaxDoubleDigits, v.lo.z, 
+        kMaxDoubleDigits, v.hi.x, 
+        kMaxDoubleDigits, v.hi.y, 
+        kMaxDoubleDigits, v.hi.z
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox3f(const AxBox3F& v)
+{
+    static thread_local char    buffer [ 512 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g,%.*g,%.*g,%.*g", 
+        kMaxFloatDigits, v.lo.x, 
+        kMaxFloatDigits, v.lo.y, 
+        kMaxFloatDigits, v.lo.z, 
+        kMaxFloatDigits, v.hi.x, 
+        kMaxFloatDigits, v.hi.y, 
+        kMaxFloatDigits, v.hi.z
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox3i(const AxBox3I& v)
+{
+    static thread_local char    buffer [ 512 ];
+    int n = snprintf(buffer, sizeof(buffer), "%i,%i,%i,%i,%i,%i", 
+        v.lo.x, 
+        v.lo.y, 
+        v.lo.z, 
+        v.hi.x, 
+        v.hi.y, 
+        v.hi.z
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox3u(const AxBox3U& v)
+{
+    static thread_local char    buffer [ 512 ];
+    int n = snprintf(buffer, sizeof(buffer), "%u,%u,%u,%u,%u,%u", 
+        v.lo.x, 
+        v.lo.y, 
+        v.lo.z, 
+        v.hi.x, 
+        v.hi.y, 
+        v.hi.z
+    );
+    return std::string_view(buffer, n);
+}
+
+
+static bool  parse_axbox3d(AxBox3D& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 6)
+        return false;
+    auto lx = to_double(bits[0]);
+    auto ly = to_double(bits[1]);
+    auto lz = to_double(bits[2]);
+    auto hx = to_double(bits[3]);
+    auto hy = to_double(bits[4]);
+    auto hz = to_double(bits[5]);
+    if(!(lx && ly && lz && hx && hy && hz)) 
+        return false;
+    v   = AxBox3D(Vector3D(*lx, *ly, *lz),Vector3D(*hx, *hy, *hz));
+    return true;
+}
+
+static bool  parse_axbox3f(AxBox3F& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 6)
+        return false;
+    auto lx = to_float(bits[0]);
+    auto ly = to_float(bits[1]);
+    auto lz = to_float(bits[2]);
+    auto hx = to_float(bits[3]);
+    auto hy = to_float(bits[4]);
+    auto hz = to_float(bits[5]);
+    if(!(lx && ly && lz && hx && hy && hz)) 
+        return false;
+    v   = AxBox3F(Vector3F(*lx, *ly, *lz),Vector3F(*hx, *hy, *hz));
+    return true;
+}
+
+static bool  parse_axbox3i(AxBox3I& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 6)
+        return false;
+    auto lx = to_integer(bits[0]);
+    auto ly = to_integer(bits[1]);
+    auto lz = to_integer(bits[2]);
+    auto hx = to_integer(bits[3]);
+    auto hy = to_integer(bits[4]);
+    auto hz = to_integer(bits[5]);
+    if(!(lx && ly && lz && hx && hy && hz)) 
+        return false;
+    v   = AxBox3I(Vector3I(*lx, *ly, *lz),Vector3I(*hx, *hy, *hz));
+    return true;
+}
+
+static bool  parse_axbox3u(AxBox3U& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 6)
+        return false;
+    auto lx = to_unsigned(bits[0]);
+    auto ly = to_unsigned(bits[1]);
+    auto lz = to_unsigned(bits[2]);
+    auto hx = to_unsigned(bits[3]);
+    auto hy = to_unsigned(bits[4]);
+    auto hz = to_unsigned(bits[5]);
+    if(!(lx && ly && lz && hx && hy && hz)) 
+        return false;
+    v   = AxBox3U(Vector3U(*lx, *ly, *lz),Vector3U(*hx, *hy, *hz));
+    return true;
+}
 
 static void reg_axbox3()
 {
@@ -40,6 +174,9 @@ static void reg_axbox3()
         w.method(szOverlaps, (bool(AxBox3D::*)(const AxBox3D&) const) &AxBox3D::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox3D::project).description(szProject_Box);
         w.method(szUnproject, &AxBox3D::unproject).description(szUnproject_Box);
+        w.parse<parse_axbox3d>();
+        w.print<print_axbox3<double>>();
+        w.format<write_axbox3d>();
     }
 
     {
@@ -60,6 +197,9 @@ static void reg_axbox3()
         w.method(szOverlaps, (bool(AxBox3F::*)(const AxBox3F&) const) &AxBox3F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox3F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox3F::unproject).description(szUnproject_Box);
+        w.parse<parse_axbox3f>();
+        w.print<print_axbox3<float>>();
+        w.format<write_axbox3f>();
     }
 
     {
@@ -78,6 +218,9 @@ static void reg_axbox3()
         w.method(szContains, (bool(AxBox3I::*)(const Vector3I&) const) &AxBox3I::contains).description(szContains_Box_Pt);
         w.method(szEclipses, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox3I::*)(const AxBox3I&) const) &AxBox3I::overlaps).description(szOverlaps_Box_Box);
+        w.parse<parse_axbox3i>();
+        w.print<print_axbox3<int>>();
+        w.format<write_axbox3i>();
     }
 
     {
@@ -96,6 +239,9 @@ static void reg_axbox3()
         w.method(szContains, (bool(AxBox3U::*)(const Vector3U&) const) &AxBox3U::contains).description(szContains_Box_Pt);
         w.method(szEclipses, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox3U::*)(const AxBox3U&) const) &AxBox3U::overlaps).description(szOverlaps_Box_Box);
+        w.parse<parse_axbox3u>();
+        w.print<print_axbox3<unsigned>>();
+        w.format<write_axbox3u>();
     }
 }
 

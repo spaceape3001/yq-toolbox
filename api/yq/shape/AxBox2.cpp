@@ -12,6 +12,9 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/shape/Circle2.hpp>
+#include <yq/text/format.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/split.hpp>
 
 #include "AxBox2.hxx"
 #include "Circle2.hxx"
@@ -25,6 +28,202 @@ YQ_TYPE_IMPLEMENT(yq::AxBox2CM)
 YQ_TYPE_IMPLEMENT(yq::AxBox2MM)
 
 using namespace yq;
+
+
+template <typename T>
+void    print_axbox2(Stream& str, const AxBox2<T>& v)
+{
+    as_stream(str, v);
+}
+
+static std::string_view write_axbox2d(const AxBox2D& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", 
+        kMaxDoubleDigits, v.lo.x, 
+        kMaxDoubleDigits, v.lo.y, 
+        kMaxDoubleDigits, v.hi.x, 
+        kMaxDoubleDigits, v.hi.y
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox2f(const AxBox2F& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g,%.*g", 
+        kMaxFloatDigits, v.lo.x, 
+        kMaxFloatDigits, v.lo.y, 
+        kMaxFloatDigits, v.hi.x, 
+        kMaxFloatDigits, v.hi.y
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox2i(const AxBox2I& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%i,%i,%i,%i", 
+        v.lo.x, 
+        v.lo.y, 
+        v.hi.x, 
+        v.hi.y
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox2u(const AxBox2U& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%u,%u,%u,%u", 
+        v.lo.x, 
+        v.lo.y, 
+        v.hi.x, 
+        v.hi.y
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox2m(const AxBox2M& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", 
+        kMaxDoubleDigits, v.lo.x.value, 
+        kMaxDoubleDigits, v.lo.y.value, 
+        kMaxDoubleDigits, v.hi.x.value, 
+        kMaxDoubleDigits, v.hi.y.value
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox2cm(const AxBox2CM& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", 
+        kMaxDoubleDigits, v.lo.x.value, 
+        kMaxDoubleDigits, v.lo.y.value, 
+        kMaxDoubleDigits, v.hi.x.value, 
+        kMaxDoubleDigits, v.hi.y.value
+    );
+    return std::string_view(buffer, n);
+}
+
+static std::string_view write_axbox2mm(const AxBox2MM& v)
+{
+    static thread_local char    buffer [ 256 ];
+    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", 
+        kMaxDoubleDigits, v.lo.x.value, 
+        kMaxDoubleDigits, v.lo.y.value, 
+        kMaxDoubleDigits, v.hi.x.value, 
+        kMaxDoubleDigits, v.hi.y.value
+    );
+    return std::string_view(buffer, n);
+}
+
+static bool  parse_axbox2d(AxBox2D& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_double(bits[0]);
+    auto ly = to_double(bits[1]);
+    auto hx = to_double(bits[2]);
+    auto hy = to_double(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2D(Vector2D(*lx, *ly),Vector2D(*hx, *hy));
+    return true;
+}
+
+static bool  parse_axbox2f(AxBox2F& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_float(bits[0]);
+    auto ly = to_float(bits[1]);
+    auto hx = to_float(bits[2]);
+    auto hy = to_float(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2F(Vector2F(*lx, *ly),Vector2F(*hx, *hy));
+    return true;
+}
+
+static bool  parse_axbox2i(AxBox2I& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_integer(bits[0]);
+    auto ly = to_integer(bits[1]);
+    auto hx = to_integer(bits[2]);
+    auto hy = to_integer(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2I(Vector2I(*lx, *ly),Vector2I(*hx, *hy));
+    return true;
+}
+
+static bool  parse_axbox2u(AxBox2U& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_unsigned(bits[0]);
+    auto ly = to_unsigned(bits[1]);
+    auto hx = to_unsigned(bits[2]);
+    auto hy = to_unsigned(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2U(Vector2U(*lx, *ly),Vector2U(*hx, *hy));
+    return true;
+}
+
+static bool  parse_axbox2m(AxBox2M& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_double(bits[0]);
+    auto ly = to_double(bits[1]);
+    auto hx = to_double(bits[2]);
+    auto hy = to_double(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2M(Vector2M(*lx, *ly),Vector2M(*hx, *hy));
+    return true;
+}
+
+static bool  parse_axbox2cm(AxBox2CM& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_double(bits[0]);
+    auto ly = to_double(bits[1]);
+    auto hx = to_double(bits[2]);
+    auto hy = to_double(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2CM(Vector2CM(*lx, *ly),Vector2CM(*hx, *hy));
+    return true;
+}
+
+static bool  parse_axbox2mm(AxBox2MM& v, std::string_view str)
+{
+    auto bits = split(str, ',');
+    if(bits.size() != 4)
+        return false;
+    auto lx = to_double(bits[0]);
+    auto ly = to_double(bits[1]);
+    auto hx = to_double(bits[2]);
+    auto hy = to_double(bits[3]);
+    if(!(lx && ly && hx && hy)) 
+        return false;
+    v   = AxBox2MM(Vector2MM(*lx, *ly),Vector2MM(*hx, *hy));
+    return true;
+}
 
 static void reg_axbox2()
 {
@@ -52,6 +251,9 @@ static void reg_axbox2()
         w.method(szOverlaps, (bool(AxBox2D::*)(const AxBox2D&) const) &AxBox2D::overlaps).description(szContains_Box_Box);
         w.method(szProject, &AxBox2D::project).description(szProject_Box);
         w.method(szUnproject, &AxBox2D::unproject).description(szUnproject_Box);
+        w.parse<parse_axbox2d>();
+        w.print<print_axbox2<double>>();
+        w.format<write_axbox2d>();
     }
     
     {
@@ -78,6 +280,9 @@ static void reg_axbox2()
         w.method(szOverlaps, (bool(AxBox2F::*)(const AxBox2F&) const) &AxBox2F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox2F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox2F::unproject).description(szUnproject_Box);
+        w.parse<parse_axbox2f>();
+        w.print<print_axbox2<float>>();
+        w.format<write_axbox2f>();
     }
     
     {
@@ -100,6 +305,9 @@ static void reg_axbox2()
         w.method(szEclipses, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::eclipses).description(szEclipses_Box_Box);
         w.method(szEclipses, (bool(AxBox2I::*)(const Circle2I&) const) &AxBox2I::eclipses).description(szEclipses_Box_Circle);
         w.method(szOverlaps, (bool(AxBox2I::*)(const AxBox2I&) const) &AxBox2I::overlaps).description(szOverlaps_Box_Box);
+        w.parse<parse_axbox2i>();
+        w.print<print_axbox2<int>>();
+        w.format<write_axbox2i>();
     }
     
     {
@@ -122,6 +330,9 @@ static void reg_axbox2()
         w.method(szEclipses, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::eclipses).description(szEclipses_Box_Box);
         w.method(szEclipses, (bool(AxBox2U::*)(const Circle2U&) const) &AxBox2U::eclipses).description(szEclipses_Box_Circle);
         w.method(szOverlaps, (bool(AxBox2U::*)(const AxBox2U&) const) &AxBox2U::overlaps).description(szOverlaps_Box_Box);
+        w.parse<parse_axbox2u>();
+        w.print<print_axbox2<unsigned>>();
+        w.format<write_axbox2u>();
     }
 
     {
@@ -148,6 +359,9 @@ static void reg_axbox2()
         w.method(szOverlaps, (bool(AxBox2M::*)(const AxBox2M&) const) &AxBox2M::overlaps).description(szContains_Box_Box);
         //w.method(szProject, &AxBox2M::project).description(szProject_Box);
         //w.method(szUnproject, &AxBox2M::unproject).description(szUnproject_Box);
+        w.print<print_axbox2<unit::Meter>>();
+        w.parse<parse_axbox2m>();
+        w.format<write_axbox2m>();
     }
 
     {
@@ -174,6 +388,9 @@ static void reg_axbox2()
         w.method(szOverlaps, (bool(AxBox2CM::*)(const AxBox2CM&) const) &AxBox2CM::overlaps).description(szContains_Box_Box);
         //w.method(szProject, &AxBox2CM::project).description(szProject_Box);
         //w.method(szUnproject, &AxBox2CM::unproject).description(szUnproject_Box);
+        w.print<print_axbox2<unit::Centimeter>>();
+        w.parse<parse_axbox2cm>();
+        w.format<write_axbox2cm>();
     }
     
     {
@@ -200,6 +417,9 @@ static void reg_axbox2()
         w.method(szOverlaps, (bool(AxBox2MM::*)(const AxBox2MM&) const) &AxBox2MM::overlaps).description(szContains_Box_Box);
         //w.method(szProject, &AxBox2MM::project).description(szProject_Box);
         //w.method(szUnproject, &AxBox2MM::unproject).description(szUnproject_Box);
+        w.print<print_axbox2<unit::Millimeter>>();
+        w.parse<parse_axbox2mm>();
+        w.format<write_axbox2mm>();
     }    
 }
 
