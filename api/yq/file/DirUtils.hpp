@@ -121,7 +121,8 @@ namespace yq {
                 return;
         }
 
-        template <typename P>
+       //! Recursively iterates the given directories (and subdirectories) calling your lambda callback
+         template <typename P>
         auto    for_all_children(const std::vector<filesystem_path_t>& dirs, unsigned options, P pred)
         {
             using result_t  = decltype(pred({}));
