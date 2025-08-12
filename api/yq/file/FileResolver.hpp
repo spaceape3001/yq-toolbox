@@ -16,6 +16,7 @@ namespace yq {
     class FileResolver {
     public:
     
+        //! Default constructor
         FileResolver();
         FileResolver(const FileResolver&);
         FileResolver(FileResolver&&);
