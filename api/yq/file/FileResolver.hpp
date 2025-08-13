@@ -18,6 +18,8 @@ namespace yq {
     
         //! Default constructor
         FileResolver();
+        
+        //! Copy constructor
         FileResolver(const FileResolver&);
         FileResolver(FileResolver&&);
 
