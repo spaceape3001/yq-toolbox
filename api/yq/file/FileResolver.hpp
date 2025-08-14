@@ -21,6 +21,8 @@ namespace yq {
         
         //! Copy constructor
         FileResolver(const FileResolver&);
+        
+        //! Move constructor
         FileResolver(FileResolver&&);
 
         ~FileResolver();
