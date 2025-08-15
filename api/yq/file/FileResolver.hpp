@@ -25,6 +25,7 @@ namespace yq {
         //! Move constructor
         FileResolver(FileResolver&&);
 
+        //! Destructor
         ~FileResolver();
 
         //! Adds the specified path
