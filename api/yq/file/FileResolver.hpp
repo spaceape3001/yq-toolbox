@@ -41,6 +41,7 @@ namespace yq {
         //! \note This implies recursive
         filesystem_path_t       partial(std::string_view) const;
         
+        //! Finds all files that partially match (filesystem case sensitivity dependent)
         std::vector<filesystem_path_t>  all_partial(std::string_view) const;
         
         const std::vector<filesystem_path_t>& paths() const { return m_paths; }
