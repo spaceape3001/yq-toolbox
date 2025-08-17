@@ -44,6 +44,7 @@ namespace yq {
         //! Finds all files that partially match (filesystem case sensitivity dependent)
         std::vector<filesystem_path_t>  all_partial(std::string_view) const;
         
+        //! Reference to the search paths registered to this resolver
         const std::vector<filesystem_path_t>& paths() const { return m_paths; }
         
         FileResolver& operator=(const FileResolver&);
