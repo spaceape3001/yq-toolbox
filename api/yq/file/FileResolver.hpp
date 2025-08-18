@@ -47,6 +47,7 @@ namespace yq {
         //! Reference to the search paths registered to this resolver
         const std::vector<filesystem_path_t>& paths() const { return m_paths; }
         
+        //! Copy operator
         FileResolver& operator=(const FileResolver&);
         FileResolver& operator=(FileResolver&&);
         bool    operator==(const FileResolver&) const;
