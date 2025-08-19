@@ -49,6 +49,8 @@ namespace yq {
         
         //! Copy operator
         FileResolver& operator=(const FileResolver&);
+        
+        //! Move operator
         FileResolver& operator=(FileResolver&&);
         bool    operator==(const FileResolver&) const;
 
