@@ -52,6 +52,8 @@ namespace yq {
         
         //! Move operator
         FileResolver& operator=(FileResolver&&);
+        
+        //! Equality operator
         bool    operator==(const FileResolver&) const;
 
         //! Full resolution (by default)
