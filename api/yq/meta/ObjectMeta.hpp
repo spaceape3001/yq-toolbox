@@ -9,6 +9,7 @@
 #include <yq/meta/CompoundMeta.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/typedef/object.hpp>
+#include <yq/trait/no_hidden_warning.hpp>
 
 namespace yq {
 

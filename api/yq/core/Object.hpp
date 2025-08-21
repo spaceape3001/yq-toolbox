@@ -9,6 +9,7 @@
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/typedef/object.hpp>
+#include <yq/trait/no_hidden_warning.hpp>
 
 namespace yq {
 
