@@ -61,6 +61,10 @@ namespace yq {
         
         //! Resolution of the file path (no partials, must be full from root)
         filesystem_path_t       operator()(full_k, std::string_view) const;
+        
+        //! Resolution of the file path by partial (ie, most expensive search as 
+        //! it needs to iterate through all directories, testing to see if the 
+        //! partial matches).
         filesystem_path_t       operator()(partial_k, std::string_view) const;
 
     private:
