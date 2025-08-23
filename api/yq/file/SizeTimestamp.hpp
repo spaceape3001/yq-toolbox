@@ -10,6 +10,8 @@
 #include <cstdint>
 
 namespace yq {
+
+    //! Size/timestamp for last file modifications
     struct SizeTimestamp {
         size_t          size   = 0;
         uint64_t        time   = 0;
