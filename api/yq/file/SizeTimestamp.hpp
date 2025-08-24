@@ -13,6 +13,8 @@ namespace yq {
 
     //! Size/timestamp for last file modifications
     struct SizeTimestamp {
+    
+        //! Size of the file (bytes)
         size_t          size   = 0;
         uint64_t        time   = 0;
         uint64_t        nano   = 0;
