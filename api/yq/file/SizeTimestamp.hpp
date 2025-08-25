@@ -16,6 +16,8 @@ namespace yq {
     
         //! Size of the file (bytes)
         size_t          size   = 0;
+        
+        //! Time of the file's last modification (seconds of epoch)
         uint64_t        time   = 0;
         uint64_t        nano   = 0;
         bool            exists = false;
