@@ -19,6 +19,8 @@ namespace yq {
         
         //! Time of the file's last modification (seconds of epoch)
         uint64_t        time   = 0;
+        
+        //! Nanosecons of the file's last modification (seconds of epoch)
         uint64_t        nano   = 0;
         bool            exists = false;
         
