@@ -22,6 +22,8 @@ namespace yq {
         
         //! Nanosecons of the file's last modification (seconds of epoch)
         uint64_t        nano   = 0;
+        
+        //! TRUE if the file exists
         bool            exists = false;
         
         SizeTimestamp() : size{}, time{}, nano{}, exists(false) {}
