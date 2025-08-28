@@ -26,6 +26,7 @@ namespace yq {
         //! TRUE if the file exists
         bool            exists = false;
         
+        //! Default Constructor
         SizeTimestamp() : size{}, time{}, nano{}, exists(false) {}
         SizeTimestamp(size_t s, uint64_t t, uint64_t n) : size(s), time(t), nano(n), exists(true) {}
         uint64_t        nanoseconds() const { return 1'000'000'000*time + nano; }
