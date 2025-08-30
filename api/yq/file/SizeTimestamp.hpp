@@ -31,6 +31,8 @@ namespace yq {
         
         //! Piecewise constructor
         SizeTimestamp(size_t s, uint64_t t, uint64_t n) : size(s), time(t), nano(n), exists(true) {}
+
+        //! Total number of nanoseconds from epoch
         uint64_t        nanoseconds() const { return 1'000'000'000*time + nano; }
         bool    operator==(const SizeTimestamp&) const = default;
     };
