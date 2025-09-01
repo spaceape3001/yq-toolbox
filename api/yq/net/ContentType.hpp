@@ -38,6 +38,7 @@ namespace yq {
         xml
     )
 
+    //! Mime type string for content type lookup table
     std::string_view    mimeType(ContentType);
     ContentType         mimeTypeForExt(std::string_view);
     
