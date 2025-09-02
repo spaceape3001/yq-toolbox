@@ -40,6 +40,8 @@ namespace yq {
 
     //! Mime type string for content type lookup table
     std::string_view    mimeType(ContentType);
+    
+    //! Likely mime type based on file extension
     ContentType         mimeTypeForExt(std::string_view);
     
     //! TRUE for types that can render as images
