@@ -178,6 +178,10 @@ namespace yq {
     ContentType mimeTypeForExt(std::string_view ext)
     {
         const auto& r = extToTypeMap();
+        if(ext.empty())
+			return ContentType::unknown;
+		if(ext[0] == '.')
+			ext	= ext.substr(1);
         return r.get(ext);
     }
 
