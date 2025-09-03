@@ -51,6 +51,7 @@ namespace yq {
     //! \note this will overlap with isImage for some formats.
     bool                isTextual(ContentType);
     
+    //! TRUE if the content type is audio
     bool            isAudio(ContentType);
     bool            isMovie(ContentType);
 
