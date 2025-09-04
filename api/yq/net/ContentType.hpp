@@ -53,6 +53,8 @@ namespace yq {
     
     //! TRUE if the content type is audio
     bool            isAudio(ContentType);
+    
+    //! TRUE if the content type is movie/video
     bool            isMovie(ContentType);
 
 }
