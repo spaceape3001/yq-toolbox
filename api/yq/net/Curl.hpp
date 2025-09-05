@@ -14,6 +14,8 @@
 namespace yq {
     class ByteArray;
 
+	/*! Simple C++ Curl wrapper
+	*/
     class Curl {
     public:
         Curl();
