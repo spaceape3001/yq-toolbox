@@ -18,6 +18,8 @@ namespace yq {
 	*/
     class Curl {
     public:
+    
+		//! Default constructor
         Curl();
         ~Curl();
         
