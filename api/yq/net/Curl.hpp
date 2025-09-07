@@ -21,6 +21,8 @@ namespace yq {
     
 		//! Default constructor
         Curl();
+        
+        //! Destructor
         ~Curl();
         
         
