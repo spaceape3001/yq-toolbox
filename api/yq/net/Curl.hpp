@@ -19,13 +19,13 @@ namespace yq {
     class Curl {
     public:
     
-		//! Default constructor
+		//! Default constructor (creates the curl connection)
         Curl();
         
-        //! Destructor
+        //! Destructor (destroys the curl connection)
         ~Curl();
         
-        
+        //! Returns the effective URL of our connection
         std::string         get_effective_url() const;
         
         void                set_url(const Url&);
