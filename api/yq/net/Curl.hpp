@@ -21,14 +21,11 @@ namespace yq {
     
 		//! Default constructor (creates the curl connection)
         Curl();
-        
-        #if 0
-        // disabled until I can syntax check this
+
         explicit Curl(const Url&);
         explicit Curl(const UrlView&);
         explicit Curl(const std::string&);
         explicit Curl(const char*);
-        #endif
 
         //! Destructor (destroys the curl connection)
         ~Curl();
