@@ -27,6 +27,29 @@ namespace yq {
         curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
     }
 
+	#if 0
+		// disabled until I can syntax check this
+	Curl::Curl(const Url&u) : Curl()
+	{
+		set_url(u);
+	}
+	
+	Curl::Curl(const UrlView&u) : Curl()
+	{
+		set_url(u);
+	}
+	
+	Curl::Curl(const std::string&u) : Curl()
+	{
+		set_url(u);
+	}
+	
+	Curl::Curl(const char*u) : Curl()
+	{
+		set_url(u);
+	}
+	#endif
+
     Curl::~Curl()
     {
         curl_easy_cleanup(m_curl);
