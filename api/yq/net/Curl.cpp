@@ -27,8 +27,6 @@ namespace yq {
         curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
     }
 
-	#if 0
-		// disabled until I can syntax check this
 	Curl::Curl(const Url&u) : Curl()
 	{
 		set_url(u);
@@ -48,7 +46,6 @@ namespace yq {
 	{
 		set_url(u);
 	}
-	#endif
 
     Curl::~Curl()
     {
