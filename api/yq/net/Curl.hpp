@@ -22,6 +22,7 @@ namespace yq {
 		//! Default constructor (creates the curl connection)
         Curl();
 
+		//! Creates & sets the url to a CURL connection (note, does not execute)
         explicit Curl(const Url&);
         explicit Curl(const UrlView&);
         explicit Curl(const std::string&);
