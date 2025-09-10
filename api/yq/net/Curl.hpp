@@ -24,6 +24,8 @@ namespace yq {
 
 		//! Creates & sets the url to a CURL connection (note, does not execute)
         explicit Curl(const Url&);
+
+		//! Creates & sets the url to a CURL connection (note, does not execute)
         explicit Curl(const UrlView&);
         explicit Curl(const std::string&);
         explicit Curl(const char*);
