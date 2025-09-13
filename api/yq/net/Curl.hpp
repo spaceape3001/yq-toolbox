@@ -42,6 +42,8 @@ namespace yq {
         
         //! Set the target URL (call *BEFORE* exec())
         void                set_url(const Url&);
+
+        //! Set the target URL (call *BEFORE* exec())
         void                set_url(const UrlView&);
         void                set_url(const std::string&);
         void                set_url(const char*);
