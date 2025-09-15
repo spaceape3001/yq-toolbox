@@ -48,6 +48,8 @@ namespace yq {
 
         //! Set the target URL (call *BEFORE* exec())
         void                set_url(const std::string&);
+
+        //! Set the target URL (call *BEFORE* exec())
         void                set_url(const char*);
         
         //using JsonResult    = std::pair<json,HttpStatus>;
