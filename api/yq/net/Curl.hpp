@@ -56,6 +56,7 @@ namespace yq {
         //using UInt8Result   = std::pair<Vector<uint8_t>,HttpStatus>;
         //using BytesResult   = std::pair<ByteArray,HttpStatus>;
         
+        //! Executes the connection & query, captures any reply
         HttpStatus          exec();
         
         const Vector<uint8_t>&  rx() const { return m_rx; }
