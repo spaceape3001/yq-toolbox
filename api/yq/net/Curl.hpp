@@ -59,6 +59,7 @@ namespace yq {
         //! Executes the connection & query, captures any reply
         HttpStatus          exec();
         
+        //! Contents of the received data buffer (after execution)
         const Vector<uint8_t>&  rx() const { return m_rx; }
         ByteArray               rx_bytes() const;
         json                    rx_json() const;
