@@ -61,6 +61,9 @@ namespace yq {
         
         //! Contents of the received data buffer (after execution)
         const Vector<uint8_t>&  rx() const { return m_rx; }
+        
+        //! Contents of the received data buffer as a byte array
+        //! \note This will be a COPY of the data, so hopefully it's not too much
         ByteArray               rx_bytes() const;
         json                    rx_json() const;
         
