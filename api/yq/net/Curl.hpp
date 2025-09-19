@@ -65,6 +65,9 @@ namespace yq {
         //! Contents of the received data buffer as a byte array
         //! \note This will be a COPY of the data, so hopefully it's not too much
         ByteArray               rx_bytes() const;
+        
+        //! Contents of the received data buffer as a json object
+        //! \note This will, of course, be a COPY of the data, so hopefully it's not too much
         json                    rx_json() const;
         
     private:
