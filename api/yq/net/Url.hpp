@@ -15,6 +15,10 @@
 namespace yq {
     class Stream;
 
+    /*! \brief URL (template)
+    
+        This is the template for the url.  Called Basic so we can specialize it for string vs string view.
+    */
     template <typename T>
     struct BasicUrl {
         T       scheme;
