@@ -39,6 +39,7 @@ namespace yq {
             return { scheme, user, pwd, host, path, query, fragment, port };
         }
 
+        //! TRUE if this url is "empty"
         bool    empty() const 
         {
             return scheme.empty() && user.empty() && pwd.empty() && host.empty() && path.empty() && query.empty() && fragment.empty() && !port;
