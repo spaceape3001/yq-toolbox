@@ -49,6 +49,7 @@ namespace yq {
         auto    operator<=>(const BasicUrl&) const = default;
     };
 
+    //! Copies a view URL into a regular URL
     Url             copy(const UrlView&);
     url_view_r      to_url_view(const char*, size_t);
     url_view_r      to_url_view(const char*);
