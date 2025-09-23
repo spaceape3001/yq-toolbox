@@ -51,6 +51,9 @@ namespace yq {
 
     //! Copies a view URL into a regular URL
     Url             copy(const UrlView&);
+    
+    //! Parses a char string to return a URL (view)
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(const char*, size_t);
     url_view_r      to_url_view(const char*);
     url_view_r      to_url_view(std::string_view);
