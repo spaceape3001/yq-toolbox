@@ -60,6 +60,9 @@ namespace yq {
     //! Parses a null terminated char string to return a URL (view)
     //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(const char*);
+
+    //! Parses a string view to return a URL (view)
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(std::string_view);
     Url             to_url(const filesystem_path_t&);
     
