@@ -64,6 +64,8 @@ namespace yq {
     //! Parses a string view to return a URL (view)
     //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(std::string_view);
+    
+    //! Creates a url for a filesystem path (auto-adds the "file" scheme)
     Url             to_url(const filesystem_path_t&);
     
     
