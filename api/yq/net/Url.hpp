@@ -68,7 +68,8 @@ namespace yq {
     //! Creates a url for a filesystem path (auto-adds the "file" scheme)
     Url             to_url(const filesystem_path_t&);
     
-    
+    //! Parses a char string to a host/port combination 
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      as_host_port(const char*, size_t);
     url_view_r      as_host_port(std::string_view);
 
