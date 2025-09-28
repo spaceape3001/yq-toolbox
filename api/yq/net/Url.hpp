@@ -71,6 +71,9 @@ namespace yq {
     //! Parses a char string to a host/port combination 
     //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      as_host_port(const char*, size_t);
+
+    //! Parses a string view to a host/port combination 
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      as_host_port(std::string_view);
 
     std::string     to_string(const Url&);
