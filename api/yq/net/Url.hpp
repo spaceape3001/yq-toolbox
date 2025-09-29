@@ -76,6 +76,7 @@ namespace yq {
     //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      as_host_port(std::string_view);
 
+    //! Formats the url to a string
     std::string     to_string(const Url&);
     std::string     to_string(const UrlView&);
     
