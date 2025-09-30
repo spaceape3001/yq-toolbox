@@ -78,6 +78,8 @@ namespace yq {
 
     //! Formats the url to a string
     std::string     to_string(const Url&);
+
+    //! Formats the url view to a string
     std::string     to_string(const UrlView&);
     
     //! Tests for a valid URL
