@@ -13,6 +13,7 @@ namespace log4cpp { class CategoryStream; }
 
 namespace yq {
 
+    //! Structure for version specification as in Protocol/Major.Minor
     struct VersionSpec {
         std::string_view    protocol;
         uint16_t            major = 0;
