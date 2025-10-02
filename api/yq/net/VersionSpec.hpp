@@ -15,6 +15,8 @@ namespace yq {
 
     //! Structure for version specification as in Protocol/Major.Minor
     struct VersionSpec {
+    
+        //! Protocol (ie, HTTP)
         std::string_view    protocol;
         uint16_t            major = 0;
         uint16_t            minor = 0;
