@@ -18,6 +18,8 @@ namespace yq {
     
         //! Protocol (ie, HTTP)
         std::string_view    protocol;
+        
+        //! Major version
         uint16_t            major = 0;
         uint16_t            minor = 0;
         
