@@ -21,6 +21,8 @@ namespace yq {
         
         //! Major version
         uint16_t            major = 0;
+        
+        //! Minor version
         uint16_t            minor = 0;
         
         operator Version() const { return Version { major, minor, 0, 0 }; }
