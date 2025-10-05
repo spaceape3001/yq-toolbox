@@ -25,6 +25,7 @@ namespace yq {
         //! Minor version
         uint16_t            minor = 0;
         
+        //! Implicit operator to the version
         operator Version() const { return Version { major, minor, 0, 0 }; }
         bool    operator==(const VersionSpec&) const = default;
         
