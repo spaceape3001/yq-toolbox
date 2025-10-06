@@ -13,12 +13,22 @@ namespace log4cpp { class CategoryStream; }
 
 namespace yq {
 
+    //! Structure for version specification as in Protocol/Major.Minor
     struct VersionSpec {
+    
+        //! Protocol (ie, HTTP)
         std::string_view    protocol;
+        
+        //! Major version
         uint16_t            major = 0;
+        
+        //! Minor version
         uint16_t            minor = 0;
         
+        //! Implicit operator to the version
         operator Version() const { return Version { major, minor, 0, 0 }; }
+        
+        //! Equality operator
         bool    operator==(const VersionSpec&) const = default;
         
         template <typename S>

@@ -15,6 +15,10 @@
 namespace yq {
     class Stream;
 
+    /*! \brief URL (template)
+    
+        This is the template for the url.  Called Basic so we can specialize it for string vs string view.
+    */
     template <typename T>
     struct BasicUrl {
         T       scheme;
@@ -35,6 +39,7 @@ namespace yq {
             return { scheme, user, pwd, host, path, query, fragment, port };
         }
 
+        //! TRUE if this url is "empty"
         bool    empty() const 
         {
             return scheme.empty() && user.empty() && pwd.empty() && host.empty() && path.empty() && query.empty() && fragment.empty() && !port;
@@ -44,17 +49,37 @@ namespace yq {
         auto    operator<=>(const BasicUrl&) const = default;
     };
 
+    //! Copies a view URL into a regular URL
     Url             copy(const UrlView&);
+    
+    //! Parses a char string to return a URL (view)
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(const char*, size_t);
+    
+    
+    //! Parses a null terminated char string to return a URL (view)
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(const char*);
+
+    //! Parses a string view to return a URL (view)
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      to_url_view(std::string_view);
+    
+    //! Creates a url for a filesystem path (auto-adds the "file" scheme)
     Url             to_url(const filesystem_path_t&);
     
-    
+    //! Parses a char string to a host/port combination 
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      as_host_port(const char*, size_t);
+
+    //! Parses a string view to a host/port combination 
+    //! \note Return are string views, thus, the original buffer needs to remain valid!
     url_view_r      as_host_port(std::string_view);
 
+    //! Formats the url to a string
     std::string     to_string(const Url&);
+
+    //! Formats the url view to a string
     std::string     to_string(const UrlView&);
     
     //! Tests for a valid URL
