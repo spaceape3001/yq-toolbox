@@ -27,6 +27,8 @@ namespace yq {
         
         //! Implicit operator to the version
         operator Version() const { return Version { major, minor, 0, 0 }; }
+        
+        //! Equality operator
         bool    operator==(const VersionSpec&) const = default;
         
         template <typename S>
