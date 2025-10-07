@@ -31,6 +31,7 @@ namespace yq {
         //! Equality operator
         bool    operator==(const VersionSpec&) const = default;
         
+        //! Writes the version spec to a formatting stream (ie, std ostream, a log, etc)
         template <typename S>
         S&        write_stream(S& s) const
         {
