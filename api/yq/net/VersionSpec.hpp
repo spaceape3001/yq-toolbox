@@ -41,6 +41,8 @@ namespace yq {
     
     //! Constant for HTTP/0.9
     inline consteval VersionSpec    http09() { return { "HTTP", 0, 9 }; }
+
+    //! Constant for HTTP/1.0
     inline consteval VersionSpec    http10() { return { "HTTP", 1, 0 }; }
     inline consteval VersionSpec    http11() { return { "HTTP", 1, 1 }; }
     
