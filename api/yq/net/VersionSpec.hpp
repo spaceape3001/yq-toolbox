@@ -44,6 +44,8 @@ namespace yq {
 
     //! Constant for HTTP/1.0
     inline consteval VersionSpec    http10() { return { "HTTP", 1, 0 }; }
+
+    //! Constant for HTTP/1.1
     inline consteval VersionSpec    http11() { return { "HTTP", 1, 1 }; }
     
     bool                    is_similar(const VersionSpec& a, const VersionSpec& b);
