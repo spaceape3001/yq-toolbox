@@ -31,6 +31,7 @@ namespace yq {
         //! Equality operator
         bool    operator==(const VersionSpec&) const = default;
         
+        //! Writes the version spec to a formatting stream (ie, std ostream, a log, etc)
         template <typename S>
         S&        write_stream(S& s) const
         {
@@ -38,8 +39,13 @@ namespace yq {
         }
     };
     
+    //! Constant for HTTP/0.9
     inline consteval VersionSpec    http09() { return { "HTTP", 0, 9 }; }
+
+    //! Constant for HTTP/1.0
     inline consteval VersionSpec    http10() { return { "HTTP", 1, 0 }; }
+
+    //! Constant for HTTP/1.1
     inline consteval VersionSpec    http11() { return { "HTTP", 1, 1 }; }
     
     bool                    is_similar(const VersionSpec& a, const VersionSpec& b);
