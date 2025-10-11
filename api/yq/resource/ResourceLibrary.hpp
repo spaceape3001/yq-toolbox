@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/resource/Resource.hpp>
+#include <yq/resource/ResourceInfo.hpp>
 #include <yq/text/IgCase.hpp>
 
 namespace yq {
@@ -42,8 +43,9 @@ namespace yq {
         static void init_meta();
         
         ResourceCPtr   resource(const std::string&) const;
-    
-        void        add(std::string_view, ResourcePtr);
+        
+        void            add(std::string_view, ResourcePtr);
+        void            add(ResourcePtr);
     
     protected:
         friend class Resource;
@@ -51,6 +53,6 @@ namespace yq {
         ResourceLibrary();
         virtual ~ResourceLibrary();
         
-        std::map<std::string,ResourceCPtr,IgCase>    m_resources;
+        std::map<std::string,ResourceCPtr,IgCase>   m_resources;
     };
 }
