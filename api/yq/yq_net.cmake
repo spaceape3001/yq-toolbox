@@ -16,8 +16,6 @@ add_library(yq_net SHARED
 target_link_libraries(yq_net 
     PUBLIC
         yq_core
-
-    PRIVATE
         yq_json
 )
 

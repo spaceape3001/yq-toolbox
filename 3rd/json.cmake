@@ -5,6 +5,7 @@
 ################################################################################
 
 if(NOT TARGET yq_json)
+	message("Adding JSON")
     set(json_dir ${CMAKE_CURRENT_LIST_DIR}/json)
     add_library(yq_json INTERFACE)
     target_sources(yq_json INTERFACE
