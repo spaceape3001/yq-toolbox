@@ -47,10 +47,11 @@ namespace yq {
         void            add(std::string_view, ResourcePtr);
         void            add(ResourcePtr);
     
+        ResourceLibrary();
+
     protected:
         friend class Resource;
         
-        ResourceLibrary();
         virtual ~ResourceLibrary();
         
         std::map<std::string,ResourceCPtr,IgCase>   m_resources;
