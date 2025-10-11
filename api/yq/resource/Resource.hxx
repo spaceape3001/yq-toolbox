@@ -25,41 +25,41 @@ namespace yq {
     void ResourceIO<A>::add_infoer(const ResourceIOSpec&sp, Pred&&fn, const std::source_location& sl)
     {
         if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const ByteArray&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceByteInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceByteInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const ByteArray&>){
-            Resource::add_loader( new TypedResourceByteInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceByteInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const json&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceJsonInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceJsonInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const json&>){
-            Resource::add_loader( new TypedResourceJsonInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceJsonInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const KVDocument&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceKVDocumentInfoer<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
+            Resource::add_infoer( new TypedResourceKVDocumentInfoer<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const KVDocument&>){
-            Resource::add_loader( new TypedResourceKVDocumentInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
+            Resource::add_infoer( new TypedResourceKVDocumentInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const KVTree&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceKVTreeInfoer<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
+            Resource::add_infoer( new TypedResourceKVTreeInfoer<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const KVTree&>){
-            Resource::add_loader( new TypedResourceKVTreeInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
+            Resource::add_infoer( new TypedResourceKVTreeInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sp.recursive, sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const std::filesystem::path&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceFileInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceFileInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const std::filesystem::path&>){
-            Resource::add_loader( new TypedResourceFileInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceFileInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, std::istream&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceStreamInfoer<A,Pred>(sp.extensions, std::move(fn), sp.binary, sl));
+            Resource::add_infoer( new TypedResourceStreamInfoer<A,Pred>(sp.extensions, std::move(fn), sp.binary, sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, std::istream&>){
-            Resource::add_loader( new TypedResourceStreamInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sp.binary, sl));
+            Resource::add_infoer( new TypedResourceStreamInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sp.binary, sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const std::string&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceStringInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceStringInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const std::string&>){
-            Resource::add_loader( new TypedResourceStringInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceStringInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const UrlView&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceUrlInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceUrlInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const UrlView&>){
-            Resource::add_loader( new TypedResourceUrlInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceUrlInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const XmlDocument&, const ResourceInfoAPI&>){
-            Resource::add_loader( new TypedResourceXmlInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceXmlInfoer<A,Pred>(sp.extensions, std::move(fn), sl));
         } else if constexpr (std::is_invocable_r_v<typename A::MyInfo*, Pred, const XmlDocument&>){
-            Resource::add_loader( new TypedResourceXmlInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
+            Resource::add_infoer( new TypedResourceXmlInfoerNoAPI<A,Pred>(sp.extensions, std::move(fn), sl));
         } else {
             static_assert( always_false_v<Pred>, "info function is incompatible with known patterns");
         }
