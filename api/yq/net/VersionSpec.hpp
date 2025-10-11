@@ -48,6 +48,7 @@ namespace yq {
     //! Constant for HTTP/1.1
     inline consteval VersionSpec    http11() { return { "HTTP", 1, 1 }; }
     
+    //! Compares two version specs for case insensitive "similarness" (ie, http vs HTTP will return true)
     bool                    is_similar(const VersionSpec& a, const VersionSpec& b);
     VersionSpec             to_version_spec(std::string_view);
     VersionSpec             to_version_spec(const char*, size_t);
