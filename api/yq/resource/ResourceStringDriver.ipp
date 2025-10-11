@@ -23,11 +23,11 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceStringInfoer::info(const std::filesystem::path& fp, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceStringInfoer::info(const std::filesystem::path& fp, const ResourceInfoAPI&api) const 
     {
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         std::string   str   = file_string(fp);
@@ -45,11 +45,11 @@ namespace yq {
     {
     }
 
-    Resource* ResourceStringLoader::load(const std::filesystem::path& fp, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceStringLoader::load(const std::filesystem::path& fp, const ResourceLoadAPI& api) const
     {
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         std::string   str   = file_string(fp);

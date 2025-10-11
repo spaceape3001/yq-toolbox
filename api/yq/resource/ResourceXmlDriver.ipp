@@ -26,7 +26,7 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceXmlInfoer::info(const std::string& file, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceXmlInfoer::info(const std::string& file, const ResourceInfoAPI&api) const 
     {
         std::string     buffer = file;
         XmlDocument     doc;
@@ -52,7 +52,7 @@ namespace yq {
     {
     }
 
-    Resource* ResourceXmlLoader::load(const std::string& file, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceXmlLoader::load(const std::string& file, const ResourceLoadAPI& api) const
     {
         std::string     buffer = file;
         XmlDocument     doc;

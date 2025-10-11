@@ -32,14 +32,14 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceKVDocumentInfoer::info(const ByteArray& file, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceKVDocumentInfoer::info(const ByteArray& file, const ResourceInfoAPI&api) const 
     {
         KVDocument      doc;
             
             // which will be boolean until key-values return std::error_code
         auto ret    = doc.parse(file.as_view(), api.spec(), m_options);
         if(ret.ec != std::error_code()) [[unlikely]]
-            return nullptr;
+            return {};
         doc.body    = std::move(ret.body);
         return info(doc, api);
     }
@@ -57,14 +57,14 @@ namespace yq {
     {
     }
 
-    Resource* ResourceKVDocumentLoader::load(const ByteArray& file, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceKVDocumentLoader::load(const ByteArray& file, const ResourceLoadAPI& api) const
     {
         KVDocument      doc;
             
             // which will be boolean until key-values return std::error_code
         auto ret    = doc.parse(file.as_view(), api.spec(), m_options);
         if(ret.ec != std::error_code()) [[unlikely]]
-            return nullptr;
+            return {};
         doc.body    = std::move(ret.body);
         return load(doc, api);
     }

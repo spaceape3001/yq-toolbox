@@ -115,7 +115,7 @@ namespace yq {
             return {};
         }
 
-        ResourceCPtr ret;
+        ResourcePtr ret;
 
         for(auto& itr : as_iterable(_r.loaders.equal_range(std::string(ext)))){
             const ResourceLoader* ld    = itr.second;

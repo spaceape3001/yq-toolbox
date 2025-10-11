@@ -24,7 +24,7 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceJsonInfoer::info(const std::string& file, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceJsonInfoer::info(const std::string& file, const ResourceInfoAPI&api) const 
     {
         json        j;
         try {
@@ -33,7 +33,7 @@ namespace yq {
         catch(...)
         {
             resourceError << "Unable to parse json: " << to_string(api.url());
-            return nullptr;
+            return {};
         }
         
         return info(j, api);
@@ -50,7 +50,7 @@ namespace yq {
     {
     }
 
-    Resource* ResourceJsonLoader::load(const std::string& file, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceJsonLoader::load(const std::string& file, const ResourceLoadAPI& api) const
     {
         json        j;
         try {
@@ -59,7 +59,7 @@ namespace yq {
         catch(...)
         {
             resourceError << "Unable to parse json: " << to_string(api.url());
-            return nullptr;
+            return {};
         }
         
         return load(j, api);

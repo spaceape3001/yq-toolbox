@@ -24,7 +24,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(std::istream& file, const ResourceInfoAPI& api) const override
+        ResourceInfoPtr info(std::istream& file, const ResourceInfoAPI& api) const override
         {
             return m_function(file, api);
         }
@@ -47,7 +47,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(std::istream& file, const ResourceInfoAPI&) const override
+        ResourceInfoPtr info(std::istream& file, const ResourceInfoAPI&) const override
         {
             return m_function(file);
         }
@@ -70,7 +70,7 @@ namespace yq {
         {
         }
 
-        Resource* load(std::istream& file, const ResourceLoadAPI& api) const override
+        ResourcePtr load(std::istream& file, const ResourceLoadAPI& api) const override
         {
             return m_function(file, api);
         }
@@ -93,7 +93,7 @@ namespace yq {
         {
         }
 
-        Resource* info(std::istream& file, const ResourceLoadAPI&) const override
+        ResourcePtr info(std::istream& file, const ResourceLoadAPI&) const override
         {
             return m_function(file);
         }

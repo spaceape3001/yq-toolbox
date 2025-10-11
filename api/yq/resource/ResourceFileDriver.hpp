@@ -12,8 +12,8 @@ namespace yq {
     class ResourceFileInfoer : public ResourceInfoer {
     public:
     
-        virtual ResourceInfo* info(const UrlView&, const ResourceInfoAPI&) const override final;
-        virtual ResourceInfo* info(const std::filesystem::path&, const ResourceInfoAPI&) const = 0;
+        virtual ResourceInfoPtr info(const UrlView&, const ResourceInfoAPI&) const override final;
+        virtual ResourceInfoPtr info(const std::filesystem::path&, const ResourceInfoAPI&) const = 0;
         
     protected:
         ResourceFileInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
@@ -23,8 +23,8 @@ namespace yq {
     class ResourceFileLoader : public ResourceLoader {
     public:
     
-        virtual Resource* load(const UrlView&, const ResourceLoadAPI&) const override final;
-        virtual Resource* load(const std::filesystem::path&, const ResourceLoadAPI&) const = 0;
+        virtual ResourcePtr load(const UrlView&, const ResourceLoadAPI&) const override final;
+        virtual ResourcePtr load(const std::filesystem::path&, const ResourceLoadAPI&) const = 0;
         
     protected:
         ResourceFileLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);

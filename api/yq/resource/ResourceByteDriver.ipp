@@ -24,11 +24,11 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceByteInfoer::info(const std::filesystem::path& fp, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceByteInfoer::info(const std::filesystem::path& fp, const ResourceInfoAPI&api) const 
     {
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         ByteArray   bytes   = file_bytes(fp);
@@ -46,11 +46,11 @@ namespace yq {
     {
     }
 
-    Resource* ResourceByteLoader::load(const std::filesystem::path& fp, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceByteLoader::load(const std::filesystem::path& fp, const ResourceLoadAPI& api) const
     {
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         ByteArray   bytes   = file_bytes(fp);

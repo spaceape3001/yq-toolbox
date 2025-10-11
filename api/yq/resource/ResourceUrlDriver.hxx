@@ -24,7 +24,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(const UrlView& url, const ResourceInfoAPI& api) const override
+        ResourceInfoPtr info(const UrlView& url, const ResourceInfoAPI& api) const override
         {
             return m_function(url, api);
         }
@@ -47,7 +47,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(const UrlView& url, const ResourceInfoAPI&) const override
+        ResourceInfoPtr info(const UrlView& url, const ResourceInfoAPI&) const override
         {
             return m_function(url);
         }
@@ -70,7 +70,7 @@ namespace yq {
         {
         }
 
-        Resource* load(const UrlView& url, const ResourceLoadAPI& api) const override
+        ResourcePtr load(const UrlView& url, const ResourceLoadAPI& api) const override
         {
             return m_function(url, api);
         }
@@ -93,7 +93,7 @@ namespace yq {
         {
         }
 
-        Resource* info(const UrlView& url, const ResourceLoadAPI&) const override
+        ResourcePtr info(const UrlView& url, const ResourceLoadAPI&) const override
         {
             return m_function(url);
         }

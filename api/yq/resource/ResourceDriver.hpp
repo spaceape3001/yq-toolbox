@@ -49,7 +49,7 @@ namespace yq {
     class ResourceInfoer : public ResourceDriver {
     public:
 
-        virtual ResourceInfo* info(const UrlView&, const ResourceInfoAPI&) const = 0;
+        virtual ResourceInfoPtr info(const UrlView&, const ResourceInfoAPI&) const = 0;
 
     protected:
         friend class Resource;
@@ -61,7 +61,7 @@ namespace yq {
     class ResourceLoader : public ResourceDriver {
     public:
 
-        virtual Resource* load(const UrlView&, const ResourceLoadAPI&) const = 0;
+        virtual ResourcePtr load(const UrlView&, const ResourceLoadAPI&) const = 0;
 
     protected:
         friend class Resource;

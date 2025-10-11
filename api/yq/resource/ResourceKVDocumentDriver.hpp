@@ -13,8 +13,8 @@ namespace yq {
     public:
     
         using ResourceByteInfoer::info;
-        virtual ResourceInfo* info(const ByteArray&, const ResourceInfoAPI&) const override final;
-        virtual ResourceInfo* info(const KVDocument&, const ResourceInfoAPI&) const = 0;
+        virtual ResourceInfoPtr info(const ByteArray&, const ResourceInfoAPI&) const override final;
+        virtual ResourceInfoPtr info(const KVDocument&, const ResourceInfoAPI&) const = 0;
         
     protected:
         ResourceKVDocumentInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
@@ -28,8 +28,8 @@ namespace yq {
     public:
 
         using ResourceByteLoader::load;
-        virtual Resource* load(const ByteArray&, const ResourceLoadAPI&) const override final;
-        virtual Resource* load(const KVDocument&, const ResourceLoadAPI&) const = 0;
+        virtual ResourcePtr load(const ByteArray&, const ResourceLoadAPI&) const override final;
+        virtual ResourcePtr load(const KVDocument&, const ResourceLoadAPI&) const = 0;
         
     protected:
         ResourceKVDocumentLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);

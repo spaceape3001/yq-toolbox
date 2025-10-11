@@ -32,14 +32,14 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceKVTreeInfoer::info(const ByteArray& file, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceKVTreeInfoer::info(const ByteArray& file, const ResourceInfoAPI&api) const 
     {
         KVTree      doc;
             
             // which will be boolean until key-values return std::error_code
         auto ret    = doc.parse(file.as_view(), api.spec(), m_options);
         if(ret.ec != std::error_code()) [[unlikely]]
-            return nullptr;
+            return {};
         return info(doc, api);
     }
 
@@ -56,14 +56,14 @@ namespace yq {
     {
     }
 
-    Resource* ResourceKVTreeLoader::load(const ByteArray& file, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceKVTreeLoader::load(const ByteArray& file, const ResourceLoadAPI& api) const
     {
         KVTree      doc;
             
             // which will be boolean until key-values return std::error_code
         auto ret    = doc.parse(file.as_view(), api.spec(), m_options);
         if(ret.ec != std::error_code()) [[unlikely]]
-            return nullptr;
+            return {};
         return load(doc, api);
     }
 

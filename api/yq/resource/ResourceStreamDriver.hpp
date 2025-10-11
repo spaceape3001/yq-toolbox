@@ -14,8 +14,8 @@ namespace yq {
     public:
     
         using ResourceFileInfoer::info;
-        virtual ResourceInfo* info(const std::filesystem::path&, const ResourceInfoAPI&) const override final;
-        virtual ResourceInfo* info(std::istream&, const ResourceInfoAPI&) const = 0;
+        virtual ResourceInfoPtr info(const std::filesystem::path&, const ResourceInfoAPI&) const override final;
+        virtual ResourceInfoPtr info(std::istream&, const ResourceInfoAPI&) const = 0;
         
     protected:
         ResourceStreamInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
@@ -29,8 +29,8 @@ namespace yq {
     public:
 
         using ResourceFileLoader::load;
-        virtual Resource* load(const std::filesystem::path&, const ResourceLoadAPI&) const override final;
-        virtual Resource* load(std::istream&, const ResourceLoadAPI&) const = 0;
+        virtual ResourcePtr load(const std::filesystem::path&, const ResourceLoadAPI&) const override final;
+        virtual ResourcePtr load(std::istream&, const ResourceLoadAPI&) const = 0;
         
     protected:
         ResourceStreamLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);

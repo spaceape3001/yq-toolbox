@@ -22,7 +22,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(const XmlDocument& file, const ResourceInfoAPI& api) const override
+        ResourceInfoPtr info(const XmlDocument& file, const ResourceInfoAPI& api) const override
         {
             return m_function(file, api);
         }
@@ -43,7 +43,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(const XmlDocument& file, const ResourceInfoAPI&) const override
+        ResourceInfoPtr info(const XmlDocument& file, const ResourceInfoAPI&) const override
         {
             return m_function(file);
         }
@@ -64,7 +64,7 @@ namespace yq {
         {
         }
 
-        Resource* load(const XmlDocument& file, const ResourceLoadAPI& api) const override
+        ResourcePtr load(const XmlDocument& file, const ResourceLoadAPI& api) const override
         {
             return m_function(file, api);
         }
@@ -85,7 +85,7 @@ namespace yq {
         {
         }
 
-        Resource* load(const XmlDocument& file, const ResourceLoadAPI&) const override
+        ResourcePtr load(const XmlDocument& file, const ResourceLoadAPI&) const override
         {
             return m_function(file);
         }

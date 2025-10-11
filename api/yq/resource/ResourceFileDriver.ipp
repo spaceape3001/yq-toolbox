@@ -26,17 +26,17 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceFileInfoer::info(const UrlView&url, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceFileInfoer::info(const UrlView&url, const ResourceInfoAPI&api) const 
     {
         if(url.path.empty()){
             resourceWarning << "URL from " << api.spec() << " has no path!";
-            return nullptr;
+            return {};
         }
         
         std::filesystem::path fp(url.path);
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         return info(fp, api);
@@ -53,17 +53,17 @@ namespace yq {
     {
     }
 
-    Resource* ResourceFileLoader::load(const UrlView& url, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceFileLoader::load(const UrlView& url, const ResourceLoadAPI& api) const
     {
         if(url.path.empty()){
             resourceWarning << "URL '" << to_string(api.url()) << "' has no path!";
-            return nullptr;
+            return {};
         }
         
         std::filesystem::path fp(url.path);
         if(!file_exists(fp)){
             resourceWarning << "URL '" << to_string(api.url()) << "' does not exist!";
-            return nullptr;
+            return {};
         }
         
         return load(fp, api);

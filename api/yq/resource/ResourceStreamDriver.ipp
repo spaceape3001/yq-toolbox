@@ -24,11 +24,11 @@ namespace yq {
     {
     }
     
-    ResourceInfo* ResourceStreamInfoer::info(const std::filesystem::path& fp, const ResourceInfoAPI&api) const 
+    ResourceInfoPtr ResourceStreamInfoer::info(const std::filesystem::path& fp, const ResourceInfoAPI&api) const 
     {
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         std::ios_base::openmode     mode    = std::ios_base::in;
@@ -38,7 +38,7 @@ namespace yq {
         std::ifstream   fin(fp, mode);
         if(!fin){
             resourceWarning << "Unable to open " << fp << " for reading.";
-            return nullptr;
+            return {};
         }
         
         return info(fin, api);
@@ -55,11 +55,11 @@ namespace yq {
     {
     }
 
-    Resource* ResourceStreamLoader::load(const std::filesystem::path& fp, const ResourceLoadAPI& api) const
+    ResourcePtr ResourceStreamLoader::load(const std::filesystem::path& fp, const ResourceLoadAPI& api) const
     {
         if(!file_exists(fp)){
             resourceWarning << "URL's file from " << api.spec() << " does not exist!";
-            return nullptr;
+            return {};
         }
         
         std::ios_base::openmode     mode    = std::ios_base::in;
@@ -69,7 +69,7 @@ namespace yq {
         std::ifstream   fin(fp, mode);
         if(!fin){
             resourceWarning << "Unable to open " << fp << " for reading.";
-            return nullptr;
+            return {};
         }
 
         return load(fin, api);
