@@ -41,7 +41,7 @@ namespace yq {
     {
         if(!ap)
             return;
-            
+
         Url u2  = url();
         if(k.empty()){
             // create a name
@@ -52,15 +52,28 @@ namespace yq {
         }
         ap->m_url   = u2;
         m_resources[u2.fragment] = (ResourceCPtr) ap;
+        post_add(k,ap);
     }
-        
+
 
     bool        ResourceLibrary::contains(const std::string&k) const
     {
         return m_resources.contains(k);
     }
 
+    size_t         ResourceLibrary::data_size() const
+    {
+        size_t  cnt = 0;
+        for(auto& itr : m_resources)
+            if(itr.second)
+                cnt += itr.second -> data_size();
+        return cnt;
+    }
 
+    void        ResourceLibrary::post_add(std::string_view k, ResourcePtr ap)
+    {
+    }
+        
     ResourceCPtr   ResourceLibrary::resource(const std::string& k) const
     {
         auto x = m_resources.find(k);

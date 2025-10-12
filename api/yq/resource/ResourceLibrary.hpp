@@ -49,10 +49,14 @@ namespace yq {
     
         ResourceLibrary();
 
+        size_t                  data_size() const;
+
     protected:
         friend class Resource;
         
         virtual ~ResourceLibrary();
+        
+        virtual void    post_add(std::string_view, ResourcePtr);
         
         std::map<std::string,ResourceCPtr,IgCase>   m_resources;
     };
