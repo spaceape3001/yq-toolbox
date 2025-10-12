@@ -34,50 +34,48 @@ namespace yq {
 
     void        ResourceLibrary::add(ResourcePtr ap)
     {
-        add({}, ap);
-    }
-
-    void        ResourceLibrary::add(std::string_view k, ResourcePtr ap)
-    {
         if(!ap)
             return;
 
-        Url u2  = url();
-        if(k.empty()){
-            // create a name
-            for(size_t i = m_resources.size()+1; m_resources.contains( u2.fragment = to_string(i)); ++i)
+        if(ap->m_name.empty()){
+            std::string_view    tn  = ap->metaInfo().stem();
+            for(size_t i = 1; m_byName.contains(ap->m_name = std::format("{}_{}", tn, i)); ++i)
                 ;
-        } else {
-            u2.fragment = std::string(k);
         }
-        ap->m_url   = u2;
-        m_resources[u2.fragment] = (ResourceCPtr) ap;
-        post_add(k,ap);
+
+        if(ap->url().empty()){
+            Url u2      = url();
+            u2.fragment = ap->m_name;
+            ap->m_url   = u2;
+        }
+        m_byName[ap->m_name] = (ResourceCPtr) ap;
+        m_resources.push_back(ap);
+        post_add(ap);
     }
 
 
     bool        ResourceLibrary::contains(const std::string&k) const
     {
-        return m_resources.contains(k);
+        return m_byName.contains(k);
     }
 
     size_t         ResourceLibrary::data_size() const
     {
         size_t  cnt = 0;
         for(auto& itr : m_resources)
-            if(itr.second)
-                cnt += itr.second -> data_size();
+            if(itr)
+                cnt += itr->data_size();
         return cnt;
     }
 
-    void        ResourceLibrary::post_add(std::string_view k, ResourcePtr ap)
+    void        ResourceLibrary::post_add(ResourcePtr ap)
     {
     }
         
     ResourceCPtr   ResourceLibrary::resource(const std::string& k) const
     {
-        auto x = m_resources.find(k);
-        if(x == m_resources.end())
+        auto x = m_byName.find(k);
+        if(x == m_byName.end())
             return {};
         return x->second;
     }

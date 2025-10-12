@@ -216,7 +216,8 @@ namespace yq {
         //! Saves data to native binary format (whatever that is)
         //virtual bool        save_binary(const std::filesystem::path&) const = 0;
         
-        
+        //! User supplied "name"
+        std::string_view                name() const { return m_name; }
         
         //! Resolve the given string to a filename (fully spec'd from the root)
         //! \note This is the preference to use as this will have the best performance (ie... no recursive iterator)
@@ -257,6 +258,8 @@ namespace yq {
         void    set_url(const std::filesystem::path&);
         void    set_url(const UrlView&);
         
+        void    set_name(std::string_view);
+        
     
         //  INFO... TODO
         //  LIBRARY (somewhat TODO)
@@ -274,6 +277,7 @@ namespace yq {
     private:
         Url                             m_url;      // URL
         bool                            m_readonly  = false;
+        std::string                     m_name;
         
         struct Cache;
         static Cache&   cache();

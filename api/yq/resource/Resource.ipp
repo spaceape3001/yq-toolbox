@@ -85,15 +85,15 @@ namespace yq {
 
         if(ResourceLibrary* lib = dynamic_cast<ResourceLibrary*>(ass)){
             for(auto& itr : lib->m_resources){
-                if(!itr.second)
+                if(!itr)
                     continue;
                     
-                Resource* ass2             = const_cast<Resource*>(itr.second.ptr());
+                Resource* ass2             = const_cast<Resource*>(itr.ptr());
                 ass2->m_url             = api.m_url;
-                ass2->m_url.fragment    = std::string(itr.first);
+                ass2->m_url.fragment    = ass->name();
                 if(api.m_options.cache != Tristate::NO){
                     ass2 -> m_readonly   = true;
-                    _c.inject(itr.second);
+                    _c.inject(itr);
                 }
             }
         }
@@ -566,6 +566,13 @@ namespace yq {
         ResourceSaveAPI    api(options);
         api.m_url      = copy(url);
         return _save(*this, api);
+    }
+
+    void Resource::set_name(std::string_view z)
+    {
+        if(m_readonly)
+            return;
+        m_name  = std::string(z);
     }
 
     void Resource::set_url(const std::filesystem::path&fp) 

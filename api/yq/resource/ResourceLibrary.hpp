@@ -43,8 +43,8 @@ namespace yq {
         static void init_meta();
         
         ResourceCPtr   resource(const std::string&) const;
+        const auto&     resources() const { return m_resources; }
         
-        void            add(std::string_view, ResourcePtr);
         void            add(ResourcePtr);
     
         ResourceLibrary();
@@ -56,8 +56,9 @@ namespace yq {
         
         virtual ~ResourceLibrary();
         
-        virtual void    post_add(std::string_view, ResourcePtr);
+        virtual void    post_add(ResourcePtr);
         
-        std::map<std::string,ResourceCPtr,IgCase>   m_resources;
+        std::map<std::string,ResourceCPtr,IgCase>   m_byName;
+        std::vector<ResourceCPtr>                   m_resources;
     };
 }
