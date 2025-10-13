@@ -54,6 +54,9 @@ namespace yq {
     //! Parses the string to make a version spec
     //! \note The string needs to stay alive
     VersionSpec             to_version_spec(std::string_view);
+
+    //! Parses the string to make a version spec
+    //! \note The string needs to stay alive
     VersionSpec             to_version_spec(const char*, size_t);
     
     class Stream;
