@@ -22,7 +22,6 @@ add_library(yq_math SHARED
     coord/LatLonAlt.cpp
     coord/LatLon.cpp
     coord/Polar2.cpp
-    coord/earthcoords.cpp
 
     math/Complex.cpp
     math/Counter.cpp

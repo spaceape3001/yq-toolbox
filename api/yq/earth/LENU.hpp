@@ -25,3 +25,17 @@ namespace yq {
         using keyword_t     = lenu_k;
     };
 }
+
+YQ_TYPE_DECLARE(yq::LENUAcceleration)
+YQ_TYPE_DECLARE(yq::LENUAngularAcceleration)
+YQ_TYPE_DECLARE(yq::LENUAngularVelocity)
+YQ_TYPE_DECLARE(yq::LENUDisplacement)
+YQ_TYPE_DECLARE(yq::LENUForce)
+YQ_TYPE_DECLARE(yq::LENUOrientation)
+YQ_TYPE_DECLARE(yq::LENUPosition)
+YQ_TYPE_DECLARE(yq::LENURotation)
+YQ_TYPE_DECLARE(yq::LENUTensor)
+YQ_TYPE_DECLARE(yq::LENUVector)
+YQ_TYPE_DECLARE(yq::LENUVelocity)
+
+

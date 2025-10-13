@@ -11,6 +11,7 @@
 #include <yq/coord/DPosition.hpp>
 #include <yq/coord/DTensor.hpp>
 #include <yq/coord/DVector.hpp>
+#include <yq/tensor/Tensor33.hpp>
 #include <yq/typedef/bnsd.hpp>
 
 namespace yq {
@@ -25,3 +26,17 @@ namespace yq {
         using keyword_t     = ecef_k;
     };
 }
+
+YQ_TYPE_DECLARE(yq::BNSDAcceleration)
+YQ_TYPE_DECLARE(yq::BNSDAngularAcceleration)
+YQ_TYPE_DECLARE(yq::BNSDAngularVelocity)
+YQ_TYPE_DECLARE(yq::BNSDDisplacement)
+YQ_TYPE_DECLARE(yq::BNSDForce)
+YQ_TYPE_DECLARE(yq::BNSDOrientation)
+YQ_TYPE_DECLARE(yq::BNSDPosition)
+YQ_TYPE_DECLARE(yq::BNSDRotation)
+YQ_TYPE_DECLARE(yq::BNSDTensor)
+YQ_TYPE_DECLARE(yq::BNSDVector)
+YQ_TYPE_DECLARE(yq::BNSDVelocity)
+
+

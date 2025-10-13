@@ -4,11 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "BNSD.hpp"
-#include "BSNU.hpp"
-#include "ECEF.hpp"
-#include "ECI.hpp"
-#include "LENU.hpp"
-#include "LNED.hpp"
-#include "TENU.hpp"
-#include "TNED.hpp"
+#pragma once
+
+#include <yq/coord/DPosition.hpp>
+#include <yq/typedef/bnsd.hpp>
+#include <yq/unit/MKS.hpp>
+#include <yq/vector/Vector3.hpp>
+
+YQ_TYPE_DECLARE(yq::BNSDPosition)

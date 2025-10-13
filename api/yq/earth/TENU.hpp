@@ -24,3 +24,17 @@ namespace yq {
         using keyword_t     = tenu_k;
     };
 }
+
+YQ_TYPE_DECLARE(yq::TENUAcceleration)
+YQ_TYPE_DECLARE(yq::TENUAngularAcceleration)
+YQ_TYPE_DECLARE(yq::TENUAngularVelocity)
+YQ_TYPE_DECLARE(yq::TENUDisplacement)
+YQ_TYPE_DECLARE(yq::TENUForce)
+YQ_TYPE_DECLARE(yq::TENUOrientation)
+YQ_TYPE_DECLARE(yq::TENUPosition)
+YQ_TYPE_DECLARE(yq::TENURotation)
+YQ_TYPE_DECLARE(yq::TENUTensor)
+YQ_TYPE_DECLARE(yq::TENUVector)
+YQ_TYPE_DECLARE(yq::TENUVelocity)
+
+

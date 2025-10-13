@@ -11,6 +11,7 @@
 #include <yq/coord/DPosition.hpp>
 #include <yq/coord/DTensor.hpp>
 #include <yq/coord/DVector.hpp>
+#include <yq/tensor/Tensor33.hpp>
 #include <yq/typedef/bsnu.hpp>
 
 namespace yq {
@@ -26,3 +27,17 @@ namespace yq {
         
     };
 }
+
+YQ_TYPE_DECLARE(yq::BSNUAcceleration)
+YQ_TYPE_DECLARE(yq::BSNUAngularAcceleration)
+YQ_TYPE_DECLARE(yq::BSNUAngularVelocity)
+YQ_TYPE_DECLARE(yq::BSNUDisplacement)
+YQ_TYPE_DECLARE(yq::BSNUForce)
+YQ_TYPE_DECLARE(yq::BSNUOrientation)
+YQ_TYPE_DECLARE(yq::BSNUPosition)
+YQ_TYPE_DECLARE(yq::BSNURotation)
+YQ_TYPE_DECLARE(yq::BSNUTensor)
+YQ_TYPE_DECLARE(yq::BSNUVector)
+YQ_TYPE_DECLARE(yq::BSNUVelocity)
+
+
