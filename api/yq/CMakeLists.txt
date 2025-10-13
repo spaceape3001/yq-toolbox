@@ -11,7 +11,6 @@ include(yq_core.cmake)
 #   FIRST STEP
 include(yq_date.cmake)
 include(yq_math.cmake)
-include(yq_earth.cmake)
 # include(yq_post.cmake)
 include(yq_file.cmake)
 include(yq_net.cmake)
