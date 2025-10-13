@@ -58,7 +58,9 @@ namespace yq {
     struct bigger_k {};
     struct biggest_k {};
     struct binary_k {};
+    struct bnsd_k {};
     struct box_k {};
+    struct bsnu_k {};
     struct cache_k {};
     struct calculate_k {};
     struct cancel_k {};
@@ -92,6 +94,8 @@ namespace yq {
     struct done_k {};
     struct down_k {};
     struct easter_t {};
+    struct ecef_k {};
+    struct eci_k {};
     struct edge_k {};
     struct ellipse_k {};
     struct empty_k {};
@@ -114,6 +118,7 @@ namespace yq {
     struct frequency_k {};
     struct full_k {};
     struct from_k {};
+    struct geo_k {};
     struct global_k {};
     struct graph_k {};
     struct gregorian_k {};
@@ -145,7 +150,9 @@ namespace yq {
     struct last_k {};
     struct layout_k {};
     struct left_k {};
+    struct lenu_k {};
     struct line_k {};
+    struct lned_k {};
     struct load_k {};
     struct local_k {};
     struct lock_k {};
@@ -254,11 +261,13 @@ namespace yq {
     struct stop_k {};
     struct stretch_k {};
     struct target_k {};
+    struct tenu_k {};
     struct thread_k {};
     struct three_k {};
     struct throw_k {};
     struct ticks_k {};
     struct timeout_k {};
+    struct tned_k {};
     struct triangle_k {};
     struct to_k {};
     struct today_k {};
@@ -345,7 +354,9 @@ namespace yq {
     static constexpr const bigger_k             BIGGER;
     static constexpr const biggest_k            BIGGEST;
     static constexpr const binary_k             BINARY;
+    static constexpr const bnsd_k               BNSD;
     static constexpr const box_k                BOX;
+    static constexpr const bsnu_k               BSNU;
     static constexpr const cache_k              CACHE;
     static constexpr const calculate_k          CALC, CALCULATE;
     static constexpr const cancel_k             CANCEL;
@@ -379,6 +390,8 @@ namespace yq {
     static constexpr const done_k               DONE;
     static constexpr const down_k               DOWN;
     static constexpr const easter_t             EASTER;
+    static constexpr const ecef_k               ECEF;
+    static constexpr const eci_k                ECI;
     static constexpr const edge_k               EDGE;
     static constexpr const ellipse_k            ELLIPSE;
     static constexpr const empty_k              EMPTY;
@@ -401,6 +414,7 @@ namespace yq {
     static constexpr const frequency_k          FREQUENCY;
     static constexpr const full_k               FULL;
     static constexpr const from_k               FROM;
+    static constexpr const geo_k                GEO;
     static constexpr const global_k             GLOBAL;
     static constexpr const graph_k              GRAPH;
     static constexpr const gregorian_k          GREGORIAN;
@@ -433,6 +447,8 @@ namespace yq {
     static constexpr const layout_k             LAYOUT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
+    static constexpr const lenu_k               LENU;
+    static constexpr const lned_k               LNED;
     static constexpr const load_k               LOAD;
     static constexpr const local_k              LOCAL;
     static constexpr const lock_k               LOCK;
@@ -546,11 +562,13 @@ namespace yq {
     static constexpr const stop_k               STOP;
     static constexpr const stretch_k            STRETCH;
     static constexpr const target_k             TARGET;
+    static constexpr const tenu_k               TENU;
     static constexpr const thread_k             THREAD;
     static constexpr const three_k              THREE;
     static constexpr const throw_k              THROW;
     static constexpr const ticks_k              TICKS;
     static constexpr const timeout_k            TIMEOUT;
+    static constexpr const tned_k               TNED;
     static constexpr const to_k                 TO;
     static constexpr const today_k              TODAY;
     static constexpr const toggle_k             TOGGLE;
