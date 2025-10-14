@@ -6,25 +6,20 @@
 
 #pragma once
 
-#include "LENUTensor.hpp"
 
-YQ_TYPE_IMPLEMENT(yq::LENUTensor)
+#include "LENUForce.hpp"
+
+YQ_TYPE_IMPLEMENT(yq::LENUForce)
 
 namespace {
-    void    reg_LENUTensor()
+    void    reg_LENUForce()
     {
-        auto w = writer<LENUTensor>();
-        w.description("LENU Tensor");
-        w.property(szXX, &LENUTensor::xx);
-        w.property(szXY, &LENUTensor::xy);
-        w.property(szXZ, &LENUTensor::xz);
-        w.property(szYX, &LENUTensor::yx);
-        w.property(szYY, &LENUTensor::yy);
-        w.property(szYZ, &LENUTensor::yz);
-        w.property(szZX, &LENUTensor::zx);
-        w.property(szZY, &LENUTensor::zy);
-        w.property(szZZ, &LENUTensor::zz);
+        auto w = writer<LENUForce>();
+        w.description("LENU Force");
+        w.property(szX, &LENUForce::x);
+        w.property(szY, &LENUForce::y);
+        w.property(szZ, &LENUForce::z);
     }
     
-    YQ_INVOKE(reg_LENUTensor();)
+    YQ_INVOKE(reg_LENUForce();)
 }

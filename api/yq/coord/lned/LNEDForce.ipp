@@ -6,25 +6,19 @@
 
 #pragma once
 
-#include "LNEDTensor.hpp"
+#include "LNEDForce.hpp"
 
-YQ_TYPE_IMPLEMENT(yq::LNEDTensor)
+YQ_TYPE_IMPLEMENT(yq::LNEDForce)
 
 namespace {
-    void    reg_LNEDTensor()
+    void    reg_LNEDForce()
     {
-        auto w = writer<LNEDTensor>();
-        w.description("LNED Tensor");
-        w.property(szXX, &LNEDTensor::xx);
-        w.property(szXY, &LNEDTensor::xy);
-        w.property(szXZ, &LNEDTensor::xz);
-        w.property(szYX, &LNEDTensor::yx);
-        w.property(szYY, &LNEDTensor::yy);
-        w.property(szYZ, &LNEDTensor::yz);
-        w.property(szZX, &LNEDTensor::zx);
-        w.property(szZY, &LNEDTensor::zy);
-        w.property(szZZ, &LNEDTensor::zz);
+        auto w = writer<LNEDForce>();
+        w.description("LNED Force");
+        w.property(szX, &LNEDForce::x);
+        w.property(szY, &LNEDForce::y);
+        w.property(szZ, &LNEDForce::z);
     }
     
-    YQ_INVOKE(reg_LNEDTensor();)
+    YQ_INVOKE(reg_LNEDForce();)
 }

@@ -6,25 +6,19 @@
 
 #pragma once
 
-#include "TENUTensor.hpp"
+#include "TENUForce.hpp"
 
-YQ_TYPE_IMPLEMENT(yq::TENUTensor)
+YQ_TYPE_IMPLEMENT(yq::TENUForce)
 
 namespace {
-    void    reg_TENUTensor()
+    void    reg_TENUForce()
     {
-        auto w = writer<TENUTensor>();
-        w.description("TENU Tensor");
-        w.property(szXX, &TENUTensor::xx);
-        w.property(szXY, &TENUTensor::xy);
-        w.property(szXZ, &TENUTensor::xz);
-        w.property(szYX, &TENUTensor::yx);
-        w.property(szYY, &TENUTensor::yy);
-        w.property(szYZ, &TENUTensor::yz);
-        w.property(szZX, &TENUTensor::zx);
-        w.property(szZY, &TENUTensor::zy);
-        w.property(szZZ, &TENUTensor::zz);
+        auto w = writer<TENUForce>();
+        w.description("TENU Force");
+        w.property(szX, &TENUForce::x);
+        w.property(szY, &TENUForce::y);
+        w.property(szZ, &TENUForce::z);
     }
     
-    YQ_INVOKE(reg_TENUTensor();)
+    YQ_INVOKE(reg_TENUForce();)
 }
