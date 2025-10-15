@@ -68,6 +68,9 @@ namespace yq {
     //! Streams a version spec to our stream
     //! (Needed as the generic streamer doesn't seem to work)
     Stream& operator<<(Stream&, const VersionSpec&);
+
+    //! Streams a version spec to the logger
+    //! (Needed as the generic streamer doesn't seem to work)
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const VersionSpec&);
     
     template <typename S>
