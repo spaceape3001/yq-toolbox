@@ -102,6 +102,7 @@ namespace yq {
     struct enable_k {};
     struct enabled_k {};
     struct end_k {};
+    struct enu_k {};
     struct erasable_k {};
     struct erase_k {};
     struct error_k {};
@@ -174,6 +175,7 @@ namespace yq {
         consteval operator double() const noexcept { return std::numeric_limits<double>::quiet_NaN(); }
     };
     struct nearest_k {};
+    struct ned_k {};
     struct negative_k {};
     struct nested_k {};
     struct next_k {};
@@ -210,6 +212,7 @@ namespace yq {
     struct property_k {};
     struct pull_k {};
     struct push_k {};
+    struct quaternion_k {};
     struct queue_k {};
     struct raw_k {};
     struct read_k {};
@@ -261,6 +264,7 @@ namespace yq {
     struct stop_k {};
     struct stretch_k {};
     struct target_k {};
+    struct tensor_k {};
     struct tenu_k {};
     struct thread_k {};
     struct three_k {};
@@ -293,6 +297,7 @@ namespace yq {
     struct valid_k {};
     struct value_k {};
     struct variable_k {};
+    struct vector_k {};
     struct vertex_k {};
     struct vertical_k {};
     struct visible_k {};
@@ -398,6 +403,7 @@ namespace yq {
     static constexpr const enable_k             ENABLE;
     static constexpr const enabled_k            ENABLED;
     static constexpr const end_k                END;
+    static constexpr const enu_k                ENU;
     static constexpr const erasable_k           ERASABLE;
     static constexpr const erase_k              ERASE;
     static constexpr const error_k              ERROR;
@@ -471,6 +477,7 @@ namespace yq {
     static constexpr const n_k                  N;
     static constexpr const nan_k                NAN;
     static constexpr const nearest_k            NEAREST;
+    static constexpr const ned_k                NED;
     static constexpr const negative_k           NEGATIVE;
     static constexpr const nested_k             NESTED;
     static constexpr const next_k               NEXT;
@@ -512,6 +519,7 @@ namespace yq {
     static constexpr const property_k           PROPERTY;
     static constexpr const pull_k               PULL;
     static constexpr const push_k               PUSH;
+    static constexpr const quaternion_k         QUAT, QUATERNION;
     static constexpr const queue_k              QUEUE;
     static constexpr const raw_k                RAW;
     static constexpr const read_k               READ;
@@ -562,6 +570,7 @@ namespace yq {
     static constexpr const stop_k               STOP;
     static constexpr const stretch_k            STRETCH;
     static constexpr const target_k             TARGET;
+    static constexpr const tensor_k             TENSOR;
     static constexpr const tenu_k               TENU;
     static constexpr const thread_k             THREAD;
     static constexpr const three_k              THREE;
@@ -594,6 +603,7 @@ namespace yq {
     static constexpr const valid_k              VALID;
     static constexpr const value_k              VALUE;
     static constexpr const variable_k           VARIABLE;
+    static constexpr const vector_k             VECTOR;
     static constexpr const vertex_k             VERTEX;
     static constexpr const vertical_k           VERTICAL, VERT;
     static constexpr const visible_k            VISIBLE;
