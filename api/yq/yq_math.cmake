@@ -24,9 +24,11 @@ add_library(yq_math SHARED
     coord/Polar2.cpp
     coord/earthcoords.cpp
 
-    earth/GeoEllipsoid.cpp
-    earth/GeoModel.cpp
-    earth/GeoSpheroid.cpp
+    earth/wgs84.cpp
+    
+    earth/model/GeoENU.cpp
+    earth/model/GeoModel.cpp
+    #earth/model/GeoSpheroid.cpp
 
     math/Complex.cpp
     math/Counter.cpp

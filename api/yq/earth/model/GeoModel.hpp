@@ -44,6 +44,8 @@ namespace yq {
 
 
     /*! \brief Geodetic Model (ie, a planet, moon, etc)
+    
+        This represents the general shape, mapping out coordinates in position/geodetic fashion
     */
     class GeoModel : public Object {
         YQ_OBJECT_DECLARE(GeoModel, Object)
@@ -113,11 +115,13 @@ namespace yq {
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&, unit::Meter) const;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const ECEFPosition&) const;
     
+        //! Rotation tensor for a reference frame to ECEF ( equivalent to columns(east(),north(),up()) )
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&, unit::Meter) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic3RM&) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const ECEFPosition&) const;
 
+        //! Rotation tensor for a reference frame to ECEF ( equivalent to columns(north(),east(),down()) )
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&) const;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&, unit::Meter) const;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic3RM&) const;
