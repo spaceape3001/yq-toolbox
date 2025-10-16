@@ -14,8 +14,11 @@
 #include <yq/coord/ecef/ECEFTensor.hpp>
 #include <yq/coord/ecef/ECEFVector.hpp>
 #include <yq/math/trigonometry.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 #include <numbers>
+
+YQ_OBJECT_IMPLEMENT(yq::GeoNED)
 
 namespace yq {
     static constexpr const Tensor33D    kENUT{
@@ -25,6 +28,12 @@ namespace yq {
     };
 
     static const Quaternion3D           kENUQ    = quaternion(kENUT);
+
+    void GeoNED::init_meta()
+    {
+        auto w = writer<GeoNED>();
+        w.description("Flat Earth Model (North East Down)");
+    }
 
     GeoNED::GeoNED(const GeoNEDConfig& cfg) : m_center(cfg.center), m_gravity(cfg.gravity)
     {

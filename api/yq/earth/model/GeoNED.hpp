@@ -18,6 +18,7 @@ namespace yq {
     };
     
     class GeoNED : public GeoModel {
+        YQ_OBJECT_DECLARE(GeoNED, GeoModel)
     public:
         GeoNED(const GeoNEDConfig& cfg = {});
         ~GeoNED();
@@ -92,6 +93,8 @@ namespace yq {
         virtual ECEFVector                  west(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  west(const Geodetic3RM&) const override;
         virtual ECEFVector                  west(const ECEFPosition&) const override;
+
+        static void init_meta();
 
     private:
         Geodetic2R                          m_center;

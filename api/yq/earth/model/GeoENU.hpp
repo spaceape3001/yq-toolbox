@@ -18,6 +18,7 @@ namespace yq {
     };
     
     class GeoENU : public GeoModel {
+        YQ_OBJECT_DECLARE(GeoENU, GeoModel)
     public:
         GeoENU(const GeoENUConfig& cfg = {});
         ~GeoENU();
@@ -92,6 +93,8 @@ namespace yq {
         virtual ECEFVector                  west(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  west(const Geodetic3RM&) const override;
         virtual ECEFVector                  west(const ECEFPosition&) const override;
+        
+        static void init_meta();
 
     private:
         Geodetic2R                          m_center;
