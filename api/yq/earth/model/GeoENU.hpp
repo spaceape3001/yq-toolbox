@@ -54,20 +54,20 @@ namespace yq {
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const Geodetic3RM&) const override;
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const ECEFPosition&) const override;
 
-        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic3RM&) const;
-        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&) const;
-        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&, unit::Meter) const;
-        virtual Quaternion3D                orientation(quaternion_k, ned_k, const ECEFPosition&) const;
+        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic3RM&) const override;
+        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&) const override;
+        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&, unit::Meter) const override;
+        virtual Quaternion3D                orientation(quaternion_k, ned_k, const ECEFPosition&) const override;
     
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&) const override;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&, unit::Meter) const override;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic3RM&) const override;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const ECEFPosition&) const override;
 
-        virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&) const;
-        virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&, unit::Meter) const;
-        virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic3RM&) const;
-        virtual Tensor33D                   orientation(tensor_k, ned_k, const ECEFPosition&) const;
+        virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&) const override;
+        virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&, unit::Meter) const override;
+        virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic3RM&) const override;
+        virtual Tensor33D                   orientation(tensor_k, ned_k, const ECEFPosition&) const override;
     
         virtual ECEFPosition                position(const Geodetic3RM&) const override;
         virtual ECEFPosition                position(const Geodetic2R&) const override;

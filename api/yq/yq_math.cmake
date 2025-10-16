@@ -28,6 +28,7 @@ add_library(yq_math SHARED
     
     earth/model/GeoENU.cpp
     earth/model/GeoModel.cpp
+    earth/model/GeoNED.cpp
     #earth/model/GeoSpheroid.cpp
 
     math/Complex.cpp

@@ -330,7 +330,6 @@ namespace yq {
         return ECEFVector(Z, 1.);
     }
     
-        
     ECEFVector  GeoENU::west(const Geodetic2R&) const
     {
         return ECEFVector(X, -1.);
