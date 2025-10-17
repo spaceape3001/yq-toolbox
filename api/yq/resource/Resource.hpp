@@ -72,6 +72,8 @@ namespace yq {
         
     template <typename> class ResourceIO;
     
+    /*! \brief Used to declare driver information upon registration
+    */
     struct ResourceIOSpec {
         std::vector<std::string>        extensions;
         bool                            binary      = false;
