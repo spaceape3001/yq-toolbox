@@ -197,7 +197,7 @@ namespace yq {
         struct CacheStats {
         };
 
-
+        //! Indicates this resource is "read only", usually in the cache and shouldn't be modified (as it'll be thread unsafe to do so)
         bool                            read_only() const { return m_readonly; }
 
 
