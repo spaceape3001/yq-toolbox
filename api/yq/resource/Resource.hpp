@@ -203,7 +203,8 @@ namespace yq {
 
         //! Current data size
         virtual size_t                  data_size() const = 0;
-        
+
+        //! Original file "extension" for our resource
         std::string_view                extension() const;
         
         //! File Path part of the URL (here for compatibility, will be deprecated/removed)
