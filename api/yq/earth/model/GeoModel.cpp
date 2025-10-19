@@ -207,7 +207,7 @@ namespace yq {
 
     Tensor33D                   GeoModel::orientation(tensor_k, enu_k, const Geodetic3RM& geo) const
     {
-        return rows(east(geo), north(geo), up(geo));
+        return columns(east(geo), north(geo), up(geo));
     }
 
     Tensor33D                   GeoModel::orientation(tensor_k, enu_k, const ECEFPosition& ecef) const
@@ -227,7 +227,7 @@ namespace yq {
 
     Tensor33D                   GeoModel::orientation(tensor_k, ned_k, const Geodetic3RM& geo) const
     {
-        return rows(north(geo), east(geo), down(geo));
+        return columns(north(geo), east(geo), down(geo));
     }
 
     Tensor33D                   GeoModel::orientation(tensor_k, ned_k, const ECEFPosition&ecef) const

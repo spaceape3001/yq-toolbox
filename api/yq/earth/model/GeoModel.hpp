@@ -52,7 +52,7 @@ namespace yq {
     public:
 
         //! Altitude of the given position
-        virtual Meter                       altitude(const ECEFPosition&) const;
+        virtual unit::Meter                 altitude(const ECEFPosition&) const;
 
         virtual ECEFVector                  down(const Geodetic2R&) const;
         virtual ECEFVector                  down(const Geodetic2R&, unit::Meter) const;
@@ -110,18 +110,18 @@ namespace yq {
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const Geodetic3RM&) const;
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const ECEFPosition&) const;
 
-        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic3RM&) const;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&) const;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&, unit::Meter) const;
+        virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic3RM&) const;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const ECEFPosition&) const;
     
-        //! Rotation tensor for a reference frame to ECEF ( equivalent to columns(east(),north(),up()) )
+        //! Rotation tensor for a reference frame ENU to ECEF ( equivalent to columns(east(),north(),up()) )
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&, unit::Meter) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic3RM&) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const ECEFPosition&) const;
 
-        //! Rotation tensor for a reference frame to ECEF ( equivalent to columns(north(),east(),down()) )
+        //! Rotation tensor for a reference frame NED to ECEF ( equivalent to columns(north(),east(),down()) )
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&) const;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&, unit::Meter) const;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic3RM&) const;
@@ -137,10 +137,17 @@ namespace yq {
         //! Postition from a 2D geodetic & altitude
         virtual ECEFPosition                position(const Geodetic2R&, unit::Meter) const;
 
-        virtual Meter                       radius(const Geodetic2R&) const;
-        virtual Meter                       radius(const Geodetic2R&, unit::Meter) const;
-        virtual Meter                       radius(const Geodetic3RM&) const;
-        virtual Meter                       radius(const ECEFPosition&) const;
+        //! Earth radius at position
+        virtual unit::Meter                 radius(const Geodetic2R&) const;
+
+        //! Earth radius at position (altitude likely irrelevant, here for consistency)
+        virtual unit::Meter                 radius(const Geodetic2R&, unit::Meter) const;
+
+        //! Earth radius at position
+        virtual unit::Meter                 radius(const Geodetic3RM&) const;
+
+        //! Earth radius at position
+        virtual unit::Meter                 radius(const ECEFPosition&) const;
         
         virtual ECEFVector                  south(const Geodetic2R&) const;
         virtual ECEFVector                  south(const Geodetic2R&, unit::Meter) const;

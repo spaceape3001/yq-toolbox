@@ -18,6 +18,7 @@
 #include <yq/trait/ieee754.hpp>
 #include <yq/trait/is_arithmetic.hpp>
 #include <yq/trait/is_floating_point.hpp>
+#include <yq/trait/is_unit.hpp>
 #include <yq/trait/square.hpp>
 #include <cmath>
 #include <initializer_list>
@@ -70,7 +71,7 @@ namespace yq {
 
     template <typename T, typename R>
     requires is_arithmetic_v<T>
-    bool is_close(const R& compare, T actual, T expected)
+    bool is_close(const R& compare, T actual, std::type_identity_t<T> expected)
     {
         return compare(actual - expected, expected);
     }
@@ -78,7 +79,7 @@ namespace yq {
     /*! \brief Mid-way divide two numbers
     */
     template <typename T>
-    constexpr T     middivide(T a, T b=T{}) noexcept
+    constexpr T     middivide(T a, std::type_identity_t<T> b=T{}) noexcept
     {
         if constexpr (has_ieee754_v<T>)
             return ieee754_t<T>(0.5)*(a+b);
@@ -174,6 +175,35 @@ namespace yq {
         if(values.empty())
             return T{};
         return sum(values) / ieee754_t<T>(values.size());
+    }
+    
+    template <typename T>
+    T   wrap(T val, std::type_identity_t<T> minimum, std::type_identity_t<T> maximum)
+    {
+        if((val >= minimum) && (val < maximum))
+            return val;
+        
+        T   range = maximum - minimum;
+        T   tmp = val - minimum;
+            
+        if constexpr( is_unit_v<T> && std::is_floating_point_v<typename T::component_type>){
+            tmp.value   = fmod(tmp.value, range.value);
+        } else if constexpr( is_unit_v<T> && std::is_integral_v<typename T::component_type>){
+            tmp.value   = tmp.value % range.value;
+        } else if constexpr( std::is_floating_point_v<T> ){
+            tmp         = fmod(tmp, range);
+        } else if constexpr (std::is_integral_v<T>){
+            tmp         = tmp % range;
+        } else {
+            return val; // currently NOP/static assert
+        }
+        
+        if(tmp < T{})
+            tmp += range;
+        if(tmp >= maximum)  // sanity check...
+            tmp = minimum;
+        tmp += minimum;
+        return tmp;
     }
 }
 

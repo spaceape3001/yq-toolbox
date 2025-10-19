@@ -63,7 +63,7 @@ namespace yq {
     template <typename T, typename DIM>
     Radian          atan(MKS<T,DIM> y, MKS<T,DIM> x)
     {
-        return { std::atan2((double) y.value, (double) x.avlue) };
+        return { std::atan2((double) y.value, (double) x.value) };
     }
 
     /*! \brief Cosine

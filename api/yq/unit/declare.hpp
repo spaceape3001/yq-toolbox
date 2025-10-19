@@ -124,6 +124,9 @@ namespace yq {
     template <typename T, typename DIM>             struct MKS;
     template <typename T, typename DIM, double K>   struct SCALED;
     
+    template <typename DIM>             struct MKS_SYMBOL;
+    template <typename DIM, double K>   struct SCALED_SYMBOL;
+
 
     //  Unit sizes double checked with wikipedia!
     namespace unit {
@@ -399,6 +402,7 @@ namespace yq {
         using KilometerPerSecond3D      = Vector3<KilometerPerSecond>;
         using Meter3D                   = Vector3<Meter>;
         using Meter3F                   = Vector3<MeterF>;
+        using Meter3I                   = Vector3<int>;
         using MeterPerSecond3D          = Vector3<MeterPerSecond>;
         using MeterPerSecond²3D         = Vector3<MeterPerSecond²>;
         using MicrometerPerSecond3D     = Vector3<MicrometerPerSecond>;

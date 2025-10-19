@@ -35,7 +35,7 @@ namespace yq {
         w.description("Flat Earth Model (North East Down)");
     }
 
-    GeoNED::GeoNED(const GeoNEDConfig& cfg) : m_center(cfg.center), m_gravity(cfg.gravity)
+    GeoNED::GeoNED(const GeoNEDConfig& cfg) : m_center(cfg.center), m_gravity(cfg.gravity), m_radius(cfg.radius)
     {
         m_curvature.latitude    = m_radius.value;
         m_curvature.longitude   = m_radius.value * cos(cfg.center.latitude);

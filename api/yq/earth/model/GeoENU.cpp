@@ -35,7 +35,7 @@ namespace yq {
         w.description("Flat Earth Model (East North Up)");
     }
 
-    GeoENU::GeoENU(const GeoENUConfig& cfg) : m_center(cfg.center), m_gravity(cfg.gravity)
+    GeoENU::GeoENU(const GeoENUConfig& cfg) : m_center(cfg.center), m_gravity(cfg.gravity), m_radius(cfg.radius)
     {
         m_curvature.latitude    = m_radius.value;
         m_curvature.longitude   = m_radius.value * cos(cfg.center.latitude);

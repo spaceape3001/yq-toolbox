@@ -26,10 +26,11 @@ add_library(yq_math SHARED
 
     earth/wgs84.cpp
     
+    earth/model/GeoEllipsoid.cpp
     earth/model/GeoENU.cpp
     earth/model/GeoModel.cpp
     earth/model/GeoNED.cpp
-    #earth/model/GeoSpheroid.cpp
+    earth/model/GeoSpheroid.cpp
 
     math/Complex.cpp
     math/Counter.cpp

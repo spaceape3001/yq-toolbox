@@ -115,9 +115,10 @@ namespace yq {
 //  BASIC FUNCTIONS
 
     template <typename T, typename DIM>
+    requires (std::is_integral_v<T> || std::is_floating_point_v<T>)
     MKS<T,DIM> abs(const MKS<T,DIM>& v)
     {
-        return { abs(v.value) };
+        return { std::abs(v.value) };
     }
     
     template <typename T, typename DIM>
@@ -335,9 +336,23 @@ namespace yq {
 //  --------------------------------------------------------
 //  STREAMING
     
+    template <typename S, typename T, typename DIM>
+    S&  as_stream(S& s, const MKS<T,DIM>& v)
+    {
+        return s << v.value;
+    }
+    
+    #ifdef _LOG4CPP_CATEGORYSTREAM_HH
+    template <typename T, typename DIM>
+    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& s, const MKS<T,DIM>& v)
+    {
+        return as_stream(s, v);
+    }
+    #endif
+
     template <typename T, typename DIM>
     Stream& operator<<(Stream& stream, const MKS<T,DIM>& v)
     {
-        return stream << v.value;
+        return as_stream(stream, v);
     }
 }

@@ -23,7 +23,7 @@ namespace yq {
         GeoNED(const GeoNEDConfig& cfg = {});
         ~GeoNED();
 
-        virtual Meter                       altitude(const ECEFPosition&) const override;
+        virtual unit::Meter                 altitude(const ECEFPosition&) const override;
         virtual ECEFVector                  down(const Geodetic2R&) const override;
         virtual ECEFVector                  down(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  down(const Geodetic3RM&) const override;
@@ -74,10 +74,10 @@ namespace yq {
         virtual ECEFPosition                position(const Geodetic2R&) const override;
         virtual ECEFPosition                position(const Geodetic2R&, unit::Meter) const override;
 
-        virtual Meter                       radius(const Geodetic2R&) const override;
-        virtual Meter                       radius(const Geodetic2R&, unit::Meter) const override;
-        virtual Meter                       radius(const Geodetic3RM&) const override;
-        virtual Meter                       radius(const ECEFPosition&) const override;
+        virtual unit::Meter                 radius(const Geodetic2R&) const override;
+        virtual unit::Meter                 radius(const Geodetic2R&, unit::Meter) const override;
+        virtual unit::Meter                 radius(const Geodetic3RM&) const override;
+        virtual unit::Meter                 radius(const ECEFPosition&) const override;
         
         virtual ECEFVector                  south(const Geodetic2R&) const override;
         virtual ECEFVector                  south(const Geodetic2R&, unit::Meter) const override;
