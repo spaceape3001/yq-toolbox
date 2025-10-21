@@ -236,6 +236,7 @@ namespace yq {
         //! Saves the resource to the specified filename
         std::error_code                 save_to(const std::filesystem::path&, const ResourceSaveOptions& options={}) const;
         
+        //! Saves the resource to the specified url (if able)
         std::error_code                 save_to(const UrlView&, const ResourceSaveOptions& options={}) const;
 
 
