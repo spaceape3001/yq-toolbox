@@ -72,6 +72,8 @@ namespace yq {
         
     template <typename> class ResourceIO;
     
+    /*! \brief Used to declare driver information upon registration
+    */
     struct ResourceIOSpec {
         std::vector<std::string>        extensions;
         bool                            binary      = false;
@@ -195,13 +197,14 @@ namespace yq {
         struct CacheStats {
         };
 
-
+        //! Indicates this resource is "read only", usually in the cache and shouldn't be modified (as it'll be thread unsafe to do so)
         bool                            read_only() const { return m_readonly; }
 
 
         //! Current data size
         virtual size_t                  data_size() const = 0;
-        
+
+        //! Original file "extension" for our resource
         std::string_view                extension() const;
         
         //! File Path part of the URL (here for compatibility, will be deprecated/removed)
@@ -230,8 +233,10 @@ namespace yq {
         //! Saves the file to the original URL (if able to)
         std::error_code                 save(const ResourceSaveOptions& options={}) const;
 
+        //! Saves the resource to the specified filename
         std::error_code                 save_to(const std::filesystem::path&, const ResourceSaveOptions& options={}) const;
         
+        //! Saves the resource to the specified url (if able)
         std::error_code                 save_to(const UrlView&, const ResourceSaveOptions& options={}) const;
 
 
@@ -255,6 +260,7 @@ namespace yq {
     
         static void init_meta();
         
+        //! Sets the url for this resource (readonly disables this)
         void    set_url(const std::filesystem::path&);
         void    set_url(const UrlView&);
         

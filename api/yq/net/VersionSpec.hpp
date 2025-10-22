@@ -68,8 +68,12 @@ namespace yq {
     //! Streams a version spec to our stream
     //! (Needed as the generic streamer doesn't seem to work)
     Stream& operator<<(Stream&, const VersionSpec&);
+
+    //! Streams a version spec to the logger
+    //! (Needed as the generic streamer doesn't seem to work)
     log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const VersionSpec&);
     
+    //! Technically the helper to stream to a generic stream (doesn't always seem to work, see above)
     template <typename S>
     requires (!std::is_same_v<S, mithril::WebHtml>)
     S&  operator<<(S& s, const VersionSpec&v)
