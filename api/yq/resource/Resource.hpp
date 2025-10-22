@@ -260,6 +260,7 @@ namespace yq {
     
         static void init_meta();
         
+        //! Sets the url for this resource (readonly disables this)
         void    set_url(const std::filesystem::path&);
         void    set_url(const UrlView&);
         
