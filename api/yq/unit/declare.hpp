@@ -124,9 +124,38 @@ namespace yq {
     template <typename T, typename DIM>             struct MKS;
     template <typename T, typename DIM, double K>   struct SCALED;
     
+#if 0
     template <typename DIM>             struct MKS_SYMBOL;
     template <typename DIM, double K>   struct SCALED_SYMBOL;
 
+    namespace udef {
+        struct convMKS {
+            static constexpr const long double toUnit(long double v) noexcept { return v; }
+            static constexpr const long double fromUnit(long double v) noexcept { return v; }
+        };
+        
+        template <double K>
+        struct ScalarConv {
+            static constexpr const long double toUnit(long double v){ return v*(1./K); }
+            static constexpr const long double toMKS(long double v){ return v*K; }
+        };
+        
+        struct NoSymbol {
+        
+        };
+        
+        template <BasicString sym>
+        struct Symbol {
+        };
+    
+        struct AcreDef : ScalarConv<4046.86> {
+            using dim_t     = dim::Area;
+        };
+    }
+    
+    template <typename T, typename DIM> std::string_view  symbol(MKS<T,DIM>);
+    
+#endif
 
     //  Unit sizes double checked with wikipedia!
     namespace unit {

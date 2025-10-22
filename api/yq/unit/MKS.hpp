@@ -157,7 +157,7 @@ namespace yq {
     {
         return is_nan(v.value);
     }
-    
+
     template <typename T, typename DIM>
     requires has_sqrt_v<T>
     auto sqrt(const MKS<T,DIM>& v)
@@ -166,6 +166,15 @@ namespace yq {
         return MKS<decltype(ret), typename DIM::template _pow_<1,2>>{ ret };
     }
 
+    template <typename T, typename DIM>
+    requires std::is_floating_point_v<T>
+    struct sqrt_eval<MKS<T,DIM>> : public std::true_type { 
+        static constexpr auto compute(T v) 
+        {
+            return sqrt(v);
+        }
+    };
+    
     template <typename T, typename DIM>
     auto square(const MKS<T,DIM>& v)
     {

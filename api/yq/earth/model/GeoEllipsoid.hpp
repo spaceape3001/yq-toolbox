@@ -42,6 +42,7 @@ namespace yq {
         virtual ECEFVector                  down(const Geodetic3RM&) const override;
         virtual ECEFVector                  down(const ECEFPosition&) const override;
 
+        ECEFVector                          east(unit::Radian) const;
         virtual ECEFVector                  east(const Geodetic2R&) const override;
         virtual ECEFVector                  east(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  east(const Geodetic3RM&) const override;
@@ -84,6 +85,7 @@ namespace yq {
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic3RM&) const override;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const ECEFPosition&) const override;
 
+        ECEFPosition                        position(unit::Radian, unit::Radian, unit::Meter) const;
         virtual ECEFPosition                position(const Geodetic3RM&) const override;
         virtual ECEFPosition                position(const Geodetic2R&) const override;
         virtual ECEFPosition                position(const Geodetic2R&, unit::Meter) const override;
@@ -104,6 +106,7 @@ namespace yq {
         virtual ECEFVector                  up(const Geodetic3RM&) const override;
         virtual ECEFVector                  up(const ECEFPosition&) const override;
         
+        ECEFVector                          west(unit::Radian) const;
         virtual ECEFVector                  west(const Geodetic2R&) const override;
         virtual ECEFVector                  west(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  west(const Geodetic3RM&) const override;
@@ -150,7 +153,5 @@ namespace yq {
         const Param           m_param;
     
         static Param compute_parameters(const GeoEllipsoidConfig&);
-        
-        unit::Meter N(unit::Radian, unit::Meter) const;
     };
 }

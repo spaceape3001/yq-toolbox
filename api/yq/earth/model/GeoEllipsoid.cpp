@@ -106,29 +106,30 @@ namespace yq {
         // TODO { REFINE }
         return down(geodetic(ecef));
     }
+    
+    ECEFVector  GeoEllipsoid::east(unit::Radian lo) const
+    {
+        return ECEFVector( -sin(lo), cos(lo), 0. );
+    }
 
     ECEFVector  GeoEllipsoid::east(const Geodetic2R& geo) const
     {
-        // TODO
-        return {};
+        return east(geo.longitude);
     }
 
-    ECEFVector  GeoEllipsoid::east(const Geodetic2R& geo, unit::Meter z) const
+    ECEFVector  GeoEllipsoid::east(const Geodetic2R& geo, unit::Meter) const
     {
-        // TODO
-        return {};
+        return east(geo.longitude);
     }
 
     ECEFVector  GeoEllipsoid::east(const Geodetic3RM& geo) const
     {
-        // TODO
-        return {};
+        return east(geo.longitude);
     }
 
     ECEFVector  GeoEllipsoid::east(const ECEFPosition& ecef) const
     {
-        // TODO
-        return {};
+        return ECEFVector(~Vector3D( -ecef.y.value, ecef.x.value, 0. ));
     }
 
     Geodetic3RM  GeoEllipsoid::geodetic(const ECEFPosition& ecef) const 
@@ -311,23 +312,32 @@ namespace yq {
         return {};
     }
 
+    ECEFPosition  GeoEllipsoid::position(unit::Radian la, unit::Radian lo, unit::Meter h) const 
+    {
+        double  sla = sin(la);
+        double  cla = cos(la);
+        unit::Meter N   = semimajor/sqrt(1-m_param.e²*sla*sla);
+        
+        unit::Meter x   = (N+h)*cla*cos(lo);
+        unit::Meter y   = (N+h)*cla*sin(lo);
+        unit::Meter z   = (m_param.ne2m1*N+h)*sla;
+        
+        return ECEFPosition(x,y,z);
+    }
+
     ECEFPosition  GeoEllipsoid::position(const Geodetic3RM& geo) const 
     {
-        
-        // TODO
-        return {};
+        return position(geo.latitude, geo.longitude, geo.altitude);
     }
 
     ECEFPosition  GeoEllipsoid::position(const Geodetic2R& geo) const 
     {
-        // TODO
-        return {};
+        return position(geo.latitude, geo.longitude, 0._m);
     }
 
     ECEFPosition  GeoEllipsoid::position(const Geodetic2R& geo, unit::Meter z) const 
     {
-        // TODO
-        return {};
+        return position(geo.latitude, geo.longitude, z);
     }
 
     unit::Meter  GeoEllipsoid::radius(const Geodetic2R& geo) const
@@ -405,28 +415,29 @@ namespace yq {
         return up(geodetic(ecef));
     }
     
+    ECEFVector  GeoEllipsoid::west(unit::Radian lo) const
+    {
+        return ECEFVector( sin(lo), -cos(lo), 0. );
+    }
+
     ECEFVector  GeoEllipsoid::west(const Geodetic2R& geo) const
     {
-        // TODO
-        return {};
+        return west(geo.longitude);
     }
 
     ECEFVector  GeoEllipsoid::west(const Geodetic2R& geo, unit::Meter z) const
     {
-        // TODO
-        return {};
+        return west(geo.longitude);
     }
 
     ECEFVector  GeoEllipsoid::west(const Geodetic3RM& geo) const
     {
-        // TODO
-        return {};
+        return west(geo.longitude);
     }
 
     ECEFVector  GeoEllipsoid::west(const ECEFPosition& ecef) const
     {
-        // TODO
-        return {};
+        return ECEFVector(~Vector3D( ecef.y.value, -ecef.x.value, 0. ));
     }
 
     /////////////////////////////////////////////////////

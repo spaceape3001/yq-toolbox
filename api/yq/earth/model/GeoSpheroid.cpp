@@ -67,30 +67,29 @@ namespace yq {
         return down(geodetic(ecef));
     }
 
-    ECEFVector     GeoSpheroid::east(unit::Radian la, unit::Radian lo) const
+    ECEFVector     GeoSpheroid::east(unit::Radian lo) const
     {
         return ECEFVector( -sin(lo), cos(lo), 0. );
     }
     
     ECEFVector     GeoSpheroid::east(const Geodetic2R&geo) const
     {
-        return east(geo.latitude, geo.longitude);
+        return east(geo.longitude);
     }
     
     ECEFVector     GeoSpheroid::east(const Geodetic2R& geo, unit::Meter) const
     {
-        return east(geo.latitude, geo.longitude);
+        return east(geo.longitude);
     }
     
     ECEFVector     GeoSpheroid::east(const Geodetic3RM& geo) const
     {
-        return east(geo.latitude, geo.longitude);
+        return east(geo.longitude);
     }
     
     ECEFVector     GeoSpheroid::east(const ECEFPosition& ecef) const
     {
-        // TODO (make better)
-        return east(geodetic(ecef));
+        return ECEFVector(~Vector3D( -ecef.y.value, ecef.x.value, 0. ));
     }
 
     Geodetic3RM    GeoSpheroid::geodetic(const ECEFPosition&ecef) const
@@ -250,7 +249,7 @@ namespace yq {
 
     Tensor33D  GeoSpheroid::orientation(tensor_k, enu_k, unit::Radian la, unit::Radian lo) const
     {
-        return columns( east(la,lo), north(la,lo), up(la,lo));
+        return columns( east(lo), north(la,lo), up(la,lo));
     }
     
     Tensor33D  GeoSpheroid::orientation(tensor_k, enu_k, const Geodetic2R& geo) const
@@ -276,7 +275,7 @@ namespace yq {
 
     Tensor33D  GeoSpheroid::orientation(tensor_k, ned_k, unit::Radian la, unit::Radian lo) const
     {
-        return columns( north(la,lo), east(la,lo), down(la,lo));
+        return columns( north(la,lo), east(lo), down(la,lo));
     }
 
     Tensor33D  GeoSpheroid::orientation(tensor_k, ned_k, const Geodetic2R& geo) const
@@ -401,30 +400,29 @@ namespace yq {
         return up(geodetic(ecef));
     }
     
-    ECEFVector   GeoSpheroid::west(unit::Radian la, unit::Radian lo) const
+    ECEFVector   GeoSpheroid::west(unit::Radian lo) const
     {
         return ECEFVector( sin(lo), -cos(lo), 0. );
     }
     
     ECEFVector   GeoSpheroid::west(const Geodetic2R& geo) const
     {
-        return west(geo.latitude, geo.longitude);
+        return west(geo.longitude);
     }
     
     ECEFVector   GeoSpheroid::west(const Geodetic2R& geo, unit::Meter) const
     {
-        return west(geo.latitude, geo.longitude);
+        return west(geo.longitude);
     }
     
     ECEFVector   GeoSpheroid::west(const Geodetic3RM& geo) const
     {
-        return west(geo.latitude, geo.longitude);
+        return west(geo.longitude);
     }
     
     ECEFVector   GeoSpheroid::west(const ECEFPosition& ecef) const
     {
-        // TODO (make better)
-        return west(geodetic(ecef));
+        return ECEFVector(~Vector3D( ecef.y.value, -ecef.x.value, 0. ));
     }
     
 }

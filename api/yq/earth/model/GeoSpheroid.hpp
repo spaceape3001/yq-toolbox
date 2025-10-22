@@ -29,7 +29,7 @@ namespace yq {
         virtual ECEFVector                  down(const Geodetic3RM&) const override;
         virtual ECEFVector                  down(const ECEFPosition&) const override;
 
-        ECEFVector                          east(unit::Radian, unit::Radian) const;
+        ECEFVector                          east(unit::Radian) const;
         virtual ECEFVector                  east(const Geodetic2R&) const override;
         virtual ECEFVector                  east(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  east(const Geodetic3RM&) const override;
@@ -99,7 +99,7 @@ namespace yq {
         virtual ECEFVector                  up(const Geodetic3RM&) const override;
         virtual ECEFVector                  up(const ECEFPosition&) const override;
         
-        ECEFVector                          west(unit::Radian, unit::Radian) const;
+        ECEFVector                          west(unit::Radian) const;
         virtual ECEFVector                  west(const Geodetic2R&) const override;
         virtual ECEFVector                  west(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  west(const Geodetic3RM&) const override;

@@ -6,7 +6,9 @@
 
 #include <boost/ut.hpp>
 #include <yq/units.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
+#include <yq/math/utility.hpp>
 #include <yq/meta/Meta.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector3.hxx>
@@ -17,6 +19,7 @@ using namespace yq;
 
 int main()
 {
+    log_to_std_output();
     Meta::freeze();
     Absolute tol{1e-12_m};
     Absolute tol²{1e-12_m²};
@@ -37,8 +40,10 @@ int main()
             unit::Meter3D b( k.bx, k.by, k.bz  );
             unit::Meter3D c( k.ax+k.bx, k.ay+k.by, k.az+k.bz );
             unit::Meter3D d = a + b;
+            unit::Meter3D e = a - b;
             
             expect(true == is_close(tol, d, c));
+            expect(false == is_close(tol, e, c));
         }
     
         

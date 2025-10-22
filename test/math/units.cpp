@@ -20,6 +20,9 @@ int main()
         expect( true == is_close(tol, 1_m + 1_m, 2_m));
         expect( true == is_close(tol, 1_m + 2_m, 3_m));
         expect( true == is_close(tol, 2_m + 1_m, 3_m));
+        expect( false == is_close(tol, 1_m - 1_m, 2_m));
+        expect( false == is_close(tol, 1_m - 2_m, 3_m));
+        expect( false == is_close(tol, 2_m - 1_m, 3_m));
     };
     
     "add_meter_foot"_test = [&]{
