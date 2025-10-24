@@ -51,35 +51,48 @@ namespace yq {
         virtual Geodetic3RM                 geodetic(const ECEFPosition&) const override;
         virtual Geodetic2R                  geodetic2(const ECEFPosition&) const override;
 
+        unit::MeterPerSecond²               gravity(unit::Radian, unit::Meter) const;
         virtual unit::MeterPerSecond²       gravity(const Geodetic2R&) const override;
         virtual unit::MeterPerSecond²       gravity(const Geodetic2R&, unit::Meter) const override;
         virtual unit::MeterPerSecond²       gravity(const Geodetic3RM&) const override;
         virtual unit::MeterPerSecond²       gravity(const ECEFPosition&) const override;
+        
+        ECEFAcceleration                    gravity(vector_k, unit::Radian, unit::Radian, unit::Meter) const;
         virtual ECEFAcceleration            gravity(vector_k, const Geodetic2R&) const override;
         virtual ECEFAcceleration            gravity(vector_k, const Geodetic2R&, unit::Meter) const override;
         virtual ECEFAcceleration            gravity(vector_k, const Geodetic3RM&) const override;
         virtual ECEFAcceleration            gravity(vector_k, const ECEFPosition&) const override;
 
+        //! North vector
+        //! \note This is the spheroid definition of "north", which, while not technically north-north, is good 
+        //! enough for rotations and most uses.  The *exact* north will be a different routine (if needed).
+        //! The reason for this is... well, the exact true north isn't orthogonal to down/up, and thus makes
+        //! the math really ugly, making the pro/con debate favor the easier way.
+        ECEFVector                          north(unit::Radian, unit::Radian) const;
         virtual ECEFVector                  north(const Geodetic2R&) const override;
         virtual ECEFVector                  north(const Geodetic2R&, Meter) const override;
         virtual ECEFVector                  north(const Geodetic3RM&) const override;
         virtual ECEFVector                  north(const ECEFPosition&) const override;
 
+        Quaternion3D                        orientation(quaternion_k, enu_k, unit::Radian, unit::Radian) const;
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const Geodetic2R&) const override;
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const Geodetic2R&, unit::Meter) const override;
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const Geodetic3RM&) const override;
         virtual Quaternion3D                orientation(quaternion_k, enu_k, const ECEFPosition&) const override;
 
+        Quaternion3D                        orientation(quaternion_k, ned_k, unit::Radian, unit::Radian) const;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&) const override;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic2R&, unit::Meter) const override;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const Geodetic3RM&) const override;
         virtual Quaternion3D                orientation(quaternion_k, ned_k, const ECEFPosition&) const override;
     
+        Tensor33D                           orientation(tensor_k, enu_k, unit::Radian, unit::Radian) const;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&) const override;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic2R&, unit::Meter) const override;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const Geodetic3RM&) const override;
         virtual Tensor33D                   orientation(tensor_k, enu_k, const ECEFPosition&) const override;
 
+        Tensor33D                           orientation(tensor_k, ned_k, unit::Radian, unit::Radian) const;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&) const override;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic2R&, unit::Meter) const override;
         virtual Tensor33D                   orientation(tensor_k, ned_k, const Geodetic3RM&) const override;
@@ -90,11 +103,13 @@ namespace yq {
         virtual ECEFPosition                position(const Geodetic2R&) const override;
         virtual ECEFPosition                position(const Geodetic2R&, unit::Meter) const override;
 
+        unit::Meter                         radius(unit::Radian) const;
         virtual unit::Meter                 radius(const Geodetic2R&) const override;
         virtual unit::Meter                 radius(const Geodetic2R&, unit::Meter) const override;
         virtual unit::Meter                 radius(const Geodetic3RM&) const override;
         virtual unit::Meter                 radius(const ECEFPosition&) const override;
         
+        ECEFVector                          south(unit::Radian, unit::Radian) const;
         virtual ECEFVector                  south(const Geodetic2R&) const override;
         virtual ECEFVector                  south(const Geodetic2R&, unit::Meter) const override;
         virtual ECEFVector                  south(const Geodetic3RM&) const override;

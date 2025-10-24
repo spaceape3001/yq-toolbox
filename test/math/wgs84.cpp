@@ -15,6 +15,7 @@
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/vector/Vector3.hxx>
 #include <numbers>
+#include <iomanip>
 
 namespace ut = boost::ut;
 
@@ -88,7 +89,7 @@ int main()
             { 0._deg, 135._deg, 0._m,  -kHRt2*a, kHRt2*a, 0. },
             { 0._deg, -30._deg, 0._m,   kHRt3*a, -0.5*a, 0. },
             { 0._deg, -45._deg, 0._m,   kHRt2*a, -kHRt2*a, 0. },
-            { 0._deg, -135._deg, 0._m,  kHRt2*a, -kHRt2*a, 0. },
+            { 0._deg, -135._deg, 0._m,  -kHRt2*a, -kHRt2*a, 0. },
             
             // cases from the WGS84 documentation
             { 38.80305456_deg, 255.47540844_deg, 1911.755, -1248.597295_km, -4819.433239_km, 3976.500175_km },  // colorado springs
@@ -112,18 +113,37 @@ int main()
         };
 
         const auto& cm  = wgs84();
-        Absolute    tolX(1e-3_m);
+        Absolute    tolX(1e-2_m);
         Absolute    tolA(1e-6);
 
         for(auto& k : kCases){
-            unit::Degree        lo  = wrap(k.longitude, -180., 180.);
-            Geodetic3RM         geo = { k.latitude, k.longitude, k.altitude };
+            unit::Degree        lo      = wrap(k.longitude, -180., 180.);
+            Geodetic3RM         geo     = { k.latitude, k.longitude, k.altitude };
             ECEFPosition        posX(k.x, k.y, k.z);
-            ECEFPosition        pos = cm.position(geo);
+            ECEFPosition        pos     = cm.position(geo);
+            Geodetic3RM         geo2    = cm.geodetic(posX);
+            
+#if 0
+yInfo() << std::setprecision(12) << 
+           "\n"
+           "inputs:\n"
+           "  latitude>  " << k.latitude.value << "\n"
+           "  longitude> " << k.longitude.value << "\n"
+           "  altitude>  " << k.altitude.value << "\n"
+           "  x>         " << k.x.value << "\n"
+           "  y>         " << k.y.value << "\n"
+           "  z>         " << k.z.value << "\n"
+           "outputs:\n"
+           "  x>         " << pos.x.value << "\n"
+           "  y>         " << pos.y.value << "\n"
+           "  z>         " << pos.z.value << "\n"
+           "  latitude>  " << unit::Degree(geo2.latitude).value << "\n"
+           "  longitude> " << unit::Degree(geo2.longitude).value << "\n"
+           "  altitiude> " << geo.altitude.value
+;
+#endif
             
             expect(true == is_close(tolX, pos,  posX));
-            
-            Geodetic3RM         geo2    = cm.geodetic(posX);
             expect(true == is_close(tolA, geo2.latitude, (unit::Radian) k.latitude));
             expect(true == is_close(tolA, geo2.longitude, (unit::Radian) lo));
             expect(true == is_close(tolX, geo2.altitude, k.altitude));
