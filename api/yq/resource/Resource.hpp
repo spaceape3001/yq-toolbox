@@ -262,8 +262,11 @@ namespace yq {
         
         //! Sets the url for this resource (readonly disables this)
         void    set_url(const std::filesystem::path&);
+
+        //! Sets the url for this resource (readonly disables this)
         void    set_url(const UrlView&);
         
+        //! Sets the resource name (readonly disables this)
         void    set_name(std::string_view);
         
     
