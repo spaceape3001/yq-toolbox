@@ -11,6 +11,9 @@
 
 using namespace yq;
 
+#include "tan/Tangential.ipp"
+#include "tan/TanSurface.ipp"
+
 #include "bnsd/BNSDAcceleration.ipp"
 #include "bnsd/BNSDAngularAcceleration.ipp"
 #include "bnsd/BNSDAngularVelocity.ipp"

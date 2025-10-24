@@ -209,6 +209,7 @@ namespace yq {
     struct pop_k {};
     struct port_k {};
     struct positive_k {};
+    struct primary_k {};
     struct property_k {};
     struct pull_k {};
     struct push_k {};
@@ -242,6 +243,7 @@ namespace yq {
     struct rows_k {};
     struct rx_k {};
     struct scalable_k {};
+    struct secondary_k {};
     struct self_k {};
     struct sender_k {};
     struct set_k {};
@@ -263,6 +265,7 @@ namespace yq {
     struct stem_k {};
     struct stop_k {};
     struct stretch_k {};
+    struct tangential_k {};
     struct target_k {};
     struct tensor_k {};
     struct tenu_k {};
@@ -516,6 +519,7 @@ namespace yq {
     static constexpr const positive_k           POSITIVE;
     static constexpr const port_k               PORT;
     static constexpr const pointer_k            PTR;
+    static constexpr const primary_k            PRIMARY;
     static constexpr const property_k           PROPERTY;
     static constexpr const pull_k               PULL;
     static constexpr const push_k               PUSH;
@@ -549,6 +553,7 @@ namespace yq {
     static constexpr const rows_k               ROWS;
     static constexpr const rx_k                 RX;
     static constexpr const scalable_k           SCALABLE;
+    static constexpr const secondary_k          SECONDARY;
     static constexpr const self_k               SELF;
     static constexpr const sender_k             SENDER;
     static constexpr const set_k                SET;
@@ -569,6 +574,7 @@ namespace yq {
     static constexpr const stem_k               STEM;
     static constexpr const stop_k               STOP;
     static constexpr const stretch_k            STRETCH;
+    static constexpr const tangential_k         TANGENTIAL;
     static constexpr const target_k             TARGET;
     static constexpr const tensor_k             TENSOR;
     static constexpr const tenu_k               TENU;
