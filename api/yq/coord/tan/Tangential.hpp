@@ -13,6 +13,7 @@
 
 namespace yq {
 
+    //! Helpers for a tangential earth coordinate system
     namespace tangential {
         struct TriTanSurface {
             TanSurface  primary;        //!< Surface the position is on
@@ -25,6 +26,10 @@ namespace yq {
         TriTanSurface   surfaces(const ECEFPosition&);
         
         TanUV           uv_of(TanSurface, const ECEFPosition&);
+        
+        //! Outward Directional vector 
+        //! \note This will *NOT* be of unit length... if that's necessary, caller does normalization
+        ECEFVector      outward_directional_vector(TanSurface, const TanUV&);
     }
 
     class TanDomain {

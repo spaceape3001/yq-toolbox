@@ -24,7 +24,7 @@ namespace yq {
     {
         auto w = writer<GeoEllipsoid>();
         w.description("Ellipsoid (ie oblate spheroid) geodetic model");
-        w.property("area", &GeoEllipsoid::surface_area);
+        //w.property("area", &GeoEllipsoid::surface_area);
         w.property("eccentricity", &GeoEllipsoid::eccentricity);
         w.property("focus", &GeoEllipsoid::focus);
         w.property("semimajor", &GeoEllipsoid::semimajor);
@@ -162,12 +162,26 @@ namespace yq {
 
     Geodetic2R  GeoEllipsoid::geodetic2(const ECEFPosition& ecef) const 
     {
-        // TODO (REFINE)
-        Geodetic3RM geo = geodetic(ecef);
-        return Geodetic2R{ geo.latitude, geo.longitude };
+        double  p       = sqrt(ecef.x*ecef.x+ecef.y*ecef.y).value;
+        double  lo      = atan2(ecef.y.value, ecef.x.value);
+        double  la      = 0.;
+        
+        if(p == 0.0){   // got a singularity...
+            la          = copysign(0.5*std::numbers::pi_v<double>, ecef.z.value);
+        } else {
+            double u, su, cu, n, d;
+        
+            u   = std::atan((ecef.z.value/p)*m_param.a_div_b);
+            su  = std::sin(u);  cu = std::cos(u);
+            n   = ecef.z.value + m_param.e²cb*su*su*su;
+            d   = p - m_param.e²a * cu*cu*cu;
+            la  = std::atan(n/d);
+        }
+        
+        return { la, lo };
     }
 
-    unit::MeterPerSecond²  GeoEllipsoid::gravity(unit::Radian la, unit::Meter) const
+    unit::MeterPerSecond²  GeoEllipsoid::gravity(unit::Radian la, unit::Meter z) const
     {
         // TODO
         return 1_G;
@@ -519,9 +533,7 @@ namespace yq {
     
     unit::Meter     GeoEllipsoidConfig::radius_by_volume() const
     {
-        // TODO
-        return {};
-        // return cbrt( semimajor*semimajor*semiminor());
+        return {pow(semimajor.value*semimajor.value*semiminor().value, 1.0/3.0)};
     }
 
     unit::Meter     GeoEllipsoidConfig::semiminor() const

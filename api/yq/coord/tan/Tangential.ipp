@@ -9,6 +9,7 @@
 #include "Tangential.hpp"
 #include <yq/coord/DValue.hpp>
 #include <yq/coord/ecef/ECEFPosition.hpp>
+#include <yq/coord/ecef/ECEFVector.hpp>
 #include <yq/math/UV.hpp>
 
 namespace yq::tangential {
@@ -48,6 +49,26 @@ namespace yq::tangential {
             return TanUV( ecef.x.value / ecef.z.value, ecef.y.value / ecef.z.value);
         case TanSurface::zNegative:
             return TanUV( ecef.x.value / ecef.z.value, ecef.y.value / ecef.z.value);
+        default:
+            return {};
+        }
+    }
+
+    ECEFVector      outward_directional_vector(TanSurface surf, const TanUV& t)
+    {
+        switch(surf){
+        case TanSurface::xPositive:
+            return ECEFVector(  1.0,  t.u,  t.v );
+        case TanSurface::xNegative:
+            return ECEFVector( -1.0, -t.u,  t.v );
+        case TanSurface::yPositive:
+            return ECEFVector( -t.u,  1.0,  t.v );
+        case TanSurface::yNegative:
+            return ECEFVector(  t.u, -1.0,  t.v );
+        case TanSurface::zPositive:
+            return ECEFVector(  t.u,  t.v,  1.0 );
+        case TanSurface::zNegative:
+            return ECEFVector( -t.u, -t.v, -1.0 );
         default:
             return {};
         }
