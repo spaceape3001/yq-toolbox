@@ -7,7 +7,10 @@
 #   CORE
 include(yq_text.cmake)
 include(yq_core.cmake)
-include(yq_lua.cmake)
+
+if(Build_Lua)
+    include(yq_lua.cmake)
+endif()
 
 #   FIRST STEP
 include(yq_date.cmake)
