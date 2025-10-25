@@ -303,6 +303,11 @@ namespace yq {
         
     };
 
+    /*! IO Helper to specfic derived resources.  
+    
+        This is here due to limitations on inheritance and template parameter deduction, it's a one-stop
+        for a paraticular resource type.  To access, it's like `Resource::IO::load(whatever)`.
+    */
     template <typename A>
     class ResourceIO {
     public:
