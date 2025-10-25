@@ -11,6 +11,8 @@
 
 using namespace yq;
 
+bool    gQuit   = false;
+
 int main(int argc, char* argv[])
 {
     log_to_std_output();
@@ -23,11 +25,15 @@ int main(int argc, char* argv[])
         }
     } else {
         char    buffer[1024];
-        while(std::cin.good()){
+        while(std::cin.good() && !gQuit){
             memset(buffer, 0, sizeof(buffer));  // wipe existing data
+            std::cout << "> ";
             std::cin.getline(buffer, sizeof(buffer));
             buffer[1023]    = '\0';             // guard against null termination
-            lua.execute(buffer);
+            auto ec = lua.execute(buffer);
+            if(ec != std::error_code()){
+                std::cout << ec.message() << "\n";
+            }
         }
     }
     

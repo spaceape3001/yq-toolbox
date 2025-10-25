@@ -36,7 +36,11 @@ namespace yq {
         
         operator lua_State*() const { return m_lua; }
         
-        
+        std::error_code   set_global(const std::string&, bool);
+        std::error_code   set_global(const std::string&, int);
+        std::error_code   set_global(const std::string&, double);
+        std::error_code   set_global(const std::string&, std::string_view);
+        std::error_code   set_global(const std::string&, void*);
         
     private:
         LuaVM(const LuaVM&) = delete;
