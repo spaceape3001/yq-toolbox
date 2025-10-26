@@ -43,5 +43,6 @@ namespace yq {
     using u32string_x   = Expect<std::u32string>;
     using url_x         = Expect<Url>;
     using url_view_x    = Expect<UrlView>;
+    using void_ptr_x    = Expect<void*>;
     using wstring_x     = Expect<std::wstring>;
 }

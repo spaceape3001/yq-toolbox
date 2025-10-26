@@ -26,7 +26,7 @@ namespace yq {
         m_lua   = luaL_newstate();
         lua_setwarnf(m_lua, luaWarn, nullptr);
         luaL_openlibs(m_lua);
-        set_global("**vm", this);
+        lua::set(m_lua, GLOBAL, lua::VM, this);
     }
     
     LuaVM::~LuaVM()
@@ -106,67 +106,6 @@ namespace yq {
         
         return (((size_t) kb) << 10) | (0x3FF & b);
     }
-
-    std::error_code   LuaVM::set_global(const std::string&k, bool v)
-    {
-        if(!m_lua){
-            luaWarning << "Invalid LuaVM";
-            return errors::lua_badvm();
-        }
-        
-        lua_pushboolean(m_lua, v);
-        lua_setglobal(m_lua, k.c_str());
-        return {};
-    }
-    
-    std::error_code   LuaVM::set_global(const std::string&k, int v)
-    {
-        if(!m_lua){
-            luaWarning << "Invalid LuaVM";
-            return errors::lua_badvm();
-        }
-        
-        lua_pushinteger(m_lua, v);
-        lua_setglobal(m_lua, k.c_str());
-        return {};
-    }
-    
-    std::error_code   LuaVM::set_global(const std::string&k, double v)
-    {
-        if(!m_lua){
-            luaWarning << "Invalid LuaVM";
-            return errors::lua_badvm();
-        }
-        
-        lua_pushnumber(m_lua, v);
-        lua_setglobal(m_lua, k.c_str());
-        return {};
-    }
-    
-    std::error_code   LuaVM::set_global(const std::string&k, std::string_view v)
-    {
-        if(!m_lua){
-            luaWarning << "Invalid LuaVM";
-            return errors::lua_badvm();
-        }
-        
-        lua_pushlstring(m_lua, v.data(), v.size());
-        lua_setglobal(m_lua, k.c_str());
-        return {};
-    }
-    
-    std::error_code   LuaVM::set_global(const std::string&k, void* v)
-    {
-        if(!m_lua){
-            luaWarning << "Invalid LuaVM";
-            return errors::lua_badvm();
-        }
-        
-        lua_pushlightuserdata(m_lua, v);
-        lua_setglobal(m_lua, k.c_str());
-        return {};
-    }
-    
 
     std::error_code     LuaVM::status() const
     {

@@ -260,6 +260,7 @@ namespace yq {
     struct source_k {};
     struct square_k {};
     struct specification_k {};
+    struct stack_k {};
     struct start_k {};
     struct startup_k {};
     struct stem_k {};
@@ -569,6 +570,7 @@ namespace yq {
     static constexpr const span_k               SPAN;
     static constexpr const specification_k      SPEC, SPECIFICATION;
     static constexpr const square_k             SQUARE;
+    static constexpr const stack_k              STACK;
     static constexpr const start_k              START;
     static constexpr const startup_k            STARTUP;
     static constexpr const stem_k               STEM;
