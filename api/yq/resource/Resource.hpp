@@ -144,6 +144,7 @@ namespace yq {
         //! \note Linear search as we're assuming a short one
         static bool             has_path(const std::filesystem::path&);
    
+        //! Gets resource information from the specific resource (short specification)
         static ResourceInfoCPtr    resource_info(std::string_view, const ResourceInfoOptions& options={});
         
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, std::string_view, const ResourceInfoOptions& options={});
