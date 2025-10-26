@@ -27,13 +27,16 @@ namespace yq::lua {
         Stack... note, number is as pushed on the stack, so use negatives to get 
         the last item pushed (ie -1)
     */
-    std::error_code     errored(int);
-    
+
     boolean_x           boolean(lua_State*, global_k, const char*);
     boolean_x           boolean(lua_State*, stack_k, int);
     
     double_x            double_(lua_State*, global_k, const char*);
     double_x            double_(lua_State*, stack_k, int);
+
+    //! Converts lua error code into a std::error_code
+    std::error_code     errored(int);
+    
 
     int64_x             integer(lua_State*, global_k, const char*);
     int64_x             integer(lua_State*, stack_k, int);
@@ -47,6 +50,7 @@ namespace yq::lua {
     std::error_code     push(lua_State*, bool);
     std::error_code     push(lua_State*, double);
     std::error_code     push(lua_State*, int64_t);
+    std::error_code     push(lua_State*, std::nullptr_t);
     std::error_code     push(lua_State*, std::string_view);
     std::error_code     push(lua_State*, void*);
     
@@ -63,6 +67,7 @@ namespace yq::lua {
     //! \note This will convert said value to a STRING
     string_view_x       string(lua_State*, stack_k, int);
 
+    //! Generic type string to a lua type ID (don't use with the meta)
     std::string_view    typestring(int);
 
     LuaVM*              vm(lua_State*);

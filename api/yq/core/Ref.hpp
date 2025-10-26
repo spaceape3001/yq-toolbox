@@ -16,9 +16,16 @@ namespace yq {
     
     template <typename T> class Ref;
 
+    class Refable {
+    protected:
+        template <typename T>  friend class Ref;
+        virtual void	incRef() const = 0;
+        virtual void	decRef() const = 0;
+    };
+
     /*! \brief Basic Reference Counted class
     */
-    class RefCount {
+    class RefCount : public Refable {
     public:
     
         //! Tests for uniqueness
@@ -52,9 +59,9 @@ namespace yq {
         template <typename T>  friend class Ref;
 
             //! TREAD LIGHTLY!  Increments the reference count (can lead to orphaned memory)
-        void	incRef() const;
+        virtual void	incRef() const override;
             //! TREAD LIGHTLY!  Decrements the reference count (can lead to dangling pointers)
-        void	decRef() const;
+        virtual void	decRef() const override;
 
     private:
         mutable std::atomic<size_t>  m_count;

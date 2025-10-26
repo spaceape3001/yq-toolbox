@@ -445,6 +445,11 @@ namespace yq {
         return has(Flag::PROPERTY);
     }
 
+    bool  Meta::is_refable() const
+    {
+        return has(Flag::REFABLE);
+    }
+
     bool  Meta::is_render3d() const
     {
         return has(Flag::RENDER3D);

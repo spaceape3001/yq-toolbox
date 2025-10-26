@@ -146,6 +146,7 @@ namespace yq {
             PROPERTY,       //!< Meta has PropertyMeta
             PROXY,          //!< It's a proxy
             RASTER,         //!< Raster (iamge) related
+            REFABLE,        //!< Refable object
             RENDER3D,       //!< It's a 3D render (Render3DInfo)
             RENDERED,       //!< It's a rendered (RenderedInfo)
             REPLY,          //!< It's a reply (message API)
@@ -366,6 +367,8 @@ namespace yq {
         bool                            is_post_trigger() const;
         
         bool                            is_property() const;
+        
+        bool                            is_refable() const;
         
         bool                            is_render3d() const;
 

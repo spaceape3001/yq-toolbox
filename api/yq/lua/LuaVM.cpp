@@ -11,20 +11,24 @@
 
 #include <filesystem>
 #include <yq/lua/errors.hpp>
+#include <yq/core/Stream.hpp>
+#include <yq/core/StreamOps.hpp>
 #include <lua.hpp>
 
 namespace yq {
 
-    static void luaWarn(void*, const char* msg, int)
+    static void luaWarn(void*ud, const char* msg, int)
     {
-        luaWarning << msg;
+        if(ud){
+            (*(Stream*)ud) << msg;
+        } else
+            luaWarning << msg;
     }
 
-
-    LuaVM::LuaVM()
+    LuaVM::LuaVM(const LuaVMConfig& cfg)
     {
         m_lua   = luaL_newstate();
-        lua_setwarnf(m_lua, luaWarn, nullptr);
+        lua_setwarnf(m_lua, luaWarn, cfg.warnings);
         luaL_openlibs(m_lua);
         lua::set(m_lua, GLOBAL, lua::VM, this);
     }

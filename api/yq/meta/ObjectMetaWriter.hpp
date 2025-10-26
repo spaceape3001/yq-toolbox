@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/DelayInit.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/CompoundMetaDynamic.hpp>
 #include <yq/meta/UnsafePropGetter.hpp>
@@ -94,6 +95,9 @@ namespace yq {
         {
             if constexpr ( std::is_abstract_v<Obj> ){
                 Meta::set(Meta::Flag::ABSTRACT);
+            }
+            if constexpr ( std::is_base_of_v<Refable,Obj>){
+                Meta::set(Meta::Flag::REFABLE);
             }
         }
         

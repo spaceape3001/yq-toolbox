@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <string>
+#include <yq/meta/Meta.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <system_error>
@@ -16,13 +16,17 @@ struct luaL_Reg;
 namespace yq {
     class Stream;
 
+    struct LuaVMConfig {
+        Stream*     warnings    = nullptr;
+    };
+
     class LuaVM {
     public:
     
         static LuaVM*               extract(lua_State*);
         static std::error_code      errored(int);
         
-        LuaVM();
+        LuaVM(const LuaVMConfig& cfg={});
         ~LuaVM();
         
         std::error_code     execute(const std::string&);
@@ -42,12 +46,17 @@ namespace yq {
         //! \note This stream *MUST* remain valid as long as it's configured
         std::error_code     set_output(Stream*);
         
+        struct MetaTable;
+        const MetaTable*    meta_table(const TypeMeta&);
+        const MetaTable*    meta_table(const ObjectMeta&);
+        
     private:
         LuaVM(const LuaVM&) = delete;
         LuaVM(LuaVM&&) = delete;
         LuaVM& operator=(const LuaVM&) = delete;
         LuaVM& operator=(LuaVM&&) = delete;
         
-        lua_State*  m_lua       = nullptr;
+        lua_State*                                  m_lua   = nullptr;
+        std::map<Meta::id_t, const MetaTable*>      m_meta;
     };
 }

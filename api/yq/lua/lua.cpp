@@ -157,6 +157,14 @@ namespace yq::lua {
         lua_pushinteger(l,v);
         return {};
     }
+
+    std::error_code     push(lua_State* l, std::nullptr_t)
+    {
+        if(!l)
+            return errors::lua_null();
+        lua_pushnil(l);
+        return {};
+    }
     
     std::error_code     push(lua_State* l, std::string_view v)
     {
