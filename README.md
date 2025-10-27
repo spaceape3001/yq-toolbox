@@ -22,5 +22,6 @@ Your Quill uses CMake for build management and C++23 as the language standard.  
 * Sqlite3
 * GLM &mdash; optional (to the toolbox)
 * [PStreams](https://pstreams.sourceforge.net/) &mdash; bundled 
+* Lua (optional)
 
 
