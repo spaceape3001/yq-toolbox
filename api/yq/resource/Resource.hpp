@@ -147,6 +147,7 @@ namespace yq {
         //! Gets resource information from the specific resource (short specification)
         static ResourceInfoCPtr    resource_info(std::string_view, const ResourceInfoOptions& options={});
         
+        //! Gets resource information from the specific resource (short specification), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, std::string_view, const ResourceInfoOptions& options={});
 
         static ResourceInfoCPtr    resource_info(const UrlView&, const ResourceInfoOptions& options={});
