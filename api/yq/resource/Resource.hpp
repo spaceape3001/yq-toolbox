@@ -150,10 +150,10 @@ namespace yq {
         //! Gets resource information from the specific resource (short specification), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, std::string_view, const ResourceInfoOptions& options={});
 
-        //! Gets resource information from the specific resource (url), narrowed down to a specific type
+        //! Gets resource information from the specific resource (url)
         static ResourceInfoCPtr    resource_info(const UrlView&, const ResourceInfoOptions& options={});
 
-        //! Loads from the specific URL
+        //! Gets resource information from the specific resource (url), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, const UrlView&, const ResourceInfoOptions& options={});
         
         //! Loads from the specific file
