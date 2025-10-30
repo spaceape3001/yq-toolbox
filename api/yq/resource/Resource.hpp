@@ -156,7 +156,7 @@ namespace yq {
         //! Gets resource information from the specific resource (url), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, const UrlView&, const ResourceInfoOptions& options={});
         
-        //! Loads from the specific file
+        //! Gets resource information from the specific resource (filepath)
         static ResourceInfoCPtr    resource_info(const std::filesystem::path&, const ResourceInfoOptions& options={});
 
         //! Loads from the specific file
