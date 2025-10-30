@@ -6,6 +6,7 @@
 
 #include <yq/lua/LuaVM.hpp>
 #include <yq/core/Logging.hpp>
+#include <yq/process/PluginLoader.hpp>
 #include <yq/meta/Meta.hpp>
 #include <iostream>
 
@@ -13,12 +14,32 @@ using namespace yq;
 
 bool    gQuit   = false;
 
+////////////////////////////////////////////////////////////////////////////////
+//  LUA HELPERS
+
+int fn_help(lua_State*)
+{
+    return 0;
+}
+
+int fn_quit(lua_State*)
+{
+    gQuit   = true;
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 int main(int argc, char* argv[])
 {
     log_to_std_output();
+    Meta::init();
+    load_plugin_dir("plugin/lua");
     Meta::freeze();
     
     LuaVM   lua;
+    lua.add_global_function("quit", fn_quit, "Quits the application");
+    lua.init_global_functions();
     if(argc > 1){
         for(int i=1;i<argc;++i){
             lua.execfile(argv[i]);

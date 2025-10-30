@@ -76,6 +76,7 @@ namespace yq {
     struct close_k {};
     struct clear_k {};
     struct columns_k {};
+    struct const_k {};
     struct continue_k {};
     struct copy_k {};
     struct cout_k {};
@@ -381,6 +382,7 @@ namespace yq {
     static constexpr const clockwise_k          CLOCKWISE;
     static constexpr const close_k              CLOSE;
     static constexpr const columns_k            COLUMNS;
+    static constexpr const const_k              CONST;
     static constexpr const continue_k           CONTINUE;
     static constexpr const copy_k               COPY;
     static constexpr const count_k              COUNT;

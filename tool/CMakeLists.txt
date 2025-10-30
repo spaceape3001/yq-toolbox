@@ -22,7 +22,7 @@ endif()
 
 if(Build_Lua)
     add_executable(lualua lualua.cpp)
-    target_link_libraries(lualua yq_core yq_lua)
+    target_link_libraries(lualua yq_core yq_lua yq_process)
 endif()
 
 if(Build_SQL)

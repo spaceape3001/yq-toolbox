@@ -14,11 +14,17 @@ struct lua_State;
 
 namespace yq {
     class LuaVM;
+    class Object;
+    class ObjectMeta;
 }
 
 namespace yq::lua {
 
-    static constexpr const char*        VM      = "**vm";
+    static constexpr const char*        VM          = "_vm";
+    static constexpr const char*        PTR         = "_ptr";
+    static constexpr const char*        NAME        = "_name";
+    static constexpr const char*        STEM        = "_stem";
+    static constexpr const char*        DESCRIPTION = "_description";
 
     /*
         LUA helpers in this file
@@ -37,9 +43,17 @@ namespace yq::lua {
     //! Converts lua error code into a std::error_code
     std::error_code     errored(int);
     
-
     int64_x             integer(lua_State*, global_k, const char*);
     int64_x             integer(lua_State*, stack_k, int);
+    
+    Object*             object(lua_State*, stack_k, int);
+    const Object*       object(lua_State*, stack_k, int, const_k);
+    
+    template <class Obj>
+    Obj*                object_as(lua_State*, stack_k, int);
+
+    template <class Obj>
+    const Obj*          object_as(lua_State*, stack_k, int, const_k);
 
     //! Returns user data as a pointer (may or may not be lightweight)
     void_ptr_x          pointer(lua_State*, global_k, const char*);
@@ -47,9 +61,12 @@ namespace yq::lua {
     //! Returns user data as a pointer (may or may not be lightweight)
     void_ptr_x          pointer(lua_State*, stack_k, int);
     
+    std::error_code     push(lua_State*, const Any&);
     std::error_code     push(lua_State*, bool);
     std::error_code     push(lua_State*, double);
     std::error_code     push(lua_State*, int64_t);
+    std::error_code     push(lua_State*, const_k, const Object*);
+    std::error_code     push(lua_State*, Object*);
     std::error_code     push(lua_State*, std::nullptr_t);
     std::error_code     push(lua_State*, std::string_view);
     std::error_code     push(lua_State*, void*);
@@ -69,6 +86,8 @@ namespace yq::lua {
 
     //! Generic type string to a lua type ID (don't use with the meta)
     std::string_view    typestring(int);
+
+    any_x               value(lua_State*, stack_k, int);
 
     LuaVM*              vm(lua_State*);
 
