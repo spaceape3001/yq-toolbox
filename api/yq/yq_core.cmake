@@ -82,7 +82,7 @@ target_compile_definitions(yq_core
 target_include_directories(yq_core
     PUBLIC 
         ${TOOLBOX_BIN_DIR}
-        ${TOOLBOX_API_DIR}
+        ${YQ_TOOLBOX_API}
         ${TBB_INCLUDE_DIR}
         ${LOG4CPP_INCLUDE_DIR}
 )
