@@ -33,6 +33,7 @@ namespace yq {
         using DefEnum   = E;
         //! Captures the bit-field type parameter
         using DefType   = T;
+        using value_type    = T;
 
         static constexpr T  mask(E e) noexcept
         {

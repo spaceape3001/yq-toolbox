@@ -10,15 +10,11 @@
 #include <yq/core/Any.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/meta/ObjectMeta.hpp>
 #include <lua.hpp>
 
 namespace yq::lua {
-    enum class X : uint8_t {
-        Const,
-        Ref
-    };
-    using XFlags    = Flags<X>;
-    
     /*
         CONVENTIONS
         
@@ -133,24 +129,6 @@ namespace yq::lua {
     
     
 
-    Object*             object(lua_State* l, stack_k, int n)
-    {
-        if(!l)
-            return nullptr;
-            
-        //  TODO
-        return nullptr;
-    }
-
-    const Object*       object(lua_State* l, stack_k, int n, const_k)
-    {
-        if(!l)
-            return nullptr;
-            
-        //  TODO
-        return nullptr;
-    }
-
     void_ptr_x          pointer(lua_State* l, global_k, const char*key)
     {
         if(!l)
@@ -220,34 +198,6 @@ namespace yq::lua {
         return {};
     }
     
-    std::error_code     push(lua_State* l, Object* obj, XFlags flags)
-    {
-        if(!l)
-            return errors::lua_null();
-
-        if(!obj){
-            lua_pushnil(l);
-            return {};
-        }
-
-        //LuaVM*  lvm = vm(l);
-        //if(!lvm)
-            //return errors::lua_badvm();
-            
-        // TODO
-        return errors::todo();
-    }
-    
-
-    std::error_code     push(lua_State*l, const_k, const Object* obj)
-    {
-        return push(l, (Object*) obj, X::Const);
-    }
-    
-    std::error_code     push(lua_State*l, Object* obj)
-    {
-        return push(l, obj, {});
-    }
 
     std::error_code     push(lua_State* l, std::nullptr_t)
     {

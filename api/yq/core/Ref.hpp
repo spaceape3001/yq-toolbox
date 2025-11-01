@@ -17,9 +17,15 @@ namespace yq {
     template <typename T> class Ref;
 
     class Refable {
-    protected:
+    public:
         template <typename T>  friend class Ref;
+        
+        //! increments any reference.
+        //! \note Internal use, though syntax required public availability
         virtual void	incRef() const = 0;
+
+        //! decrements any reference, potential to delete pointer
+        //! \note Internal use, though syntax required public availability
         virtual void	decRef() const = 0;
     };
 
