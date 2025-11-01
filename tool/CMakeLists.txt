@@ -20,10 +20,6 @@ if(Build_CURL)
     target_link_libraries(ask ${CURL_LIBRARIES})
 endif()
 
-if(Build_Lua)
-    add_executable(lualua lualua.cpp)
-    target_link_libraries(lualua yq_core yq_lua yq_process)
-endif()
 
 if(Build_SQL)
     add_executable(sqlquery sqlquery.cpp)

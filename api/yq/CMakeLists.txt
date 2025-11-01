@@ -8,10 +8,6 @@
 include(yq_text.cmake)
 include(yq_core.cmake)
 
-if(Build_Lua)
-    include(yq_lua.cmake)
-endif()
-
 #   FIRST STEP
 include(yq_date.cmake)
 include(yq_math.cmake)
