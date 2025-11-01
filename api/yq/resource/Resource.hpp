@@ -147,20 +147,22 @@ namespace yq {
         //! Gets resource information from the specific resource (short specification)
         static ResourceInfoCPtr    resource_info(std::string_view, const ResourceInfoOptions& options={});
         
+        //! Gets resource information from the specific resource (short specification), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, std::string_view, const ResourceInfoOptions& options={});
 
+        //! Gets resource information from the specific resource (url)
         static ResourceInfoCPtr    resource_info(const UrlView&, const ResourceInfoOptions& options={});
 
-        //! Loads from the specific URL
+        //! Gets resource information from the specific resource (url), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, const UrlView&, const ResourceInfoOptions& options={});
         
-        //! Loads from the specific file
+        //! Gets resource information from the specific resource (filepath)
         static ResourceInfoCPtr    resource_info(const std::filesystem::path&, const ResourceInfoOptions& options={});
 
-        //! Loads from the specific file
+        //! Gets resource information from the specific resource (filepath), narrowed down to a specific type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, const std::filesystem::path&, const ResourceInfoOptions& options={});
     
-        //! Loads from the specific library
+        //! Gets resource information from the specific library resource (filepath + internal path)
         static ResourceInfoCPtr    resource_info(const std::filesystem::path&, std::string_view, const ResourceInfoOptions& options={});
 
         //! Loads from the specific library
