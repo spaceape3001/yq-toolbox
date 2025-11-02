@@ -16,6 +16,8 @@
 #include <yq/math/trigonometry.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
 
+#include <yq/vector/Quaternion3.hxx>
+
 #include <numbers>
 
 YQ_OBJECT_IMPLEMENT(yq::GeoENU)

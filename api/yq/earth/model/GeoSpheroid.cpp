@@ -14,6 +14,7 @@
 #include <yq/coord/ecef/ECEFVector.hpp>
 #include <yq/math/trigonometry.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
+#include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector3.hxx>
 
 YQ_OBJECT_IMPLEMENT(yq::GeoSpheroid)
