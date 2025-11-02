@@ -165,7 +165,7 @@ namespace yq {
         //! Gets resource information from the specific library resource (filepath + internal path)
         static ResourceInfoCPtr    resource_info(const std::filesystem::path&, std::string_view, const ResourceInfoOptions& options={});
 
-        //! Loads from the specific library
+        //! Gets resource information from the specific library resource (filepath + internal path), narrowed down to a specific resource type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, const std::filesystem::path&, std::string_view, const ResourceInfoOptions& options={});
 
 
