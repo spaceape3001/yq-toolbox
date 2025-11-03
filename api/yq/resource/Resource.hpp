@@ -75,6 +75,8 @@ namespace yq {
     /*! \brief Used to declare driver information upon registration
     */
     struct ResourceIOSpec {
+    
+        //! File extensions that a given resource driver reads/writes
         std::vector<std::string>        extensions;
         bool                            binary      = false;
         bool                            recursive   = false;
