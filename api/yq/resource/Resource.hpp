@@ -78,6 +78,8 @@ namespace yq {
     
         //! File extensions that a given resource driver reads/writes
         std::vector<std::string>        extensions;
+        
+        //! Set if the driver is binary (relevant for those using the STD streaming API)
         bool                            binary      = false;
         bool                            recursive   = false;
     };
