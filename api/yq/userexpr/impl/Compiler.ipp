@@ -10,6 +10,7 @@
 
 #include <yq/text/parse32.hpp>
 
+#include <yq/userexpr/errors.hpp>
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/Context.hpp>
 

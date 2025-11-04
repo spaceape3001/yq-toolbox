@@ -7,6 +7,7 @@
 #include "ConstantInstruction.hpp"
 #include <yq/container/Stack.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
+#include <yq/userexpr/errors.hpp>
 
 namespace yq::expr {
     ConstantInstruction::ConstantInstruction(const string_t& s) : Instruction(s)

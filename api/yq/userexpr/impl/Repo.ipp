@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/core/DelayInit.hpp>
+#include <yq/userexpr/errors.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
 
 namespace yq::expr {

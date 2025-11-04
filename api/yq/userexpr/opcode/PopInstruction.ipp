@@ -8,6 +8,7 @@
 #include <yq/core/Any.hpp>
 #include <yq/errors.hpp>
 #include <yq/container/Stack.hpp>
+#include <yq/userexpr/errors.hpp>
 
 namespace yq::expr {
     PopInstruction::PopInstruction(const string_t&s) : Instruction(s) 

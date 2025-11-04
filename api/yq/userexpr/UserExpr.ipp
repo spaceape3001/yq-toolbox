@@ -11,6 +11,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/text/format32.hpp>
+#include <yq/userexpr/errors.hpp>
 #include <yq/userexpr/Algebra.hpp>
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/Context.hpp>

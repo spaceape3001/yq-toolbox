@@ -14,6 +14,7 @@
 #include <yq/core/Logging.hpp>
 //#include <0/basic/TextUtils.hpp>
 //#include <0/basic/TextUtils32.hpp>
+#include <yq/userexpr/errors.hpp>
 #include <yq/userexpr/Analysis.hpp>
 #include <yq/userexpr/impl/Repo.hpp>
 #include <yq/userexpr/impl/SymData.hpp>

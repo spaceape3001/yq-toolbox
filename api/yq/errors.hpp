@@ -11,21 +11,14 @@
 namespace yq::errors {
     using bad_access                = error_db::entry<"Bad access">;
     using bad_argument              = error_db::entry<"Bad argument provided">;
-    using bad_constant              = error_db::entry<"Bad constant">;
     using bad_constructor           = error_db::entry<"Bad constructor">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
-    using bad_function              = error_db::entry<"Bad function">;
-    using bad_instruction           = error_db::entry<"Bad instruction">;
-    using bad_operator              = error_db::entry<"Bad operator">;
-    using bad_userexpr              = error_db::entry<"Bad user expression">;
-    using bad_variable              = error_db::entry<"Bad variable">;
     using cant_open_read            = error_db::entry<"Unable to open file for reading">;
     using cant_open_write           = error_db::entry<"Unable to open file for writing">;
     using checksum_failure          = error_db::entry<"Checksum failure">;
     using const_object_violation    = error_db::entry<"Constant object violated">;
     using degenerate_dimension      = error_db::entry<"Degenerate dimension">;
     using empty_key                 = error_db::entry<"Empty key">;
-    using empty_stack               = error_db::entry<"Empty stack">;
     using empty_string              = error_db::entry<"Empty string">;
     using existing_error            = error_db::entry<"Existing error in argument">;
     using failed_to_backup_file     = error_db::entry<"Failed to backup the existing file, aborting">;
@@ -42,7 +35,6 @@ namespace yq::errors {
     using invalid_box               = error_db::entry<"Invalid box">;
     using key_not_found             = error_db::entry<"Key not found">;
     using memory_allocation_failed  = error_db::entry<"Memory allocation failed">;
-    using mulitple_values           = error_db::entry<"Multiple values remain">;
     using name_lookup_failed        = error_db::entry<"Name Lookup Failed" >;
     using no_file_name              = error_db::entry<"No filename specified">;
     using no_getter                 = error_db::entry<"No getter exists" >;
