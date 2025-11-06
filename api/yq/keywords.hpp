@@ -164,6 +164,7 @@ namespace yq {
     struct main_k {};
     struct maximum_k {};
     struct maybe_k {};
+    struct meta_k {};
     struct minimum_k {};
     struct mismatch_k {};
     struct move_k {};
@@ -472,6 +473,7 @@ namespace yq {
     static constexpr const maximum_k            MAX, MAXIMUM;
 #endif
     static constexpr const maybe_k              MAYBE;
+    static constexpr const meta_k               META;
 #ifndef YQ_KEYWORD_OMIT_MIN
     static constexpr const minimum_k            MIN, MINIMUM;
 #endif

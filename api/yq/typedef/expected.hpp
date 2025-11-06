@@ -15,6 +15,7 @@
 
 namespace yq {
     class Any;
+    class Object;
     
     using any_x         = Expect<Any>;
     using boolean_x     = Expect<bool>;
@@ -27,6 +28,8 @@ namespace yq {
     using int32_x       = Expect<int32_t>;
     using int64_x       = Expect<int64_t>;
     using int128_x      = Expect<int128_t>;
+    using object_ptr_x  = Expect<Object*>;
+    using object_cptr_x = Expect<const Object*>;
     using short_x       = Expect<short>;
     using size_x        = Expect<size_t>;
     using string_x      = Expect<std::string>;
