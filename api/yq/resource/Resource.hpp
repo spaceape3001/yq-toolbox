@@ -81,6 +81,8 @@ namespace yq {
         
         //! Set if the driver is binary (relevant for those using the STD streaming API)
         bool                            binary      = false;
+        
+        //! Used for the KV documents, TRUE to say it's a recursive tree structure
         bool                            recursive   = false;
     };
     
