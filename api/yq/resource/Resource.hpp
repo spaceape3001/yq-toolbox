@@ -316,10 +316,14 @@ namespace yq {
     
         This is here due to limitations on inheritance and template parameter deduction, it's a one-stop
         for a paraticular resource type.  To access, it's like `Resource::IO::load(whatever)`.
+        
+        \tparam A   Type of the resource
     */
     template <typename A>
     class ResourceIO {
     public:
+    
+        //! Reads the information from the given resource (short specification) as the given type
         static Ref<const typename A::MyInfo> info( std::string_view u, const ResourceInfoOptions& options={})
         {
             ResourceInfoCPtr       ret = Resource::resource_info(meta<A>(), u, options);
