@@ -330,6 +330,7 @@ namespace yq {
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
         
+        //! Reads the information from the given resource (short specification) as the given type
         static Ref<const typename A::MyInfo> info( const std::string& u, const ResourceInfoOptions& options={})
         {
             return info( (std::string_view) u, options);
