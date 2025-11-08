@@ -52,6 +52,8 @@ namespace yq {
     struct any_k {};
     struct append_k {};
     struct appendable_k {};
+    struct argument_k {};
+    struct arguments_k {};
     struct asset_k {};
     struct base_k {};
     struct begin_k {};
@@ -119,6 +121,7 @@ namespace yq {
     struct forward_k {};
     struct frequency_k {};
     struct full_k {};
+    struct function_k {};
     struct from_k {};
     struct geo_k {};
     struct global_k {};
@@ -167,6 +170,7 @@ namespace yq {
     struct meta_k {};
     struct minimum_k {};
     struct mismatch_k {};
+    struct module_k {};
     struct move_k {};
     struct moveable_k {};
     struct multipliable_k {};
@@ -234,6 +238,8 @@ namespace yq {
     struct required_k {};
     struct reset_k {};
     struct resource_k {};
+    struct result_k {};
+    struct results_k {};
     struct resume_k {};
     struct return_k {};
     struct right_k {};
@@ -359,6 +365,8 @@ namespace yq {
     static constexpr const any_k                ANY;
     static constexpr const append_k             APPEND;
     static constexpr const appendable_k         APPENDABLE;
+    static constexpr const argument_k           ARG, ARGUMENT;
+    static constexpr const arguments_k          ARGS, ARGUMENTS;
     static constexpr const asset_k              ASSET;
     static constexpr const base_k               BASE;
     static constexpr const begin_k              BEGIN;
@@ -426,6 +434,7 @@ namespace yq {
     static constexpr const forward_k            FORWARD;
     static constexpr const frequency_k          FREQUENCY;
     static constexpr const full_k               FULL;
+    static constexpr const function_k           FCN, FUNCTION;
     static constexpr const from_k               FROM;
     static constexpr const geo_k                GEO;
     static constexpr const global_k             GLOBAL;
@@ -478,6 +487,7 @@ namespace yq {
     static constexpr const minimum_k            MIN, MINIMUM;
 #endif
     static constexpr const mismatch_k           MISMATCH;
+    static constexpr const module_k             MODULE;
     static constexpr const move_k               MOVE;
     static constexpr const moveable_k           MOVEABLE;
     static constexpr const multipliable_k       MULTIPLIABLE;
@@ -547,6 +557,8 @@ namespace yq {
     static constexpr const required_k           REQUIRED;
     static constexpr const reset_k              RESET;
     static constexpr const resource_k           RESOURCE;
+    static constexpr const result_k             RESULT;
+    static constexpr const results_k            RESULTS;
     static constexpr const resume_k             RESUME;
     static constexpr const return_k             RETURN;
     static constexpr const right_k              RIGHT;

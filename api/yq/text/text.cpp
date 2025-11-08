@@ -9,6 +9,7 @@
 #include "IterUtf8.ipp"
 #include "MaybeCase.ipp"
 #include "RevIgCase.ipp"
+#include "XCase.ipp"
 #include "basic.ipp"
 #include "basic32.ipp"
 #include "chars.ipp"

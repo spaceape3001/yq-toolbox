@@ -31,5 +31,4 @@ namespace yq {
     {
         return to_lower(a) < to_lower(b);
     }
-
 }
