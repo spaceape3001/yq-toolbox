@@ -336,6 +336,7 @@ namespace yq {
             return info( (std::string_view) u, options);
         }
         
+        //! Reads the information from the given resource (short specification) as the given type
         static Ref<const typename A::MyInfo> info( const char* u, const ResourceInfoOptions& options={})
         {
             return info( (std::string_view) u, options);
