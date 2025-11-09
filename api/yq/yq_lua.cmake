@@ -11,6 +11,11 @@ add_library(yq_lua SHARED
     lua/lua.cpp
 )
 
+target_compile_definitions(yq_lua
+    PUBLIC
+        YQ_LUA_ENABLE=1
+)
+
 target_include_directories(yq_lua
     PRIVATE 
         ${LUA_INCLUDE_DIR}
