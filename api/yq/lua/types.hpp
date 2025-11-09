@@ -1,0 +1,116 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <map>
+#include <set>
+#include <string>
+#include <system_error>
+#include <vector>
+#include <variant>
+
+#include <yq/core/Flags.hpp>
+#include <yq/lua/keywords.hpp>
+#include <yq/text/XCase.hpp>
+
+struct lua_State;
+
+namespace yq {
+    class Any;
+    class Meta;
+    class Object;
+    class ObjectMeta;
+    class Refable;
+    class Stream;
+    class TypeMeta;
+    class LuaVM;
+}
+
+namespace yq::lua {
+    enum class Type {
+        Unknown,
+        Nil,
+        String,
+        Boolean,
+        Double,
+        Integer,
+        Object,
+        Pointer,
+        Function,
+        Class,
+        Module
+    };
+
+    enum class X : uint8_t {
+        Const,
+        Delete,
+        Ref
+    };
+    using XFlags    = Flags<X, int32_t>;
+
+    typedef int (*FNLuaCallback)(lua_State*);
+
+    using value_t = std::variant<
+        std::monostate,
+        later_k,       
+        std::string,
+        bool,
+        double,
+        int,
+        Object*,
+        const Object*,
+        void*,
+        FNLuaCallback
+    >;
+    
+    using type_t  = std::variant<
+        std::monostate,
+        std::string,
+        Type,
+        const TypeMeta*,
+        const ObjectMeta*
+    >;
+
+    template <typename ... Args> struct LuaCallbackUpvalued {
+        typedef int (*FN)(lua_State*, Args...);
+    };
+    
+    template <typename ... Args>
+    using FNLuaUpvalueHandler = LuaCallbackUpvalued<Args...>::FN;
+
+
+    using cstr_xset_t   = std::set<const char*, XCase>;
+
+#if 0
+    // Idea for dealing with upvalues on function registration....
+    template <typename T> 
+    struct Upvalue {
+        T       value;
+    };
+#endif
+
+    class ArgumentInfo;
+    class ClassInfo;
+    class FunctionInfo;
+    class Info;
+    class ModuleInfo;
+    class ObjectInfo;
+    class TypeInfo;
+    class ValueInfo;
+    class Repo;
+    
+    using argument_info_vector_t    = std::vector<const ArgumentInfo*>;
+    using function_info_map_t       = std::map<const char*,const FunctionInfo*,XCase>;
+    using info_map_t                = std::map<const char*,const Info*,XCase>;
+    using info_mmap_t               = std::multimap<const char*,const Info*,XCase>;
+    using module_info_map_t         = std::map<const char*,const ModuleInfo*,XCase>;
+    using object_info_map_t         = std::map<uint32_t, const ObjectInfo*>;
+    using type_info_map_t           = std::map<uint32_t, const TypeInfo*>;
+    using value_info_vector_t       = std::vector<const ValueInfo*>;
+
+    static constexpr const int       MAX_UPVALUES    = 255;  // hardcoded in Lua
+}

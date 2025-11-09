@@ -99,6 +99,7 @@ if(NOT YOUR_QUILL_TOOLBOX)
         -Wno-error=unused-function 
         -Wno-error=unused-variable 
         -Wno-free-nonheap-object
+        -Wno-trigraphs                  # I mean... trigraphs were cool and all, now deprecated
         -Wall 
         -fno-strict-aliasing 
         -D_GNU_SOURCE 

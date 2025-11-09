@@ -61,6 +61,7 @@ namespace yq {
     struct biggest_k {};
     struct binary_k {};
     struct bnsd_k {};
+    struct bottom_k {};
     struct box_k {};
     struct bsnu_k {};
     struct cache_k {};
@@ -374,6 +375,7 @@ namespace yq {
     static constexpr const biggest_k            BIGGEST;
     static constexpr const binary_k             BINARY;
     static constexpr const bnsd_k               BNSD;
+    static constexpr const bottom_k             BOTTOM;
     static constexpr const box_k                BOX;
     static constexpr const bsnu_k               BSNU;
     static constexpr const cache_k              CACHE;
