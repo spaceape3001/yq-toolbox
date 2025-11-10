@@ -29,10 +29,14 @@ namespace {
 
     void    help_top(lua_State*l, Streamer& out)
     {
-        out << "Help:\n"
-            << "    globals -- lists globals\n"
-            << "    modules -- lists modules\n"
-        ;
+        out << R"VOGON(
+Help:
+
+    help( argument ) 
+
+    "globals" -- lists globals
+    "modules" -- lists modules
+)VOGON" ;
     }
     
     void    list_module(lua_State*l, Streamer& out, const ModuleInfo& m)
@@ -103,18 +107,6 @@ namespace {
         }
 
         Streamer    out(l);
-        if(!out.can_output()){
-            luaWarning << "help(): No output stream!";
-            return 0;
-        }
-        if(!out.can_warning()){
-            luaWarning << "help(): No warning stream!";
-        }
-        if(!out.can_error()){
-            luaWarning << "help(): No error stream!";
-        }
-        
-    
         if(cmd.empty()){
             help_top(l, out);
         } else if(is_similar(cmd, "globals")){
@@ -134,7 +126,10 @@ namespace {
 
     void    reg_help()
     {
-        reg(GLOBAL, "help", cmd_help)->brief("Help routine");
+        FunctionInfo* fi = reg(GLOBAL, "help", cmd_help);
+        if(fi){
+            fi -> brief("Help routine");
+        }
     }
     
     YQ_INVOKE(reg_help();)

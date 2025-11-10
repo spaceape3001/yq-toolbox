@@ -50,7 +50,6 @@ int main(int argc, char* argv[])
     StdError            stdErr;
     
     reg(GLOBAL, "quit", fn_quit) -> brief("Quits the application");
-    reg(GLOBAL, "print", lua::lh_write_cout) -> brief("Print");
     
     Meta::freeze();
     

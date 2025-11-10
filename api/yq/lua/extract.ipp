@@ -38,7 +38,7 @@ namespace yq::lua {
         lua_getglobal(l, key);
 
         auto ret = boolean(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -72,7 +72,7 @@ namespace yq::lua {
 
         lua_getglobal(l, key);
         auto ret = double_(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -106,7 +106,7 @@ namespace yq::lua {
 
         lua_getglobal(l, key);
         auto ret = integer(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -228,7 +228,7 @@ namespace yq::lua {
 
         lua_getglobal(l, key);
         auto ret            = object(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -244,7 +244,7 @@ namespace yq::lua {
         lua_getglobal(l, key);
             
         auto ret            = object(l, -1, CONST);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -260,7 +260,7 @@ namespace yq::lua {
         lua_getglobal(l, key);
             
         auto ret            = object(l, -1, om);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -275,7 +275,7 @@ namespace yq::lua {
         lua_getglobal(l, key);
             
         auto ret            = object(l, -1, om, CONST);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -325,7 +325,7 @@ namespace yq::lua {
         
         lua_getglobal(l, key);
         auto ret = pointer(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -359,7 +359,7 @@ namespace yq::lua {
             ret     = unexpected(x.error());
         }
         
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -407,7 +407,7 @@ namespace yq::lua {
         lua_getglobal(l, key);
             
         auto ret            = voidptr(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 

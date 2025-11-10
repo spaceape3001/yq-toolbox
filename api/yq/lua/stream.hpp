@@ -7,6 +7,8 @@
 #pragma once
 
 #include <yq/keywords.hpp>
+#include <yq/stream/StdOutput.hpp>
+#include <yq/stream/StdError.hpp>
 
 struct lua_State;
 
@@ -37,5 +39,8 @@ namespace yq::lua {
         Stream*     m_error     = nullptr;
         Stream*     m_output    = nullptr;
         Stream*     m_warning   = nullptr;
+        
+        stream::StdError    m_stderr;
+        stream::StdOutput   m_stdout;
     };
 }
