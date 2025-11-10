@@ -82,6 +82,7 @@ namespace yq {
     struct close_k {};
     struct clear_k {};
     struct columns_k {};
+    struct color_k {};
     struct const_k {};
     struct continue_k {};
     struct copy_k {};
@@ -397,6 +398,7 @@ namespace yq {
     static constexpr const clock_arg_k          CLOCK;
     static constexpr const clockwise_k          CLOCKWISE;
     static constexpr const close_k              CLOSE;
+    static constexpr const color_k              COLOR;
     static constexpr const columns_k            COLUMNS;
     static constexpr const const_k              CONST;
     static constexpr const continue_k           CONTINUE;

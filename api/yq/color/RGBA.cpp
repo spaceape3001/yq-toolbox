@@ -19,6 +19,21 @@ YQ_TYPE_IMPLEMENT(yq::RGBA4F)
 YQ_TYPE_IMPLEMENT(yq::RGBA4U8)
 YQ_TYPE_IMPLEMENT(yq::RGBA4U16)
 
+namespace yq {
+    RGBA4F  rgba4f(const color_t&v)
+    {
+        if(auto p = std::get_if<RGB3U8>(&v)){
+            return (RGBA4F) rgba(*p, 255);
+        } else if(auto p = std::get_if<RGB3F>(&v)){
+            return rgba(*p, 1.0);
+        } else if(auto p = std::get_if<RGBA4U8>(&v)){
+            return (RGBA4F) *p;
+        } else if(auto p = std::get_if<RGBA4F>(&v)){
+            return *p;
+        } else
+            return {0., 0., 0., 0.};
+    }
+}
 
 static std::string_view write_rgba4d(const RGBA4D& v)
 {
