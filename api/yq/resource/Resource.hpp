@@ -349,6 +349,7 @@ namespace yq {
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
         
+        //! Reads the information from the given resource (url) as the given type
         static Ref<const typename A::MyInfo> info( const UrlView& u, const ResourceInfoOptions& options={})
         {
             ResourceInfoCPtr       ret = Resource::resource_info(meta<A>(), u, options);
