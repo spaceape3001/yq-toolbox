@@ -10,7 +10,7 @@
 #include <yq/meta/TypeMeta.hpp>
 
 namespace yq::lua {
-    TypeInfo::TypeInfo(const TypeMeta& tm) : ModuleInfo(tm.name().data()), m_meta(tm)
+    TypeInfo::TypeInfo(const TypeMeta& tm) : ModuleInfo(std::string(tm.stem())), m_meta(tm)
     {
     }
     

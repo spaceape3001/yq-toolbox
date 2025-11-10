@@ -20,12 +20,12 @@ namespace yq::lua {
         const type_info_map_t& types() const { return m_types; }
 
         const ModuleInfo*   info(global_k) const;
-        const ModuleInfo*   info(module_k, const char*) const;
+        const ModuleInfo*   info(module_k, const std::string&) const;
         const ObjectInfo*   info(const ObjectMeta&) const;
         const TypeInfo*     info(const TypeMeta&) const;
         
         std::pair<ModuleInfo*,bool>         edit(global_k);
-        std::pair<ModuleInfo*,bool>         edit(module_k, const char*);
+        std::pair<ModuleInfo*,bool>         edit(module_k, const std::string&);
         std::pair<ObjectInfo*,bool>         edit(const ObjectMeta&);
         std::pair<TypeInfo*,bool>           edit(const TypeMeta&);
 

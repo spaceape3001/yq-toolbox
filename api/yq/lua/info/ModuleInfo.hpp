@@ -14,51 +14,51 @@ namespace yq::lua {
     
         const info_map_t&   components() const { return m_components; }
     
-        const Info*         info(const char*) const;
-        const ValueInfo*    info(value_k, const char*) const;
-        const FunctionInfo* info(function_k, const char*) const;
+        const Info*         info(const std::string&) const;
+        const ValueInfo*    info(value_k, const std::string&) const;
+        const FunctionInfo* info(function_k, const std::string&) const;
         
-        std::pair<FunctionInfo*,bool>   edit(function_k, const char*);
-        std::pair<ValueInfo*,bool>      edit(value_k, const char*);
+        std::pair<FunctionInfo*,bool>   edit(function_k, const std::string&);
+        std::pair<ValueInfo*,bool>      edit(value_k, const std::string&);
     
         virtual bool        is_module() const override { return true; }
 
         //! Adds an abstract function
         //! \note This is generic, means it'll be set by the VM
-        FunctionInfo*       add(const char*, function_k);
+        FunctionInfo*       add(const std::string&, function_k);
 
         //! Adds an abstract value
         //! \note This is generic, means it'll be set by the VM
-        ValueInfo*          add(const char*, value_k);
+        ValueInfo*          add(const std::string&, value_k);
 
         //! Adds a function/method
-        FunctionInfo*       add(const char*, FNLuaCallback);
+        FunctionInfo*       add(const std::string&, FNLuaCallback);
 
         //! Adds a boolean value
-        ValueInfo*          add(const char*, bool);
+        ValueInfo*          add(const std::string&, bool);
 
         //! Adds a double value
-        ValueInfo*          add(const char*, double);
+        ValueInfo*          add(const std::string&, double);
 
         //! Adds a integer value
-        ValueInfo*          add(const char*, int);
+        ValueInfo*          add(const std::string&, int);
 
         //! Adds a string value
-        ValueInfo*          add(const char*, std::string_view);
+        ValueInfo*          add(const std::string&, std::string_view);
 
         //! Adds an object
-        ValueInfo*          add(const char*, const Object*);
+        ValueInfo*          add(const std::string&, const Object*);
 
         //! Adds an object
-        ValueInfo*          add(const char*, Object*);
+        ValueInfo*          add(const std::string&, Object*);
 
         //! Adds an raw pointer
-        ValueInfo*          add(const char*, raw_k, void*);
+        ValueInfo*          add(const std::string&, raw_k, void*);
 
     protected:
         friend class Repo;
     
-        ModuleInfo(const char*);
+        ModuleInfo(const std::string&);
         virtual ~ModuleInfo();
     
     private:

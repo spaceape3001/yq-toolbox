@@ -11,7 +11,7 @@
 #include <yq/lua/info/ValueInfo.hpp>
 
 namespace yq::lua {
-    FunctionInfo::FunctionInfo(const char*z) : Info(z)
+    FunctionInfo::FunctionInfo(const std::string& z) : Info(z)
     {
     }
     
@@ -36,7 +36,7 @@ namespace yq::lua {
         // global detection (later)
         
         if(push_it(api)){
-            lua_setglobal(api.lvm, key());
+            lua_setglobal(api.lvm, key().c_str());
         }
     }
 

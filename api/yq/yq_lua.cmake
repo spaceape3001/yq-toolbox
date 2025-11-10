@@ -17,7 +17,7 @@ target_compile_definitions(yq_lua
 )
 
 target_include_directories(yq_lua
-    PRIVATE 
+    PUBLIC
         ${LUA_INCLUDE_DIR}
 )
 

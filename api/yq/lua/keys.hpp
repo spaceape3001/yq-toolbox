@@ -16,5 +16,7 @@ namespace yq::lua {
     static constexpr const char* keyPointer             = "_ptr";
     static constexpr const char* keyFlags               = "_flags";
     static constexpr const char* keyGarbageCollection   = "__gc"; // LUA's
-    
+    static constexpr const char* keyOutput              = "_output";
+    static constexpr const char* keyError               = "_error";
+    static constexpr const char* keyWarning             = "_warning";
 }

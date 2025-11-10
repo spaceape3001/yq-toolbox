@@ -14,6 +14,9 @@
         
     */
 
+#include "lualua.hpp"
+#include "logging.hpp"
+
 #include "extract.ipp"
 #include "handler.ipp"
 #include "impl.ipp"
@@ -22,6 +25,7 @@
 #include "register.ipp"
 #include "repo.ipp"
 #include "set.ipp"
+#include "stream.ipp"
 #include "writer.ipp"
 
 #include "info/ArgumentInfo.ipp"
@@ -31,6 +35,13 @@
 #include "info/ObjectInfo.ipp"
 #include "info/TypeInfo.ipp"
 #include "info/ValueInfo.ipp"
+
+namespace yq {
+    void    lua_initialize()
+    {
+        lua::initialize();
+    }
+}
 
 namespace yq::lua {
     static void cfg_globals(lua_State*l)
@@ -69,6 +80,30 @@ namespace yq::lua {
     void    initialize()
     {
         Repo::instance();
+    }
+
+    Stream*             stream(lua_State*l, error_k)
+    {
+        auto x = voidptr(l, GLOBAL, keyError);
+        if(!x)
+            return nullptr;
+        return (Stream*) *x;
+    }
+    
+    Stream*             stream(lua_State*l, output_k)
+    {
+        auto x = voidptr(l, GLOBAL, keyOutput);
+        if(!x)
+            return nullptr;
+        return (Stream*) *x;
+    }
+    
+    Stream*             stream(lua_State*l, warning_k)
+    {
+        auto x = voidptr(l, GLOBAL, keyWarning);
+        if(!x)
+            return nullptr;
+        return (Stream*) *x;
     }
 
     LuaVM* vm(lua_State* l)

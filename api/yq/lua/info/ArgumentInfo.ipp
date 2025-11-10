@@ -9,7 +9,7 @@
 #include <yq/lua/info/ArgumentInfo.hpp>
 
 namespace yq::lua {
-    ArgumentInfo::ArgumentInfo(const char* z) : Info(z)
+    ArgumentInfo::ArgumentInfo(const std::string& z) : Info(z)
     {
     }
     

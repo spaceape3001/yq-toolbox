@@ -25,7 +25,7 @@ namespace yq::lua {
         friend class FunctionInfo;
         friend class Repo;
         
-        ValueInfo(const char*);
+        ValueInfo(const std::string&);
         virtual ~ValueInfo();
         
     private:

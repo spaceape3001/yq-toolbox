@@ -9,6 +9,7 @@
 #include <yq/lua/writer.hpp>
 #include <lua.hpp>
 #include <yq/core/StreamOps.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq::lua {
 
@@ -65,7 +66,7 @@ namespace yq::lua {
             }
             break;
         case LUA_TLIGHTUSERDATA:
-            str << "(pointer)";
+            str << "(pointer: " << fmt_hex((uint64_t) lua_touserdata(l, n)) << ")";
             break;
         case LUA_TFUNCTION:
             str << "(function)";

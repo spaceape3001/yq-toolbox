@@ -18,17 +18,17 @@ namespace yq::lua {
     class Info {
     public:
     
-        const char*     brief() const { return m_brief; }
-        const char*     key() const { return m_key; }
-        const char*     help() const { return m_help; }
+        const std::string&  brief() const { return m_brief; }
+        const std::string&  key() const { return m_key; }
+        const std::string&  help() const { return m_help; }
     
         //! Sets the brief
         //! \note Provided pointer must *LIVE* throughout the program lifetime (ie, it's not copied)
-        void            brief(const char*);
+        void            brief(const std::string&);
         
         //! Sets the text
         //! \note Provided pointer must *LIVE* throughout the program lifetime (ie, it's not copied)
-        void            help(const char*);
+        void            help(const std::string&);
         
         virtual bool    is_argument() const { return false; }
         virtual bool    is_function() const { return false; }
@@ -49,14 +49,14 @@ namespace yq::lua {
         friend class ModuleInfo;
         friend class Repo;
         
-        Info(const char*z=nullptr);
+        Info(const std::string& k={});
         virtual ~Info();
     
     private:
         
-        const char* m_key       = nullptr;
-        const char* m_brief     = nullptr;
-        const char* m_help      = nullptr;
+        std::string m_key;
+        std::string m_brief;
+        std::string m_help;
         Info*       m_parent    = nullptr;
     };
 }

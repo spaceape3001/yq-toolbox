@@ -25,6 +25,9 @@
 namespace yq {
 
     // Problematic macros...
+    #ifdef ERROR
+        #undef ERROR
+    #endif
     #ifdef MIN
         #undef MIN
     #endif
@@ -202,6 +205,7 @@ namespace yq {
     struct open_k {};
     struct opposite_k {};
     struct optional_k {};
+    struct output_k {};
     struct parent_k {};
     struct parse_k {};
     struct partial_k {};
@@ -316,6 +320,7 @@ namespace yq {
     struct visible_k {};
     struct w_k {};
     struct wait_k {};
+    struct warning_k {};
     struct write_k {};
     struct ww_k {};
     struct wx_k {};
@@ -521,6 +526,7 @@ namespace yq {
     static constexpr const open_k               OPEN;
     static constexpr const opposite_k           OPPOSITE; 
     static constexpr const optional_k           OPTIONAL;
+    static constexpr const output_k             OUTPUT;
     static constexpr const parent_k             PARENT;
     static constexpr const parse_k              PARSE;
     static constexpr const partial_k            PARTIAL;
@@ -635,6 +641,7 @@ namespace yq {
     static constexpr const visible_k            VISIBLE;
     static constexpr const w_k                  W;
     static constexpr const wait_k               WAIT;
+    static constexpr const warning_k            WARNING, WARN;
     static constexpr const write_k              WRITE;
     static constexpr const ww_k                 WW;
     static constexpr const wx_k                 WX;

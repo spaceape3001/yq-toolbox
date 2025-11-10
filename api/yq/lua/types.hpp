@@ -104,10 +104,10 @@ namespace yq::lua {
     class Repo;
     
     using argument_info_vector_t    = std::vector<const ArgumentInfo*>;
-    using function_info_map_t       = std::map<const char*,const FunctionInfo*,XCase>;
-    using info_map_t                = std::map<const char*,const Info*,XCase>;
-    using info_mmap_t               = std::multimap<const char*,const Info*,XCase>;
-    using module_info_map_t         = std::map<const char*,const ModuleInfo*,XCase>;
+    using function_info_map_t       = std::map<std::string,const FunctionInfo*>;
+    using info_map_t                = std::map<std::string,const Info*>;
+    using info_mmap_t               = std::multimap<std::string,const Info*>;
+    using module_info_map_t         = std::map<std::string,const ModuleInfo*>;
     using object_info_map_t         = std::map<uint32_t, const ObjectInfo*>;
     using type_info_map_t           = std::map<uint32_t, const TypeInfo*>;
     using value_info_vector_t       = std::vector<const ValueInfo*>;

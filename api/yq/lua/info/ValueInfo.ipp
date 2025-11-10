@@ -10,7 +10,7 @@
 #include <yq/meta/Meta.hpp>
 
 namespace yq::lua {
-    ValueInfo::ValueInfo(const char* k) : Info(k)
+    ValueInfo::ValueInfo(const std::string& k) : Info(k)
     {
     }
     
@@ -23,7 +23,7 @@ namespace yq::lua {
         
         // global detection (later)
         if(push_it(api))
-            lua_setglobal(api.lvm, key());
+            lua_setglobal(api.lvm, key().c_str());
     }
 
     bool    ValueInfo::is_global() const 
