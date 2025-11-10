@@ -55,6 +55,12 @@ namespace yq::lua {
             i.second->install(api);
     }
 
+    void    complaint(lua_State*l, std::string_view txt)
+    {
+        Streamer    out(l);
+        out.error() << txt << '\n';
+    }
+
     void    configure(lua_State*l)
     {
         if(!l)
@@ -112,5 +118,11 @@ namespace yq::lua {
         if(!x)
             return nullptr;
         return (LuaVM*) *x;
+    }
+
+    void    warning(lua_State*l, std::string_view txt)
+    {
+        Streamer    out(l);
+        out.warning() << txt << '\n';
     }
 }

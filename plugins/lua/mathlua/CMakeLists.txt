@@ -4,7 +4,11 @@
 ##
 ################################################################################
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin/plugin/lua)
+add_library(mathlua SHARED 
+    numbers.cpp
+    trigonometry.cpp
+)
 
-add_subdirectory(corelua)
-add_subdirectory(mathlua)
+
+target_link_libraries(mathlua PUBLIC yq_lua yq_math)
+LinkTest(mathlua)

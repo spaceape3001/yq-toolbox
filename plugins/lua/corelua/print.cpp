@@ -31,8 +31,7 @@ namespace {
     
     void reg_print()
     {
-        FunctionInfo* fi = reg(GLOBAL, "print", myPrinter);
-        if(fi){
+        if(FunctionInfo* fi = reg(GLOBAL, "print", myPrinter)){
             fi->brief("Printer of printing");
             fi->help(R"VOGON(
 Standard "print" redefined for the YourQuill engine so the output can be 

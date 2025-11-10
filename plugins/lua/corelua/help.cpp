@@ -126,8 +126,7 @@ Help:
 
     void    reg_help()
     {
-        FunctionInfo* fi = reg(GLOBAL, "help", cmd_help);
-        if(fi){
+        if(FunctionInfo* fi = reg(GLOBAL, "help", cmd_help)){
             fi -> brief("Help routine");
         }
     }

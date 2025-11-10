@@ -28,7 +28,9 @@ namespace yq::lua {
     LuaVM*  vm(lua_State*);
     
     void    initialize();
-    
+ 
+    void    complaint(lua_State*l, std::string_view txt);
+    void    warning(lua_State*l, std::string_view txt);
 }
 
 namespace yq {
