@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## Upcoming
+
+* Lua support
+
 ## 2025.07.19
 
 * ObjectInfo renamed to ObjectMeta (toolbox-scoped), this is to allow for the use of "Info" to be specific to an instance.
