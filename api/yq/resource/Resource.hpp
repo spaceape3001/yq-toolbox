@@ -356,6 +356,7 @@ namespace yq {
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
 
+        //! Loads the given resource (short specification) as the given type
         static Ref<const A> load(std::string_view u, const ResourceLoadOptions& options={})
         {
             ResourceCPtr       ret = Resource::resource_load(meta<A>(), u, options);
