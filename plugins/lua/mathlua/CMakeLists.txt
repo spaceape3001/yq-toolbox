@@ -5,8 +5,7 @@
 ################################################################################
 
 add_library(mathlua SHARED 
-    numbers.cpp
-    trigonometry.cpp
+    common.cpp
 )
 
 

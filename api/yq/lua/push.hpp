@@ -15,6 +15,8 @@ namespace yq::lua {
     std::error_code         push(lua_State*, int);
     std::error_code         push(lua_State*, const_k, const Object*);
     std::error_code         push(lua_State*, Object*);
+    std::error_code         push(lua_State*, object_k, const_k, const Object*);
+    std::error_code         push(lua_State*, object_k, Object*);
     std::error_code         push(lua_State*, std::nullptr_t);
     std::error_code         push(lua_State*, std::string_view);
     std::error_code         push(lua_State*, void*);

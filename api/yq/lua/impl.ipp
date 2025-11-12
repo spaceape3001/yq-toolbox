@@ -168,6 +168,8 @@ namespace yq::lua {
             return {};
         }
         
+        flags |= X::Object;
+        
         lua_newtable(l);
         set(l, -1, TABLE, keyPointer, RAW, obj);
         set(l, -1, TABLE, keyMeta, RAW, (void*) &(obj->metaInfo()));

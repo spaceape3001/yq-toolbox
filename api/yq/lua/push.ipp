@@ -127,4 +127,14 @@ namespace yq::lua {
     {
         return _push(l, obj, XFlags{});
     }
+
+    std::error_code         push(lua_State*l, object_k, const_k, const Object*obj)
+    {
+        return _push(l, (Object*) obj, X::Const);
+    }
+    
+    std::error_code         push(lua_State*l, object_k, Object*obj)
+    {
+        return _push(l, obj, XFlags{});
+    }
 }

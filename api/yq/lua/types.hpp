@@ -46,6 +46,7 @@ namespace yq::lua {
     };
 
     enum class X : uint8_t {
+        Object,
         Const,
         Delete,
         Ref
