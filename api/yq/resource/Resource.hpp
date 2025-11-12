@@ -349,18 +349,21 @@ namespace yq {
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
         
+        //! Reads the information from the given resource (url) as the given type
         static Ref<const typename A::MyInfo> info( const UrlView& u, const ResourceInfoOptions& options={})
         {
             ResourceInfoCPtr       ret = Resource::resource_info(meta<A>(), u, options);
             return static_cast<const typename A::MyInfo*>(ret.ptr());
         }
 
+        //! Loads the given resource (short specification) as the given type
         static Ref<const A> load(std::string_view u, const ResourceLoadOptions& options={})
         {
             ResourceCPtr       ret = Resource::resource_load(meta<A>(), u, options);
             return static_cast<const A*>(ret.ptr());
         }
         
+        //! Loads the given resource (short specification) as the given type
         static Ref<const A> load(const std::string& u, const ResourceLoadOptions& options={})
         {
             return load((std::string_view) u, options);
