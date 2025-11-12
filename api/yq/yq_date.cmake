@@ -10,6 +10,7 @@ add_library(yq_date SHARED
     date/JulianDay.cpp
     date/Time.cpp
     date/Weekday.cpp
+    date/dateutils.cpp
 )
 
 target_link_libraries(yq_date PUBLIC
