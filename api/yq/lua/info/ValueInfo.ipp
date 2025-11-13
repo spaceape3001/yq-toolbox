@@ -16,16 +16,6 @@ namespace yq::lua {
     
     ValueInfo::~ValueInfo() = default;
 
-    void    ValueInfo::install(InstallInfoAPI& api) const 
-    {
-        if(!api.lvm)
-            return ;
-        
-        // global detection (later)
-        if(push_it(api))
-            lua_setglobal(api.lvm, key().c_str());
-    }
-
     bool    ValueInfo::is_global() const 
     {
         return parent() && parent()->is_global();
@@ -33,6 +23,8 @@ namespace yq::lua {
 
     bool    ValueInfo::push_it(InstallInfoAPI&api) const
     {
+        if(!api.lvm)
+            return false;
         return _push(api.lvm, m_value);
     }
 

@@ -44,17 +44,6 @@ namespace yq {
 }
 
 namespace yq::lua {
-    static void cfg_globals(lua_State*l)
-    {
-        const ModuleInfo*   x   = info(GLOBAL);
-        if(!x)
-            return ;
-        
-        InstallInfoAPI  api{ .lvm=l };
-        for(const auto& i : x->components())
-            i.second->install(api);
-    }
-
     void    complaint(lua_State*l, std::string_view txt)
     {
         Streamer    out(l);
@@ -65,7 +54,18 @@ namespace yq::lua {
     {
         if(!l)
             return;
-        cfg_globals(l);
+        
+        const Repo& _r  = Repo::instance();
+            
+        InstallInfoAPI  api{.lvm=l};
+        if(auto x = _r.info(GLOBAL))
+            x -> install(api);
+        for(auto& i : _r.modules())
+            i.second -> install(api);
+        for(auto& i : _r.objects()) 
+            i.second -> install(api);
+        for(auto& i : _r.types())
+            i.second -> install(api);
     }
 
 

@@ -199,6 +199,11 @@ namespace yq::lua {
         return nullptr;
     }
     
+    bool    ModuleInfo::install(InstallInfoAPI&) const 
+    {
+        return false;
+    }
+
     //////////////////
 
     GlobalModuleInfo::GlobalModuleInfo() : ModuleInfo("_G")
@@ -207,5 +212,16 @@ namespace yq::lua {
     
     GlobalModuleInfo::~GlobalModuleInfo()
     {
+    }
+
+    bool    GlobalModuleInfo::install(InstallInfoAPI& api) const 
+    {
+        if(!api.lvm)
+            return false;
+        for(auto& i : m_components){
+            if(i.second->push_it(api))
+                lua_setglobal(api.lvm, i.first.c_str());
+        }
+        return true;
     }
 }

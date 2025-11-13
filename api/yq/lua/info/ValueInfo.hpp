@@ -18,7 +18,8 @@ namespace yq::lua {
         virtual bool    is_value() const override { return true; }
         virtual bool    is_global() const override;
         void            type(const type_t&);
-        virtual void    install(InstallInfoAPI&) const;
+
+        virtual bool    push_it(InstallInfoAPI&) const;
 
     protected:
         friend class ModuleInfo;
@@ -29,7 +30,6 @@ namespace yq::lua {
         virtual ~ValueInfo();
         
     private:
-        bool    push_it(InstallInfoAPI&) const;
     
         type_t      m_type;
         value_t     m_value;

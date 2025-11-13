@@ -21,7 +21,7 @@ namespace yq::lua {
         
         FNLuaCallback   callback() const { return m_callback; }
 
-        virtual void    install(InstallInfoAPI&) const override;
+        virtual bool    push_it(InstallInfoAPI&) const override;
     
     protected:
         friend class ModuleInfo;
@@ -35,8 +35,6 @@ namespace yq::lua {
         argument_info_vector_t  m_results;
         value_info_vector_t     m_upvalues;
         FNLuaCallback           m_callback      = nullptr;
-        
-        bool push_it(InstallInfoAPI&) const;
     };
 
 }

@@ -28,18 +28,6 @@ namespace yq::lua {
         m_upvalues.clear();
     }
 
-    void    FunctionInfo::install(InstallInfoAPI& api) const 
-    {
-        if(!api.lvm)
-            return ;
-
-        // global detection (later)
-        
-        if(push_it(api)){
-            lua_setglobal(api.lvm, key().c_str());
-        }
-    }
-
     bool    FunctionInfo::is_global() const 
     {
         return parent() && parent()->is_global();
@@ -47,6 +35,8 @@ namespace yq::lua {
 
     bool FunctionInfo::push_it(InstallInfoAPI&api) const
     {
+        if(!api.lvm)
+            return false;
         if(!m_callback)
             return false;
         if(m_upvalues.empty()){

@@ -55,13 +55,14 @@ namespace yq::lua {
         //! Adds an raw pointer
         ValueInfo*          add(const std::string&, raw_k, void*);
 
+        virtual bool        install(InstallInfoAPI&) const override;
+
     protected:
         friend class Repo;
     
         ModuleInfo(const std::string&);
         virtual ~ModuleInfo();
     
-    private:
         info_map_t          m_components;
     };
 
@@ -71,6 +72,8 @@ namespace yq::lua {
         virtual ~GlobalModuleInfo();
 
         virtual bool    is_global() const { return true; }
+
+        virtual bool    install(InstallInfoAPI&) const override;
     };
 
 }

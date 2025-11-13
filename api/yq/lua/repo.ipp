@@ -22,7 +22,7 @@ namespace yq::lua {
         return *s_repo;
     }
     
-    Repo::Repo(const std::source_location& sl) : Meta("yq::lua::Repo", sl) 
+    Repo::Repo(const std::source_location& sl) : Meta("yq::lua::Repo", sl)
     {
     }
     
@@ -86,7 +86,7 @@ namespace yq::lua {
             return { nullptr, false };
         if(m_global)
             return { m_global, false };
-        m_global    = new ModuleInfo("_G");
+        m_global    = new GlobalModuleInfo;
         m_global -> brief("Lua globals");
         m_global -> help(R"VOGON(
 This is the lua global table.  Listed are functions/values registered with

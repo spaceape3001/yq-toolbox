@@ -40,10 +40,13 @@ namespace yq::lua {
         virtual bool    is_type() const { return false; }
         virtual bool    is_value() const { return false; }
     
-        // Installs ourself to the given table (using our key)
-        virtual void    install(InstallInfoAPI&) const {}
+        // Installs ourself, appropriately (Global/top level scope)
+        virtual bool    install(InstallInfoAPI&) const { return false; }
     
         const Info*     parent() const { return m_parent; }
+        
+        //! Pushs the value/function onto the stack (ready for installation, wherever)
+        virtual bool    push_it(InstallInfoAPI&) const { return false; }
     
     protected:
         friend class ModuleInfo;
