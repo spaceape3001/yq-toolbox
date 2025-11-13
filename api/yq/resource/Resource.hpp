@@ -369,6 +369,7 @@ namespace yq {
             return load((std::string_view) u, options);
         }
         
+        //! Loads the given resource (short specification) as the given type
         static Ref<const A> load(const char* u, const ResourceLoadOptions& options={})
         {
             return load((std::string_view) u, options);
