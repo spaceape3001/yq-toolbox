@@ -199,9 +199,23 @@ namespace yq::lua {
         return nullptr;
     }
     
-    bool    ModuleInfo::install(InstallInfoAPI&) const 
+    bool    ModuleInfo::install(InstallInfoAPI& api) const 
     {
-        return false;
+        if(!api.lvm)
+            return false;
+
+        lua_getglobal(api.lvm, key().c_str());
+        if(lua_type(api.lvm, -1) != LUA_TTABLE){    // in case there's an existing package
+            _pop(api.lvm);
+            lua_newtable(api.lvm);
+        }
+        int tm  = lua_gettop(api.lvm);
+        for(auto& i : m_components){
+            if(i.second->push_it(api))
+                lua_setfield(api.lvm, tm, i.first.c_str());
+        }
+        lua_setglobal(api.lvm, key().c_str());
+        return true;
     }
 
     //////////////////

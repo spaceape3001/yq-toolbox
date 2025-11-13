@@ -6,6 +6,7 @@
 
 add_library(mathlua SHARED 
     common.cpp
+    trigonometry.cpp
 )
 
 
