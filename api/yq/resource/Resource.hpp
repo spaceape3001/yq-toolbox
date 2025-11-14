@@ -375,6 +375,7 @@ namespace yq {
             return load((std::string_view) u, options);
         }
         
+        //! Loads the given resource (filepath) as the given type
         static Ref<const A> load(const std::filesystem::path& u, const ResourceLoadOptions& options={})
         {
             ResourceCPtr       ret = Resource::resource_load(meta<A>(), u, options);
