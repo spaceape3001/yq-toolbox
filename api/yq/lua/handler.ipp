@@ -18,7 +18,15 @@ namespace yq::lua {
     {
         if(!_gc(l, 1, OBJECT))
             return 0;
-        _pop(l);
+        _pop(l);        // need to verify 
+        return -1;
+    }
+
+    int lh_gc_type(lua_State* l)
+    {
+        if(!_gc(l, 1, TYPE))
+            return 0;
+        _pop(l);        // need to verify 
         return -1;
     }
 

@@ -9,4 +9,6 @@
 #include <yq/lua/lualua.hpp>
 #include <yq/lua/extract.hxx>
 #include <yq/lua/push.hxx>
+#include <yq/lua/repo.hxx>
+#include <yq/lua/register.hxx>
 #include <yq/lua/set.hxx>

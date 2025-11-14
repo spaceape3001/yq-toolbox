@@ -131,7 +131,7 @@ our lua registry.
         auto i = m_types.find(tm.id());
         if(i != m_types.end())
             return { const_cast<TypeInfo*>(i->second), false };
-            
+
         TypeInfo* ret = new TypeInfo(tm);
         m_types[tm.id()] = ret;
         return { ret, true };

@@ -54,6 +54,8 @@ namespace yq {
         //! All aliases for this type info
         //const std::vector<std::string_view>&    aliases() const { return m_aliases; }
         
+
+
         //! TRUE if this type has a string parser defined for it
         bool        can_parse() const { return m_parse != nullptr; }
         
@@ -84,7 +86,11 @@ namespace yq {
         {
             return copy(dst, &src, meta<T>());
         }
-    
+        
+        void*           copy(allocate_k, const void* src) const;
+        
+        void            destroy(void*) const;
+        
         //! The "generic" classification for this meta which is type.
         virtual const char*     generic() const override { return "Type"; }
 
@@ -180,6 +186,9 @@ namespace yq {
         typedef void        (*FNCtorCopyRawBlk)(DataBlock&, const void*);
         //! Function to construct the data into a block from another data block
         typedef void        (*FNCtorCopyBlkBlk)(DataBlock&, const DataBlock&);
+        
+        typedef void*       (*FNCtorCopyRawNew)(const void*);
+        typedef void*       (*FNCtorCopyBlkNew)(const DataBlock&);
 
             //  MOVE CONSTRUCTORS
         //! Function to move the data (as a move constructor) from block to block
@@ -188,6 +197,8 @@ namespace yq {
             //  DESTRUCTOR
         //! Function to delete from a data block
         typedef void        (*FNDtor)(DataBlock&);
+
+        typedef void        (*FNDtorDelete)(void*);
 
         //! Function to compare two data blocks
         typedef bool        (*FNCompare)(const DataBlock&, const DataBlock&);
@@ -305,6 +316,12 @@ namespace yq {
         
         //! Our copy constructor (from raw pointer)
         FNCtorCopyRawBlk        m_ctorCopyR     = nullptr;
+        
+        //! Our copy constructor (from raw to new)
+        FNCtorCopyRawNew        m_ctorCopyRN    = nullptr;
+
+        //! Our copy constructor (from block to new)
+        FNCtorCopyBlkNew        m_ctorCopyBN    = nullptr;
 
         //! Our copy constructor (from another block)
         FNCtorCopyBlkBlk        m_ctorCopyB     = nullptr;
@@ -314,6 +331,9 @@ namespace yq {
         
         //! Destructor from block
         FNDtor                  m_dtor          = nullptr;
+        
+        //! Destructor with raw pointer
+        FNDtorDelete            m_dtorDelete    = nullptr;
         
         //! Equality comparison
         FNCompare               m_equal         = nullptr;

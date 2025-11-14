@@ -23,6 +23,7 @@ namespace yq::errors {
     using lua_not_table                         = error_db::entry<"Lua item is not a table">;
     using lua_null                              = error_db::entry<"Null LuaState">;
     using lua_null_pointer                      = error_db::entry<"Lua table does not contain a valid pointer field">;
+    using lua_push_failed                       = error_db::entry<"Lua failed to push value">;
     using lua_value_out_of_range                = error_db::entry<"Value is out of range">;
     using lua_runtime                           = error_db::entry<"Runtime Lua error">;
     using lua_syntax                            = error_db::entry<"Lua syntax error">;

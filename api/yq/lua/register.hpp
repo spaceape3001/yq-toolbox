@@ -10,6 +10,8 @@
 #include <string>
 
 namespace yq::lua {
+    template <typename> class TypedTypeInfo;
+
     std::pair<ModuleInfo*,bool>     reg_edit(global_k);
     std::pair<ModuleInfo*,bool>     reg_edit(module_k, const std::string&);
     std::pair<ObjectInfo*,bool>     reg_edit(const ObjectMeta&);
@@ -29,4 +31,11 @@ namespace yq::lua {
     
     ModuleInfo*     reg(module_k, const std::string&);
     
+    
+    ObjectInfo*     reg(const ObjectMeta&);
+
+    TypeInfo*       reg(const TypeMeta&);
+    
+    template <typename>
+    auto            reg();
 }

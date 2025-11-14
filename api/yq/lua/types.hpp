@@ -46,6 +46,7 @@ namespace yq::lua {
     };
 
     enum class X : uint8_t {
+        Any,
         Object,
         Const,
         Delete,
@@ -53,7 +54,9 @@ namespace yq::lua {
     };
     using XFlags    = Flags<X, int32_t>;
 
-    typedef int (*FNLuaCallback)(lua_State*);
+    typedef int     (*FNLuaCallback)(lua_State*);
+    typedef bool    (*FNLuaPush)(lua_State*, const void*);
+    typedef bool    (*FNLuaExtract)(lua_State*, int, void*);
 
     using value_t = std::variant<
         std::monostate,
@@ -103,6 +106,8 @@ namespace yq::lua {
     class TypeInfo;
     class ValueInfo;
     class Repo;
+    
+    template <typename> class TypedTypeInfo;
     
     using argument_info_vector_t    = std::vector<const ArgumentInfo*>;
     using function_info_map_t       = std::map<std::string,const FunctionInfo*>;

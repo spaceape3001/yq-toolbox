@@ -194,6 +194,17 @@ namespace yq {
         return cvt(dst, src);
     }
 
+    void*       TypeMeta::copy(allocate_k, const void* src) const
+    {
+        return m_ctorCopyRN(src);
+    }
+
+    void            TypeMeta::destroy(void*tgt) const
+    {   
+        if(tgt)
+            m_dtorDelete(tgt);
+    }
+    
     size_t                              TypeMeta::method_count() const
     {
         return m_methods.all.size();

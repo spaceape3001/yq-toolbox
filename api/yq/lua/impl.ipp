@@ -13,7 +13,9 @@
 #include <yq/lua/impl.hpp>
 #include <yq/lua/keys.hpp>
 #include <yq/lua/push.hpp>
+#include <yq/lua/repo.hpp>
 #include <yq/lua/set.hpp>
+#include <yq/lua/info/TypeInfo.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 #include <lua.hpp>
@@ -50,6 +52,24 @@ namespace yq::lua {
         return flags;
     }
 
+    bool    _gc(lua_State*l, int n, type_k)
+    {
+        if(!l)
+            return false;
+        if(!lua_istable(l, n))
+            return false;
+
+        XFlags flags                = _flags(l, n);
+        if(!flags(X::Any))
+            return false;
+        const TypeMeta* type        = _meta(l, n, TYPE);
+        if(!type)
+            return false;
+        
+        
+        //  todo....
+        return false;
+    }
 
     bool    _gc(lua_State*l, int n, object_k)
     {
@@ -58,8 +78,11 @@ namespace yq::lua {
         if(!lua_istable(l, n))
             return false;
 
-        Object*obj                  = _object(l, n);
         XFlags flags                = _flags(l, n);
+        if(!flags(X::Object))
+            return false;
+
+        Object*obj                  = _object(l, n);
         const ObjectMeta*   meta    = _meta(l, n, OBJECT);
 
         if(!obj || !meta)               // neither meta nor obj
@@ -109,6 +132,13 @@ namespace yq::lua {
         std::string name(om.name());
         luaL_newmetatable(l, name.c_str());
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_object);
+    }
+    
+    void        _metamake(lua_State* l, const TypeMeta& tm)
+    {
+        std::string name(tm.name());
+        luaL_newmetatable(l, name.c_str());
+        set(l, -1, TABLE, keyGarbageCollection, lh_gc_type);
     }
     
     Object*     _object(lua_State *l, int n)
@@ -185,6 +215,46 @@ namespace yq::lua {
         if(lua_isnil(l, -1)){
             _pop(l);
             _metamake(l, obj->metaInfo());
+        }
+        
+        lua_setmetatable(l, -1);    // think this works....
+        return {};
+    }
+    
+    std::error_code _push(lua_State* l, const Any& any, XFlags flags)
+    {
+        if(!l)
+            return errors::lua_null();
+        
+        if(!any.invalid()){
+            lua_pushnil(l);
+            return {};
+        }
+        
+        flags |= X::Any;
+        
+        const TypeMeta* tmeta   = &any.type();
+        const TypeInfo* tinfo   = Repo::instance().info(any.type());
+        
+        FNLuaPush       fnpush  = tinfo ? tinfo->pusher() : nullptr;
+        if(fnpush){
+            if(!fnpush(l, any.raw_ptr()))
+                return errors::lua_push_failed();
+            if(lua_type(l, -1) != LUA_TTABLE)   // some simple types might do a direct LUA push (w/o table)
+                return {};
+        } else {
+            // TODO
+        }
+        
+        set(l, -1, TABLE, keyMeta, RAW, (void*) tmeta);
+        set(l, -1, TABLE, keyFlags, flags.value());
+        
+        std::string name    = std::string(tmeta->name());
+        luaL_getmetatable(l, name.c_str());
+        
+        if(lua_isnil(l, -1)){
+            _pop(l);
+            _metamake(l, *tmeta);
         }
         
         lua_setmetatable(l, -1);    // think this works....

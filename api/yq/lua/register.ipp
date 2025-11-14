@@ -97,6 +97,16 @@ namespace yq::lua {
         return reg_edit(MODULE, k).first;
     }
 
+    ObjectInfo*     reg(const ObjectMeta& om)
+    {
+        return reg_edit(om).first;
+    }
+    
+    TypeInfo*       reg(const TypeMeta&tm)
+    {
+        return reg_edit(tm).first;
+    }
+
         ///
 
     std::pair<ModuleInfo*,bool>  reg_edit(global_k)

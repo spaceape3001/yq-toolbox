@@ -112,19 +112,25 @@ namespace yq {
         {
             TypeMeta::m_default.ctorCopy(T{});
             TypeMeta::m_copyB         = [](DataBlock& dst, const DataBlock&src){
-                dst.reference<T>()  = src.reference<T>();
+                dst.reference<T>()   = src.reference<T>();
             };
             TypeMeta::m_copyR        = [](DataBlock& dst, const void* src){
-                dst.reference<T>()  = *(const T*) src;
+                dst.reference<T>()   = *(const T*) src;
             };
-            TypeMeta::m_copyRR      = [](void* dst, const void* src){
-                *(T*) dst           = *(const T*) src;
+            TypeMeta::m_copyRR       = [](void* dst, const void* src){
+                *(T*) dst            = *(const T*) src;
             };
             TypeMeta::m_ctorCopyR     = [](DataBlock& dst, const void* src){ 
                 dst.ctorCopy(*(const T*) src); 
             };
             TypeMeta::m_ctorCopyB     = [](DataBlock& dst, const DataBlock& src){ 
                 dst.ctorCopy( src.reference<T>());
+            };
+            TypeMeta::m_ctorCopyRN     = [](const void* src) -> void* {
+                return new T(*(const T*) src);
+            };
+            TypeMeta::m_ctorCopyBN     = [](const DataBlock& src) -> void* {
+                return new T( src.reference<T>() );
             };
             TypeMeta::m_ctorMove      = [](DataBlock& dst, DataBlock&& src){
                 if constexpr (sizeof(T) <= sizeof(DataBlock))
@@ -135,6 +141,10 @@ namespace yq {
             TypeMeta::m_dtor          = [](DataBlock& tgt)
             {
                 tgt.dtor<T>();
+            };
+            TypeMeta::m_dtorDelete      = [](void* tgt)
+            {
+                delete (T*) tgt;
             };
             TypeMeta::m_equal         = [](const DataBlock& a, const DataBlock& b) -> bool 
             {
