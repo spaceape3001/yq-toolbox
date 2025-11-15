@@ -382,6 +382,7 @@ namespace yq {
             return static_cast<const A*>(ret.ptr());
         }
         
+        //! Loads the given resource (url) as the given type
         static Ref<const A> load(const UrlView& u, const ResourceLoadOptions& options={})
         {
             ResourceCPtr       ret = Resource::resource_load(meta<A>(), u, options);
