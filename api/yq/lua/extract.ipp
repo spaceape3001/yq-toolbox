@@ -35,10 +35,10 @@ namespace yq::lua {
         if(!*key)
             return errors::bad_argument();
 
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
+
         auto ret = boolean(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -70,10 +70,9 @@ namespace yq::lua {
         if(!*key)
             return errors::bad_argument();
 
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
         auto ret = double_(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -105,10 +104,9 @@ namespace yq::lua {
         if(!*key)
             return errors::bad_argument();
 
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
         auto ret = integer(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -227,11 +225,10 @@ namespace yq::lua {
             return errors::null_pointer();
         if(!*key)
             return errors::bad_argument();
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
-            
+
+        lua_getglobal(l, key);
         auto ret            = object(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -243,11 +240,11 @@ namespace yq::lua {
             return errors::null_pointer();
         if(!*key)
             return errors::bad_argument();
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+
+        lua_getglobal(l, key);
             
         auto ret            = object(l, -1, CONST);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -259,11 +256,11 @@ namespace yq::lua {
             return errors::null_pointer();
         if(!*key)
             return errors::bad_argument();
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+
+        lua_getglobal(l, key);
             
         auto ret            = object(l, -1, om);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
     
@@ -275,11 +272,10 @@ namespace yq::lua {
             return errors::null_pointer();
         if(!*key)
             return errors::bad_argument();
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
             
         auto ret            = object(l, -1, om, CONST);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
@@ -327,23 +323,21 @@ namespace yq::lua {
         if(!*key)
             return errors::bad_argument();
         
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
         auto ret = pointer(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
-    
-    string_view_x       string(lua_State*l, int n)
+    string_x        string(lua_State*l, int n)
     {
         if(!l)
             return errors::lua_null();
-        size_t  sz  = 0;
+        size_t sz = 0;
         const char* v   = lua_tolstring(l, n, &sz);
         if(!v)
             return errors::lua_bad_type();
-        return std::string_view(v, sz);
+        return std::string(v);
     }
 
     string_x            string(lua_State*l, global_k, const char*key)
@@ -355,22 +349,21 @@ namespace yq::lua {
         if(!*key)
             return errors::bad_argument();
         
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
             
         auto x              = string(l, -1);
         string_x    ret;
         if(x){
-            ret     = std::string(*x);
+            ret     = *x;
         } else {
             ret     = unexpected(x.error());
         }
         
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 
-    string_view_x       string(lua_State*l, upvalue_k, int n)
+    string_x       string(lua_State*l, upvalue_k, int n)
     {
         if((n<0) || (n>MAX_UPVALUES))
             return errors::bad_argument();
@@ -411,11 +404,10 @@ namespace yq::lua {
         if(!*key)
             return errors::bad_argument();
         
-        if(lua_getglobal(l, key) != LUA_OK)
-            return errors::lua_bad_global();
+        lua_getglobal(l, key);
             
         auto ret            = voidptr(l, -1);
-        lua_pop(l, -1);
+        _pop(l);
         return ret;
     }
 

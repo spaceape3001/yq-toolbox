@@ -6,12 +6,9 @@
 
 #pragma once
 
-#include <yq/lua/info/ArgumentInfo.hpp>
+#include <string>
 
-namespace yq::lua {
-    ArgumentInfo::ArgumentInfo(const std::string& z) : Info(z)
-    {
-    }
-    
-    ArgumentInfo::~ArgumentInfo() = default;
+namespace yq {
+    std::string iso8601basic_now();
 }
+

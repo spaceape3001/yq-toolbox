@@ -10,7 +10,7 @@
 #include <yq/meta/Meta.hpp>
 
 namespace yq::lua {
-    ModuleInfo::ModuleInfo(const char* z) : Info(z)
+    ModuleInfo::ModuleInfo(const std::string& z) : Info(z)
     {
     }
     
@@ -21,7 +21,7 @@ namespace yq::lua {
         m_components.clear();
     }
 
-    FunctionInfo*       ModuleInfo::add(const char* k, function_k)
+    FunctionInfo*       ModuleInfo::add(const std::string& k, function_k)
     {
         auto [x,f] = edit(FUNCTION, k);
         if(!f)
@@ -30,7 +30,7 @@ namespace yq::lua {
     }
     
 
-    ValueInfo*          ModuleInfo::add(const char* k, value_k)
+    ValueInfo*          ModuleInfo::add(const std::string& k, value_k)
     {
         auto [x,f] = edit(VALUE, k);
         if(!f)
@@ -38,7 +38,7 @@ namespace yq::lua {
         return x;
     }
     
-    FunctionInfo*       ModuleInfo::add(const char* k, FNLuaCallback fn)
+    FunctionInfo*       ModuleInfo::add(const std::string& k, FNLuaCallback fn)
     {
         if(!fn)
             return nullptr;
@@ -51,7 +51,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char* k, bool v)
+    ValueInfo*          ModuleInfo::add(const std::string& k, bool v)
     {
         auto [x,f]  = edit(VALUE, k);
         if(!f)
@@ -62,7 +62,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char*k, double v)
+    ValueInfo*          ModuleInfo::add(const std::string&k, double v)
     {
         auto [x,f]  = edit(VALUE, k);
         if(!f)
@@ -73,7 +73,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char*k, int v)
+    ValueInfo*          ModuleInfo::add(const std::string&k, int v)
     {
         auto [x,f]  = edit(VALUE, k);
         if(!f)
@@ -84,7 +84,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char*k, std::string_view v)
+    ValueInfo*          ModuleInfo::add(const std::string&k, std::string_view v)
     {
         auto [x,f]  = edit(VALUE, k);
         if(!f)
@@ -95,7 +95,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char*k, const Object* v)
+    ValueInfo*          ModuleInfo::add(const std::string&k, const Object* v)
     {
         if(!v)
             return nullptr;
@@ -111,7 +111,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char*k, Object* v)
+    ValueInfo*          ModuleInfo::add(const std::string&k, Object* v)
     {
         if(!v)
             return nullptr;
@@ -128,7 +128,7 @@ namespace yq::lua {
         return x;
     }
     
-    ValueInfo*          ModuleInfo::add(const char*k, raw_k, void* v)
+    ValueInfo*          ModuleInfo::add(const std::string&k, raw_k, void* v)
     {
         if(!v)
             return nullptr;
@@ -143,9 +143,9 @@ namespace yq::lua {
         return x;
     }
 
-    std::pair<FunctionInfo*,bool>   ModuleInfo::edit(function_k, const char* k)
+    std::pair<FunctionInfo*,bool>   ModuleInfo::edit(function_k, const std::string& k)
     {
-        if(!k || !*k || !Meta::thread_safe_write())
+        if(k.empty() || !Meta::thread_safe_write())
             return { nullptr, false };
         auto x = m_components.find(k);
         if(x != m_components.end())
@@ -156,9 +156,9 @@ namespace yq::lua {
         return { ret, true };
     }
 
-    std::pair<ValueInfo*,bool>   ModuleInfo::edit(value_k, const char* k)
+    std::pair<ValueInfo*,bool>   ModuleInfo::edit(value_k, const std::string& k)
     {
-        if(!k || !*k || !Meta::thread_safe_write())
+        if(k.empty() || !Meta::thread_safe_write())
             return { nullptr, false };
         auto x = m_components.find(k);
         if(x != m_components.end())
@@ -169,9 +169,9 @@ namespace yq::lua {
         return { ret, true };
     }
     
-    const Info*         ModuleInfo::info(const char*k) const
+    const Info*         ModuleInfo::info(const std::string&k) const
     {
-        if(!k || !*k)
+        if(k.empty())
             return nullptr;
         auto x = m_components.find(k);
         if(x != m_components.end())
@@ -179,9 +179,9 @@ namespace yq::lua {
         return nullptr;
     }
     
-    const FunctionInfo* ModuleInfo::info(function_k, const char*k) const
+    const FunctionInfo* ModuleInfo::info(function_k, const std::string& k) const
     {
-        if(!k || !*k)
+        if(k.empty())
             return nullptr;
         auto x = m_components.find(k);
         if(x != m_components.end())
@@ -189,9 +189,9 @@ namespace yq::lua {
         return nullptr;
     }
 
-    const ValueInfo*    ModuleInfo::info(value_k, const char*k) const
+    const ValueInfo*    ModuleInfo::info(value_k, const std::string& k) const
     {
-        if(!k || !*k)
+        if(k.empty())
             return nullptr;
         auto x = m_components.find(k);
         if(x != m_components.end())
@@ -199,6 +199,25 @@ namespace yq::lua {
         return nullptr;
     }
     
+    bool    ModuleInfo::install(InstallInfoAPI& api) const 
+    {
+        if(!api.lvm)
+            return false;
+
+        lua_getglobal(api.lvm, key().c_str());
+        if(lua_type(api.lvm, -1) != LUA_TTABLE){    // in case there's an existing package
+            _pop(api.lvm);
+            lua_newtable(api.lvm);
+        }
+        int tm  = lua_gettop(api.lvm);
+        for(auto& i : m_components){
+            if(i.second->push_it(api))
+                lua_setfield(api.lvm, tm, i.first.c_str());
+        }
+        lua_setglobal(api.lvm, key().c_str());
+        return true;
+    }
+
     //////////////////
 
     GlobalModuleInfo::GlobalModuleInfo() : ModuleInfo("_G")
@@ -207,5 +226,16 @@ namespace yq::lua {
     
     GlobalModuleInfo::~GlobalModuleInfo()
     {
+    }
+
+    bool    GlobalModuleInfo::install(InstallInfoAPI& api) const 
+    {
+        if(!api.lvm)
+            return false;
+        for(auto& i : m_components){
+            if(i.second->push_it(api))
+                lua_setglobal(api.lvm, i.first.c_str());
+        }
+        return true;
     }
 }

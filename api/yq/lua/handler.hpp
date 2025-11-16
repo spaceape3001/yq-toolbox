@@ -18,6 +18,8 @@ namespace yq::lua {
     
     //! Deletes the items in the stack
     int lh_gc_object(lua_State*);
+
+    int lh_gc_type(lua_State*);
     
     //! Writes to the specified stream
     //! \tparam stream Pointer to stream

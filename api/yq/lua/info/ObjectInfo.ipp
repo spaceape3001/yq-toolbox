@@ -10,7 +10,7 @@
 #include <yq/meta/ObjectMeta.hpp>
 
 namespace yq::lua {
-    ObjectInfo::ObjectInfo(const ObjectMeta& om) : ModuleInfo(om.name().data()), m_meta(om)
+    ObjectInfo::ObjectInfo(const ObjectMeta& om) : ModuleInfo(std::string(om.stem())), m_meta(om)
     {
     }
     

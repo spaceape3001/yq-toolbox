@@ -10,6 +10,9 @@
 #include <yq/meta/Meta.hpp>
 
 namespace yq::lua {
+    template <typename> class TypedTypeInfo;
+    template <typename> class TypedObjectInfo;
+
     class Repo : public Meta {
     public:
     
@@ -20,16 +23,23 @@ namespace yq::lua {
         const type_info_map_t& types() const { return m_types; }
 
         const ModuleInfo*   info(global_k) const;
-        const ModuleInfo*   info(module_k, const char*) const;
+        const ModuleInfo*   info(module_k, const std::string&) const;
         const ObjectInfo*   info(const ObjectMeta&) const;
         const TypeInfo*     info(const TypeMeta&) const;
         
-        std::pair<ModuleInfo*,bool>         edit(global_k);
-        std::pair<ModuleInfo*,bool>         edit(module_k, const char*);
-        std::pair<ObjectInfo*,bool>         edit(const ObjectMeta&);
-        std::pair<TypeInfo*,bool>           edit(const TypeMeta&);
+        std::pair<ModuleInfo*,bool>             edit(global_k);
+        std::pair<ModuleInfo*,bool>             edit(module_k, const std::string&);
+        std::pair<ObjectInfo*,bool>             edit(const ObjectMeta&);
+        
+        std::pair<TypeInfo*,bool>               edit(const TypeMeta&);
+
+        template <typename T>
+        std::pair<TypedTypeInfo<T>*,bool>       edit(type_k);
+        template <typename T>
+        std::pair<TypedObjectInfo<T>*,bool>     edit(object_k);
 
     private:
+
         Repo(const std::source_location& sl = std::source_location::current());
         ~Repo();
         

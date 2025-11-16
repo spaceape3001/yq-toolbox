@@ -20,9 +20,19 @@ namespace yq::lua {
 
     bool    has(lua_State* l, global_k, const char* key);
 
+    Stream* stream(lua_State*, error_k);
+    Stream* stream(lua_State*, output_k);
+    Stream* stream(lua_State*, warning_k);
+
     // LuaVM from the lua state (could be null if unavailble)
     LuaVM*  vm(lua_State*);
     
     void    initialize();
-    
+ 
+    void    complaint(lua_State*l, std::string_view txt);
+    void    warning(lua_State*l, std::string_view txt);
+}
+
+namespace yq {
+    void    lua_initialize();
 }

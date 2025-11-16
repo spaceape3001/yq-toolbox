@@ -24,6 +24,7 @@ namespace yq::lua {
     //
 
     bool                _gc(lua_State*, int, object_k);
+    bool                _gc(lua_State*, int, type_k);
     
     //! Assumes the pointer of the meta field on the given table is a valid meta thing
     
@@ -42,8 +43,11 @@ namespace yq::lua {
     */
     const TypeMeta*     _meta(lua_State*l, int n, type_k);
 
-    // Creates a meta table
+    // Creates a meta table (leaving it on the stack)
     void                _metamake(lua_State*, const ObjectMeta&);
+
+    // Creates a meta table (leaving it on the stack)
+    void                _metamake(lua_State*, const TypeMeta&);
     
     Object*             _object(lua_State *l, int n);
     

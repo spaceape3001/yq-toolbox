@@ -13,6 +13,7 @@
 #include <yq/lua/info/TypeInfo.hpp>
 #include <yq/lua/info/ValueInfo.hpp>
 #include <yq/meta/Meta.hpp>
+#include <yq/text/match.hpp>
 
 namespace yq::lua {
     Repo&    Repo::instance()
@@ -21,7 +22,7 @@ namespace yq::lua {
         return *s_repo;
     }
     
-    Repo::Repo(const std::source_location& sl) : Meta("yq::lua::Repo", sl) 
+    Repo::Repo(const std::source_location& sl) : Meta("yq::lua::Repo", sl)
     {
     }
     
@@ -85,13 +86,18 @@ namespace yq::lua {
             return { nullptr, false };
         if(m_global)
             return { m_global, false };
-        m_global    = new ModuleInfo("_G");
+        m_global    = new GlobalModuleInfo;
+        m_global -> brief("Lua globals");
+        m_global -> help(R"VOGON(
+This is the lua global table.  Listed are functions/values registered with
+our lua registry.        
+)VOGON");
         return { m_global, true };
     }
 
-    std::pair<ModuleInfo*,bool>         Repo::edit(module_k, const char*k)
+    std::pair<ModuleInfo*,bool>         Repo::edit(module_k, const std::string&k)
     {
-        if(!k || !*k || !thread_safe_write())
+        if(k.empty() || !thread_safe_write())
             return { nullptr, false };
 
         auto i = m_modules.find(k);
@@ -125,7 +131,7 @@ namespace yq::lua {
         auto i = m_types.find(tm.id());
         if(i != m_types.end())
             return { const_cast<TypeInfo*>(i->second), false };
-            
+
         TypeInfo* ret = new TypeInfo(tm);
         m_types[tm.id()] = ret;
         return { ret, true };
@@ -147,10 +153,12 @@ namespace yq::lua {
     }
 */
     
-    const ModuleInfo*     Repo::info(module_k, const char* k) const
+    const ModuleInfo*     Repo::info(module_k, const std::string& k) const
     {
-        if(!k || !*k)
+        if(k.empty())
             return nullptr;
+        if(is_similar(k, "_G"))
+            return m_global;
         auto i = m_modules.find(k);
         if(i != m_modules.end())
             return i->second;

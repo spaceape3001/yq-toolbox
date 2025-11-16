@@ -21,7 +21,7 @@ namespace yq::stream {
     {
         if(buf && cb){
             m_output.write(buf, cb);
-            return m_output.fail();
+            return !m_output.fail();
         }
         return false;
     }

@@ -5,13 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <yq/typedef/rgb.hpp>
+#include <yq/typedef/rgba.hpp>
+#include <variant>
 
-#include <yq/lua/info/ArgumentInfo.hpp>
-
-namespace yq::lua {
-    ArgumentInfo::ArgumentInfo(const std::string& z) : Info(z)
-    {
-    }
-    
-    ArgumentInfo::~ArgumentInfo() = default;
+namespace yq {
+    using color_t = std::variant<std::monostate, RGBA4F, RGBA4U8, RGB3F, RGB3U8>;
 }

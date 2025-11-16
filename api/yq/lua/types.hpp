@@ -46,13 +46,17 @@ namespace yq::lua {
     };
 
     enum class X : uint8_t {
+        Any,
+        Object,
         Const,
         Delete,
         Ref
     };
     using XFlags    = Flags<X, int32_t>;
 
-    typedef int (*FNLuaCallback)(lua_State*);
+    typedef int     (*FNLuaCallback)(lua_State*);
+    typedef bool    (*FNLuaPush)(lua_State*, const void*);
+    typedef bool    (*FNLuaExtract)(lua_State*, int, void*);
 
     using value_t = std::variant<
         std::monostate,
@@ -103,11 +107,13 @@ namespace yq::lua {
     class ValueInfo;
     class Repo;
     
+    template <typename> class TypedTypeInfo;
+    
     using argument_info_vector_t    = std::vector<const ArgumentInfo*>;
-    using function_info_map_t       = std::map<const char*,const FunctionInfo*,XCase>;
-    using info_map_t                = std::map<const char*,const Info*,XCase>;
-    using info_mmap_t               = std::multimap<const char*,const Info*,XCase>;
-    using module_info_map_t         = std::map<const char*,const ModuleInfo*,XCase>;
+    using function_info_map_t       = std::map<std::string,const FunctionInfo*>;
+    using info_map_t                = std::map<std::string,const Info*>;
+    using info_mmap_t               = std::multimap<std::string,const Info*>;
+    using module_info_map_t         = std::map<std::string,const ModuleInfo*>;
     using object_info_map_t         = std::map<uint32_t, const ObjectInfo*>;
     using type_info_map_t           = std::map<uint32_t, const TypeInfo*>;
     using value_info_vector_t       = std::vector<const ValueInfo*>;

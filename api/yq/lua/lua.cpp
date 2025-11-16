@@ -14,6 +14,9 @@
         
     */
 
+#include "lualua.hpp"
+#include "logging.hpp"
+
 #include "extract.ipp"
 #include "handler.ipp"
 #include "impl.ipp"
@@ -22,6 +25,7 @@
 #include "register.ipp"
 #include "repo.ipp"
 #include "set.ipp"
+#include "stream.ipp"
 #include "writer.ipp"
 
 #include "info/ArgumentInfo.ipp"
@@ -32,23 +36,36 @@
 #include "info/TypeInfo.ipp"
 #include "info/ValueInfo.ipp"
 
-namespace yq::lua {
-    static void cfg_globals(lua_State*l)
+namespace yq {
+    void    lua_initialize()
     {
-        const ModuleInfo*   x   = info(GLOBAL);
-        if(!x)
-            return ;
-        
-        InstallInfoAPI  api{ .lvm=l };
-        for(const auto& i : x->components())
-            i.second->install(api);
+        lua::initialize();
+    }
+}
+
+namespace yq::lua {
+    void    complaint(lua_State*l, std::string_view txt)
+    {
+        Streamer    out(l);
+        out.error() << txt << '\n';
     }
 
     void    configure(lua_State*l)
     {
         if(!l)
             return;
-        cfg_globals(l);
+        
+        const Repo& _r  = Repo::instance();
+            
+        InstallInfoAPI  api{.lvm=l};
+        if(auto x = _r.info(GLOBAL))
+            x -> install(api);
+        for(auto& i : _r.modules())
+            i.second -> install(api);
+        for(auto& i : _r.objects()) 
+            i.second -> install(api);
+        for(auto& i : _r.types())
+            i.second -> install(api);
     }
 
 
@@ -71,11 +88,41 @@ namespace yq::lua {
         Repo::instance();
     }
 
+    Stream*             stream(lua_State*l, error_k)
+    {
+        auto x = voidptr(l, GLOBAL, keyError);
+        if(!x)
+            return nullptr;
+        return (Stream*) *x;
+    }
+    
+    Stream*             stream(lua_State*l, output_k)
+    {
+        auto x = voidptr(l, GLOBAL, keyOutput);
+        if(!x)
+            return nullptr;
+        return (Stream*) *x;
+    }
+    
+    Stream*             stream(lua_State*l, warning_k)
+    {
+        auto x = voidptr(l, GLOBAL, keyWarning);
+        if(!x)
+            return nullptr;
+        return (Stream*) *x;
+    }
+
     LuaVM* vm(lua_State* l)
     {
         void_ptr_x  x = voidptr(l, GLOBAL, keyVM);
         if(!x)
             return nullptr;
         return (LuaVM*) *x;
+    }
+
+    void    warning(lua_State*l, std::string_view txt)
+    {
+        Streamer    out(l);
+        out.warning() << txt << '\n';
     }
 }

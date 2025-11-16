@@ -11,6 +11,10 @@
 #include <yq/lua/types.hpp>
 #include <yq/typedef/expected.hpp>
 
+namespace yq {
+    class Stream;
+}
+
 namespace yq::lua {
     //////////////////////////////////////////////////////////////////////////////
     //  Extracting
@@ -91,17 +95,16 @@ namespace yq::lua {
     void_ptr_x              pointer(lua_State*, upvalue_k, int);
     
 
-
     //! Stack value as a string... 
     //! \note This will convert said value to a STRING
-    string_view_x           string(lua_State*,  int);
+    string_x                string(lua_State*,  int);
 
     //! Global as a string... 
     string_x                string(lua_State*, global_k, const char*);
 
     //! Stack value as a string... 
     //! \note This will convert said value to a STRING
-    string_view_x           string(lua_State*,  upvalue_k, int);
+    string_x                string(lua_State*,  upvalue_k, int);
 
     any_x                   value(lua_State*, int);
     any_x                   value(lua_State*, upvalue_k, int);

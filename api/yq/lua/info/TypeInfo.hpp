@@ -14,6 +14,9 @@ namespace yq::lua {
     
         virtual bool   is_type() const override { return true; }
 
+        FNLuaPush       pusher() const { return m_pusher; }
+        FNLuaExtract    extractor() const { return m_extractor; }
+    
     protected:
         friend class Repo;
 
@@ -23,8 +26,10 @@ namespace yq::lua {
         // printer helpers go in here
     
     private:
-    
-        const TypeMeta& m_meta;
+        const TypeMeta&     m_meta;
+    protected:
+        FNLuaPush           m_pusher    = nullptr;
+        FNLuaExtract        m_extractor = nullptr;
     };
 
 }

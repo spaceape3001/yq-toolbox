@@ -21,7 +21,7 @@ namespace yq::lua {
     protected:
         friend class FunctionInfo;
         
-        ArgumentInfo(const char* z);
+        ArgumentInfo(const std::string& z);
         virtual ~ArgumentInfo();
     
     private:

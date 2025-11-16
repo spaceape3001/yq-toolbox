@@ -14,6 +14,8 @@
 #include <yq/trait/has_one.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/typedef/rgba.hpp>
+#include <yq/typedef/color.hpp>
+#include <variant>
 
 namespace yq {
 
@@ -122,6 +124,8 @@ namespace yq {
         return { v.r, v.g, v.b };
     }
     #endif
+    
+    RGBA4F  rgba4f(const color_t&);
 
     YQ_NAN_1(RGBA, {nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>})
     YQ_ZERO_1(RGBA, {zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>})
