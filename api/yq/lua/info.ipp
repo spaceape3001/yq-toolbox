@@ -31,4 +31,13 @@ namespace yq::lua {
         return Repo::instance().info(tm);
     }
 
+    const ModuleInfo*       info(meta_k, const Meta& m)
+    {
+        return Repo::instance().info(META, m);
+    }
+    
+    const ModuleInfo*       info(meta_k, uint32_t id)
+    {
+        return Repo::instance().info(META, id);
+    }
 }

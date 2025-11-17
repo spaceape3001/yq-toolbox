@@ -204,7 +204,7 @@ namespace yq {
         if(tgt)
             m_dtorDelete(tgt);
     }
-    
+
     size_t                              TypeMeta::method_count() const
     {
         return m_methods.all.size();

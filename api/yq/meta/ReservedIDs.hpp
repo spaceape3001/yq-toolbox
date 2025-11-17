@@ -6,10 +6,6 @@
 
 #pragma once
 
-#ifndef YQ__CORE__OVERRIDE
-    #error  "Don't include this outside of the meta sub-comopnent!"
-#endif
-
 namespace yq {
     //  Reserved IDs
     enum {
@@ -29,6 +25,10 @@ namespace yq {
         MT_UInt16,
         MT_UInt32,
         MT_UInt64,
+        
+            // needed for Lua... won't validate otherwise
+        MT_Meta,
+        MT_Type,
         
         M_USER
     };

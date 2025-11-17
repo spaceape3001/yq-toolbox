@@ -6,6 +6,7 @@
 
 add_library(corelua SHARED 
     help.cpp
+    meta.cpp
     print.cpp
     stdtypes.cpp
 )

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/lua/types.hpp>
+#include <yq/meta/ReservedIDs.hpp>
 #include <string>
 
 namespace yq::lua {
@@ -14,6 +15,8 @@ namespace yq::lua {
 
     std::pair<ModuleInfo*,bool>     reg_edit(global_k);
     std::pair<ModuleInfo*,bool>     reg_edit(module_k, const std::string&);
+    std::pair<ModuleInfo*,bool>     reg_edit(meta_k, uint32_t);
+    std::pair<ModuleInfo*,bool>     reg_edit(meta_k, const Meta&);
     std::pair<ObjectInfo*,bool>     reg_edit(const ObjectMeta&);
     std::pair<TypeInfo*,bool>       reg_edit(const TypeMeta&);
     
@@ -31,10 +34,11 @@ namespace yq::lua {
     
     ModuleInfo*     reg(module_k, const std::string&);
     
-    
     ObjectInfo*     reg(const ObjectMeta&);
-
     TypeInfo*       reg(const TypeMeta&);
+    
+    ModuleInfo*     reg(meta_k, const Meta&);
+    ModuleInfo*     reg(meta_k, uint32_t);
     
     template <typename>
     auto            reg();

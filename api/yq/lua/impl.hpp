@@ -21,10 +21,8 @@ namespace yq::lua {
 
     XFlags              _flags(lua_State *l, int n);
 
-    //
-
-    bool                _gc(lua_State*, int, object_k);
-    bool                _gc(lua_State*, int, type_k);
+    std::error_code     _gc(lua_State*, int, object_k);
+    std::error_code     _gc(lua_State*, int, type_k);
     
     //! Assumes the pointer of the meta field on the given table is a valid meta thing
     
@@ -43,18 +41,18 @@ namespace yq::lua {
     */
     const TypeMeta*     _meta(lua_State*l, int n, type_k);
 
-    // Creates a meta table (leaving it on the stack)
-    void                _metamake(lua_State*, const ObjectMeta&);
-
-    // Creates a meta table (leaving it on the stack)
-    void                _metamake(lua_State*, const TypeMeta&);
-    
     Object*             _object(lua_State *l, int n);
+    
+    //! Assumes the given stack item is a table representing a complex thing,
+    //! Extracts the pointer from it
+    void*               _pointer(lua_State* l, int n);
     
     void                _pop(lua_State* l);
 
+    std::error_code     _push(lua_State*l, const Meta*, XFlags);
+
     std::error_code     _push(lua_State* l, Object* obj, XFlags flags);
-    bool                _push(lua_State* l, const value_t& val, unsigned n=0);
+    std::error_code     _push(lua_State* l, const value_t& val, unsigned n=0);
 
     //! Generic type string to a lua type ID (don't use with the meta)
     std::string_view    _type(int);

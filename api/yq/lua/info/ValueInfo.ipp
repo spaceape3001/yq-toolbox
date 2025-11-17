@@ -25,7 +25,7 @@ namespace yq::lua {
     {
         if(!api.lvm)
             return false;
-        return _push(api.lvm, m_value);
+        return _push(api.lvm, m_value) == std::error_code();
     }
 
     void       ValueInfo::type(const type_t& type)

@@ -8,6 +8,7 @@
 
 #include <yq/lua/repo.hpp>
 #include <yq/lua/info/TypeInfo.hxx>
+#include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 
@@ -18,7 +19,7 @@ namespace yq::lua {
         if(!Meta::thread_safe_write())
             return { nullptr, false };
     
-        Meta::id_t  id  = meta<T>().id();
+        Meta::id_t  id  = ::yq::meta<T>().id();
         
         auto x = m_objects.find(id);
         if(x != m_objects.end())
@@ -35,7 +36,7 @@ namespace yq::lua {
         if(!Meta::thread_safe_write())
             return { nullptr, false };
     
-        Meta::id_t  id  = meta<T>().id();
+        Meta::id_t  id  = ::yq::meta<T>().id();
         
         auto x = m_types.find(id);
         if(x != m_types.end())

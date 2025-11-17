@@ -243,7 +243,7 @@ namespace yq {
         FNFormat            printer() const { return m_print; }
         FNFormat            writer() const { return m_write; }
         FNParse             parser() const { return m_parse; }
-
+        
     protected:
     
         friend class PropertyMeta;

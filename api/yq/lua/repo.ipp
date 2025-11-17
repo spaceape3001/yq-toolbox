@@ -108,6 +108,23 @@ our lua registry.
         m_modules[k] = ret;
         return { ret, true };
     }
+
+    std::pair<ModuleInfo*,bool>     Repo::edit(meta_k, uint32_t id)
+    {
+        if(!thread_safe_write())
+            return { nullptr, false };
+        auto i = m_metas.find(id);
+        if(i != m_metas.end())
+            return { const_cast<ModuleInfo*>(i->second), false };
+        ModuleInfo* ret = new ModuleInfo(std::format("{}", id));
+        m_metas[id] = ret;
+        return {ret,true};
+    }
+
+    std::pair<ModuleInfo*,bool>     Repo::edit(meta_k, const Meta& m)
+    {
+        return edit(META, m.id());
+    }
     
     std::pair<ObjectInfo*,bool>         Repo::edit(const ObjectMeta& om)
     {
@@ -161,6 +178,19 @@ our lua registry.
             return m_global;
         auto i = m_modules.find(k);
         if(i != m_modules.end())
+            return i->second;
+        return nullptr;
+    }
+
+    const ModuleInfo*     Repo::info(meta_k, const Meta& m) const
+    {
+        return info(META, m.id());
+    }
+
+    const ModuleInfo*     Repo::info(meta_k, uint32_t id) const
+    {
+        auto i = m_metas.find(id);
+        if(i != m_metas.end())
             return i->second;
         return nullptr;
     }

@@ -15,6 +15,6 @@ namespace yq::lua {
         //  To avoid nasty things... NEVER DO MEMBERS/VIRTUAL OVERRIDES IN HERE!
         //  It needs to work with a type info being allocated (& casted into a typed type).
     
-        TypedObjectInfo() : ObjectInfo(meta<T>()){}
+        TypedObjectInfo() : ObjectInfo(::yq::meta<T>()){}
     };
 }

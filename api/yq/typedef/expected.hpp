@@ -15,7 +15,10 @@
 
 namespace yq {
     class Any;
+    class Meta;
     class Object;
+    class ObjectMeta;
+    class TypeMeta;
     
     using any_x         = Expect<Any>;
     using boolean_x     = Expect<bool>;
@@ -28,6 +31,8 @@ namespace yq {
     using int32_x       = Expect<int32_t>;
     using int64_x       = Expect<int64_t>;
     using int128_x      = Expect<int128_t>;
+    using meta_x        = Expect<const Meta*>;
+    using object_meta_x = Expect<const ObjectMeta*>;
     using object_ptr_x  = Expect<Object*>;
     using object_cptr_x = Expect<const Object*>;
     using short_x       = Expect<short>;
@@ -36,6 +41,7 @@ namespace yq {
     using string_view_x = Expect<std::string_view>;
     //using string_map_x  = Expect<StringMap>;
     //using string_set_x  = Expect<StringSet>;
+    using type_meta_x   = Expect<const TypeMeta*>;
     using uint8_x       = Expect<uint8_t>;
     using uint16_x      = Expect<uint16_t>;
     using uint32_x      = Expect<uint32_t>;

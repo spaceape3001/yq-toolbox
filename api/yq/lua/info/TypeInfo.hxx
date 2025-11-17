@@ -16,7 +16,7 @@ namespace yq::lua {
         //  To avoid nasty things... NEVER DO MEMBERS/VIRTUAL OVERRIDES IN HERE!
         //  It needs to work with a type info being allocated (& casted into a typed type).
     
-        TypedTypeInfo() : TypeInfo(meta<T>()){}
+        TypedTypeInfo() : TypeInfo(::yq::meta<T>()){}
         
         typedef bool (*FNPush)(lua_State*, const T&);
         typedef bool (*FNExtract)(lua_State*, int, T&);

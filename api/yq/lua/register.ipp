@@ -97,6 +97,16 @@ namespace yq::lua {
         return reg_edit(MODULE, k).first;
     }
 
+    ModuleInfo*     reg(meta_k, const Meta&m)
+    {
+        return reg_edit(META, m).first;
+    }
+
+    ModuleInfo*     reg(meta_k, uint32_t id)
+    {
+        return reg_edit(META, id).first;
+    }
+
     ObjectInfo*     reg(const ObjectMeta& om)
     {
         return reg_edit(om).first;
@@ -118,7 +128,17 @@ namespace yq::lua {
     {
         return Repo::instance().edit(MODULE, k);
     }
+
+    std::pair<ModuleInfo*,bool>     reg_edit(meta_k, const Meta&m)
+    {
+        return Repo::instance().edit(META, m);
+    }
     
+    std::pair<ModuleInfo*,bool>     reg_edit(meta_k, uint32_t id)
+    {
+        return Repo::instance().edit(META, id);
+    }
+
     std::pair<ObjectInfo*,bool>  reg_edit(const ObjectMeta&om)
     {
         return Repo::instance().edit(om);

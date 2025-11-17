@@ -118,6 +118,20 @@ namespace yq::lua {
         return {};
     }
 
+    std::error_code     push(lua_State*l, meta_k, const ObjectMeta*om)
+    {
+        if(!om)
+            return errors::null_pointer();
+        return _push(l, om, X::Object);
+    }
+    
+    std::error_code     push(lua_State*l, meta_k, const TypeMeta*tm)
+    {
+        if(!tm)
+            return errors::null_pointer();
+        return _push(l, tm, X::Type);
+    }
+
     std::error_code     push(lua_State*l, const_k, const Object* obj)
     {
         return _push(l, (Object*) obj, X::Const);

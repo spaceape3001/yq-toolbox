@@ -46,8 +46,9 @@ namespace yq::lua {
     };
 
     enum class X : uint8_t {
-        Any,
+        Type,
         Object,
+        Meta,
         Const,
         Delete,
         Ref
@@ -57,6 +58,7 @@ namespace yq::lua {
     typedef int     (*FNLuaCallback)(lua_State*);
     typedef bool    (*FNLuaPush)(lua_State*, const void*);
     typedef bool    (*FNLuaExtract)(lua_State*, int, void*);
+    typedef bool    (*FNLuaDivertor)(lua_State*, const void*);
 
     using value_t = std::variant<
         std::monostate,
@@ -117,6 +119,8 @@ namespace yq::lua {
     using object_info_map_t         = std::map<uint32_t, const ObjectInfo*>;
     using type_info_map_t           = std::map<uint32_t, const TypeInfo*>;
     using value_info_vector_t       = std::vector<const ValueInfo*>;
+    
+    using meta_module_map_t         = std::map<uint32_t, const ModuleInfo*>;
 
     static constexpr const int       MAX_UPVALUES    = 255;  // hardcoded in Lua
 }

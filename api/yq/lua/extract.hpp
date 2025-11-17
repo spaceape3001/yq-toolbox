@@ -46,6 +46,10 @@ namespace yq::lua {
     integer_x               integer(lua_State*, global_k, const char*);
     integer_x               integer(lua_State*, upvalue_k, int);
     
+    meta_x                  meta(lua_State*, int);
+    meta_x                  meta(lua_State*, global_k, const char*);
+    meta_x                  meta(lua_State*, upvalue_k, int);
+    
     object_ptr_x            object(lua_State*, int);
     object_cptr_x           object(lua_State*, int, const_k);
     object_ptr_x            object(lua_State*, int, const ObjectMeta&);
@@ -85,6 +89,17 @@ namespace yq::lua {
     template <class Obj>
     Expect<const Obj*>      object_as(lua_State*, upvalue_k, int, const_k);
 
+    object_meta_x           object_meta(lua_State*, int);
+    object_meta_x           object_meta(lua_State*, global_k, const char*);
+    object_meta_x           object_meta(lua_State*, upvalue_k, int);
+    
+    template <class Obj>
+    Expect<const typename Obj::MyInfo*>     object_meta_as(lua_State*, int);
+    template <class Obj>
+    Expect<const typename Obj::MyInfo*>     object_meta_as(lua_State*, global_k, const char*);
+    template <class Obj>
+    Expect<const typename Obj::MyInfo*>     object_meta_as(lua_State*, upvalue_k, int);
+
     //! Returns user data as a pointer (may or may not be lightweight)
     void_ptr_x              pointer(lua_State*, int);
 
@@ -105,6 +120,10 @@ namespace yq::lua {
     //! Stack value as a string... 
     //! \note This will convert said value to a STRING
     string_x                string(lua_State*,  upvalue_k, int);
+
+    type_meta_x             type_meta(lua_State*, int);
+    type_meta_x             type_meta(lua_State*, global_k, const char*);
+    type_meta_x             type_meta(lua_State*, upvalue_k, int);
 
     any_x                   value(lua_State*, int);
     any_x                   value(lua_State*, upvalue_k, int);
