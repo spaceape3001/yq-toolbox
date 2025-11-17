@@ -25,8 +25,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         lua_pushboolean(l, v);
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -41,8 +40,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         lua_pushnumber(l, v);
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -57,8 +55,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         lua_pushinteger(l, v);
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -73,8 +70,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         lua_pushlstring(l, v.data(), v.size());
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -91,8 +87,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         _push(l, const_cast<Object*>(v), X::Const );
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -109,8 +104,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         _push(l, v, XFlags{} );
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -127,8 +121,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         lua_pushlightuserdata(l, v );
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
     
@@ -149,8 +142,7 @@ namespace yq::lua {
 
         int tm  = lua_absindex(l, n);
         lua_pushcclosure(l, v, (int) cnt );
-        lua_pushstring(l, key);
-        lua_settable(l, tm);
+        lua_setfield(l, tm, key);
         return {};
     }
 

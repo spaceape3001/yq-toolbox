@@ -6,8 +6,9 @@
 
 #pragma once
 
-//#include <yq/lua/push.hpp>
+#include <yq/lua/logging.hpp>
 #include <yq/lua/extract.hxx>
+//#include <yq/lua/push.hpp>
 //#include <lua.hpp>
 
 // template based standard handlers
@@ -23,8 +24,9 @@ namespace yq::lua {
             auto x = ObjHelper<Obj>::object_meta_as(l, n);
             if(x){
                 push(l, META, *x);
-            } else
+            } else {
                 lua_pushnil(l);
+            }
         }
         return nargs;
     }

@@ -22,14 +22,20 @@ namespace yq::lua {
         return { v, sz };
     }
 
-    void    write_object(Stream&str, const ObjectMeta& om, lua_State*l, int n, const WriteOptions& options)
+
+    void    write_meta(Stream&str, const Meta& om, const WriteOptions& options)
     {
-        str << "(object:" << om.name() << ")";
+        str << "(meta: " << om.name() << ")";
     }
 
-    void    write_type(Stream&str, const TypeMeta& tm, lua_State*l, int n, const WriteOptions& options)
+    void    write_object(Stream&str, const ObjectMeta& om, const WriteOptions& options)
     {
-        str << "(type:" << tm.name() << ")";
+        str << "(object: " << om.name()<< ")";
+    }
+
+    void    write_type(Stream&str, const TypeMeta& tm, const WriteOptions& options)
+    {
+        str << "(" << tm.name() << ")";
     }
 
     void    write(Stream&str, lua_State*l, int n, const WriteOptions& options)
@@ -53,17 +59,16 @@ namespace yq::lua {
         case LUA_TTABLE:
             {
                 const XFlags flags  = _flags(l,n);
-                const Meta* m   = _meta(l, n);
-                if(m){
-                    if(m->is_object()){
-                        write_object(str, *(const ObjectMeta*) m, l, n, options);
-                        break;
-                    } else if(m->is_type()){
-                        write_type(str, *(const TypeMeta*) m, l, n, options);
-                        break;
-                    }
+                const Meta* m       = _meta(l, n);
+                if(m && flags(X::Meta)){
+                    write_meta(str, *m, options);
+                } else if(m && flags(X::Object)){
+                    write_object(str, *(const ObjectMeta*)m, options);
+                } else if(m && flags(X::Type)){
+                    write_type(str, *(const TypeMeta*) m, options);
+                } else {
+                    str << "(table)";
                 }
-                str << "(table)";
             }
             break;
         case LUA_TLIGHTUSERDATA:

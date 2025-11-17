@@ -115,12 +115,18 @@ namespace yq {
         
         const MT* find(const std::u32string_view k) const
         {
-            return lut32.first(k, nullptr);
+            const MT* x = lut32.first(k, nullptr);
+            if(!x)
+                x   = stem32.first(k, nullptr);
+            return x;
         }
         
         const MT* find(const std::string_view k) const
         {
-            return lut.first(k, nullptr);
+            const MT*   x = lut.first(k, nullptr);
+            if(!x)
+                x   = stem.first(k, nullptr);
+            return x;
         }
 
         const MT* find_stem(const std::u32string_view k) const
