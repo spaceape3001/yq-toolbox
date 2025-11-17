@@ -124,7 +124,7 @@ namespace yq {
         //! \note Takes ownership of the pointer (not going the unique_ptr route here...)
         static void         add_saver(ResourceSaver*);
 
-
+        //! Information structure associated with our resource (default is the base info)
         using MyInfo            = ResourceInfo;
     
         //! Resolve the given string to a filename
