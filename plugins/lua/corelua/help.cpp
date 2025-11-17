@@ -89,9 +89,24 @@ Help:
                 out.warning() << "No modules found\n";
             else
                 out << "Warning: No modules present\n";
+            return;
         }
+        size_t  mx  = 0;
         for(auto& i : modules)
-            out << i.first << '\n';
+            mx  = std::max(mx, i.first.size());
+
+        std::string         paddata(mx+2, ' ');
+        std::string_view    padder(paddata);
+
+        for(auto& i : modules){
+            out << i.first;
+            if(!i.second->brief().empty()){
+                out << padder.substr(i.first.size());
+                out << "-- ";
+                out << i.second->brief();
+            }
+            out << '\n';
+        }
     }
 
 
