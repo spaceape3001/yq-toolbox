@@ -52,6 +52,7 @@ namespace yq::lua {
             break;
         case LUA_TTABLE:
             {
+                const XFlags flags  = _flags(l,n);
                 const Meta* m   = _meta(l, n);
                 if(m){
                     if(m->is_object()){

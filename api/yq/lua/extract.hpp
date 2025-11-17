@@ -94,11 +94,11 @@ namespace yq::lua {
     object_meta_x           object_meta(lua_State*, upvalue_k, int);
     
     template <class Obj>
-    Expect<const typename Obj::MyInfo*>     object_meta_as(lua_State*, int);
+    Expect<const typename Obj::MyMeta*>     object_meta_as(lua_State*, int);
     template <class Obj>
-    Expect<const typename Obj::MyInfo*>     object_meta_as(lua_State*, global_k, const char*);
+    Expect<const typename Obj::MyMeta*>     object_meta_as(lua_State*, global_k, const char*);
     template <class Obj>
-    Expect<const typename Obj::MyInfo*>     object_meta_as(lua_State*, upvalue_k, int);
+    Expect<const typename Obj::MyMeta*>     object_meta_as(lua_State*, upvalue_k, int);
 
     //! Returns user data as a pointer (may or may not be lightweight)
     void_ptr_x              pointer(lua_State*, int);
