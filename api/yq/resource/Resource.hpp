@@ -397,6 +397,8 @@ namespace yq {
         template <typename Pred>
         static void add_loader(const ResourceIOSpec&, Pred&&, const std::source_location& sl = std::source_location::current());
         
+        //! Register a resource saver
+        //! \note A number of signatures are tested in the registration, see it for a full list
         template <typename Pred>
         static void add_saver(const ResourceIOSpec&, Pred&&, const std::source_location& sl = std::source_location::current());
 
