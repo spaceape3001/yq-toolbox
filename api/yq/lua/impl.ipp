@@ -271,6 +271,9 @@ namespace yq::lua {
         } else if(auto p = std::get_if<int>(&val)){
             lua_pushinteger(l, *p);
             return {};
+        } else if(auto p = std::get_if<const Meta*>(&val)){
+            lua_pushlightuserdata(l, (void*) *p);
+            return {};
         } else if(auto p = std::get_if<Object*>(&val)){
             return push(l, *p);
         } else if(auto p = std::get_if<const Object*>(&val)){

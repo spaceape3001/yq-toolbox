@@ -39,12 +39,9 @@ namespace yq::lua {
             return false;
         if(!m_callback)
             return false;
-        if(m_upvalues.empty()){
-            lua_pushcfunction(api.lvm, m_callback);
-            return true;
-        } else {
-            // TODO
-            return false;
-        }
+        for(const ValueInfo* v : m_upvalues)
+            _push(api.lvm, v->value());
+        lua_pushcclosure(api.lvm, m_callback, m_upvalues.size());
+        return true;
     }
 }

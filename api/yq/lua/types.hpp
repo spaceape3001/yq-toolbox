@@ -67,6 +67,7 @@ namespace yq::lua {
         bool,
         double,
         int,
+        const Meta*,
         Object*,
         const Object*,
         void*,

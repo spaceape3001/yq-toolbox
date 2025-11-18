@@ -20,11 +20,13 @@ using namespace yq;
 using namespace yq::lua;
 
 namespace {
-    int lh_print(lua_State*l)
+    int lh_printtable(lua_State*l)
     {
         int nargs   = lua_gettop(l);
         Streamer    str(l);
         for(int n=1;n<=nargs;++n){
+            if(lua_type(l,n) != LUA_TTABLE)
+                continue;
             lua_pushnil(l);
             while(lua_next(l, n) != 0){
                 yq::lua::write(str, l, -2);
@@ -39,11 +41,8 @@ namespace {
     
     void reg_table()
     {
-        if(ModuleInfo* mi = reg(MODULE, "table")){
-            mi->brief("Table utilities");
-            if(FunctionInfo* fi = mi->add("print", lh_print)){
-                fi->brief("Extracts keys from the tables");
-            }
+        if(FunctionInfo* fi = reg(GLOBAL, "printtable", lh_printtable)){
+            fi->brief("Prints the table");
         }
     }
     
