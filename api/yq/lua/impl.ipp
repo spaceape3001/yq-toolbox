@@ -12,6 +12,7 @@
 #include <yq/lua/handler.hpp>
 #include <yq/lua/impl.hpp>
 #include <yq/lua/keys.hpp>
+#include <yq/lua/logging.hpp>
 #include <yq/lua/push.hpp>
 #include <yq/lua/repo.hpp>
 #include <yq/lua/set.hpp>
@@ -183,7 +184,8 @@ namespace yq::lua {
 
     void       _metamake(lua_State* l, meta_k, const Meta& m, const std::string& name)
     {
-        luaL_newmetatable(l, name.c_str());
+        int metatable = lua_gettop(l);
+        lua_newtable(l);
         if(const ModuleInfo* mi = info(META, MT_Meta))
             _metaadd(l, *mi);
     
@@ -196,20 +198,25 @@ namespace yq::lua {
             if(const ModuleInfo* mi = info(META, m))
                 _metaadd(l, *mi);
         }
+        lua_setfield(l, metatable, "__index");
     }
 
     void       _metamake(lua_State* l, const ObjectMeta& om, const std::string& name)
     {
-        luaL_newmetatable(l, name.c_str());
+        int metatable = lua_gettop(l);
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_object);
+        lua_newtable(l);
         _metaadd(l, om);
+        lua_setfield(l, metatable, "__index");
     }
     
     void        _metamake(lua_State* l, const TypeMeta& tm, const std::string& name)
     {
-        luaL_newmetatable(l, name.c_str());
+        int metatable = lua_gettop(l);
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_type);
+        lua_newtable(l);
         _metaadd(l, tm);
+        lua_setfield(l, metatable, "__index");
     }
     
     std::string         _metatablename(meta_k, const Meta& m)
@@ -298,14 +305,13 @@ namespace yq::lua {
             ref -> incRef();
         
         std::string name    = _metatablename(obj->metaInfo());
-        luaL_getmetatable(l, name.c_str());
-        
-        if(lua_isnil(l, -1)){
-            _pop(l);
+        if(luaL_getmetatable(l, name.c_str()) == LUA_TNIL){
+            luaL_newmetatable(l, name.c_str());
             _metamake(l, obj->metaInfo(), name);
+            //luaL_setmetatable(l, name.c_str());
         }
         
-        lua_setmetatable(l, -1);    // think this works....
+        lua_setmetatable(l, -2);    // think this works....
         return {};
     }
     
@@ -342,11 +348,10 @@ namespace yq::lua {
         set(l, -1, TABLE, keyFlags, flags.value());
         
         std::string name    = _metatablename(type);
-        luaL_getmetatable(l, name.c_str());
-        
-        if(lua_isnil(l, -1)){
-            _pop(l);
+        if(luaL_getmetatable(l, name.c_str()) == LUA_TNIL){
+            luaL_newmetatable(l, name.c_str());
             _metamake(l, type, name);
+            //luaL_setmetatable(l, name.c_str());
         }
         
         lua_setmetatable(l, -1);    // think this works....
@@ -364,13 +369,10 @@ namespace yq::lua {
         set(l, -1, TABLE, keyFlags, flags.value());
         
         std::string name    = _metatablename(*m);
-        luaL_getmetatable(l, name.c_str());
-        if(lua_isnil(l, -1)){
-            _pop(l);
+        if(luaL_newmetatable(l, name.c_str()))
             _metamake(l, META, *m, name);
-        }
+        lua_setmetatable(l, -2);    // think this works....
         
-        lua_setmetatable(l, -1);    // think this works....
         return {};
     }
     
