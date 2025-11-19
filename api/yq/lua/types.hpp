@@ -52,7 +52,9 @@ namespace yq::lua {
         Meta,
         Const,
         Delete,
-        Ref
+        Ref,
+        ID,
+        Value
     };
     using XFlags    = Flags<X, int32_t>;
 

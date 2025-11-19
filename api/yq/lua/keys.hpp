@@ -12,12 +12,14 @@ namespace yq::lua {
     static constexpr const char* keyName                = "_name";
     static constexpr const char* keyStem                = "_stem";
     static constexpr const char* keyDescription         = "_desc";
-    static constexpr const char* keyMeta                = "_meta";
-    static constexpr const char* keyPointer             = "_ptr";
+    static constexpr const char* keyError               = "_error";
     static constexpr const char* keyFlags               = "_flags";
     static constexpr const char* keyGarbageCollection   = "__gc"; // LUA's
+    static constexpr const char* keyID                  = "_id";
     static constexpr const char* keyInfo                = "_info";
+    static constexpr const char* keyMeta                = "_meta";
     static constexpr const char* keyOutput              = "_output";
-    static constexpr const char* keyError               = "_error";
+    static constexpr const char* keyPointer             = "_ptr";
+    static constexpr const char* keyValue               = "_value";
     static constexpr const char* keyWarning             = "_warning";
 }

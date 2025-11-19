@@ -280,6 +280,7 @@ namespace yq {
     struct stem_k {};
     struct stop_k {};
     struct stretch_k {};
+    struct table_k {};
     struct tangential_k {};
     struct target_k {};
     struct tensor_k {};
@@ -602,6 +603,7 @@ namespace yq {
     static constexpr const stem_k               STEM;
     static constexpr const stop_k               STOP;
     static constexpr const stretch_k            STRETCH;
+    static constexpr const table_k              TABLE;
     static constexpr const tangential_k         TANGENTIAL;
     static constexpr const target_k             TARGET;
     static constexpr const tensor_k             TENSOR;
