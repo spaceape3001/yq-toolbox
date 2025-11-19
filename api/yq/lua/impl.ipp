@@ -190,38 +190,6 @@ namespace yq::lua {
         }
     }
 
-    
-    void        _metaadd(lua_State* l, const ModuleInfo& info)
-    {
-        int     tm  = lua_gettop(l);
-        InstallInfoAPI  api{.lvm=l};
-        for(auto& i : info.components()){
-            if(i.second->push_it(api))
-                lua_setfield(l, tm, i.first.c_str());
-        }
-    }
-    
-    void        _metaadd(lua_State* l, meta_k, const ObjectMeta& om)
-    {
-        if(const ObjectMeta* base = om.base())
-            _metaadd(l, META, *base);
-        if(const ModuleInfo* mi = info(META, om))
-            _metaadd(l, *mi);
-    }
-    
-    void        _metaadd(lua_State*l, const ObjectMeta& om)
-    {
-        if(const ObjectMeta* base = om.base())
-            _metaadd(l, *base);
-        if(const ObjectInfo* mi = info(om))
-            _metaadd(l, (const ModuleInfo&) *mi);
-    }
-    
-    void        _metaadd(lua_State*l, const TypeMeta& tm)
-    {
-        if(const TypeInfo* ti = info(tm))
-            _metaadd(l, *ti);
-    }
 
     void       _metamake(lua_State* l, meta_k, const Meta& m)
     {
@@ -322,8 +290,8 @@ namespace yq::lua {
         
         if(m.is_object()){
             for(const ObjectMeta* p = static_cast<const ObjectMeta&>(m).base(); p; p = p->base()){
-                if(const ObjectInfo* oi = _r.info(*p))
-                    ret.push_back(oi);
+                if(const ModuleInfo* mi = _r.info(META, *p))
+                    ret.push_back(mi);
             }
         } else if(m.is_type()){
             if(const ModuleInfo* mi = _r.info(META, MT_Type))
