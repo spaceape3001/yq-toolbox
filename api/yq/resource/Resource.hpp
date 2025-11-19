@@ -402,6 +402,8 @@ namespace yq {
         template <typename Pred>
         static void add_saver(const ResourceIOSpec&, Pred&&, const std::source_location& sl = std::source_location::current());
 
+        //! Register a resource information extractor
+        //! \note A number of signatures are tested in the registration, see it for a full list
         template <typename Pred>
         static void add_infoer(const ResourceIOSpec&, Pred&&, const std::source_location& sl = std::source_location::current());
     };
