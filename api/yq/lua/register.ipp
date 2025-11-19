@@ -12,6 +12,7 @@
 
 namespace yq::lua {
 
+
     ValueInfo*      reg(global_k, const std::string&k, value_k)
     {
         auto g  = reg_edit(GLOBAL).first;
@@ -97,6 +98,16 @@ namespace yq::lua {
         return reg_edit(MODULE, k).first;
     }
 
+    ModuleInfo*     reg(any_k)
+    {
+        return reg_edit(ANY).first;
+    }
+    
+    ModuleInfo*     reg(global_k)
+    {
+        return reg_edit(GLOBAL).first;
+    }
+
     ModuleInfo*     reg(meta_k, const Meta&m)
     {
         return reg_edit(META, m).first;
@@ -119,6 +130,11 @@ namespace yq::lua {
 
         ///
 
+    std::pair<ModuleInfo*,bool>     reg_edit(any_k)
+    {
+        return Repo::instance().edit(ANY);
+    }
+    
     std::pair<ModuleInfo*,bool>  reg_edit(global_k)
     {
         return Repo::instance().edit(GLOBAL);

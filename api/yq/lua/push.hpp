@@ -26,5 +26,6 @@ namespace yq::lua {
     std::error_code         push(lua_State*, raw_k, void*);
     
     std::error_code         push(lua_State*, FNLuaCallback);
+    std::error_code         push(lua_State*, FNLuaCallback, std::initializer_list<value_t>);
     std::error_code         push(lua_State*, FNLuaCallback, size_t);
 }

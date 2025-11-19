@@ -40,6 +40,11 @@ namespace yq::lua {
         and extracts the meta pointer from it.  
     */
     const TypeMeta*     _meta(lua_State*l, int n, type_k);
+    
+    std::vector<const ModuleInfo*>  _modules(const ObjectMeta&om);
+    std::vector<const ModuleInfo*>  _modules(const TypeMeta&om);
+    std::vector<const ModuleInfo*>  _modules(meta_k, const Meta&om);
+    
 
     Object*             _object(lua_State *l, int n);
     
@@ -53,8 +58,12 @@ namespace yq::lua {
 
     std::error_code     _push(lua_State* l, Object* obj, XFlags flags);
     std::error_code     _push(lua_State* l, const value_t& val, unsigned n=0);
+    std::error_code     _push(lua_State* l, const TypeMeta& type, const void* ptr, XFlags flags);
+
+    //! Type for the object (uses meta)
+    const Meta*         _metatype(lua_State*l, int n);
 
     //! Generic type string to a lua type ID (don't use with the meta)
-    std::string_view    _type(int);
+    std::string_view    _typename(int);
     
 }

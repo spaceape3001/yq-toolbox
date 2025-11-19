@@ -29,6 +29,21 @@ namespace yq::lua {
         _pop(l);        // need to verify 
         return -1;
     }
+    
+    int lh_meta_extract(lua_State* l)
+    {
+        int nargs=lua_gettop(l);
+        for(int n=1;n<=nargs;++n){
+            const Meta* m   = _metatype(l,n);
+            if(m){
+                push(l, META, m);
+            } else {
+                lua_pushnil(l);
+            }
+        }
+        return nargs;
+    }
+    
 
     int lh_write_cerr(lua_State* l)
     {

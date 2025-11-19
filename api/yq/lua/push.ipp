@@ -25,16 +25,7 @@ namespace yq::lua {
             return {};
         }    
         
-        const TypeMeta& tm  = v.type();
-        
-        
-        
-        //LuaVM*  lvm = vm(l);
-        //if(!lvm)
-            //return errors::lua_badvm();
-            
-        // TODO
-        return errors::todo();
+        return _push(l, v.type(), v.raw_ptr(), X::Any);
     }
 
     std::error_code     push(lua_State* l, bool v)
@@ -115,6 +106,20 @@ namespace yq::lua {
         if(lua_gettop(l) < (int) n)
             return errors::lua_insufficent_upvalue_arguments();
         lua_pushcclosure(l, fn, (int) n);
+        return {};
+    }
+
+    std::error_code     push(lua_State*l, FNLuaCallback fn, std::initializer_list<value_t> values)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!fn)
+            return errors::null_pointer();
+        if((int) values.size()>MAX_UPVALUES)
+            return errors::lua_too_many_upvalues();
+        for(auto& v : values)
+            _push(l, v);
+        lua_pushcclosure(l, fn, (int) values.size());
         return {};
     }
 

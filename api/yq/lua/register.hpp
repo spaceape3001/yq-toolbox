@@ -13,6 +13,7 @@
 namespace yq::lua {
     template <typename> class TypedTypeInfo;
 
+    std::pair<ModuleInfo*,bool>     reg_edit(any_k);
     std::pair<ModuleInfo*,bool>     reg_edit(global_k);
     std::pair<ModuleInfo*,bool>     reg_edit(module_k, const std::string&);
     std::pair<ModuleInfo*,bool>     reg_edit(meta_k, uint32_t);
@@ -32,6 +33,8 @@ namespace yq::lua {
     FunctionInfo*   reg(global_k, const std::string&, function_k);
     FunctionInfo*   reg(global_k, const std::string&, FNLuaCallback);
     
+    ModuleInfo*     reg(any_k);
+    ModuleInfo*     reg(global_k);
     ModuleInfo*     reg(module_k, const std::string&);
     
     ObjectInfo*     reg(const ObjectMeta&);

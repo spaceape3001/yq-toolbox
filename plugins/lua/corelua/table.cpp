@@ -39,10 +39,33 @@ namespace {
         return 0;
     }
     
+    int lh_keys(lua_State*l)
+    {
+        int nargs   = lua_gettop(l);
+        for(int n=1;n<=nargs;++n){
+            if(lua_type(l,n) != LUA_TTABLE)
+                continue;
+            lua_pushnil(l);
+            while(lua_next(l, n) != 0){
+                lua_pop(l, 1);
+                lua_pushvalue(l, -1);
+            }
+        }
+        return lua_gettop(l) - nargs;
+    }
+    
     void reg_table()
     {
         if(FunctionInfo* fi = reg(GLOBAL, "printtable", lh_printtable)){
             fi->brief("Prints the table");
+        }
+        if(ModuleInfo* mi = reg(MODULE, "table")){
+            if(FunctionInfo* fi = mi->add("print", lh_printtable)){
+                fi->brief("Prints the table");
+            }
+            if(FunctionInfo* fi = mi->add("keys", lh_keys)){
+                fi->brief("Extracts table keys");
+            }
         }
     }
     

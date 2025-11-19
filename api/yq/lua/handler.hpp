@@ -28,4 +28,6 @@ namespace yq::lua {
     
     int lh_write_cerr(lua_State*);
     int lh_write_cout(lua_State*);
+    
+    int lh_meta_extract(lua_State*);
 }

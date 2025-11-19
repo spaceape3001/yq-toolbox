@@ -171,6 +171,17 @@ namespace {
     
     void    reg_meta()
     {
+        if(ModuleInfo* mi   = reg(GLOBAL)){
+            mi -> brief("Lua globals");
+            mi -> help(R"VOGON(
+This is the lua global table.  Listed are functions/values registered with
+our lua registry.        
+)VOGON");
+        }
+        if(ModuleInfo* mi   = reg(ANY)){
+            mi->brief("General Any helpers");
+        }
+    
         if(ModuleInfo* mi = reg(MODULE, "meta")){
             if(FunctionInfo* fi = mi->add("count", lh_meta_count)){
                 fi->brief("Count of all meta");
@@ -222,7 +233,7 @@ namespace {
         }
         
         if(ObjectInfo* mi = reg(yq::meta<Object>())){
-            if(FunctionInfo*fi = mi->add("meta", lh_meta)){
+            if(FunctionInfo*fi = mi->add("meta", FUNCTION)){
                 fi->brief("Meta for this object");
             }
         }

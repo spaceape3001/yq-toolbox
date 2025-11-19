@@ -47,6 +47,7 @@ namespace yq::lua {
 
     enum class X : uint8_t {
         Type,
+        Any=Type,
         Object,
         Meta,
         Const,

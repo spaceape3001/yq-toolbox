@@ -7,11 +7,27 @@
 #pragma once
 
 #include <yq/lua/info/Info.hpp>
+#include <functional>
 
 namespace yq::lua {
+    
+    enum class Phase : uint8_t {
+        //  Yeah, could restructure slightly, mixing "module" with "meta table" here....
+    
+        General,    //!< General creation, so top item is the meta table
+        Index,      //!< Method/Index table creation
+        NewIndex,   //!< For New Index table creation 
+        Call        //!< Method/Call table creation
+    };
     class ModuleInfo : public Info {
     public:
+
+        using FNAugment         = std::function<void(InstallInfoAPI&)>;
+        using augment_pair_t    = std::pair<Phase,FNAugment>;
+        using augment_vector_t  = std::vector<augment_pair_t>;
     
+        //! What can get called during meta table creation
+        const augment_vector_t& augments() const { return m_augments; }
         const info_map_t&   components() const { return m_components; }
     
         const Info*         info(const std::string&) const;
@@ -54,15 +70,21 @@ namespace yq::lua {
 
         //! Adds an raw pointer
         ValueInfo*          add(const std::string&, raw_k, void*);
+        void                add(Phase, FNAugment&&);
 
         virtual bool        install(InstallInfoAPI&) const override;
 
+        void                augment(InstallInfoAPI&, Phase) const;
+        bool                augment(has_k, Phase) const;
+
+        // not quite... need methods, properties, operators....
     protected:
         friend class Repo;
     
         ModuleInfo(const std::string&);
         virtual ~ModuleInfo();
     
+        augment_vector_t    m_augments;
         info_map_t          m_components;
     };
 

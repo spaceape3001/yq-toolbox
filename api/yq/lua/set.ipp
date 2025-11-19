@@ -146,6 +146,27 @@ namespace yq::lua {
         return {};
     }
 
+    std::error_code     set(lua_State* l, int n, table_k, const char* key, FNLuaCallback v, std::initializer_list<value_t> values)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!key)
+            return errors::null_pointer();
+        if(!*key)
+            return errors::bad_argument();
+        if(!v)
+            return errors::null_pointer();
+        if((int) values.size() > MAX_UPVALUES)
+            return errors::lua_too_many_upvalues();
+        
+        int tm  = lua_absindex(l, n);
+        for(const value_t& v : values)  
+            _push(l, v);
+        lua_pushcclosure(l, v, (int) values.size());
+        lua_setfield(l, tm, key);
+        return {};
+    }
+
     std::error_code     set(lua_State*l, global_k, const char* key, bool v)
     {
         if(!l)

@@ -143,6 +143,30 @@ namespace yq::lua {
         return x;
     }
 
+    void                ModuleInfo::add(Phase p, FNAugment&&fn)
+    {
+        if(fn){
+            m_augments.push_back({p, std::move(fn)});
+        }
+    }
+
+    bool                ModuleInfo::augment(has_k, Phase p) const
+    {
+        for(auto& i : m_augments){
+            if(i.first == p)
+                return true;
+        }
+        return false;
+    }
+
+    void                ModuleInfo::augment(InstallInfoAPI&api, Phase p) const
+    {
+        for(auto& i : m_augments){
+            if(i.first == p)
+                i.second(api);
+        }
+    }
+
     std::pair<FunctionInfo*,bool>   ModuleInfo::edit(function_k, const std::string& k)
     {
         if(k.empty() || !Meta::thread_safe_write())

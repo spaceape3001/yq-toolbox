@@ -87,12 +87,17 @@ namespace yq::lua {
         if(m_global)
             return { m_global, false };
         m_global    = new GlobalModuleInfo;
-        m_global -> brief("Lua globals");
-        m_global -> help(R"VOGON(
-This is the lua global table.  Listed are functions/values registered with
-our lua registry.        
-)VOGON");
         return { m_global, true };
+    }
+
+    std::pair<ModuleInfo*,bool>     Repo::edit(any_k)
+    {
+        if(!thread_safe_write())
+            return { nullptr, false };
+        if(m_any)
+            return { m_any, false };
+        m_any    = new ModuleInfo("");
+        return { m_any, true };
     }
 
     std::pair<ModuleInfo*,bool>         Repo::edit(module_k, const std::string&k)
@@ -154,10 +159,15 @@ our lua registry.
         return { ret, true };
     }
     
+    const ModuleInfo*     Repo::info(any_k) const
+    {
+        return m_any;
+    }
     const ModuleInfo*     Repo::info(global_k) const
     {
         return m_global;
     }
+
 /*
     const Info*     Repo::info(global_k, const char* k) const
     {

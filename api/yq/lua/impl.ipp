@@ -16,6 +16,7 @@
 #include <yq/lua/push.hpp>
 #include <yq/lua/repo.hpp>
 #include <yq/lua/set.hpp>
+#include <yq/lua/info/ObjectInfo.hpp>
 #include <yq/lua/info/TypeInfo.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/ReservedIDs.hpp>
@@ -149,6 +150,46 @@ namespace yq::lua {
             return nullptr;
         return static_cast<const TypeMeta*>(m);
     }
+
+    // Assumes the top item is a meta
+    void    _metaadd(lua_State*l, const std::vector<const ModuleInfo*>& modules)
+    {
+        int     tm  = lua_gettop(l);
+        InstallInfoAPI api{.lvm=l};
+        
+        bool    nIdx    = false;
+        bool    nCall   = false;
+        for(const ModuleInfo* mi : modules){
+            nIdx    = nIdx  || mi->augment(HAS, Phase::NewIndex);
+            nCall   = nCall || mi->augment(HAS, Phase::Call);
+        }
+        
+        lua_newtable(l);
+        int     ct      = lua_gettop(l);
+        for(const ModuleInfo* mi : modules){
+            for(auto& i : mi->components()){
+                if(i.second->push_it(api))
+                    lua_setfield(l, ct, i.first.c_str());
+            }
+            mi->augment(api, Phase::Index);
+        }
+        lua_setfield(l, tm, "__index");
+        
+        if(nIdx){
+            lua_newtable(l);
+            for(const ModuleInfo* mi : modules)
+                mi->augment(api, Phase::NewIndex);
+            lua_setfield(l, tm, "__newindex");
+        }
+        
+        if(nCall){
+            lua_newtable(l);
+            for(const ModuleInfo* mi : modules)
+                mi->augment(api, Phase::Call);
+            lua_setfield(l, tm, "__call");
+        }
+    }
+
     
     void        _metaadd(lua_State* l, const ModuleInfo& info)
     {
@@ -182,41 +223,21 @@ namespace yq::lua {
             _metaadd(l, *ti);
     }
 
-    void       _metamake(lua_State* l, meta_k, const Meta& m, const std::string& name)
+    void       _metamake(lua_State* l, meta_k, const Meta& m)
     {
-        int metatable = lua_gettop(l);
-        lua_newtable(l);
-        if(const ModuleInfo* mi = info(META, MT_Meta))
-            _metaadd(l, *mi);
-    
-        if(m.is_object()){
-            _metaadd(l, META, static_cast<const ObjectMeta&>(m));
-        } 
-        if(m.is_type()){
-            if(const ModuleInfo* mi = info(META, MT_Type))
-                _metaadd(l, *mi);
-            if(const ModuleInfo* mi = info(META, m))
-                _metaadd(l, *mi);
-        }
-        lua_setfield(l, metatable, "__index");
+        _metaadd(l, _modules(META, m));
     }
 
-    void       _metamake(lua_State* l, const ObjectMeta& om, const std::string& name)
+    void       _metamake(lua_State* l, const ObjectMeta& om)
     {
-        int metatable = lua_gettop(l);
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_object);
-        lua_newtable(l);
-        _metaadd(l, om);
-        lua_setfield(l, metatable, "__index");
+        _metaadd(l, _modules(om));
     }
     
-    void        _metamake(lua_State* l, const TypeMeta& tm, const std::string& name)
+    void        _metamake(lua_State* l, const TypeMeta& tm)
     {
-        int metatable = lua_gettop(l);
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_type);
-        lua_newtable(l);
-        _metaadd(l, tm);
-        lua_setfield(l, metatable, "__index");
+        _metaadd(l, _modules(tm));
     }
     
     std::string         _metatablename(meta_k, const Meta& m)
@@ -235,7 +256,85 @@ namespace yq::lua {
             return std::string(m.name());
     }
     
+    const Meta* _metatype(lua_State*l,int n)
+    {
+        switch(lua_type(l,n)){
+        case LUA_TNIL:
+            return nullptr;
+        case LUA_TBOOLEAN:
+            return &yq::meta<bool>();
+        case LUA_TSTRING:
+            return &yq::meta<std::string>();
+        case LUA_TNUMBER:
+            if(lua_isinteger(l,n))
+                return &yq::meta<int>();
+            else
+                return &yq::meta<double>();
+        case LUA_TTABLE:
+            return _meta(l,n);
+        default:
+            return nullptr;
+        }
+    }
 
+    
+    // all modules that meta will use (as data)
+    std::vector<const ModuleInfo*>  _modules(const ObjectMeta&om)
+    {
+        static const Repo&  _r  = Repo::instance();
+
+        std::vector<const ModuleInfo*> ret;
+        if(const ModuleInfo* mi = _r.info(om)){
+            if(mi)
+                ret.push_back(mi);
+        }
+        
+        for(const ObjectMeta* p = om.base(); p; p = om.base()){
+            if(const ObjectInfo* mi = _r.info(*p)){
+                if(mi)
+                    ret.push_back(mi);
+            }
+        }
+        
+        return ret;
+    }
+
+    std::vector<const ModuleInfo*>  _modules(const TypeMeta&tm)
+    {
+        static const Repo&  _r  = Repo::instance();
+
+        std::vector<const ModuleInfo*> ret;
+        if(const ModuleInfo* mi = _r.info(tm))
+            ret.push_back(mi);
+        if(const ModuleInfo* mi = _r.info(ANY))
+            ret.push_back(mi);        
+        return ret;
+    }
+    
+    // all modules that meta will use (as a meta type)
+    std::vector<const ModuleInfo*>  _modules(meta_k, const Meta&m)
+    {
+        static const Repo&  _r  = Repo::instance();
+        
+        std::vector<const ModuleInfo*> ret;
+        if(const ModuleInfo* mi = _r.info(META, m))
+            ret.push_back(mi);
+        
+        if(m.is_object()){
+            for(const ObjectMeta* p = static_cast<const ObjectMeta&>(m).base(); p; p = p->base()){
+                if(const ObjectInfo* oi = _r.info(*p))
+                    ret.push_back(oi);
+            }
+        } else if(m.is_type()){
+            if(const ModuleInfo* mi = _r.info(META, MT_Type))
+                ret.push_back(mi);
+        }
+        
+        if(const ModuleInfo* mi = _r.info(META, MT_Meta))
+            ret.push_back(mi);
+        return ret;
+    }
+    
     Object*     _object(lua_State *l, int n)
     {
         lua_getfield(l, n, keyPointer);
@@ -308,11 +407,8 @@ namespace yq::lua {
             ref -> incRef();
         
         std::string name    = _metatablename(obj->metaInfo());
-        if(luaL_getmetatable(l, name.c_str()) == LUA_TNIL){
-            luaL_newmetatable(l, name.c_str());
-            _metamake(l, obj->metaInfo(), name);
-            //luaL_setmetatable(l, name.c_str());
-        }
+        if(luaL_newmetatable(l, name.c_str()))
+            _metamake(l, obj->metaInfo());
         
         lua_setmetatable(l, -2);    // think this works....
         return {};
@@ -351,13 +447,10 @@ namespace yq::lua {
         set(l, -1, TABLE, keyFlags, flags.value());
         
         std::string name    = _metatablename(type);
-        if(luaL_getmetatable(l, name.c_str()) == LUA_TNIL){
-            luaL_newmetatable(l, name.c_str());
-            _metamake(l, type, name);
-            //luaL_setmetatable(l, name.c_str());
-        }
+        if(luaL_newmetatable(l, name.c_str()))
+            _metamake(l, type);
         
-        lua_setmetatable(l, -1);    // think this works....
+        lua_setmetatable(l, -2);    // think this works....
         return {};
     }
 
@@ -373,9 +466,8 @@ namespace yq::lua {
         
         std::string name    = _metatablename(*m);
         if(luaL_newmetatable(l, name.c_str()))
-            _metamake(l, META, *m, name);
+            _metamake(l, META, *m);
         lua_setmetatable(l, -2);    // think this works....
-        
         return {};
     }
     
@@ -387,8 +479,9 @@ namespace yq::lua {
         }
         return _push(l, any.type(), any.raw_ptr(), flags);
     }
+
         
-    std::string_view    _type(int n)
+    std::string_view    _typename(int n)
     {
         switch(n){
         case LUA_TNIL:
