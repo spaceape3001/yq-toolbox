@@ -35,18 +35,22 @@ namespace yq::lua {
     
  
     boolean_x               boolean(lua_State*, int);
+    boolean_x               boolean(lua_State*, int, table_k, const char*);
     boolean_x               boolean(lua_State*, global_k, const char*);
     boolean_x               boolean(lua_State*, upvalue_k, int);
     
     double_x                double_(lua_State*, int);
+    double_x                double_(lua_State*, int, table_k, const char*);
     double_x                double_(lua_State*, global_k, const char*);
     double_x                double_(lua_State*, upvalue_k, int);
     
     integer_x               integer(lua_State*, int);
+    integer_x               integer(lua_State*, int, table_k, const char*);
     integer_x               integer(lua_State*, global_k, const char*);
     integer_x               integer(lua_State*, upvalue_k, int);
     
     meta_x                  meta(lua_State*, int);
+    meta_x                  meta(lua_State*, int, table_k, const char*);
     meta_x                  meta(lua_State*, global_k, const char*);
     meta_x                  meta(lua_State*, upvalue_k, int);
     
@@ -102,6 +106,8 @@ namespace yq::lua {
 
     //! Returns user data as a pointer (may or may not be lightweight)
     void_ptr_x              pointer(lua_State*, int);
+    
+    void_ptr_x              pointer(lua_State*, int, table_k, const char*);
 
     //! Returns user data as a pointer (may or may not be lightweight)
     void_ptr_x              pointer(lua_State*, global_k, const char*);

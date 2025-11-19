@@ -24,7 +24,21 @@ namespace yq::lua {
             return errors::lua_null();
         return static_cast<bool>(lua_toboolean(l, n));
     }
-    
+
+    boolean_x           boolean(lua_State* l, int n, table_k, const char*key)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!key)
+            return errors::null_pointer();
+        if(!*key)
+            return errors::bad_argument();
+
+        lua_getfield(l, n, key);
+        auto ret = boolean(l, -1);
+        _pop(l);
+        return ret;
+    }
 
     boolean_x           boolean(lua_State*l, global_k, const char* key)
     {
@@ -49,7 +63,6 @@ namespace yq::lua {
         return boolean(l, lua_upvalueindex(n));
     }
     
-
     double_x            double_(lua_State*l, int n)
     {
         if(!l)
@@ -61,6 +74,21 @@ namespace yq::lua {
         return v;
     }
     
+    double_x            double_(lua_State* l, int n, table_k, const char* key)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!key)
+            return errors::null_pointer();
+        if(!*key)
+            return errors::bad_argument();
+
+        lua_getfield(l, n, key);
+        auto ret = double_(l, -1);
+        _pop(l);
+        return ret;
+    }
+
     double_x            double_(lua_State* l, global_k, const char* key)
     {
         if(!l)
@@ -95,6 +123,22 @@ namespace yq::lua {
         return v;
     }
 
+    integer_x       integer(lua_State* l, int n, table_k, const char* key)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!key)
+            return errors::null_pointer();
+        if(!*key)
+            return errors::bad_argument();
+            
+        lua_getfield(l, n, key);
+        auto x = integer(l, -1);
+        _pop(l);
+        return x;
+    }
+    
+
     integer_x             integer(lua_State* l, global_k, const char* key)
     {
         if(!l)
@@ -116,7 +160,7 @@ namespace yq::lua {
             return errors::bad_argument();
         return integer(l, lua_upvalueindex(n));
     }
-    
+
     static meta_x   meta_by_number(lua_State* l, int n)
     {
         Meta::id_t  i   = lua_tointeger(l, n);
@@ -149,6 +193,22 @@ namespace yq::lua {
         default:
             return errors::lua_not_meta();
         }
+    }
+
+
+    meta_x  meta(lua_State*l, int n, table_k, const char* key)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!key)
+            return errors::null_pointer();
+        if(!*key)
+            return errors::bad_argument();
+
+        lua_getfield(l, n, key);
+        auto ret   = meta(l, -1);
+        _pop(l);
+        return ret;
     }
     
     meta_x  meta(lua_State*l, global_k, const char* key)
@@ -448,6 +508,21 @@ namespace yq::lua {
         if(!l)
             return errors::lua_null();
         return lua_touserdata(l, -1);
+    }
+
+    void_ptr_x          pointer(lua_State* l, int n, table_k, const char*key)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!key)
+            return errors::null_pointer();
+        if(!*key)
+            return errors::bad_argument();
+        
+        lua_getfield(l, n, key);
+        auto ret = pointer(l, -1);
+        _pop(l);
+        return ret;
     }
 
     void_ptr_x          pointer(lua_State* l, global_k, const char*key)
