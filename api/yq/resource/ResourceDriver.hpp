@@ -12,6 +12,12 @@
 
 namespace yq {
 
+    /*! \brief Root class to all resource drivers.
+    
+        This is the root to all drivers.  Normally, most users won't interface
+        directly with this class, they'll leverage the auto-creation via the
+        add loader/infoer/saver routines.
+    */
     class ResourceDriver {
         friend class Resource;
     public:
@@ -40,7 +46,7 @@ namespace yq {
         virtual ~ResourceDriver();
         
     private:
-        const ResourceMeta&        m_resource;
+        const ResourceMeta&     m_resource;
         string_vector_t         m_extensions;
         std::source_location    m_location;
         Type                    m_type;
