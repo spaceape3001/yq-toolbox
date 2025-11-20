@@ -15,6 +15,13 @@
 namespace yq {
     
     template <StringLiteral, unsigned>
+    bool    once()
+    {
+        static std::atomic_flag     s_again;
+        return !s_again.test_and_set();
+    }
+
+    template <StringLiteral, unsigned>
     log4cpp::Priority::Value log_once(log4cpp::Priority::Value def)
     {
         static std::atomic_flag     s_again;
@@ -43,7 +50,9 @@ namespace yq {
     }
 }
 
+#define yFirst(...)        ::yq::first_seen<__FILE__, __LINE__>(__VA_ARGS__)
 #define yFirstSeen(...)    ::yq::first_seen<__FILE__, __LINE__>(__VA_ARGS__)
+#define yOnce              ::yq::once<__FILE__,__LINE__>()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Log once and only once (per invocation)

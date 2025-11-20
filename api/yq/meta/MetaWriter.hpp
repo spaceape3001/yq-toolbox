@@ -73,6 +73,8 @@ namespace yq {
         */
         Writer&     name(std::string_view zName);
         
+        std::string_view name() const;
+        
         /*! \brief Applies new options/flags
         */
         Writer&     options(options_t);

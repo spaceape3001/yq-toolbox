@@ -27,10 +27,17 @@ namespace {
     {
         int nargs = lua_gettop(l);
         for(int n=1;n<=nargs;++n){
+            lua_newtable(l);
+            int ti = lua_gettop(l);
+            int cnt = 0;
+
             auto x = meta(l, n);
             if(x){
-                for(auto& a : (*x)->aliases())
+                for(auto& a : (*x)->aliases()){
+                    lua_pushinteger(l, ++cnt);
                     push(l, a);
+                    lua_settable(l, ti);
+                }
             } 
         }
         return lua_gettop(l) - nargs;
@@ -133,6 +140,69 @@ namespace {
             lua_pushnil(l);
         }
         return nargs;
+    }
+
+    int     lh_meta_object_bases(lua_State* l)
+    {
+        int nargs = lua_gettop(l);
+        for(int n=1;n<=nargs;++n){
+            lua_newtable(l);
+            int ti = lua_gettop(l);
+            int cnt = 0;
+            
+            auto x = object_meta(l, n);
+            if(!x)
+                continue;
+                
+            for(const ObjectMeta* b = *x; b; b = b -> base()){
+                lua_pushinteger(l, ++cnt);
+                push(l, META, b);
+                lua_settable(l, ti);
+            }
+        }
+        return lua_gettop(l) - nargs;
+    }
+
+    int     lh_meta_object_derive(lua_State*l)
+    {
+        int nargs = lua_gettop(l);
+        for(int n=1;n<=nargs;++n){
+            lua_newtable(l);
+            int ti = lua_gettop(l);
+            int cnt = 0;
+
+            auto x = object_meta(l, n);
+            if(!x)
+                continue;
+            for(const ObjectMeta* d : (*x)->deriveds(false).all){
+                lua_pushinteger(l, ++cnt);
+                push(l, META, d);
+                lua_settable(l, ti);
+            }
+        }
+        
+        return lua_gettop(l) - nargs;
+    }
+
+    int     lh_meta_object_derives(lua_State*l)
+    {
+        int nargs = lua_gettop(l);
+        for(int n=1;n<=nargs;++n){
+            lua_newtable(l);
+            int ti = lua_gettop(l);
+            int cnt = 0;
+
+            auto x = object_meta(l, n);
+            if(!x)
+                continue;
+            for(const ObjectMeta* d : (*x)->deriveds(true).all){
+                lua_pushinteger(l, ++cnt);
+                push(l, META, d);
+                lua_settable(l,ti);
+            }
+        }
+        
+        return lua_gettop(l) - nargs;
     }
 
     int     lh_meta_tagged(lua_State*l)
@@ -245,6 +315,15 @@ our lua registry.
         if(ModuleInfo* mi = reg(META, yq::meta<Object>())){
             if(FunctionInfo* fi = mi->add("base", lh_meta_object_base)){
                 fi->brief("Base meta");
+            }
+            if(FunctionInfo* fi = mi->add("bases", lh_meta_object_bases)){
+                fi->brief("ALL base meta of given class");
+            }
+            if(FunctionInfo* fi = mi->add("derive", lh_meta_object_derive)){
+                fi->brief("Derived metas (immediate)");
+            }
+            if(FunctionInfo* fi = mi->add("derives", lh_meta_object_derives)){
+                fi->brief("Derived metas (all)");
             }
         }
         

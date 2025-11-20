@@ -95,6 +95,13 @@ namespace yq {
         return *this;
     }
     
+    std::string_view Meta::Writer::name() const
+    {
+        if(!m_meta)
+            return "(null meta)";
+        return m_meta -> name();
+    }
+
     Meta::Writer&     Meta::Writer::name(std::string_view zName)
     {
         if(m_meta && thread_safe_write())
