@@ -209,6 +209,9 @@ namespace yq {
         
         const D& def(bool all) const { return all ? m_all : m_local; }
     
+        //! Adds an alias to the object (note view is NOT copied, so should come from program strings "" )
+        virtual void    add_alias(std::string_view) override;
+
     private:
         ObjectMeta(std::string_view zName, ObjectMeta* base, const std::source_location& sl);
     };

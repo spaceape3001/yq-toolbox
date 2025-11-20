@@ -23,6 +23,19 @@ using namespace yq;
 using namespace yq::lua;
 
 namespace {
+    int     lh_meta_aliases(lua_State *l)
+    {
+        int nargs = lua_gettop(l);
+        for(int n=1;n<=nargs;++n){
+            auto x = meta(l, n);
+            if(x){
+                for(auto& a : (*x)->aliases())
+                    push(l, a);
+            } 
+        }
+        return lua_gettop(l) - nargs;
+    }
+    
     int     lh_meta_count(lua_State*l)
     {
         int nargs = lua_gettop(l);
@@ -39,7 +52,7 @@ namespace {
         push(l, (int) Meta::all().size());
         return 1;
     }
-    
+
     int     lh_meta_description(lua_State *l)
     {
         int nargs = lua_gettop(l);
@@ -212,6 +225,9 @@ our lua registry.
         }
         
         if(ModuleInfo* mi = reg(META, MT_Meta)){
+            if(FunctionInfo* fi = mi->add("aliases", lh_meta_aliases)){
+                fi->brief("Aliases for meta");
+            }
             if(FunctionInfo* fi = mi->add("description", lh_meta_description)){
                 fi->brief("Description for meta");
             }

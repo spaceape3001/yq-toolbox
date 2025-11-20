@@ -45,6 +45,13 @@ namespace yq {
         r.objects << this;
     }
 
+
+    void            ObjectMeta::add_alias(std::string_view sz)
+    {
+        Meta::add_alias(sz);
+        repo().objects.add_mapping(sz, this);
+    }
+
     /* TODO
     Object* ObjectMeta::create(std::span<const Any>) const
     {
