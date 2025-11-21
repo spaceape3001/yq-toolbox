@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/resource/Resource.hpp>
-#include <yq/resource/ResourceInfoMetaWriter.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
 
 namespace yq {
     template <typename C>

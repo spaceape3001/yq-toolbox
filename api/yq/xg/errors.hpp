@@ -1,0 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/core/ErrorDB.hpp>
+
+namespace yq::errors {
+    using xg_invalid_result     = error_db::entry<"XG invalid step result">;
+    using xg_invalid_element    = error_db::entry<"XG invalid element">;
+}

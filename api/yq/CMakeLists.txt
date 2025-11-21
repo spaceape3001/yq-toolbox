@@ -36,3 +36,5 @@ include(yq_xml.cmake)
 include(yq_graph.cmake)
 include(yq_keyv.cmake)
 include(yq_raster.cmake)
+include(yq_xg.cmake)
+
