@@ -36,18 +36,10 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     option(Feature_Doxygen      "Build doxygen documentation" OFF)
 
     option(Feature_Experimental "Enable Experimental Features" ON)
-    
-    option(Feature_Lua "Enable LUA Integration" ON)
-    if(Feature_Lua)
-        find_package(Lua)
-        if(Lua_FOUND)
-            set(Build_Lua ON)
-        else()
-            set(Build_Lua OFF)
-        endif()
-    else()
-        set(Build_Lua OFF)
-    endif()
+
+        # Used to be optional, but integration demanded it
+    find_package(Lua REQUIRED)
+    set(Build_Lua ON)
 
     if(EXISTS ${CMAKE_SOURCE_DIR}/yq-novel)
         option(Feature_Novel   "Enable the novel API and features" ON)

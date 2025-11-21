@@ -4,9 +4,6 @@
 ##
 ################################################################################
 
-if(Build_Lua)
-    add_subdirectory(lua)
-endif()
-
+add_subdirectory(lua)
 add_subdirectory(xg)
 
