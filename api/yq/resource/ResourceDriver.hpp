@@ -22,6 +22,8 @@ namespace yq {
         friend class Resource;
     public:
     
+        //! Shortcut to help to know the basic "type" of the driver, whether it's
+        //! taking URLs vs files vs whatever
         enum class Type : uint8_t {
             none    = 0,
             url,
