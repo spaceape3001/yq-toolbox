@@ -37,6 +37,7 @@ namespace yq {
             kvtree
         };
         
+        //! Type of the driver
         Type                type() const { return m_type; }
         const ResourceMeta&    resource() const { return m_resource; }
 
