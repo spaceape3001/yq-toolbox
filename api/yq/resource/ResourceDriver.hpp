@@ -39,6 +39,8 @@ namespace yq {
         
         //! Type of the driver
         Type                type() const { return m_type; }
+        
+        //! Resource the driver loads
         const ResourceMeta&    resource() const { return m_resource; }
 
         constexpr const string_vector_t& extensions() const { return m_extensions; }
