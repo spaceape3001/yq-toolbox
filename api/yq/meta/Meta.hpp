@@ -227,6 +227,8 @@ namespace yq {
         */
         const std::set<std::string_view>&    aliases() const { return m_aliases; }
         
+        const std::string_view&              category() const { return m_category; }
+        
         //! \brief Vector of child-meta (could include pointers)
         const std::vector<const Meta*>&      children() const { return m_children; }
         
@@ -486,6 +488,7 @@ namespace yq {
         std::map<int,Any>                       m_tagsByInt;
         icon_map_t                              m_icons;
         string_view_xset_t                      m_aliases;
+        std::string_view                        m_category;
         std::string_view                        m_description;
         std::string_view                        m_label;
         std::string_view                        m_name;

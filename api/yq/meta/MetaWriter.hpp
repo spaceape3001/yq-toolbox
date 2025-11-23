@@ -37,6 +37,17 @@ namespace yq {
         Writer&     alias(std::string_view zAlias);
 
         Writer&     alias(std::initializer_list<std::string_view> zAlias);
+        
+        /*! \brief Sets a category
+        
+            This defines a category for the meta.  (This is usually for UI assistance)
+            
+            \note   Provided zCategory *MUST* remain valid throughout the program execution, so it's expected
+                    to be a program string "char[]"
+            \param[in] zCategory   Category string
+            \return Reference to this writer object
+        */
+        Writer&     category(std::string_view zCategory);
 
         /*! \brief Sets a description
         

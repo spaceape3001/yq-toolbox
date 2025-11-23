@@ -24,7 +24,6 @@ namespace yq::xg {
         
         bool                always() const { return m_always; }
         const RGBA4F&       bgcolor() const { return m_bgcolor; }
-        std::string_view    category() const { return m_category; }
         const RGBA4F&       color() const { return m_color; }
         //! Lets user know this is a *decision* type of element
         bool                decision() const { return m_decision; }
@@ -35,7 +34,6 @@ namespace yq::xg {
 
     private:
         bool                m_always        = false;
-        std::string_view    m_category      = "";
         RGBA4F              m_bgcolor       = { 0., 0., 0., 0. };
         RGBA4F              m_color         = { 0., 0., 0., 0. };
         bool                m_decision      = false;

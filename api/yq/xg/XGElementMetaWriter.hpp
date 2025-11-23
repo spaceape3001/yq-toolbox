@@ -35,13 +35,6 @@ namespace yq::xg {
             }
         }
         
-        void    category(std::string_view v)
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_category  = v;
-            }
-        }
-        
         void    color(const color_t&v)
         {
             if(m_meta && Meta::thread_safe_write()){

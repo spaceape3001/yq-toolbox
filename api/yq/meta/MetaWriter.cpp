@@ -74,6 +74,13 @@ namespace yq {
         return *this;
     }
 
+    Meta::Writer&     Meta::Writer::category(std::string_view zCategory)
+    {
+        if(m_meta && thread_safe_write())
+            m_meta -> m_category = std::string_view(zCategory);
+        return *this;
+    }
+
     Meta::Writer&     Meta::Writer::description(std::string_view zDescription)
     {
         if(m_meta && thread_safe_write())

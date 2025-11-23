@@ -125,9 +125,9 @@ namespace yq {
     struct for_k {};
     struct forward_k {};
     struct frequency_k {};
+    struct from_k {};
     struct full_k {};
     struct function_k {};
-    struct from_k {};
     struct geo_k {};
     struct global_k {};
     struct graph_k {};
@@ -443,9 +443,9 @@ namespace yq {
     static constexpr const for_k                FOR;
     static constexpr const forward_k            FORWARD;
     static constexpr const frequency_k          FREQUENCY;
+    static constexpr const from_k               FROM;
     static constexpr const full_k               FULL;
     static constexpr const function_k           FCN, FUNCTION;
-    static constexpr const from_k               FROM;
     static constexpr const geo_k                GEO;
     static constexpr const global_k             GLOBAL;
     static constexpr const graph_k              GRAPH;
