@@ -57,6 +57,7 @@ namespace yq {
     struct appendable_k {};
     struct argument_k {};
     struct arguments_k {};
+    struct ascii_k {};
     struct asset_k {};
     struct base_k {};
     struct begin_k {};
@@ -285,6 +286,7 @@ namespace yq {
     struct target_k {};
     struct tensor_k {};
     struct tenu_k {};
+    struct text_k {};
     struct thread_k {};
     struct three_k {};
     struct throw_k {};
@@ -303,6 +305,7 @@ namespace yq {
     struct typed_k {};
     struct types_k {};
     struct u_k {};
+    struct unicode_k {};
     struct union_k {};
     struct unique_k {};
     struct unit_k {};
@@ -312,6 +315,9 @@ namespace yq {
     struct up_k {};
     struct url_k {};
     struct use_k {};
+    struct utf8_k {};
+    struct utf16_k {};
+    struct utf32_k {};
     struct v_k {};
     struct valid_k {};
     struct value_k {};
@@ -375,6 +381,7 @@ namespace yq {
     static constexpr const appendable_k         APPENDABLE;
     static constexpr const argument_k           ARG, ARGUMENT;
     static constexpr const arguments_k          ARGS, ARGUMENTS;
+    static constexpr const ascii_k              ASCII;
     static constexpr const asset_k              ASSET;
     static constexpr const base_k               BASE;
     static constexpr const begin_k              BEGIN;
@@ -608,6 +615,7 @@ namespace yq {
     static constexpr const target_k             TARGET;
     static constexpr const tensor_k             TENSOR;
     static constexpr const tenu_k               TENU;
+    static constexpr const text_k               TEXT;
     static constexpr const thread_k             THREAD;
     static constexpr const three_k              THREE;
     static constexpr const throw_k              THROW;
@@ -626,6 +634,7 @@ namespace yq {
     static constexpr const typed_k              TYPED;
     static constexpr const types_k              TYPES;
     static constexpr const u_k                  U;
+    static constexpr const unicode_k            UNICODE;
     static constexpr const union_k              UNION;
     static constexpr const unique_k             UNIQUE;
     static constexpr const unit_k               UNIT;
@@ -635,6 +644,9 @@ namespace yq {
     static constexpr const up_k                 UP;
     static constexpr const url_k                URL;
     static constexpr const use_k                USE;
+    static constexpr const utf8_k               UTF8;
+    static constexpr const utf16_k              UTF16;
+    static constexpr const utf32_k              UTF32;
     static constexpr const v_k                  V;
     static constexpr const valid_k              VALID;
     static constexpr const value_k              VALUE;
