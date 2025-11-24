@@ -43,6 +43,7 @@ namespace yq {
         //! Resource the driver loads
         const ResourceMeta&    resource() const { return m_resource; }
 
+        //! File extensions that are valid for this driver
         constexpr const string_vector_t& extensions() const { return m_extensions; }
         constexpr const std::source_location& location() const { return m_location; }
         
