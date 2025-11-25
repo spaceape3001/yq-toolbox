@@ -45,6 +45,8 @@ namespace yq {
 
         //! File extensions that are valid for this driver
         constexpr const string_vector_t& extensions() const { return m_extensions; }
+        
+        //! Code location to where the driver was registered.
         constexpr const std::source_location& location() const { return m_location; }
         
     protected:
