@@ -60,6 +60,9 @@ namespace yq {
         Type                    m_type;
     };
 
+    /*! \brief Base class for all info extraction drivers.  Normally end users will
+        using the method registrations
+    */
     class ResourceInfoer : public ResourceDriver {
     public:
 
