@@ -15,6 +15,7 @@
 #include <yq/trait/has_zero.hpp>
 #include <yq/typedef/rgba.hpp>
 #include <yq/typedef/color.hpp>
+#include <yq/typedef/expected.hpp>
 #include <variant>
 
 namespace yq {
@@ -126,6 +127,14 @@ namespace yq {
     #endif
     
     RGBA4F  rgba4f(const color_t&);
+
+    std::string_view    fmt_hex(const RGBA4U8&);
+
+    rgba4u8_x           to_rgba4u8(std::string_view);
+    rgba4f_x            to_rgba4f(std::string_view);
+    
+    std::string_view    to_string_view(const RGBA4F&);
+    std::string_view    to_string_view(const RGBA4U8&);
 
     YQ_NAN_1(RGBA, {nan_v<T>, nan_v<T>, nan_v<T>, nan_v<T>})
     YQ_ZERO_1(RGBA, {zero_v<T>, zero_v<T>, zero_v<T>, zero_v<T>})

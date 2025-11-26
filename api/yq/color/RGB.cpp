@@ -6,6 +6,7 @@
 
 #include "RGB.hpp"
 #include <yq/strings.hpp>
+#include <yq/color/database.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/text/format.hpp>
@@ -152,3 +153,45 @@ static void reg_rgb_color()
 }
 
 YQ_INVOKE(reg_rgb_color();)
+
+namespace yq {
+    std::string_view    fmt_hex(const RGB3U8&v)
+    {
+        static char buffer[256];
+        snprintf(buffer, sizeof(buffer), "#%02X%02X%02X", (int) v.red, (int) v.green, (int) v.blue);
+        return buffer;
+    }
+
+    rgb3u8_x            to_rgb3u8(std::string_view s)
+    {
+        RGB3U8  ret;
+        if(parse_rgb3u8(ret, s))
+            return ret;
+        auto x  = color::lookup(s);
+        if(x)
+            return *x;
+        return errors::parser_failed();
+    }
+    
+    rgb3f_x             to_rgb3f(std::string_view s)
+    {
+        RGB3F  ret;
+        if(parse_rgb3f(ret, s))
+            return ret;
+        auto x  = color::lookup(s);
+        if(x)
+            return (RGB3F) *x;
+        return errors::parser_failed();
+    }
+    
+    std::string_view    to_string_view(const RGB3F&v)
+    {
+        return write_rgb3f(v);
+    }
+    
+    std::string_view    to_string_view(const RGB3U8&v)
+    {
+        return write_rgb3u8(v);
+    }
+}
+

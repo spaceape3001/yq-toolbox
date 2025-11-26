@@ -12,6 +12,7 @@
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_zero.hpp>
 #include <yq/typedef/rgb.hpp>
+#include <yq/typedef/expected.hpp>
 
 namespace yq {
 
@@ -109,6 +110,13 @@ namespace yq {
     YQ_IS_NAN_1(RGB, is_nan(v.red) || is_nan(v.green) || is_nan(v.blue))
     YQ_IS_FINITE_1(RGB, is_finite(v.red) && is_finite(v.green) && is_finite(v.blue))
     
+    std::string_view    fmt_hex(const RGB3U8&);
+
+    rgb3u8_x            to_rgb3u8(std::string_view);
+    rgb3f_x             to_rgb3f(std::string_view);
+    
+    std::string_view    to_string_view(const RGB3F&);
+    std::string_view    to_string_view(const RGB3U8&);
 }
 
 YQ_TYPE_DECLARE(yq::RGB3D)

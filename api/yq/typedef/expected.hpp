@@ -12,6 +12,8 @@
 #include <yq/core/Expect.hpp>
 #include <yq/typedef/128.hpp>
 #include <yq/typedef/url.hpp>
+#include <yq/typedef/rgb.hpp>
+#include <yq/typedef/rgba.hpp>
 
 namespace yq {
     class Any;
@@ -35,6 +37,10 @@ namespace yq {
     using object_meta_x = Expect<const ObjectMeta*>;
     using object_ptr_x  = Expect<Object*>;
     using object_cptr_x = Expect<const Object*>;
+    using rgb3f_x       = Expect<RGB3F>;
+    using rgb3u8_x      = Expect<RGB3U8>;
+    using rgba4f_x      = Expect<RGBA4F>;
+    using rgba4u8_x     = Expect<RGBA4U8>;
     using short_x       = Expect<short>;
     using size_x        = Expect<size_t>;
     using string_x      = Expect<std::string>;
