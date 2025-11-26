@@ -16,7 +16,7 @@ namespace yq {
         //using Pred    = std::function<typename A::MyInfo*(const KVTree&, const ResourceInfoAPI&)>;
     
         TypedResourceKVTreeInfoer(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVTreeInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -24,7 +24,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(const KVTree& file, const ResourceInfoAPI& api) const override
+        ResourceInfoPtr info(const KVTree& file, const ResourceInfoAPI& api) const override
         {
             return m_function(file, api);
         }
@@ -39,7 +39,7 @@ namespace yq {
         //using Pred    = std::function<typename A::MyInfo*(const KVTree&)>;
     
         TypedResourceKVTreeInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVTreeInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -47,7 +47,7 @@ namespace yq {
         {
         }
 
-        ResourceInfo* info(const KVTree& file, const ResourceInfoAPI&) const override
+        ResourceInfoPtr info(const KVTree& file, const ResourceInfoAPI&) const override
         {
             return m_function(file);
         }
@@ -63,7 +63,7 @@ namespace yq {
         //using Pred    = std::function<A*(const KVTree&, const ResourceLoadAPI&)>;
         
         TypedResourceKVTreeLoader(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVTreeLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -71,7 +71,7 @@ namespace yq {
         {
         }
 
-        Resource* load(const KVTree& file, const ResourceLoadAPI& api) const override
+        ResourcePtr load(const KVTree& file, const ResourceLoadAPI& api) const override
         {
             return m_function(file, api);
         }
@@ -87,7 +87,7 @@ namespace yq {
         //using Pred    = std::function<A*(const KVTree&)>;
     
         TypedResourceKVTreeLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVTreeLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -95,7 +95,7 @@ namespace yq {
         {
         }
 
-        Resource* info(const KVTree& file, const ResourceLoadAPI&) const override
+        ResourcePtr load(const KVTree& file, const ResourceLoadAPI&) const override
         {
             return m_function(file);
         }
@@ -140,7 +140,7 @@ namespace yq {
         //using Pred    = std::function<std::error_code(const A&, KVTree&)>;
 
         TypedResourceKVTreeSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVTreeSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+            ResourceKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
 
@@ -199,7 +199,7 @@ namespace yq {
         //using Pred    = std::function<bool(const A&, KVTree&)>;
 
         TypedResourceKVTreeSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVTreeSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+            ResourceKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
 

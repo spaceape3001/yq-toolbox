@@ -17,7 +17,7 @@ namespace yq {
         virtual ResourceInfoPtr info(const KVTree&, const ResourceInfoAPI&) const = 0;
         
     protected:
-        ResourceKVTreeInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        ResourceKVTreeInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvtree);
         virtual ~ResourceKVTreeInfoer();
         
     private:
@@ -32,7 +32,7 @@ namespace yq {
         virtual ResourcePtr load(const KVTree&, const ResourceLoadAPI&) const = 0;
         
     protected:
-        ResourceKVTreeLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        ResourceKVTreeLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvtree);
         virtual ~ResourceKVTreeLoader();
     private:
         unsigned int m_options;
@@ -46,7 +46,7 @@ namespace yq {
         virtual std::error_code  save(const Resource&, KVTree&, const ResourceSaveAPI&) const = 0;
 
     protected:
-        ResourceKVTreeSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::kvdoc);
+        ResourceKVTreeSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::kvtree);
         virtual ~ResourceKVTreeSaver();
     };
 }

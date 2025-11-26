@@ -16,7 +16,7 @@ namespace yq {
         //using Pred    = std::function<typename A::MyInfo*(const KVDocument&, const ResourceInfoAPI&)>;
     
         TypedResourceKVDocumentInfoer(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVDocumentInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -39,7 +39,7 @@ namespace yq {
         //using Pred    = std::function<typename A::MyInfo*(const KVDocument&)>;
     
         TypedResourceKVDocumentInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentInfoer(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVDocumentInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -63,7 +63,7 @@ namespace yq {
         //using Pred    = std::function<A*(const KVDocument&, const ResourceLoadAPI&)>;
         
         TypedResourceKVDocumentLoader(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVDocumentLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -87,7 +87,7 @@ namespace yq {
         //using Pred    = std::function<A*(const KVDocument&)>;
     
         TypedResourceKVDocumentLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentLoader(meta<A>(), exts, recursive, sl), m_function(std::move(fn))
+            ResourceKVDocumentLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -152,7 +152,7 @@ namespace yq {
         //using Pred    = std::function<std::error_code(const A&, KVDocument&)>;
 
         TypedResourceKVDocumentSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVDocumentSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+            ResourceKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
 
@@ -210,7 +210,7 @@ namespace yq {
 //        using Pred    = std::function<bool(const A&, KVDocument&)>;
 
         TypedResourceKVDocumentSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVDocumentSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+            ResourceKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
         {
         }
 
