@@ -66,6 +66,7 @@ namespace yq {
     class ResourceInfoer : public ResourceDriver {
     public:
 
+        //! Query for resource information from the given url
         virtual ResourceInfoPtr info(const UrlView&, const ResourceInfoAPI&) const = 0;
 
     protected:
