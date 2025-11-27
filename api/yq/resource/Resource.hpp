@@ -231,6 +231,9 @@ namespace yq {
         //! User supplied "name"
         std::string_view                name() const { return m_name; }
         
+        //! Should be a more unique identifier... 
+        std::string_view                key() const { return m_key; } 
+        
         //! Resolve the given string to a filename (fully spec'd from the root)
         //! \note This is the preference to use as this will have the best performance (ie... no recursive iterator)
         //static std::filesystem::path    resolve(full_k, std::string_view);
@@ -276,8 +279,12 @@ namespace yq {
         void    set_url(const UrlView&);
         
         //! Sets the resource name (readonly disables this)
+        //! \note if the key's empty, it'll be set
         void    set_name(std::string_view);
         
+        //! Sets the resource key (readonly disables this)
+        //! \note if the key's empty, it'll be set
+        void    set_key(std::string_view);
     
         //  INFO... TODO
         //  LIBRARY (somewhat TODO)
@@ -296,6 +303,7 @@ namespace yq {
         Url                             m_url;      // URL
         bool                            m_readonly  = false;
         std::string                     m_name;
+        std::string                     m_key;
         
         struct Cache;
         static Cache&   cache();

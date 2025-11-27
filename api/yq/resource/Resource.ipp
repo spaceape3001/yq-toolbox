@@ -45,6 +45,8 @@ namespace yq {
         auto w = writer<Resource>();
         w.description("Resource (ie texture, mesh, shader, etc)");
         w.property("url", &Resource::m_url).tag({kTag_Save});
+        w.property("name", &Resource::m_name);
+        w.property("key", &Resource::m_key);
         w.abstract();
     }
 
@@ -52,7 +54,7 @@ namespace yq {
 
     ResourceInfoCPtr            Resource::_info(const ResourceMeta&am, ResourceInfoAPI&api)
     {
-        static const Repo& _r   = repo();
+        // static const Repo& _r   = repo();
         return {};  // TODO
     }
     
@@ -88,9 +90,9 @@ namespace yq {
                 if(!itr)
                     continue;
                     
-                Resource* ass2             = const_cast<Resource*>(itr.ptr());
+                Resource* ass2          = const_cast<Resource*>(itr.ptr());
                 ass2->m_url             = api.m_url;
-                ass2->m_url.fragment    = ass->name();
+                ass2->m_url.fragment    = ass->key();
                 if(api.m_options.cache != Tristate::NO){
                     ass2 -> m_readonly   = true;
                     _c.inject(itr);
@@ -168,7 +170,7 @@ namespace yq {
         if(!asslib) [[unlikely]]
             return {};
             
-        ResourceCPtr ret = asslib -> resource(api.m_url.fragment);
+        ResourceCPtr ret = asslib -> resource(KEY, api.m_url.fragment);
         
         if(!ret){
             resourceWarning << "Unable to load (" << to_string(api.m_url) << "): no suitable libraries/loaders loaded it.";
@@ -568,11 +570,22 @@ namespace yq {
         return _save(*this, api);
     }
 
+    void Resource::set_key(std::string_view z)
+    {
+        if(m_readonly)
+            return;
+        m_key  = std::string(z);
+        if(m_name.empty())
+            m_name  = m_key;
+    }
+
     void Resource::set_name(std::string_view z)
     {
         if(m_readonly)
             return;
         m_name  = std::string(z);
+        if(m_key.empty())
+            m_key   = m_name;
     }
 
     void Resource::set_url(const std::filesystem::path&fp) 

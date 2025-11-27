@@ -157,6 +157,7 @@ namespace yq {
     struct json_k {};
     struct julian_k {};
     struct k_k {};
+    struct key_k {};
     struct l_k {};
     struct last_k {};
     struct layout_k {};
@@ -182,6 +183,7 @@ namespace yq {
     struct multipliable_k {};
     struct multiply_k {};
     struct n_k {};
+    struct name_k {};
     struct nan_k {
         consteval operator float() const noexcept { return std::numeric_limits<float>::quiet_NaN(); }
         consteval operator double() const noexcept { return std::numeric_limits<double>::quiet_NaN(); }
@@ -481,6 +483,7 @@ namespace yq {
     static constexpr const json_k               JSON;
     static constexpr const julian_k             JULIAN;
     static constexpr const k_k                  K;
+    static constexpr const key_k                KEY;
     static constexpr const l_k                  L;
     static constexpr const last_k               LAST;
     static constexpr const layout_k             LAYOUT;
@@ -510,6 +513,7 @@ namespace yq {
     static constexpr const multipliable_k       MULTIPLIABLE;
     static constexpr const multiply_k           MULTIPLY;
     static constexpr const n_k                  N;
+    static constexpr const name_k               NAME;
     static constexpr const nan_k                NAN;
     static constexpr const nearest_k            NEAREST;
     static constexpr const ned_k                NED;

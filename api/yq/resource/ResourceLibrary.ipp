@@ -37,18 +37,19 @@ namespace yq {
         if(!ap)
             return;
 
-        if(ap->m_name.empty()){
+        if(ap->m_key.empty()){
             std::string_view    tn  = ap->metaInfo().stem();
-            for(size_t i = 1; m_byName.contains(ap->m_name = std::format("{}_{}", tn, i)); ++i)
+            for(size_t i = 1; m_byKey.contains(ap->m_key = std::format("{}_{}", tn, i)); ++i)
                 ;
         }
 
         if(ap->url().empty()){
             Url u2      = url();
-            u2.fragment = ap->m_name;
+            u2.fragment = ap->m_key;
             ap->m_url   = u2;
         }
-        m_byName[ap->m_name] = (ResourceCPtr) ap;
+        m_byKey[ap->m_name]         = (ResourceCPtr) ap;
+        m_byName.insert({ap->m_name, (ResourceCPtr) ap});
         m_resources.push_back(ap);
         post_add(ap);
     }
@@ -56,7 +57,7 @@ namespace yq {
 
     bool        ResourceLibrary::contains(const std::string&k) const
     {
-        return m_byName.contains(k);
+        return m_byKey.contains(k);
     }
 
     size_t         ResourceLibrary::data_size() const
@@ -72,11 +73,28 @@ namespace yq {
     {
     }
         
-    ResourceCPtr   ResourceLibrary::resource(const std::string& k) const
+    ResourceCPtr   ResourceLibrary::resource(key_k, const std::string& k) const
+    {
+        auto x = m_byKey.find(k);
+        if(x == m_byKey.end())
+            return {};
+        return x->second;
+    }
+
+    ResourceCPtr   ResourceLibrary::resource(name_k, const std::string& k) const
     {
         auto x = m_byName.find(k);
         if(x == m_byName.end())
             return {};
         return x->second;
+    }
+
+    std::vector<ResourceCPtr>   ResourceLibrary::resouces(name_k, const std::string& k) const
+    {
+        std::vector<ResourceCPtr>   ret;
+        auto x = m_byName.equal_range(k);
+        for(auto i = x.first; i != x.second; ++i)
+            ret.push_back(i->second);
+        return ret;
     }
 }

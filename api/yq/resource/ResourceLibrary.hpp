@@ -42,10 +42,14 @@ namespace yq {
     
         static void init_meta();
         
-        ResourceCPtr   resource(const std::string&) const;
-        const auto&     resources() const { return m_resources; }
+        //! Returns the *FIRST* resource of the given name
+        ResourceCPtr                    resource(key_k, const std::string&) const;
+        //! Returns the *FIRST* resource of the given name
+        ResourceCPtr                    resource(name_k, const std::string&) const;
+        const auto&                     resources() const { return m_resources; }
+        std::vector<ResourceCPtr>       resouces(name_k, const std::string&) const;
         
-        void            add(ResourcePtr);
+        void                    add(ResourcePtr);
     
         ResourceLibrary();
 
@@ -58,7 +62,8 @@ namespace yq {
         
         virtual void    post_add(ResourcePtr);
         
-        std::map<std::string,ResourceCPtr,IgCase>   m_byName;
-        std::vector<ResourceCPtr>                   m_resources;
+        std::multimap<std::string,ResourceCPtr,IgCase>  m_byName;
+        std::map<std::string,ResourceCPtr,IgCase>       m_byKey;
+        std::vector<ResourceCPtr>                       m_resources;
     };
 }
