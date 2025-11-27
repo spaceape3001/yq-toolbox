@@ -458,34 +458,37 @@ namespace yq {
         if(u.empty())
             return {};
     
-        Url         ret;
+        Url     ret;
         auto    colon  = u.find_first_of(':');
-
-        if(colon != std::string_view::npos){
-            auto uv = to_url_view(u);
-            if(!uv.good)
-                return {};
-            if(!is_similar(ret.scheme, "file"))
-                return copy(uv.value);
-            ret     = copy(uv.value);
-        } else {
+        if(colon == std::string_view::npos){
+            if(u[0] == '/')
+                ret.scheme  = "file";
+            else
+                ret.scheme  = "pp";
             auto hash   = u.find_first_of('#');
             if(hash != std::string_view::npos){
                 ret.path        = std::string(u.substr(0, hash));
                 ret.fragment    = std::string(u.substr(hash+1));
             } else
                 ret.path        = u;
-            ret.scheme  = "file";
+        } else {
+            auto uv = to_url_view(u);
+            if(!uv.good)
+                return {};
+            ret = copy(uv.value);
+            if(!is_similar(ret.scheme, "file") && !is_similar(ret.scheme, "pp"))
+                return ret;
         }
         
         if(ret.path.empty())
             return {};
         
-        if(ret.path[0] != '/'){
+        if(is_similar(ret.scheme, "pp") || ret.path[0] != '/'){
             for(auto& sp : repo().search){
                 if(auto p = std::get_if<std::filesystem::path>(&sp)){
                     std::filesystem::path   fp  = *p / ret.path;
                     if(file_exists(fp)){
+                        ret.scheme  = "file";
                         ret.path    = fp.string();
                         return ret;
                     }
