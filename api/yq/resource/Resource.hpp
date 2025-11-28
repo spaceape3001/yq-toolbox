@@ -331,6 +331,9 @@ namespace yq {
     class ResourceIO {
     public:
     
+        //  TODO...
+        //      Cross Resource Inference (so implicit conversion between assets, ie, a raster image to a texture with suitable defaults)
+    
         //! Reads the information from the given resource (short specification) as the given type
         static Ref<const typename A::MyInfo> info( std::string_view u, const ResourceInfoOptions& options={})
         {
