@@ -49,7 +49,8 @@ namespace yq {
         const auto&                     resources() const { return m_resources; }
         std::vector<ResourceCPtr>       resouces(name_k, const std::string&) const;
         
-        void                    add(ResourcePtr);
+        //! Add resource to the library
+        virtual void            add(ResourcePtr);
     
         ResourceLibrary();
 

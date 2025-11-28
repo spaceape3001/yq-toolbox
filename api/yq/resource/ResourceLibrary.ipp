@@ -7,6 +7,7 @@
 #pragma once
 
 #include "ResourceLibrary.hpp"
+#include <yq/core/Logging.hpp>
 #include <yq/resource/ResourceLibraryMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::ResourceLibrary)
@@ -44,11 +45,10 @@ namespace yq {
         }
 
         if(ap->url().empty()){
-            Url u2      = url();
-            u2.fragment = ap->m_key;
-            ap->m_url   = u2;
+            ap -> m_url             = url();
+            ap -> m_url.fragment    = ap->m_key;
         }
-        m_byKey[ap->m_name]         = (ResourceCPtr) ap;
+        m_byKey[ap->m_key]         = (ResourceCPtr) ap;
         m_byName.insert({ap->m_name, (ResourceCPtr) ap});
         m_resources.push_back(ap);
         post_add(ap);

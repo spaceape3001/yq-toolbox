@@ -91,8 +91,8 @@ namespace yq {
                     continue;
                     
                 Resource* ass2          = const_cast<Resource*>(itr.ptr());
-                ass2->m_url             = api.m_url;
-                ass2->m_url.fragment    = ass->key();
+                //ass2->m_url             = api.m_url;      // redundant now that it's in the "add"
+                //ass2->m_url.fragment    = ass2->key();
                 if(api.m_options.cache != Tristate::NO){
                     ass2 -> m_readonly   = true;
                     _c.inject(itr);
