@@ -13,46 +13,54 @@ namespace yq {
         class WebHtml;
     }
 
+    template <typename T>
+        template <typename S>
+    S&      BasicUrl<T>::streamer(S& s) const
+    {
+        if(!scheme.empty())
+            s << scheme << ':';
+        
+        if(!host.empty()){
+            s << "//";
+            if(!user.empty()){
+                s << user;
+                if(!pwd.empty())
+                    s << ':' << pwd;
+                s << '@';
+            }
+            s << host;
+            if(port)
+                s << ':' << port;
+            
+            if(path.empty()){
+                s << '/';
+            } else{
+                if(path[0] != '/')
+                    s << '/';
+                s << path;
+            }
+        } else {
+            if(scheme.empty()){
+                s << path;
+            } else {
+                if(path[0] == '/')
+                    s << "//";
+                s << path;
+            }
+        }
+        
+        if(!query.empty())
+            s << '?' << query;
+        if(!fragment.empty())
+            s << '#' << fragment;
+        return s;
+    }
+    
+
     template <typename S, typename T>
     requires (!std::is_same_v<S, mithril::WebHtml>)
     S&              operator<<(S& s, const BasicUrl<T>& v)
     {
-        if(!v.scheme.empty())
-            s << v.scheme << ':';
-        
-        if(!v.host.empty()){
-            s << "//";
-            if(!v.user.empty()){
-                s << v.user;
-                if(!v.pwd.empty())
-                    s << ':' << v.pwd;
-                s << '@';
-            }
-            s << v.host;
-            if(v.port)
-                s << ':' << v.port;
-            
-            if(v.path.empty()){
-                s << '/';
-            } else{
-                if(v.path[0] != '/')
-                    s << '/';
-                s << v.path;
-            }
-        } else {
-            if(v.scheme.empty()){
-                s << v.path;
-            } else {
-                if(v.path[0] == '/')
-                    s << "//";
-                s << v.path;
-            }
-        }
-        
-        if(!v.query.empty())
-            s << '?' << v.query;
-        if(!v.fragment.empty())
-            s << '#' << v.fragment;
-        return s;
+        return v.streamer(s);
     }
 }

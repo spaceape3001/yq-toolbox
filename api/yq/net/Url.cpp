@@ -492,4 +492,34 @@ namespace yq {
     }
     
     YQ_INVOKE(reg_url();)
+
+    std::ostringstream& operator<<(std::ostringstream&s, const Url&v)
+    {
+        return v.streamer(s);
+    }
+
+    std::ostringstream& operator<<(std::ostringstream&s, const UrlView&v)
+    {
+        return v.streamer(s);
+    }
+
+    std::ostream& operator<<(std::ostream&s, const Url&v)
+    {
+        return v.streamer(s);
+    }
+
+    std::ostream& operator<<(std::ostream&s, const UrlView&v)
+    {
+        return v.streamer(s);
+    }
+
+    Stream& operator<<(Stream&s, const Url&v)
+    {
+        return v.streamer(s);
+    }
+
+    Stream& operator<<(Stream&s, const UrlView&v)
+    {
+        return v.streamer(s);
+    }
 }

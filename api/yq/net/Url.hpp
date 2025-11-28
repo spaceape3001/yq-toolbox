@@ -11,6 +11,7 @@
 #include <yq/typedef/result.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/meta/MetaBinder.hpp>
+#include <iosfwd>
 
 namespace yq {
     class Stream;
@@ -47,6 +48,9 @@ namespace yq {
         
         // need equality & comparison (for maps)
         auto    operator<=>(const BasicUrl&) const = default;
+        
+        template <typename S>
+        S&      streamer(S&) const;
     };
 
     //! Copies a view URL into a regular URL
@@ -86,7 +90,15 @@ namespace yq {
     //! \note empty scheme is treated as valid for this context
     bool            is_valid(const UrlView&);
 
+    std::ostringstream& operator<<(std::ostringstream&, const Url&);
+    std::ostringstream& operator<<(std::ostringstream&, const UrlView&);
+    std::ostream& operator<<(std::ostream&, const Url&);
+    std::ostream& operator<<(std::ostream&, const UrlView&);
+
+    Stream& operator<<(Stream&, const Url&);
+    Stream& operator<<(Stream&, const UrlView&);
 }
+
 
 YQ_TYPE_DECLARE(yq::Url)
 
