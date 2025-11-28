@@ -76,6 +76,9 @@ namespace yq {
         virtual ~ResourceInfoer();
     };
     
+    /*! \brief Base class for all resouce loading drivers.  Normally end users will
+        be using the method registrations & the loading API helpers (ie, MyResource::IO::load()).
+    */
     class ResourceLoader : public ResourceDriver {
     public:
 

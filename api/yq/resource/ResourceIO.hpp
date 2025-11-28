@@ -36,7 +36,7 @@ namespace yq {
 
         //! Loading options
         //! yes -> always load
-        //! maybe -> load if in cache
+        //! maybe -> load if not in cache
         //! no -> never load, so we'll fail if *NOT* in the cache
         Tristate    load        = Tristate::Maybe;
         
