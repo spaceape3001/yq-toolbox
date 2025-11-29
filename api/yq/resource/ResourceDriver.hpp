@@ -82,6 +82,7 @@ namespace yq {
     class ResourceLoader : public ResourceDriver {
     public:
 
+        //! Load the specified resource
         virtual ResourcePtr load(const UrlView&, const ResourceLoadAPI&) const = 0;
 
     protected:
