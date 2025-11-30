@@ -92,6 +92,9 @@ namespace yq {
         virtual ~ResourceLoader();
     };
 
+    /*! \brief Base class for all resource saving drivers.  Normally end users will
+        be using the method registrations & the saving API helpers (ie, MyResource::IO::save()).
+    */
     class ResourceSaver : public ResourceDriver {
     public:
         virtual std::error_code  save(const Resource&, const UrlView&, const ResourceSaveAPI&) const = 0;
