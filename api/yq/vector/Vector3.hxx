@@ -962,7 +962,7 @@ namespace yq {
 
     template <typename T>
     requires has_copysign_v<T>
-    Vector3<T>  copysign(const Vector3<T>& value, const Vector3<T>& test);
+    Vector3<T>  copysign(const Vector3<T>& value, const Vector3<T>& test)
     {
         return Vector3<T>( copysign(value.x, test.x), copysign(value.y, test.y), copysign(value.z, test.z));
     }
