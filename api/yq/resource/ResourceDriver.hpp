@@ -97,6 +97,8 @@ namespace yq {
     */
     class ResourceSaver : public ResourceDriver {
     public:
+    
+        //! Save the specific resource to the specific file
         virtual std::error_code  save(const Resource&, const UrlView&, const ResourceSaveAPI&) const = 0;
         
     protected:
