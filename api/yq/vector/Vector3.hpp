@@ -15,6 +15,7 @@
 #include <yq/math/glm.hpp>
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/trait/cube.hpp>
+#include <yq/trait/has_copysign.hpp>
 #include <yq/trait/has_nan.hpp>
 #include <yq/trait/has_is_finite.hpp>
 #include <yq/trait/has_one.hpp>
@@ -778,6 +779,14 @@ namespace yq {
 
     template <typename T>
     AnyComponents<const Vector3<T>>   any(const Vector3<T>& val);
+
+    template <typename T>
+    requires has_copysign_v<T>
+    Vector3<T>  copysign(const Vector3<T>& value, T test);
+
+    template <typename T>
+    requires has_copysign_v<T>
+    Vector3<T>  copysign(const Vector3<T>& value, const Vector3<T>& test);
 
     template <typename S, typename T>
     S&  as_stream(S& s, const Vector3<T>& v);

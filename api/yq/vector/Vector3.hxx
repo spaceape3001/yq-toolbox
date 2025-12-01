@@ -953,6 +953,20 @@ namespace yq {
         return a.csum();
     }
 
+    template <typename T>
+    requires has_copysign_v<T>
+    Vector3<T>  copysign(const Vector3<T>& value, T test)
+    {
+        return Vector3<T>( copysign(value.x, test), copysign(value.y, test), copysign(value.z, test));
+    }
+
+    template <typename T>
+    requires has_copysign_v<T>
+    Vector3<T>  copysign(const Vector3<T>& value, const Vector3<T>& test);
+    {
+        return Vector3<T>( copysign(value.x, test.x), copysign(value.y, test.y), copysign(value.z, test.z));
+    }
+
     #if 0
     template <typename T>
     ElemComponents<Vector3<T>>   elem(Vector3<T>& val)
