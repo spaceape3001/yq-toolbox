@@ -67,13 +67,14 @@ namespace yq {
             if(ap)
                 return ap;
         }
-        
+
         ResourceCPtr       ret;
         if(!api.m_url.fragment.empty()){
             ret = _load_fragment(am, api);
         } else if(is_similar(api.m_url.scheme, "file")){
             ret = _load_file(am, api);
         } else {
+            resourceWarning << "Resource::_load(" << api.m_url << ") ... non-file loading not yet supported";
         }
 
         // right now, non files aren't supported... (TODO)
@@ -177,8 +178,9 @@ namespace yq {
             return {};
         }
         
-        if(!ret->metaInfo().is_derived_or_this(am)){
-            resourceWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable resource type.";
+        if(!ret->metaInfo().is_base_or_this(am)){
+            resourceWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable resource type (want " 
+                << am.name() << " but it's " << ret->metaInfo().name() << ")";
             return {};
         }
         
