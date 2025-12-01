@@ -22,7 +22,7 @@ namespace yq {
         Debug,
         //! Informational messages and above
         //! 
-        //! Informational messages are routine in natur
+        //! Informational messages are routine in nature
         Info,
         //! Notice messages and above
         //!
