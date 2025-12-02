@@ -32,6 +32,12 @@ namespace yq {
         
     };
 
+    /*! \brief Collection of resources
+    
+        A resource library comes is a collection of resources.  (Think zip, archive, or similar collection.)  Note, 
+        don't make this recursive, so repackage to make a common library.  (ie, some resource formats, like GLTF, 
+        is inherently a library of resources.)
+    */
     class ResourceLibrary : public Resource {
         YQ_RESOURCE_META(ResourceLibraryMeta)
         YQ_RESOURCE_INFO(ResourceLibraryInfo)
