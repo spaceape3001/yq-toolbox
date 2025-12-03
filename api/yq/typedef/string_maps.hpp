@@ -35,6 +35,7 @@ namespace yq {
     using string_any_xmmap_t        = std::multimap<std::string,Any>;
     using string_any_map_t          = std::map<std::string,Any,IgCase>;
     using string_any_multimap_t     = std::multimap<std::string,Any,IgCase>;
+    using string_any_mmap_t         = std::multimap<std::string,Any,IgCase>;
     using string_view_any_map_t     = std::map<std::string_view,Any,IgCase>;
 
     using string_map_t              = std::map<std::string,std::string,IgCase>;

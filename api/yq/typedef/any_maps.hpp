@@ -11,6 +11,7 @@
 namespace yq {
     class Any;
 
-    using uint32_any_map_t  = std::map<uint32_t, Any>;
+    using uint32_any_map_t      = std::map<uint32_t, Any>;
+    using uint32_any_mmap_t     = std::multimap<uint32_t, Any>;
 
 }
