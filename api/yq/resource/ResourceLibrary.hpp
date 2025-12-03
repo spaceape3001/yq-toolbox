@@ -44,6 +44,7 @@ namespace yq {
         YQ_RESOURCE_DECLARE(ResourceLibrary, Resource)
     public:
     
+        //! TRUE if the library contains the given key for a resource
         bool    contains(const std::string&) const;
     
         static void init_meta();
