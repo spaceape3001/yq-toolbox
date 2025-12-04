@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "BasicApp.hpp"
+#include "BasicAppConfig.hpp"
 #include <yq/core/Logging.hpp>
 //#include "TextUtils.hpp"
 #include <yq/text/vsplit.hpp>
@@ -144,14 +145,21 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    BasicApp::BasicApp(int argc, char**argv)
+    BasicApp::BasicApp(int argc, char**argv) : BasicApp(argc, argv, BasicAppConfig())
+    {
+    }
+    
+    BasicApp::BasicApp(int argc, char**argv, const BasicAppConfig& cfg)
     {
         m_args  = std::span<const char*>((const char**) argv, argc);
         m_exe   = argv[0];
         
         if(!thread::id() && !s_app){
             s_app       = this;
-            log_to_std_error( LogPriority::Debug);
+            if(auto p = std::get_if<LogPriority>(&cfg.log_cerr))
+                log_to_std_error(*p);
+            if(auto p = std::get_if<LogPriority>(&cfg.log_cout))
+                log_to_std_output(*p);
             Meta::init();
         }
     }

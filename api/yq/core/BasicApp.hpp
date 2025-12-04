@@ -13,6 +13,7 @@
 #include <vector>
 
 namespace yq {
+    struct BasicAppConfig;
 
     class BasicApp  {
     public:
@@ -51,6 +52,7 @@ namespace yq {
         
         //! Simple constructor for the basic application
         BasicApp(int, char**);
+        BasicApp(int, char**, const BasicAppConfig&);
         ~BasicApp();
         
         //! "FINALIZES" the setup
