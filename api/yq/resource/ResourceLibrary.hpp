@@ -49,10 +49,13 @@ namespace yq {
     
         static void init_meta();
         
-        //! Returns the *FIRST* resource of the given name
+        //! Returns one of the resources using the given key (in case of dupes within)
         ResourceCPtr                    resource(key_k, const std::string&) const;
-        //! Returns the *FIRST* resource of the given name
+        
+        //! Returns one of the resources of the given name (in case of dupes within)
         ResourceCPtr                    resource(name_k, const std::string&) const;
+        
+        //! All the resources in this library (reference to the vector)
         const auto&                     resources() const { return m_resources; }
         std::vector<ResourceCPtr>       resouces(name_k, const std::string&) const;
         
@@ -71,7 +74,7 @@ namespace yq {
         virtual void    post_add(ResourcePtr);
         
         std::multimap<std::string,ResourceCPtr,IgCase>  m_byName;
-        std::map<std::string,ResourceCPtr,IgCase>       m_byKey;
+        std::map<std::string,ResourceCPtr,IgCase>       m_byKey;    // TODO (make multimap)
         std::vector<ResourceCPtr>                       m_resources;
     };
 }
