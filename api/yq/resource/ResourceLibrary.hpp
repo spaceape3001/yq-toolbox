@@ -57,6 +57,8 @@ namespace yq {
         
         //! All the resources in this library (reference to the vector)
         const auto&                     resources() const { return m_resources; }
+        
+        //! Returns all the resources sharing the specified name
         std::vector<ResourceCPtr>       resouces(name_k, const std::string&) const;
         
         //! Add resource to the library
