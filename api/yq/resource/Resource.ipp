@@ -256,7 +256,7 @@ namespace yq {
             #endif
 
             if(ec == std::error_code()){
-                resourceInfo << "Resource saved '" << to_string(api.m_url) << "'";
+                //resourceInfo << "Resource saved '" << to_string(api.m_url) << "'";
                 saved = true;
                 break;
             }
