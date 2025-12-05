@@ -486,6 +486,11 @@ namespace yq {
             return {};
         
         if(is_similar(ret.scheme, "pp") || ret.path[0] != '/'){
+            if(file_exists(ret.path)){
+                ret.scheme  = "file";
+                return ret;
+            }
+        
             for(auto& sp : repo().search){
                 if(auto p = std::get_if<std::filesystem::path>(&sp)){
                     std::filesystem::path   fp  = *p / ret.path;
