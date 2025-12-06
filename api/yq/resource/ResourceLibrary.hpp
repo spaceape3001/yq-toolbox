@@ -64,6 +64,7 @@ namespace yq {
         //! Add resource to the library
         virtual void            add(ResourcePtr);
     
+        //! Default constructor
         ResourceLibrary();
 
         size_t                  data_size() const;
