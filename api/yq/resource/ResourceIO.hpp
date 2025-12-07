@@ -19,6 +19,7 @@ namespace yq {
         Backup
     };
     
+    //! Options that can be passed to the info loading
     struct ResourceInfoOptions {
         //! Integer/Any parameters
         uint32_any_map_t            iparams;
