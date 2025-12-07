@@ -287,6 +287,7 @@ YQ_TYPE_IMPLEMENT(yq::unit::Yard²)
 YQ_TYPE_IMPLEMENT(yq::unit::Yard³)
 
 YQ_TYPE_IMPLEMENT(yq::unit::CentimeterPerSecond3D)
+YQ_TYPE_IMPLEMENT(yq::unit::Degree3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Foot3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Foot3F)
 YQ_TYPE_IMPLEMENT(yq::unit::KilometerPerSecond3D)

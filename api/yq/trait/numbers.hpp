@@ -14,6 +14,7 @@ namespace yq {
     static constexpr const double   sqrt3   = 1.7320508075688772935274463415058723669428052538103806280558069794519330169088;
     static constexpr const int64_t  max64   = std::numeric_limits<int64_t>::max();
     static constexpr const uint64_t maxu64  = std::numeric_limits<uint64_t>::max();
+    static constexpr const double   two_pi  = 2.0 * pi;
 
     static constexpr double   NaN     = std::numeric_limits<double>::quiet_NaN();
     static constexpr float    NaNf    = std::numeric_limits<float>::quiet_NaN();

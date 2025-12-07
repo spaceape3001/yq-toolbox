@@ -426,6 +426,7 @@ namespace yq {
         using Yard³                     = SCALED<double,dim::Volume, (double) (27.*def::foot³)>;
         
         using CentimeterPerSecond3D     = Vector3<CentimeterPerSecond>;
+        using Degree3D                  = Vector3<Degree>;
         using Foot3D                    = Vector3<Foot>;
         using Foot3F                    = Vector3<FootF>;
         using KilometerPerSecond3D      = Vector3<KilometerPerSecond>;
