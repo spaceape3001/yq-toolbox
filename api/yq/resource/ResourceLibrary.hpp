@@ -71,7 +71,8 @@ namespace yq {
 
     protected:
         friend class Resource;
-        
+
+        //! Destructor
         virtual ~ResourceLibrary();
         
         virtual void    post_add(ResourcePtr);
