@@ -61,7 +61,7 @@ namespace yq {
         //! Returns all the resources sharing the specified name
         std::vector<ResourceCPtr>       resouces(name_k, const std::string&) const;
         
-        //! Add resource to the library
+        //! Add resource to the library (override if derived class needs to reject)
         virtual void            add(ResourcePtr);
     
         //! Default constructor
@@ -75,7 +75,9 @@ namespace yq {
         //! Destructor
         virtual ~ResourceLibrary();
         
+        //! Called after ADD of resource to the library
         virtual void    post_add(ResourcePtr);
+        // TODO: Might remove this, was added prior to making the "add" virtual and could now be made redundant
         
         std::multimap<std::string,ResourceCPtr,IgCase>  m_byName;
         std::map<std::string,ResourceCPtr,IgCase>       m_byKey;    // TODO (make multimap)
