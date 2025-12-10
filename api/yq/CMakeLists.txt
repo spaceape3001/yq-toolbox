@@ -24,7 +24,7 @@ include(yq_resource.cmake)
 include(yq_chemistry.cmake)
 include(yq_color.cmake)
 include(yq_process.cmake)
-# include(yq_data.cmake)
+include(yq_data.cmake)
 
 if(Build_SQL)
     include(yq_sql.cmake)

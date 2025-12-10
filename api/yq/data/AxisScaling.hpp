@@ -10,10 +10,10 @@
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::data {
-    YQ_ENUM(AxisType, ,
+    YQ_ENUM(AxisScaling, ,
         Linear      = 0,   //!< Usual...
         Logarithmic
     );
 }
 
-YQ_TYPE_DECLARE(yq::data::AxisType)
+YQ_TYPE_DECLARE(yq::data::AxisScaling)
