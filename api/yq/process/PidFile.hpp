@@ -9,6 +9,13 @@
 #include <yq/typedef/filesystem_path.hpp>
 
 namespace yq {
+    
+    /*! \brief Class for making/keeping a PID file open
+    
+        A PID file is something to let other invocations of the same program know 
+        that there's a currently running process.  Best to put these in a temporary
+        location that'll be cleared out on reboots.
+    */
     class PidFile {
     public:
 
