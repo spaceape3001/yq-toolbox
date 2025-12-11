@@ -19,6 +19,7 @@ namespace yq {
     class PidFile {
     public:
 
+        //! Constructor, requires a filepath to the PID file
         PidFile(const std::filesystem::path&, bool autoMake=true);
         ~PidFile();
         bool            first() const { return m_first; }
