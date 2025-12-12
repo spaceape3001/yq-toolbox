@@ -19,11 +19,12 @@
 #include <yq/typedef/json.hpp>
 #include <yq/typedef/string_initlists.hpp>
 #include <yq/typedef/xml.hpp>
-#include <iosfwd>
 
 #include <atomic>
 #include <filesystem>
+#include <iosfwd>
 #include <system_error>
+//#include <variant>
 
 namespace yq {
     class FileResolver;
@@ -88,6 +89,8 @@ namespace yq {
     
     template <typename> class ResourceFixer;
     
+    using resource_meta_init_list_t = std::initializer_list<const ResourceMeta*>;
+    //using resource_specifier_t      = std::variant<std::string_view, UrlView, std::filesystem::path>;
     
     /*! \brief An resource of the graphics engine
     
@@ -129,6 +132,10 @@ namespace yq {
     
         //! Resolve the given string to a filename
         static Url              resolve(std::string_view);
+
+        //static Url              resolve2(const resource_specifier_t&);
+        
+        //static std::pair<std::filesystem::path,bool>    resolve(partial_k, std::string_view);
     
         //! Adds library (should be perpetually *FIXED* at this point)
         //! \note INITIALIZATION ONLY AS IT'S NOT THREAD SAFE
@@ -150,6 +157,8 @@ namespace yq {
         //! \note Linear search as we're assuming a short one
         static bool             has_path(const std::filesystem::path&);
    
+        static ResourceInfoCPtr    resource_info(resource_meta_init_list_t metas, std::string_view, const ResourceInfoOptions& options={});
+
         //! Gets resource information from the specific resource (short specification)
         static ResourceInfoCPtr    resource_info(std::string_view, const ResourceInfoOptions& options={});
         
@@ -173,6 +182,16 @@ namespace yq {
 
         //! Gets resource information from the specific library resource (filepath + internal path), narrowed down to a specific resource type
         static ResourceInfoCPtr    resource_info(const ResourceMeta&, const std::filesystem::path&, std::string_view, const ResourceInfoOptions& options={});
+
+        /*! Master load (all others will fold into this one)
+        
+            \param[in] metas Metas to load, empty loads everything, {nullptr} loads nothing
+            \param[in] spec Specification (string/url/filepath)
+            \param[in] options
+        */
+        static ResourceCPtr        resource_load(resource_meta_init_list_t metas, std::string_view spec, const ResourceLoadOptions& options={});
+
+        static ResourceCPtr        resource_load(resource_meta_init_list_t metas, const UrlView&, const ResourceLoadOptions& options={});
 
 
         //! Common, loads from the short specification
@@ -311,12 +330,15 @@ namespace yq {
         struct Repo;
         static Repo&    repo();
         
-        static ResourceInfoCPtr            _info(const ResourceMeta&, ResourceInfoAPI&);
-        static ResourceCPtr                _load(const ResourceMeta&, ResourceLoadAPI&);
-        static ResourceCPtr                _load_file(const ResourceMeta&, ResourceLoadAPI&);
-        static ResourceCPtr                _load_fragment(const ResourceMeta&, ResourceLoadAPI&);
+        static ResourceInfoCPtr         _info(resource_meta_init_list_t, ResourceInfoAPI&);
+        static ResourceCPtr             _load(resource_meta_init_list_t, ResourceLoadAPI&);
+        static ResourceCPtr             _load_file(resource_meta_init_list_t, ResourceLoadAPI&);
+        static ResourceCPtr             _load_fragment(resource_meta_init_list_t, ResourceLoadAPI&);
         static std::error_code          _save(const Resource&, ResourceSaveAPI&);
         static std::error_code          _save_file(const Resource&, ResourceSaveAPI&);
+        
+        //static Url      _resolve_pp(std::string_view);
+        //static Url      _resolve_url(UrlView);
         
     };
 

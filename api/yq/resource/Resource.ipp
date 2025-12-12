@@ -52,13 +52,13 @@ namespace yq {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-    ResourceInfoCPtr            Resource::_info(const ResourceMeta&am, ResourceInfoAPI&api)
+    ResourceInfoCPtr            Resource::_info(resource_meta_init_list_t am, ResourceInfoAPI&api)
     {
         // static const Repo& _r   = repo();
         return {};  // TODO
     }
     
-    ResourceCPtr                Resource::_load(const ResourceMeta&am, ResourceLoadAPI&api)
+    ResourceCPtr                Resource::_load(resource_meta_init_list_t am,  ResourceLoadAPI&api)
     {
         static Cache& _c        = cache();
         
@@ -109,7 +109,7 @@ namespace yq {
         return ret;
     }
 
-    ResourceCPtr                Resource::_load_file(const ResourceMeta&am, ResourceLoadAPI&api)
+    ResourceCPtr                Resource::_load_file(resource_meta_init_list_t am, ResourceLoadAPI&api)
     {
         static const Repo& _r   = repo();
         std::string_view    ext = file_extension(api.m_url.path);
@@ -124,9 +124,19 @@ namespace yq {
             const ResourceLoader* ld    = itr.second;
             if(!ld)
                 continue;
-            if(!ld->resource().is_base_or_this(am))    // (unrelated) so total skip
-                continue;
                 
+            if(am.size()){
+                bool    detected    = false;
+                for(const ResourceMeta* m : am){
+                    if(!m)
+                        continue;
+                    if(ld->resource().is_base_or_this(*m))
+                        detected    = true;
+                }
+                if(!detected)
+                    continue;
+            }
+            
             std::error_code ec;
             try {
                 ret = ld -> load(api.m_url, api);
@@ -155,7 +165,7 @@ namespace yq {
         return ret;
     }
     
-    ResourceCPtr                Resource::_load_fragment(const ResourceMeta&am, ResourceLoadAPI&api)
+    ResourceCPtr                Resource::_load_fragment(resource_meta_init_list_t am, ResourceLoadAPI&api)
     {
         static const ResourceLoadOptions   s_default;
         
@@ -163,7 +173,7 @@ namespace yq {
         api2.m_url          = api.m_url;
         api2.m_url.fragment = {};       // zap the fragment
         
-        ResourceCPtr   libAss   = _load(meta<ResourceLibrary>(), api2);
+        ResourceCPtr   libAss   = _load({&meta<ResourceLibrary>()}, api2);
         if(!libAss)
             return {};
         
@@ -178,9 +188,14 @@ namespace yq {
             return {};
         }
         
-        if(!ret->metaInfo().is_base_or_this(am)){
-            resourceWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable resource type (want " 
-                << am.name() << " but it's " << ret->metaInfo().name() << ")";
+        if(am.size() != 0){
+            for(const ResourceMeta* m : am){
+                if(!m)
+                    continue;
+                if(ret->metaInfo().is_base_or_this(*m))
+                    return ret;
+            }
+            resourceWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable resource type for request";
             return {};
         }
         
@@ -343,6 +358,13 @@ namespace yq {
         return ret;
     }
 
+    ResourceInfoCPtr    Resource::resource_info(resource_meta_init_list_t metas, std::string_view spec, const ResourceInfoOptions& options)
+    {
+        ResourceInfoAPI    api(options);
+        api.m_url       = resolve(spec);
+        api.m_spec      = spec;
+        return _info(metas, api);
+    }
 
     ResourceInfoCPtr    Resource::resource_info(std::string_view spec, const ResourceInfoOptions& options)
     {
@@ -354,7 +376,7 @@ namespace yq {
         ResourceInfoAPI    api(options);
         api.m_url       = resolve(spec);
         api.m_spec      = spec;
-        return _info(am, api);
+        return _info({&am}, api);
     }
 
     ResourceInfoCPtr    Resource::resource_info(const UrlView& url, const ResourceInfoOptions& options)
@@ -367,7 +389,7 @@ namespace yq {
         ResourceInfoAPI    api(options);
         api.m_url   = copy(url);
         api.m_spec  = to_string(url);
-        return _info(am, api);
+        return _info({&am}, api);
     }
     
     ResourceInfoCPtr    Resource::resource_info(const std::filesystem::path& fp, const ResourceInfoOptions& options)
@@ -381,7 +403,7 @@ namespace yq {
         api.m_url.scheme    = "file";
         api.m_url.path      = fp.string();
         api.m_spec  = to_string(api.m_url);
-        return _info(am, api);
+        return _info({&am}, api);
     }
 
     ResourceInfoCPtr    Resource::resource_info(const std::filesystem::path&fp, std::string_view frag, const ResourceInfoOptions& options)
@@ -396,7 +418,7 @@ namespace yq {
         api.m_url.path      = fp.string();
         api.m_url.fragment  = std::string(frag);
         api.m_spec  = to_string(api.m_url);
-        return _info(am, api);
+        return _info({&am}, api);
     }
 
     ResourceCPtr        Resource::resource_load(std::string_view spec, const ResourceLoadOptions& options)
@@ -404,12 +426,20 @@ namespace yq {
         return resource_load(meta<Resource>(), spec, options);
     }
 
+    ResourceCPtr        Resource::resource_load(resource_meta_init_list_t metas, std::string_view spec, const ResourceLoadOptions& options)
+    {
+        ResourceLoadAPI        api(options);
+        api.m_url       = resolve(spec);
+        api.m_spec      = spec;
+        return _load(metas, api);
+    }
+
     ResourceCPtr        Resource::resource_load(const ResourceMeta&am, std::string_view spec, const ResourceLoadOptions& options)
     {
         ResourceLoadAPI        api(options);
         api.m_url       = resolve(spec);
         api.m_spec      = spec;
-        return _load(am, api);
+        return _load({&am}, api);
     }
 
     ResourceCPtr        Resource::resource_load(const UrlView&url, const ResourceLoadOptions& options)
@@ -417,12 +447,20 @@ namespace yq {
         return resource_load(meta<Resource>(), url, options);
     }
 
+    ResourceCPtr        Resource::resource_load(resource_meta_init_list_t metas, const UrlView&url, const ResourceLoadOptions& options)
+    {
+        ResourceLoadAPI    api(options);
+        api.m_url   = copy(url);
+        api.m_spec  = to_string(url);
+        return _load(metas, api);
+    }
+
     ResourceCPtr        Resource::resource_load(const ResourceMeta&am, const UrlView&url, const ResourceLoadOptions& options)
     {
         ResourceLoadAPI    api(options);
         api.m_url   = copy(url);
         api.m_spec  = to_string(url);
-        return _load(am, api);
+        return _load({&am}, api);
     }
         
     ResourceCPtr        Resource::resource_load(const std::filesystem::path&fp, const ResourceLoadOptions& options)
@@ -436,7 +474,7 @@ namespace yq {
         api.m_url.scheme    = "file";
         api.m_url.path      = fp.string();
         api.m_spec  = to_string(api.m_url);
-        return _load(am, api);
+        return _load({&am}, api);
     }
     
     ResourceCPtr        Resource::resource_load(const std::filesystem::path& fp, std::string_view frag, const ResourceLoadOptions& options)
@@ -451,9 +489,77 @@ namespace yq {
         api.m_url.path      = fp.string();
         api.m_url.fragment  = std::string(frag);
         api.m_spec  = to_string(api.m_url);
-        return _load(am, api);
+        return _load({&am}, api);
+    }
+    
+#if 0
+    Url  Resource::_resolve_pp(std::string_view sv)
+    {
+        if(p->find_first_of(':') != std::string_view::npos))
+            return _resolve_url(to_url_view(*p));
+
+        Url ret;
+        ret.scheme          = "file";
+        std::string_view    frag;
+        
+
+        if(auto n = p->find_first_of('#'); n != std::string_view::npos)){
+            ret.fragment = std::string(sv.substr(n+1));
+            sv   = sv.substr(0, n);
+        }
+        
+        
+        auto [fp,f] = resolve(PARTIAL, sv);
+        if(!f){
+            ret.path      = std::string(sv);
+        } else
+            ret.path        = fp.string();
+        return ret;
+    }
+    
+    Url  Resource::_resolve_url(UrlView uv)
+    {
+        if(is_similar(uv.scheme, "pp") || is_similar("yq")){
+            auto [fp, f] = resolve(PARTIAL, uv.path);
+            if(f){
+                Url ret;
+                ret.scheme      = "file";
+                ret.path        = fp.string();
+                ret.fragment    = std::string(uv.fragment);
+                ret.query       = std::string(uv.query);
+                return ret;
+            }
+        } 
+        return copy(uv);
+    }
+    
+
+    Url  Resource::resolve2(const resource_specifier_t& rs)
+    {
+        if(auto p = std::get_if<std::filesystem::path>(&rs))
+            return to_url(*p);
+        if(auto p = std::get_if<std::string_view>(&rs))
+            return _resolve_pp(*p);
+        if(auto p = std::get_if<UrlView>(&rs))
+            return _resolve_url(*p);
+        return {};
     }
         
+    std::pair<std::filesystem::path,bool>    Resource::resolve(partial_k, std::string_view fp)
+    {
+        if(fp.empty())
+            return {{}, true };
+        if(fp[0] == '/')
+            return { fp, true };
+        if(file_exists(fp))
+            return { fp, true };
+        
+        // TODO....
+        
+        return {{}, false };
+    }
+#endif
+
     Url  Resource::resolve(std::string_view u)
     {
         u = trimmed(u);
