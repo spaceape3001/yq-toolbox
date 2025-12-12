@@ -21,6 +21,8 @@ namespace yq {
 
         //! Constructor, requires a filepath to the PID file
         PidFile(const std::filesystem::path&, bool autoMake=true);
+        
+        //! Destructor
         ~PidFile();
         bool            first() const { return m_first; }
         void            make();
