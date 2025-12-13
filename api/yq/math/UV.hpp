@@ -49,6 +49,13 @@ namespace yq {
         
         //! Defaulted equality operator
         constexpr bool operator==(const UV&) const noexcept = default;
+
+        //! An explicit cast when its "ambiguous"
+        template <typename U>
+        constexpr UV<U>  cast() const
+        {
+            return { (U) u, (U) v };
+        }
     };
 }
 
