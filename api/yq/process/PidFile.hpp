@@ -24,6 +24,8 @@ namespace yq {
         
         //! Destructor
         ~PidFile();
+        
+        //! True if we're the first process (ie, the file wasn't there on construction)
         bool            first() const { return m_first; }
         void            make();
         const std::filesystem::path&    file() const { return m_file; }
