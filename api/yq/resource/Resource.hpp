@@ -50,8 +50,13 @@ namespace yq {
         //! Constructor of resource info, used by the meta system to initialize the thing (so... don't need to call this outside of that context)
         ResourceMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
 
+        const auto& convert_from() const { return m_convertFrom; }
+        const auto& convert_to() const { return m_convertTo; }
+
     protected:
-        std::vector<const ResourceLibraryMeta*>    m_libraries;
+        std::vector<const ResourceLibraryMeta*>                         m_libraries;
+        std::multimap<const ResourceMeta*,const ResourceConverter*>     m_convertTo;
+        std::multimap<const ResourceMeta*,const ResourceConverter*>     m_convertFrom;
 
     private:
         friend class Resource;
@@ -90,6 +95,9 @@ namespace yq {
     template <typename> class ResourceFixer;
     
     using resource_meta_init_list_t = std::initializer_list<const ResourceMeta*>;
+    using resource_meta_span_t      = std::span<const ResourceMeta* const>;
+    using resource_ptr_pair_t       = std::pair<ResourcePtr,ResourcePtr>;
+    
     //using resource_specifier_t      = std::variant<std::string_view, UrlView, std::filesystem::path>;
     
     /*! \brief An resource of the graphics engine
@@ -126,6 +134,8 @@ namespace yq {
 
         //! \note Takes ownership of the pointer (not going the unique_ptr route here...)
         static void         add_saver(ResourceSaver*);
+        
+        static void         add_converter(ResourceConverter*);
 
         //! Information structure associated with our resource (default is the base info)
         using MyInfo            = ResourceInfo;
@@ -270,7 +280,6 @@ namespace yq {
         //! Saves the resource to the specified url (if able)
         std::error_code                 save_to(const UrlView&, const ResourceSaveOptions& options={}) const;
 
-
         //static const path_vector_t&             search_path();
         //static const std::filesystem::path&     binary_root();
         //static std::filesystem::path            resolve(const std::filesystem::path&);
@@ -330,10 +339,12 @@ namespace yq {
         struct Repo;
         static Repo&    repo();
         
+        struct Conversion;
+        
         static ResourceInfoCPtr         _info(resource_meta_init_list_t, ResourceInfoAPI&);
         static ResourceCPtr             _load(resource_meta_init_list_t, ResourceLoadAPI&);
-        static ResourceCPtr             _load_file(resource_meta_init_list_t, ResourceLoadAPI&);
-        static ResourceCPtr             _load_fragment(resource_meta_init_list_t, ResourceLoadAPI&);
+        static resource_ptr_pair_t      _load_file(const Conversion&, ResourceLoadAPI&);
+        static resource_ptr_pair_t      _load_fragment(const Conversion&, ResourceLoadAPI&);
         static std::error_code          _save(const Resource&, ResourceSaveAPI&);
         static std::error_code          _save_file(const Resource&, ResourceSaveAPI&);
         
@@ -439,5 +450,11 @@ namespace yq {
         //! \note A number of signatures are tested in the registration, see it for a full list
         template <typename Pred>
         static void add_infoer(const ResourceIOSpec&, Pred&&, const std::source_location& sl = std::source_location::current());
+    
+        template <SomeResource B, typename Pred>
+        static void add_converter_to(Pred&&, const std::source_location& sl = std::source_location::current());
+        
+        template <SomeResource B, typename Pred>
+        static void add_converter_from(Pred&&, const std::source_location& sl = std::source_location::current());
     };
 }

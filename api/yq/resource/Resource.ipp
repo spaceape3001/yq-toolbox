@@ -58,35 +58,98 @@ namespace yq {
         return {};  // TODO
     }
     
+    struct Resource::Conversion {
+        std::multimap<const ResourceMeta*,const ResourceConverter*>     fromMeta;
+        std::vector<const ResourceMeta*>                                sources;
+        std::set<const ResourceMeta*>                                   desired;
+        
+        operator bool() const { return !fromMeta.empty(); }
+        
+        Conversion(resource_meta_span_t ams) : desired(ams.begin(), ams.end())
+        {
+            std::set<const ResourceMeta*>                           srcSet;
+            for(const ResourceMeta* m : ams){
+                for(const ObjectMeta* om : m->deriveds(ALL).all)
+                    desired.insert(static_cast<const ResourceMeta*>(om));
+                for(auto& itr : m->convert_from()){
+                    srcSet.insert(itr.first);
+                    fromMeta.insert(itr);
+
+                    for(const ObjectMeta* om : itr.first->deriveds(ALL).all){
+                        const ResourceMeta* cm  = static_cast<const ResourceMeta*>(om);
+                        srcSet.insert(cm);
+                        fromMeta.insert({cm, itr.second});
+                    }
+                }
+            }
+            sources = std::vector<const ResourceMeta*>(srcSet.begin(), srcSet.end());
+        }
+        
+        bool operator ()(const ResourceMeta& m) const
+        {
+            return desired.empty() || desired.contains(&m) || fromMeta.contains(&m);
+        }
+        
+        ResourcePtr operator()(const Resource& res) const
+        {
+            if(desired.empty() || desired.contains(&res.metaInfo()))
+                return const_cast<Resource*>(&res);
+            auto r = fromMeta.equal_range(&res.metaInfo());
+            for(auto itr=r.first; itr!=r.second; ++itr){
+                auto ret    = itr->second->convert(res);
+                if(ret)
+                    return ret;
+            }
+            return {};
+        }
+    };
+    
     ResourceCPtr                Resource::_load(resource_meta_init_list_t am,  ResourceLoadAPI&api)
     {
         static Cache& _c        = cache();
         
         if(api.m_options.load != Tristate::YES){
-            ResourceCPtr   ap  = _c.lookup(api.m_url);
+            ResourceCPtr ap  = _c.lookup(api.m_url);
             if(ap)
                 return ap;
         }
+    
+        Conversion      conversion(am);
+        if(conversion && (api.m_options.load != Tristate::YES)){
+            auto r = _c.byUrl.equal_range(api.m_url);
+            for(auto itr = r.first; itr != r.second; ++itr){
+                auto ret = conversion(*(itr->second));
+                if(ret){
+                    ret->m_url     = itr->second->m_url;
+                    ret->m_key     = itr->second->m_key;
+                    if(api.m_options.cache != Tristate::NO)
+                        _c.inject(ret);
+                    return ret;
+                }
+            }
+        }
 
-        ResourceCPtr       ret;
+        resource_ptr_pair_t ret;
         if(!api.m_url.fragment.empty()){
-            ret = _load_fragment(am, api);
+            ret = _load_fragment(conversion, api);
         } else if(is_similar(api.m_url.scheme, "file")){
-            ret = _load_file(am, api);
+            ret = _load_file(conversion, api);
         } else {
             resourceWarning << "Resource::_load(" << api.m_url << ") ... non-file loading not yet supported";
         }
 
         // right now, non files aren't supported... (TODO)
-        if(!ret){
+
+        if(!ret.second){
             resourceWarning << "Unable to load (" << to_string(api.m_url) << "): no suitable libraries/loaders loaded it.";
             return {};
         }
         
-        Resource* ass      = const_cast<Resource*>(ret.ptr());
-        ass -> m_url    = api.m_url;
+        ret.second -> m_url  = api.m_url;
+        if((ret.first != ret.second) && !ret.first->m_readonly)
+            ret.first -> m_url = api.m_url;
 
-        if(ResourceLibrary* lib = dynamic_cast<ResourceLibrary*>(ass)){
+        if(ResourceLibrary* lib = dynamic_cast<ResourceLibrary*>(ret.second.ptr())){
             for(auto& itr : lib->m_resources){
                 if(!itr)
                     continue;
@@ -102,14 +165,20 @@ namespace yq {
         }
 
         if(api.m_options.cache != Tristate::NO){
-            ass -> m_readonly    = true;
-            _c.inject(ret);
+            if((ret.first != ret.second) && !ret.first->m_readonly){
+                ret.second -> m_readonly    = true;
+                _c.inject(ret.second);
+            }
+
+            ret.second -> m_readonly    = true;
+            _c.inject(ret.second);
         }
             
-        return ret;
+        return ret.second;
     }
 
-    ResourceCPtr                Resource::_load_file(resource_meta_init_list_t am, ResourceLoadAPI&api)
+
+    resource_ptr_pair_t             Resource::_load_file(const Conversion& cvt, ResourceLoadAPI&api)
     {
         static const Repo& _r   = repo();
         std::string_view    ext = file_extension(api.m_url.path);
@@ -118,28 +187,19 @@ namespace yq {
             return {};
         }
 
-        ResourcePtr ret;
+        std::pair<ResourcePtr,ResourcePtr> ret;
 
         for(auto& itr : as_iterable(_r.loaders.equal_range(std::string(ext)))){
             const ResourceLoader* ld    = itr.second;
             if(!ld)
                 continue;
                 
-            if(am.size()){
-                bool    detected    = false;
-                for(const ResourceMeta* m : am){
-                    if(!m)
-                        continue;
-                    if(ld->resource().is_base_or_this(*m))
-                        detected    = true;
-                }
-                if(!detected)
-                    continue;
-            }
+            if(!cvt(ld->resource()))
+                continue;
             
             std::error_code ec;
             try {
-                ret = ld -> load(api.m_url, api);
+                ret.first = ld -> load(api.m_url, api);
             } 
             catch(std::error_code ex)
             {
@@ -153,19 +213,21 @@ namespace yq {
             #endif
             
             if(ec != std::error_code()){
-                ret = {};
+                ret.first = {};
                 resourceWarning << "Unable to load (" << to_string(api.m_url) << "): " << ec.message();
                 continue;
             }
             
-            if(ret)
-                break;
+            if(!ret.first)
+                continue;
+                
+            ret.second      = cvt(*ret.first);
         }
 
         return ret;
     }
     
-    ResourceCPtr                Resource::_load_fragment(resource_meta_init_list_t am, ResourceLoadAPI&api)
+    resource_ptr_pair_t                Resource::_load_fragment(const Conversion& cvt, ResourceLoadAPI&api)
     {
         static const ResourceLoadOptions   s_default;
         
@@ -181,20 +243,16 @@ namespace yq {
         if(!asslib) [[unlikely]]
             return {};
             
-        ResourceCPtr ret = asslib -> resource(KEY, api.m_url.fragment);
+        resource_ptr_pair_t ret;
+        ret.first = const_cast<Resource*>(asslib -> resource(KEY, api.m_url.fragment).ptr());
         
-        if(!ret){
+        if(!ret.first){
             resourceWarning << "Unable to load (" << to_string(api.m_url) << "): no suitable libraries/loaders loaded it.";
             return {};
         }
         
-        if(am.size() != 0){
-            for(const ResourceMeta* m : am){
-                if(!m)
-                    continue;
-                if(ret->metaInfo().is_base_or_this(*m))
-                    return ret;
-            }
+        ret.second  = cvt(*ret.first);
+        if(!ret.second){
             resourceWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable resource type for request";
             return {};
         }
@@ -297,9 +355,22 @@ namespace yq {
         return {};
     }
 
-    void Resource::add_infoer(ResourceInfoer*d) 
+    void Resource::add_converter(ResourceConverter*c)
     {
         if(Meta::thread_safe_write()){
+            ResourceMeta* src   = const_cast<ResourceMeta*>(&c->source());
+            ResourceMeta* tgt   = const_cast<ResourceMeta*>(&c->target());
+            if(src && tgt){
+                src->m_convertTo.insert({tgt, c});
+                tgt->m_convertFrom.insert({src, c});
+            }
+        } else if(c)
+            delete c;
+    }
+
+    void Resource::add_infoer(ResourceInfoer*d) 
+    {
+        if(d && Meta::thread_safe_write()){
             repo().inject(d);
         } else if(d)
             delete d;
@@ -307,9 +378,9 @@ namespace yq {
     
     void Resource::add_loader(ResourceLoader*d)
     {
-        if(Meta::thread_safe_write()){
+        if(d && Meta::thread_safe_write()){
             repo().inject(d);
-        } else {
+        } else if(d){
             delete d;
         }
     }
@@ -341,7 +412,7 @@ namespace yq {
 
     void    Resource::add_saver(ResourceSaver*d)
     {
-        if(Meta::thread_safe_write()){
+        if(d && Meta::thread_safe_write()){
             repo().inject(d);
         } else if(d)
             delete d;

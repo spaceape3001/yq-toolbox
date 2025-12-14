@@ -47,6 +47,7 @@ namespace yq {
 
         Repo(){}
 
+
         void    inject(ResourceInfoer* d)
         {
             if(!d)

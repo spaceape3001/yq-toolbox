@@ -39,6 +39,7 @@
 
 #include "Resource.hpp"
 #include "ResourceCache.ipp"
+#include "ResourceConverter.ipp"
 #include "ResourceRepo.ipp"
 #include "ResourceDriver.ipp"
 

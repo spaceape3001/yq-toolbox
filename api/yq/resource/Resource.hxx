@@ -8,6 +8,7 @@
 
 #include <yq/resource/Resource.hpp>
 #include <yq/resource/ResourceByteDriver.hxx>
+#include <yq/resource/ResourceConverter.hxx>
 #include <yq/resource/ResourceFileDriver.hxx>
 #include <yq/resource/ResourceJsonDriver.hxx>
 #include <yq/resource/ResourceKVDocumentDriver.hxx>
@@ -20,6 +21,20 @@
 #include <type_traits>
 
 namespace yq {
+    template <typename A>
+    template <SomeResource B, typename Pred>
+    void ResourceIO<A>::add_converter_to(Pred&&fn, const std::source_location& sl)
+    {
+        Resource::add_converter( new TypedResourceConverter<A,B,Pred>(std::move(fn), sl));
+    }
+    
+    template <typename A>
+    template <SomeResource B, typename Pred>
+    void ResourceIO<A>::add_converter_from(Pred&&fn, const std::source_location& sl)
+    {
+        Resource::add_converter( new TypedResourceConverter<B,A,Pred>(std::move(fn), sl));
+    }
+
     template <typename A>
         template <typename Pred>
     void ResourceIO<A>::add_infoer(const ResourceIOSpec&sp, Pred&&fn, const std::source_location& sl)

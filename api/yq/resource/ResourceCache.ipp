@@ -17,12 +17,12 @@ namespace yq {
         using mutex_t   = tbb::spin_rw_mutex;
         using lock_t    = tbb::spin_rw_mutex::scoped_lock;
     
-        mutable tbb::spin_rw_mutex                      mutex;
+        mutable tbb::spin_rw_mutex                         mutex;
         std::unordered_map<uint64_t, ResourceCPtr>         byId;       //!< Resource cache (by ID)
-        std::map<UrlView, ResourceCPtr>                    byUrl;      //!< Resource cache (by URL)
+        std::multimap<UrlView, ResourceCPtr>               byUrl;      //!< Resource cache (by URL)
         std::map<UrlView, ResourceLibraryCPtr>             libraries;  //!< Currently loaded libraries
         std::unordered_map<uint64_t, ResourceInfoCPtr>     infoById;   //!< Resource Info cache (by ID)
-        std::map<UrlView, ResourceInfoCPtr>                infoByUrl;  //!< Resource Info cache (by URL)
+        std::multimap<UrlView, ResourceInfoCPtr>           infoByUrl;  //!< Resource Info cache (by URL)
         
         //void    inject(ResourceLibraryCPtr alp)
         //{
@@ -45,12 +45,29 @@ namespace yq {
             ResourceLibraryCPtr lib = dynamic_cast<const ResourceLibrary*>(ap.ptr());
             
             {
+                bool swapped     = false;
+                bool existing    = false;
                 lock_t  _lock(mutex, true);
                 byId[ap->id()]  = ap;
-                auto [i,f]  = byUrl.insert({ap->url(), ap});
-                if(!f && (ap != i->second))
-                    std::swap(i->second, ap);
-                    
+                auto r = byUrl.equal_range(ap->url());
+                for(auto i =r.first; i != r.second; ++i){
+                    if(i->second->id() == ap->id()){
+                        existing    = true;
+                        break;
+                    }
+                }
+                if(!existing){
+                    for(auto i =r.first; i != r.second; ++i){
+                        if(i->second->metaInfo().id() == ap->metaInfo().id()){
+                            std::swap(i->second, ap);
+                            swapped =true;
+                            break;
+                        }
+                    }
+                    if(!swapped)
+                        byUrl.insert({ap->url(), ap});
+                }
+                
                 if(lib){
                     auto [j, g] = libraries.insert({lib->url(), lib});
                     if(!g && (lib != j->second))
@@ -67,11 +84,19 @@ namespace yq {
             //ResourceLibraryCPtr lib = dynamic_cast<const ResourceLibrary*>(ap.ptr());
             
             {
+                bool    swapped = false;
                 lock_t  _lock(mutex, true);
                 infoById[ap->id()]  = ap;
-                auto [i,f]  = infoByUrl.insert({ap->url(), ap});
-                if(!f && (ap != i->second))
-                    std::swap(i->second, ap);
+                auto r = infoByUrl.equal_range(ap->url());
+                for(auto i = r.first; i!=r.second; ++i){
+                    if(i->second->metaInfo().id() == ap->metaInfo().id()){
+                        std::swap(i->second, ap);
+                        swapped =true;
+                        break;
+                    }
+                }
+                if(!swapped)
+                    infoByUrl.insert({ap->url(), ap});
                     
                 #if 0
                     //  if we're libraries....
@@ -91,6 +116,17 @@ namespace yq {
             if(i == byUrl.end())
                 return {};
             return i->second;
+        }
+
+        ResourceCPtr   lookup(const UrlView& uv, const ResourceMeta& am) const
+        {
+            lock_t  _lock(mutex, false);
+            auto r = byUrl.equal_range(uv);
+            for(auto i = r.first; i!=r.second; ++i){
+                if(i->second && i->second->metaInfo().is_base_or_this(am))
+                    return i->second;
+            }
+            return {};
         }
 
         ResourceInfoCPtr   lookup(info_k, const UrlView& uv) const

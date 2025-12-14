@@ -57,5 +57,6 @@ namespace yq {
     class ResourceDriver;
     class ResourceLoader;
     class ResourceInfoer;
+    class ResourceConverter;
     class ResourceSaver;
 }
