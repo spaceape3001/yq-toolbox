@@ -27,6 +27,8 @@ namespace yq {
         
         //! True if we're the first process (ie, the file wasn't there on construction)
         bool            first() const { return m_first; }
+        
+        //! Creates the file (not usually needed unless the false is passed to the constructor)
         void            make();
         const std::filesystem::path&    file() const { return m_file; }
         
