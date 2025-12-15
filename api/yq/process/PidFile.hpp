@@ -30,6 +30,8 @@ namespace yq {
         
         //! Creates the file (not usually needed unless the false is passed to the constructor)
         void            make();
+        
+        //! Filepath (as provided in the constructor)
         const std::filesystem::path&    file() const { return m_file; }
         
     private:
