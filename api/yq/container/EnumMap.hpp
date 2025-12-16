@@ -9,6 +9,8 @@
 #include <yq/core/Enum.hpp>
 #include <yq/container/Vector.hpp>
 
+#include <cassert>
+
 namespace yq {
 
     /*! \brief Enum-based Map

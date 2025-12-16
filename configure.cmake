@@ -26,9 +26,10 @@ if(NOT YOUR_QUILL_TOOLBOX)
         set(LINUX TRUE)
         set(CMAKE_GENERATOR "Unix Makefiles")
         get_filename_component(CMAKE_BUILD_TYPE ${CMAKE_BINARY_DIR} NAME)
+    else()
+        set(CMAKE_CONFIGURATION_TYPES Debug;Release)
     endif()
 
-    set(CMAKE_CONFIGURATION_TYPES Debug;Release)
     set(CMAKE_CXX_STANDARD 26)                  # C++26 is the standard (may be bumped in the future)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -115,6 +116,16 @@ if(NOT YOUR_QUILL_TOOLBOX)
         
         -Wno-maybe-uninitialized 
     )
+
+    if(${CMAKE_BUILD_TYPE} STREQUAL "Debug") # Why isn't this coming through normally???
+        add_definitions(
+            -D_DEBUG=1
+        )
+    elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+        add_definitions(
+            -DNDEBUG=1
+        )
+    endif()
     
     if(Build_ASIO)
         message("Configuring to use ASIO")
