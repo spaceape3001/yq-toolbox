@@ -25,6 +25,7 @@ namespace yq {
     class Settings {
     public:
     
+        //! Constructs using a filepath to the INI file
         Settings(const std::filesystem::path&);
         ~Settings();
         
