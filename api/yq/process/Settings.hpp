@@ -27,6 +27,8 @@ namespace yq {
     
         //! Constructs using a filepath to the INI file
         Settings(const std::filesystem::path&);
+        
+        //! Standard destructor.
         ~Settings();
         
         //! Re-reads from file
