@@ -40,6 +40,7 @@ add_library(yq_core SHARED
     meta/CompoundMeta.cpp
     meta/ConstructorMeta.cpp
     meta/Generator.cpp
+    meta/EnumMeta.cpp
     meta/GlobalMeta.cpp
     meta/Meta.cpp
     meta/MetaWriter.cpp

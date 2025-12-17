@@ -9,6 +9,7 @@
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/meta/CompoundMetaDynamic.hpp>
 #include <yq/meta/CompoundMetaStatic.hpp>
+#include <yq/meta/EnumMeta.hpp>
 #include <yq/meta/GlobalMeta.hpp>
 #include <yq/meta/GlobalMetaWriter.hpp>
 #include <yq/meta/MetaWriter.hpp>
