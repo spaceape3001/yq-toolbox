@@ -32,6 +32,7 @@ add_library(yq_math SHARED
     earth/model/GeoNED.cpp
     earth/model/GeoSpheroid.cpp
 
+    math/math_io.cpp
     math/Complex.cpp
     math/Counter.cpp
     math/DimMapper.cpp

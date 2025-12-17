@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Sphere3.hxx"
@@ -28,6 +29,8 @@ static void reg_sphere3()
         w.property(szCenter, &Sphere3D::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3D::radius).description(szRadius_Sphere).alias({szRad, szR});
         w.property(szVolume, &Sphere3D::volume).description(szVolume_Sphere).alias({szVol});
+        w.format<math_io::format<Sphere3D>>();
+        w.parse<math_io::parse<Sphere3D>>();
     }
 
     {
@@ -36,6 +39,8 @@ static void reg_sphere3()
         w.property(szCenter, &Sphere3F::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3F::radius).description(szRadius_Sphere).alias({szRad, szR});
         w.property(szVolume, &Sphere3F::volume).description(szVolume_Sphere).alias({szVol});
+        w.format<math_io::format<Sphere3F>>();
+        w.parse<math_io::parse<Sphere3F>>();
     }
 
     {
@@ -43,6 +48,8 @@ static void reg_sphere3()
         w.description("3D sphere in integer");
         w.property(szCenter, &Sphere3I::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3I::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.format<math_io::format<Sphere3I>>();
+        w.parse<math_io::parse<Sphere3I>>();
     }
 
     {
@@ -50,6 +57,8 @@ static void reg_sphere3()
         w.description("3D sphere in unsigned integer");
         w.property(szCenter, &Sphere3U::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere3U::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.format<math_io::format<Sphere3U>>();
+        w.parse<math_io::parse<Sphere3U>>();
     }
 }
 

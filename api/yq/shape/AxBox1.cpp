@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
@@ -28,98 +29,6 @@ void    print_axbox1(Stream& str, const AxBox1<T>& v)
     as_stream(str, v);
 }
 
-static std::string_view write_axbox1d(const AxBox1D& v)
-{
-    static thread_local char    buffer [ 128 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg", 
-        kMaxDoubleDigits, v.lo.x, 
-        kMaxDoubleDigits, v.hi.x
-    );
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_axbox1f(const AxBox1F& v)
-{
-    static thread_local char    buffer [ 128 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g", 
-        kMaxFloatDigits, v.lo.x, 
-        kMaxFloatDigits, v.hi.x
-    );
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_axbox1i(const AxBox1I& v)
-{
-    static thread_local char    buffer [ 128 ];
-    int n = snprintf(buffer, sizeof(buffer), "%i,%i", 
-        v.lo.x, 
-        v.hi.x
-    );
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_axbox1u(const AxBox1U& v)
-{
-    static thread_local char    buffer [ 128 ];
-    int n = snprintf(buffer, sizeof(buffer), "%u,%u", 
-        v.lo.x, 
-        v.hi.x
-    );
-    return std::string_view(buffer, n);
-}
-
-static bool  parse_axbox1d(AxBox1D& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 2)
-        return false;
-    auto lx = to_double(bits[0]);
-    auto hx = to_double(bits[1]);
-    if(!(lx && hx)) 
-        return false;
-    v   = AxBox1D(Vector1D(*lx),Vector1D(*hx));
-    return true;
-}
-
-static bool  parse_axbox1f(AxBox1F& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 2)
-        return false;
-    auto lx = to_float(bits[0]);
-    auto hx = to_float(bits[1]);
-    if(!(lx && hx)) 
-        return false;
-    v   = AxBox1F(Vector1F(*lx),Vector1F(*hx));
-    return true;
-}
-
-static bool  parse_axbox1i(AxBox1I& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 2)
-        return false;
-    auto lx = to_integer(bits[0]);
-    auto hx = to_integer(bits[1]);
-    if(!(lx && hx)) 
-        return false;
-    v   = AxBox1I(Vector1I(*lx),Vector1I(*hx));
-    return true;
-}
-
-static bool  parse_axbox1u(AxBox1U& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 2)
-        return false;
-    auto lx = to_unsigned(bits[0]);
-    auto hx = to_unsigned(bits[1]);
-    if(!(lx && hx)) 
-        return false;
-    v   = AxBox1U(Vector1U(*lx),Vector1U(*hx));
-    return true;
-}
-
 static void reg_axbox1()
 {
 
@@ -137,9 +46,9 @@ static void reg_axbox1()
         w.method(szOverlaps, (bool(AxBox1D::*)(const AxBox1D&) const) &AxBox1D::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox1D::project).description(szProject_Box);
         w.method(szUnproject, &AxBox1D::unproject).description(szUnproject_Box);
-        w.parse<parse_axbox1d>();
+        w.format<math_io::format<AxBox1D>>();
+        w.parse<math_io::parse<AxBox1D>>();
         w.print<print_axbox1<double>>();
-        w.format<write_axbox1d>();
     }
 
     {
@@ -156,9 +65,9 @@ static void reg_axbox1()
         w.method(szOverlaps, (bool(AxBox1F::*)(const AxBox1F&) const) &AxBox1F::overlaps).description(szOverlaps_Box_Box);
         w.method(szProject, &AxBox1F::project).description(szProject_Box);
         w.method(szUnproject, &AxBox1F::unproject).description(szUnproject_Box);
-        w.parse<parse_axbox1f>();
+        w.format<math_io::format<AxBox1F>>();
+        w.parse<math_io::parse<AxBox1F>>();
         w.print<print_axbox1<float>>();
-        w.format<write_axbox1f>();
     }
 
     {
@@ -173,9 +82,9 @@ static void reg_axbox1()
         w.method(szContains, (bool(AxBox1I::*)(const Vector1I&) const) &AxBox1I::contains).description(szContains_Box_Pt);
         w.method(szEclipses, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox1I::*)(const AxBox1I&) const) &AxBox1I::overlaps).description(szOverlaps_Box_Box);
-        w.parse<parse_axbox1i>();
+        w.format<math_io::format<AxBox1I>>();
+        w.parse<math_io::parse<AxBox1I>>();
         w.print<print_axbox1<int>>();
-        w.format<write_axbox1i>();
     }
 
     {
@@ -190,9 +99,9 @@ static void reg_axbox1()
         w.method(szContains, (bool(AxBox1U::*)(const Vector1U&) const) &AxBox1U::contains).description(szContains_Box_Pt);
         w.method(szEclipses, (bool(AxBox1U::*)(const AxBox1U&) const) &AxBox1U::eclipses).description(szEclipses_Box_Box);
         w.method(szOverlaps, (bool(AxBox1U::*)(const AxBox1U&) const) &AxBox1U::overlaps).description(szOverlaps_Box_Box);
-        w.parse<parse_axbox1u>();
+        w.format<math_io::format<AxBox1U>>();
+        w.parse<math_io::parse<AxBox1U>>();
         w.print<print_axbox1<unsigned>>();
-        w.format<write_axbox1u>();
     }
 }
 

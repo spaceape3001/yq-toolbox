@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/text/format.hpp>
@@ -31,97 +32,6 @@ namespace yq {
 using namespace yq;
 
 
-template <typename T>
-void    print_size3(Stream& str, const Size3<T>& v)
-{
-    str << "(" << v.x << "," << v.y << "," << v.z << ")";
-}
-
-
-static std::string_view write_size3d(const Size3D& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg", kMaxDoubleDigits, v.x, kMaxDoubleDigits, v.y, kMaxDoubleDigits, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_size3f(const Size3F& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g", kMaxFloatDigits, v.x, kMaxFloatDigits, v.y, kMaxFloatDigits, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_size3i(const Size3I& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%i,%i,%i", v.x, v.y, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_size3u(const Size3U& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%u,%u,%u", v.x, v.y, v.z);
-    return std::string_view(buffer, n);
-}
-
-static bool  parse_size3d(Size3D& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_double(bits[0]);
-    auto y = to_double(bits[1]);
-    auto z = to_double(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Size3D(*x, *y, *z);
-    return true;
-}
-
-static bool  parse_size3f(Size3F& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_float(bits[0]);
-    auto y = to_float(bits[1]);
-    auto z = to_float(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Size3F(*x, *y, *z);
-    return true;
-}
-
-static bool  parse_size3i(Size3I& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_int(bits[0]);
-    auto y = to_int(bits[1]);
-    auto z = to_int(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Size3I(*x, *y, *z);
-    return true;
-}
-
-static bool  parse_size3u(Size3U& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_unsigned(bits[0]);
-    auto y = to_unsigned(bits[1]);
-    auto z = to_unsigned(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Size3U(*x, *y, *z);
-    return true;
-}
-
 
 static void reg_size3()
 {
@@ -131,9 +41,9 @@ static void reg_size3()
         w.property(szX, &Size3D::x).description(szX_Size).alias(szWidth);
         w.property(szY, &Size3D::y).description(szY_Size).alias(szHeight);
         w.property(szZ, &Size3D::z).description(szZ_Size).alias(szDepth);
-        w.print<print_size3<double>>();
-        w.format<write_size3d>();
-        w.parse<parse_size3d>();
+        w.format<math_io::format<Size3D>>();
+        w.parse<math_io::parse<Size3D>>();
+        w.print<math_io::print<Size3D>>();
         w.operate_with<double>();
     }
 
@@ -143,9 +53,10 @@ static void reg_size3()
         w.property(szX, &Size3F::x).description(szX_Size).alias(szWidth);
         w.property(szY, &Size3F::y).description(szY_Size).alias(szHeight);
         w.property(szZ, &Size3F::z).description(szZ_Size).alias(szDepth);
-        w.print<print_size3<float>>();
-        w.format<write_size3f>();
-        w.parse<parse_size3f>();
+        w.format<math_io::format<Size3F>>();
+        w.parse<math_io::parse<Size3F>>();
+        w.print<math_io::print<Size3F>>();
+        w.operate_with<float>();
     }
 
     {
@@ -154,9 +65,10 @@ static void reg_size3()
         w.property(szX, &Size3I::x).description(szX_Size).alias(szWidth);
         w.property(szY, &Size3I::y).description(szY_Size).alias(szHeight);
         w.property(szZ, &Size3I::z).description(szZ_Size).alias(szDepth);
-        w.print<print_size3<int>>();
-        w.format<write_size3i>();
-        w.parse<parse_size3i>();
+        w.format<math_io::format<Size3I>>();
+        w.parse<math_io::parse<Size3I>>();
+        w.print<math_io::print<Size3I>>();
+        w.operate_with<int>();
     }
 
     {
@@ -165,9 +77,10 @@ static void reg_size3()
         w.property(szX, &Size3U::x).description(szX_Size).alias(szWidth);
         w.property(szY, &Size3U::y).description(szY_Size).alias(szHeight);
         w.property(szZ, &Size3U::z).description(szZ_Size).alias(szDepth);
-        w.print<print_size3<unsigned>>();
-        w.format<write_size3u>();
-        w.parse<parse_size3u>();
+        w.format<math_io::format<Size3U>>();
+        w.parse<math_io::parse<Size3U>>();
+        w.print<math_io::print<Size3U>>();
+        w.operate_with<unsigned>();
     }
 }
 

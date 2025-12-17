@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor11.hpp>
 #include <yq/tensor/Tensor12.hpp>
@@ -61,8 +62,10 @@ static void reg_vector1()
         w.operate_with<Tensor12D>(Operator::Multiply);
         w.operate_with<Tensor13D>(Operator::Multiply);
         w.operate_with<Tensor14D>(Operator::Multiply);
-        w.print<print_vector1<double>>();
         w.constructor(construct_vector1<double>);
+        w.format<math_io::format<Vector1D>>();
+        w.parse<math_io::parse<Vector1D>>();
+        w.print<math_io::print<Vector1D>>();
     }
     
     {
@@ -83,8 +86,10 @@ static void reg_vector1()
         w.operate_with<Tensor12F>(Operator::Multiply);
         w.operate_with<Tensor13F>(Operator::Multiply);
         w.operate_with<Tensor14F>(Operator::Multiply);
-        w.print<print_vector1<float>>();
         w.constructor(construct_vector1<float>);
+        w.format<math_io::format<Vector1F>>();
+        w.parse<math_io::parse<Vector1F>>();
+        w.print<math_io::print<Vector1F>>();
     }
     
     {
@@ -98,8 +103,10 @@ static void reg_vector1()
         w.property(szLength², &Vector1I::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1I::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self({ Operator::Add, Operator::Subtract });
-        w.print<print_vector1<int>>();
         w.constructor(construct_vector1<int>);
+        w.format<math_io::format<Vector1I>>();
+        w.parse<math_io::parse<Vector1I>>();
+        w.print<math_io::print<Vector1I>>();
     }
 
     {
@@ -108,8 +115,10 @@ static void reg_vector1()
         w.property(szLength², &Vector1U::length²).description(szLength²_Vector).alias(szLen²);
         w.property(szX, &Vector1U::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.operate_self({ Operator::Add, Operator::Subtract });
-        w.print<print_vector1<unsigned>>();
         w.constructor(construct_vector1<unsigned>);
+        w.format<math_io::format<Vector1U>>();
+        w.parse<math_io::parse<Vector1U>>();
+        w.print<math_io::print<Vector1U>>();
     }
 }
 

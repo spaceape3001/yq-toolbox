@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/tensor/Tensor11.hpp>
 #include <yq/tensor/Tensor12.hpp>
 #include <yq/tensor/Tensor13.hpp>
@@ -42,6 +43,9 @@ static void reg_tensor41()
         w.operate_with<Tensor12D>();
         w.operate_with<Tensor13D>();
         w.operate_with<Tensor14D>();
+        w.format<math_io::format<Tensor41D>>();
+        w.parse<math_io::parse<Tensor41D>>();
+        w.print<math_io::print<Tensor41D>>();
     }
     
     {
@@ -63,11 +67,14 @@ static void reg_tensor41()
         w.operate_with<Tensor12F>();
         w.operate_with<Tensor13F>();
         w.operate_with<Tensor14F>();
+        w.format<math_io::format<Tensor41F>>();
+        w.parse<math_io::parse<Tensor41F>>();
+        w.print<math_io::print<Tensor41F>>();
     }
 
     {
         auto w = writer<float>();
-        w.operate_with<Tensor41D>();
+        w.operate_with<Tensor41F>();
     }
 
     {
@@ -77,6 +84,16 @@ static void reg_tensor41()
         w.property(szYX, &Tensor41I::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41I::zx).description(szZX_Tensor);
         w.property(szWX, &Tensor41I::wx).description(szWX_Tensor);
+        w.operate_self();
+        w.operate_with<int>();
+        w.operate_with<Vector1I>();
+        w.operate_with<Tensor11I>();
+        w.operate_with<Tensor12I>();
+        w.operate_with<Tensor13I>();
+        w.operate_with<Tensor14I>();
+        w.format<math_io::format<Tensor41I>>();
+        w.parse<math_io::parse<Tensor41I>>();
+        w.print<math_io::print<Tensor41I>>();
     }
 
     {
@@ -86,6 +103,16 @@ static void reg_tensor41()
         w.property(szYX, &Tensor41U::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor41U::zx).description(szZX_Tensor);
         w.property(szWX, &Tensor41U::wx).description(szWX_Tensor);
+        w.operate_self();
+        w.operate_with<unsigned>();
+        w.operate_with<Vector1U>();
+        w.operate_with<Tensor11U>();
+        w.operate_with<Tensor12U>();
+        w.operate_with<Tensor13U>();
+        w.operate_with<Tensor14U>();
+        w.format<math_io::format<Tensor41U>>();
+        w.parse<math_io::parse<Tensor41U>>();
+        w.print<math_io::print<Tensor41U>>();
     }
 }
 

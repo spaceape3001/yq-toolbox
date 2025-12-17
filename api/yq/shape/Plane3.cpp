@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Plane3.hxx"
@@ -24,12 +25,16 @@ static void reg_plane3()
         w.description("3D plane in double");
         w.property(szNormal,   &Plane3D::normal).description(szNormal_Plane).alias(szN);
         w.property(szDistance, &Plane3D::distance).description(szDistance_Plane).alias(szD);
+        w.format<math_io::format<Plane3D>>();
+        w.parse<math_io::parse<Plane3D>>();
     }
     {   
         auto     w  = writer<Plane3F>();
         w.description("3D plane in float");
         w.property(szNormal,   &Plane3F::normal).description(szNormal_Plane).alias(szN);
         w.property(szDistance, &Plane3F::distance).description(szDistance_Plane).alias(szD);
+        w.format<math_io::format<Plane3F>>();
+        w.parse<math_io::parse<Plane3F>>();
     }
 }
 YQ_INVOKE(reg_plane3();)

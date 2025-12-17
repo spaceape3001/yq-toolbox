@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Vector1.hpp>
 
@@ -29,6 +30,9 @@ static void reg_multivector1()
         w.operate_self();
         w.operate_with<double>();
         w.operate_with<Vector1D>();
+        w.format<math_io::format<Multivector1D>>();
+        w.parse<math_io::parse<Multivector1D>>();
+        w.print<math_io::print<Multivector1D>>();
     }
     
     {
@@ -44,6 +48,9 @@ static void reg_multivector1()
         w.operate_self();
         w.operate_with<float>();
         w.operate_with<Vector1F>();
+        w.format<math_io::format<Multivector1F>>();
+        w.parse<math_io::parse<Multivector1F>>();
+        w.print<math_io::print<Multivector1F>>();
     }
 
     {

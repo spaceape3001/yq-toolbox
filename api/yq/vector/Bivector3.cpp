@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Multivector3.hpp>
 #include <yq/vector/Trivector3.hpp>
@@ -35,6 +36,8 @@ static void reg_bivector3()
         w.operate_with<Multivector3D>();
         w.operate_with<Trivector3D>();
         w.operate_with<Vector3D>();
+        w.format<math_io::format<Bivector3D>>();
+        w.parse<math_io::parse<Bivector3D>>();
     }
 
     {
@@ -53,6 +56,9 @@ static void reg_bivector3()
         w.operate_with<Multivector3F>();
         w.operate_with<Trivector3F>();
         w.operate_with<Vector3F>();
+        w.format<math_io::format<Bivector3F>>();
+        w.parse<math_io::parse<Bivector3F>>();
+        w.print<math_io::print<Bivector3F>>();
     }
 
     {

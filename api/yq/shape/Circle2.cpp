@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/shape/AxBox2.hpp>
 
@@ -34,6 +35,8 @@ static void reg_circle2()
         w.property(szDiameter, &Circle2D::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2D::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2D::valid).description(szValid_Circle);
+        w.format<math_io::format<Circle2D>>();
+        w.parse<math_io::parse<Circle2D>>();
     }
     
     {
@@ -46,6 +49,8 @@ static void reg_circle2()
         w.property(szDiameter, &Circle2F::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2F::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2F::valid).description(szValid_Circle);
+        w.format<math_io::format<Circle2F>>();
+        w.parse<math_io::parse<Circle2F>>();
     }
     
     {
@@ -56,6 +61,8 @@ static void reg_circle2()
         w.property(szDiameter, &Circle2I::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2I::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2I::valid).description(szValid_Circle);
+        w.format<math_io::format<Circle2I>>();
+        w.parse<math_io::parse<Circle2I>>();
     }
     
     {
@@ -66,6 +73,8 @@ static void reg_circle2()
         w.property(szDiameter, &Circle2U::diameter).description(szDiameter_Circle).alias({szDia, szD});
         w.property(szRadius, &Circle2U::radius).description(szRadius_Circle).alias({szRad, szR});
         w.property(szValid, &Circle2U::valid).description(szValid_Circle);
+        w.format<math_io::format<Circle2U>>();
+        w.parse<math_io::parse<Circle2U>>();
     }
 }
 

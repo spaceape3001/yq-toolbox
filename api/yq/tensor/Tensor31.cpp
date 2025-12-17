@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor11.hpp>
 #include <yq/tensor/Tensor12.hpp>
@@ -41,6 +42,9 @@ static void reg_tensor31()
         w.operate_with<Tensor12D>();
         w.operate_with<Tensor13D>();
         w.operate_with<Tensor14D>();
+        w.format<math_io::format<Tensor31D>>();
+        w.parse<math_io::parse<Tensor31D>>();
+        w.print<math_io::print<Tensor31D>>();
     }
     
     {
@@ -61,11 +65,14 @@ static void reg_tensor31()
         w.operate_with<Tensor12F>();
         w.operate_with<Tensor13F>();
         w.operate_with<Tensor14F>();
+        w.format<math_io::format<Tensor31F>>();
+        w.parse<math_io::parse<Tensor31F>>();
+        w.print<math_io::print<Tensor31F>>();
     }
 
     {
         auto w = writer<float>();
-        w.operate_with<Tensor31D>();
+        w.operate_with<Tensor31F>();
     }
 
     {
@@ -74,6 +81,16 @@ static void reg_tensor31()
         w.property(szXX, &Tensor31I::xx).description(szXX_Tensor);
         w.property(szYX, &Tensor31I::yx).description(szYX_Tensor);
         w.property(szZX, &Tensor31I::zx).description(szZX_Tensor);
+        w.operate_self();
+        w.operate_with<int>();
+        w.operate_with<Vector1I>();
+        w.operate_with<Tensor11I>();
+        w.operate_with<Tensor12I>();
+        w.operate_with<Tensor13I>();
+        w.operate_with<Tensor14I>();
+        w.format<math_io::format<Tensor31I>>();
+        w.parse<math_io::parse<Tensor31I>>();
+        w.print<math_io::print<Tensor31I>>();
     }
 
     {

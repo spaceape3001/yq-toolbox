@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Rectangle2.hxx"
@@ -26,6 +27,8 @@ static void reg_rectangle2()
         w.description("2D rectangle in double");
         w.property(szPosition, &Rectangle2D::position).description(szPosition_Rectangle).alias({szPos, szCorner});
         w.property(szSize, &Rectangle2D::size).description(szSize_Rectangle);
+        w.format<math_io::format<Rectangle2D>>();
+        w.parse<math_io::parse<Rectangle2D>>();
     }
 
     {
@@ -33,6 +36,8 @@ static void reg_rectangle2()
         w.description("2D rectangle in float");
         w.property(szPosition, &Rectangle2F::position).description(szPosition_Rectangle).alias({szPos, szCorner});
         w.property(szSize, &Rectangle2F::size).description(szSize_Rectangle);
+        w.format<math_io::format<Rectangle2F>>();
+        w.parse<math_io::parse<Rectangle2F>>();
     }
 
     {
@@ -40,6 +45,8 @@ static void reg_rectangle2()
         w.description("2D rectangle in integer");
         w.property(szPosition, &Rectangle2I::position).description(szPosition_Rectangle).alias({szPos, szCorner});
         w.property(szSize, &Rectangle2I::size).description(szSize_Rectangle);
+        w.format<math_io::format<Rectangle2I>>();
+        w.parse<math_io::parse<Rectangle2I>>();
     }
 
     {
@@ -47,6 +54,8 @@ static void reg_rectangle2()
         w.description("2D rectangle in unsigned integer");
         w.property(szPosition, &Rectangle2U::position).description(szPosition_Rectangle).alias({szPos, szCorner});
         w.property(szSize, &Rectangle2U::size).description(szSize_Rectangle);
+        w.format<math_io::format<Rectangle2U>>();
+        w.parse<math_io::parse<Rectangle2U>>();
     }
 }
 

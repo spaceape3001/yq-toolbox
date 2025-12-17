@@ -28,7 +28,7 @@ namespace yq {
     struct Circle2 {
     
         //! Component type (ie, the template parameter)
-        using component_t   = T;
+        using component_type    = T;
 
         //! Center center
         Vector2<T>  center;

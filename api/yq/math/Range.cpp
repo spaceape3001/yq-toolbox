@@ -8,6 +8,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 using namespace yq;
@@ -20,6 +21,9 @@ YQ_TYPE_IMPLEMENT(yq::RangeM)
 YQ_TYPE_IMPLEMENT(yq::RangeCM)
 YQ_TYPE_IMPLEMENT(yq::RangeMM)
 
+namespace {
+}
+
 static void reg_range_math()
 {
     {
@@ -27,6 +31,8 @@ static void reg_range_math()
         w.description("Range in double");
         w.property(szLow, &RangeD::lo).description(szLow_Range).alias({szLo, szL}).tag(kTag_Save).tag(kTag_Print);
         w.property(szHigh, &RangeD::hi).description(szHigh_Range).alias({szHi, szH}).tag(kTag_Save).tag(kTag_Print);
+        w.format<math_io::format<RangeD>>();
+        w.parse<math_io::parse<RangeD>>();
     }
     
     {
@@ -34,6 +40,8 @@ static void reg_range_math()
         w.description("Range in float");
         w.property(szLow, &RangeF::lo).description(szLow_Range).alias({szLo, szL}).tag(kTag_Save).tag(kTag_Print);
         w.property(szHigh, &RangeF::hi).description(szHigh_Range).alias({szHi, szH}).tag(kTag_Save).tag(kTag_Print);
+        w.format<math_io::format<RangeF>>();
+        w.parse<math_io::parse<RangeF>>();
     }
 
     {
@@ -41,6 +49,8 @@ static void reg_range_math()
         w.description("Range in integer");
         w.property(szLow, &RangeI::lo).description(szLow_Range).alias({szLo, szL}).tag(kTag_Save).tag(kTag_Print);
         w.property(szHigh, &RangeI::hi).description(szHigh_Range).alias({szHi, szH}).tag(kTag_Save).tag(kTag_Print);
+        w.format<math_io::format<RangeI>>();
+        w.parse<math_io::parse<RangeI>>();
     }
 
     {
@@ -48,6 +58,8 @@ static void reg_range_math()
         w.description("Range in unsigned integer");
         w.property(szLow, &RangeU::lo).description(szLow_Range).alias({szLo, szL}).tag(kTag_Save).tag(kTag_Print);
         w.property(szHigh, &RangeU::hi).description(szHigh_Range).alias({szHi, szH}).tag(kTag_Save).tag(kTag_Print);
+        w.format<math_io::format<RangeU>>();
+        w.parse<math_io::parse<RangeU>>();
     }
 
     {

@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/text/format.hpp>
@@ -28,52 +29,6 @@ void    print_quaternion3(Stream& str, const Quaternion3<T>& v)
     str << "(" << v.w << "," << v.x << "," << v.y << "," << v.z << ")";
 }
 
-
-static std::string_view write_quaternion3d(const Quaternion3D& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", kMaxDoubleDigits, v.w, kMaxDoubleDigits, v.x, kMaxDoubleDigits, v.y, kMaxDoubleDigits, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_quaternion3f(const Quaternion3F& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g,%.*g", kMaxFloatDigits, v.w, kMaxFloatDigits, v.x, kMaxFloatDigits, v.y, kMaxFloatDigits, v.z);
-    return std::string_view(buffer, n);
-}
-
-static bool  parse_quaternion3d(Quaternion3D& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 4)
-        return false;
-    auto w = to_double(bits[0]);
-    auto x = to_double(bits[1]);
-    auto y = to_double(bits[2]);
-    auto z = to_double(bits[3]);
-    if(!(x && y && z && w)) 
-        return false;
-    v   = Quaternion3D(*w, *x, *y, *z);
-    return true;
-}
-
-static bool  parse_quaternion3f(Quaternion3F& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 4)
-        return false;
-    auto w = to_float(bits[0]);
-    auto x = to_float(bits[1]);
-    auto y = to_float(bits[2]);
-    auto z = to_float(bits[3]);
-    if(!(x && y && z && w)) 
-        return false;
-    v   = Quaternion3F(*w, *x, *y, *z);
-    return true;
-}
-
-
 static void reg_quaternion3()
 {
     {
@@ -86,9 +41,9 @@ static void reg_quaternion3()
         w.operate_self();
         w.operate_with<double>();
         //w.operate_with<Vector3D>(); // DISABLED due to bad template expansion causing weird compiler substitution issues
-        w.print<print_quaternion3<double>>();
-        w.format<write_quaternion3d>();
-        w.parse<parse_quaternion3d>();
+        w.format<math_io::format<Quaternion3D>>();
+        w.parse<math_io::parse<Quaternion3D>>();
+        w.print<math_io::print<Quaternion3D>>();
     }
 
     {
@@ -106,9 +61,9 @@ static void reg_quaternion3()
         w.operate_self();
         w.operate_with<float>();
         //w.operate_with<Vector3F>(); // DISABLED due to bad template expansion causing weird compiler substitution issues
-        w.print<print_quaternion3<float>>();
-        w.format<write_quaternion3f>();
-        w.parse<parse_quaternion3f>();
+        w.format<math_io::format<Quaternion3F>>();
+        w.parse<math_io::parse<Quaternion3F>>();
+        w.print<math_io::print<Quaternion3F>>();
     }
 
     {

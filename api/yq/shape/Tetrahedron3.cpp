@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Tetrahedron3.hxx"
@@ -29,6 +30,8 @@ static void reg_tetrahedron3()
         w.property(szB, &Tetrahedron3D::b).description(szB_Tetrahedron);
         w.property(szC, &Tetrahedron3D::c).description(szC_Tetrahedron);
         w.property(szD, &Tetrahedron3D::d).description(szD_Tetrahedron);
+        w.format<math_io::format<Tetrahedron3D>>();
+        w.parse<math_io::parse<Tetrahedron3D>>();
     }
 
     {
@@ -38,6 +41,8 @@ static void reg_tetrahedron3()
         w.property(szB, &Tetrahedron3F::b).description(szB_Tetrahedron);
         w.property(szC, &Tetrahedron3F::c).description(szC_Tetrahedron);
         w.property(szD, &Tetrahedron3F::d).description(szD_Tetrahedron);
+        w.format<math_io::format<Tetrahedron3F>>();
+        w.parse<math_io::parse<Tetrahedron3F>>();
     }
 
     {
@@ -47,6 +52,8 @@ static void reg_tetrahedron3()
         w.property(szB, &Tetrahedron3I::b).description(szB_Tetrahedron);
         w.property(szC, &Tetrahedron3I::c).description(szC_Tetrahedron);
         w.property(szD, &Tetrahedron3I::d).description(szD_Tetrahedron);
+        w.format<math_io::format<Tetrahedron3I>>();
+        w.parse<math_io::parse<Tetrahedron3I>>();
     }
     
     {
@@ -56,6 +63,8 @@ static void reg_tetrahedron3()
         w.property(szB, &Tetrahedron3U::b).description(szB_Tetrahedron);
         w.property(szC, &Tetrahedron3U::c).description(szC_Tetrahedron);
         w.property(szD, &Tetrahedron3U::d).description(szD_Tetrahedron);
+        w.format<math_io::format<Tetrahedron3U>>();
+        w.parse<math_io::parse<Tetrahedron3U>>();
     }
 }
 

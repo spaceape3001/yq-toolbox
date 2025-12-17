@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor41.hpp>
 #include <yq/tensor/Tensor42.hpp>
@@ -49,6 +50,9 @@ static void reg_tensor44()
         w.operate_with<Tensor41D>();
         w.operate_with<Tensor42D>();
         w.operate_with<Tensor43D>();
+        w.format<math_io::format<Tensor44D>>();
+        w.parse<math_io::parse<Tensor44D>>();
+        w.print<math_io::print<Tensor44D>>();
     }
     
     {
@@ -81,11 +85,14 @@ static void reg_tensor44()
         w.operate_with<Tensor41F>();
         w.operate_with<Tensor42F>();
         w.operate_with<Tensor43F>();
+        w.format<math_io::format<Tensor44F>>();
+        w.parse<math_io::parse<Tensor44F>>();
+        w.print<math_io::print<Tensor44F>>();
     }
 
     {
         auto w = writer<float>();
-        w.operate_with<Tensor44D>();
+        w.operate_with<Tensor44F>();
     }
 
     {
@@ -107,6 +114,9 @@ static void reg_tensor44()
         w.property(szWY, &Tensor44I::wy).description(szWY_Tensor);
         w.property(szWZ, &Tensor44I::wz).description(szWZ_Tensor);
         w.property(szWW, &Tensor44I::ww).description(szWW_Tensor);
+        w.format<math_io::format<Tensor44I>>();
+        w.parse<math_io::parse<Tensor44I>>();
+        w.print<math_io::print<Tensor44I>>();
     }
 
     {
@@ -128,6 +138,9 @@ static void reg_tensor44()
         w.property(szWY, &Tensor44U::wy).description(szWY_Tensor);
         w.property(szWZ, &Tensor44U::wz).description(szWZ_Tensor);
         w.property(szWW, &Tensor44U::ww).description(szWW_Tensor);
+        w.format<math_io::format<Tensor44U>>();
+        w.parse<math_io::parse<Tensor44U>>();
+        w.print<math_io::print<Tensor44U>>();
     }
 }
 

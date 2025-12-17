@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor41.hpp>
 #include <yq/tensor/Tensor42.hpp>
@@ -45,100 +46,6 @@ Vector4<T>    construct_vector4(T x, T y, T z, T w)
     return Vector4<T>(x,y,z,w);
 }
 
-template <typename T>
-void    print_vector4(Stream& str, const Vector4<T>& v)
-{
-    str << "(" << v.x << "," << v.y << "," << v.z << "," << v.w << ")";
-}
-
-static std::string_view write_vector4d(const Vector4D& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg,%.*lg", kMaxDoubleDigits, v.x, kMaxDoubleDigits, v.y, kMaxDoubleDigits, v.z, kMaxDoubleDigits, v.w);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_vector4f(const Vector4F& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g,%.*g", kMaxFloatDigits, v.x, kMaxFloatDigits, v.y, kMaxFloatDigits, v.z, kMaxFloatDigits, v.w);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_vector4i(const Vector4I& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%i,%i,%i,%i", v.x, v.y, v.z, v.w);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_vector4u(const Vector4U& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%u,%u,%u,%u", v.x, v.y, v.z, v.w);
-    return std::string_view(buffer, n);
-}
-
-static bool  parse_vector4d(Vector4D& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 4)
-        return false;
-    auto x = to_double(bits[0]);
-    auto y = to_double(bits[1]);
-    auto z = to_double(bits[2]);
-    auto w = to_double(bits[3]);
-    if(!(x && y && z && w)) 
-        return false;
-    v   = Vector4D(*x, *y, *z, *w);
-    return true;
-}
-
-static bool  parse_vector4f(Vector4F& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 4)
-        return false;
-    auto x = to_float(bits[0]);
-    auto y = to_float(bits[1]);
-    auto z = to_float(bits[2]);
-    auto w = to_float(bits[3]);
-    if(!(x && y && z && w)) 
-        return false;
-    v   = Vector4F(*x, *y, *z, *w);
-    return true;
-}
-
-static bool  parse_vector4i(Vector4I& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 4)
-        return false;
-    auto x = to_int(bits[0]);
-    auto y = to_int(bits[1]);
-    auto z = to_int(bits[2]);
-    auto w = to_int(bits[3]);
-    if(!(x && y && z && w)) 
-        return false;
-    v   = Vector4I(*x, *y, *z, *w);
-    return true;
-}
-
-static bool  parse_vector4u(Vector4U& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 4)
-        return false;
-    auto x = to_unsigned(bits[0]);
-    auto y = to_unsigned(bits[1]);
-    auto z = to_unsigned(bits[2]);
-    auto w = to_unsigned(bits[3]);
-    if(!(x && y && z && w)) 
-        return false;
-    v   = Vector4U(*x, *y, *z, *w);
-    return true;
-}
-
 static void reg_vector4()
 {
     {
@@ -160,9 +67,9 @@ static void reg_vector4()
         w.operate_with<Tensor42D>(Operator::Multiply);
         w.operate_with<Tensor43D>(Operator::Multiply);
         w.operate_with<Tensor44D>(Operator::Multiply);
-        w.print<print_vector4<double>>();
-        w.format<write_vector4d>();
-        w.parse<parse_vector4d>();
+        w.print<math_io::print<Vector4D>>();
+        w.format<math_io::format<Vector4D>>();
+        w.parse<math_io::parse<Vector4D>>();
         w.constructor(construct_vector4<double>);
     }
     
@@ -188,9 +95,9 @@ static void reg_vector4()
         w.operate_with<Tensor42F>(Operator::Multiply);
         w.operate_with<Tensor43F>(Operator::Multiply);
         w.operate_with<Tensor44F>(Operator::Multiply);
-        w.print<print_vector4<float>>();
-        w.format<write_vector4f>();
-        w.parse<parse_vector4f>();
+        w.print<math_io::print<Vector4F>>();
+        w.format<math_io::format<Vector4F>>();
+        w.parse<math_io::parse<Vector4F>>();
         w.constructor(construct_vector4<float>);
     }
     
@@ -207,9 +114,9 @@ static void reg_vector4()
         w.property(szY, &Vector4I::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szZ, &Vector4I::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szW, &Vector4I::w).description(szW_Vector).tag(kTag_Save).tag(kTag_Print);
-        w.print<print_vector4<int>>();
-        w.format<write_vector4i>();
-        w.parse<parse_vector4i>();
+        w.print<math_io::print<Vector4I>>();
+        w.format<math_io::format<Vector4I>>();
+        w.parse<math_io::parse<Vector4I>>();
         w.constructor(construct_vector4<int>);
     }
     
@@ -226,9 +133,9 @@ static void reg_vector4()
         w.property(szY, &Vector4U::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szZ, &Vector4U::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szW, &Vector4U::w).description(szW_Vector).tag(kTag_Save).tag(kTag_Print);
-        w.print<print_vector4<unsigned>>();
-        w.format<write_vector4u>();
-        w.parse<parse_vector4u>();
+        w.print<math_io::print<Vector4U>>();
+        w.format<math_io::format<Vector4U>>();
+        w.parse<math_io::parse<Vector4U>>();
         w.constructor(construct_vector4<unsigned>);
     }
 

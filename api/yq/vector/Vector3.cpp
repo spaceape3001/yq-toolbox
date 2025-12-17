@@ -9,6 +9,7 @@
 #include <yq/strings.hpp>
 #include <yq/tags.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor31.hpp>
 #include <yq/tensor/Tensor32.hpp>
@@ -52,90 +53,6 @@ void    print_vector3(Stream& str, const Vector3<T>& v)
     str << "(" << v.x << "," << v.y << "," << v.z << ")";
 }
 
-static std::string_view write_vector3d(const Vector3D& v)
-{
-    static thread_local char    buffer [ 192 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*lg,%.*lg,%.*lg", kMaxDoubleDigits, v.x, kMaxDoubleDigits, v.y, kMaxDoubleDigits, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_vector3f(const Vector3F& v)
-{
-    static thread_local char    buffer [ 192 ];
-    int n = snprintf(buffer, sizeof(buffer), "%.*g,%.*g,%.*g", kMaxFloatDigits, v.x, kMaxFloatDigits, v.y, kMaxFloatDigits, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_vector3i(const Vector3I& v)
-{
-    static thread_local char    buffer [ 192 ];
-    int n = snprintf(buffer, sizeof(buffer), "%i,%i,%i", v.x, v.y, v.z);
-    return std::string_view(buffer, n);
-}
-
-static std::string_view write_vector3u(const Vector3U& v)
-{
-    static thread_local char    buffer [ 256 ];
-    int n = snprintf(buffer, sizeof(buffer), "%u,%u,%u", v.x, v.y, v.z);
-    return std::string_view(buffer, n);
-}
-
-static bool  parse_vector3d(Vector3D& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_double(bits[0]);
-    auto y = to_double(bits[1]);
-    auto z = to_double(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Vector3D(*x, *y, *z);
-    return true;
-}
-
-static bool  parse_vector3f(Vector3F& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_float(bits[0]);
-    auto y = to_float(bits[1]);
-    auto z = to_float(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Vector3F(*x, *y, *z);
-    return true;
-}
-
-static bool  parse_vector3i(Vector3I& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_int(bits[0]);
-    auto y = to_int(bits[1]);
-    auto z = to_int(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Vector3I(*x, *y, *z);
-    return true;
-}
-
-static bool  parse_vector3u(Vector3U& v, std::string_view str)
-{
-    auto bits = split(str, ',');
-    if(bits.size() != 3)
-        return false;
-    auto x = to_unsigned(bits[0]);
-    auto y = to_unsigned(bits[1]);
-    auto z = to_unsigned(bits[2]);
-    if(!(x && y && z)) 
-        return false;
-    v   = Vector3U(*x, *y, *z);
-    return true;
-}
-
 static void reg_vector3()
 {
     {
@@ -156,9 +73,9 @@ static void reg_vector3()
         w.operate_with<Tensor32D>(Operator::Multiply);
         w.operate_with<Tensor33D>(Operator::Multiply);
         w.operate_with<Tensor34D>(Operator::Multiply);
-        w.print<print_vector3<double>>();
-        w.format<write_vector3d>();
-        w.parse<parse_vector3d>();
+        w.format<math_io::format<Vector3D>>();
+        w.parse<math_io::parse<Vector3D>>();
+        w.print<math_io::print<Vector3D>>();
         w.constructor(construct_vector3<double>);
     }
     
@@ -185,9 +102,9 @@ static void reg_vector3()
         w.operate_with<Tensor32F>(Operator::Multiply);
         w.operate_with<Tensor33F>(Operator::Multiply);
         w.operate_with<Tensor34F>(Operator::Multiply);
-        w.print<print_vector3<float>>();
-        w.format<write_vector3f>();
-        w.parse<parse_vector3f>();
+        w.format<math_io::format<Vector3F>>();
+        w.parse<math_io::parse<Vector3F>>();
+        w.print<math_io::print<Vector3F>>();
         w.constructor(construct_vector3<float>);
     }
     
@@ -203,9 +120,9 @@ static void reg_vector3()
         w.property(szX, &Vector3I::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szY, &Vector3I::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szZ, &Vector3I::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
-        w.print<print_vector3<int>>();
-        w.format<write_vector3i>();
-        w.parse<parse_vector3i>();
+        w.format<math_io::format<Vector3I>>();
+        w.parse<math_io::parse<Vector3I>>();
+        w.print<math_io::print<Vector3I>>();
         w.constructor(construct_vector3<int>);
     }
 
@@ -216,9 +133,9 @@ static void reg_vector3()
         w.property(szX, &Vector3U::x).description(szX_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szY, &Vector3U::y).description(szY_Vector).tag(kTag_Save).tag(kTag_Print);
         w.property(szZ, &Vector3U::z).description(szZ_Vector).tag(kTag_Save).tag(kTag_Print);
-        w.print<print_vector3<unsigned>>();
-        w.format<write_vector3u>();
-        w.parse<parse_vector3u>();
+        w.format<math_io::format<Vector3U>>();
+        w.parse<math_io::parse<Vector3U>>();
+        w.print<math_io::print<Vector3U>>();
         w.constructor(construct_vector3<unsigned>);
     }
 }

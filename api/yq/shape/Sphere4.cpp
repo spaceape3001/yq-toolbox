@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Sphere4.hxx"
@@ -27,6 +28,8 @@ static void reg_sphere4()
         w.property(szCenter, &Sphere4D::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4D::radius).description(szRadius_Sphere).alias({szRad, szR});
         w.property(szHypervolume, &Sphere4D::hypervolume).description(szHypervolume_Sphere4);
+        w.format<math_io::format<Sphere4D>>();
+        w.parse<math_io::parse<Sphere4D>>();
     }
 
     {
@@ -35,6 +38,8 @@ static void reg_sphere4()
         w.property(szCenter, &Sphere4F::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4F::radius).description(szRadius_Sphere).alias({szRad, szR});
         w.property(szHypervolume, &Sphere4F::hypervolume).description(szHypervolume_Sphere4);
+        w.format<math_io::format<Sphere4F>>();
+        w.parse<math_io::parse<Sphere4F>>();
     }
 
     {
@@ -42,6 +47,8 @@ static void reg_sphere4()
         w.description("4D sphere in integer");
         w.property(szCenter, &Sphere4I::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4I::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.format<math_io::format<Sphere4I>>();
+        w.parse<math_io::parse<Sphere4I>>();
     }
 
     {
@@ -49,6 +56,8 @@ static void reg_sphere4()
         w.description("4D sphere in unsigned integer");
         w.property(szCenter, &Sphere4U::center).description(szCenter_Sphere).alias({szPoint, szPt});
         w.property(szRadius, &Sphere4U::radius).description(szRadius_Sphere).alias({szRad, szR});
+        w.format<math_io::format<Sphere4U>>();
+        w.parse<math_io::parse<Sphere4U>>();
     }
 }
 

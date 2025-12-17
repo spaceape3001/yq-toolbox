@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor21.hpp>
 #include <yq/tensor/Tensor23.hpp>
@@ -37,6 +38,9 @@ static void reg_tensor22()
         w.operate_with<Tensor21D>();
         w.operate_with<Tensor23D>();
         w.operate_with<Tensor24D>();
+        w.format<math_io::format<Tensor22D>>();
+        w.parse<math_io::parse<Tensor22D>>();
+        w.print<math_io::print<Tensor22D>>();
     }
     
     {
@@ -57,11 +61,14 @@ static void reg_tensor22()
         w.operate_with<Tensor21F>();
         w.operate_with<Tensor23F>();
         w.operate_with<Tensor24F>();
+        w.format<math_io::format<Tensor22F>>();
+        w.parse<math_io::parse<Tensor22F>>();
+        w.print<math_io::print<Tensor22F>>();
     }
 
     {
         auto w = writer<float>();
-        w.operate_with<Tensor22D>();
+        w.operate_with<Tensor22F>();
     }
 
     {
@@ -71,6 +78,15 @@ static void reg_tensor22()
         w.property(szXY, &Tensor22I::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22I::yx).description(szYX_Tensor);
         w.property(szYY, &Tensor22I::yy).description(szYY_Tensor);
+        w.operate_self();
+        w.operate_with<int>();
+        w.operate_with<Vector2I>();
+        w.operate_with<Tensor21I>();
+        w.operate_with<Tensor23I>();
+        w.operate_with<Tensor24I>();
+        w.format<math_io::format<Tensor22I>>();
+        w.parse<math_io::parse<Tensor22I>>();
+        w.print<math_io::print<Tensor22I>>();
     }
 
     {
@@ -80,6 +96,15 @@ static void reg_tensor22()
         w.property(szXY, &Tensor22U::xy).description(szXY_Tensor);
         w.property(szYX, &Tensor22U::yx).description(szYX_Tensor);
         w.property(szYY, &Tensor22U::yy).description(szYY_Tensor);
+        w.operate_self();
+        w.operate_with<unsigned>();
+        w.operate_with<Vector2U>();
+        w.operate_with<Tensor21U>();
+        w.operate_with<Tensor23U>();
+        w.operate_with<Tensor24U>();
+        w.format<math_io::format<Tensor22U>>();
+        w.parse<math_io::parse<Tensor22U>>();
+        w.print<math_io::print<Tensor22U>>();
     }
 }
 

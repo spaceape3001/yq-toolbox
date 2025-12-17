@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Segment1.hxx"
@@ -26,6 +27,8 @@ static void reg_segment1()
         w.description("1D Segment in double");
         w.property(szA, &Segment1D::a).description(szA_Segment);
         w.property(szB, &Segment1D::b).description(szB_Segment);
+        w.format<math_io::format<Segment1D>>();
+        w.parse<math_io::parse<Segment1D>>();
     }
 
     {
@@ -33,6 +36,8 @@ static void reg_segment1()
         w.description("1D Segment in float");
         w.property(szA, &Segment1F::a).description(szA_Segment);
         w.property(szB, &Segment1F::b).description(szB_Segment);
+        w.format<math_io::format<Segment1F>>();
+        w.parse<math_io::parse<Segment1F>>();
     }
 
     {
@@ -40,6 +45,8 @@ static void reg_segment1()
         w.description("1D Segment in integer");
         w.property(szA, &Segment1I::a).description(szA_Segment);
         w.property(szB, &Segment1I::b).description(szB_Segment);
+        w.format<math_io::format<Segment1I>>();
+        w.parse<math_io::parse<Segment1I>>();
     }
 
     {
@@ -47,6 +54,8 @@ static void reg_segment1()
         w.description("1D Segment in unsigned integer");
         w.property(szA, &Segment1U::a).description(szA_Segment);
         w.property(szB, &Segment1U::b).description(szB_Segment);
+        w.format<math_io::format<Segment1U>>();
+        w.parse<math_io::parse<Segment1U>>();
     }
 }
 

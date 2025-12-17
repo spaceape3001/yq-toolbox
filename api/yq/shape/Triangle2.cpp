@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Triangle2.hxx"
@@ -27,6 +28,8 @@ static void reg_triangle2()
         w.property(szA, &Triangle2D::a).description(szA_Triangle);
         w.property(szB, &Triangle2D::b).description(szB_Triangle);
         w.property(szC, &Triangle2D::c).description(szC_Triangle);
+        w.format<math_io::format<Triangle2D>>();
+        w.parse<math_io::parse<Triangle2D>>();
     }
 
     {
@@ -35,6 +38,8 @@ static void reg_triangle2()
         w.property(szA, &Triangle2F::a).description(szA_Triangle);
         w.property(szB, &Triangle2F::b).description(szB_Triangle);
         w.property(szC, &Triangle2F::c).description(szC_Triangle);
+        w.format<math_io::format<Triangle2F>>();
+        w.parse<math_io::parse<Triangle2F>>();
     }
 
     {
@@ -43,6 +48,8 @@ static void reg_triangle2()
         w.property(szA, &Triangle2I::a).description(szA_Triangle);
         w.property(szB, &Triangle2I::b).description(szB_Triangle);
         w.property(szC, &Triangle2I::c).description(szC_Triangle);
+        w.format<math_io::format<Triangle2I>>();
+        w.parse<math_io::parse<Triangle2I>>();
     }
 
     {
@@ -51,6 +58,8 @@ static void reg_triangle2()
         w.property(szA, &Triangle2U::a).description(szA_Triangle);
         w.property(szB, &Triangle2U::b).description(szB_Triangle);
         w.property(szC, &Triangle2U::c).description(szC_Triangle);
+        w.format<math_io::format<Triangle2U>>();
+        w.parse<math_io::parse<Triangle2U>>();
     }
 }
 

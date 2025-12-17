@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Ray3.hxx"
@@ -24,6 +25,8 @@ static void reg_ray3()
         w.description("3D ray in double");
         w.property(szPoint, &Ray3D::point).description(szPoint_Ray).alias(szPt);
         w.property(szDirection, &Ray3D::direction).description(szDirection_Ray).alias(szDir);
+        w.format<math_io::format<Ray3D>>();
+        w.parse<math_io::parse<Ray3D>>();
     }
 
     {
@@ -31,6 +34,8 @@ static void reg_ray3()
         w.description("3D ray in float");
         w.property(szPoint, &Ray3F::point).description(szPoint_Ray).alias(szPt);
         w.property(szDirection, &Ray3F::direction).description(szDirection_Ray).alias(szDir);
+        w.format<math_io::format<Ray3F>>();
+        w.parse<math_io::parse<Ray3F>>();
     }
 }
 

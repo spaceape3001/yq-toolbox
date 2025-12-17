@@ -8,6 +8,7 @@
 
 #include <yq/strings.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/math/math_io.hpp>
 #include <yq/meta/Init.hpp>
 
 #include "Ray4.hxx"
@@ -24,6 +25,8 @@ static void reg_ray4()
         w.description("4D ray in double");
         w.property(szPoint, &Ray4D::point).description(szPoint_Ray).alias(szPt);
         w.property(szDirection, &Ray4D::direction).description(szDirection_Ray).alias(szDir);
+        w.format<math_io::format<Ray4D>>();
+        w.parse<math_io::parse<Ray4D>>();
     }
 
     {
@@ -31,6 +34,8 @@ static void reg_ray4()
         w.description("4D ray in float");
         w.property(szPoint, &Ray4F::point).description(szPoint_Ray).alias(szPt);
         w.property(szDirection, &Ray4F::direction).description(szDirection_Ray).alias(szDir);
+        w.format<math_io::format<Ray4F>>();
+        w.parse<math_io::parse<Ray4F>>();
     }
 }
 
