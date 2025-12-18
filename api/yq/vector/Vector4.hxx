@@ -15,6 +15,7 @@
 */
 
 #include <yq/vector/Vector4.hpp>
+#include <yq/math/algorithm.hpp>
 #include <yq/math/trigonometry.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/math/AllComponents.hpp>

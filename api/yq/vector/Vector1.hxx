@@ -15,6 +15,7 @@
 */
 
 #include <yq/math/tolerance/Absolute.hpp>
+#include <yq/math/algorithm.hpp>
 #include <yq/math/AllComponents.hpp>
 #include <yq/math/AnyComponents.hpp>
 #include <yq/math/utility.hpp>
