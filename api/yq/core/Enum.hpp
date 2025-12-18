@@ -146,6 +146,10 @@ namespace yq {
         //! Key for the specified value
         std::string_view            key_of(int value) const;
         
+        std::string_view            pretty_of(int value) const;
+        
+        std::string_view            display_of(int value) const;
+        
         //! Tests to see if value is present
         bool                        has_value(int value) const;
         
@@ -198,9 +202,13 @@ namespace yq {
     private:
         template <class> friend class EnumImpl;
 
+        void    pretty(int, std::string_view);
+
         std::string_view            m_name;
         Name2Val                    m_name2value;
         Val2Name                    m_value2name;
+        Val2Name                    m_value2display;
+        Val2Name                    m_value2pretty;
         Vector<std::string_view>    m_keys;         //!< Keys (as parsed)
         Vector<std::string_view>    m_ordered;      //!< Keys ordered by value
         Vector<std::string_view>    m_sorted;       //!< Keys in alphabetical order
@@ -260,6 +268,10 @@ namespace yq {
         //! Turns a vector of values into comma separated string
         static std::string                  comma_string(const Vector<EnumImpl>& k);
 
+        //! Defines a "pretty" string (used for display)
+        template <size_t N>
+        static void pretty(EnumImpl e, const char (&txt)[N]);
+
         //! Default constructor, assigns the default value
         EnumImpl() : E(default_value()) {}
         
@@ -296,6 +308,8 @@ namespace yq {
         
         //! Key for this enumeration
         std::string_view    key() const;
+
+        std::string_view    display() const;
 
         //! Copy operator
         EnumImpl&   operator=(const EnumImpl&b)
@@ -357,7 +371,7 @@ namespace yq {
         
         //! Converts vector of enumerated values to vector of ints
         static Vector<int>              to_ints(const Vector<EnumImpl>& vals);
-
+        
     private:
         static Vector<EnumImpl>         calcAllValues();
     };
@@ -492,7 +506,20 @@ namespace yq {
         return E::staticEnumInfo() -> minimum_value();
     }
 
+    template <typename E>
+        template <size_t N>
+    void EnumImpl<E>::pretty(EnumImpl e, const char (&txt)[N])
+    {
+        const_cast<EnumDef*>(E::staticEnumInfo())->pretty(e.value(), std::string_view(txt, N));
+    }
+
         //  -------------------------------------------------------------------
+
+    template <typename E>
+    std::string_view    EnumImpl<E>::display() const
+    {
+        return E::staticEnumInfo()->display_of(E::m_value);
+    }
 
     template <typename E>
     std::string_view     EnumImpl<E>::key() const

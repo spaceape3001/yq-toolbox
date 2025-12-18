@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Enum.hpp"
+#include <yq/meta/Meta.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/count.hpp>
 #include <yq/text/join.hpp>
@@ -216,8 +217,24 @@ namespace yq {
         m_ordered.sort([&](std::string_view  a, std::string_view b) -> bool {
             return m_name2value.get(a) < m_name2value.get(b);
         });
+        
+        m_value2display = m_value2name;
+    }
+        
+        ////
+
+    Vector<int>             EnumDef::all_values() const
+    {
+        return m_value2name.keys();
     }
 
+    std::string_view        EnumDef::display_of(int v) const
+    {
+        auto r =  m_value2display(v);
+        if(r)
+            return *r;
+        return std::string_view();
+    }
 
     bool    EnumDef::has_key(std::string_view key) const
     {
@@ -229,21 +246,12 @@ namespace yq {
         return m_value2name.contains(v);
     }
 
-
     std::string_view EnumDef::key_of(int v) const
     {
         auto r =  m_value2name(v);
         if(r)
             return *r;
         return std::string_view();
-    }
-
-
-    int     EnumDef::minimum_value() const
-    {
-        if(m_value2name.empty())
-            return -1;
-        return m_value2name.begin()->first;
     }
 
     int     EnumDef::maximum_value() const
@@ -253,6 +261,12 @@ namespace yq {
         return m_value2name.rbegin()->first;
     }
 
+    int     EnumDef::minimum_value() const
+    {
+        if(m_value2name.empty())
+            return -1;
+        return m_value2name.begin()->first;
+    }
 
     Vector<int>  EnumDef::parse_comma_list(std::string_view str)  const
     {
@@ -280,14 +294,26 @@ namespace yq {
             return std::string();
     }
 
-    Vector<int>             EnumDef::all_values() const
-    {
-        return m_value2name.keys();
-    }
 
     Enum            EnumDef::make_enum(int v) const
     {
         return Enum(this, v);
+    }
+
+    void    EnumDef::pretty(int v, std::string_view txt)
+    {
+        if(Meta::thread_safe_write()){
+            m_value2display[v]      = txt;
+            m_value2pretty[v]       = txt;
+        }
+    }
+
+    std::string_view    EnumDef::pretty_of(int v) const
+    {
+        auto r =  m_value2pretty(v);
+        if(r)
+            return *r;
+        return std::string_view();
     }
 
 

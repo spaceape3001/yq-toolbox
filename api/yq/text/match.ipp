@@ -85,6 +85,7 @@ namespace yq {
             char32_t  ca  = a.next();
             char32_t  cb  = b.next();
             
+            // KEEP as to lower so '_' will rank BEFORE letters
             int64_t n   = (int64_t) to_lower(ca) - (int64_t) to_lower(cb);
             if(n<0)
                 return Compare::LESSER;
