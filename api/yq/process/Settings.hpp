@@ -33,6 +33,8 @@ namespace yq {
         
         //! Re-reads from file
         void                        sync();
+        
+        //! True if the given key (in the given section) is present
         bool                        has(std::string_view key, std::string_view section={}) const;
         std::string_view            value(std::string_view key, std::string_view section={}) const;
         const string_view_set_t&    sections() const;
