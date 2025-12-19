@@ -36,6 +36,8 @@ namespace yq {
         
         //! True if the given key (in the given section) is present
         bool                        has(std::string_view key, std::string_view section={}) const;
+        
+        //! Value for given key/section (if key is missing, empty value is returned)
         std::string_view            value(std::string_view key, std::string_view section={}) const;
         const string_view_set_t&    sections() const;
         const string_view_set_t&    keys(std::string_view section={}) const;
