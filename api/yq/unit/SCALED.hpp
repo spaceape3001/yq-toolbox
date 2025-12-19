@@ -19,6 +19,8 @@
 namespace yq {
     template <typename T, typename DIM, double K>
     struct SCALED {
+        // US = K * MKS
+    
         using dimension         = DIM;
         using component_type    = T;
         static constexpr const double   FACTOR = K;
@@ -36,6 +38,10 @@ namespace yq {
         auto operator<=>(const SCALED& b) const noexcept = default;
         
         constexpr SCALED(const MKS<T,DIM>& v) noexcept : value( T(v.value/K) ) {}
+
+        template <double K2>
+        constexpr SCALED(const SCALED<T,DIM,K2>&v) noexcept : value( T(v.value*K2/K)) {}
+        
         
         operator MKS<T,DIM>() const noexcept { return { T(value*K) }; }
         
