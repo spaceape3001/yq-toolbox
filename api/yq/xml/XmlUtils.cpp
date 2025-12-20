@@ -21,6 +21,14 @@
 
 namespace yq {
 
+    size_t  count_children(const XmlNode&xn)
+    {
+        size_t cnt=0;
+        for(const XmlNode* xb = xn.first_node(); xb; xb = xb -> next_sibling())
+            ++cnt;
+        return cnt;
+    }
+
     size_t  count_children(const XmlNode&xn, std::string_view pszTag)
     {
         size_t cnt=0;
@@ -408,6 +416,7 @@ namespace yq {
         doc.append_node(doc.allocate_node(rapidxml::node_pi, "xml", "version=\"1.0\" encoding=\"UTF-8\""));
     }
 
+#if 0
     std::error_code     read_file(XmlDocument&doc, const filesystem_path_t&fp)
     {
         if(fp.empty())
@@ -427,7 +436,24 @@ namespace yq {
         }
         return errors::none();
     }
-    
+#endif
+
+    std::error_code     parse_xml(XmlDocument&doc, ByteArray& ba)
+    {
+        if(ba.empty())
+            return errors::failed_to_read_file();
+        if(ba[ba.size()-1] != 0x00)
+            ba << 0x00; // safety
+        try {
+            doc.parse<0>(ba.data());
+        } catch(const rapidxml::parse_error& pe){
+            size_t  pt  = pe.where<char>() - ba.data();
+            yError() << "Xml parse error: " << pe.what() << " (at byte " << pt << ")";
+            return errors::xml_bad_syntax();
+        }
+        return errors::none();
+    }
+
     std::error_code     save_file(const XmlDocument&doc, const filesystem_path_t&fp)
     {
         if(fp.empty())

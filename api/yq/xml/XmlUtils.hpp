@@ -532,6 +532,8 @@ namespace yq {
     */
     size_t              count_children(const XmlNode&, std::string_view pszTag);
 
+    size_t              count_children(const XmlNode&);
+
 
     /*
         With the exception of bool, the rest use the xml document for allocation purposes
@@ -855,7 +857,9 @@ namespace yq {
     
     XmlNode*            create_child(XmlNode&, std::string_view pszTag);
     
-    std::error_code     read_file(XmlDocument&, const filesystem_path_t&);
+
+    std::error_code     parse_xml(XmlDocument&, ByteArray&);
+
     std::error_code     save_file(const XmlDocument&, const filesystem_path_t&);
     ByteArray           save_bytes(const XmlDocument&);
 }

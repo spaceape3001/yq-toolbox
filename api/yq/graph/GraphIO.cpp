@@ -4,8 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/graph/Graph.hpp>
 #include <yq/errors.hpp>
+#include <yq/container/ByteArray.hpp>
+#include <yq/file/FileUtils.hpp>
+#include <yq/graph/Graph.hpp>
 #include <yq/xml/XmlUtils.hpp>
 
 namespace yq::g {
@@ -152,7 +154,10 @@ namespace yq::g {
     std::error_code load(Document& doc, const std::filesystem::path&fp, std::string_view rootTagName)
     {
         XmlDocument xml;
-        std::error_code ec  = read_file(xml, fp);
+        ByteArray       bytes   = file_bytes(fp);
+        if(bytes.empty())
+            return {};
+        std::error_code ec  = parse_xml(xml, bytes);
         if(ec)
             return ec;
         return load(doc, xml, rootTagName, fp.string());

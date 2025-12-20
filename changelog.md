@@ -2,6 +2,10 @@
 
 ## Upcoming
 
+* Removing the `read_file(XmlDocument&, const std::filesystem::path&)` api.  This led to an inherent dangling pointer issue in the string views.   Use `file_bytes(const std::filesystem::path&)` and `parse_xml(XmlDocument&, ByteArray&)` instead, while making sure the ByteArray stay lives as long as you're examining the document.
+
+## 2025.12.19
+
 * Lua support
 
 ## 2025.07.19
