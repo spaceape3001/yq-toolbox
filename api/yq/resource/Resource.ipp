@@ -429,6 +429,19 @@ namespace yq {
         return ret;
     }
 
+    std::vector<Url>   Resource::all_libraries()
+    {
+        std::vector<Url> ret;
+        for(auto& sp : repo().search){
+            if(auto p = std::get_if<ResourceLibraryCPtr>(&sp)){
+                if(*p){
+                    ret.push_back((*p) -> url());
+                }
+            }
+        }
+        return ret;
+    }
+    
     ResourceInfoCPtr    Resource::resource_info(resource_meta_init_list_t metas, std::string_view spec, const ResourceInfoOptions& options)
     {
         ResourceInfoAPI    api(options);

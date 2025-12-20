@@ -162,6 +162,7 @@ namespace yq {
         //! \note INITIALIZATION ONLY AS IT'S NOT THREAD SAFE
         static void             add_paths(std::string_view);
         
+        static std::vector<Url>                     all_libraries();
         static std::vector<std::filesystem::path>   all_paths();
         
         //! \note Linear search as we're assuming a short one
