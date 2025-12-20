@@ -39,6 +39,8 @@ namespace yq {
         
         //! Value for given key/section (if key is missing, empty value is returned)
         std::string_view            value(std::string_view key, std::string_view section={}) const;
+        
+        //! Set of all section keys
         const string_view_set_t&    sections() const;
         const string_view_set_t&    keys(std::string_view section={}) const;
         
