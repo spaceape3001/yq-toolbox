@@ -40,10 +40,61 @@ namespace yq::future {
         return *this;
     }
 
-    bool    Base::valid() const noexcept
+    bool  Base::aborted() const
+    {
+        switch(fate()){
+        case Fate::Cancelled:
+        case Fate::Error:
+        case Fate::Exception:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    void  Base::cancel()
+    {
+        if(m_data){
+            m_data -> cancel    = true;
+        }
+    }
+
+        //! TRUE if the fate is error or exception
+    bool  Base::errored() const
+    {
+        switch(fate()){
+        case Fate::Error:
+        case Fate::Exception:
+            return true;
+        default:
+            return false;
+        }
+    }
+    
+    
+    Fate  Base::fate() const
+    {
+        if(m_data)
+            return m_data -> fate;
+        return Fate::None;
+    }
+    
+
+    bool  Base::finished() const
+    {
+        return fate() != Fate::None;
+    }
+
+    bool  Base::ready() const
+    {
+        return fate() == Fate::Ready;
+    }
+    
+    bool  Base::valid() const noexcept
     {
         return m_data.valid();
     }
+
 }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -77,50 +128,6 @@ namespace yq {
     
     FFuture::~FFuture() = default;
 
-    bool        FFuture::aborted() const
-    {
-        switch(fate()){
-        case Fate::Cancelled:
-        case Fate::Error:
-        case Fate::Exception:
-            return true;
-        default:
-            return false;
-        }
-    }
-
-    void  FFuture::cancel()
-    {
-        if(m_data){
-            m_data -> cancel    = true;
-        }
-    }
-
-        //! TRUE if the fate is error or exception
-    bool        FFuture::errored() const
-    {
-        switch(fate()){
-        case Fate::Error:
-        case Fate::Exception:
-            return true;
-        default:
-            return false;
-        }
-    }
-
-    Fate  FFuture::fate() const
-    {
-        if(m_data)
-            return m_data -> fate;
-        return Fate::None;
-    }
-    
-
-    bool  FFuture::finished() const
-    {
-        return fate() != Fate::None;
-    }
-    
     std::error_code     FFuture::get_error() const
     {
         if(m_data){
@@ -137,10 +144,6 @@ namespace yq {
         return {};
     }
 
-    bool  FFuture::ready() const
-    {
-        return fate() == Fate::Ready;
-    }
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -164,7 +167,6 @@ namespace yq {
     {
         return m_data.valid() && m_data->cancel;
     }
-
 
     bool        PPromise::set(cancel_k)
     {

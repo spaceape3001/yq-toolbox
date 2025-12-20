@@ -57,6 +57,33 @@ namespace yq::future {
     class Base {
     public:
     
+        // Aborting is cancellation, or error/exception condition
+        bool                aborted() const;
+    
+        /*! Cancels the future/promise
+        
+            This signals to the promise that the result isn't needed, 
+            to cancel it.
+            
+            \note This cancellation might be too late to be honored.
+        */
+        void                cancel();
+
+        //! TRUE if the fate is DONE
+        bool                done() const;
+        
+        //! TRUE if the fate is error or exception
+        bool                errored() const;
+
+        //! Current fate
+        future::Fate        fate() const;
+        
+        //! TRUE if the fate isn't none
+        bool                finished() const;
+
+        //! TRUE if we're ready to get data
+        bool                ready() const;
+        
         //! TRUE if valid (ie not detached)
         bool        valid() const noexcept;
     
@@ -90,36 +117,10 @@ namespace yq::future {
 namespace yq {
     class FFuture : public future::Base {
     public:
-    
-        // Aborting is cancellation, or error/exception condition
-        bool                aborted() const;
-    
-        /*! Cancels the future/promise
-        
-            This signals to the promise that the result isn't needed, 
-            to cancel it.
-            
-            \note This cancellation might be too late to be honored.
-        */
-        void                cancel();
 
-        //! TRUE if the fate is DONE
-        bool                done() const;
-        
-        //! TRUE if the fate is error or exception
-        bool                errored() const;
-        
         std::error_code     get_error() const;
         std::exception_ptr  get_exception() const;
         
-        //! Current fate
-        future::Fate        fate() const;
-        
-        //! TRUE if the fate isn't none
-        bool                finished() const;
-        
-        //! TRUE if we're ready to get data
-        bool                ready() const;
         
     protected:
         FFuture(Ref<future::State> st={});
@@ -172,6 +173,8 @@ namespace yq {
     class Future : public FFuture {
         friend class Promise<T>;
     public:
+    
+        using value_type    = T;
     
         using Data   = future::Data<T>;
     
@@ -238,6 +241,7 @@ namespace yq {
     class Promise : public PPromise {
     public:
         using PPromise::set;
+        using value_type    = T;
         
         //! Default, constructs a promise
         Promise() : PPromise(new future::Data<T>)
@@ -304,5 +308,17 @@ namespace yq {
         //! Copy prohibited
         Promise&    operator=(const Promise&) = delete;
     };
+    
+    template <typename> struct is_promise : std::false_type {
+    };
+    template <typename T> struct is_promise<Promise<T>> : std::true_type {};
+    template <typename T> constexpr const bool is_promise_v = is_promise<T>::value;
+    
+    template <typename> struct is_future : std::false_type {
+    };
+
+    template <typename T> struct is_future<Future<T>> : std::true_type {};
+    template <typename T> constexpr const bool is_future_v = is_future<T>::value;
+    
     
 }
