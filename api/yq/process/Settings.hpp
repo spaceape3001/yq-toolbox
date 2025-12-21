@@ -42,6 +42,8 @@ namespace yq {
         
         //! Set of all section keys
         const string_view_set_t&    sections() const;
+        
+        //! Set of all value keys within a section (or the "default" section if empty)
         const string_view_set_t&    keys(std::string_view section={}) const;
         
     private:
