@@ -41,8 +41,8 @@ namespace yq {
     
         This is what allows for the user-code to modify a type information. 
         
-        \note it's STRONGLY advised to be in a thread-safe environment.  The `thread_safe_write()` is a sentienel
-        but might not be perfect.
+        \note it's STRONGLY advised to be in a single threaded environment (before going multithreaded).  
+        The `thread_safe_write()` is a sentienel but might not be perfect.
     */
     template <typename T>
     class UntypeMeta::Writer : public Meta::Writer {

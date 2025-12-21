@@ -28,6 +28,7 @@ namespace yq::lua {
     void                _metamake(lua_State* l, meta_k, const Meta&, const std::string&);
     void                _metamake(lua_State* l, const ObjectMeta&, const std::string&);
     void                _metamake(lua_State* l, const TypeMeta&, const std::string&);
+    void                _metamake(lua_State* l, const UntypeMeta&, const std::string&);
 
     std::string         _metatablename(meta_k, const Meta&);
     std::string         _metatablename(const Meta&);
@@ -207,6 +208,11 @@ namespace yq::lua {
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_type);
         _metaadd(l, _modules(tm));
     }
+
+    //void                _metamake(lua_State* l, const UntypeMeta& um)
+    //{
+        //_metaadd(l, _modules(um));
+    //}
     
     std::string         _metatablename(meta_k, const Meta& m)
     {
@@ -278,6 +284,18 @@ namespace yq::lua {
             ret.push_back(mi);        
         return ret;
     }
+
+#if 0
+    std::vector<const ModuleInfo*>  _modules(const UntypeMeta&tm)
+    {
+        static const Repo&  _r  = Repo::instance();
+
+        std::vector<const ModuleInfo*> ret;
+        if(const ModuleInfo* mi = _r.info(tm))
+            ret.push_back(mi);
+        return ret;
+    }
+#endif
     
     // all modules that meta will use (as a meta type)
     std::vector<const ModuleInfo*>  _modules(meta_k, const Meta&m)

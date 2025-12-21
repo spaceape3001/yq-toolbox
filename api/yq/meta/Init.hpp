@@ -17,6 +17,7 @@
 #include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/meta/PropertyMetaWriter.hpp>
 #include <yq/meta/TypeMetaWriter.hpp>
+#include <yq/meta/UntypeMetaWriter.hpp>
 
 #include <yq/core/Logging.hpp>
 

@@ -7,6 +7,10 @@
 #pragma once
 
 #include <yq/lua/types.hpp>
+#include <span>
+#include <string>
+#include <string_view>
+#include <yq/meta/MetaBinder.hpp>
 
 namespace yq::lua {
     std::error_code         push(lua_State*, const Any&);
@@ -23,9 +27,22 @@ namespace yq::lua {
     std::error_code         push(lua_State*, std::nullptr_t);
     std::error_code         push(lua_State*, std::string_view);
     std::error_code         push(lua_State*, void*);
+    
     std::error_code         push(lua_State*, raw_k, void*);
+    std::error_code         push(lua_State*, std::span<const std::string_view>);
+    std::error_code         push(lua_State*, std::span<const std::string>);
+    std::error_code         push(lua_State*, std::span<const char*>);
     
     std::error_code         push(lua_State*, FNLuaCallback);
     std::error_code         push(lua_State*, FNLuaCallback, std::initializer_list<value_t>);
     std::error_code         push(lua_State*, FNLuaCallback, size_t);
+
+    std::error_code         push_any_impl(lua_State*, const TypeMeta&, const void*);
+
+    template <typename T>
+    std::error_code         push(lua_State*l, any_k, const T&val)
+    {
+        return push_any_impl(l, ::yq::meta<T>(), &val);
+    }
+    
 }

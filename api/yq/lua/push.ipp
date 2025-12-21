@@ -163,4 +163,62 @@ namespace yq::lua {
     {
         return _push(l, obj, XFlags{});
     }
+
+    std::error_code         push(lua_State* l, std::span<const char*> vals)
+    {
+        lua_newtable(l);
+        int n   = lua_gettop(l);
+        int cnt = 1;
+        for(const char* s : vals){
+            if(s){
+                push(l, s);
+            } else
+                lua_pushnil(l);
+            lua_seti(l, n, cnt);
+            ++cnt;
+        }
+        return {};
+    }
+
+    std::error_code         push(lua_State* l, std::span<const std::string_view> vals)
+    {
+        lua_newtable(l);
+        int n   = lua_gettop(l);
+        int cnt = 1;
+        for(const std::string_view& s : vals){
+            push(l, s);
+            lua_seti(l, n, cnt);
+            ++cnt;
+        }
+        return {};
+    }
+    
+    std::error_code         push(lua_State* l, std::span<const std::string> vals)
+    {
+        lua_newtable(l);
+        int n   = lua_gettop(l);
+        int cnt = 1;
+        for(const std::string& s : vals){
+            push(l, s);
+            lua_seti(l, n, cnt);
+            ++cnt;
+        }
+        return {};
+    }
+
+    std::error_code         push(lua_State*l, const Meta&m, void*ptr)
+    {
+        return errors::todo();
+    }
+
+    std::error_code     push_any_impl(lua_State* l, const TypeMeta& tm, const void* ptr)
+    {
+        if(!l)
+            return errors::lua_null();
+        if(!ptr){
+            lua_pushnil(l);
+            return {};
+        }
+        return _push(l, tm, ptr, X::Any);
+    }
 }
