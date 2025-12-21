@@ -10,7 +10,6 @@
 #include <span>
 #include <string>
 #include <string_view>
-#include <yq/meta/MetaBinder.hpp>
 
 namespace yq::lua {
     std::error_code         push(lua_State*, const Any&);
@@ -37,12 +36,5 @@ namespace yq::lua {
     std::error_code         push(lua_State*, FNLuaCallback, std::initializer_list<value_t>);
     std::error_code         push(lua_State*, FNLuaCallback, size_t);
 
-    std::error_code         push_any_impl(lua_State*, const TypeMeta&, const void*);
-
-    template <typename T>
-    std::error_code         push(lua_State*l, any_k, const T&val)
-    {
-        return push_any_impl(l, ::yq::meta<T>(), &val);
-    }
     
 }

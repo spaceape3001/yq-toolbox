@@ -12,6 +12,7 @@
 #include <yq/lua/impl.hpp>
 #include <yq/lua/keywords.hpp>
 #include <yq/lua/push.hpp>
+#include <yq/meta/MetaBinder.hpp>
 #include <lua.hpp>
 
 namespace yq::lua {
@@ -58,4 +59,10 @@ namespace yq::lua {
         return {};
     }
     
+    template <typename T>
+    std::error_code         push(lua_State*l, any_k, const T&val)
+    {
+        return _push(l, ::yq::meta<T>(), &val, { X::Any });
+    }
+
 }
