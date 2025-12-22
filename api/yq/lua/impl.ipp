@@ -277,10 +277,12 @@ namespace yq::lua {
 
     void        _meta_add(lua_State*l, const TypeMeta&tm)
     {
+        set(l, -1, TABLE, keyMeta, RAW, (void*) &tm);
         std::string name    = _metatablename(tm);
+        _flags_set(l, X::Type);
         if(luaL_newmetatable(l, name.c_str()))
             _metaadd(l, _modules(tm));
-        lua_setmetatable(l, -1);    // think this works....
+        lua_setmetatable(l, -2);    // think this works....
     }
 
     //void                _metamake(lua_State* l, const UntypeMeta& um)
@@ -423,6 +425,24 @@ namespace yq::lua {
         lua_pop(l, 1);
     }
 
+    std::error_code    _prime(lua_State*l, const TypeMeta&tm, XFlags flags)
+    {
+        if(!l)
+            return errors::lua_null();
+
+        flags |= X::Type;
+        lua_newtable(l);
+        set(l, -1, TABLE, keyMeta, RAW, (void*) &tm);
+        set(l, -1, TABLE, keyFlags, flags.value());
+        
+        std::string name    = _metatablename(tm);
+        if(luaL_newmetatable(l, name.c_str()))
+            _metaadd(l, _modules(tm));
+        lua_setmetatable(l, -2);    // think this works....
+        return {};
+    }
+
+
     std::error_code _push(lua_State* l, const value_t& val, unsigned n)
     {
         if(std::get_if<std::monostate>(&val)){
@@ -480,6 +500,7 @@ namespace yq::lua {
         lua_setmetatable(l, -2);    // think this works....
         return {};
     }
+
     
     std::error_code _push(lua_State* l, const TypeMeta& type, const void* ptr, XFlags flags)
     {

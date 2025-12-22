@@ -51,6 +51,9 @@ namespace yq::lua {
 
     //! Adds meta to the top item (so long as it's a table)
     void                _meta_add(lua_State*l, const TypeMeta&);
+    
+    //! Creates a table, primed with meta, ready for caller to add the data
+    std::error_code    _prime(lua_State*l, const TypeMeta&, XFlags);
 
     void        _metamake(lua_State* l, meta_k, const Meta& m);
     void        _metamake(lua_State* l, const ObjectMeta& m);
