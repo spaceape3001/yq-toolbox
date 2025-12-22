@@ -45,6 +45,46 @@ namespace yq::lua {
         }
         return {};
     }
+    
+    template <typename A>
+    std::error_code push(lua_State* l, const std::set<A>& data)
+    {
+        lua_newtable(l);
+        int tm = lua_gettop(l);
+        int cnt=0;
+        for(const A& a : data){
+            push(l, a);
+            lua_seti(l,tm,++cnt);
+        }
+        return {};
+    }
+    
+    template <typename A>
+    std::error_code push(lua_State* l, const std::span<A>& data)
+    {
+        lua_newtable(l);
+        int tm = lua_gettop(l);
+        int cnt=0;
+        for(const A& a : data){
+            push(l, a);
+            lua_seti(l,tm,++cnt);
+        }
+        return {};
+    }
+
+    template <typename B, typename A>
+    std::error_code push_as(lua_State* l, const std::span<A>& data)
+    {
+        lua_newtable(l);
+        int tm = lua_gettop(l);
+        int cnt=0;
+        for(const A& a : data){
+            push(l, (B) a);
+            lua_seti(l,tm,++cnt);
+        }
+        return {};
+    }
+    
 
     template <typename ... Args>
     std::error_code     push(lua_State*l, FNLuaCallback fn, upvalues_k, Args... args)

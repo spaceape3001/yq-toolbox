@@ -28,6 +28,8 @@ namespace yq::lua {
         FNLuaExtract    extractor() const { return m_extractor; }
         FNLuaDivertor   divertor() const { return m_divertor; }
         
+        const TypeMeta* attached() const { return m_attach; }
+        
     protected:
         friend class Repo;
 
@@ -43,6 +45,7 @@ namespace yq::lua {
         FNLuaPush           m_pusher    = nullptr;
         FNLuaExtract        m_extractor = nullptr;
         FNLuaDivertor       m_divertor  = nullptr;
+        const TypeMeta*     m_attach    = nullptr;
     };
 
 }

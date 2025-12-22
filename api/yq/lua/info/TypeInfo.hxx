@@ -38,5 +38,13 @@ namespace yq::lua {
                 return;
             TypeInfo::m_extractor   = (FNLuaExtract) fn;
         }
+        
+        template <typename T2>
+        void    attach()
+        {
+            if(!Meta::thread_safe_write())
+                return;
+            TypeInfo::m_attach      = &yq::meta<T2>();
+        }
     };
 }

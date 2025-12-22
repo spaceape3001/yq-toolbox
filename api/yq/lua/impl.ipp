@@ -277,7 +277,10 @@ namespace yq::lua {
 
     void        _meta_add(lua_State*l, const TypeMeta&tm)
     {
-        _metaadd(l, _modules(tm));
+        std::string name    = _metatablename(tm);
+        if(luaL_newmetatable(l, name.c_str()))
+            _metaadd(l, _modules(tm));
+        lua_setmetatable(l, -1);    // think this works....
     }
 
     //void                _metamake(lua_State* l, const UntypeMeta& um)
@@ -349,8 +352,15 @@ namespace yq::lua {
         static const Repo&  _r  = Repo::instance();
 
         std::vector<const ModuleInfo*> ret;
-        if(const ModuleInfo* mi = _r.info(tm))
+        if(const TypeInfo* mi = _r.info(tm)){
             ret.push_back(mi);
+            for(const TypeMeta* a = mi->attached(); a; a = mi->attached()){
+                mi  = _r.info(*a);
+                if(!mi)
+                    break;
+                ret.push_back(mi);
+            }
+        }
         if(const ModuleInfo* mi = _r.info(ANY))
             ret.push_back(mi);        
         return ret;
