@@ -33,6 +33,11 @@ namespace yq {
         */
         int         wait = 500;
         
+        //! Execute the process (as described by the arguments)
+        //! \param[in] stdInput Standard input to the process
+        //! \param[out] stdErrors Errors from the process
+        //! \param[out] exit_code Exit code from the process
+        //! \return Standard output from the process
         ByteArray       execute(const ByteArray& stdInput, ByteArray* stdErrors=nullptr, int *exit_code=nullptr) const;
     };
 
