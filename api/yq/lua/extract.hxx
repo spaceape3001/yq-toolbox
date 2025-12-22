@@ -9,12 +9,23 @@
 #include <yq/lua/extract.hpp>
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/core/ErrorDB.hpp>
+#include <yq/core/Enum.hpp>
 
 namespace yq::lua {
+    integer_x               _enumeration(lua_State*, int, const EnumDef&, const TypeMeta&);
+    
+    template <typename E>
+    Expect<E> enumeration(lua_State*l, int n)
+    {
+        auto ix = _enumeration(l, n, *E::staticEnumInfo(), ::yq::meta<E>());
+        if(!ix)
+            return unexpected(ix.error());
+        return (typename E::enum_t) *ix;
+    }
+    
 
     //////////////////////////////////////////////////////////////////////////////
     //  Extracting
-
     #if 0
         // TBD....
     template <typename T>

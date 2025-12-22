@@ -8,7 +8,9 @@
 
 #include <yq/lua/handler.hpp>
 #include <yq/lua/impl.hpp>
+#include <yq/lua/keys.hpp>
 #include <yq/lua/writer.hpp>
+#include <yq/core/Enum.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Text.hpp>
 #include <iostream>
@@ -30,6 +32,7 @@ namespace yq::lua {
         return -1;
     }
     
+
     int lh_meta_extract(lua_State* l)
     {
         int nargs=lua_gettop(l);

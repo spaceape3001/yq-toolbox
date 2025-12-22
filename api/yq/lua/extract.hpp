@@ -13,6 +13,7 @@
 
 namespace yq {
     class Stream;
+    class EnumDef;
 }
 
 namespace yq::lua {
@@ -43,6 +44,7 @@ namespace yq::lua {
     double_x                double_(lua_State*, int, table_k, const char*);
     double_x                double_(lua_State*, global_k, const char*);
     double_x                double_(lua_State*, upvalue_k, int);
+    
     
     integer_x               integer(lua_State*, int);
     integer_x               integer(lua_State*, int, table_k, const char*);

@@ -20,12 +20,17 @@ namespace yq::lua {
     
 
     XFlags              _flags(lua_State *l, int n);
+    
+    //! Set flags to the top item (table)
+    void    _flags_set(lua_State*, XFlags);
 
     std::error_code     _gc(lua_State*, int, object_k);
     std::error_code     _gc(lua_State*, int, type_k);
     
     //! ID from the specified value (returns 0 if errors)
-    uint64_t            _id(lua_State*l, uint64_t);
+    uint64_t            _id(lua_State*l, int);
+    
+    int                 _enum(lua_State*l, int);
 
     //! Assumes the pointer of the meta field on the given table is a valid meta thing
     
@@ -43,6 +48,14 @@ namespace yq::lua {
         and extracts the meta pointer from it.  
     */
     const TypeMeta*     _meta(lua_State*l, int n, type_k);
+
+    //! Adds meta to the top item (so long as it's a table)
+    void                _meta_add(lua_State*l, const TypeMeta&);
+
+    void        _metamake(lua_State* l, meta_k, const Meta& m);
+    void        _metamake(lua_State* l, const ObjectMeta& m);
+    void        _metamake(lua_State* l, const TypeMeta& m);
+    void        _metamake_nogc(lua_State* l, const TypeMeta& tm);
     
     std::vector<const ModuleInfo*>  _modules(const ObjectMeta&om);
     std::vector<const ModuleInfo*>  _modules(const TypeMeta&om);
@@ -62,9 +75,12 @@ namespace yq::lua {
     std::error_code     _push(lua_State* l, const value_t& val, unsigned n=0);
     std::error_code     _push(lua_State* l, const TypeMeta& type, const void* ptr, XFlags flags);
     
+    std::error_code     _push_enum(lua_State*l, int);
+    
     //  pushed as an ID to the lua stack
     std::error_code     _push_id(lua_State*l, uint64_t);
     
+
 
     //! Type for the object (uses meta)
     const Meta*         _metatype(lua_State*l, int n);

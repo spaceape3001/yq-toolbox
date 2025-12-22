@@ -85,9 +85,6 @@ namespace {
                 fi->brief("Application Directory");
             }
             
-            if(FunctionInfo* fi = mi->add("appname", lh_appname)){
-                fi->brief("Application Name");
-            }
 
             if(FunctionInfo* fi = mi->add("cmdline", lh_cmdline)){
                 fi->brief("Invocation command line (all arguments as a list)");
@@ -95,6 +92,10 @@ namespace {
 
             if(FunctionInfo* fi = mi->add("cwd", lh_curdir)){
                 fi->brief("Current Working Directory");
+            }
+
+            if(FunctionInfo* fi = mi->add("exe", lh_appname)){
+                fi->brief("Application Executable");
             }
 
             if(FunctionInfo* fi = mi->add("hostname", lh_hostname)){

@@ -6,7 +6,11 @@
 
 #pragma once
 
+#include <yq/typedef/result.hpp>
+
 struct lua_State;
+
+namespace yq { class EnumDef; }
 
 namespace yq::lua {
 
@@ -30,4 +34,7 @@ namespace yq::lua {
     int lh_write_cout(lua_State*);
     
     int lh_meta_extract(lua_State*);
+    
+    int     lh_enum_value_extract(lua_State*, int);
+    bool    lh_enum_value_push(lua_State*, int);
 }

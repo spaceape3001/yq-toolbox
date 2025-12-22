@@ -111,6 +111,23 @@ namespace yq::lua {
         return double_(l, lua_upvalueindex(n));
     }
 
+    integer_x   _enumeration(lua_State*l, int n, const EnumDef& eDef, const TypeMeta&tm)
+    {
+        if(!l)
+            return errors::lua_null();
+        switch(lua_type(l,n)){
+        case LUA_TSTRING:
+            return eDef.value_of(lua_tostring(l,n));
+        case LUA_TNUMBER:
+            return integer(l, n);
+        case LUA_TTABLE:
+            if(_meta(l,n,TYPE) != &tm)
+                return errors::bad_argument();
+            return _enum(l,n);
+        default:
+            return errors::bad_argument();
+        }
+    }
 
     integer_x             integer(lua_State* l, int n)
     {

@@ -7,9 +7,11 @@
 #pragma once
 
 #include <yq/errors.hpp>
+#include <yq/core/Enum.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/lua/errors.hpp>
 #include <yq/lua/impl.hpp>
+#include <yq/lua/keys.hpp>
 #include <yq/lua/keywords.hpp>
 #include <yq/lua/push.hpp>
 #include <yq/meta/MetaBinder.hpp>
@@ -28,7 +30,7 @@ namespace yq::lua {
     requires (std::is_base_of_v<Refable, Obj> && std::is_base_of_v<Object, Obj>)
     std::error_code     push(lua_State*l, Ref<const Obj> ptr)
     {
-        return _push(l, const_cast<Object*>(ptr.ptr()), { X::Const, X::Ref });
+        return _push(l, const_cast<Obj*>(ptr.ptr()), { X::Const, X::Ref });
     }
 
     template <typename A, typename ... Args>
@@ -63,6 +65,18 @@ namespace yq::lua {
     std::error_code         push(lua_State*l, any_k, const T&val)
     {
         return _push(l, ::yq::meta<T>(), &val, { X::Any });
+    }
+
+    template <typename E>
+    std::error_code         push(lua_State*l, EnumImpl<E> val)
+    {
+        lua_newtable(l);
+        int tm = lua_gettop(l);
+        _meta_add(l, ::yq::meta<E>());
+        _push_enum(l, val.value());
+        lua_setfield(l, tm, keyValue);
+        _flags_set(l, X::Type);
+        return {};
     }
 
 }

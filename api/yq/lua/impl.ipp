@@ -32,7 +32,28 @@ namespace yq::lua {
 
     std::string         _metatablename(meta_k, const Meta&);
     std::string         _metatablename(const Meta&);
+
     
+    int                 _enum(lua_State*l, int n)
+    {
+        if(!l)
+            return 0;
+        
+        switch(lua_type(l,n)){
+        case LUA_TLIGHTUSERDATA:
+            return (int) (int64_t) lua_touserdata(l, n);
+        case LUA_TTABLE:
+            {
+                lua_getfield(l, n, keyValue);
+                int    ret = lua_tointeger(l, -1);
+                _pop(l);
+                return ret;
+            }
+            break;
+        default:
+            return 0;
+        }
+    }
 
     std::error_code     _error(int n)
     {
@@ -62,6 +83,20 @@ namespace yq::lua {
         XFlags  flags               = (XFlags::value_type) lua_tointeger(l, -1);
         _pop(l);
         return flags;
+    }
+
+    void    _flags_set(lua_State* l, XFlags flags)
+    {
+        if(!l)
+            return;
+        int tm = lua_gettop(l);
+        if(tm <= 0)
+            return ;
+        if(lua_type(l, tm) != LUA_TTABLE)
+            return;
+            
+        lua_pushinteger(l, flags.value());
+        lua_setfield(l, tm, keyFlags);
     }
 
     std::error_code    _gc(lua_State*l, int n, type_k)
@@ -124,11 +159,25 @@ namespace yq::lua {
         return {};
     }
 
-    uint64_t            _id(lua_State*l, uint64_t n)
+    uint64_t            _id(lua_State*l, int n)
     {
         if(!l)
             return 0;
-        return (uint64_t) lua_touserdata(l, n);
+            
+        switch(lua_type(l,n)){
+        case LUA_TLIGHTUSERDATA:
+            return (uint64_t) lua_touserdata(l, n);
+        case LUA_TTABLE:
+            {
+                lua_getfield(l, n, keyID);
+                uint64_t    ret = (uint64_t) lua_touserdata(l, -1);
+                _pop(l);
+                return ret;
+            }
+            break;
+        default:
+            return 0;
+        }
     }
 
     const Meta*         _meta(lua_State*l, int n)
@@ -162,6 +211,9 @@ namespace yq::lua {
     // Assumes the top item is a meta
     void    _metaadd(lua_State*l, const std::vector<const ModuleInfo*>& modules)
     {
+        if(!l)
+            return;
+
         int     tm  = lua_gettop(l);
         InstallInfoAPI api{.lvm=l};
         
@@ -201,6 +253,8 @@ namespace yq::lua {
 
     void       _metamake(lua_State* l, meta_k, const Meta& m)
     {
+        if(!l)
+            return;
         _metaadd(l, _modules(META, m));
     }
 
@@ -213,6 +267,16 @@ namespace yq::lua {
     void        _metamake(lua_State* l, const TypeMeta& tm)
     {
         set(l, -1, TABLE, keyGarbageCollection, lh_gc_type);
+        _metaadd(l, _modules(tm));
+    }
+
+    void        _metamake_nogc(lua_State* l, const TypeMeta& tm)
+    {
+        _metaadd(l, _modules(tm));
+    }
+
+    void        _meta_add(lua_State*l, const TypeMeta&tm)
+    {
         _metaadd(l, _modules(tm));
     }
 
@@ -473,6 +537,14 @@ namespace yq::lua {
         return _push(l, any.type(), any.raw_ptr(), flags);
     }
 
+    std::error_code     _push_enum(lua_State*l, int v)
+    {
+        if(!l)
+            return errors::lua_null();
+        lua_pushinteger(l, v);
+        return {};
+    }
+
     std::error_code _push_id(lua_State* l, uint64_t v)
     {
         if(!l)
@@ -480,6 +552,7 @@ namespace yq::lua {
         lua_pushlightuserdata(l, (void*) v);
         return {};
     }
+
         
     std::string_view    _typename(int n)
     {
