@@ -22,10 +22,19 @@ namespace {
         return true;
     }
 
+    bool  lh_push_double(lua_State* l, const double& value)
+    {
+        lua_pushnumber(l, value);
+        return true;
+    }
+
     void reg_stdtypes()
     {
         if(auto* ti = lua::reg<bool>()){
             ti -> pusher(lh_push_boolean);
+        }
+        if(auto* ti = lua::reg<double>()){
+            ti -> pusher(lh_push_double);
         }
         if(auto* ti = lua::reg<std::string>()){  
             ti -> pusher(lh_push_string);

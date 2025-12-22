@@ -124,6 +124,13 @@ namespace yq::lua {
         return {};
     }
 
+    uint64_t            _id(lua_State*l, uint64_t n)
+    {
+        if(!l)
+            return 0;
+        return (uint64_t) lua_touserdata(l, n);
+    }
+
     const Meta*         _meta(lua_State*l, int n)
     {
         lua_getfield(l, n, keyMeta);
@@ -466,6 +473,13 @@ namespace yq::lua {
         return _push(l, any.type(), any.raw_ptr(), flags);
     }
 
+    std::error_code _push_id(lua_State* l, uint64_t v)
+    {
+        if(!l)
+            return errors::lua_null();
+        lua_pushlightuserdata(l, (void*) v);
+        return {};
+    }
         
     std::string_view    _typename(int n)
     {

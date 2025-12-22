@@ -24,6 +24,9 @@ namespace yq::lua {
     std::error_code     _gc(lua_State*, int, object_k);
     std::error_code     _gc(lua_State*, int, type_k);
     
+    //! ID from the specified value (returns 0 if errors)
+    uint64_t            _id(lua_State*l, uint64_t);
+
     //! Assumes the pointer of the meta field on the given table is a valid meta thing
     
     /*! Assumes the given stack value is a table representing a complex thing (ie, object, any), 
@@ -45,7 +48,6 @@ namespace yq::lua {
     std::vector<const ModuleInfo*>  _modules(const TypeMeta&om);
     std::vector<const ModuleInfo*>  _modules(meta_k, const Meta&om);
     
-
     Object*             _object(lua_State *l, int n);
     
     //! Assumes the given stack item is a table representing a complex thing,
@@ -59,6 +61,10 @@ namespace yq::lua {
     std::error_code     _push(lua_State* l, Object* obj, XFlags flags);
     std::error_code     _push(lua_State* l, const value_t& val, unsigned n=0);
     std::error_code     _push(lua_State* l, const TypeMeta& type, const void* ptr, XFlags flags);
+    
+    //  pushed as an ID to the lua stack
+    std::error_code     _push_id(lua_State*l, uint64_t);
+    
 
     //! Type for the object (uses meta)
     const Meta*         _metatype(lua_State*l, int n);
