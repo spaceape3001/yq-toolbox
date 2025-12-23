@@ -14,6 +14,8 @@ struct sqlite3;
 
 namespace yq {
     
+    /*! \brief "Connection" to a SQLLite database
+    */
     class SqlLite {
     public:
     
