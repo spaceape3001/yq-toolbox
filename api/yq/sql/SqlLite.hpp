@@ -44,6 +44,7 @@ namespace yq {
             ExRescode       = 0x0200000
         };
     
+        //! Default constructor (call open() to open it)
         SqlLite();
         ~SqlLite();
         bool        open(const std::filesystem::path&, int flags=0);
