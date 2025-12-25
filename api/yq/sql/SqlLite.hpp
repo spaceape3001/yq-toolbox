@@ -46,6 +46,8 @@ namespace yq {
     
         //! Default constructor (call open() to open it)
         SqlLite();
+        
+        //! Destructor
         ~SqlLite();
         bool        open(const std::filesystem::path&, int flags=0);
         sqlite3*    db() const { return m_database; }
