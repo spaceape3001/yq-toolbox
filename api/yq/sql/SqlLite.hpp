@@ -49,6 +49,8 @@ namespace yq {
         
         //! Destructor
         ~SqlLite();
+        
+        //! Opens the database at the specified location with the specified flags
         bool        open(const std::filesystem::path&, int flags=0);
         sqlite3*    db() const { return m_database; }
         bool        is_open() const;
