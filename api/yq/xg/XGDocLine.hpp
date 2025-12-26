@@ -6,8 +6,10 @@
 
 #pragma once
 
-#include <yq/keywords.hpp>
+#include <yq/xg/XGBitPoly.hpp>
+#include <yq/xg/XGDocBase.hpp>
 
-namespace yq::xg {
-    // As needed
+namespace yq {
+    struct XGDocLine : public XGDocBase, public XGBitPoly {
+    };
 }

@@ -1,0 +1,28 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/color/RGBA.hpp>
+#include <yq/text/IgCase.hpp>
+#include <yq/typedef/any_maps.hpp>
+#include <yq/typedef/string_maps.hpp>
+#include <yq/xg/types.hpp>
+
+namespace yq {
+    struct XGDocBase {
+        //! Attributes
+        string_any_multimap_t   attributes;
+        
+        //! Color to the object (applied to text/border)
+        RGBA4F                  color       = { 0., 0., 0., 0. };
+
+        //! ID for this item.  Set when the correlation is needed. (ie, nodes/edges)
+        id_t                    id          = 0;
+
+    };
+}
+

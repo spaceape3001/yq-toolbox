@@ -9,7 +9,7 @@
 #include <yq/meta/ObjectMetaWriter.hpp>
 #include <yq/xg/XGElement.hpp>
 
-namespace yq::xg {
+namespace yq {
     template <typename C>
     class XGElementMeta::Writer : public ObjectMeta::Writer<C> {
     public:

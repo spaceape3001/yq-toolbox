@@ -7,9 +7,9 @@
 #include "XGElement.hpp"
 #include "XGElementMetaWriter.hpp"
 
-YQ_OBJECT_IMPLEMENT(yq::xg::XGElement)
+YQ_OBJECT_IMPLEMENT(yq::XGElement)
 
-namespace yq::xg {
+namespace yq {
     void XGElement::init_meta()
     {
         auto w = writer<XGElement>();
@@ -24,9 +24,14 @@ namespace yq::xg {
     {
     }
 
-    result_t    XGElement::execute(XGContext&)
+    xg_result_t    XGElement::execute(XGContext&)
     {
         return {};
+    }
+
+    bool    XGElement::initialize(const XGDocNode&)
+    {
+        return true;
     }
     
     ////////////////////////////////////////////////////////////////////////////

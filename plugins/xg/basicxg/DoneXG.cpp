@@ -8,7 +8,6 @@
 #include <yq/xg/XGElementMetaWriter.hpp>
 
 using namespace yq;
-using namespace yq::xg;
 
 namespace {
     class DoneXG : public XGElement {
@@ -25,7 +24,7 @@ namespace {
             w.description("Done execution");
         }
         
-        result_t execute(XGContext&)
+        xg_result_t execute(XGContext&)
         {
             return DONE;
         }

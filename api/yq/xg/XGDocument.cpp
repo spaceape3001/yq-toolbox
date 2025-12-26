@@ -4,19 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "XGDocBase.hpp"
 #include "XGDocument.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
 
-YQ_RESOURCE_IMPLEMENT(yq::xg::XGDocument)
+YQ_RESOURCE_IMPLEMENT(yq::XGDocument)
 
-namespace yq::xg {
-    XGDocItem::XGDocItem(Type t) : type(t)
-    {
-    }
-    
-    XGDocItem::~XGDocItem()
-    {
-    }
+namespace yq {
     
     void XGDocument::init_meta()
     {
@@ -25,7 +19,7 @@ namespace yq::xg {
     }
 
     
-    XGDocument::XGDocument() : content(XGDocItem::Type::Document)
+    XGDocument::XGDocument() 
     {
     }
     

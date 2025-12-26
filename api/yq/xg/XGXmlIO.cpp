@@ -4,15 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <map>
-#include <cstdint>
+#include "XGDocument.hpp"
+#include "XGXmlIO.hpp"
 
 namespace yq {
-    class Any;
 
-    using uint32_any_map_t      = std::map<uint32_t, Any>;
-    using uint32_any_mmap_t     = std::multimap<uint32_t, Any>;
+    XGDocumentPtr   loadXGXML(const std::filesystem::path&)
+    {
+        return {};
+    }
 
 }

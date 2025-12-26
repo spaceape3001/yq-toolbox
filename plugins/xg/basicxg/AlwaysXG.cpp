@@ -10,25 +10,31 @@
 using namespace yq;
 
 namespace {
-    class ContinueXG : public XGElement {
-        YQ_OBJECT_DECLARE(ContinueXG, XGElement)
+    /*! \brief An ALWAYS node
+    
+        \note Always nodes should *NEVER* have inbound edges.
+    */
+
+    class AlwaysXG : public XGElement {
+        YQ_OBJECT_DECLARE(AlwaysXG, XGElement)
     public:
-        ContinueXG(){}
-        ~ContinueXG(){}
+        AlwaysXG(){}
+        ~AlwaysXG(){}
         
         static void init_meta()
         {
-            auto w = writer<ContinueXG>();
+            auto w = writer<AlwaysXG>();
             w.category("Basic");
-            w.label("Continue");
-            w.description("Continue execution");
+            w.label("Always");
+            w.description("Always execution");
+            w.always();
         }
         
         xg_result_t execute(XGContext&)
         {
-            return CONTINUE;
+            return {};
         }
     };
 }
 
-YQ_OBJECT_IMPLEMENT(ContinueXG)
+YQ_OBJECT_IMPLEMENT(AlwaysXG)
