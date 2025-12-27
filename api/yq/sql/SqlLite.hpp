@@ -52,6 +52,8 @@ namespace yq {
         
         //! Opens the database at the specified location with the specified flags
         bool        open(const std::filesystem::path&, int flags=0);
+        
+        //! SQLite Database pointer (so, use this to make the queries)
         sqlite3*    db() const { return m_database; }
         bool        is_open() const;
         void        close();
