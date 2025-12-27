@@ -18,7 +18,7 @@ namespace yq {
         Tristate        always      = Tristate::Inherit;
 
         //! Notes a decision node (more for rendering than not)
-        Tristate        decision       = Tristate::Inherit;
+        Tristate        decision    = Tristate::Inherit;
 
         //! Notes a start node, so check on start (based on priority)
         Tristate        start       = Tristate::Inherit;
