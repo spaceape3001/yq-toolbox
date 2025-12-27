@@ -441,6 +441,39 @@ namespace yq {
         }
         return ret;
     }
+
+    string_vector_t     Resource::infoable_extensions_for(const ResourceMeta&rm)
+    {
+        string_vector_t ret;
+        auto& _r    = repo();
+        for(auto& itr : _r.infoers){
+            if(itr.second->resource().is_derived_or_this(rm))
+                ret.push_back(itr.first);
+        }
+        return ret;
+    }
+
+    string_vector_t     Resource::loadable_extensions_for(const ResourceMeta&rm)
+    {
+        string_vector_t ret;
+        auto& _r    = repo();
+        for(auto& itr : _r.loaders){
+            if(itr.second->resource().is_derived_or_this(rm))
+                ret.push_back(itr.first);
+        }
+        return ret;
+    }
+
+    string_vector_t     Resource::saveable_extensions_for(const ResourceMeta& rm)
+    {
+        string_vector_t ret;
+        auto& _r    = repo();
+        for(auto& itr : _r.savers){
+            if(itr.second->resource().is_base_or_this(rm))
+                ret.push_back(itr.first);
+        }
+        return ret;
+    }
     
     ResourceInfoCPtr    Resource::resource_info(resource_meta_init_list_t metas, std::string_view spec, const ResourceInfoOptions& options)
     {

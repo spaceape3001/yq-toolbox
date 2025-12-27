@@ -18,6 +18,7 @@
 #include <yq/typedef/resource.hpp>
 #include <yq/typedef/json.hpp>
 #include <yq/typedef/string_initlists.hpp>
+#include <yq/typedef/string_vectors.hpp>
 #include <yq/typedef/xml.hpp>
 
 #include <atomic>
@@ -231,6 +232,11 @@ namespace yq {
       
             //! Does what it says, wipes the cache
         static void         wipe_cache();
+        
+        static string_vector_t      infoable_extensions_for(const ResourceMeta&);
+        static string_vector_t      loadable_extensions_for(const ResourceMeta&);
+        static string_vector_t      saveable_extensions_for(const ResourceMeta&);
+        
 
         // TOBD
         struct CacheStats {
