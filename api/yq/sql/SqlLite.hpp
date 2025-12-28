@@ -55,6 +55,8 @@ namespace yq {
         
         //! SQLite Database pointer (so, use this to make the queries)
         sqlite3*    db() const { return m_database; }
+        
+        //! True if the database is open and usable
         bool        is_open() const;
         void        close();
         const std::filesystem::path&    file() const { return m_file; }
