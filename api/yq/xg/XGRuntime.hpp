@@ -12,7 +12,7 @@
 #include <system_error>
 #include <vector>
 
-namespace yq::xg {
+namespace yq {
     class XGDocument;
     class XGElement;
     struct XGContext;
@@ -29,8 +29,8 @@ namespace yq::xg {
         ~XGRuntime();
         
         std::error_code             compile(const XGDocumentCPtr&);
-        result_t                    step(XGContext&);
-        result_t                    execute(XGContext&, const XGRuntimeOptions& options={});
+        xg_result_t                 step(XGContext&);
+        xg_result_t                 execute(XGContext&, const XGRuntimeOptions& options={});
         
         uint32_t                    current() const { return m_current; }
         
@@ -48,11 +48,11 @@ namespace yq::xg {
         
         std::vector<XGDocumentCPtr> m_documents;    // keep documents alive
         std::vector<XGElement*>     m_elements;     // all elements... 
-        std::vector<execute_t>      m_always;        // start elements
-        std::vector<execute_t>      m_start;        // start elements
+        std::vector<xg_execute_t>   m_always;        // start elements
+        std::vector<xg_execute_t>   m_start;        // start elements
         Stack<id_t>                 m_stack;
         id_t                        m_current   = 0;
         
-        result_t                    stepstep(XGContext&, const std::vector<execute_t>&);
+        xg_result_t         stepstep(XGContext&, const std::vector<xg_execute_t>&);
     };
 }

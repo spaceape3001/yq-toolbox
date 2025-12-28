@@ -4,12 +4,14 @@
 ##
 ################################################################################
 
-add_library(basicxg SHARED 
-    AlwaysXG.cpp
-    ContinueXG.cpp
-    DoneXG.cpp
-    ResumeXG.cpp
-    StartXG.cpp
+add_library(yq_xgxml SHARED
+    xg/XGXmlIO.cpp
 )
-target_link_libraries(basicxg PUBLIC yq_xg)
-LinkTest(basicxg)
+
+target_link_libraries(yq_xgxml 
+PUBLIC 
+    yq_xg
+    yq_xml
+)
+
+LinkTest(yq_xgxml)

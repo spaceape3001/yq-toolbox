@@ -6,13 +6,10 @@
 
 #pragma once
 
-#include <map>
-#include <cstdint>
-
 namespace yq {
-    class Any;
-
-    using uint32_any_map_t      = std::map<uint32_t, Any>;
-    using uint32_any_mmap_t     = std::multimap<uint32_t, Any>;
-
+    template <typename> class Ref;
+    
+    class XGDocument;
+    using XGDocumentPtr     = Ref<XGDocument>;
+    using XGDocumentCPtr    = Ref<const XGDocument>;
 }

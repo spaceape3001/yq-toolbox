@@ -13,8 +13,9 @@
 #include <yq/xg/types.hpp>
 #include <yq/trait/numbers.hpp>
 
-namespace yq::xg {
+namespace yq {
     class XGRuntime;
+    struct XGDocNode;
     
     class XGElementMeta : public ObjectMeta {
     public:
@@ -49,15 +50,17 @@ namespace yq::xg {
         YQ_OBJECT_DECLARE(XGElement, Object)
     public:
     
-        virtual result_t    execute(XGContext&);
+        virtual xg_result_t         execute(XGContext&);
         
         //! True if this an always node
-        bool                always() const;
+        bool                        always() const;
         
         //! True if this is the starting node (should generally only be ONE per document)
-        bool                start() const;
+        bool                        start() const;
         
-        float               priority() const;
+        xg_priority_t               priority() const;
+        
+        //! Might want some wait condition handling...  (will, if it becomes an issue)
         
         static void init_meta();
         
@@ -65,12 +68,14 @@ namespace yq::xg {
         XGElement();
         virtual ~XGElement();
     
+        virtual bool    initialize(const XGDocNode&);
+    
     private:
         friend class XGRuntime;
         
-        std::vector<execute_t>  m_next;
-        Tristate                m_always    = Tristate::Inherit;
-        Tristate                m_start     = Tristate::Inherit;
-        float                   m_priority  = NaNf;
+        std::vector<xg_execute_t>   m_next;
+        Tristate                    m_always    = Tristate::Inherit;
+        Tristate                    m_start     = Tristate::Inherit;
+        xg_priority_t               m_priority  = NaNf;
     };
 }

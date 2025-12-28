@@ -6,13 +6,14 @@
 
 #pragma once
 
-#include <map>
-#include <cstdint>
+#include <yq/vector/Vector2.hpp>
+#include <vector>
 
 namespace yq {
-    class Any;
-
-    using uint32_any_map_t      = std::map<uint32_t, Any>;
-    using uint32_any_mmap_t     = std::multimap<uint32_t, Any>;
-
+    struct XGBitPoly {
+        
+        //! Points for any lines/edges
+        std::vector<Vector2F>   points;
+        
+    };
 }

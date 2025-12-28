@@ -6,13 +6,11 @@
 
 #pragma once
 
-#include <map>
-#include <cstdint>
+#include <yq/trait/numbers.hpp>
 
 namespace yq {
-    class Any;
-
-    using uint32_any_map_t      = std::map<uint32_t, Any>;
-    using uint32_any_mmap_t     = std::multimap<uint32_t, Any>;
-
+    struct XGBitPri {
+        //! Priority of this node/edge execution... unspecified will be treated as 0
+        float                   priority    = NaNf;
+    };
 }

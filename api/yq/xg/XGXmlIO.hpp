@@ -4,9 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "XGContext.hpp"
+#pragma once
 
-namespace yq::xg {
-    XGContext::XGContext() = default;
-    XGContext::~XGContext() = default;
+#include <yq/typedef/xg_document.hpp>
+
+namespace yq {
+    XGDocumentPtr   loadXGXML(const std::filesystem::path&);
 }

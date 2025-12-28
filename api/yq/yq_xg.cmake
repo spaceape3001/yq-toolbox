@@ -5,7 +5,6 @@
 ################################################################################
 
 add_library(yq_xg SHARED
-    xg/XGContext.cpp
     xg/XGDocument.cpp
     xg/XGElement.cpp
     xg/XGRuntime.cpp
@@ -20,3 +19,4 @@ PUBLIC
 )
 
 LinkTest(yq_xg)
+

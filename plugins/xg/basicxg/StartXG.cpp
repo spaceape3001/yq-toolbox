@@ -10,25 +10,26 @@
 using namespace yq;
 
 namespace {
-    class ContinueXG : public XGElement {
-        YQ_OBJECT_DECLARE(ContinueXG, XGElement)
+    class StartXG : public XGElement {
+        YQ_OBJECT_DECLARE(StartXG, XGElement)
     public:
-        ContinueXG(){}
-        ~ContinueXG(){}
+        StartXG(){}
+        ~StartXG(){}
         
         static void init_meta()
         {
-            auto w = writer<ContinueXG>();
+            auto w = writer<StartXG>();
             w.category("Basic");
-            w.label("Continue");
-            w.description("Continue execution");
+            w.label("Start");
+            w.description("Start execution");
+            w.start();
         }
         
         xg_result_t execute(XGContext&)
         {
-            return CONTINUE;
+            return {};
         }
     };
 }
 
-YQ_OBJECT_IMPLEMENT(ContinueXG)
+YQ_OBJECT_IMPLEMENT(StartXG)

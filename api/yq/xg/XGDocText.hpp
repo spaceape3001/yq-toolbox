@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <map>
-#include <cstdint>
+#include <yq/xg/XGBitPoly.hpp>
+#include <yq/xg/XGDocBase.hpp>
+
 
 namespace yq {
-    class Any;
-
-    using uint32_any_map_t      = std::map<uint32_t, Any>;
-    using uint32_any_mmap_t     = std::multimap<uint32_t, Any>;
-
+    struct XGDocText : public XGDocBase, public XGBitBox {
+        //! "Text" 
+        std::string             text;
+    };
 }
