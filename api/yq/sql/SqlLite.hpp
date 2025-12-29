@@ -47,7 +47,7 @@ namespace yq {
         //! Default constructor (call open() to open it)
         SqlLite();
         
-        //! Destructor
+        //! Destructor (will close the database, if open)
         ~SqlLite();
         
         //! Opens the database at the specified location with the specified flags
@@ -58,6 +58,8 @@ namespace yq {
         
         //! True if the database is open and usable
         bool        is_open() const;
+        
+        //! Closes the database
         void        close();
         const std::filesystem::path&    file() const { return m_file; }
         
