@@ -61,6 +61,8 @@ namespace yq {
         
         //! Closes the database
         void        close();
+        
+        //! Filepath to the database
         const std::filesystem::path&    file() const { return m_file; }
         
         //! Queries and returns a set of table names.
