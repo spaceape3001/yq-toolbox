@@ -50,6 +50,14 @@ namespace yq {
             return (m_data[index(i)] & mask(i)) != 0;
         }
         
+        constexpr bool    operator()(size_t i) const
+        {
+            if(i>=MAX)
+                return false;
+
+            return (m_data[index(i)] & mask(i)) != 0;
+        }
+
         void    set(size_t i)
         {
             if(i>=MAX)
