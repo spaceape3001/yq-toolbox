@@ -71,6 +71,7 @@ namespace yq {
         //! Queries to see if specified table exists in the database
         bool            has_table(std::string_view) const;
     
+        //! Calls the checkpoint method on the database (IIRC, thats equivalent to a "flush")
         void            checkpoint();
     
     private:
