@@ -13,6 +13,17 @@
 #include <string_view>
 
 namespace yq {
+
+    /*! \brief String literal (for template parameters)
+    
+    
+        Little gem for allowing templates based on string, thus you can do
+        
+        template <StringLiteral Name> void print();
+        print<"Hello World!">();
+        
+        Or use with classes, wherever you need to capture a string.
+    */
     template <size_t N>
     struct StringLiteral {
         char value[N+1];
