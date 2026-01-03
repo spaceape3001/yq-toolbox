@@ -28,6 +28,7 @@ namespace yq {
     struct StringLiteral {
         char value[N+1];
 
+        //! Constructs (from program string)
         constexpr StringLiteral(const char (&str)[N])
         {
             std::copy_n(str, N, value);
