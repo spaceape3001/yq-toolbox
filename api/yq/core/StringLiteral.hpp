@@ -35,6 +35,7 @@ namespace yq {
             value[N] = '\0';
         }
         
+        //! Gets the value as a string view
         constexpr std::string_view view() const  noexcept
         {
             return std::string_view(value, N);
