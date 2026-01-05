@@ -41,6 +41,7 @@ namespace yq {
             return std::string_view(value, N);
         }
         
+        //! Gets the value as a C-style string pointer
         constexpr const char* c_str() const 
         {
             return value;
