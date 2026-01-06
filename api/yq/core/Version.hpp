@@ -3,6 +3,8 @@
 #include <cstdint>
 
 namespace yq {
+    
+    //! Simple version structure (major/minor/patch/build)
     struct Version {
         uint16_t    major   = 0;
         uint16_t    minor   = 0;
