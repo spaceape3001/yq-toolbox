@@ -9,6 +9,8 @@ namespace yq {
     
         //! Major version number
         uint16_t    major   = 0;
+        
+        //! Minor version number
         uint16_t    minor   = 0;
         uint16_t    patch   = 0;
         uint16_t    build   = 0;
