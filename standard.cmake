@@ -106,17 +106,17 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     endif()
 
     set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+    if(Build_Qt6)
+        set(QT_DIR ${CMAKE_SOURCE_DIR}/qt-utilities)
+        add_subdirectory(${CMAKE_SOURCE_DIR}/qt-utilities)
+    endif()
+    
     if(Build_Vulkan)
         set(VULQAN_DIR ${CMAKE_SOURCE_DIR}/yq-vulqan)
         include(${CMAKE_SOURCE_DIR}/yq-vulqan/configure.cmake)
         add_subdirectory(${CMAKE_SOURCE_DIR}/yq-vulqan)
     endif()
 
-    if(Build_Qt6)
-        set(QT_DIR ${CMAKE_SOURCE_DIR}/qt-utilities)
-        add_subdirectory(${CMAKE_SOURCE_DIR}/qt-utilities)
-    endif()
-    
     if(Build_Atlas)
         include(${CMAKE_SOURCE_DIR}/yq-atlas/configure.cmake)
         add_subdirectory(${CMAKE_SOURCE_DIR}/yq-atlas)
