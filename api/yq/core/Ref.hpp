@@ -69,6 +69,8 @@ namespace yq {
             //! TREAD LIGHTLY!  Decrements the reference count (can lead to dangling pointers)
         virtual void	decRef() const override;
 
+        virtual void    deleteMe() const;       // only override if you know what you're up to (unlikely)
+
     private:
         mutable std::atomic<size_t>  m_count;
     };

@@ -26,6 +26,11 @@ namespace yq {
     void	RefCount::decRef() const
     {
         if(!--m_count) 
-            delete this;
+            deleteMe();
+    }
+
+    void    RefCount::deleteMe() const
+    {
+        delete this;
     }
 }
