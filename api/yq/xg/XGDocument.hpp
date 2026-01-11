@@ -28,6 +28,8 @@ namespace yq {
         XGDocument();
         ~XGDocument();
 
+        virtual size_t                  data_size() const override;
+
         static void init_meta();
     };
 }

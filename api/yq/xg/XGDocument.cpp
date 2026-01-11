@@ -18,7 +18,6 @@ namespace yq {
         w.description("Execution Graph Document");
     }
 
-    
     XGDocument::XGDocument() 
     {
     }
@@ -26,4 +25,10 @@ namespace yq {
     XGDocument::~XGDocument()
     {
     }
+
+    size_t  XGDocument::data_size() const 
+    {
+        return 0;   // TODO
+    }
+    
 }
