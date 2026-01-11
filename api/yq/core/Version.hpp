@@ -20,6 +20,7 @@ namespace yq {
         //! Build number
         uint16_t    build   = 0;
         
+        //! Comparison operator (default)
         auto operator<=>(const Version&) const = default;
     };
 }
