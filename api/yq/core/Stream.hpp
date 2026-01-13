@@ -23,6 +23,7 @@ namespace yq {
             
         static Stream&  null();
 
+        //! Destructor (virtual base has nothing to destruct)
         virtual ~Stream(){}
         
         /*! \brief Finish
