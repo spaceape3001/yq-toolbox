@@ -14,4 +14,8 @@ namespace yq {
         return {};
     }
 
+    bool    saveXGXML(const XGDocument&, const std::filesystem::path&)
+    {
+        return false;
+    }
 }

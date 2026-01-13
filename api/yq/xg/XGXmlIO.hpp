@@ -10,4 +10,5 @@
 
 namespace yq {
     XGDocumentPtr   loadXGXML(const std::filesystem::path&);
+    bool            saveXGXML(const XGDocument&, const std::filesystem::path&);
 }
