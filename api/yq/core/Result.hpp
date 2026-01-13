@@ -24,6 +24,8 @@ namespace yq {
         //constexpr Result(bool f, T&&v) : value(std::move(v)), good(f) {}
         
         operator const T& () const { return value; }
+        
+        //! Equality operator
         bool operator==(const Result&) const noexcept = default;
         
         template <typename U>
