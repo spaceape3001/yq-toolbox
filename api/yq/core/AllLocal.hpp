@@ -9,6 +9,9 @@
 #include <yq/keywords.hpp>
 
 namespace yq {
+
+    //! An all/local definition concept
+    //! Used when there's a "local" concept and "all", (ie properties on an object with inheritance)
     template <typename T>
     struct AllLocal {
         T   all;
