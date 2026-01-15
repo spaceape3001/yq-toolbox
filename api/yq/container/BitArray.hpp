@@ -10,11 +10,24 @@
 #include <yq/math/integer.hpp>
 
 namespace yq {
+
+    /*! Array of bits
+    
+        This is an array of bits, consisting of T[N] data,   Thus, the resulting 
+        array can contain 8*sizeof(T)*N bits.  (See MAX, below)
+    
+        \tparam T   integer type
+        \tparam N   count of integers to use
+    */
     template <typename T, size_t N>
     class BitArray {
     public:
     
         static_assert(is_power_two(sizeof(T)), "T must be a power of two in size.");
+        
+        #ifdef MAX
+        #undef MAX
+        #endif
     
         static constexpr size_t     PER     = sizeof(T) * 8ULL;
         static constexpr size_t     MAX     = PER * N;
