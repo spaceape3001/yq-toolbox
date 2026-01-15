@@ -12,10 +12,13 @@
 #include <yq/core/UniqueID.hpp>
 #include <yq/xg/types.hpp>
 #include <yq/trait/numbers.hpp>
+#include <yq/xg/XGNodeType.hpp>
+#include <yq/typedef/xg_manifest.hpp>
 
 namespace yq {
     class XGRuntime;
     struct XGDocNode;
+    
     
     class XGElementMeta : public ObjectMeta {
     public:
@@ -23,23 +26,23 @@ namespace yq {
         
         XGElementMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
-        bool                always() const { return m_always; }
         const RGBA4F&       bgcolor() const { return m_bgcolor; }
         const RGBA4F&       color() const { return m_color; }
+        
+        XGNodeType          node_type() const { return m_nodeType; }
+        
         //! Lets user know this is a *decision* type of element
-        bool                decision() const { return m_decision; }
         float               priority() const { return m_priority; }
-        bool                start() const { return m_start; }
         
         static const std::vector<const XGElementMeta*>& all();
+        
+        static XGManifestPtr   create_manifest();
 
     private:
-        bool                m_always        = false;
-        RGBA4F              m_bgcolor       = { 0., 0., 0., 0. };
-        RGBA4F              m_color         = { 0., 0., 0., 0. };
-        bool                m_decision      = false;
+        RGBA4F              m_bgcolor       = kInvalidColor;
+        RGBA4F              m_color         = kInvalidColor;
+        XGNodeType          m_nodeType      = XGNodeType::Unspecified;
         float               m_priority      = NaNf;
-        bool                m_start         = false;
         
         struct Repo;
         static Repo&    repo();
@@ -52,11 +55,8 @@ namespace yq {
     
         virtual xg_result_t         execute(XGContext&);
         
-        //! True if this an always node
-        bool                        always() const;
-        
-        //! True if this is the starting node (should generally only be ONE per document)
-        bool                        start() const;
+        // Type of the node
+        XGNodeType                  node_type() const;
         
         xg_priority_t               priority() const;
         
@@ -74,8 +74,7 @@ namespace yq {
         friend class XGRuntime;
         
         std::vector<xg_execute_t>   m_next;
-        Tristate                    m_always    = Tristate::Inherit;
-        Tristate                    m_start     = Tristate::Inherit;
-        xg_priority_t               m_priority  = NaNf;
+        XGNodeType                  m_nodeType      = XGNodeType::Unspecified;
+        xg_priority_t               m_priority      = NaNf;
     };
 }

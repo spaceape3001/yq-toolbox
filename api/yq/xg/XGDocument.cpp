@@ -22,6 +22,10 @@ namespace yq {
     {
     }
     
+    XGDocument::XGDocument(const XGDocument&cp ) : Resource(), XGDocDoc(cp)
+    {
+    }
+
     XGDocument::~XGDocument()
     {
     }

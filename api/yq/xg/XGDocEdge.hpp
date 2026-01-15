@@ -12,6 +12,9 @@
 
 namespace yq {
     struct XGDocEdge : public XGDocBase, public XGBitPoly, public XGBitPri {
+        //! Source ID (for edges)
+        xg_id_t         source      = 0;
+
         //! Target ID (for edges)
         xg_id_t         target      = 0;
     };

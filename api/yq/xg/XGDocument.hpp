@@ -27,6 +27,7 @@ namespace yq {
     public:
         XGDocument();
         ~XGDocument();
+        XGDocument(const XGDocument&);
 
         virtual size_t                  data_size() const override;
 

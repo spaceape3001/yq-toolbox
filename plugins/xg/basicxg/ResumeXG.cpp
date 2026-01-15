@@ -22,6 +22,7 @@ namespace {
             w.category("Basic");
             w.label("Resume");
             w.description("Resume execution");
+            w.node_type(XGNodeType::Resume);
         }
         
         xg_result_t execute(XGContext&)

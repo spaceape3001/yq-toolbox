@@ -27,7 +27,7 @@ namespace {
             w.category("Basic");
             w.label("Always");
             w.description("Always execution");
-            w.always();
+            w.node_type(XGNodeType::Always);
         }
         
         xg_result_t execute(XGContext&)

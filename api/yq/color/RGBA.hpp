@@ -82,6 +82,12 @@ namespace yq {
         }
     };
 
+    static constexpr const RGBA4F kInvalidColor = { 0., 0., 0., -1 };
+    
+    //! Invalid color (won't catch nans)
+    inline bool is_invalid(const RGBA4F& v) { return v.alpha < 0.; }
+    inline bool is_valid(const RGBA4F& v)   { return v.alpha >= 0.; }
+
     template <typename T>
     template <typename U>
     requires (std::is_integral_v<T> && std::is_floating_point_v<U>)

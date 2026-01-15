@@ -22,6 +22,7 @@ namespace {
             w.category("Basic");
             w.label("Continue");
             w.description("Continue execution");
+            w.node_type(XGNodeType::Continue);
         }
         
         xg_result_t execute(XGContext&)

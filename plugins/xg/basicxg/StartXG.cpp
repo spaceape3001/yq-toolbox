@@ -22,7 +22,7 @@ namespace {
             w.category("Basic");
             w.label("Start");
             w.description("Start execution");
-            w.start();
+            w.node_type(XGNodeType::Start);
         }
         
         xg_result_t execute(XGContext&)

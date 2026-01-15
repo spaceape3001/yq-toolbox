@@ -10,20 +10,15 @@
 #include <yq/xg/XGBitBox.hpp>
 #include <yq/xg/XGBitPri.hpp>
 #include <yq/xg/XGDocBase.hpp>
+#include <yq/xg/XGNodeType.hpp>
 
 namespace yq {
     struct XGDocNode : public XGDocBase, public XGBitBox, public XGBitPri {
+    
+        //! If unspecified, will use inherited (either meta or template)
+        XGNodeType      node_type   = XGNodeType::Unspecified;
 
-        //! Notes an "ALWAYS" node, ie, always check it (based on priority)
-        Tristate        always      = Tristate::Inherit;
-
-        //! Notes a decision node (more for rendering than not)
-        Tristate        decision    = Tristate::Inherit;
-
-        //! Notes a start node, so check on start (based on priority)
-        Tristate        start       = Tristate::Inherit;
-
-        //! Node's element meta name
+        //! Node's element meta name (for now, will go template???)
         std::string     element;
 
     };

@@ -21,13 +21,6 @@ namespace yq {
         {
         }
         
-        void    always(bool f=true)
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_always  = f;
-            }
-        }
-
         void    bgcolor(const color_t&v)
         {
             if(m_meta && Meta::thread_safe_write()){
@@ -42,13 +35,6 @@ namespace yq {
             }
         }
 
-        void    decision(bool f=true)
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_decision  = f;
-            }
-        }
-        
         void    priority(float v)
         {
             if(m_meta && Meta::thread_safe_write()){
@@ -56,10 +42,10 @@ namespace yq {
             }
         }
 
-        void    start(bool f=true)
+        void    node_type(XGNodeType v)
         {
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_start  = f;
+                m_meta -> m_nodeType = v;
             }
         }
 

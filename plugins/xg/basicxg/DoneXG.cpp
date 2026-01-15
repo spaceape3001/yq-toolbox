@@ -22,6 +22,7 @@ namespace {
             w.category("Basic");
             w.label("Done");
             w.description("Done execution");
+            w.node_type(XGNodeType::Done);
         }
         
         xg_result_t execute(XGContext&)
