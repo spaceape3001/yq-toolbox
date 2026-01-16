@@ -24,6 +24,5 @@ namespace yq {
         std::string     spec_data;
 
         std::string     label;
-
     };
 }

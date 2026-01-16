@@ -21,6 +21,8 @@ namespace yq {
         Done
     );
     
+    bool    is_command(XGNodeType);
+    bool    is_decision(XGNodeType);
     bool    is_flow(XGNodeType);
 }
 

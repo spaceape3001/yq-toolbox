@@ -19,7 +19,7 @@ namespace {
         static void init_meta()
         {
             auto w = writer<ContinueXG>();
-            w.category("Basic");
+            w.category("1..2..3");
             w.label("Continue");
             w.description("Continue execution");
             w.node_type(XGNodeType::Continue);

@@ -19,7 +19,7 @@ namespace {
         static void init_meta()
         {
             auto w = writer<ResumeXG>();
-            w.category("Basic");
+            w.category("1..2..3");
             w.label("Resume");
             w.description("Resume execution");
             w.node_type(XGNodeType::Resume);

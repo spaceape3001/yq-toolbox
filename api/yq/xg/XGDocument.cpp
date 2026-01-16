@@ -11,6 +11,16 @@
 YQ_RESOURCE_IMPLEMENT(yq::XGDocument)
 
 namespace yq {
+
+    XGDocBase::XGDocBase() = default;
+    XGDocBase::XGDocBase(const XGDocBase&) = default;
+    XGDocBase::XGDocBase(XGDocBase&&) = default;
+    XGDocBase::~XGDocBase() = default;
+    XGDocBase& XGDocBase::operator=(const XGDocBase&) = default;
+    XGDocBase& XGDocBase::operator=(XGDocBase&&) = default;
+    bool    XGDocBase::operator==(const XGDocBase&) const = default;
+
+    ////////////////////////////////////////////////
     
     void XGDocument::init_meta()
     {

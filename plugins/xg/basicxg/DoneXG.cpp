@@ -19,7 +19,7 @@ namespace {
         static void init_meta()
         {
             auto w = writer<DoneXG>();
-            w.category("Basic");
+            w.category("1..2..3");
             w.label("Done");
             w.description("Done execution");
             w.node_type(XGNodeType::Done);

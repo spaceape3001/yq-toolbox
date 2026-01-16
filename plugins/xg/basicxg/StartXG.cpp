@@ -19,7 +19,7 @@ namespace {
         static void init_meta()
         {
             auto w = writer<StartXG>();
-            w.category("Basic");
+            w.category("1..2..3");
             w.label("Start");
             w.description("Start execution");
             w.node_type(XGNodeType::Start);

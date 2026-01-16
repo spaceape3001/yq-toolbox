@@ -1,0 +1,8 @@
+#  Node shape definition
+#
+#  shape (ellipse/circle/square/rectangle/other)
+#   parameters are subsequent lines... automatic otherwise, subject to minimum/maximums
+#  out/in/pin  (define pins) with position argument
+#   First shape is assumed to be the label... (unless otherwise stated)
+shape ellipse
+out south

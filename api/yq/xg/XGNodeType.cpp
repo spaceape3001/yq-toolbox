@@ -10,6 +10,16 @@
 YQ_TYPE_IMPLEMENT(yq::XGNodeType)
 
 namespace yq {
+    bool    is_command(XGNodeType v)
+    {
+        return v == XGNodeType::Command;
+    }
+
+    bool    is_decision(XGNodeType v)
+    {
+        return v == XGNodeType::Decision;
+    }
+
     bool    is_flow(XGNodeType v)
     {
         switch(v){

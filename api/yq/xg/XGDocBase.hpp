@@ -23,6 +23,13 @@ namespace yq {
         //! ID for this item.  Set when the correlation is needed. (ie, nodes/edges)
         id_t                    id          = 0;
 
+        XGDocBase();
+        XGDocBase(const XGDocBase&);
+        XGDocBase(XGDocBase&&);
+        ~XGDocBase();
+        XGDocBase& operator=(const XGDocBase&);
+        XGDocBase& operator=(XGDocBase&&);
+        bool    operator==(const XGDocBase&) const;
     };
 }
 

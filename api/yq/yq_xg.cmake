@@ -19,6 +19,7 @@ PUBLIC
     yq_color 
     yq_math 
     yq_resource
+    yq_graph
 )
 
 LinkTest(yq_xg)

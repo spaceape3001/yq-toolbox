@@ -11,7 +11,9 @@ add_library(yq_graph SHARED
 )
 
 target_link_libraries(yq_graph PUBLIC
-    yq_core yq_xml
+    yq_core 
+    yq_xml 
+    yq_resource
 )
 
 LinkTest(yq_graph)

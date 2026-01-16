@@ -24,7 +24,7 @@ namespace {
         static void init_meta()
         {
             auto w = writer<AlwaysXG>();
-            w.category("Basic");
+            w.category("1..2..3");
             w.label("Always");
             w.description("Always execution");
             w.node_type(XGNodeType::Always);
