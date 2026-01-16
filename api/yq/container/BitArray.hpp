@@ -29,6 +29,7 @@ namespace yq {
         #undef MAX
         #endif
     
+        //! Bits per T
         static constexpr size_t     PER     = sizeof(T) * 8ULL;
         static constexpr size_t     MAX     = PER * N;
         static constexpr size_t     SHIFT   = log_two_approximate(PER);
