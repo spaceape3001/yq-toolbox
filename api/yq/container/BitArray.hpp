@@ -31,6 +31,8 @@ namespace yq {
     
         //! Bits per T
         static constexpr size_t     PER     = sizeof(T) * 8ULL;
+        
+        //! Total number of bits
         static constexpr size_t     MAX     = PER * N;
         static constexpr size_t     SHIFT   = log_two_approximate(PER);
         static constexpr size_t     MASK    = (1ULL << SHIFT) - 1;
