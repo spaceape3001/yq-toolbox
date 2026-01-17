@@ -6,6 +6,7 @@
 
 #include "line.hpp"
 #include <yq/errors.hpp>
+#include <yq/core/Logging.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/IgCase.hpp>
@@ -72,7 +73,7 @@ namespace yq::b3 {
             for(auto i = text.rbegin(); i!=text.rend(); ++i, ++j){
                 if(is_space(*i))
                     continue;
-                return (*i == ch) ? j : -1;
+                return (*i == ch) ? (text.size()-j) : -1;
             }
             return j;
         }
@@ -135,7 +136,7 @@ namespace yq::b3 {
                     ssize_t q   = endsWith(fline, '\\');
                     if(q < 0)
                         break;
-                    fline       = fline.substr(0,fline.size()-q) + readline();
+                    fline       = fline.substr(0, q) + readline();
                 } while(file.good() && !file.eof());
                     
                 if(isEmptyOrComment(fline))
@@ -154,7 +155,7 @@ namespace yq::b3 {
                 }
                 
                 std::string    qline(trimmed(fline));
-                if(!fline.empty()){
+                if(!qline.empty()){
                     line_t      proto{.line=line};
                     
                     Vector<std::string>     toks;
@@ -169,12 +170,12 @@ namespace yq::b3 {
                     for(const std::string &tok : toks){
                         ++n;
                         std::smatch sm;
-                        if(std::regex_match(tok, sm, arg1) || 
+                        if(std::regex_match(tok, sm, quoted)){
+                            proto.values << sm[1];
+                        } else if(std::regex_match(tok, sm, arg1) || 
                             std::regex_match(tok, sm, arg2)
                         ){
                             proto.attrs[sm[1]] = sm[2];
-                        } else if(std::regex_match(tok, sm, quoted)){
-                            proto.values << sm[1];
                         } else {
                             proto.values << tok;
                         }

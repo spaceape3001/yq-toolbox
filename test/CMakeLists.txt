@@ -4,6 +4,7 @@
 ##
 ################################################################################
 
+add_subdirectory(b3fmt)
 add_subdirectory(core)
 add_subdirectory(date)
 add_subdirectory(math)
