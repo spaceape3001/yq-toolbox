@@ -60,6 +60,7 @@ add_library(yq_math SHARED
     shape/Circle3.cpp
     shape/Normal2.cpp
     shape/Normal3.cpp
+    shape/Oval2.cpp
     shape/Plane3.cpp
     shape/Polygon2.cpp
     shape/Polygon3.cpp

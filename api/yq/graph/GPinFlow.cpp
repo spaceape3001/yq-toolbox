@@ -4,14 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PinFlow.hpp"
+#include "GPinFlow.hpp"
 #include <yq/core/DelayInit.hpp>
 #include <yq/meta/Init.hpp>
 
-YQ_TYPE_IMPLEMENT(yq::graph::PinFlow)
+YQ_TYPE_IMPLEMENT(yq::GPinFlow)
 
 using namespace yq;
 
 YQ_INVOKE(
-    writer<graph::PinFlow>();
+    writer<GPinFlow>();
 )

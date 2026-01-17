@@ -26,7 +26,8 @@ namespace yq {
     const std::string_view     szAngle_Polar               = "Angle of the polar coordinate";
     const std::string_view     szArea                      = "area";
     const std::string_view     szArea_Box                  = "Area of the box";
-    const std::string_view     szArea_Circle               = "Area of the box";
+    const std::string_view     szArea_Circle               = "Area of the circle";
+    const std::string_view     szArea_Oval                 = "Area of the oval";
     const std::string_view     szB                         = "b";
     const std::string_view     szB_Quadrilateral           = "Second point 'B' of the quadrilateral";
     const std::string_view     szB_Segment                 = "Second point 'B' of the segment";
@@ -36,6 +37,7 @@ namespace yq {
     const std::string_view     szBlue_Color                = "Blue channel of the color";
     const std::string_view     szBox                       = "box";
     const std::string_view     szBox_Circle                = "Bounding box of the circle";
+    const std::string_view     szBox_Oval                  = "Bounding box of the oval";
     const std::string_view     szC                         = "c";
     const std::string_view     szC_Quadrilateral           = "Third point 'C' of the quadrilateral";
     const std::string_view     szC_Tetrahedron             = "Third point 'C' of the tetrahedron";
@@ -43,6 +45,7 @@ namespace yq {
     const std::string_view     szCenter                    = "center";
     const std::string_view     szCenter_Box                = "Center of the box";
     const std::string_view     szCenter_Circle             = "Center of the circle";
+    const std::string_view     szCenter_Oval               = "Center of the oval";
     const std::string_view     szCenter_Sphere             = "Center of the sphere";
     const std::string_view     szCir                       = "cir";
     const std::string_view     szCirc                      = "circ";
@@ -198,6 +201,7 @@ namespace yq {
     const std::string_view     szRadius                    = "radius";
     const std::string_view     szRadius_Circle             = "Radius of the circle";
     const std::string_view     szRadius_Cylindrical        = "Radius of the cylindrical coordinate";
+    const std::string_view     szRadius_Oval               = "Radii of the oval";
     const std::string_view     szRadius_Polar              = "Radius of the polar coordinate";
     const std::string_view     szRadius_Sphere             = "Radius of the sphere";
     const std::string_view     szRe                        = "re";
@@ -233,6 +237,7 @@ namespace yq {
     const std::string_view     szValid                     = "valid";
     const std::string_view     szValid_Box                 = "Tests if the box is valid (ie, lo < hi)";
     const std::string_view     szValid_Circle              = "Tests if the circle is valid (ie, radius >= 0)";
+    const std::string_view     szValid_Oval                = "Tests if the circle is valid (ie, radii >= 0)";
     const std::string_view     szVol                       = "vol";
     const std::string_view     szVolume                    = "volume";
     const std::string_view     szVolume_Box                = "Volume of the box";

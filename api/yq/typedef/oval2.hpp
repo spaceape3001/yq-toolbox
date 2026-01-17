@@ -6,15 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/meta/MetaBinder.hpp>
+namespace yq {
+    template <typename> struct Oval2;
 
-namespace yq::graph {
-    YQ_ENUM(PinFlow, ,
-        Dead,
-        Input,
-        Output
-    )
+    using Oval2D = Oval2<double>;
+    using Oval2F = Oval2<float>;
+    using Oval2I = Oval2<int>;
+    using Oval2U = Oval2<unsigned>;
 }
-
-YQ_TYPE_DECLARE(yq::graph::PinFlow)

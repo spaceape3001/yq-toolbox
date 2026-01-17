@@ -4,18 +4,18 @@
 ##
 ################################################################################
 
-add_library(yq_graph SHARED
-    #graph/GraphSymbol.cpp
-    graph/GraphIO.cpp
-    graph/graph.cpp
-    graph/GPinFlow.cpp
+add_library(yq_symbol SHARED
+    symbol/symbol.cpp
+    symbol/transform.cpp
 )
 
-target_link_libraries(yq_graph PUBLIC
+target_link_libraries(yq_symbol
+PUBLIC 
     yq_core 
-    yq_xml 
+    yq_color 
+    yq_math 
     yq_resource
 )
 
-LinkTest(yq_graph)
+LinkTest(yq_symbol)
 

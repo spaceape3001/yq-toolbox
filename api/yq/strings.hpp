@@ -35,6 +35,7 @@ namespace yq {
     extern const std::string_view     szArea;
     extern const std::string_view     szArea_Box;
     extern const std::string_view     szArea_Circle;
+    extern const std::string_view     szArea_Oval;
     extern const std::string_view     szB;
     extern const std::string_view     szB_Quadrilateral;
     extern const std::string_view     szB_Segment;
@@ -44,6 +45,7 @@ namespace yq {
     extern const std::string_view     szBlue_Color;
     extern const std::string_view     szBox;
     extern const std::string_view     szBox_Circle;
+    extern const std::string_view     szBox_Oval;
     extern const std::string_view     szC;
     extern const std::string_view     szC_Quadrilateral;
     extern const std::string_view     szC_Tetrahedron;
@@ -51,6 +53,7 @@ namespace yq {
     extern const std::string_view     szCenter;
     extern const std::string_view     szCenter_Box;
     extern const std::string_view     szCenter_Circle;
+    extern const std::string_view     szCenter_Oval;
     extern const std::string_view     szCenter_Sphere;
     extern const std::string_view     szCir;
     extern const std::string_view     szCirc;
@@ -206,6 +209,7 @@ namespace yq {
     extern const std::string_view     szRadius;
     extern const std::string_view     szRadius_Circle;
     extern const std::string_view     szRadius_Cylindrical;
+    extern const std::string_view     szRadius_Oval;
     extern const std::string_view     szRadius_Polar;
     extern const std::string_view     szRadius_Sphere;
     extern const std::string_view     szRe;
@@ -244,6 +248,7 @@ namespace yq {
     extern const std::string_view     szValid;
     extern const std::string_view     szValid_Box;
     extern const std::string_view     szValid_Circle;
+    extern const std::string_view     szValid_Oval;
     extern const std::string_view     szVol;
     extern const std::string_view     szVolume;
     extern const std::string_view     szVolume_Box;
