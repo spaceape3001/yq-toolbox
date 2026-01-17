@@ -26,6 +26,7 @@ include(yq_color.cmake)
 include(yq_process.cmake)
 include(yq_data.cmake)
 
+include(yq_b3fmt.cmake)
 include(yq_symbol.cmake)
 
 if(Build_SQL)
