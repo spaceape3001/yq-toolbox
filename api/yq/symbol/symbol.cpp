@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yq/b3fmt/logging.hpp>
 #include "SymbolLibrary.ipp"
 #include "Shape.ipp"
 #include "Symbol.ipp"

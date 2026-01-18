@@ -33,17 +33,21 @@ namespace yq::symbol {
         Bottom
     };
     
-    struct aligned_t {
+    enum class TextType {
+        Text,   //!< Generic text (no restrictions)
+        Label,  //!< Simple label (no edit)
+        Prog,   //!< Programmable label
+        User    //!< User editable label
+    };
+
+    struct text_t {      // user/edit/prog text... 
         Vector2F        point       = ZERO;
         HAlign          halign      = HAlign::Center;
         VAlign          valign      = VAlign::Middle;
-    };
 
-    struct label_t : public aligned_t  {
-    };
-
-    struct text_t : public aligned_t {
-        std::string     text;
+        std::string     id;     //!< Can be targeted
+        std::string     text;   //!< Text to show (default for alterables/editables)
+        TextType        type    = TextType::Text;
     };
 
     struct image_t {
@@ -60,20 +64,22 @@ namespace yq::symbol {
         Segment2F,
         Triangle2F,
         text_t,
-        label_t,
         image_t
     >;
     
+    AxBox2F     bounds_for(const primitive_t&);
+    
     struct Shape {
-        std::vector<primitive_t>    primitives;
+        primitive_t                     primitive;
         
         struct {
-            stroke_style_t          stroke;
-            fill_style_t            fill;
-            text_style_t            text;
+            std::optional<stroke_style_t>   stroke;
+            std::optional<fill_style_t>     fill;
+            std::optional<font_style_t>     font;
         } style;
         
         Shape();
+        Shape(const primitive_t&);
         Shape(const Shape&);
         Shape(Shape&&);
         ~Shape();

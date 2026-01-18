@@ -22,7 +22,7 @@ namespace yq::symbol {
     struct stroke_style_t : public absstyle_t {
     };
     
-    struct text_style_t : public absstyle_t {
+    struct font_style_t : public absstyle_t {
     };
 }
 

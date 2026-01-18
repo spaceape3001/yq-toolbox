@@ -26,8 +26,7 @@ include(yq_color.cmake)
 include(yq_process.cmake)
 include(yq_data.cmake)
 
-include(yq_b3fmt.cmake)
-include(yq_symbol.cmake)
+###  and... kinda tougher to order right
 
 if(Build_SQL)
     include(yq_sql.cmake)
@@ -35,6 +34,9 @@ endif()
 
 include(yq_userexpr.cmake)
 include(yq_xml.cmake)
+
+include(yq_b3fmt.cmake)
+include(yq_symbol.cmake)
 
 #   REMAINDER
 include(yq_graph.cmake)

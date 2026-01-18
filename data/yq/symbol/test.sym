@@ -1,0 +1,5 @@
+test Test {
+    box 50,50 100,0
+    oval -50,50 r=50,20 
+    circle 50,-50 r=25
+}

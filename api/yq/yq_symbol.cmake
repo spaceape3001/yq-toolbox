@@ -17,6 +17,7 @@ PUBLIC
     yq_math 
     yq_resource
     yq_b3fmt
+    yq_xml
 )
 
 LinkTest(yq_symbol)
