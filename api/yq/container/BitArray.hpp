@@ -34,6 +34,8 @@ namespace yq {
         
         //! Total number of bits
         static constexpr size_t     MAX     = PER * N;
+        
+        //! Amount that needs to be shifted to split the index (array entry vs bit)
         static constexpr size_t     SHIFT   = log_two_approximate(PER);
         static constexpr size_t     MASK    = (1ULL << SHIFT) - 1;
         
