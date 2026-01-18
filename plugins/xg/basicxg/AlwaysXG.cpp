@@ -28,6 +28,7 @@ namespace {
             w.label("Always");
             w.description("Always execution");
             w.node_type(XGNodeType::Always);
+            w.symbol("pp:yq/symbol/xgflow.sym#always");
         }
         
         xg_result_t execute(XGContext&)

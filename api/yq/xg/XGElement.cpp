@@ -77,6 +77,7 @@ namespace yq {
             node.node_type      = xm -> node_type();
             node.spec_type      = XGSpecType::Meta;
             node.spec_data      = std::string(xm -> name());
+            node.symbol         = std::string(xm -> symbol_spec());
             ret -> m_nodes.push_back(std::move(node));
         }
         return ret;

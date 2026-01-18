@@ -10,7 +10,11 @@ circle Circle {
 }
 
 green_circle "Green Circle" {
-    stroke  white
-    fill    green
+    #stroke  white
+    #fill    green
     circle
+}
+
+test Test {
+    box 200,200 100,0
 }

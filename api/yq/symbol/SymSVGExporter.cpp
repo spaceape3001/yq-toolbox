@@ -107,8 +107,17 @@ namespace yq {
                     fill(xml, sh);
                     stroke(xml, sh);
                 }
+                if(const auto* p = std::get_if<Polygon2F>(&sh.primitive)){
+                }
+                if(const auto* p = std::get_if<Polyline2F>(&sh.primitive)){
+                }
+                if(const auto* p = std::get_if<Segment2F>(&sh.primitive)){
+                }
+                if(const auto* p = std::get_if<Triangle2F>(&sh.primitive)){
+                }
             }
             for(auto& sh : sym.pin){
+            
             }
             for(auto& sh : sym.pins){
             }

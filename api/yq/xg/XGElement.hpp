@@ -31,6 +31,8 @@ namespace yq {
         
         XGNodeType          node_type() const { return m_nodeType; }
         
+        std::string_view    symbol_spec() const { return m_symbol; }
+        
         //! Lets user know this is a *decision* type of element
         float               priority() const { return m_priority; }
         
@@ -39,6 +41,7 @@ namespace yq {
         static XGManifestPtr   create_manifest();
 
     private:
+        std::string_view    m_symbol;
         RGBA4F              m_bgcolor       = kInvalidColor;
         RGBA4F              m_color         = kInvalidColor;
         XGNodeType          m_nodeType      = XGNodeType::Unspecified;

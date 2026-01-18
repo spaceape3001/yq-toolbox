@@ -28,6 +28,7 @@ namespace yq {
         XGNodeType      node_type   = XGNodeType::Unspecified;
         std::string     spec_data;
         XGSpecType      spec_type   = XGSpecType::Unknown;
+        std::string     symbol;
         
         bool        operator==(const XGNodeMeta&) const;
         

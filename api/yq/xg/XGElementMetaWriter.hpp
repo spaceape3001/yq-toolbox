@@ -48,6 +48,13 @@ namespace yq {
                 m_meta -> m_nodeType = v;
             }
         }
+        
+        void    symbol(std::string_view v)
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_symbol  = v;
+            }
+        }
 
     private:
         XGElementMeta*  m_meta;
