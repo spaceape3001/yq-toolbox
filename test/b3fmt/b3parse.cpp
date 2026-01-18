@@ -18,7 +18,7 @@ using namespace yq::b3;
 int main(int argc, char* argv[])
 {
     Meta::init();
-    log_to_std_output();
+    log_to_std_error();
 
     "empty line"_test = []{
         

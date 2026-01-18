@@ -18,6 +18,7 @@ set_property(GLOBAL PROPERTY YQ_VULQAN_DATA ${YQ_TOOLBOX_ROOT}/data)
 
 set(TOOLBOX_API_DIR ${YQ_TOOLBOX_ROOT}/api)
 set(TOOLBOX_DEV_DIR ${YQ_TOOLBOX_ROOT}/dev)
+set(TOOLBOX_DATA_DIR ${YQ_TOOLBOX_ROOT}/data)
 
 include(configure.cmake)
 include(standard.cmake)

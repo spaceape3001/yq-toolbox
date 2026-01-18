@@ -1,0 +1,10 @@
+#   Basic symbols
+
+symbol box {
+    box
+}
+
+symbol circle {
+    circle
+}
+

@@ -10,6 +10,8 @@ find_package(TBB REQUIRED)
 add_library(yq_core SHARED
     strings.cpp
 
+    config/build.cpp
+
     container/ByteArray.cpp
 
     core/Any.cpp
@@ -78,6 +80,7 @@ add_library(yq_core SHARED
 target_compile_definitions(yq_core
     PRIVATE 
         YQ__CORE__OVERRIDE 
+        "-DYQ_TOOLBOX_DATA=\"${TOOLBOX_DATA_DIR}\"" 
 )
 
 target_include_directories(yq_core

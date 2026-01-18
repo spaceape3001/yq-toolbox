@@ -9,6 +9,7 @@
 #include <yq/resource/Resource.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/symbol/transform.hpp>
+#include <yq/typedef/symbol.hpp>
 
 namespace yq {
     namespace symbol {
