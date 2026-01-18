@@ -6,7 +6,6 @@
 
 add_library(yq_symbol SHARED
     symbol/symbol.cpp
-    symbol/transform.cpp
 )
 
 target_link_libraries(yq_symbol

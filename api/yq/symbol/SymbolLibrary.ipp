@@ -4,7 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SymbolLibrary.ipp"
-#include "Shape.ipp"
-#include "Symbol.ipp"
-#include "transform.ipp"
+#include "SymbolLibrary.hpp"
+
+
+
+namespace yq {
+}
