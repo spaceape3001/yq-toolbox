@@ -9,6 +9,7 @@
 #include <yq/math/Range.hpp>
 #include <yq/shape/Segment2.hpp>
 #include <yq/vector/Vector2.hpp>
+#include <yq/symbol/style.hpp>
 
 namespace yq::symbol {
     
@@ -38,6 +39,10 @@ namespace yq::symbol {
         Vector2F        size        = { 0., 0. };
         PinFlow         flow        = PinFlow::Bi;
         PinShape        shape       = PinShape::None;
+        struct {
+            stroke_style_t          stroke;
+            fill_style_t            fill;
+        } style;
         bool            filled      = false;
     };
     

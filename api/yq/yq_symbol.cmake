@@ -6,7 +6,8 @@
 
 add_library(yq_symbol SHARED
     symbol/symbol.cpp
-    symbol/USymLoader.cpp
+    symbol/SymLibLoader.cpp
+    symbol/SymSVGExporter.cpp
 )
 
 target_link_libraries(yq_symbol

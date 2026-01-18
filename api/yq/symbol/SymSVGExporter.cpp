@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Symbol.hpp"
+
+#include <yq/errors.hpp>
+
+namespace yq {
+    std::error_code     exportSymbolToSVG(Stream&, const Symbol&, const SymbolSVGOptions& opts)
+    {
+        return errors::todo();
+    }
+}

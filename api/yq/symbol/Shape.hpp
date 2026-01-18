@@ -15,6 +15,7 @@
 #include <yq/shape/Polyline2.hpp>
 #include <yq/shape/Segment2.hpp>
 #include <yq/shape/Triangle2.hpp>
+#include <yq/symbol/style.hpp>
 #include <optional>
 #include <variant>
 #include <vector>
@@ -65,8 +66,12 @@ namespace yq::symbol {
     
     struct Shape {
         std::vector<primitive_t>    primitives;
-        std::optional<RGBA4F>       color;
-        std::optional<RGBA4F>       bgcolor;
+        
+        struct {
+            stroke_style_t          stroke;
+            fill_style_t            fill;
+            text_style_t            text;
+        } style;
         
         Shape();
         Shape(const Shape&);

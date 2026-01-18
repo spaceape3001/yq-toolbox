@@ -6,7 +6,7 @@
 
 #include "line.hpp"
 #include <yq/errors.hpp>
-#include <yq/core/Logging.hpp>
+#include <yq/b3fmt/logging.hpp>
 #include <yq/container/Stack.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/text/IgCase.hpp>
@@ -75,7 +75,7 @@ namespace yq::b3 {
                     continue;
                 return (*i == ch) ? (text.size()-j) : -1;
             }
-            return j;
+            return -1;
         }
         
         bool    isEmptyOrComment(std::string_view text)
@@ -142,7 +142,7 @@ namespace yq::b3 {
                 if(isEmptyOrComment(fline))
                     continue;
 
-                Block  blk      = Block::Push;
+                Block  blk      = Block::Unknown;
                 ssize_t qb      = endsWith(fline, '{');
                 ssize_t qe      = endsWith(fline, '}');
                 if(qb != -1){
@@ -203,7 +203,6 @@ namespace yq::b3 {
         {
             return unexpected(parseCode(ex.code()));
         }
-        
         return ret;
     }
 

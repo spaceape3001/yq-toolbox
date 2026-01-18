@@ -1,10 +1,16 @@
 #   Basic symbols
 
-symbol box {
-    box
+box Box {
+    allow X Y XY ROT
+    rectangle
 }
 
-symbol circle {
+circle Circle {
     circle
 }
 
+green_circle "Green Circle" {
+    stroke  white
+    fill    green
+    circle
+}

@@ -30,9 +30,11 @@ int main(int argc, char* argv[])
             return;
     
         //  rest of it....
-        auto square = Symbol::IO::load("pp:yq/symbol/basic.sym#square");
-        expect(square.valid());
+        auto box = Symbol::IO::load("pp:yq/symbol/basic.sym#box");
+        expect(box.valid());
     
+        auto circle = Symbol::IO::load("pp:yq/symbol/basic.sym#circle");
+        expect(circle.valid());
     };
     
     return ut::cfg<>.run();

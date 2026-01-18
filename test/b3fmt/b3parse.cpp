@@ -129,6 +129,16 @@ static const std::string_view kComments[] = {
             }
         }
     };
+    
+    "multiple"_test = []{
+        auto ret=loadB3Buffer(R"(
+    udder foo="1" "bar=2" spartan="1 2 3"
+    udder foo="1" "bar=2" spartan="1 2 3"
+)");
+
+        expect(true == ret.has_value());
+        expect(2ULL == ret->lines.size());
+    };
 
     return ut::cfg<>.run();
 }

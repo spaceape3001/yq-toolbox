@@ -8,10 +8,12 @@
 
 #include <yq/resource/Resource.hpp>
 #include <yq/shape/AxBox2.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yq/symbol/transform.hpp>
 #include <yq/typedef/symbol.hpp>
 
 namespace yq {
+    class Stream;
     namespace symbol {
         struct Shape;
         struct Pin;
@@ -45,4 +47,10 @@ namespace yq {
         size_t data_size() const override;
         static void init_meta();
     };
+ 
+    struct SymbolSVGOptions {
+        Size2F      size    = { 100., 100. };
+    };
+    
+    std::error_code     exportSymbolToSVG(Stream&, const Symbol&, const SymbolSVGOptions& opts={});
 }
