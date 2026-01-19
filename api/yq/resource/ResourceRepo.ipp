@@ -65,6 +65,7 @@ namespace yq {
             drivers.push_back(d);
             for(auto& ext : d->extensions())
                 loaders.insert({ ext, d });
+            
         }
         
         void    inject(ResourceSaver*d)

@@ -18,7 +18,7 @@ namespace yq {
         directly with this class, they'll leverage the auto-creation via the
         add loader/infoer/saver routines.
     */
-    class ResourceDriver {
+    class ResourceDriver : public Meta {
         friend class Resource;
     public:
     
@@ -46,9 +46,6 @@ namespace yq {
         //! File extensions that are valid for this driver
         constexpr const string_vector_t& extensions() const { return m_spec.extensions; }
         
-        //! Code location to where the driver was registered.
-        constexpr const std::source_location& location() const { return m_location; }
-        
     protected:
         ResourceDriver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type);
         virtual ~ResourceDriver();
@@ -56,7 +53,6 @@ namespace yq {
     private:
         const ResourceMeta&     m_resource;
         ResourceIOSpec          m_spec;
-        std::source_location    m_location;
         Type                    m_type;
     };
 

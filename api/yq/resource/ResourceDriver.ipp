@@ -13,7 +13,7 @@ namespace yq {
 ////////////////////////////////////////////////////////////////////////////////
 
     ResourceDriver::ResourceDriver(const ResourceMeta&resource, const ResourceIOSpec& spec, const std::source_location& loc, Type type) :
-        m_resource(resource), m_spec(spec), m_location(loc), m_type(type)
+        Meta("", (Meta*) &resource, loc), m_resource(resource), m_spec(spec), m_type(type)
     {
     }
     
