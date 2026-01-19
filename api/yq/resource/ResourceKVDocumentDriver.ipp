@@ -21,8 +21,8 @@
 namespace yq {
     ///////////////////////////////////
 
-    ResourceKVDocumentInfoer::ResourceKVDocumentInfoer(const ResourceMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) :
-        ResourceByteInfoer(meta, exts, sl, type), m_options(KVTree::BODY)
+    ResourceKVDocumentInfoer::ResourceKVDocumentInfoer(const ResourceMeta& meta, const ResourceIOSpec& spec, const std::source_location& sl, bool recurse, Type type) :
+        ResourceByteInfoer(meta, spec, sl, type), m_options(KVTree::BODY)
     {
         if(recurse)
             m_options |= KVTree::RECURSIVE;
@@ -46,8 +46,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceKVDocumentLoader::ResourceKVDocumentLoader(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) : 
-        ResourceByteLoader(meta, exts, sl, type), m_options(KVTree::BODY)
+    ResourceKVDocumentLoader::ResourceKVDocumentLoader(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, bool recurse, Type type) : 
+        ResourceByteLoader(meta, spec, sl, type), m_options(KVTree::BODY)
     {
         if(recurse)
             m_options |= KVTree::RECURSIVE;
@@ -71,8 +71,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceKVDocumentSaver::ResourceKVDocumentSaver(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
-        ResourceByteSaver(meta, exts, sl, type)
+    ResourceKVDocumentSaver::ResourceKVDocumentSaver(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceByteSaver(meta, spec, sl, type)
     {
     }
     

@@ -15,7 +15,7 @@ namespace yq {
         using ResourceInfoer::info;
         
     protected:
-        ResourceUrlInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::url);
+        ResourceUrlInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::url);
         virtual ~ResourceUrlInfoer();
     };
     
@@ -25,7 +25,7 @@ namespace yq {
         using ResourceLoader::load;
         
     protected:
-        ResourceUrlLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::url);
+        ResourceUrlLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::url);
         virtual ~ResourceUrlLoader();
     };
 
@@ -35,7 +35,7 @@ namespace yq {
         using ResourceSaver::save;
 
     protected:
-        ResourceUrlSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::url);
+        ResourceUrlSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::url);
         virtual ~ResourceUrlSaver();
     };
 }

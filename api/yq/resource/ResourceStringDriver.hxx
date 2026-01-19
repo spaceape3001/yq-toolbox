@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::string&, const ResourceInfoAPI&)>;
     
-        TypedResourceStringInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -38,8 +38,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::string&)>;
     
-        TypedResourceStringInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -61,8 +61,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::string&, const ResourceLoadAPI&)>;
         
-        TypedResourceStringLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -84,8 +84,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::string&)>;
     
-        TypedResourceStringLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -110,8 +110,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, std::string&, const ResourceSaveAPI&)>;
 
-        TypedResourceStringSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -137,8 +137,8 @@ namespace yq {
     class TypedResourceStringSaverNoAPI : public ResourceStringSaver {
         //using Pred    = std::function<std::error_code(const A&, std::string&)>;
 
-        TypedResourceStringSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -166,8 +166,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, std::string&, const ResourceSaveAPI&)>;
 
-        TypedResourceStringSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -194,8 +194,8 @@ namespace yq {
     class TypedResourceStringSaverBoolNoAPI : public ResourceStringSaver {
         //using Pred    = std::function<bool(const A&, std::string&)>;
 
-        TypedResourceStringSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceStringSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceStringSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStringSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

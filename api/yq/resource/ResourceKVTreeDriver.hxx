@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVTree&, const ResourceInfoAPI&)>;
     
-        TypedResourceKVTreeInfoer(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVTreeInfoer(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVTreeInfoer(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -38,8 +38,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVTree&)>;
     
-        TypedResourceKVTreeInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVTreeInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVTreeInfoer(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -62,8 +62,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVTree&, const ResourceLoadAPI&)>;
         
-        TypedResourceKVTreeLoader(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVTreeLoader(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVTreeLoader(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -86,8 +86,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVTree&)>;
     
-        TypedResourceKVTreeLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVTreeLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVTreeLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVTreeLoader(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -112,8 +112,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, KVTree&, const ResourceSaveAPI&)>;
 
-        TypedResourceKVTreeSaver(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
-            ResourceKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVTreeSaver(const ResourceIOSpec& spec, Pred&& fn, bool recurse, const std::source_location& sl) :
+            ResourceKVTreeSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -139,8 +139,8 @@ namespace yq {
     class TypedResourceKVTreeSaverNoAPI : public ResourceKVTreeSaver {
         //using Pred    = std::function<std::error_code(const A&, KVTree&)>;
 
-        TypedResourceKVTreeSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVTreeSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceKVTreeSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -168,8 +168,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, KVTree&, const ResourceSaveAPI&)>;
 
-        TypedResourceKVTreeSaverBool(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
-            ResourceKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVTreeSaverBool(const ResourceIOSpec& spec, Pred&& fn, bool recurse, const std::source_location& sl) :
+            ResourceKVTreeSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -198,8 +198,8 @@ namespace yq {
     class TypedResourceKVTreeSaverBoolNoAPI : public ResourceKVTreeSaver {
         //using Pred    = std::function<bool(const A&, KVTree&)>;
 
-        TypedResourceKVTreeSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVTreeSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVTreeSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceKVTreeSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

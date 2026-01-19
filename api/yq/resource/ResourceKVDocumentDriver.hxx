@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVDocument&, const ResourceInfoAPI&)>;
     
-        TypedResourceKVDocumentInfoer(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVDocumentInfoer(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVDocumentInfoer(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -38,8 +38,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const KVDocument&)>;
     
-        TypedResourceKVDocumentInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentInfoer(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVDocumentInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVDocumentInfoer(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -62,8 +62,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVDocument&, const ResourceLoadAPI&)>;
         
-        TypedResourceKVDocumentLoader(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVDocumentLoader(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVDocumentLoader(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -86,8 +86,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const KVDocument&)>;
     
-        TypedResourceKVDocumentLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool recursive, const std::source_location& sl) :
-            ResourceKVDocumentLoader(meta<A>(), exts, sl, recursive), m_function(std::move(fn))
+        TypedResourceKVDocumentLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, bool recursive, const std::source_location& sl) :
+            ResourceKVDocumentLoader(meta<A>(), spec, sl, recursive), m_function(std::move(fn))
         {
         }
         
@@ -105,15 +105,15 @@ namespace yq {
     };
     
     //template <SomeResource A>
-    //void    Resource::add_loader(const string_vector_t& exts, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
+    //void    Resource::add_loader(const ResourceIOSpec& spec, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
     //{
-        //add_loader(new TypedResourceKVDocumentLoaderNoAPI<A>(exts, std::move(fn), false, sl));
+        //add_loader(new TypedResourceKVDocumentLoaderNoAPI<A>(spec, std::move(fn), false, sl));
     //}
     
     //template <SomeResource A>
-    //void    Resource::add_loader(const string_vector_t& exts, recursive_k, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
+    //void    Resource::add_loader(const ResourceIOSpec& spec, recursive_k, std::function<A*(const KVDocument&)>&&fn, const std::source_location& sl) 
     //{
-        //add_loader(new TypedResourceKVDocumentLoaderNoAPI<A>(exts, std::move(fn), true, sl));
+        //add_loader(new TypedResourceKVDocumentLoaderNoAPI<A>(spec, std::move(fn), true, sl));
     //}
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -124,8 +124,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, KVDocument&, const ResourceSaveAPI&)>;
 
-        TypedResourceKVDocumentSaver(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
-            ResourceKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVDocumentSaver(const ResourceIOSpec& spec, Pred&& fn, bool recurse, const std::source_location& sl) :
+            ResourceKVDocumentSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -151,8 +151,8 @@ namespace yq {
     class TypedResourceKVDocumentSaverNoAPI : public ResourceKVDocumentSaver {
         //using Pred    = std::function<std::error_code(const A&, KVDocument&)>;
 
-        TypedResourceKVDocumentSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVDocumentSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceKVDocumentSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -180,8 +180,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, KVDocument&, const ResourceSaveAPI&)>;
 
-        TypedResourceKVDocumentSaverBool(const string_vector_t& exts, Pred&& fn, bool recurse, const std::source_location& sl) :
-            ResourceKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVDocumentSaverBool(const ResourceIOSpec& spec, Pred&& fn, bool recurse, const std::source_location& sl) :
+            ResourceKVDocumentSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -209,8 +209,8 @@ namespace yq {
     class TypedResourceKVDocumentSaverBoolNoAPI : public ResourceKVDocumentSaver {
 //        using Pred    = std::function<bool(const A&, KVDocument&)>;
 
-        TypedResourceKVDocumentSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceKVDocumentSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceKVDocumentSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceKVDocumentSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

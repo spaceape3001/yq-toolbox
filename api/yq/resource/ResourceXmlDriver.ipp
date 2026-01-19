@@ -17,8 +17,8 @@
 namespace yq {
     ///////////////////////////////////
 
-    ResourceXmlInfoer::ResourceXmlInfoer(const ResourceMeta& meta, const string_vector_t& exts, const std::source_location& sl, Type type) :
-        ResourceStringInfoer(meta, exts, sl, type)
+    ResourceXmlInfoer::ResourceXmlInfoer(const ResourceMeta& meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) :
+        ResourceStringInfoer(meta, spec, sl, type)
     {
     }
 
@@ -43,8 +43,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceXmlLoader::ResourceXmlLoader(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
-        ResourceStringLoader(meta, exts, sl, type)
+    ResourceXmlLoader::ResourceXmlLoader(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceStringLoader(meta, spec, sl, type)
     {
     }
     
@@ -69,8 +69,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceXmlSaver::ResourceXmlSaver(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
-        ResourceStringSaver(meta, exts, sl, type)
+    ResourceXmlSaver::ResourceXmlSaver(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceStringSaver(meta, spec, sl, type)
     {
     }
     

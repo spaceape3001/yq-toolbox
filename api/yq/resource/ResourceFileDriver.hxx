@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::filesystem::path&, const ResourceInfoAPI&)>;
     
-        TypedResourceFileInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileInfoer(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceFileInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileInfoer(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
         
@@ -39,8 +39,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const std::filesystem::path&)>;
     
-        TypedResourceFileInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -62,8 +62,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::filesystem::path&, const ResourceLoadAPI&)>;
         
-        TypedResourceFileLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -85,8 +85,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const std::filesystem::path&)>;
     
-        TypedResourceFileLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -112,8 +112,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, const std::filesystem::path&, const ResourceSaveAPI&)>;
 
-        TypedResourceFileSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -140,8 +140,8 @@ namespace yq {
     public:
         //using Pred    = std::function<std::error_code(const A&, const std::filesystem::path&)>;
 
-        TypedResourceFileSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -168,8 +168,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, const std::filesystem::path&, const ResourceSaveAPI&)>;
 
-        TypedResourceFileSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -197,8 +197,8 @@ namespace yq {
     public:
         //using Pred    = std::function<bool(const A&, const std::filesystem::path&)>;
 
-        TypedResourceFileSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceFileSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceFileSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceFileSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

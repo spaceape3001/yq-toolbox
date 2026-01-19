@@ -21,8 +21,8 @@
 namespace yq {
     ///////////////////////////////////
 
-    ResourceKVTreeInfoer::ResourceKVTreeInfoer(const ResourceMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) :
-        ResourceByteInfoer(meta, exts, sl, type), m_options(0)
+    ResourceKVTreeInfoer::ResourceKVTreeInfoer(const ResourceMeta& meta, const ResourceIOSpec& spec, const std::source_location& sl, bool recurse, Type type) :
+        ResourceByteInfoer(meta, spec, sl, type), m_options(0)
     {
         if(recurse)
             m_options |= KVTree::RECURSIVE;
@@ -45,8 +45,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceKVTreeLoader::ResourceKVTreeLoader(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool recurse, Type type) : 
-        ResourceByteLoader(meta, exts, sl, type), m_options(0)
+    ResourceKVTreeLoader::ResourceKVTreeLoader(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, bool recurse, Type type) : 
+        ResourceByteLoader(meta, spec, sl, type), m_options(0)
     {
         if(recurse)
             m_options |= KVTree::RECURSIVE;
@@ -69,8 +69,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceKVTreeSaver::ResourceKVTreeSaver(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
-        ResourceByteSaver(meta, exts, sl, type)
+    ResourceKVTreeSaver::ResourceKVTreeSaver(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceByteSaver(meta, spec, sl, type)
     {
     }
     

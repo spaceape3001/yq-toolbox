@@ -15,8 +15,8 @@
 namespace yq {
     ///////////////////////////////////
 
-    ResourceStreamInfoer::ResourceStreamInfoer(const ResourceMeta& meta, const string_vector_t& exts, const std::source_location& sl, bool binary, Type type) :
-        ResourceFileInfoer(meta, exts, sl, type), m_binary(binary)
+    ResourceStreamInfoer::ResourceStreamInfoer(const ResourceMeta& meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) :
+        ResourceFileInfoer(meta, spec, sl, type), m_binary(spec.binary)
     {
     }
 
@@ -46,8 +46,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceStreamLoader::ResourceStreamLoader(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool binary, Type type) : 
-        ResourceFileLoader(meta, exts, sl, type), m_binary(binary)
+    ResourceStreamLoader::ResourceStreamLoader(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceFileLoader(meta, spec, sl, type), m_binary(spec.binary)
     {
     }
     
@@ -77,8 +77,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceStreamSaver::ResourceStreamSaver(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, bool binary, Type type) : 
-        ResourceFileSaver(meta, exts, sl, type), m_binary(binary)
+    ResourceStreamSaver::ResourceStreamSaver(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceFileSaver(meta, spec, sl, type), m_binary(spec.binary)
     {
     }
     

@@ -34,14 +34,15 @@ namespace yq {
         using saver_mmap_t      = std::multimap<std::string, const ResourceSaver*, IgCase>;
         // ditto once we have the idea of "skimming" or similar
         
-        std::vector<search_t>                   search;         //!< Search
-        std::vector<const ResourceMeta*>           resources;         //!< All registered resource classes
-        std::vector<const ResourceLibraryMeta*>    libraries;      //!< All registered library classes
+        std::vector<search_t>                       search;         //!< Search
+        std::vector<const ResourceMeta*>            resources;         //!< All registered resource classes
+        std::vector<const ResourceLibraryMeta*>     libraries;      //!< All registered library classes
         
-        std::vector<const ResourceDriver*>         drivers;        //!< Drivers
-        infoer_mmap_t                           infoers;        //!< Infoing drivers
-        loader_mmap_t                           loaders;        //!< Loading drivers
-        saver_mmap_t                            savers;         //!< Saving drivers
+        std::vector<const ResourceDriver*>          drivers;        //!< Drivers
+        infoer_mmap_t                               infoers;        //!< Infoing drivers
+        loader_mmap_t                               loaders;        //!< Loading drivers
+        saver_mmap_t                                savers;         //!< Saving drivers
+        loader_mmap_t                               yqload;         //!< YQ loaders
         
         // todo_t                               schemes;        // (Thinking Servers)
 

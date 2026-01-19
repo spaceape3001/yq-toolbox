@@ -91,6 +91,9 @@ namespace yq {
         
         //! Used for the KV documents, TRUE to say it's a recursive tree structure
         bool                            recursive   = false;
+
+        //! Uri path for the yq scheme
+        std::string                     yqpath;
     };
     
     template <typename> class ResourceFixer;

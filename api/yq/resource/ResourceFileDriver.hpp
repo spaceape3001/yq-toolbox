@@ -16,7 +16,7 @@ namespace yq {
         virtual ResourceInfoPtr info(const std::filesystem::path&, const ResourceInfoAPI&) const = 0;
         
     protected:
-        ResourceFileInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
+        ResourceFileInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::file);
         virtual ~ResourceFileInfoer();
     };
     
@@ -27,7 +27,7 @@ namespace yq {
         virtual ResourcePtr load(const std::filesystem::path&, const ResourceLoadAPI&) const = 0;
         
     protected:
-        ResourceFileLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
+        ResourceFileLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::file);
         virtual ~ResourceFileLoader();
     };
 
@@ -38,7 +38,7 @@ namespace yq {
         virtual std::error_code  save(const Resource&, const std::filesystem::path&, const ResourceSaveAPI&) const = 0;
 
     protected:
-        ResourceFileSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::file);
+        ResourceFileSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::file);
         virtual ~ResourceFileSaver();
     };
 }

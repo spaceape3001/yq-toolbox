@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(std::istream&, const ResourceInfoAPI&)>;
     
-        TypedResourceStreamInfoer(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamInfoer(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -38,8 +38,8 @@ namespace yq {
     public:
 //        using Pred    = std::function<typename A::MyInfo*(std::istream&)>;
     
-        TypedResourceStreamInfoerNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamInfoer(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -61,8 +61,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(std::istream&, const ResourceLoadAPI&)>;
         
-        TypedResourceStreamLoader(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamLoader(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -84,8 +84,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(std::istream&)>;
     
-        TypedResourceStreamLoaderNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamLoader(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -110,8 +110,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, std::ostream&, const ResourceSaveAPI&)>;
 
-        TypedResourceStreamSaver(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -136,8 +136,8 @@ namespace yq {
     class TypedResourceStreamSaverNoAPI : public ResourceStreamSaver {
         //using Pred    = std::function<std::error_code(const A&, std::ostream&)>;
 
-        TypedResourceStreamSaverNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -164,8 +164,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, std::ostream&, const ResourceSaveAPI&)>;
 
-        TypedResourceStreamSaverBool(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -190,15 +190,15 @@ namespace yq {
 
 #if 0
     template <SomeResource A>
-    void    Resource::add_saver(const string_vector_t& exts, std::function<bool(const A&, std::ostream&, const ResourceSaveAPI&)>&&fn, const std::source_location& sl)
+    void    Resource::add_saver(const ResourceIOSpec& spec, std::function<bool(const A&, std::ostream&, const ResourceSaveAPI&)>&&fn, const std::source_location& sl)
     {
-        add_saver(new TypedResourceStreamSaverBool<A>(exts, std::move(fn), false, sl));
+        add_saver(new TypedResourceStreamSaverBool<A>(spec, std::move(fn), false, sl));
     }
         
     template <SomeResource A>
-    void    Resource::add_saver(const string_vector_t& exts, binary_k, std::function<bool(const A&, std::ostream&, const ResourceSaveAPI&)>&&fn, const std::source_location& sl)
+    void    Resource::add_saver(const ResourceIOSpec& spec_k, std::function<bool(const A&, std::ostream&, const ResourceSaveAPI&)>&&fn, const std::source_location& sl)
     {
-        add_saver(new TypedResourceStreamSaverBool<A>(exts, std::move(fn), true, sl));
+        add_saver(new TypedResourceStreamSaverBool<A>(spec, std::move(fn), true, sl));
     }
 #endif
     
@@ -206,8 +206,8 @@ namespace yq {
     class TypedResourceStreamSaverBoolNoAPI : public ResourceStreamSaver {
         //using Pred    = std::function<bool(const A&, std::ostream&)>;
 
-        TypedResourceStreamSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, bool binary, const std::source_location& sl) :
-            ResourceStreamSaver(meta<A>(), exts, sl, binary), m_function(std::move(fn))
+        TypedResourceStreamSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceStreamSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

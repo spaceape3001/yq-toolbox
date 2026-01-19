@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const json&, const ResourceInfoAPI&)>;
     
-        TypedResourceJsonInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -38,8 +38,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const json&)>;
     
-        TypedResourceJsonInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -61,8 +61,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const json&, const ResourceLoadAPI&)>;
         
-        TypedResourceJsonLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -84,8 +84,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const json&)>;
     
-        TypedResourceJsonLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -110,8 +110,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, json&, const ResourceSaveAPI&)>;
 
-        TypedResourceJsonSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -136,8 +136,8 @@ namespace yq {
     class TypedResourceJsonSaverNoAPI : public ResourceJsonSaver {
         //using Pred    = std::function<std::error_code(const A&, json&)>;
 
-        TypedResourceJsonSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -165,8 +165,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, json&, const ResourceSaveAPI&)>;
 
-        TypedResourceJsonSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -193,8 +193,8 @@ namespace yq {
     class TypedResourceJsonSaverBoolNoAPI : public ResourceJsonSaver {
         //using Pred    = std::function<bool(const A&, json&)>;
 
-        TypedResourceJsonSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceJsonSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceJsonSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceJsonSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

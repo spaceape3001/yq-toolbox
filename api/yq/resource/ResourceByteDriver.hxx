@@ -15,8 +15,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const ByteArray&, const ResourceInfoAPI&)>;
     
-        TypedResourceByteInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -39,8 +39,8 @@ namespace yq {
     public:
         //using Pred    = std::function<typename A::MyInfo*(const ByteArray&)>;
     
-        TypedResourceByteInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -63,8 +63,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const ByteArray&, const ResourceLoadAPI&)>;
         
-        TypedResourceByteLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -87,8 +87,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const ByteArray&)>;
     
-        TypedResourceByteLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -114,8 +114,8 @@ namespace yq {
     
         //using Pred    = std::function<std::error_code(const A&, ByteArray&, const ResourceSaveAPI&)>;
 
-        TypedResourceByteSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -140,8 +140,8 @@ namespace yq {
     class TypedResourceByteSaverNoAPI : public ResourceByteSaver {
         //using Pred    = std::function<std::error_code(const A&, ByteArray&)>;
 
-        TypedResourceByteSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -168,8 +168,8 @@ namespace yq {
     
         //using Pred    = std::function<bool(const A&, ByteArray&, const ResourceSaveAPI&)>;
 
-        TypedResourceByteSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -196,8 +196,8 @@ namespace yq {
     class TypedResourceByteSaverBoolNoAPI : public ResourceByteSaver {
         //using Pred    = std::function<bool(const A&, ByteArray&)>;
 
-        TypedResourceByteSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceByteSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceByteSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceByteSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

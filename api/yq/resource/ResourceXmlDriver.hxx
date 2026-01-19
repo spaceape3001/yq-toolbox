@@ -13,8 +13,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlInfoer : public ResourceXmlInfoer {
     public:
-        TypedResourceXmlInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlInfoer(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlInfoer(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
         
@@ -34,8 +34,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlInfoerNoAPI : public ResourceXmlInfoer {
     public:
-        TypedResourceXmlInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlInfoer(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlInfoer(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
         
@@ -55,8 +55,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlLoader : public ResourceXmlLoader {
     public:
-        TypedResourceXmlLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlLoader(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlLoader(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
         
@@ -76,8 +76,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlLoaderNoAPI : public ResourceXmlLoader {
     public:
-        TypedResourceXmlLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlLoader(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlLoader(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
         
@@ -99,8 +99,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlSaver : public ResourceXmlSaver {
     public:
-        TypedResourceXmlSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlSaver(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
 
@@ -124,8 +124,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceXmlSaverNoAPI : public ResourceXmlSaver {
     public:
-        TypedResourceXmlSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlSaver(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
 
@@ -150,8 +150,8 @@ namespace yq {
     class TypedResourceXmlSaverBool : public ResourceXmlSaver {
     public:
     
-        TypedResourceXmlSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlSaver(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
 
@@ -178,8 +178,8 @@ namespace yq {
     class TypedResourceXmlSaverBoolNoAPI : public ResourceXmlSaver {
     public:
     
-        TypedResourceXmlSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceXmlSaver(meta<A>(), exts, sl, Type::file), m_function(std::move(fn))
+        TypedResourceXmlSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceXmlSaver(meta<A>(), spec, sl, Type::file), m_function(std::move(fn))
         {
         }
 

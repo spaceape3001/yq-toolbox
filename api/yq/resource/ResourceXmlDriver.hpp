@@ -17,7 +17,7 @@ namespace yq {
         virtual ResourceInfoPtr info(const XmlDocument&, const ResourceInfoAPI&) const = 0;
         
     protected:
-        ResourceXmlInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::xml);
+        ResourceXmlInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::xml);
         virtual ~ResourceXmlInfoer();
     };
     
@@ -29,7 +29,7 @@ namespace yq {
         virtual ResourcePtr load(const XmlDocument&, const ResourceLoadAPI&) const = 0;
         
     protected:
-        ResourceXmlLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::xml);
+        ResourceXmlLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::xml);
         virtual ~ResourceXmlLoader();
     };
 
@@ -41,7 +41,7 @@ namespace yq {
         virtual std::error_code  save(const Resource&, XmlDocument&, const ResourceSaveAPI&) const = 0;
 
     protected:
-        ResourceXmlSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::xml);
+        ResourceXmlSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::xml);
         virtual ~ResourceXmlSaver();
     };
 }

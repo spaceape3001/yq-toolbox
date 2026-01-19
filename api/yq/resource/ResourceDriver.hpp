@@ -44,18 +44,18 @@ namespace yq {
         const ResourceMeta&    resource() const { return m_resource; }
 
         //! File extensions that are valid for this driver
-        constexpr const string_vector_t& extensions() const { return m_extensions; }
+        constexpr const string_vector_t& extensions() const { return m_spec.extensions; }
         
         //! Code location to where the driver was registered.
         constexpr const std::source_location& location() const { return m_location; }
         
     protected:
-        ResourceDriver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type);
+        ResourceDriver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type);
         virtual ~ResourceDriver();
         
     private:
         const ResourceMeta&     m_resource;
-        string_vector_t         m_extensions;
+        ResourceIOSpec          m_spec;
         std::source_location    m_location;
         Type                    m_type;
     };
@@ -72,7 +72,7 @@ namespace yq {
     protected:
         friend class Resource;
         
-        ResourceInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type);
+        ResourceInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type);
         virtual ~ResourceInfoer();
     };
     
@@ -88,7 +88,7 @@ namespace yq {
     protected:
         friend class Resource;
 
-        ResourceLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type);
+        ResourceLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type);
         virtual ~ResourceLoader();
     };
 
@@ -104,7 +104,7 @@ namespace yq {
     protected:
         friend class Resource;
 
-        ResourceSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type);
+        ResourceSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type);
         virtual ~ResourceSaver();
     };
     

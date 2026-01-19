@@ -18,7 +18,7 @@ namespace yq {
         virtual ResourceInfoPtr info(std::istream&, const ResourceInfoAPI&) const = 0;
         
     protected:
-        ResourceStreamInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
+        ResourceStreamInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::stream);
         virtual ~ResourceStreamInfoer();
         
     private:
@@ -33,7 +33,7 @@ namespace yq {
         virtual ResourcePtr load(std::istream&, const ResourceLoadAPI&) const = 0;
         
     protected:
-        ResourceStreamLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
+        ResourceStreamLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::stream);
         virtual ~ResourceStreamLoader();
         
     private:
@@ -48,7 +48,7 @@ namespace yq {
         virtual std::error_code  save(const Resource&, std::ostream&, const ResourceSaveAPI&) const = 0;
 
     protected:
-        ResourceStreamSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool binary, Type type=Type::stream);
+        ResourceStreamSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::stream);
         virtual ~ResourceStreamSaver();
         
     private:

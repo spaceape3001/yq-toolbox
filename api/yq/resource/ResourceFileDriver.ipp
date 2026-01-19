@@ -17,8 +17,8 @@
 namespace yq {
     ///////////////////////////////////
 
-    ResourceFileInfoer::ResourceFileInfoer(const ResourceMeta& meta, const string_vector_t& exts, const std::source_location& sl, Type type) :
-        ResourceInfoer(meta, exts, sl, type)
+    ResourceFileInfoer::ResourceFileInfoer(const ResourceMeta& meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) :
+        ResourceInfoer(meta, spec, sl, type)
     {
     }
 
@@ -44,8 +44,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceFileLoader::ResourceFileLoader(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
-        ResourceLoader(meta, exts, sl, type)
+    ResourceFileLoader::ResourceFileLoader(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceLoader(meta, spec, sl, type)
     {
     }
     
@@ -71,8 +71,8 @@ namespace yq {
 
     ///////////////////////////////////
 
-    ResourceFileSaver::ResourceFileSaver(const ResourceMeta&meta, const string_vector_t& exts, const std::source_location& sl, Type type) : 
-        ResourceSaver(meta, exts, sl, type)
+    ResourceFileSaver::ResourceFileSaver(const ResourceMeta&meta, const ResourceIOSpec& spec, const std::source_location& sl, Type type) : 
+        ResourceSaver(meta, spec, sl, type)
     {
     }
     

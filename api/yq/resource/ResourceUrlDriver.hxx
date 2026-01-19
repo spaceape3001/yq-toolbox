@@ -15,8 +15,8 @@ namespace yq {
     public:
         // using Pred    = std::function<typename A::MyInfo*(const UrlView&, const ResourceInfoAPI&)>;
     
-        TypedResourceUrlInfoer(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlInfoer(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -38,8 +38,8 @@ namespace yq {
     public:
         // using Pred    = std::function<typename A::MyInfo*(const UrlView&)>;
     
-        TypedResourceUrlInfoerNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlInfoer(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlInfoerNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlInfoer(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -61,8 +61,8 @@ namespace yq {
     public:
         //using Pred    = std::function<A*(const UrlView&, const ResourceLoadAPI&)>;
         
-        TypedResourceUrlLoader(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlLoader(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -84,8 +84,8 @@ namespace yq {
     public:
         // using Pred    = std::function<A*(const UrlView&)>;
     
-        TypedResourceUrlLoaderNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlLoader(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlLoaderNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlLoader(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
         
@@ -110,8 +110,8 @@ namespace yq {
     
         // using Pred    = std::function<std::error_code(const A&, const UrlView&, const ResourceSaveAPI&)>;
 
-        TypedResourceUrlSaver(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlSaver(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -136,8 +136,8 @@ namespace yq {
     class TypedResourceUrlSaverNoAPI : public ResourceUrlSaver {
         // using Pred    = std::function<std::error_code(const A&, const UrlView&)>;
 
-        TypedResourceUrlSaverNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlSaverNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -161,8 +161,8 @@ namespace yq {
     template <SomeResource A, typename Pred> 
     class TypedResourceUrlSaverBool : public ResourceUrlSaver {
     public:
-        TypedResourceUrlSaverBool(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlSaverBool(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 
@@ -188,8 +188,8 @@ namespace yq {
     class TypedResourceUrlSaverBoolNoAPI : public ResourceUrlSaver {
         //using Pred    = std::function<bool(const A&, const UrlView&)>;
 
-        TypedResourceUrlSaverBoolNoAPI(const string_vector_t& exts, Pred&& fn, const std::source_location& sl) :
-            ResourceUrlSaver(meta<A>(), exts, sl), m_function(std::move(fn))
+        TypedResourceUrlSaverBoolNoAPI(const ResourceIOSpec& spec, Pred&& fn, const std::source_location& sl) :
+            ResourceUrlSaver(meta<A>(), spec, sl), m_function(std::move(fn))
         {
         }
 

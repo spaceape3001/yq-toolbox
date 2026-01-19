@@ -17,7 +17,7 @@ namespace yq {
         virtual ResourceInfoPtr info(const json&, const ResourceInfoAPI&) const = 0;
         
     protected:
-        ResourceJsonInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
+        ResourceJsonInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::json);
         virtual ~ResourceJsonInfoer();
     };
     
@@ -29,7 +29,7 @@ namespace yq {
         virtual ResourcePtr load(const json&, const ResourceLoadAPI&) const = 0;
         
     protected:
-        ResourceJsonLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
+        ResourceJsonLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::json);
         virtual ~ResourceJsonLoader();
     };
 
@@ -41,7 +41,7 @@ namespace yq {
         virtual std::error_code  save(const Resource&, json&, const ResourceSaveAPI&) const = 0;
 
     protected:
-        ResourceJsonSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::json);
+        ResourceJsonSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::json);
         virtual ~ResourceJsonSaver();
     };
 }

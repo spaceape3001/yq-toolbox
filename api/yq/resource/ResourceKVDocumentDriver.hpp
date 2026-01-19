@@ -17,7 +17,7 @@ namespace yq {
         virtual ResourceInfoPtr info(const KVDocument&, const ResourceInfoAPI&) const = 0;
         
     protected:
-        ResourceKVDocumentInfoer(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        ResourceKVDocumentInfoer(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, bool, Type type=Type::kvdoc);
         virtual ~ResourceKVDocumentInfoer();
         
     private:
@@ -32,7 +32,7 @@ namespace yq {
         virtual ResourcePtr load(const KVDocument&, const ResourceLoadAPI&) const = 0;
         
     protected:
-        ResourceKVDocumentLoader(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, bool, Type type=Type::kvdoc);
+        ResourceKVDocumentLoader(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, bool, Type type=Type::kvdoc);
         virtual ~ResourceKVDocumentLoader();
     private:
         unsigned int m_options;
@@ -46,7 +46,7 @@ namespace yq {
         virtual std::error_code  save(const Resource&, KVDocument&, const ResourceSaveAPI&) const = 0;
 
     protected:
-        ResourceKVDocumentSaver(const ResourceMeta&, const string_vector_t& exts, const std::source_location&, Type type=Type::kvdoc);
+        ResourceKVDocumentSaver(const ResourceMeta&, const ResourceIOSpec& spec, const std::source_location&, Type type=Type::kvdoc);
         virtual ~ResourceKVDocumentSaver();
     };
 }
