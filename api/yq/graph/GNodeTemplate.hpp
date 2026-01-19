@@ -74,7 +74,7 @@ namespace yq {
         // std::string              family;
         
         //! Any/all icons.  SVG should be [0]
-        icon_url_map_t              icons;
+        icon_spec_map_t              icons;
         
         // Idea is to have some inheritance (later)
         //std::vector<Url>            inherits;
@@ -85,8 +85,9 @@ namespace yq {
         //! Logical Pins/Ports
         std::vector<GPinTemplate>   pins;
         
-        //! Our symbol
-        Url                         symbol; 
+        //! Our symbol (specification)
+        // \note As tempting as Url is here...don't, fouls with the resource system
+        std::string                 symbol; 
         
         
         GNodeTemplate();

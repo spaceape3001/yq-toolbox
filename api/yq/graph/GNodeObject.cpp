@@ -23,12 +23,8 @@ namespace yq {
         gnt.color.light     = m_colorLight;
         gnt.description     = std::string(description());
         
-        for(auto& itr : icons()){
-            auto ux     = to_url_view(itr.second);
-            if(!ux.good)
-                continue;
-            gnt.icons[itr.first]    = copy(ux.value);
-        }
+        for(auto& itr : icons())
+            gnt.icons[itr.first]    = std::string(itr.second);
         
         gnt.label           = std::string(label());
         

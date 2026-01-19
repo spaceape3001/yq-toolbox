@@ -25,7 +25,7 @@ namespace yq {
         
         const color_spec&   color_dark() const { return m_colorDark; }
         const color_spec&   color_light() const { return m_colorLight; }
-        const Url&          symbol() const { return m_symbol; }
+        const std::string&  symbol() const { return m_symbol; }
         
         /*! \brief Creates a node template from the node's description
         
@@ -44,7 +44,7 @@ namespace yq {
         
     private:
         color_spec      m_colorDark, m_colorLight;
-        Url             m_symbol;
+        std::string     m_symbol;
         
         // TODO: Pins
         // TODO: Dynamic pins (based on function/string)

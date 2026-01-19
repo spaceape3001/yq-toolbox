@@ -759,10 +759,12 @@ namespace yq {
                 ret.scheme  = "file";
                 return ret;
             }
+            
+            std::string    bit(trimmed(ret.path, '/'));
         
             for(auto& sp : repo().search){
                 if(auto p = std::get_if<std::filesystem::path>(&sp)){
-                    std::filesystem::path   fp  = *p / ret.path;
+                    std::filesystem::path   fp  = *p / bit;
                     if(file_exists(fp)){
                         ret.scheme  = "file";
                         ret.path    = fp.string();
@@ -773,9 +775,9 @@ namespace yq {
                 if(auto p = std::get_if<ResourceLibraryCPtr>(&sp)){
                     if(!ret.fragment.empty())  // not doing multple libraries deep....
                         continue;
-                    if((*p) && (*p)->contains(ret.path)){
+                    if((*p) && (*p)->contains(bit)){
                         Url u2   = (*p) -> url();
-                        u2.fragment  = ret.path;
+                        u2.fragment  = bit;
                         return u2;
                     }
                 }
