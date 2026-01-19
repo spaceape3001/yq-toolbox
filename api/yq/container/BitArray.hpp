@@ -37,6 +37,8 @@ namespace yq {
         
         //! Amount that needs to be shifted to split the index (array entry vs bit)
         static constexpr size_t     SHIFT   = log_two_approximate(PER);
+        
+        //! Mask needed to split the bit address off the index
         static constexpr size_t     MASK    = (1ULL << SHIFT) - 1;
         
         
