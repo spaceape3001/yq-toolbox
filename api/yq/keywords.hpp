@@ -91,6 +91,7 @@ namespace yq {
     struct count_k {};
     struct create_k {};
     struct cursor_k {};
+    struct dark_k {};
     struct data_k {};
     struct default_k {};
     struct delete_k {};
@@ -163,6 +164,7 @@ namespace yq {
     struct layout_k {};
     struct left_k {};
     struct lenu_k {};
+    struct light_k {};
     struct line_k {};
     struct lned_k {};
     struct load_k {};
@@ -417,6 +419,7 @@ namespace yq {
     static constexpr const cout_k               COUT;
     static constexpr const create_k             CREATE;
     static constexpr const cursor_k             CURSOR;
+    static constexpr const dark_k               DARK;
     static constexpr const data_k               DATA;
     static constexpr const default_k            DEFAULT;
     static constexpr const diagonal_k           DIAGONAL;
@@ -487,6 +490,7 @@ namespace yq {
     static constexpr const l_k                  L;
     static constexpr const last_k               LAST;
     static constexpr const layout_k             LAYOUT;
+    static constexpr const light_k              LIGHT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
     static constexpr const lenu_k               LENU;

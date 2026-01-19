@@ -9,9 +9,12 @@
 #include <yq/core/Result.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Text.hpp>
-#include <yq/text/copy.hpp>
-#include <yq/text/parse.hpp>
 #include <yq/text/chars.hpp>
+#include <yq/text/copy.hpp>
+#include <yq/text/match.hpp>
+#include <yq/text/misc.hpp>
+#include <yq/text/parse.hpp>
+#include <yq/text/vsplit.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TYPE_IMPLEMENT(yq::Url)
@@ -111,6 +114,18 @@ namespace yq {
     Url             copy(const UrlView& v)
     {
         return Url{ copy(v.scheme), copy(v.user), copy(v.pwd), copy(v.host), copy(v.path), copy(v.query), copy(v.fragment), v.port};
+    }
+
+    std::string     first_query_parameter(std::string_view query, std::string_view key)
+    {
+        return vsplit(query, '&', [&](std::string_view b) -> std::string {
+            const char* eq  = strnchr(b, '=');
+            if(!eq)
+                return std::string();
+            if(!is_similar(key, std::string_view(b.data(), eq)))
+                return std::string();
+            return web_decode(std::string_view(eq+1, b.end()));
+        });
     }
 
     bool            is_valid(const UrlView&v)

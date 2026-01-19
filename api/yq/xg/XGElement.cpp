@@ -9,14 +9,32 @@
 #include "XGDocNode.hpp"
 #include "XGManifest.hpp"
 #include "XGNodeMeta.hpp"
+#include <yq/graph/GNodeTemplate.hpp>
+#include <yq/resource/Resource.hxx>
+#include <format>
 
 YQ_OBJECT_IMPLEMENT(yq::XGElement)
 
 namespace yq {
+    static constexpr const char *szXGElementMetaPath    = "/xg/element/meta";
+
+    static GNodeTemplatePtr    makeMetaNode(const UrlView& url, const ResourceLoadAPI&)
+    {
+        std::string     name    = first_query_parameter(url.query, "key");
+        if(name.empty())
+            return {};
+        const XGElementMeta* em = XGElementMeta::find_stem(name);
+        if(!em)
+            return {};
+        return em->create_meta_node();
+    }
+
+
     void XGElement::init_meta()
     {
         auto w = writer<XGElement>();
         w.description("Executive Graph Element");
+        GNodeTemplate::IO::add_loader({.yqpath=szXGElementMetaPath}, makeMetaNode);
     }
 
     XGElement::XGElement()
@@ -57,6 +75,24 @@ namespace yq {
         return repo().elements.all;
     }
 
+    GNodeTemplatePtr        XGElementMeta::create_meta_node() const
+    {
+        GNodeTemplatePtr    ret = new GNodeTemplate;
+        ret -> set_url({ .scheme="app", .path=szXGElementMetaPath, .query=std::format("key={}", stem())});
+        ret -> set_key(stem());
+        ret -> category     = std::string(category());
+        //ret -> color.dark
+        //ret -> color.light
+        ret -> description  = std::string(description());
+        ret -> label        = label();
+
+        //auto ux             = to_url(symbol());
+        
+        //ret -> symbol       = to_
+        
+        return ret;
+    }
+
     XGManifestPtr   XGElementMeta::create_manifest()
     {
         XGManifestPtr ret = new XGManifest;
@@ -83,14 +119,24 @@ namespace yq {
         return ret;
     }
 
+    const XGElementMeta* XGElementMeta::find(std::string_view k)
+    {
+        return repo().elements.find(k);
+    }
+
+    const XGElementMeta* XGElementMeta::find_stem(std::string_view k)
+    {
+        return repo().elements.find_stem(k);
+    }
+
     XGElementMeta::Repo&    XGElementMeta::repo()
     {
         static Repo s_repo;
         return s_repo;
     }
 
-    XGElementMeta::XGElementMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) : 
-        ObjectMeta(zName, base, sl)
+    XGElementMeta::XGElementMeta(std::string_view zName, GNodeObjectMeta& base, const std::source_location& sl) : 
+        GNodeObjectMeta(zName, base, sl)
     {
         repo().elements << this;
     }

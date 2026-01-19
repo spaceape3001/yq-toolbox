@@ -89,6 +89,9 @@ namespace yq {
     //! Tests for a valid URL
     //! \note empty scheme is treated as valid for this context
     bool            is_valid(const UrlView&);
+    
+    //! Returns the *FIRST* query parameter with the given key
+    std::string     first_query_parameter(std::string_view query, std::string_view key);
 
     std::ostringstream& operator<<(std::ostringstream&, const Url&);
     std::ostringstream& operator<<(std::ostringstream&, const UrlView&);

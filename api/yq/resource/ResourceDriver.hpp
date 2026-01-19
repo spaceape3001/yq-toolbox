@@ -42,6 +42,8 @@ namespace yq {
         
         //! Resource the driver loads
         const ResourceMeta&    resource() const { return m_resource; }
+        
+        const ResourceIOSpec&   spec() const { return m_spec; }
 
         //! File extensions that are valid for this driver
         constexpr const string_vector_t& extensions() const { return m_spec.extensions; }

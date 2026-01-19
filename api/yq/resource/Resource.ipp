@@ -134,6 +134,8 @@ namespace yq {
             ret = _load_fragment(conversion, api);
         } else if(is_similar(api.m_url.scheme, "file")){
             ret = _load_file(conversion, api);
+        } else if(is_similar(api.m_url.scheme, "yq") || is_similar(api.m_url.scheme, "app")){
+            ret = _load_internal(conversion, api);
         } else {
             resourceWarning << "Resource::_load(" << api.m_url << ") ... non-file loading not yet supported";
         }
@@ -255,6 +257,50 @@ namespace yq {
         if(!ret.second){
             resourceWarning << "Unable to load (" << to_string(api.m_url) << "): not a suitable resource type for request";
             return {};
+        }
+        
+        return ret;
+    }
+
+    resource_ptr_pair_t      Resource::_load_internal(const Conversion& cvt, ResourceLoadAPI& api)
+    {
+        static const Repo& _r   = repo();
+        
+        std::pair<ResourcePtr,ResourcePtr> ret;
+
+        for(auto& itr : as_iterable(_r.yqload.equal_range(std::string(api.m_url.path)))){
+            const ResourceLoader* ld    = itr.second;
+            if(!ld)
+                continue;
+
+            if(!cvt(ld->resource()))
+                continue;
+            
+            std::error_code ec;
+            try {
+                ret.first = ld -> load(api.m_url, api);
+            } 
+            catch(std::error_code ex)
+            {
+                ec  = ex;
+            }
+            #ifdef NDEBUG
+            catch(...)
+            {
+                ec  = errors::loading_exception();
+            }
+            #endif
+            
+            if(ec != std::error_code()){
+                ret.first = {};
+                resourceWarning << "Unable to load (" << to_string(api.m_url) << "): " << ec.message();
+                continue;
+            }
+            
+            if(!ret.first)
+                continue;
+                
+            ret.second      = cvt(*ret.first);
         }
         
         return ret;

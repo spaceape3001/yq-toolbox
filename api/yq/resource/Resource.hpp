@@ -353,6 +353,7 @@ namespace yq {
         
         static ResourceInfoCPtr         _info(resource_meta_init_list_t, ResourceInfoAPI&);
         static ResourceCPtr             _load(resource_meta_init_list_t, ResourceLoadAPI&);
+        static resource_ptr_pair_t      _load_internal(const Conversion&, ResourceLoadAPI&);
         static resource_ptr_pair_t      _load_file(const Conversion&, ResourceLoadAPI&);
         static resource_ptr_pair_t      _load_fragment(const Conversion&, ResourceLoadAPI&);
         static std::error_code          _save(const Resource&, ResourceSaveAPI&);

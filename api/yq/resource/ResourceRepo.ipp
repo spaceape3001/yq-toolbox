@@ -65,7 +65,8 @@ namespace yq {
             drivers.push_back(d);
             for(auto& ext : d->extensions())
                 loaders.insert({ ext, d });
-            
+            if((d->type() == ResourceDriver::Type::url) && !d->spec().yqpath.empty())
+                yqload.insert({ d->spec().yqpath, d });
         }
         
         void    inject(ResourceSaver*d)

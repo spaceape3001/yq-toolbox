@@ -7,6 +7,8 @@
 add_library(yq_graph SHARED
     #graph/GraphSymbol.cpp
     graph/GraphIO.cpp
+    graph/GNodeObject.cpp
+    graph/GNodeTemplate.cpp
     graph/graph.cpp
     graph/GPinFlow.cpp
 )

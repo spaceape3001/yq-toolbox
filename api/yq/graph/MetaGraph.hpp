@@ -27,12 +27,6 @@ namespace yq::graph {
         bool        output      = true;     //!< Ouptut permitted
     };
     
-    enum class SpecType {
-        Unknown,
-        Meta,
-        Url
-    };
-
     /*! \brief Information to a node
     */
     struct MetaNode : public MetaBase {
@@ -43,11 +37,7 @@ namespace yq::graph {
         std::string             label;              //!< Display label for a palette
 
         std::vector<MetaPin>    pins;
-
-        struct {
-            std::string     data;
-            SpecType        type;
-        }                       specification;
+        std::string             specification;
 
         std::string             symbol;
     };

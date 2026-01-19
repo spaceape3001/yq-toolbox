@@ -10,21 +10,23 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/core/UniqueID.hpp>
+#include <yq/graph/GNodeObject.hpp>
 #include <yq/xg/types.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/xg/XGNodeType.hpp>
 #include <yq/typedef/xg_manifest.hpp>
+#include <yq/typedef/g_node_template.hpp>
 
 namespace yq {
     class XGRuntime;
     struct XGDocNode;
     
     
-    class XGElementMeta : public ObjectMeta {
+    class XGElementMeta : public GNodeObjectMeta {
     public:
         template <typename> class Writer;
         
-        XGElementMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl=std::source_location::current());
+        XGElementMeta(std::string_view zName, GNodeObjectMeta& base, const std::source_location& sl=std::source_location::current());
         
         const RGBA4F&       bgcolor() const { return m_bgcolor; }
         const RGBA4F&       color() const { return m_color; }
@@ -38,8 +40,13 @@ namespace yq {
         
         static const std::vector<const XGElementMeta*>& all();
         
+        static const XGElementMeta* find(std::string_view);
+        static const XGElementMeta* find_stem(std::string_view);
+        
         static XGManifestPtr   create_manifest();
-
+        
+        GNodeTemplatePtr        create_meta_node() const;
+        
     private:
         std::string_view    m_symbol;
         RGBA4F              m_bgcolor       = kInvalidColor;
@@ -51,9 +58,9 @@ namespace yq {
         static Repo&    repo();
     };
 
-    class XGElement : public Object, public UniqueID {
+    class XGElement : public GNodeObject, public UniqueID {
         YQ_OBJECT_META(XGElementMeta)
-        YQ_OBJECT_DECLARE(XGElement, Object)
+        YQ_OBJECT_DECLARE(XGElement, GNodeObject)
     public:
     
         virtual xg_result_t         execute(XGContext&);
