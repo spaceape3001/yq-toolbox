@@ -47,6 +47,7 @@ namespace yq {
         Url             m_symbol;
         
         // TODO: Pins
+        // TODO: Dynamic pins (based on function/string)
     };
 
     /*! \brief Root for Nodes

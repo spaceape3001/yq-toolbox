@@ -12,17 +12,24 @@
 #include <yq/xg/XGDocBase.hpp>
 #include <yq/xg/XGNodeType.hpp>
 #include <yq/xg/XGSpecType.hpp>
+#include <yq/net/Url.hpp>
 
 namespace yq {
     struct XGDocNode : public XGDocBase, public XGBitBox, public XGBitPri {
     
-        //! If unspecified, will use inherited (either meta or template)
+        std::string     label;
+
+        //! If unspecified, will use inherited (either meta or template) 
+        //! \note DEPRECATED
         XGNodeType      node_type   = XGNodeType::Unspecified;
         
+        Url             node_template;
+        
+        // DEPRECATED
         XGSpecType      spec_type   = XGSpecType::Unknown;
         
+        // DEPRECATED
         std::string     spec_data;
 
-        std::string     label;
     };
 }

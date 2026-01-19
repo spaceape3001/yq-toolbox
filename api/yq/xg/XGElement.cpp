@@ -8,7 +8,7 @@
 #include "XGElementMetaWriter.hpp"
 #include "XGDocNode.hpp"
 #include "XGManifest.hpp"
-#include "XGNodeMeta.hpp"
+//#include "XGNodeMeta.hpp"
 #include <yq/graph/GNodeTemplate.hpp>
 #include <yq/resource/Resource.hxx>
 #include <format>
@@ -26,7 +26,7 @@ namespace yq {
         const XGElementMeta* em = XGElementMeta::find_stem(name);
         if(!em)
             return {};
-        return em->create_meta_node();
+        return em->make_template();
     }
 
 
@@ -74,6 +74,8 @@ namespace yq {
     {
         return repo().elements.all;
     }
+    
+    #if 0
 
     GNodeTemplatePtr        XGElementMeta::create_meta_node() const
     {
@@ -92,6 +94,7 @@ namespace yq {
         
         return ret;
     }
+    #endif
 
     XGManifestPtr   XGElementMeta::create_manifest()
     {
@@ -101,6 +104,12 @@ namespace yq {
                 continue;
             if(xm -> is_abstract())
                 continue;
+                
+            if(auto x  = xm -> make_template())
+                ret -> m_nodes.push_back(x);
+            
+            #if 0
+            ret -> m_nodes.push_back(xm->make_template());
             
             XGNodeMeta  node;
             node.bgcolor        = xm -> bgcolor();
@@ -115,6 +124,7 @@ namespace yq {
             node.spec_data      = std::string(xm -> name());
             node.symbol         = std::string(xm -> symbol_spec());
             ret -> m_nodes.push_back(std::move(node));
+            #endif
         }
         return ret;
     }

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/resource/Resource.hpp>
+#include <yq/graph/GNodeTemplate.hpp>
 
 namespace yq {
 
@@ -20,7 +21,7 @@ namespace yq {
         YQ_RESOURCE_DECLARE(XGManifest, Resource)
     public:
     
-        std::vector<XGNodeMeta>       m_nodes;
+        std::vector<GNodeTemplateCPtr>       m_nodes;
 
         XGManifest();
         ~XGManifest();

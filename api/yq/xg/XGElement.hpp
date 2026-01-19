@@ -43,9 +43,9 @@ namespace yq {
         static const XGElementMeta* find(std::string_view);
         static const XGElementMeta* find_stem(std::string_view);
         
-        static XGManifestPtr   create_manifest();
+        static XGManifestPtr    create_manifest();
         
-        GNodeTemplatePtr        create_meta_node() const;
+        //GNodeTemplatePtr        create_meta_node() const;
         
     private:
         std::string_view    m_symbol;

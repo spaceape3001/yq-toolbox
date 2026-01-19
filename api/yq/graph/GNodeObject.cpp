@@ -44,9 +44,9 @@ namespace yq {
     
     void        GNodeObjectMeta::g_write_url(GNodeTemplate&gnt) const
     {
-        const char* sPath   = app_path();
-        if(!sPath)
+        if(const char* sPath   = app_path()){
             gnt.set_url({.scheme="app", .path=sPath, .query=std::format("key={}", stem())});
+        }
     }
 
     GNodeTemplatePtr    GNodeObjectMeta::make_template() const

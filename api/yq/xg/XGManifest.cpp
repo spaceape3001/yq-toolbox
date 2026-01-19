@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "XGManifest.hpp"
-#include "XGNodeMeta.hpp"
+#include <yq/graph/GNodeTemplate.hpp>
 
 #include <yq/resource/ResourceMetaWriter.hpp>
 
@@ -17,8 +17,9 @@ namespace yq {
     
     size_t        XGManifest::data_size() const 
     {
+        return 0;
         //  TODO... more here
-        return m_nodes.size() * sizeof(XGNodeMeta);
+        //return m_nodes.size() * sizeof(XGNodeMeta);
     }
 
     void XGManifest::init_meta()
