@@ -41,7 +41,7 @@ namespace yq {
         //! Mask needed to split the bit address off the index
         static constexpr size_t     MASK    = (1ULL << SHIFT) - 1;
         
-        
+        //! Default constructor
         constexpr BitArray()
         {
         }
@@ -97,7 +97,7 @@ namespace yq {
         }
 
     private:
-        T           m_data[N];
+        T           m_data[N] = {};
         
         static constexpr size_t bit(size_t i) 
         {
