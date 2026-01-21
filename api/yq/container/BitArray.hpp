@@ -46,6 +46,7 @@ namespace yq {
         {
         }
         
+        //! Clear the bitarray
         void    clear()
         {
             for(size_t i=0;i<N;++i)
