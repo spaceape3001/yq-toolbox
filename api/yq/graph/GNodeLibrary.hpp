@@ -6,22 +6,22 @@
 
 #pragma once
 
-#include <yq/graph/MetaGraph.hpp>
-#include <yq/resource/Resource.hpp>
+#include <yq/resource/ResourceLibrary.hpp>
+#include <yq/typedef/g_node_template.hpp>
 
 namespace yq {
 
 
-    /*! \brief Meta manifest for graphs (ie...traits)
+    /*! \brief Library of nodes
     
         This is a comprehensive listing of things for a graph
     */
-    class GraphManifest : public Resource, graph::MetaGraph {
-        YQ_RESOURCE_DECLARE(GraphManifest, Resource)
+    class GNodeLibrary : public ResourceLibrary {
+        YQ_RESOURCE_DECLARE(GNodeLibrary, ResourceLibrary)
     public:
     
-        GManifest();
-        ~GManifest();
+        GNodeLibrary();
+        ~GNodeLibrary();
         
         size_t        data_size() const override;
         

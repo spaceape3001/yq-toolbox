@@ -17,7 +17,7 @@
 
 namespace yq {
 
-    struct GPinTemplate {
+    struct GPortTemplate {
         //! Where it attaches to on the symbol
         std::string     attach;
         
@@ -55,7 +55,9 @@ namespace yq {
     public:
     
         // ! Generic attributes/overrides/etc (TBD/TODO)
-        //string_any_map_t            attributes;
+        //string_any_map_t          attributes;
+        //string_any_map_t          properties;   //?
+        // (need priority to carry up)
     
         //! Category we should be listed under
         std::string                 category;
@@ -83,7 +85,7 @@ namespace yq {
         std::string                 label;
         
         //! Logical Pins/Ports
-        std::vector<GPinTemplate>   pins;
+        std::vector<GPortTemplate>  ports;
         
         //! Our symbol (specification)
         // \note As tempting as Url is here...don't, fouls with the resource system

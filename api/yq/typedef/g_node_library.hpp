@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename> class Ref;
+    
+    class GNodeLibrary;
+    using GNodeLibraryPtr  = Ref<GNodeLibrary>;
+    using GNodeLibraryCPtr = Ref<const GNodeLibrary>;
+}
+
