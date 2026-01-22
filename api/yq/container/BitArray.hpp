@@ -53,6 +53,7 @@ namespace yq {
                 m_data[i]   = {};
         }
         
+        //! Clear specified bit in the bitarray
         void    clear(size_t i)
         {
             if(i>=MAX)
