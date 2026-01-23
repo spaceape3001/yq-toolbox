@@ -62,6 +62,7 @@ namespace yq {
             m_data[index(i)] &= ~mask(i);
         }
         
+        //! Number of bits in the array
         constexpr size_t    size() const noexcept { return MAX; }
         
         constexpr bool    operator[](size_t i) const
