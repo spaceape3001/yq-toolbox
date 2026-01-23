@@ -11,7 +11,7 @@
 
 namespace yq {
     template <typename C>
-    class XGElementMeta::Writer : public GNodeObjectMeta::Writer<C> {
+    class XGElementMeta::Writer : public graph::GNodeObjectMeta::Writer<C> {
     public:
         Writer(XGElementMeta* metaPtr) : GNodeObjectMeta::Writer<C>(metaPtr), m_meta(metaPtr)
         {

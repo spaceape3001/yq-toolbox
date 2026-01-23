@@ -15,7 +15,7 @@
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/g_node_template.hpp>
 
-namespace yq {
+namespace yq::graph {
 
     struct GPortTemplate {
         //! Where it attaches to on the symbol

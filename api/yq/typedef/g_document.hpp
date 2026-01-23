@@ -10,7 +10,9 @@
 
 namespace yq {
     template <typename> class Ref;
-    
+}
+
+namespace yq::graph {
     class GDocument;
     using GDocumentPtr     = Ref<GDocument>;
     using GDocumentCPtr    = Ref<const GDocument>;

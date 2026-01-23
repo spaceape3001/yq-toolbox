@@ -9,7 +9,7 @@
 #include <yq/resource/ResourceLibrary.hpp>
 #include <yq/typedef/g_node_template.hpp>
 
-namespace yq {
+namespace yq::graph {
 
 
     /*! \brief Library of nodes

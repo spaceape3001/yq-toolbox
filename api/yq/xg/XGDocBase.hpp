@@ -13,7 +13,7 @@
 #include <yq/typedef/string_maps.hpp>
 #include <yq/xg/types.hpp>
 
-namespace yq {
+namespace yq::xg {
     struct XGDocBase {
         //! Attributes
         string_any_multimap_t   attributes;

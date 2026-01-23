@@ -10,7 +10,7 @@
 #include <yq/xg/XGBitPri.hpp>
 #include <yq/xg/XGDocBase.hpp>
 
-namespace yq {
+namespace yq::xg {
     struct XGDocEdge : public XGDocBase, public XGBitPoly, public XGBitPri {
         //! Source ID (for edges)
         xg_id_t         source      = 0;

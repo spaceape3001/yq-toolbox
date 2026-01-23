@@ -4,10 +4,4 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include <yq/resource/Resource.hpp>
-
-namespace yq {
-}
-
+#include "GDocument.hpp"

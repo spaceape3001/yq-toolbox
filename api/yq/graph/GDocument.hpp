@@ -6,14 +6,15 @@
 
 #pragma once
 
-#include <yq/vector/Vector2.hpp>
-#include <vector>
+#include <yq/resource/Resource.hpp>
 
-namespace yq::xg {
-    struct XGBitPoly {
-        
-        //! Points for any lines/edges
-        std::vector<Vector2F>   points;
-        
+namespace yq::graph {
+    class GDocument : public Resource {
+        YQ_RESOURCE_DECLARE(GDocument)
+    public:
+    
+    
     };
+
 }
+

@@ -11,7 +11,7 @@
 #include <yq/xg/XGDocText.hpp>
 #include <yq/xg/XGDocLine.hpp>
 
-namespace yq {
+namespace yq::xg {
     struct XGDocDoc : public XGDocBase {
         std::vector<XGDocEdge>  edges;
         std::vector<XGDocLine>  lines;

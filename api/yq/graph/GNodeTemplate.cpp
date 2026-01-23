@@ -7,9 +7,9 @@
 #include "GNodeTemplate.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
 
-YQ_RESOURCE_IMPLEMENT(yq::GNodeTemplate)
+YQ_RESOURCE_IMPLEMENT(yq::graph::GNodeTemplate)
 
-namespace yq {
+namespace yq::graph {
     void GNodeTemplate::init_meta()
     {
         auto w = writer<GNodeTemplate>();

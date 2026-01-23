@@ -10,7 +10,7 @@
 #include <yq/xg/XGDocBase.hpp>
 
 
-namespace yq {
+namespace yq::xg {
     struct XGDocText : public XGDocBase, public XGBitBox {
         //! "Text" 
         std::string             text;

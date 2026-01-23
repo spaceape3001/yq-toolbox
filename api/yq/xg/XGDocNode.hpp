@@ -14,7 +14,7 @@
 #include <yq/xg/XGSpecType.hpp>
 #include <yq/net/Url.hpp>
 
-namespace yq {
+namespace yq::xg {
     struct XGDocNode : public XGDocBase, public XGBitBox, public XGBitPri {
     
         std::string     label;

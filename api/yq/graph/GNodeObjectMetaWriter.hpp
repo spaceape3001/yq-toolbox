@@ -10,7 +10,7 @@
 #include <yq/graph/GNodeObject.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
 
-namespace yq {
+namespace yq::graph {
     template <typename C>
     class GNodeObjectMeta::Writer : public ObjectMeta::Writer<C> {
     public:

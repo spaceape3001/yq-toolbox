@@ -8,9 +8,9 @@
 #include "GNodeObjectMetaWriter.hpp"
 #include "GNodeTemplate.hpp"
 
-YQ_OBJECT_IMPLEMENT(yq::GNodeObject)
+YQ_OBJECT_IMPLEMENT(yq::graph::GNodeObject)
 
-namespace yq {
+namespace yq::graph {
     GNodeObjectMeta::GNodeObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {

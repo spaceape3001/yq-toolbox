@@ -13,7 +13,7 @@
 #include <yq/typedef/color.hpp>
 #include <yq/typedef/g_node_template.hpp>
 
-namespace yq {
+namespace yq::graph {
     class GNodeObject;
     class GNodeObjectMeta : public ObjectMeta {
     public:

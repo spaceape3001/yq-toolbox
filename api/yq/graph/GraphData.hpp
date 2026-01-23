@@ -9,10 +9,16 @@
 
 namespace yq {
     struct GDocBase {
-        uint32_t    id  = 0;    // set when needed
+        uint32_t    id  = 0;    // set when needed, leave as zero otherwise
     };
     
-    struct GLineAnnotation : public GDocBase {
+    struct GGroup : public GDocBase {
+    };
+    
+    struct GAnnotation : public GDocBase {
+    };
+
+    struct GLineAnnotation : public GAnnotation {
     };
 
     struct GTextAnnotation : public GDocBase {
@@ -20,7 +26,6 @@ namespace yq {
 
     struct GPortData : public GDocBase {
     };
-    
     
     struct GNodeData : public GDocBase {
     };

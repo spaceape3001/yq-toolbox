@@ -10,7 +10,9 @@
 
 namespace yq {
     template <typename> class Ref;
-    
+}
+
+namespace yq::xg {
     class XGManifest;
     using XGManifestPtr     = Ref<XGManifest>;
     using XGManifestCPtr    = Ref<const XGManifest>;

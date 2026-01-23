@@ -9,7 +9,7 @@
 #include <yq/xg/XGBitPoly.hpp>
 #include <yq/xg/XGDocBase.hpp>
 
-namespace yq {
+namespace yq::xg {
     struct XGDocLine : public XGDocBase, public XGBitPoly {
     };
 }

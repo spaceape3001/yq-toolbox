@@ -9,9 +9,7 @@
 #include <yq/resource/Resource.hpp>
 #include <yq/graph/GNodeTemplate.hpp>
 
-namespace yq {
-
-    struct XGNodeMeta;
+namespace yq::xg {
 
     /*! \brief Meta manifest for graphs
     

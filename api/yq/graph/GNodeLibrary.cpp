@@ -8,9 +8,9 @@
 #include "GNodeTemplate.hpp"
 #include <yq/resource/ResourceLibraryMetaWriter.hpp>
 
-YQ_RESOURCE_IMPLEMENT(yq::GNodeLibrary)
+YQ_RESOURCE_IMPLEMENT(yq::graph::GNodeLibrary)
 
-namespace yq {
+namespace yq::graph {
     GNodeLibrary::GNodeLibrary()
     {
     }

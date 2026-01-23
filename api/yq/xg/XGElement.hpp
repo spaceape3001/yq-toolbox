@@ -22,7 +22,7 @@ namespace yq {
     struct XGDocNode;
     
     
-    class XGElementMeta : public GNodeObjectMeta {
+    class XGElementMeta : public graph::GNodeObjectMeta {
     public:
         template <typename> class Writer;
         

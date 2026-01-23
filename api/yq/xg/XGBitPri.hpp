@@ -8,7 +8,7 @@
 
 #include <yq/trait/numbers.hpp>
 
-namespace yq {
+namespace yq::xg {
     struct XGBitPri {
         //! Priority of this node/edge execution... unspecified will be treated as 0
         float                   priority    = NaNf;

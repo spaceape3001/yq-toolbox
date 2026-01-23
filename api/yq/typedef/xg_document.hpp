@@ -10,7 +10,9 @@
 
 namespace yq {
     template <typename> class Ref;
-    
+}
+
+namespace yq::xg {
     class XGDocument;
     using XGDocumentPtr     = Ref<XGDocument>;
     using XGDocumentCPtr    = Ref<const XGDocument>;
