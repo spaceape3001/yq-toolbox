@@ -65,6 +65,8 @@ namespace yq {
         //! Number of bits in the array
         constexpr size_t    size() const noexcept { return MAX; }
         
+        //! Accesses and returns the given bit in the arra
+        //! \note It's value, its *not* a modifier (use set/clear to change)
         constexpr bool    operator[](size_t i) const
         {
             if(i>=MAX)
