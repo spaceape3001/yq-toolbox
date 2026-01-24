@@ -30,6 +30,15 @@ namespace yq {
         
         GGraphData*  data();
         const GGraphData*  data() const;
+        
+        
+        std::vector<GEdge>  edges() const;
+        size_t              edges(count_k) const;
+
+        GNode               node(create_k);
+
+        std::vector<GNode>  nodes() const;
+        size_t              nodes(count_k) const;
 
         operator bool() const;
     };

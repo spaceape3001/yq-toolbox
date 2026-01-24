@@ -158,4 +158,11 @@ namespace yq {
             return d->is_text();
         return false;
     }
+
+    GBase   GBase::parent() const
+    {
+        if(const GBaseData* d = data())
+            return GBase(m_doc, d->parent);
+        return GBase();
+    }
 }

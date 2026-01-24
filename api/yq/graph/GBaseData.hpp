@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/graph/graph_types.hpp>
+#include <yq/core/Tristate.hpp>
 
 namespace yq {
 
@@ -30,8 +31,15 @@ namespace yq {
         virtual ~GBaseData(){}
     
         const gid_t     id;
+        gid_t           parent  = 0;
         
         //! We won't be deleting at runtime, so this will be the marker
         bool            deleted = false;
+        
+        //! Hidden (inherit defers to parent, root graph will be visible)
+        Tristate        hidden  = Tristate::Inherit;
+        
+        //! For rendering
+        float           z_order   = 0.;
     };
 }

@@ -52,6 +52,8 @@ namespace yq {
         explicit operator GText() const;
 
 
+        GBase       parent() const;
+
         operator bool() const;
 
     protected:

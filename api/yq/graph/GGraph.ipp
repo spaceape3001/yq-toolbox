@@ -6,6 +6,7 @@
 
 #include "GGraph.hpp"
 #include "GGraphData.hpp"
+#include "GDocument.hxx"
 
 namespace yq {
     GGraph::GGraph() = default;
@@ -35,5 +36,60 @@ namespace yq {
         if(m_doc)
             return m_doc -> graph(m_id);
         return nullptr;
+    }
+
+    std::vector<GEdge> GGraph::edges() const
+    {
+        std::vector<GEdge> ret;
+        if(m_doc){
+            m_doc->edges(FOR, [&](const GEdgeData& d){
+                ret.push_back(GEdge(m_doc, d.id));
+            });
+        }
+        return ret;
+    }
+    
+    size_t             GGraph::edges(count_k) const
+    {
+        size_t ret = 0;
+        if(m_doc){
+            m_doc -> edges(FOR, [&](const GEdgeData& d){
+                if(d.parent == m_id)
+                    ++ret;
+            });
+        }
+        return ret;
+    }
+
+    GNode   GGraph::node(create_k)
+    {
+        if(!m_doc)
+            return GNode();
+        GNodeData* d    = m_doc->node(CREATE);
+        d->parent   = m_id;
+        return GNode(m_doc, d->id); 
+    }
+
+    std::vector<GNode> GGraph::nodes() const
+    {
+        std::vector<GNode> ret;
+        if(m_doc){
+            m_doc->nodes(FOR, [&](const GNodeData& d){
+                ret.push_back(GNode(m_doc, d.id));
+            });
+        }
+        return ret;
+    }
+    
+    size_t      GGraph::nodes(count_k) const
+    {
+        size_t ret = 0;
+        if(m_doc){
+            m_doc -> nodes(FOR, [&](const GNodeData& d){
+                if(d.parent == m_id)
+                    ++ret;
+            });
+        }
+        return ret;
     }
 }

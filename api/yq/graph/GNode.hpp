@@ -24,5 +24,8 @@ namespace yq {
         GNodeData*  data();
         const GNodeData*  data() const;
         
+        std::vector<GPort>  ports() const;
+        size_t              ports(count_k) const;
+        
     };
 }

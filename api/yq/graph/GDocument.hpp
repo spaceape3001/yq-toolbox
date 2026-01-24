@@ -28,43 +28,92 @@ namespace yq {
         
         static void init_meta();
         
-        GBaseData*          data(gid_t);
-        const GBaseData*    data(gid_t) const;
+        GBaseData*          data(gid_t, bool deleted=false);
+        const GBaseData*    data(gid_t, bool deleted=false) const;
+
+        template <typename Pred>
+        auto                datas(for_k, Pred&&);
+        template <typename Pred>
+        auto                datas(for_k, Pred&&) const;
         
         GEdgeData*          edge(create_k);
         GEdgeData*          edge(create_k, gid_t);
-        GEdgeData*          edge(gid_t);
-        const GEdgeData*    edge(gid_t) const;
+        GEdgeData*          edge(gid_t, bool deleted=false);
+        const GEdgeData*    edge(gid_t, bool deleted=false) const;
+        size_t              edges(count_k) const;
+
+        template <typename Pred>
+        auto                edges(for_k, Pred&&);
+        template <typename Pred>
+        auto                edges(for_k, Pred&&) const;
 
         GGraphData*         graph(create_k);
         GGraphData*         graph(create_k, gid_t);
-        GGraphData*         graph(gid_t);
-        const GGraphData*   graph(gid_t) const;
+        GGraphData*         graph(gid_t, bool deleted=false);
+        const GGraphData*   graph(gid_t, bool deleted=false) const;
+        
+        template <typename Pred>
+        auto                graphs(for_k, Pred&&);
+        template <typename Pred>
+        auto                graphs(for_k, Pred&&) const;
 
-        GNodeData*          node(create_k);
-        GNodeData*          node(create_k, gid_t);
-        GNodeData*          node(gid_t);
-        const GNodeData*    node(gid_t) const;
+        size_t              graphs(count_k) const;
 
         GLineData*          line(create_k);
         GLineData*          line(create_k, gid_t);
-        GLineData*          line(gid_t);
-        const GLineData*    line(gid_t) const;
+        GLineData*          line(gid_t, bool deleted=false);
+        const GLineData*    line(gid_t, bool deleted=false) const;
+        size_t              lines(count_k) const;
+        
+        template <typename Pred>
+        auto                lines(for_k, Pred&&);
+        template <typename Pred>
+        auto                lines(for_k, Pred&&) const;
+
+        GNodeData*          node(create_k);
+        GNodeData*          node(create_k, gid_t);
+        GNodeData*          node(gid_t, bool deleted=false);
+        const GNodeData*    node(gid_t, bool deleted=false) const;
+        
+        size_t              nodes(count_k) const;
+
+        template <typename Pred>
+        auto                nodes(for_k, Pred&&);
+        template <typename Pred>
+        auto                nodes(for_k, Pred&&) const;
 
         GPortData*          port(create_k);
         GPortData*          port(create_k, gid_t);
-        GPortData*          port(gid_t);
-        const GPortData*    port(gid_t) const;
+        GPortData*          port(gid_t, bool deleted=false);
+        const GPortData*    port(gid_t, bool deleted=false) const;
+        size_t              ports(count_k) const;
+
+        template <typename Pred>
+        auto                ports(for_k, Pred&&);
+        template <typename Pred>
+        auto                ports(for_k, Pred&&) const;
 
         GShapeData*         shape(create_k);
         GShapeData*         shape(create_k, gid_t);
-        GShapeData*         shape(gid_t);
-        const GShapeData*   shape(gid_t) const;
+        GShapeData*         shape(gid_t, bool deleted=false);
+        const GShapeData*   shape(gid_t, bool deleted=false) const;
+        size_t              shapes(count_k) const;
+        
+        template <typename Pred>
+        auto                shapes(for_k, Pred&&);
+        template <typename Pred>
+        auto                shapes(for_k, Pred&&) const;
 
         GTextData*          text(create_k);
         GTextData*          text(create_k, gid_t);
-        GTextData*          text(gid_t);
-        const GTextData*    text(gid_t) const;
+        GTextData*          text(gid_t, bool deleted=false);
+        const GTextData*    text(gid_t, bool deleted=false) const;
+        size_t              texts(count_k) const;
+        
+        template <typename Pred>
+        auto                texts(for_k, Pred&&);
+        template <typename Pred>
+        auto                texts(for_k, Pred&&) const;
         
         //GViewData*          _view(create_k);
         //GViewData*          _view(gid_t);

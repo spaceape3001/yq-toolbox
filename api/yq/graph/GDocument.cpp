@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "GDocument.hpp"
+#include "GDocument.hxx"
 
 #include "GBaseData.hpp"
 #include "GEdgeData.hpp"
@@ -66,16 +67,20 @@ namespace yq {
         m_data.resize(i, nullptr);
     }
 
-    GBaseData*          GDocument::data(gid_t i)
+    GBaseData*          GDocument::data(gid_t i, bool deleted)
     {
         if(i>=m_data.size())
+            return nullptr;
+        if(m_data[i] && m_data[i]->deleted && !deleted)
             return nullptr;
         return m_data[i];
     }
     
-    const GBaseData*    GDocument::data(gid_t i) const
+    const GBaseData*    GDocument::data(gid_t i, bool deleted) const
     {
         if(i>=m_data.size())
+            return nullptr;
+        if(m_data[i] && m_data[i]->deleted && !deleted)
             return nullptr;
         return m_data[i];
     }
@@ -90,20 +95,26 @@ namespace yq {
         return _create<GEdgeData>(i);
     }
 
-    GEdgeData*          GDocument::edge(gid_t i)
+    GEdgeData*          GDocument::edge(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_edge())
+        if(GBaseData*d = data(i,deleted); d->is_edge())
             return static_cast<GEdgeData*>(d);
         return nullptr;
     }
     
-    const GEdgeData*    GDocument::edge(gid_t i) const
+    const GEdgeData*    GDocument::edge(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_edge())
+        if(const GBaseData*d = data(i, deleted); d->is_edge())
             return static_cast<const GEdgeData*>(d);
         return nullptr;
     }
 
+    size_t              GDocument::edges(count_k) const
+    {
+        size_t  ret = 0;
+        edges(FOR, [&](const GEdgeData&){ ++ret; });
+        return ret;
+    }
 
     GGraphData*         GDocument::graph(create_k)
     {
@@ -115,19 +126,27 @@ namespace yq {
         return _create<GGraphData>(i);
     }
 
-    GGraphData*         GDocument::graph(gid_t i)
+    GGraphData*         GDocument::graph(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_graph())
+        if(GBaseData*d = data(i, deleted); d->is_graph())
             return static_cast<GGraphData*>(d);
         return nullptr;
     }
     
-    const GGraphData*   GDocument::graph(gid_t i) const
+    const GGraphData*   GDocument::graph(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_graph())
+        if(const GBaseData*d = data(i, deleted); d->is_graph())
             return static_cast<const GGraphData*>(d);
         return nullptr;
     }
+
+    size_t              GDocument::graphs(count_k) const
+    {
+        size_t  ret = 0;
+        graphs(FOR, [&](const GGraphData&){ ++ret; });
+        return ret;
+    }
+
 
     GLineData*          GDocument::line(create_k)
     {
@@ -139,19 +158,27 @@ namespace yq {
         return _create<GLineData>(i);
     }
 
-    GLineData*          GDocument::line(gid_t i)
+    GLineData*          GDocument::line(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_line())
+        if(GBaseData*d = data(i, deleted); d->is_line())
             return static_cast<GLineData*>(d);
         return nullptr;
     }
     
-    const GLineData*    GDocument::line(gid_t i) const
+    const GLineData*    GDocument::line(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_line())
+        if(const GBaseData*d = data(i, deleted); d->is_line())
             return static_cast<const GLineData*>(d);
         return nullptr;
     }
+
+    size_t              GDocument::lines(count_k) const
+    {
+        size_t  ret = 0;
+        lines(FOR, [&](const GLineData&){ ++ret; });
+        return ret;
+    }
+
 
     GNodeData*          GDocument::node(create_k)
     {
@@ -163,19 +190,27 @@ namespace yq {
         return _create<GNodeData>(i);
     }
 
-    GNodeData*          GDocument::node(gid_t i)
+    GNodeData*          GDocument::node(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_node())
+        if(GBaseData*d = data(i, deleted); d->is_node())
             return static_cast<GNodeData*>(d);
         return nullptr;
     }
     
-    const GNodeData*    GDocument::node(gid_t i) const
+    const GNodeData*    GDocument::node(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_node())
+        if(const GBaseData*d = data(i, deleted); d->is_node())
             return static_cast<const GNodeData*>(d);
         return nullptr;
     }
+
+    size_t              GDocument::nodes(count_k) const
+    {
+        size_t  ret = 0;
+        nodes(FOR, [&](const GNodeData&){ ++ret; });
+        return ret;
+    }
+
 
     GPortData*          GDocument::port(create_k)
     {
@@ -187,19 +222,27 @@ namespace yq {
         return _create<GPortData>(i);
     }
 
-    GPortData*          GDocument::port(gid_t i)
+    GPortData*          GDocument::port(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_port())
+        if(GBaseData*d = data(i, deleted); d->is_port())
             return static_cast<GPortData*>(d);
         return nullptr;
     }
     
-    const GPortData*    GDocument::port(gid_t i) const
+    const GPortData*    GDocument::port(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_port())
+        if(const GBaseData*d = data(i, deleted); d->is_port())
             return static_cast<const GPortData*>(d);
         return nullptr;
     }
+
+    size_t              GDocument::ports(count_k) const
+    {
+        size_t  ret = 0;
+        ports(FOR, [&](const GPortData&){ ++ret; });
+        return ret;
+    }
+
     
     void                GDocument::reserve(gid_t i)
     {
@@ -219,19 +262,27 @@ namespace yq {
         return _create<GShapeData>(i);
     }
 
-    GShapeData*         GDocument::shape(gid_t i)
+    GShapeData*         GDocument::shape(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_shape())
+        if(GBaseData*d = data(i, deleted); d->is_shape())
             return static_cast<GShapeData*>(d);
         return nullptr;
     }
 
-    const GShapeData*   GDocument::shape(gid_t i) const
+    const GShapeData*   GDocument::shape(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_shape())
+        if(const GBaseData*d = data(i, deleted); d->is_shape())
             return static_cast<const GShapeData*>(d);
         return nullptr;
     }
+
+    size_t              GDocument::shapes(count_k) const
+    {
+        size_t  ret = 0;
+        shapes(FOR, [&](const GShapeData&){ ++ret; });
+        return ret;
+    }
+
 
     GTextData*          GDocument::text(create_k)
     {
@@ -243,19 +294,27 @@ namespace yq {
         return _create<GTextData>(i);
     }
     
-    GTextData*          GDocument::text(gid_t i)
+    GTextData*          GDocument::text(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i); d->is_text())
+        if(GBaseData*d = data(i, deleted); d->is_text())
             return static_cast<GTextData*>(d);
         return nullptr;
     }
     
-    const GTextData*    GDocument::text(gid_t i) const
+    const GTextData*    GDocument::text(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i); d->is_text())
+        if(const GBaseData*d = data(i, deleted); d->is_text())
             return static_cast<const GTextData*>(d);
         return nullptr;
     }
+
+    size_t              GDocument::texts(count_k) const
+    {
+        size_t  ret = 0;
+        texts(FOR, [&](const GTextData&){ ++ret; });
+        return ret;
+    }
+
     
     //GViewData*          _view(create_k);
     //GViewData*          _view(gid_t);
