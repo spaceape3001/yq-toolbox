@@ -4,29 +4,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "GNodeLibrary.hpp"
+#include "GMetaGraph.hpp"
 #include "GNodeTemplate.hpp"
 #include <yq/resource/ResourceLibraryMetaWriter.hpp>
 
-YQ_RESOURCE_IMPLEMENT(yq::graph::GNodeLibrary)
+YQ_RESOURCE_IMPLEMENT(yq::GMetaGraph)
 
-namespace yq::graph {
-    GNodeLibrary::GNodeLibrary()
+namespace yq {
+    GMetaGraph::GMetaGraph()
     {
     }
     
-    GNodeLibrary::~GNodeLibrary()
+    GMetaGraph::~GMetaGraph()
     {
     }
         
-    size_t        GNodeLibrary::data_size() const 
+    size_t        GMetaGraph::data_size() const 
     {
         return 0;
     }
-        
-    void GNodeLibrary::init_meta()
+
+    void    GMetaGraph::post_add(ResourcePtr rp) 
     {
-        auto w = writer<GNodeLibrary>();
+        if(const GNodeTemplate* nt = dynamic_cast<const GNodeTemplate*>(rp.ptr()))
+            m_nodes.push_back(nt);
+    }
+        
+    void GMetaGraph::init_meta()
+    {
+        auto w = writer<GMetaGraph>();
         w.description("Library of Creatable Nodes");
         w.resource<GNodeTemplate>();
     }

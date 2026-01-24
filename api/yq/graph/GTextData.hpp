@@ -9,11 +9,11 @@
 #include <yq/graph/GBaseData.hpp>
 
 namespace yq {
-    struct GPortData : public GBaseData {
-        gid_t           parent  = 0;
-    
-        virtual bool is_port() const { return true; }
-        GPortData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GPortData(){}
+    struct GTextData : public GBaseData {
+        
+        virtual bool is_text() const { return true; }
+        GTextData(gid_t _id) : GBaseData(_id) {}
+        virtual ~GTextData(){}
+        
     };
 }

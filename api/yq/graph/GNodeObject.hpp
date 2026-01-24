@@ -13,7 +13,7 @@
 #include <yq/typedef/color.hpp>
 #include <yq/typedef/g_node_template.hpp>
 
-namespace yq::graph {
+namespace yq {
     class GNodeObject;
     class GNodeObjectMeta : public ObjectMeta {
     public:
@@ -26,6 +26,8 @@ namespace yq::graph {
         const color_spec&   color_dark() const { return m_colorDark; }
         const color_spec&   color_light() const { return m_colorLight; }
         const std::string&  symbol() const { return m_symbol; }
+        
+        virtual Url         app_url() const;
         
         /*! \brief Creates a node template from the node's description
         

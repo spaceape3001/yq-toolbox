@@ -14,15 +14,16 @@
 #include <yq/xg/types.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/xg/XGNodeType.hpp>
-#include <yq/typedef/xg_manifest.hpp>
+//#include <yq/typedef/xg_manifest.hpp>
 #include <yq/typedef/g_node_template.hpp>
+#include <yq/typedef/g_meta_graph.hpp>
 
 namespace yq {
     class XGRuntime;
     struct XGDocNode;
     
     
-    class XGElementMeta : public graph::GNodeObjectMeta {
+    class XGElementMeta : public GNodeObjectMeta {
     public:
         template <typename> class Writer;
         
@@ -43,7 +44,7 @@ namespace yq {
         static const XGElementMeta* find(std::string_view);
         static const XGElementMeta* find_stem(std::string_view);
         
-        static XGManifestPtr    create_manifest();
+        static GMetaGraphPtr    create_manifest();
         
         //GNodeTemplatePtr        create_meta_node() const;
         

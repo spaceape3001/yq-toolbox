@@ -5,9 +5,9 @@
 ################################################################################
 
 add_library(yq_xg SHARED
-    xg/XGDocument.cpp
+    #xg/XGDocument.cpp
     xg/XGElement.cpp
-    xg/XGManifest.cpp
+    #xg/XGManifest.cpp
     xg/XGNodeType.cpp
     xg/XGRuntime.cpp
 )

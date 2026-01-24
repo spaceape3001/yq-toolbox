@@ -13,7 +13,7 @@
 #include <yq/trait/numbers.hpp>
 #include <yq/xg/types.hpp>
 
-namespace yq::xg {
+namespace yq {
     struct XGContext {
     
         //! Current always mode, flip to NaN to exit

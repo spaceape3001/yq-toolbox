@@ -8,9 +8,9 @@
 #include "GNodeObjectMetaWriter.hpp"
 #include "GNodeTemplate.hpp"
 
-YQ_OBJECT_IMPLEMENT(yq::graph::GNodeObject)
+YQ_OBJECT_IMPLEMENT(yq::GNodeObject)
 
-namespace yq::graph {
+namespace yq {
     GNodeObjectMeta::GNodeObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
@@ -43,6 +43,14 @@ namespace yq::graph {
         if(const char* sPath   = app_path()){
             gnt.set_url({.scheme="app", .path=sPath, .query=std::format("key={}", stem())});
         }
+    }
+
+    Url         GNodeObjectMeta::app_url() const
+    {
+        if(const char* sPath   = app_path()){
+            return Url{.scheme="app", .path=sPath, .query=std::format("key={}", stem())};
+        }
+        return {};
     }
 
     GNodeTemplatePtr    GNodeObjectMeta::make_template() const

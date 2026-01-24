@@ -6,4 +6,18 @@
 
 #pragma once
 
-#include <yq/graph/GraphData.hpp>
+#include <yq/graph/GLineData.hpp>
+
+namespace yq {
+    struct GEdgeData : public GLineData {
+    
+        // start/end will be in the waypoints (front/back)
+    
+        gid_t       source() const;
+        gid_t       target() const;
+    
+        virtual bool is_edge() const override { return true; }
+        GEdgeData(gid_t _id) : GLineData(_id) {}
+        virtual ~GEdgeData(){}
+    };
+}

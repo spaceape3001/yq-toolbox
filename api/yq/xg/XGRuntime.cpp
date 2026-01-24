@@ -10,7 +10,7 @@
 #include <yq/errors.hpp>
 #include <yq/xg/errors.hpp>
 #include <yq/xg/XGContext.hpp>
-#include <yq/xg/XGDocument.hpp>
+//#include <yq/xg/XGDocument.hpp>
 #include <yq/xg/XGElement.hpp>
 
 #include <cassert>
@@ -58,7 +58,7 @@ namespace yq {
         //float       pri = 0.;
     //};
     
-    std::error_code         XGRuntime::compile(const XGDocumentCPtr&)
+    std::error_code         XGRuntime::compile(const GDocumentCPtr&)
     {
         return errors::todo();
     }

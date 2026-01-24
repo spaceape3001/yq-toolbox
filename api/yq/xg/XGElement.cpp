@@ -7,8 +7,9 @@
 #include "XGElement.hpp"
 #include "XGElementMetaWriter.hpp"
 #include "XGDocNode.hpp"
-#include "XGManifest.hpp"
+//#include "XGManifest.hpp"
 //#include "XGNodeMeta.hpp"
+#include <yq/graph/GMetaGraph.hpp>
 #include <yq/graph/GNodeTemplate.hpp>
 #include <yq/resource/Resource.hxx>
 #include <format>
@@ -52,8 +53,8 @@ namespace yq {
 
     bool    XGElement::initialize(const XGDocNode&dn)
     {
-        m_nodeType  = dn.node_type;
-        m_priority  = dn.priority;
+        //m_nodeType  = dn.node_type;
+        //m_priority  = dn.priority;
         return true;
     }
     
@@ -96,9 +97,9 @@ namespace yq {
     }
     #endif
 
-    XGManifestPtr   XGElementMeta::create_manifest()
+    GMetaGraphPtr   XGElementMeta::create_manifest()
     {
-        XGManifestPtr ret = new XGManifest;
+        GMetaGraphPtr ret = new GMetaGraph;
         for(const XGElementMeta* xm : repo().elements.all){
             if(!xm) [[unlikely]] /* VERY HIGHLY unlikely */
                 continue;
@@ -106,7 +107,7 @@ namespace yq {
                 continue;
                 
             if(auto x  = xm -> make_template())
-                ret -> m_nodes.push_back(x);
+                ret -> add(x);
             
             #if 0
             ret -> m_nodes.push_back(xm->make_template());

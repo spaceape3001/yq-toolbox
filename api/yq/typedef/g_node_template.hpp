@@ -10,7 +10,7 @@ namespace yq {
     template <typename> class Ref;
 }
 
-namespace yq::graph {
+namespace yq {
     class GNodeTemplate;
     using GNodeTemplatePtr  = Ref<GNodeTemplate>;
     using GNodeTemplateCPtr = Ref<const GNodeTemplate>;

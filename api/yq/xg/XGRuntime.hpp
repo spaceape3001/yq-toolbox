@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/container/Stack.hpp>
+#include <yq/typedef/g_document.hpp>
 #include <yq/xg/types.hpp>
 #include <functional>
 #include <system_error>
@@ -28,7 +29,7 @@ namespace yq {
         XGRuntime();
         ~XGRuntime();
         
-        std::error_code             compile(const XGDocumentCPtr&);
+        std::error_code             compile(const GDocumentCPtr&);
         xg_result_t                 step(XGContext&);
         xg_result_t                 execute(XGContext&, const XGRuntimeOptions& options={});
         
@@ -46,7 +47,7 @@ namespace yq {
         //! Returns the element [1...count]
         XGElement*                  element(uint32_t);
         
-        std::vector<XGDocumentCPtr> m_documents;    // keep documents alive
+        //std::vector<GDocumentCPtr> m_documents;    // keep documents alive
         std::vector<XGElement*>     m_elements;     // all elements... 
         std::vector<xg_execute_t>   m_always;        // start elements
         std::vector<xg_execute_t>   m_start;        // start elements

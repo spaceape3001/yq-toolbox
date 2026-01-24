@@ -9,20 +9,20 @@
 #include <yq/graph/GBase.hpp>
 
 namespace yq {
-    class GText : public GBase {
+    class GShape : public GBase {
     public:
         
-        GText();
-        GText(const GText&);
-        GText(GText&&);
-        GText(GDocumentPtr, gid_t);
-        ~GText();
-        GText& operator=(const GText&);
-        GText& operator=(GText&&);
+        GShape();
+        GShape(const GShape&);
+        GShape(GShape&&);
+        GShape(GDocumentPtr, gid_t);
+        ~GShape();
+        GShape& operator=(const GShape&);
+        GShape& operator=(GShape&&);
         
         operator bool() const;
+        GShapeData*  data();
+        const GShapeData*  data() const;
         
-        GTextData*  data();
-        const GTextData*  data() const;
     };
 }

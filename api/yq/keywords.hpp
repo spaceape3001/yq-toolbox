@@ -194,6 +194,7 @@ namespace yq {
     struct ned_k {};
     struct negative_k {};
     struct nested_k {};
+    struct new_k {};
     struct next_k {};
     struct no_k {};
     struct no_throw_k {};
@@ -523,6 +524,7 @@ namespace yq {
     static constexpr const ned_k                NED;
     static constexpr const negative_k           NEGATIVE;
     static constexpr const nested_k             NESTED;
+    static constexpr const new_k                NEW;
     static constexpr const next_k               NEXT;
     static constexpr const no_k                 NO;
     static constexpr const no_throw_k           NO_THROW;
