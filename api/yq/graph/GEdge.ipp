@@ -42,7 +42,7 @@ namespace yq {
 
     GBase  GEdge::source() const
     {
-        if(GEdgeData* ge = data(); !ge->waypoints.empty()){
+        if(const GEdgeData* ge = data(); !ge->waypoints.empty()){
             if(auto p = std::get_if<gid_t>(&ge->waypoints.front().position)){
                 return GBase(m_doc, *p);
             }
@@ -52,7 +52,7 @@ namespace yq {
     
     GBase  GEdge::target() const
     {
-        if(GEdgeData* ge = data(); (ge->waypoints.size() > 1)){
+        if(const GEdgeData* ge = data(); (ge->waypoints.size() > 1)){
             if(auto p = std::get_if<gid_t>(&ge->waypoints.back().position)){
                 return GBase(m_doc, *p);
             }

@@ -38,6 +38,14 @@ namespace yq {
         return nullptr;
     }
 
+    std::string_view    GNode::node_template() const
+    {
+        if(const GNodeData* gn = data()){
+            return gn -> node_template;
+        } else
+            return {};
+    }
+
     std::vector<GPort>  GNode::ports() const
     {
         std::vector<GPort>  ret;
