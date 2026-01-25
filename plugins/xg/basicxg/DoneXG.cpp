@@ -21,6 +21,7 @@ namespace {
             auto w = writer<DoneXG>();
             w.category("1..2..3");
             w.label("Done");
+            w.icon(0, "pp:yq/icon/xg/done.svg");
             w.description("Done execution");
             w.node_type(XGNodeType::Done);
         }

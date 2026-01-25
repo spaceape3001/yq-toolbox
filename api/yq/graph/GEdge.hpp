@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/graph/GLine.hpp>
+#include <yq/graph/GBase.hpp>
 
 namespace yq {
-    class GEdge : public GLine {
+    class GEdge : public GBase {
     public:
     
         GEdge();

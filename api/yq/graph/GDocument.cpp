@@ -315,6 +315,10 @@ namespace yq {
         return ret;
     }
 
+    void    GDocument::type(set_k, std::string_view v)
+    {
+        m_type  = std::string(v);
+    }
     
     //GViewData*          _view(create_k);
     //GViewData*          _view(gid_t);

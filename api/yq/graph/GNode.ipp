@@ -14,7 +14,7 @@ namespace yq {
     GNode::GNode() = default;
     GNode::GNode(const GNode&) = default;
     GNode::GNode(GNode&&) = default;
-    GNode::GNode(GDocumentPtr doc, gid_t i) : GText(doc, i) {}
+    GNode::GNode(GDocumentPtr doc, gid_t i) : GBase(doc, i) {}
     GNode::~GNode() = default;
     GNode& GNode::operator=(const GNode&) = default;
     GNode& GNode::operator=(GNode&&) = default;
@@ -68,5 +68,18 @@ namespace yq {
             });
         }
         return ret;
+    }
+
+    Vector2F  GNode::position() const
+    {
+        if(const GNodeData* gn = data())
+            return gn -> position;
+        return NAN;
+    }
+    
+    void      GNode::position(set_k, const Vector2F&v)
+    {
+        if(GNodeData* gn = data())
+            gn -> position  = v;
     }
 }

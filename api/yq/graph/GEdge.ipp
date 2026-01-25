@@ -12,7 +12,7 @@ namespace yq {
     GEdge::GEdge() = default;
     GEdge::GEdge(const GEdge&) = default;
     GEdge::GEdge(GEdge&&) = default;
-    GEdge::GEdge(GDocumentPtr doc, gid_t i) : GLine(doc, i)
+    GEdge::GEdge(GDocumentPtr doc, gid_t i) : GBase(doc, i)
     {
     }
     
@@ -42,21 +42,15 @@ namespace yq {
 
     GBase  GEdge::source() const
     {
-        if(const GEdgeData* ge = data(); !ge->waypoints.empty()){
-            if(auto p = std::get_if<gid_t>(&ge->waypoints.front().position)){
-                return GBase(m_doc, *p);
-            }
-        }
+        if(const GEdgeData* ge = data(); ge->source)
+            return GBase(m_doc, ge->source);
         return GBase();
     }
     
     GBase  GEdge::target() const
     {
-        if(const GEdgeData* ge = data(); (ge->waypoints.size() > 1)){
-            if(auto p = std::get_if<gid_t>(&ge->waypoints.back().position)){
-                return GBase(m_doc, *p);
-            }
-        }
+        if(const GEdgeData* ge = data(); ge->target)
+            return GBase(m_doc, ge->target);
         return GBase();
     }
 }

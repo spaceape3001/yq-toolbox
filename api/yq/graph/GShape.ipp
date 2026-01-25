@@ -34,4 +34,17 @@ namespace yq {
             return m_doc -> shape(m_id);
         return nullptr;
     }
+
+    Vector2F  GShape::position() const
+    {
+        if(const GShapeData* gn = data())
+            return gn -> position;
+        return NAN;
+    }
+    
+    void      GShape::position(set_k, const Vector2F&v)
+    {
+        if(GShapeData* gn = data())
+            gn -> position  = v;
+    }
 }

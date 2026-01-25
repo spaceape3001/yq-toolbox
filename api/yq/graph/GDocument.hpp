@@ -22,6 +22,10 @@ namespace yq {
         YQ_RESOURCE_DECLARE(GDocument, Resource)
     public:
     
+        /*
+            TODO ... metagraph
+        */
+    
         GDocument();
         GDocument(new_k);
         ~GDocument();
@@ -35,6 +39,10 @@ namespace yq {
         auto                datas(for_k, Pred&&);
         template <typename Pred>
         auto                datas(for_k, Pred&&) const;
+        
+        //! Direct access
+        //! \note CHECK FOR NULL POINTERS (there may be some)
+        const auto&         datas() const { return m_data; }
         
         GEdgeData*          edge(create_k);
         GEdgeData*          edge(create_k, gid_t);
@@ -119,6 +127,8 @@ namespace yq {
         //GViewData*          _view(gid_t);
         //const GViewData*    _view(gid_t) const;
         
+        const auto&         type() const { return m_type; }
+        void                type(set_k, std::string_view);
         
         void                reserve(gid_t);
         
@@ -128,11 +138,17 @@ namespace yq {
         using GBaseDataVector = std::vector<GBaseData*>;
     
         std::vector<GBaseData*>     m_data;
+        std::string                 m_type;
 
         template <typename T> T*    _create();
         template <typename T> T*    _create(gid_t);
         
         void                _expand(gid_t);
+        
+        GDocument(const GDocument&) = delete;
+        GDocument(GDocument&&) = delete;
+        GDocument& operator=(const GDocument&) = delete;
+        GDocument& operator=(GDocument&&) = delete;
     };
 
 }

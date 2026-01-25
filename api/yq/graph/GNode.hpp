@@ -6,10 +6,12 @@
 
 #pragma once
 
-#include <yq/graph/GText.hpp>
+#include <yq/graph/GBase.hpp>
+#include <yq/typedef/size2.hpp>
+#include <yq/typedef/vector2.hpp>
 
 namespace yq {
-    class GNode : public GText {
+    class GNode : public GBase {
     public:
         
         GNode();
@@ -28,6 +30,9 @@ namespace yq {
         size_t              ports(count_k) const;
         
         std::string_view    node_template() const;
+        
+        Vector2F            position() const;
+        void                position(set_k, const Vector2F&);
         
     };
 }

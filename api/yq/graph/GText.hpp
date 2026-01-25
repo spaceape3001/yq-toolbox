@@ -7,6 +7,8 @@
 #pragma once
 
 #include <yq/graph/GBase.hpp>
+#include <yq/typedef/size2.hpp>
+#include <yq/typedef/vector2.hpp>
 
 namespace yq {
     class GText : public GBase {
@@ -24,5 +26,8 @@ namespace yq {
         
         GTextData*  data();
         const GTextData*  data() const;
+
+        Vector2F    position() const;
+        void        position(set_k, const Vector2F&);
     };
 }

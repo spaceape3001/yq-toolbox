@@ -4,24 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "XGDocBase.hpp"
-#include "XGDocument.hpp"
+#include "GDocument.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
 
 YQ_RESOURCE_IMPLEMENT(yq::XGDocument)
 
 namespace yq {
-
-    XGDocBase::XGDocBase() = default;
-    XGDocBase::XGDocBase(const XGDocBase&) = default;
-    XGDocBase::XGDocBase(XGDocBase&&) = default;
-    XGDocBase::~XGDocBase() = default;
-    XGDocBase& XGDocBase::operator=(const XGDocBase&) = default;
-    XGDocBase& XGDocBase::operator=(XGDocBase&&) = default;
-    bool    XGDocBase::operator==(const XGDocBase&) const = default;
-
-    ////////////////////////////////////////////////
-    
     void XGDocument::init_meta()
     {
         auto w = writer<XGDocument>();
@@ -32,10 +20,6 @@ namespace yq {
     {
     }
     
-    XGDocument::XGDocument(const XGDocument&cp ) : Resource(), XGDocDoc(cp)
-    {
-    }
-
     XGDocument::~XGDocument()
     {
     }

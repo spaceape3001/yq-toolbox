@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<svg width="64" height="64">
+    <ellipse fill="lavender" stroke="black" stroke-width="2" 
+        cx="31.5" cy="31.5" rx="31.5" ry="15.75"
+    />
+</svg>

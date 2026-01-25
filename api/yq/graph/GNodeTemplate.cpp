@@ -25,4 +25,12 @@ namespace yq {
     {
         return 0;   // TODO
     }
+
+    std::string_view    GNodeTemplate::icon(uint16_t n) const
+    {
+        auto x = icons.find(n);
+        if(x != icons.end())
+            return x->second;
+        return {};
+    }
 }

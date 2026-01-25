@@ -91,6 +91,8 @@ namespace yq {
         // \note As tempting as Url is here...don't, fouls with the resource system
         std::string                 symbol; 
         
+        std::string_view            icon(uint16_t) const;
+        
         
         GNodeTemplate();
         ~GNodeTemplate();

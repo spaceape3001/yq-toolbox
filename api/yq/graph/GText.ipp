@@ -34,4 +34,17 @@ namespace yq {
             return m_doc -> text(m_id);
         return nullptr;
     }
+
+    Vector2F  GText::position() const
+    {
+        if(const GTextData* gn = data())
+            return gn -> position;
+        return NAN;
+    }
+    
+    void      GText::position(set_k, const Vector2F&v)
+    {
+        if(GTextData* gn = data())
+            gn -> position  = v;
+    }
 }
