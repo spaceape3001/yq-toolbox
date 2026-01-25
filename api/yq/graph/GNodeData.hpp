@@ -9,6 +9,7 @@
 #include <yq/graph/GTextData.hpp>
 
 namespace yq {
+    class GNodeTemplate;
     struct GNodeData : public GTextData {
         std::string         node_template;  // URL/etc to the node template
         

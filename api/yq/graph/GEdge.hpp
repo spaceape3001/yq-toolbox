@@ -24,6 +24,10 @@ namespace yq {
         GEdgeData*          data();
         const GEdgeData*    data() const;
         
+        
+        GBase               source() const;
+        GBase               target() const;
+        
         operator bool() const;
     };
 }

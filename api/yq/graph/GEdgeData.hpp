@@ -13,9 +13,6 @@ namespace yq {
     
         // start/end will be in the waypoints (front/back)
     
-        gid_t       source() const;
-        gid_t       target() const;
-    
         virtual bool is_edge() const override { return true; }
         GEdgeData(gid_t _id) : GLineData(_id) {}
         virtual ~GEdgeData(){}

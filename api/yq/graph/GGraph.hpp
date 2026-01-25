@@ -11,6 +11,8 @@
 
 namespace yq {
 
+    class GNodeTemplate;
+
     /*! \brief Graph in the document
     
         Graph data in the document.  If the id is NOT zero, 
@@ -36,6 +38,7 @@ namespace yq {
         size_t              edges(count_k) const;
 
         GNode               node(create_k);
+        GNode               node(create_k, const GNodeTemplate&);
 
         std::vector<GNode>  nodes() const;
         size_t              nodes(count_k) const;

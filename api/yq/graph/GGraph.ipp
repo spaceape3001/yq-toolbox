@@ -6,6 +6,7 @@
 
 #include "GGraph.hpp"
 #include "GGraphData.hpp"
+#include "GNodeTemplate.hpp"
 #include "GDocument.hxx"
 
 namespace yq {
@@ -68,6 +69,16 @@ namespace yq {
         GNodeData* d    = m_doc->node(CREATE);
         d->parent   = m_id;
         return GNode(m_doc, d->id); 
+    }
+
+    GNode              GGraph::node(create_k, const GNodeTemplate& nt)
+    {
+        if(!m_doc)
+            return GNode();
+        GNodeData*  d   = m_doc->node(CREATE);
+        d->parent           = m_id;
+        d->node_template    = to_string(nt.url());
+        return GNode(m_doc, d->id);
     }
 
     std::vector<GNode> GGraph::nodes() const

@@ -6,9 +6,11 @@
 
 #pragma once
 
+#include <yq/keywords.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/graph/graph_types.hpp>
 #include <yq/typedef/g_document.hpp>
+#include <vector>
 
 namespace yq {
     //! Root to graph things... pointer to document & ID
@@ -30,6 +32,9 @@ namespace yq {
     
         GBaseData*          data();
         const GBaseData*    data() const;
+    
+        std::vector<GBase>  children() const;
+        size_t              children(count_k) const;
     
         constexpr gid_t   id() const { return m_id; }
     

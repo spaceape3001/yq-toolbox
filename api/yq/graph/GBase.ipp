@@ -15,6 +15,8 @@
 #include "GShape.hpp"
 #include "GText.hpp"
 
+#include "GDocument.hxx"
+
 namespace yq {
     GBase::GBase() = default;
     GBase::GBase(const GBase&) = default;
@@ -77,6 +79,29 @@ namespace yq {
     GBase::operator bool() const
     {
         return static_cast<bool>(data());
+    }
+
+    std::vector<GBase>  GBase::children() const
+    {
+        std::vector<GBase>  ret;
+        if(m_doc){
+            m_doc -> datas(FOR, [&](const GBaseData&d) {
+                if(d.parent == m_id)
+                    ret.push_back(GBase(m_doc, d.id));
+            });
+        }
+        return ret;
+    }
+    
+    size_t              GBase::children(count_k) const
+    {
+        size_t ret = 0;
+        if(m_doc){
+            m_doc -> datas(FOR, [&](const GBaseData&) {
+                ++ret;
+            });
+        }
+        return ret;
     }
 
     GBaseData*          GBase::data()

@@ -39,4 +39,24 @@ namespace yq {
             return m_doc -> edge(m_id);
         return nullptr;
     }
+
+    GBase  GEdge::source() const
+    {
+        if(GEdgeData* ge = data(); !ge->waypoints.empty()){
+            if(auto p = std::get_if<gid_t>(&ge->waypoints.front().position)){
+                return GBase(m_doc, *p);
+            }
+        }
+        return GBase();
+    }
+    
+    GBase  GEdge::target() const
+    {
+        if(GEdgeData* ge = data(); (ge->waypoints.size() > 1)){
+            if(auto p = std::get_if<gid_t>(&ge->waypoints.back().position)){
+                return GBase(m_doc, *p);
+            }
+        }
+        return GBase();
+    }
 }
