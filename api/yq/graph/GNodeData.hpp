@@ -21,8 +21,10 @@ namespace yq {
         Vector2F            position    = NAN;
         Size2F              size        = NAN;
         
+        GNodeData(gid_t);
+        GNodeData(const GNodeData&);
+        virtual ~GNodeData();
+        virtual GBaseData*  clone() const override;
         virtual bool is_node() const override { return true; }
-        GNodeData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GNodeData(){}
     };
 }

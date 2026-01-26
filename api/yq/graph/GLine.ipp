@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "GLine.hpp"
+#include "GLineData.hpp"
 #include "GDocument.hpp"
 
 namespace yq {
@@ -40,5 +41,19 @@ namespace yq {
         return nullptr;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    GLineData::GLineData(gid_t _id) : GBaseData(_id) {}
+    GLineData::GLineData(const GLineData& cp) : 
+        GBaseData(cp),
+        waypoints(cp.waypoints)
+    {
+    }
+    
+    GLineData::~GLineData(){}
+    GBaseData* GLineData::clone() const 
+    { 
+        return new GLineData(*this); 
+    }
 }
 

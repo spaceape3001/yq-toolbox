@@ -15,6 +15,7 @@
 #include <yq/container/Vector.hpp>
 #include <yq/meta/forward.hpp>
 #include <yq/text/IgCase.hpp>
+#include <yq/typedef/meta_id.hpp>
 #include <yq/typedef/string_maps.hpp>
 #include <yq/typedef/string_sets.hpp>
 
@@ -42,6 +43,7 @@
 
 namespace yq {
     class Any;
+    
 
     /*
         We want flags, however, they also need to expandable in the other libraries. 
@@ -201,7 +203,7 @@ namespace yq {
         
     
         //! Meta ID type
-        using id_t                      = uint64_t;
+        using id_t                      = meta_id_t;
         
         using options_t                 = std::initializer_list<Flag>;
         

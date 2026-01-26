@@ -31,6 +31,20 @@ namespace yq {
         graph(CREATE);
     }
 
+    GDocument::GDocument(const GDocument& cp) : m_type(cp.m_type)
+    {
+        if(cp.m_data.empty())
+            return;
+        m_data.resize(cp.m_data.size(), nullptr);
+        for(size_t n=0;n<cp.m_data.size();++n){
+            if(!cp.m_data[n])
+                continue;
+            if(cp.m_data[n]->deleted) // might be a mistake...?
+                continue;
+            m_data[n]   = cp.m_data[n]->clone();
+        }
+    }
+
     GDocument::~GDocument()
     {
         for(auto& v : m_data){
@@ -65,6 +79,11 @@ namespace yq {
         if(m_data.size() > i)
             return ;
         m_data.resize(i, nullptr);
+    }
+
+    GDocumentPtr        GDocument::clone() const
+    {
+        return new GDocument(*this);
     }
 
     GBaseData*          GDocument::data(gid_t i, bool deleted)

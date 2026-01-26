@@ -34,4 +34,18 @@ namespace yq {
             return m_doc -> port(m_id);
         return nullptr;
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GPortData::GPortData(gid_t _id) : GBaseData(_id) {}
+    GPortData::GPortData(const GPortData& cp) : GBaseData(cp)
+    {
+    }
+    
+    GPortData::~GPortData(){}
+    
+    GBaseData*  GPortData::clone() const 
+    { 
+        return new GPortData(*this); 
+    }
 }

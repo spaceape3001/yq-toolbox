@@ -82,4 +82,22 @@ namespace yq {
         if(GNodeData* gn = data())
             gn -> position  = v;
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GNodeData::GNodeData(gid_t _id) : GBaseData(_id) {}
+    
+    GNodeData::GNodeData(const GNodeData& cp ) : GBaseData(cp), 
+        node_template(cp.node_template),
+        position(cp.position),
+        size(cp.size)
+    {
+    }
+    
+    GNodeData::~GNodeData(){}
+    
+    GBaseData*  GNodeData::clone() const 
+    { 
+        return new GNodeData(*this); 
+    }
 }

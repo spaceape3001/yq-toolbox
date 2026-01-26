@@ -16,8 +16,10 @@ namespace yq {
         gid_t                   target  = 0;
         std::vector<GWaypoint>  waypoints;
     
+        GEdgeData(gid_t _id);
+        GEdgeData(const GEdgeData&);
+        virtual ~GEdgeData();
+        virtual GBaseData*  clone() const override;
         virtual bool is_edge() const override { return true; }
-        GEdgeData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GEdgeData(){}
     };
 }

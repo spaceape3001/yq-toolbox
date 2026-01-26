@@ -10,10 +10,11 @@
 
 namespace yq {
     struct GPortData : public GBaseData {
-        gid_t           parent  = 0;
-    
+        
+        GPortData(gid_t);
+        GPortData(const GPortData&);
+        virtual ~GPortData();
+        virtual GBaseData*  clone() const override;
         virtual bool is_port() const { return true; }
-        GPortData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GPortData(){}
     };
 }

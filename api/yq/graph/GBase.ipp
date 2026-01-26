@@ -190,4 +190,24 @@ namespace yq {
             return GBase(m_doc, d->parent);
         return GBase();
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
+
+    GBaseData::GBaseData(gid_t _id) : id(_id) 
+    {
+    }
+
+    GBaseData::GBaseData(const GBaseData& cp) : 
+        id(cp.id), 
+        deleted(cp.deleted),    // should be skipping...maybe...
+        hidden(cp.hidden), 
+        parent(cp.parent), 
+        z_order(cp.z_order) 
+    {
+    }
+
+    GBaseData::~GBaseData()
+    {
+    }
+    
 }

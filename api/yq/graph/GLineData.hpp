@@ -20,8 +20,10 @@ namespace yq {
         std::vector<GWaypoint>      waypoints;
         
         virtual bool is_line() const override { return true; }
-        GLineData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GLineData(){}
+        GLineData(gid_t _id);
+        GLineData(const GLineData&);
+        virtual ~GLineData();
+        GBaseData*  clone() const;
         
     };
 }

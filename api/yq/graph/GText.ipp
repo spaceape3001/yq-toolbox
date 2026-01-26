@@ -47,4 +47,18 @@ namespace yq {
         if(GTextData* gn = data())
             gn -> position  = v;
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GTextData::GTextData(gid_t _id) : GBaseData(_id) {}
+    GTextData::GTextData(const GTextData& cp) : 
+        GBaseData(cp), position(cp.position), size(cp.size), symbol(cp.symbol), text(cp.text)
+    {
+    }
+    
+    GTextData::~GTextData(){}
+    GBaseData*  GTextData::clone() const 
+    { 
+        return new GTextData(*this); 
+    }
 }

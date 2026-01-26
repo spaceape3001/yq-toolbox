@@ -47,4 +47,23 @@ namespace yq {
         if(GShapeData* gn = data())
             gn -> position  = v;
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GShapeData::GShapeData(gid_t _id) : GBaseData(_id) 
+    {
+    }
+    
+    GShapeData::GShapeData(const GShapeData& cp) : GBaseData(cp), position(cp.position), size(cp.size)
+    {
+    }
+    
+    GShapeData::~GShapeData()
+    {
+    }
+    
+    GBaseData*  GShapeData::clone() const 
+    { 
+        return new GShapeData(*this); 
+    }
 }

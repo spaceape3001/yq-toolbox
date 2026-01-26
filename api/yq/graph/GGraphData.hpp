@@ -13,8 +13,10 @@ namespace yq {
     
         //std::vector<gid_t>      terminals;       // ports in/out (TBD)
     
+        GGraphData(gid_t _id);
+        GGraphData(const GGraphData&);
+        virtual ~GGraphData();
+        virtual GBaseData*  clone() const override;
         virtual bool is_graph() const override { return true; }
-        GGraphData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GGraphData(){}
     };
 }

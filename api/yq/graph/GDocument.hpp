@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <yq/resource/Resource.hpp>
 #include <yq/graph/graph_types.hpp>
+#include <yq/resource/Resource.hpp>
+#include <yq/typedef/g_document.hpp>
 
 namespace yq {
     /*! \brief Graph Document
@@ -31,6 +32,8 @@ namespace yq {
         ~GDocument();
         
         static void init_meta();
+        
+        GDocumentPtr        clone() const;
         
         GBaseData*          data(gid_t, bool deleted=false);
         const GBaseData*    data(gid_t, bool deleted=false) const;
@@ -145,7 +148,7 @@ namespace yq {
         
         void                _expand(gid_t);
         
-        GDocument(const GDocument&) = delete;
+        GDocument(const GDocument&);
         GDocument(GDocument&&) = delete;
         GDocument& operator=(const GDocument&) = delete;
         GDocument& operator=(GDocument&&) = delete;

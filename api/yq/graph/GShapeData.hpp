@@ -20,9 +20,11 @@ namespace yq {
         Vector2F            position    = NAN;
         Size2F              size        = NAN;
 
+        GShapeData(gid_t);
+        GShapeData(const GShapeData&);
+        virtual ~GShapeData();
+        GBaseData*  clone() const;
         virtual bool is_shape() const override { return true; }
-        GShapeData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GShapeData(){}
         
     };
 }

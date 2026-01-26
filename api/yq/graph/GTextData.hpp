@@ -17,15 +17,17 @@
 namespace yq {
     struct GTextData : public GBaseData {
     
+        Vector2F            position    = NAN;
+        Size2F              size        = NAN;
         std::string         symbol; // symbol, empty implies a rectangle/box
         std::string         text;
         
-        Vector2F            position    = NAN;
-        Size2F              size        = NAN;
         
+        GTextData(gid_t);
+        GTextData(const GTextData&);
+        virtual ~GTextData();
+        GBaseData*  clone() const;
         virtual bool is_text() const { return true; }
-        GTextData(gid_t _id) : GBaseData(_id) {}
-        virtual ~GTextData(){}
         
     };
 }

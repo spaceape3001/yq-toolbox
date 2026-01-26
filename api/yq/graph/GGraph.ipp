@@ -103,4 +103,15 @@ namespace yq {
         }
         return ret;
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GGraphData::GGraphData(gid_t _id) : GBaseData(_id) {}
+    GGraphData::GGraphData(const GGraphData&cp) : GBaseData(cp) 
+    {
+    }
+    
+    GGraphData::~GGraphData(){}
+    GBaseData*  GGraphData::clone() const { return new GGraphData(*this); }
+
 }

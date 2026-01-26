@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "GEdge.hpp"
+#include "GEdgeData.hpp"
 #include "GDocument.hpp"
 
 namespace yq {
@@ -52,5 +53,23 @@ namespace yq {
         if(const GEdgeData* ge = data(); ge->target)
             return GBase(m_doc, ge->target);
         return GBase();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GEdgeData::GEdgeData(gid_t _id) : GBaseData(_id) {}
+
+    GEdgeData::GEdgeData(const GEdgeData& cp ) : GBaseData(cp), 
+        source(cp.source), 
+        target(cp.target), 
+        waypoints(cp.waypoints) 
+    {
+    }
+
+    GEdgeData::~GEdgeData(){}
+
+    GBaseData*  GEdgeData::clone() const 
+    { 
+        return new GEdgeData(*this); 
     }
 }

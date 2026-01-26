@@ -18,6 +18,23 @@ namespace yq {
         render & import into whatever clever graph-like problem.
     */
     struct GBaseData {
+        const gid_t     id;
+        
+        //! We won't be deleting at runtime, so this will be the marker
+        bool            deleted = false;
+        
+        //! Hidden (inherit defers to parent, root graph will be visible)
+        Tristate        hidden  = Tristate::Inherit;
+        gid_t           parent  = 0;
+        
+        //! For rendering
+        float           z_order   = 0.;
+        
+        GBaseData(gid_t _id);
+        GBaseData(const GBaseData&);
+        virtual ~GBaseData();
+        virtual GBaseData*  clone() const = 0;
+
         virtual bool    is_edge() const { return false; }
         virtual bool    is_graph() const { return false; }
         virtual bool    is_line() const { return false; }
@@ -26,20 +43,5 @@ namespace yq {
         virtual bool    is_shape() const { return false; }
         virtual bool    is_text() const { return false; }
         virtual bool    is_view() const { return false; }
-    
-        GBaseData(gid_t _id) : id(_id) {}
-        virtual ~GBaseData(){}
-    
-        const gid_t     id;
-        gid_t           parent  = 0;
-        
-        //! We won't be deleting at runtime, so this will be the marker
-        bool            deleted = false;
-        
-        //! Hidden (inherit defers to parent, root graph will be visible)
-        Tristate        hidden  = Tristate::Inherit;
-        
-        //! For rendering
-        float           z_order   = 0.;
     };
 }
