@@ -23,4 +23,7 @@ set(TOOLBOX_DATA_DIR ${YQ_TOOLBOX_ROOT}/data)
 include(configure.cmake)
 include(standard.cmake)
 
+yq_data(data)
+
 YQRepo()
+

@@ -187,6 +187,42 @@ if(NOT YOUR_QUILL_TOOLBOX)
 endif()
 
 
+if(NOT COMMAND yq_vulkan)
+    set(GLOBAL PROPERTY YQ_VULKAN)  
+    set(GLOBAL PROPERTY YQ_DATA)  
+    
+    set_property(GLOBAL PROPERTY YQ_TOOLBOX_ROOT ${CMAKE_CURRENT_LIST_DIR})
+    
+    #   Use to add a data directory
+    macro(yq_data dir)
+        file(REAL_PATH "${CMAKE_CURRENT_LIST_DIR}/${dir}" full)
+        message("YQ data ${full}")
+        get_property(tmp GLOBAL PROPERTY YQ_DATA)
+        list(APPEND tmp ${full})
+        set_property(GLOBAL PROPERTY YQ_DATA ${tmp})
+    endmacro()
+
+    #   Use this macro for non-tachyon vulkan libraries
+    macro(yq_vulkan target)
+        message("vulkan library ${target}")
+        get_property(tmp GLOBAL PROPERTY YQ_VULKAN)
+        #get_target_property(tgt ${target} LIBRARY_OUTPUT_NAME)
+        list(APPEND tmp ${target})
+        set_property(GLOBAL PROPERTY YQ_VULKAN ${tmp})
+    endmacro()
+
+    macro(yq_config)
+        if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_LIST_DIR})
+            get_property(YQUILL_VKLIB GLOBAL PROPERTY YQ_VULKAN)
+            get_property(YQUILL_DATA GLOBAL PROPERTY YQ_DATA)
+            get_property(TOOLBOX_ROOT GLOBAL PROPERTY YQ_TOOLBOX_ROOT)
+            message("toolbox root is ${TOOLBOX_ROOT}")
+            configure_file(${TOOLBOX_ROOT}/yquill.cfg.in ${CMAKE_BINARY_DIR}/bin/yquill.cfg)
+        endif()
+    endmacro()
+endif()
+
+
 
 
 
