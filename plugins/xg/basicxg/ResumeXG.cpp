@@ -23,7 +23,7 @@ namespace {
             w.label("Resume");
             w.description("Resume execution");
             w.node_type(XGNodeType::Resume);
-            w.icon(0, "pp:yq/icon/xg/done.svg");
+            w.icon(0, "yq/icon/xg/done.svg");
         }
         
         xg_result_t execute(XGContext&)

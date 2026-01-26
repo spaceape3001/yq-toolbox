@@ -23,7 +23,7 @@ namespace {
             w.label("Continue");
             w.description("Continue execution");
             w.node_type(XGNodeType::Continue);
-            w.icon(0, "pp:yq/icon/xg/done.svg");
+            w.icon(0, "yq/icon/xg/done.svg");
         }
         
         xg_result_t execute(XGContext&)

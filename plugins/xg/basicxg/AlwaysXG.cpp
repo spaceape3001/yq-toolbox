@@ -27,9 +27,9 @@ namespace {
             w.category("1..2..3");
             w.label("Always");
             w.description("Always execution");
-            w.icon(0, "pp:yq/icon/xg/start.svg");
+            w.icon(0, "yq/icon/xg/start.svg");
             w.node_type(XGNodeType::Always);
-            w.symbol("pp:yq/symbol/xgflow.sym#always");
+            w.symbol("yq/symbol/xgflow.sym#always");
         }
         
         xg_result_t execute(XGContext&)

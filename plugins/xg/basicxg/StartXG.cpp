@@ -21,7 +21,7 @@ namespace {
             auto w = writer<StartXG>();
             w.category("1..2..3");
             w.label("Start");
-            w.icon(0, "pp:yq/icon/xg/start.svg");
+            w.icon(0, "yq/icon/xg/start.svg");
             w.description("Start execution");
             w.node_type(XGNodeType::Start);
         }
