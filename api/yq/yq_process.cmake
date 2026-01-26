@@ -5,6 +5,7 @@
 ################################################################################
 
 add_library(yq_process SHARED
+    config/config.cpp
     process/Execute.cpp
     process/OSUtils.cpp
     process/PidFile.cpp

@@ -31,7 +31,7 @@ namespace yq {
         //! Standard destructor.
         ~Settings();
         
-        //! Re-reads from file
+        //! Re-reads from file (will invalidate any string-views)
         void                        sync();
         
         //! True if the given key (in the given section) is present
