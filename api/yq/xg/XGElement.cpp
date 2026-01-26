@@ -24,7 +24,7 @@ namespace yq {
         std::string     name    = first_query_parameter(url.query, "key");
         if(name.empty())
             return {};
-        const XGElementMeta* em = XGElementMeta::find_stem(name);
+        const XGElementMeta* em = XGElementMeta::find(name);
         if(!em)
             return {};
         return em->make_template();
@@ -133,11 +133,6 @@ namespace yq {
     const XGElementMeta* XGElementMeta::find(std::string_view k)
     {
         return repo().elements.find(k);
-    }
-
-    const XGElementMeta* XGElementMeta::find_stem(std::string_view k)
-    {
-        return repo().elements.find_stem(k);
     }
 
     XGElementMeta::Repo&    XGElementMeta::repo()

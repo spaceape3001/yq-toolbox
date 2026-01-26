@@ -42,7 +42,6 @@ namespace yq {
         static const std::vector<const XGElementMeta*>& all();
         
         static const XGElementMeta* find(std::string_view);
-        static const XGElementMeta* find_stem(std::string_view);
         
         static GMetaGraphPtr    create_manifest();
         
