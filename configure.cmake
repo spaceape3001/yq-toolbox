@@ -188,8 +188,9 @@ endif()
 
 
 if(NOT COMMAND yq_vulkan)
-    set(GLOBAL PROPERTY YQ_VULKAN)  
     set(GLOBAL PROPERTY YQ_DATA)  
+    set(GLOBAL PROPERTY YQ_QTLIB)  
+    set(GLOBAL PROPERTY YQ_VKLIB)  
     
     set_property(GLOBAL PROPERTY YQ_TOOLBOX_ROOT ${CMAKE_CURRENT_LIST_DIR})
     
@@ -202,19 +203,29 @@ if(NOT COMMAND yq_vulkan)
         set_property(GLOBAL PROPERTY YQ_DATA ${tmp})
     endmacro()
 
-    #   Use this macro for non-tachyon vulkan libraries
-    macro(yq_vulkan target)
-        message("vulkan library ${target}")
-        get_property(tmp GLOBAL PROPERTY YQ_VULKAN)
+    #   Use this macro for non-gluon Qt libraries
+    macro(yq_qtlib target)
+        message("Qt library ${target}")
+        get_property(tmp GLOBAL PROPERTY YQ_QTLIB)
         #get_target_property(tgt ${target} LIBRARY_OUTPUT_NAME)
         list(APPEND tmp ${target})
-        set_property(GLOBAL PROPERTY YQ_VULKAN ${tmp})
+        set_property(GLOBAL PROPERTY YQ_QTLIB ${tmp})
+    endmacro()
+
+    #   Use this macro for non-tachyon vulkan libraries
+    macro(yq_vklib target)
+        message("Vulkan library ${target}")
+        get_property(tmp GLOBAL PROPERTY YQ_VKLIB)
+        #get_target_property(tgt ${target} LIBRARY_OUTPUT_NAME)
+        list(APPEND tmp ${target})
+        set_property(GLOBAL PROPERTY YQ_VKLIB ${tmp})
     endmacro()
 
     macro(yq_config)
         if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_LIST_DIR})
-            get_property(YQUILL_VKLIB GLOBAL PROPERTY YQ_VULKAN)
             get_property(YQUILL_DATA GLOBAL PROPERTY YQ_DATA)
+            get_property(YQUILL_QTLIB GLOBAL PROPERTY YQ_QTLIB)
+            get_property(YQUILL_VKLIB GLOBAL PROPERTY YQ_VKLIB)
             get_property(TOOLBOX_ROOT GLOBAL PROPERTY YQ_TOOLBOX_ROOT)
             message("toolbox root is ${TOOLBOX_ROOT}")
             configure_file(${TOOLBOX_ROOT}/yquill.cfg.in ${CMAKE_BINARY_DIR}/bin/yquill.cfg)

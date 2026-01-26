@@ -1,2 +1,3 @@
 data=@YQUILL_DATA@
+qtlibs=@YQUILL_QTLIB@
 vklibs=@YQUILL_VKLIB@
