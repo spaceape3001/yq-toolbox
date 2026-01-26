@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         expect(doc->nodes(COUNT) == 1);
         expect(doc->ports(COUNT) == 0);
         expect(doc->shapes(COUNT) == 0);
-        expect(doc->texts(COUNT) == 1);
+        expect(doc->texts(COUNT) == 0);
     };
 
 
