@@ -93,6 +93,7 @@ namespace yq {
             m_data[index(i)]  |= mask(i);
         }
         
+        //! Sets the specific bit to true/false
         void    set(size_t i, bool v)
         {
             if(i>=MAX)
