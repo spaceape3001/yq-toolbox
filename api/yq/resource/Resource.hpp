@@ -127,7 +127,7 @@ namespace yq {
     
         template <typename> friend class ResourceIO;
     public:
-
+    
         // unfortunately, with all the C++ shennigans, can't make these private...
 
         //! \note Takes ownership of the pointer (not going the unique_ptr route here...)
@@ -144,8 +144,6 @@ namespace yq {
         //! Information structure associated with our resource (default is the base info)
         using MyInfo            = ResourceInfo;
     
-        //! Resolve the given string to a filename
-        static Url              resolve(std::string_view);
 
         //static Url              resolve2(const resource_specifier_t&);
         
@@ -168,10 +166,17 @@ namespace yq {
         
         static std::vector<Url>                     all_libraries();
         static std::vector<std::filesystem::path>   all_paths();
+
+        //! Deresolves, returns non-empty if successful
+        static std::string          deresolve(const std::filesystem::path&, const std::vector<std::filesystem::path>& extras={});
         
         //! \note Linear search as we're assuming a short one
         static bool             has_path(const std::filesystem::path&);
    
+        //! Resolve the given string to a filename
+        static Url              resolve(std::string_view);
+        
+
         static ResourceInfoCPtr    resource_info(resource_meta_init_list_t metas, std::string_view, const ResourceInfoOptions& options={});
 
         //! Gets resource information from the specific resource (short specification)
@@ -363,6 +368,7 @@ namespace yq {
         //static Url      _resolve_url(UrlView);
         
     };
+    
 
     /*! IO Helper to specfic derived resources.  
     

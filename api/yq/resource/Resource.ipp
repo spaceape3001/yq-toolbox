@@ -488,6 +488,40 @@ namespace yq {
         return ret;
     }
 
+
+    std::string         Resource::deresolve(const std::filesystem::path&orig, const std::vector<std::filesystem::path>& extras)
+    {
+        std::string ret;
+        
+        auto checkPath  = [&](const std::filesystem::path& dir) -> bool {
+            if(dir == orig)
+                return true;
+            std::error_code ec;
+            auto rel    = std::filesystem::relative( orig, dir, ec);
+            if(ec != std::error_code())
+                return false;
+            if(rel.empty())
+                return false;
+            if(starts(rel.string(), ".."))
+                return false;
+            if(starts(rel.string(), "/"))
+                return false;
+            ret = rel.string();
+            return true;
+        };
+        
+        for(auto& fp : extras)
+            if(checkPath(fp))
+                return ret;
+        for(auto& sp : repo().search){
+            if(auto p = std::get_if<std::filesystem::path>(&sp)){
+                if(checkPath(*p))
+                    return ret;
+            }
+        }
+        return ret;
+    }
+
     string_vector_t     Resource::infoable_extensions_for(const ResourceMeta&rm)
     {
         string_vector_t ret;
@@ -722,6 +756,7 @@ namespace yq {
         return {{}, false };
     }
 #endif
+
 
     Url  Resource::resolve(std::string_view u)
     {
