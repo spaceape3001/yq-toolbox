@@ -20,7 +20,7 @@ namespace yq {
     class GMetaGraph : public ResourceLibrary {
         YQ_RESOURCE_DECLARE(GMetaGraph, ResourceLibrary)
     public:
-    
+
         GMetaGraph();
         ~GMetaGraph();
         
@@ -28,12 +28,17 @@ namespace yq {
         const auto& nodes() const { return m_nodes; }
         
         static void init_meta();
-        
+
+        static Url  kind_url(const std::string&);
+        static void kind_define(const std::string&, const Url&);
         
     protected:
         virtual void    post_add(ResourcePtr) override;
     
     private:
+        struct Repo;
+        static Repo& repo();
+    
         std::vector<GNodeTemplateCPtr>  m_nodes;
     };
 }

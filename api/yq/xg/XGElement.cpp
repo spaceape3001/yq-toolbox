@@ -18,6 +18,7 @@ YQ_OBJECT_IMPLEMENT(yq::XGElement)
 
 namespace yq {
     static constexpr const char *szXGElementMetaPath    = "/xg/element/meta";
+    static constexpr const char *szXGMetaGraphPath      = "/xg/metagraph";
 
     static GNodeTemplatePtr    makeMetaNode(const UrlView& url, const ResourceLoadAPI&)
     {
@@ -29,13 +30,19 @@ namespace yq {
             return {};
         return em->make_template();
     }
-
+    
+    static GMetaGraphPtr        makeXGMetaGraph(const UrlView&, const ResourceLoadAPI&)
+    {
+        return XGElementMeta::create_manifest();
+    }
 
     void XGElement::init_meta()
     {
         auto w = writer<XGElement>();
         w.description("Executive Graph Element");
         GNodeTemplate::IO::add_loader({.yqpath=szXGElementMetaPath}, makeMetaNode);
+        GMetaGraph::IO::add_loader({.yqpath=szXGMetaGraphPath}, makeXGMetaGraph);
+        GMetaGraph::kind_define("executive", { .scheme="app", .path=szXGMetaGraphPath});
     }
 
     XGElement::XGElement()
@@ -74,6 +81,11 @@ namespace yq {
     const std::vector<const XGElementMeta*>& XGElementMeta::all()
     {
         return repo().elements.all;
+    }
+
+    const char* XGElementMeta::app_path() const 
+    {
+        return szXGElementMetaPath;
     }
     
     #if 0

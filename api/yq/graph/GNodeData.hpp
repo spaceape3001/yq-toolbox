@@ -17,9 +17,9 @@
 namespace yq {
     class GNodeTemplate;
     struct GNodeData : public GBaseData {
-        std::string         node_template;  // URL/etc to the node template
-        Vector2F            position    = NAN;
-        Size2F              size        = NAN;
+        Vector2D            position    = NAN;
+        Size2D              size        = NAN;
+        std::string         type;  // URL/etc to the node template
         
         GNodeData(gid_t);
         GNodeData(const GNodeData&);

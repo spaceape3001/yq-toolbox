@@ -70,6 +70,9 @@ namespace yq {
 
         size_t              graphs(count_k) const;
 
+        const auto&         kind() const { return m_kind; }
+        void                kind(set_k, std::string_view);
+
         GLineData*          line(create_k);
         GLineData*          line(create_k, gid_t);
         GLineData*          line(gid_t, bool deleted=false);
@@ -130,8 +133,6 @@ namespace yq {
         //GViewData*          _view(gid_t);
         //const GViewData*    _view(gid_t) const;
         
-        const auto&         type() const { return m_type; }
-        void                type(set_k, std::string_view);
         
         void                reserve(gid_t);
         
@@ -141,7 +142,10 @@ namespace yq {
         using GBaseDataVector = std::vector<GBaseData*>;
     
         std::vector<GBaseData*>     m_data;
-        std::string                 m_type;
+        std::string                 m_kind;
+
+        //std::string                 kind;
+        //std::vector<std::string>    auxlibs;
 
         template <typename T> T*    _create();
         template <typename T> T*    _create(gid_t);

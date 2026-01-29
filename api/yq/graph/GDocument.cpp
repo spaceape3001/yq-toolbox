@@ -31,7 +31,7 @@ namespace yq {
         graph(CREATE);
     }
 
-    GDocument::GDocument(const GDocument& cp) : m_type(cp.m_type)
+    GDocument::GDocument(const GDocument& cp) : m_kind(cp.m_kind)
     {
         if(cp.m_data.empty())
             return;
@@ -166,7 +166,11 @@ namespace yq {
         return ret;
     }
 
-
+    void    GDocument::kind(set_k, std::string_view v)
+    {
+        m_kind  = std::string(v);
+    }
+    
     GLineData*          GDocument::line(create_k)
     {
         return _create<GLineData>();
@@ -334,11 +338,6 @@ namespace yq {
         return ret;
     }
 
-    void    GDocument::type(set_k, std::string_view v)
-    {
-        m_type  = std::string(v);
-    }
-    
     //GViewData*          _view(create_k);
     //GViewData*          _view(gid_t);
     //const GViewData*    _view(gid_t) const;
@@ -347,5 +346,6 @@ namespace yq {
     {
         auto w = writer<GDocument>();
         w.description("Graph Document (data)");
+        w.property("kind", &GDocument::m_kind);
     }
 }

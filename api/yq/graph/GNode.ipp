@@ -38,14 +38,6 @@ namespace yq {
         return nullptr;
     }
 
-    std::string_view    GNode::node_template() const
-    {
-        if(const GNodeData* gn = data()){
-            return gn -> node_template;
-        } else
-            return {};
-    }
-
     std::vector<GPort>  GNode::ports() const
     {
         std::vector<GPort>  ret;
@@ -70,17 +62,25 @@ namespace yq {
         return ret;
     }
 
-    Vector2F  GNode::position() const
+    Vector2D  GNode::position() const
     {
         if(const GNodeData* gn = data())
             return gn -> position;
         return NAN;
     }
     
-    void      GNode::position(set_k, const Vector2F&v)
+    void      GNode::position(set_k, const Vector2D&v)
     {
         if(GNodeData* gn = data())
             gn -> position  = v;
+    }
+
+    std::string_view    GNode::type() const
+    {
+        if(const GNodeData* gn = data()){
+            return gn -> type;
+        } else
+            return {};
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -88,9 +88,9 @@ namespace yq {
     GNodeData::GNodeData(gid_t _id) : GBaseData(_id) {}
     
     GNodeData::GNodeData(const GNodeData& cp ) : GBaseData(cp), 
-        node_template(cp.node_template),
         position(cp.position),
-        size(cp.size)
+        size(cp.size),
+        type(cp.type)
     {
     }
     

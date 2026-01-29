@@ -456,6 +456,11 @@ namespace yq {
         });
         return ret;
     }
+    
+    inline bool    has_attribute(const XmlNode& xn, std::string_view pszAttr)
+    {
+        return static_cast<bool>(xn.first_attribute(pszAttr));
+    }
 
     /*! \brief Reads and inteprets attribute
     

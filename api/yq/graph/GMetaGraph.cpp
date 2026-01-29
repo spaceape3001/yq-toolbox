@@ -11,6 +11,30 @@
 YQ_RESOURCE_IMPLEMENT(yq::GMetaGraph)
 
 namespace yq {
+    struct GMetaGraph::Repo {
+        std::map<std::string, Url, IgCase>  kinds;
+    };
+
+    void GMetaGraph::kind_define(const std::string& s, const Url& u)
+    {
+        if(Meta::thread_safe_write())
+            repo().kinds[s]    = u;
+    }
+    
+    Url  GMetaGraph::kind_url(const std::string&s)
+    {
+        auto& r = repo();
+        if(auto x = r.kinds.find(s); x != r.kinds.end())
+            return x->second;
+        return {};
+    }
+    
+    GMetaGraph::Repo& GMetaGraph::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
     GMetaGraph::GMetaGraph()
     {
     }

@@ -29,10 +29,10 @@ namespace yq {
         std::vector<GPort>  ports() const;
         size_t              ports(count_k) const;
         
-        std::string_view    node_template() const;
         
-        Vector2F            position() const;
-        void                position(set_k, const Vector2F&);
+        Vector2D            position() const;
+        void                position(set_k, const Vector2D&);
         
+        std::string_view    type() const;
     };
 }

@@ -28,37 +28,71 @@
 
 namespace yq {
 
-    static Expect<uint64_t>    read_id(const XmlNode&xml)
+    static std::error_code     read_base(GBaseData& d, const XmlNode&xml)
     {
-        return errors::todo();
+        if(has_attribute(xml, "parent")){
+            auto x = read_attribute(xml, "parent", x_uint64);
+            if(!x)
+                return x.error();
+            d.parent    = *x;
+        }
+
+        if(has_attribute(xml, "hidden")){
+            auto x = read_attribute(xml, "hidden", x_boolean);
+            if(!x)
+                return x.error();
+            d.hidden    = *x ? Tristate::Yes : Tristate::No;
+        } else
+            d.hidden    = Tristate::Inherit;
+
+        if(has_attribute(xml, "z")){
+            auto x = read_attribute(xml, "z", x_double);
+            if(!x)
+                return x.error();
+            d.z     = *x;
+        } else
+            d.z     = 0.;
+        
+        //  attributes/properties TODO
+        
+        return {};
     }
     
-    static std::error_code     read_base(GBaseData&, const XmlNode&xml)
+    static std::error_code  read_waypoints(std::vector<GWaypoint>& pts, const XmlNode& xml)
     {
         return errors::todo();
     }
 
     static std::error_code  read_edge(GDocument& doc, const XmlNode& xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
+            
         GEdgeData*  ge  = doc.edge(CREATE, *x);
-        std::error_code ec = read_base(*ge, xml);
-        if(ec != std::error_code())
+        if(std::error_code ec = read_base(*ge, xml); ec != std::error_code())
             return ec;
             
-        return errors::todo();
+        if(auto x = read_attribute(xml, "source", x_uint64))
+            ge -> source    = *x;
+        if(auto x = read_attribute(xml, "target", x_uint64))
+            ge -> target    = *x;
+            
+        if(std::error_code ec = read_waypoints(ge->waypoints, xml); ec != std::error_code())
+            return ec;
+        
+        // more... ?    
+        
+        return {};
     }
 
     static std::error_code  read_graph(GDocument& doc, const XmlNode&xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
         GGraphData*  gg  = doc.graph(CREATE, *x);
-        std::error_code ec = read_base(*gg, xml);
-        if(ec != std::error_code())
+        if(std::error_code ec = read_base(*gg, xml); ec != std::error_code())
             return ec;
             
         return errors::todo();
@@ -66,51 +100,61 @@ namespace yq {
 
     static std::error_code  read_line(GDocument& doc, const XmlNode&xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
+            
         GLineData*  gl  = doc.line(CREATE, *x);
-        std::error_code ec = read_base(*gl, xml);
-        if(ec != std::error_code())
+        if(std::error_code ec = read_base(*gl, xml); ec != std::error_code())
             return ec;
             
-        return errors::todo();
+        if(std::error_code ec = read_waypoints(gl->waypoints, xml); ec != std::error_code())
+            return ec;
+
+        // more ... ?
+
+        return {};
     }
 
     static std::error_code  read_node(GDocument& doc, const XmlNode&xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
-        GNodeData*  gn  = doc.node(CREATE, *x);
-        std::error_code ec = read_base(*gn, xml);
-        if(ec != std::error_code())
-            return ec;
             
-        return errors::todo();
+        GNodeData*  gn  = doc.node(CREATE, *x);
+        if(std::error_code ec = read_base(*gn, xml); ec != std::error_code())
+            return ec;
+
+        gn -> type  = read_attribute(xml, "type", x_string);
+
+        // more ... ?
+            
+        return {};
     }
 
     static std::error_code  read_port(GDocument& doc, const XmlNode&xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
+            
         GPortData*  gp  = doc.port(CREATE, *x);
-        std::error_code ec = read_base(*gp, xml);
-        if(ec != std::error_code())
+        if(std::error_code ec = read_base(*gp, xml); ec != std::error_code())
             return ec;
             
-        return errors::todo();
+        // more ... ?
+            
+        return {};
     }
 
     static std::error_code read_shape(GDocument& doc, const XmlNode&xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
         GShapeData*  gs  = doc.shape(CREATE, *x);
-        std::error_code ec = read_base(*gs, xml);
-        if(ec != std::error_code())
+        if(std::error_code ec = read_base(*gs, xml); ec != std::error_code())
             return ec;
             
         return errors::todo();
@@ -118,12 +162,11 @@ namespace yq {
 
     static std::error_code  read_text(GDocument& doc, const XmlNode&xml)
     {
-        auto x = read_id(xml);
+        auto x = read_attribute(xml, "id", x_uint64);
         if(!x)
             return x.error();
         GTextData*  gt  = doc.text(CREATE, *x);
-        std::error_code ec = read_base(*gt, xml);
-        if(ec != std::error_code())
+        if(std::error_code ec = read_base(*gt, xml); ec != std::error_code())
             return ec;
             
         return errors::todo();
@@ -136,42 +179,35 @@ namespace yq {
             return unexpected<"Graphxml missing root!">();
         GDocumentPtr   doc = new GDocument;
         doc -> set_url(u);
-        doc -> type(SET, read_attribute(*xroot, "type", x_string));
+        doc -> kind(SET, read_attribute(*xroot, "kind", x_string));
             
         for(const XmlNode* x = xroot->first_node(); x; x = x->next_sibling()){
             if(is_similar(x->name(), "edge")){
-                std::error_code ec = read_edge(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_edge(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
             if(is_similar(x->name(), "graph")){
-                std::error_code ec = read_graph(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_graph(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
             if(is_similar(x->name(), "line")){
-                std::error_code ec = read_line(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_line(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
             if(is_similar(x->name(), "node")){
-                std::error_code ec = read_node(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_node(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
             if(is_similar(x->name(), "port")){
-                std::error_code ec = read_port(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_port(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
             if(is_similar(x->name(), "shape")){
-                std::error_code ec = read_shape(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_shape(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
             if(is_similar(x->name(), "text")){
-                std::error_code ec = read_text(*doc, *x);
-                if(ec != std::error_code())
+                if(std::error_code ec = read_text(*doc, *x); ec != std::error_code())
                     return unexpected(ec);
             }
         }
@@ -181,13 +217,59 @@ namespace yq {
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
 
-    static void     write_base(const GBaseData&d, XmlNode&)
+    static std::string  _deresolve(const std::string& k)
+    {
+        if(!starts_igCase(k, "file:///"))
+            return k;
+        
+        auto ux = to_url_view(k);
+        if(!ux.good)
+            return k;
+        
+        std::string pp  = Resource::deresolve(ux.value.path);
+        if(pp.empty())
+            return k;
+            
+        Url u   = copy(ux.value);
+        u.path  = std::string(pp);
+        return to_string(u);
+    }
+
+    static void     write_base(const GBaseData&d, XmlNode& xn)
+    {
+        write_attribute(xn, "id", d.id);
+        if(d.parent)
+            write_attribute(xn, "parent", d.parent);
+            
+        if((d.z != 0.) && !is_nan(d.z))
+            write_attribute(xn, "z", d.z);
+
+        switch(d.hidden){
+        case Tristate::No:
+            write_attribute(xn, "hidden", "no"sv);
+            break;
+        case Tristate::Yes:
+            write_attribute(xn, "hidden", "yes"sv);
+            break;
+        default:
+            break;
+        }
+        
+        //  attributes....
+    }
+    
+    static void     write_waypoints(const std::vector<GWaypoint>& points, XmlNode& xml)
     {
     }
     
     static void     write_edge(const GEdgeData&d, XmlNode&xml)
     {
         write_base(d,xml);
+        if(d.source)
+            write_attribute(xml, "source", d.source);
+        if(d.target)
+            write_attribute(xml, "target", d.target);
+        write_waypoints(d.waypoints, xml);
     }
     
     static void     write_graph(const GGraphData&d, XmlNode&xml)
@@ -198,11 +280,14 @@ namespace yq {
     static void     write_line(const GLineData&d, XmlNode&xml)
     {
         write_base(d,xml);
+        write_waypoints(d.waypoints, xml);
     }
     
     static void     write_node(const GNodeData&d, XmlNode&xml)
     {
         write_base(d,xml);
+        if(!d.type.empty())
+            write_attribute(xml, "type", _deresolve(d.type));
     }
 
     static void     write_port(const GPortData&d, XmlNode&xml)
@@ -223,8 +308,8 @@ namespace yq {
     std::error_code saveGraphXML(const GDocument&gdoc, XmlDocument&xdoc)
     {
         auto& xroot = *xdoc.create_element("graphxml");
-        if(auto t = gdoc.type(); !t.empty())
-            write_attribute(xroot, "type", t);
+        if(auto t = gdoc.kind(); !t.empty())
+            write_attribute(xroot, "kind", t);
         gdoc.datas(FOR, [&](const GBaseData& gb) {
             if(gb.is_edge()){
                 auto&  x    = *xroot.create_element("edge");
@@ -270,8 +355,7 @@ namespace yq {
         if(bytes.empty())
             return unexpected<"No XML data read">();
         XmlDocument doc;
-        std::error_code ec  = parse_xml(doc, bytes);
-        if(ec != std::error_code())
+        if(std::error_code ec  = parse_xml(doc, bytes); ec != std::error_code())
             return unexpected(ec);
         return loadGraphXML(doc, to_url(fp));
     }
@@ -279,8 +363,7 @@ namespace yq {
     std::error_code saveGraphXML(const GDocument&gdoc, const std::filesystem::path&fp)
     {
         XmlDocument xdoc;
-        std::error_code ec  = saveGraphXML(gdoc, xdoc);
-        if(ec != std::error_code()) 
+        if(std::error_code ec  = saveGraphXML(gdoc, xdoc); ec != std::error_code()) 
             return ec;
         return save_file(xdoc, fp);
     }
@@ -302,8 +385,8 @@ namespace yq {
     
     static void reg_graphXML()
     {
-        GDocument::IO::add_loader({.extensions={"gx"}}, loadGraphXML_xml);
-        GDocument::IO::add_saver({.extensions={"gx"}}, saveGraphXML_xml);
+        GDocument::IO::add_loader({.extensions={"g"}}, loadGraphXML_xml);
+        GDocument::IO::add_saver({.extensions={"g"}}, saveGraphXML_xml);
     }
     
     YQ_INVOKE(reg_graphXML();)

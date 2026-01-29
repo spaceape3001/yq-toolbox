@@ -8,6 +8,7 @@
 
 #include <yq/keywords.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/core/Tristate.hpp>
 #include <yq/graph/graph_types.hpp>
 #include <yq/typedef/g_document.hpp>
 #include <vector>
@@ -17,27 +18,6 @@ namespace yq {
     class GBase {
     public:
 
-        bool    is_edge() const;
-        bool    is_deleted() const;
-        bool    is_graph() const;
-        bool    is_line() const;
-        bool    is_node() const;
-        bool    is_port() const;
-        bool    is_shape() const;
-        bool    is_text() const;
-        //bool  is_view() const;
-    
-        GDocumentPtr    document();
-        GDocumentCPtr   document() const;
-    
-        GBaseData*          data();
-        const GBaseData*    data() const;
-    
-        std::vector<GBase>  children() const;
-        size_t              children(count_k) const;
-    
-        constexpr gid_t   id() const { return m_id; }
-    
         GBase();
         GBase(const GBase&);
         GBase(GBase&&);
@@ -47,7 +27,7 @@ namespace yq {
         GBase&  operator=(const GBase&);
         GBase&  operator=(GBase&&);
 
-
+        operator bool() const;
         explicit operator GEdge() const;
         explicit operator GGraph() const;
         explicit operator GLine() const;
@@ -56,10 +36,38 @@ namespace yq {
         explicit operator GShape() const;
         explicit operator GText() const;
 
+        std::vector<GBase>  children() const;
+        size_t              children(count_k) const;
 
-        GBase       parent() const;
+        GBaseData*          data();
+        const GBaseData*    data() const;
+    
+        bool                deleted() const;
+    
+        GDocumentPtr        document();
+        GDocumentCPtr       document() const;
+    
+        Tristate            hidden() const;
+        void                hidden(set_k, Tristate);
 
-        operator bool() const;
+        constexpr gid_t     id() const { return m_id; }
+        
+    
+        bool                is_edge() const;
+        bool                is_deleted() const;
+        bool                is_graph() const;
+        bool                is_line() const;
+        bool                is_node() const;
+        bool                is_port() const;
+        bool                is_shape() const;
+        bool                is_text() const;
+        //bool  is_view() const;
+    
+
+        GBase               parent() const;
+
+        double              z() const;
+        void                z(set_k, double);
 
     protected:
         GDocumentPtr    m_doc;

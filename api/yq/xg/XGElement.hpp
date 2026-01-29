@@ -47,6 +47,8 @@ namespace yq {
         
         //GNodeTemplatePtr        create_meta_node() const;
         
+        virtual const char* app_path() const override;
+        
     private:
         std::string_view    m_symbol;
         RGBA4F              m_bgcolor       = kInvalidColor;

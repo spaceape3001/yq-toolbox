@@ -11,6 +11,7 @@
 namespace yq {
     struct GGraphData : public GBaseData {
     
+    
         //std::vector<gid_t>      terminals;       // ports in/out (TBD)
     
         GGraphData(gid_t _id);

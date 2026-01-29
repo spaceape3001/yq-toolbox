@@ -7,6 +7,7 @@
 #include "GNodeObject.hpp"
 #include "GNodeObjectMetaWriter.hpp"
 #include "GNodeTemplate.hpp"
+#include <yq/core/Logging.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::GNodeObject)
 
@@ -59,6 +60,7 @@ namespace yq {
         g_write_url(*ret);
         g_write_key(*ret);
         g_write(*ret);
+        
         return ret;
     }
     

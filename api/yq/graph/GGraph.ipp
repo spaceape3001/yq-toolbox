@@ -77,7 +77,7 @@ namespace yq {
             return GNode();
         GNodeData*  d   = m_doc->node(CREATE);
         d->parent           = m_id;
-        d->node_template    = to_string(nt.url());
+        d->type             = to_string(nt.url());
         return GNode(m_doc, d->id);
     }
 

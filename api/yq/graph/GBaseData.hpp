@@ -28,7 +28,9 @@ namespace yq {
         gid_t           parent  = 0;
         
         //! For rendering
-        float           z_order   = 0.;
+        double          z       = 0.;
+        
+        //  attributes/properties... TODO
         
         GBaseData(gid_t _id);
         GBaseData(const GBaseData&);

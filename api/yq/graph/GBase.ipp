@@ -104,6 +104,13 @@ namespace yq {
         return ret;
     }
 
+    bool                GBase::deleted() const
+    {
+        if(const GBaseData* d = data())
+            return d->deleted;
+        return true;
+    }
+
     GBaseData*          GBase::data()
     {
         if(!m_doc)
@@ -126,6 +133,19 @@ namespace yq {
     GDocumentCPtr   GBase::document() const 
     { 
         return m_doc; 
+    }
+
+    Tristate  GBase::hidden() const
+    {
+        if(const GBaseData* d = data())
+            return d->hidden;
+        return Tristate::Inherit;
+    }
+    
+    void      GBase::hidden(set_k, Tristate v)
+    {
+        if(GBaseData* d = data())
+            d -> hidden = v;
     }
 
     bool    GBase::is_edge() const
@@ -191,6 +211,19 @@ namespace yq {
         return GBase();
     }
     
+    double  GBase::z() const
+    {
+        if(const GBaseData* d = data())
+            return d -> z;
+        return NAN;
+    }
+    
+    void    GBase::z(set_k, double v)
+    {
+        if(GBaseData* d = data())
+            d -> z = v;
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     GBaseData::GBaseData(gid_t _id) : id(_id) 
@@ -202,7 +235,7 @@ namespace yq {
         deleted(cp.deleted),    // should be skipping...maybe...
         hidden(cp.hidden), 
         parent(cp.parent), 
-        z_order(cp.z_order) 
+        z(cp.z) 
     {
     }
 
