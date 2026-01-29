@@ -14,6 +14,9 @@ namespace yq {
 
 
     /* \brief Stack container
+    
+        Custom stack container using the vector.  
+        (std::stack can be too limiting)
     */
     template <typename T>
     class Stack : public std::vector<T> {
