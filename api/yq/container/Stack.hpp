@@ -24,6 +24,7 @@ namespace yq {
 
         using base_stack =  std::vector<T>;
         
+                    //! Default constructor
                     Stack(){}
                     Stack(const Stack&);
                     Stack(Stack&&);
