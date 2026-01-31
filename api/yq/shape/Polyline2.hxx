@@ -16,6 +16,7 @@
 #include <yq/shape/PolylineData.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/container/vector_utils.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace yq {
     template <typename T> Polyline2<T>::Polyline2(const std::vector<Vector2<T>>&pts) : vertex(pts) {}

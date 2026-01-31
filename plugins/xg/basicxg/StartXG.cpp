@@ -24,6 +24,7 @@ namespace {
             w.icon(0, "yq/icon/xg/start.svg");
             w.description("Start execution");
             w.node_type(XGNodeType::Start);
+            w.symbol("yq/symbol/xgflow.sym#start");
         }
         
         xg_result_t execute(XGContext&)

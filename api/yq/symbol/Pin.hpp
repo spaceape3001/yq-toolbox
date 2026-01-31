@@ -8,6 +8,8 @@
 
 #include <yq/math/Range.hpp>
 #include <yq/shape/Segment2.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/typedef/string_vectors.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/symbol/style.hpp>
 
@@ -15,6 +17,7 @@ namespace yq::symbol {
     
     //! General pin type
     enum class PinShape {
+        Default,
         None,
         Arrow,
         Circle,
@@ -35,23 +38,21 @@ namespace yq::symbol {
     
     struct PinBase  {
         //! Direction of pointing triangles, arrows, diamonds, etc
-        Vector2F        dir         = { 0., 0. };
-        Vector2F        size        = { 0., 0. };
+        Vector2F        direction   = { 0., 0. };
+        Size2F          size        = { 0., 0. };
         PinFlow         flow        = PinFlow::Bi;
-        PinShape        shape       = PinShape::None;
-        struct {
-            stroke_style_t          stroke;
-            fill_style_t            fill;
-        } style;
-        bool            filled      = false;
+        PinShape        shape       = PinShape::Default; // "type" in the symbol file
+        style_t         style;
     };
     
     struct Pin : public PinBase {
-        Vector2F        pos         = { 0., 0. };
+        std::string     key;
+        Vector2F        position    = { 0., 0. };
     };
 
     struct Pins : public PinBase {
         Segment2F       segment   = ZERO;
-        RangeU          count     = ZERO; // 0...0 implies any, N...0 implies N to no limit
+        RangeU          count     = ZERO; // 0...0 implies any, N...0 implies N to no limit (keys will hint for 0...0)
+        string_vector_t keys;
     };
 }

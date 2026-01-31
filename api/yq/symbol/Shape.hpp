@@ -16,7 +16,6 @@
 #include <yq/shape/Segment2.hpp>
 #include <yq/shape/Triangle2.hpp>
 #include <yq/symbol/style.hpp>
-#include <optional>
 #include <variant>
 #include <vector>
 
@@ -41,17 +40,17 @@ namespace yq::symbol {
     };
 
     struct text_t {      // user/edit/prog text... 
-        Vector2F        point       = ZERO;
+        Vector2F        position    = ZERO;
         HAlign          halign      = HAlign::Center;
         VAlign          valign      = VAlign::Middle;
 
-        std::string     id;     //!< Can be targeted
         std::string     text;   //!< Text to show (default for alterables/editables)
         TextType        type    = TextType::Text;
     };
 
     struct image_t {
-        AxBox2F         box;
+        Size2F          size        = ZERO;
+        Vector2F        position    = ZERO;
         Url             url;
     };
     
@@ -70,13 +69,9 @@ namespace yq::symbol {
     AxBox2F     bounds_for(const primitive_t&);
     
     struct Shape {
-        primitive_t                     primitive;
-        
-        struct {
-            std::optional<stroke_style_t>   stroke;
-            std::optional<fill_style_t>     fill;
-            std::optional<font_style_t>     font;
-        } style;
+        primitive_t     primitive;
+        style_t         style;
+        std::string     key;    // key/ID
         
         Shape();
         Shape(const primitive_t&);

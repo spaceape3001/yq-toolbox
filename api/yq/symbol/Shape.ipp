@@ -41,8 +41,12 @@ namespace yq::symbol {
             return p->bounds();
         if(const auto p = std::get_if<Triangle2F>(&v))
             return p->bounds();
-        if(const auto p = std::get_if<image_t>(&v))
-            return p->box;
+        if(const auto p = std::get_if<image_t>(&v)){
+            return AxBox2F(
+                { p->position.x-0.5f*p->size.x, p->position.y-0.5f*p->size.y },
+                { p->position.x+0.5f*p->size.x, p->position.y+0.5f*p->size.y }
+            );
+        }
         return NAN;
     }
 }

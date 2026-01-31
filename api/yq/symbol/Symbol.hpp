@@ -40,17 +40,11 @@ namespace yq {
         //! Permitted transforms
         symbol::TransformTypes          transforms;
         
-        struct {
-            symbol::stroke_style_t      stroke;
-            symbol::fill_style_t        fill;
-            symbol::font_style_t        font;
-        }   style;
+        symbol::style_t                 style;
         
         //! Lock the aspect ratio, so if text requires it, expand both
         bool                            aspectLocked  = true;
 
-
-        
         Symbol();
         ~Symbol();
         size_t data_size() const override;

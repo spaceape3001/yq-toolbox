@@ -117,6 +117,7 @@ namespace yq {
     /*! \brief Test to see if string matches one of the patterns
     */
     bool  is_in(std::string_view str, const std::vector<std::string_view>& pat);
+
         
     /*! \brief Tests if b < a ignoring case
     

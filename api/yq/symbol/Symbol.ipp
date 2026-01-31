@@ -11,6 +11,8 @@
 #include <yq/symbol/Pin.hpp>
 #include <yq/symbol/Shape.hpp>
 #include <yq/container/vector_utils.hpp>
+
+#include <yq/shape/Size2.hxx>
 #include <yq/vector/Vector2.hxx>
 
 YQ_RESOURCE_IMPLEMENT(yq::Symbol)
@@ -39,6 +41,8 @@ namespace yq {
             }
         }
         
+        //  explicitly do *NOT* include pins
+        
         if(is_nan(bounds))  // done
             return ;
 
@@ -65,6 +69,9 @@ namespace yq {
         auto pos    = [&](const Vector2F& v) -> Vector2F {
             return (v - ctr).emul(sca);
         };
+        auto size    = [&](const Size2F& v) -> Size2F {
+            return {sca.x*v.x, sca.y*v.y};
+        };
         
         for(auto& sh : shape){
             if(const auto p = std::get_if<AxBox2F>(&sh.primitive)){
@@ -89,13 +96,33 @@ namespace yq {
                 sh.primitive  = Triangle2F(pos(p->a), pos(p->b), pos(p->c));
             } else if(const auto p = std::get_if<symbol::image_t>(&sh.primitive)){
                 symbol::image_t cp      = *p;
-                cp.box          = AxBox2F(SORT, pos(p->box.lo), pos(p->box.hi));
+                cp.position     = pos(p->position);
+                cp.size         = size(p->size);
                 sh.primitive    = cp;
             } else if(const auto p = std::get_if<symbol::text_t>(&sh.primitive)){
                 symbol::text_t  cp  = *p;
-                cp.point    = pos(p->point);
+                cp.position     = pos(p->position);
                 sh.primitive    = cp;
             }
+        }
+        
+        for(auto& pi : pin){
+            pi.position = pos(pi.position);
+            pi.size     = size(pi.size);
+            if(is_nan(pi.size.x) || (pi.size.x <= 0.f))
+                pi.size.x   = 0.1f;
+            if(is_nan(pi.size.y) || (pi.size.y <= 0.f))
+                pi.size.y   = 0.1f;
+        }
+        
+        for(auto& pi : pins){
+            pi.size         = size(pi.size);
+            if(is_nan(pi.size.x) || (pi.size.x < 0.f))
+                pi.size.x   = 0.1f;
+            if(is_nan(pi.size.y) || (pi.size.y < 0.f))
+                pi.size.y   = 0.1f;
+            pi.segment.a    = pos(pi.segment.a);
+            pi.segment.b    = pos(pi.segment.b);
         }
     }
 }

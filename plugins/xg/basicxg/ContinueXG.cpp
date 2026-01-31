@@ -24,6 +24,7 @@ namespace {
             w.description("Continue execution");
             w.node_type(XGNodeType::Continue);
             w.icon(0, "yq/icon/xg/done.svg");
+            w.symbol("yq/symbol/xgflow.sym#done");
         }
         
         xg_result_t execute(XGContext&)

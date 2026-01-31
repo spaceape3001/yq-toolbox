@@ -1,3 +1,32 @@
 always Always {
-   oval r=100,50
+    oval r=100,50 {
+        fill  lime
+    }
+    label Always
+    out out {
+        position    0 -50
+        fill        white
+    }
+}
+
+done Done {
+    oval r=100,50 {
+        fill  lavender
+    }
+    label Done
+    in in {
+        position 0 50
+        fill    white
+    }
+}
+
+start Start {
+    oval r=100,50 {
+        fill  orange
+    }
+    label Start
+    out out {
+        position    0 -50
+        fill        white
+    }
 }

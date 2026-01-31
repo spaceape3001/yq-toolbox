@@ -39,35 +39,32 @@ namespace yq {
             };
             
             auto _fill  = [&](XmlNode& node, const fill_style_t& sty){
+                if(sty.use == Tristate::NO){
+                    write_attribute(node, "fill", "none"sv);
+                    return ;
+                }
             };
             
+            auto fill   = [&](XmlNode& node, const symbol::Shape& sh){
+                _fill(node, (sh.style.fill.use == Tristate::Inherit) ? sym.style.fill : sh.style.fill );
+            };
+
             auto _font  = [&](XmlNode& node, const font_style_t& sty){
             };
 
-            auto _stroke  = [&](XmlNode& node, const stroke_style_t& sty){
+            auto font   = [&](XmlNode& node, const symbol::Shape& sh){
+                _font(node, (sh.style.font.use == Tristate::Inherit) ? sym.style.font : sh.style.font );
             };
 
-            auto fill   = [&](XmlNode& node, const symbol::Shape& sh){
-                if(sh.style.fill){
-                    if(sh.style.fill->use == Tristate::YES){
-                        _fill(node, *sh.style.fill);
-                        return;
-                    }
-                    if(sh.style.fill->use == Tristate::NO){
-                        write_attribute(node, "fill", "none"sv);
-                        return ;
-                    }
+            auto _stroke  = [&](XmlNode& node, const stroke_style_t& sty){
+                if(sty.use == Tristate::NO){
+                    write_attribute(node, "stroke", "none"sv);
+                    return ;
                 }
-                if(sym.style.fill.use != Tristate::YES){
-                    _fill(node, sym.style.fill);
-                    return;
-                }
-                
-                write_attribute(node, "fill", "none"sv);
             };
+
             auto stroke   = [&](XmlNode& node, const symbol::Shape& sh){
-            };
-            auto font   = [&](XmlNode& node, const symbol::Shape& sh){
+                _stroke(node, (sh.style.stroke.use == Tristate::Inherit) ? sym.style.stroke : sh.style.stroke );
             };
             
             

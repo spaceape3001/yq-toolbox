@@ -24,6 +24,7 @@ namespace {
             w.icon(0, "pp:yq/icon/xg/done.svg");
             w.description("Done execution");
             w.node_type(XGNodeType::Done);
+            w.symbol("yq/symbol/xgflow.sym#done");
         }
         
         xg_result_t execute(XGContext&)
