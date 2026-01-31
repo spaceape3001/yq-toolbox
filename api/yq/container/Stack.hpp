@@ -26,6 +26,8 @@ namespace yq {
         
                     //! Default constructor
                     Stack(){}
+                    
+                    //! Copy constructor
                     Stack(const Stack&);
                     Stack(Stack&&);
 
