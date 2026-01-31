@@ -67,7 +67,7 @@ namespace yq {
         }                           color;
         
         //! Description
-        std::string     description;
+        std::string                 description;
 
         // Outbound edges (TODO)
         //std::vector<GEdgeTemplate>  edges;
@@ -92,7 +92,6 @@ namespace yq {
         std::string                 symbol; 
         
         std::string_view            icon(uint16_t) const;
-        
         
         GNodeTemplate();
         ~GNodeTemplate();

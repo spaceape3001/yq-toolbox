@@ -269,6 +269,7 @@ namespace yq {
     struct set_k {};
     struct settable_k {};
     struct shared_k {};
+    struct short_k {};
     struct skip_k {};
     struct smaller_k {};
     struct smallest_k {};
@@ -604,6 +605,7 @@ namespace yq {
     static constexpr const set_k                SET;
     static constexpr const settable_k           SETTABLE;
     static constexpr const shared_k             SHARED;
+    static constexpr const short_k              SHORT;
     static constexpr const skip_k               SKIP;
     static constexpr const smaller_k            SMALLER;
     static constexpr const smallest_k           SMALLEST;
