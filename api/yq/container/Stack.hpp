@@ -29,6 +29,8 @@ namespace yq {
                     
                     //! Copy constructor
                     Stack(const Stack&);
+                    
+                    //! Move constructor
                     Stack(Stack&&);
 
         Stack&     operator<<(const T&);
