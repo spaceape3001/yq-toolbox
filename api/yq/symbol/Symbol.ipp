@@ -55,6 +55,7 @@ namespace yq {
         if(spa.y >= 0.01)
             sca.y   = 2. / spa.y;
         
+        
 
         bool    invariant   = false;
         if(aspectLocked){
@@ -65,6 +66,7 @@ namespace yq {
         }
         
         sca.y = -sca.y; // flip y
+        Vector2F    sgn( copysign(1.f, sca.x), copysign(1.f, sca.y ));
 
         auto pos    = [&](const Vector2F& v) -> Vector2F {
             return (v - ctr).emul(sca);
@@ -107,15 +109,19 @@ namespace yq {
         }
         
         for(auto& pi : pin){
-            pi.position = pos(pi.position);
-            pi.size     = size(pi.size);
+            pi.direction    = pi.direction.emul(sgn);
+            pi.position     = pos(pi.position);
+            pi.size         = size(pi.size);
             if(is_nan(pi.size.x) || (pi.size.x <= 0.f))
                 pi.size.x   = 0.1f;
             if(is_nan(pi.size.y) || (pi.size.y <= 0.f))
                 pi.size.y   = 0.1f;
+            if((pi.direction == ZERO) && (pi.position != ZERO))
+                pi.direction  = ~pi.position;
         }
         
         for(auto& pi : pins){
+            pi.direction    = pi.direction.emul(sgn);
             pi.size         = size(pi.size);
             if(is_nan(pi.size.x) || (pi.size.x < 0.f))
                 pi.size.x   = 0.1f;

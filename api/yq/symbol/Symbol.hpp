@@ -42,6 +42,9 @@ namespace yq {
         
         symbol::style_t                 style;
         
+        //! Used to scale the size
+        float                           scale   = 1.;
+        
         //! Lock the aspect ratio, so if text requires it, expand both
         bool                            aspectLocked  = true;
 

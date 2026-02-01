@@ -820,6 +820,13 @@ namespace {
     {
         return _shape(api, _polygon(api.line, 4));
     }
+    
+    std::error_code cmdSymScale(SymAPI&api) 
+    {
+        if(api.line.values.size() < 2)
+            return create_error<"Insufficient argumetns to scale">();
+        return _float(api.sym.scale, api.line.values[1]);
+    }
 
     std::error_code cmdSymStroke(SymAPI&api)
     {
@@ -876,6 +883,7 @@ namespace {
         { "quadrilateral", cmdSymQuadrilateral },
         { "rect", cmdSymBox },
         { "rectangle", cmdSymBox },
+        { "scale", cmdSymScale },
         { "stroke", cmdSymStroke },
         { "text", cmdSymText },
         { "tri", cmdSymTriangle },
