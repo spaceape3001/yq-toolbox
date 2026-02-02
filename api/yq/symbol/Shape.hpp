@@ -14,6 +14,7 @@
 #include <yq/shape/Polygon2.hpp>
 #include <yq/shape/Polyline2.hpp>
 #include <yq/shape/Segment2.hpp>
+#include <yq/shape/Size2.hpp>
 #include <yq/shape/Triangle2.hpp>
 #include <yq/symbol/style.hpp>
 #include <variant>
