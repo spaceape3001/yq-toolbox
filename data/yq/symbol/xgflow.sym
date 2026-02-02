@@ -3,8 +3,12 @@ always Always {
         fill  lime
     }
     label Always
-    out out {
+    out {
         position    0 -50
+        fill        white
+    }
+    out {
+        position    100 0
         fill        white
     }
 }
@@ -14,7 +18,7 @@ done Done {
         fill  lavender
     }
     label Done
-    in in {
+    in {
         position 0 50
         fill    white
     }
@@ -25,7 +29,7 @@ start Start {
         fill  orange
     }
     label Start
-    out out {
+    out {
         position    0 -50
         fill        white
     }
