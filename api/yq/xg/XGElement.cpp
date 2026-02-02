@@ -39,6 +39,7 @@ namespace yq {
     void XGElement::init_meta()
     {
         auto w = writer<XGElement>();
+        w.abstract();
         w.description("Executive Graph Element");
         GNodeTemplate::IO::add_loader({.yqpath=szXGElementMetaPath}, makeMetaNode);
         GMetaGraph::IO::add_loader({.yqpath=szXGMetaGraphPath}, makeXGMetaGraph);

@@ -1,0 +1,14 @@
+delay Delay {
+    circle r=100 {
+        fill aquamarine
+    }
+    in in {
+        position north
+        fill white
+    }
+    out out {
+        position south
+        fill white
+    }
+    label Delay
+}
