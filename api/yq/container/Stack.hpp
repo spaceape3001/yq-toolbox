@@ -35,6 +35,8 @@ namespace yq {
 
         //! Push an item onto the stack
         Stack&     operator<<(const T&);
+
+        //! Push an item onto the stack (move)
         Stack&     operator<<(T&&);
         Stack&     operator>>(T&);
 
