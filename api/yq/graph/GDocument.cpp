@@ -78,7 +78,7 @@ namespace yq {
     {
         if(m_data.size() > i)
             return ;
-        m_data.resize(i, nullptr);
+        m_data.resize(i+1, nullptr);
     }
 
     GDocumentPtr        GDocument::clone() const
@@ -166,6 +166,55 @@ namespace yq {
         return ret;
     }
 
+    bool    GDocument::is_edge(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_edge();
+        return false;
+    }
+    
+    bool    GDocument::is_graph(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_graph();
+        return false;
+    }
+    
+    bool    GDocument::is_line(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_line();
+        return false;
+    }
+    
+    bool    GDocument::is_node(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_node();
+        return false;
+    }
+    
+    bool    GDocument::is_port(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_port();
+        return false;
+    }
+    
+    bool    GDocument::is_shape(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_shape();
+        return false;
+    }
+    
+    bool    GDocument::is_text(gid_t i, bool deleted) const
+    {
+        if(const GBaseData* d = data(i,deleted))
+            return d -> is_text();
+        return false;
+    }
+    
     void    GDocument::kind(set_k, std::string_view v)
     {
         m_kind  = std::string(v);

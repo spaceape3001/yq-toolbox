@@ -10,6 +10,10 @@
 
 namespace yq {
     struct GPortData : public GBaseData {
+    
+        std::string     key;
+        bool            input   = true;
+        bool            output  = true;
         
         GPortData(gid_t);
         GPortData(const GPortData&);

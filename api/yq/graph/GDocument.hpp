@@ -70,6 +70,15 @@ namespace yq {
 
         size_t              graphs(count_k) const;
 
+        bool                is_edge(gid_t, bool deleted=false) const;
+        bool                is_graph(gid_t, bool deleted=false) const;
+        bool                is_line(gid_t, bool deleted=false) const;
+        bool                is_node(gid_t, bool deleted=false) const;
+        bool                is_port(gid_t, bool deleted=false) const;
+        bool                is_shape(gid_t, bool deleted=false) const;
+        bool                is_text(gid_t, bool deleted=false) const;
+        
+
         const auto&         kind() const { return m_kind; }
         void                kind(set_k, std::string_view);
 
@@ -83,6 +92,7 @@ namespace yq {
         auto                lines(for_k, Pred&&);
         template <typename Pred>
         auto                lines(for_k, Pred&&) const;
+
 
         GNodeData*          node(create_k);
         GNodeData*          node(create_k, gid_t);

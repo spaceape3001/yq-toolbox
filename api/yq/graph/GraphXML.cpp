@@ -20,6 +20,7 @@
 #include <yq/graph/GTextData.hpp>
 #include <yq/resource/ResourceDriverAPI.hpp>
 #include <yq/text/match.hpp>
+#include <yq/symbol/Pin.hpp>
 #include <yq/xml/XmlUtils.hpp>
 #include <rapidxml.hpp>
 
@@ -95,7 +96,8 @@ namespace yq {
         if(std::error_code ec = read_base(*gg, xml); ec != std::error_code())
             return ec;
             
-        return errors::todo();
+        // more ... ?
+        return {};
     }
 
     static std::error_code  read_line(GDocument& doc, const XmlNode&xml)
@@ -127,6 +129,31 @@ namespace yq {
             return ec;
 
         gn -> type  = read_attribute(xml, "type", x_string);
+    
+        if(has_attribute(xml, "x")){
+            auto v = read_attribute(xml, "x", x_double);
+            if(!v)
+                return v.error();
+            gn -> position.x = *v;
+        }
+        if(has_attribute(xml, "y")){
+            auto v = read_attribute(xml, "y", x_double);
+            if(!v)
+                return v.error();
+            gn -> position.y = *v;
+        }
+        if(has_attribute(xml, "w")){
+            auto v = read_attribute(xml, "w", x_double);
+            if(!v)
+                return v.error();
+            gn -> size.x = *v;
+        }
+        if(has_attribute(xml, "h")){
+            auto v = read_attribute(xml, "h", x_double);
+            if(!v)
+                return v.error();
+            gn -> size.y = *v;
+        }
 
         // more ... ?
             
@@ -142,7 +169,25 @@ namespace yq {
         GPortData*  gp  = doc.port(CREATE, *x);
         if(std::error_code ec = read_base(*gp, xml); ec != std::error_code())
             return ec;
-            
+        
+        gp -> key   = read_attribute(xml, "key", x_string);
+        
+        if(has_attribute(xml, "input")){
+            auto bx = read_attribute(xml, "input", x_boolean);
+            if(!bx)
+                return bx.error();
+            gp -> input  = *bx;
+        } else
+            gp -> input = false;
+
+        if(has_attribute(xml, "output")){
+            auto bx = read_attribute(xml, "output", x_boolean);
+            if(!bx)
+                return bx.error();
+            gp -> input  = *bx;
+        } else
+            gp -> output    = false;
+
         // more ... ?
             
         return {};
@@ -157,7 +202,8 @@ namespace yq {
         if(std::error_code ec = read_base(*gs, xml); ec != std::error_code())
             return ec;
             
-        return errors::todo();
+        // more ... ?
+        return {};
     }
 
     static std::error_code  read_text(GDocument& doc, const XmlNode&xml)
@@ -169,7 +215,8 @@ namespace yq {
         if(std::error_code ec = read_base(*gt, xml); ec != std::error_code())
             return ec;
             
-        return errors::todo();
+        // more ... ?
+        return {};
     }
 
     gdocument_ptr_x   loadGraphXML(const XmlDocument&xdoc, const Url&u)
@@ -288,11 +335,25 @@ namespace yq {
         write_base(d,xml);
         if(!d.type.empty())
             write_attribute(xml, "type", _deresolve(d.type));
+        if(!is_nan(d.position)){
+            write_attribute(xml, "x", d.position.x );
+            write_attribute(xml, "y", d.position.y );
+        }
+        if(!is_nan(d.size)){
+            write_attribute(xml, "w", d.size.x);
+            write_attribute(xml, "h", d.size.y);
+        }
     }
 
     static void     write_port(const GPortData&d, XmlNode&xml)
     {
         write_base(d,xml);
+        if(d.input)
+            write_attribute(xml, "input", "true"sv);
+        if(d.output)
+            write_attribute(xml, "output", "true"sv);
+        if(!d.key.empty())
+            write_attribute(xml, "key", d.key);
     }
 
     static void     write_shape(const GShapeData&d, XmlNode&xml)

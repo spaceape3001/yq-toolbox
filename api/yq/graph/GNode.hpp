@@ -11,6 +11,10 @@
 #include <yq/typedef/vector2.hpp>
 
 namespace yq {
+    namespace symbol {
+        class PinBase;
+    }
+
     class GNode : public GBase {
     public:
         
@@ -25,6 +29,8 @@ namespace yq {
         operator bool() const;
         GNodeData*  data();
         const GNodeData*  data() const;
+        
+        GPort               port(create_k, const symbol::PinBase&, const std::string& key={});
         
         std::vector<GPort>  ports() const;
         size_t              ports(count_k) const;

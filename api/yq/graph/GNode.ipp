@@ -9,6 +9,7 @@
 #include "GPort.hpp"
 #include "GPortData.hpp"
 #include "GDocument.hxx"
+#include <yq/symbol/Pin.hpp>
 
 namespace yq {
     GNode::GNode() = default;
@@ -36,6 +37,36 @@ namespace yq {
         if(m_doc)
             return m_doc -> node(m_id);
         return nullptr;
+    }
+
+    GPort               GNode::port(create_k, const symbol::PinBase&pb, const std::string& key)
+    {
+        if(!m_doc)
+            return GPort();
+            
+        GPortData*d = m_doc -> port(CREATE);
+        d->key  = key;
+        d->parent   = m_id;
+        switch(pb.flow){
+        case symbol::PinFlow::Bi:
+            d -> input = true;
+            d -> output = true;
+            break;
+        case symbol::PinFlow::In:
+            d -> input = true;
+            d -> output = false;
+            break;
+        case symbol::PinFlow::Out:
+            d -> input = false;
+            d -> output    = true;
+            break;
+        case symbol::PinFlow::NC:
+            d -> input = false;
+            d -> output = false;
+            break;
+        }
+        
+        return GPort(m_doc, d->id);
     }
 
     std::vector<GPort>  GNode::ports() const

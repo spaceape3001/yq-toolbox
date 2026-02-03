@@ -7,10 +7,6 @@ always Always {
         position    0 -50
         fill        white
     }
-    out {
-        position    100 0
-        fill        white
-    }
 }
 
 done Done {

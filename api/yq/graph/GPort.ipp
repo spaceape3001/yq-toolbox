@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "GNode.hpp"
 #include "GPort.hpp"
 #include "GPortData.hpp"
 
@@ -33,6 +34,29 @@ namespace yq {
         if(m_doc)
             return m_doc -> port(m_id);
         return nullptr;
+    }
+
+    bool    GPort::is_input() const
+    {
+        if(const GPortData* d = data())
+            return d -> input;
+        return false;
+    }
+    
+    bool    GPort::is_output() const
+    {
+        if(const GPortData* d = data())
+            return d -> output;
+        return false;
+    }
+    
+    GNode   GPort::node() const
+    {
+        if(const GPortData* d = data()){
+            if(m_doc -> is_node(d->parent))
+                return GNode(m_doc, d->parent);
+        }
+        return GNode();
     }
 
     ////////////////////////////////////////////////////////////////////////////

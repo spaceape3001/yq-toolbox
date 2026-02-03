@@ -9,8 +9,15 @@
 #include <yq/graph/GBase.hpp>
 
 namespace yq {
+    class GNode;
+
     class GPort : public GBase {
     public:
+        
+        bool    is_input() const;
+        bool    is_output() const;
+        
+        GNode   node() const;
         
         GPort();
         GPort(const GPort&);
