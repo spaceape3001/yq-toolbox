@@ -110,7 +110,7 @@ namespace yq {
         localtime_r(&buf.st_mtim.tv_sec, &mt);
         char        thetime[256];
         sprintf(thetime, "%04d%02d%02d-%02d%02d%02d.%09ld", 
-            1900+mt.tm_year, 1+mt.tm_mon, 1+mt.tm_mday, 
+            1900+mt.tm_year, 1+mt.tm_mon, mt.tm_mday, 
             mt.tm_hour, mt.tm_min, mt.tm_sec, buf.st_mtim.tv_nsec
         );
         return thetime;
