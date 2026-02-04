@@ -121,5 +121,6 @@ namespace yq {
     //! Adds to the "stem" or the stuff before extensions
     std::filesystem::path   append_stem(const std::filesystem::path&, std::string_view);
     
-    
+    std::filesystem::path   symlink_target(const std::filesystem::path&);
+    std::filesystem::path   symlink_target(const char*);
 }

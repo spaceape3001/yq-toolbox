@@ -73,6 +73,16 @@ namespace yq {
             
             return ret;
         }
+        
+        std::filesystem::path   symLinkLocation(const char* path)
+        {
+            char data[PATH_MAX];
+            ssize_t cb  = readlink(path, data, PATH_MAX);
+            if(cb < 0)
+                return {};
+            return std::string_view(data, cb);
+        }
+        
     }
 
 
@@ -80,8 +90,8 @@ namespace yq {
 
     std::filesystem::path    BasicApp::app_dir()
     {
-        // TODO....
-        return current_working_dir();
+        static std::filesystem::path s_ret  = executable().parent_path();
+        return s_ret;
     }
 
     std::string_view         BasicApp::app_name()
@@ -105,6 +115,16 @@ namespace yq {
             return std::filesystem::path();
         cwd[PATH_MAX]   = '\0';
         return std::filesystem::path(cwd);
+    }
+
+    std::filesystem::path        BasicApp::executable()
+    {
+        #if defined(__linux__)
+        static std::filesystem::path s_ret  = symLinkLocation("/proc/self/exe");
+        return s_ret;
+        #else
+        return {};
+        #endif
     }
 
     std::filesystem::path        BasicApp::find_exe(const std::string_view k)

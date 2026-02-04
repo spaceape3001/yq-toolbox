@@ -17,6 +17,7 @@
 
 
 #include <fcntl.h>
+#include <limits.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
@@ -303,5 +304,19 @@ namespace yq {
         filename += extra;
         filename += extensions;
         return parent / filename;
+    }
+
+    std::filesystem::path   symlink_target(const char* path)
+    {
+        char data[PATH_MAX];
+        ssize_t cb  = readlink(path, data, PATH_MAX);
+        if(cb < 0)
+            return {};
+        return std::string_view(data, cb);
+    }
+
+    std::filesystem::path   symlink_target(const std::filesystem::path&pth)
+    {
+        return symlink_target(pth.c_str());
     }
 }

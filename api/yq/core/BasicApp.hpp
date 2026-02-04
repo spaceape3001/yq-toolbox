@@ -30,7 +30,11 @@ namespace yq {
         //! Current working directory
         static std::filesystem::path        current_working_dir();
         
+        //! app directory
         static std::filesystem::path        app_dir();
+
+        //! Our executable (not good on windows)
+        static std::filesystem::path        executable();
 
         //! Tries to find executables based on short name
         static std::filesystem::path        find_exe(const std::string_view);

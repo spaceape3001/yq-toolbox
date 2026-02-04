@@ -6,11 +6,12 @@
 
 #include "config.hpp"
 #include <yq/process/Settings.hpp>
+#include <yq/core/BasicApp.hpp>
 
 namespace yq::config {
     static Settings&    settings()
     {
-        static Settings s_settings("yquill.cfg");
+        static Settings s_settings(BasicApp::app_dir() / "yquill.cfg");
         return s_settings;
     }
 
