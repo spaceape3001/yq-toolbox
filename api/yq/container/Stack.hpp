@@ -56,6 +56,7 @@ namespace yq {
         //! Peeks n from top, nullptr if not found
         const T*    peek(size_t) const;
         
+        //! Top n elements as a (const) span
         std::span<const T>  top_cspan(size_t n) const;
         std::span<T>        top_span(size_t n);
         
