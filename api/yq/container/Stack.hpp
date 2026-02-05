@@ -58,6 +58,8 @@ namespace yq {
         
         //! Top n elements as a (const) span
         std::span<const T>  top_cspan(size_t n) const;
+
+        //! Top n elements as a span
         std::span<T>        top_span(size_t n);
         
     };
