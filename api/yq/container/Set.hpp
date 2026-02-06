@@ -25,6 +25,7 @@ namespace yq {
         typedef std::set<T,C> base_set;
         typedef std::vector<T>  base_vec;
         
+        //! Default constructor
         Set(){}
         Set(const base_set&);
         Set(base_set&&);
