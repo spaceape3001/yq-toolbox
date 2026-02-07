@@ -27,6 +27,8 @@ namespace yq {
         
         //! Default constructor
         Set(){}
+        
+        //! Copy Constructor
         Set(const base_set&);
         Set(base_set&&);
         template <class InputIterator>
