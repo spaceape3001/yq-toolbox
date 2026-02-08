@@ -335,6 +335,7 @@ namespace yq {
     struct w_k {};
     struct wait_k {};
     struct warning_k {};
+    struct widget_k {};
     struct write_k {};
     struct ww_k {};
     struct wx_k {};
@@ -670,6 +671,7 @@ namespace yq {
     static constexpr const w_k                  W;
     static constexpr const wait_k               WAIT;
     static constexpr const warning_k            WARNING, WARN;
+    static constexpr const widget_k             WIDGET;
     static constexpr const write_k              WRITE;
     static constexpr const ww_k                 WW;
     static constexpr const wx_k                 WX;
