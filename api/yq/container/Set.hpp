@@ -27,8 +27,14 @@ namespace yq {
         
         //! Default constructor
         Set(){}
+        
+        //! Copy constructor
         Set(const base_set&);
+        
+        //! Move constructor
         Set(base_set&&);
+        
+        //! Intake from two iterators (begin/end required)
         template <class InputIterator>
         Set(InputIterator, InputIterator);
 
