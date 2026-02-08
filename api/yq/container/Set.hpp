@@ -33,6 +33,8 @@ namespace yq {
         
         //! Move constructor
         Set(base_set&&);
+        
+        //! Intake from two iterators (begin/end required)
         template <class InputIterator>
         Set(InputIterator, InputIterator);
 
