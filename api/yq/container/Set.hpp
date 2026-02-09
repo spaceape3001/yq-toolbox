@@ -38,6 +38,7 @@ namespace yq {
         template <class InputIterator>
         Set(InputIterator, InputIterator);
 
+        //! Copy operator
         Set&   operator= (const base_set&);
         Set&   operator= (base_set&&);
         
