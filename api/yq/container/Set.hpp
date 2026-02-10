@@ -40,6 +40,8 @@ namespace yq {
 
         //! Copy operator
         Set&   operator= (const base_set&);
+        
+        //! Move operator
         Set&   operator= (base_set&&);
         
         Set    operator+ (const base_set&) const;
