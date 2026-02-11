@@ -44,6 +44,7 @@ namespace yq {
         //! Move operator
         Set&   operator= (base_set&&);
         
+        //! Injects set into this (ie, sum of the sets)
         Set    operator+ (const base_set&) const;
         Set    operator- (const base_set&) const;
         
