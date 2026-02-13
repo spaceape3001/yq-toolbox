@@ -50,6 +50,8 @@ namespace yq {
         //! Removes the given set from this one.
         Set    operator- (const base_set&) const;
         
+        //! Inserts specified item into a COPY of the set, returns that copy
+        //! \note Beware that extra memory copy of the ENTIRE set
         Set    operator+ (const T&) const;
         Set    operator- (const T&) const;
         
