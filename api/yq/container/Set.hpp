@@ -53,6 +53,9 @@ namespace yq {
         //! Inserts specified item into a COPY of the set, returns that copy
         //! \note Beware that extra memory copy of the ENTIRE set
         Set    operator+ (const T&) const;
+        
+        //! Removed specified item from a COPY of the set, returns that copy
+        //! \note Beware that extra memory copy of the ENTIRE set
         Set    operator- (const T&) const;
         
         Set    operator& (const Set&) const;
