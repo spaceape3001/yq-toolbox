@@ -51,16 +51,19 @@ namespace yq {
         Set    operator- (const base_set&) const;
         
         //! Inserts specified item into a COPY of the set, returns that copy
-        //! \note Beware that this includes an extra memory copy of the ENTIRE set
+        //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator+ (const T&) const;
         
         //! Removed specified item from a COPY of the set, returns that copy
-        //! \note Beware that this includes an extra memory copy of the ENTIRE set
+        //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator- (const T&) const;
         
         //! Intersection of the two sets 
-        //! \note Beware that this includes an extra memory copy of the ENTIRE set
+        //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator& (const Set&) const;
+        
+        //! Union of the two sets
+        //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator| (const Set&) const;
         Set    operator^ (const Set&) const;
         
