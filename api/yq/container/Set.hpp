@@ -65,6 +65,9 @@ namespace yq {
         //! Union of the two sets
         //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator| (const Set&) const;
+        
+        //! Xor of the two sets, (ie, items that are ONLY in set A or in SET B but not both)
+        //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator^ (const Set&) const;
         
 
