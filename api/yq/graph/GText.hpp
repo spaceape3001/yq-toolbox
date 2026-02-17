@@ -27,7 +27,10 @@ namespace yq {
         GTextData*  data();
         const GTextData*  data() const;
 
-        Vector2F    position() const;
-        void        position(set_k, const Vector2F&);
+        Vector2D            position() const;
+        void                position(set_k, const Vector2D&);
+
+        Size2D              size() const;
+        void                size(set_k, const Size2D&);
     };
 }

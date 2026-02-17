@@ -15,10 +15,9 @@
 #endif
 
 namespace yq {
-    struct GShapeData : public GBaseData {
+    struct GShapeData : public GBaseData, public GPosSizeData {
         
-        Vector2F            position    = NAN;
-        Size2F              size        = NAN;
+        symbol::TransformMode   transform;
 
         GShapeData(gid_t);
         GShapeData(const GShapeData&);

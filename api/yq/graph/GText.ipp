@@ -35,24 +35,37 @@ namespace yq {
         return nullptr;
     }
 
-    Vector2F  GText::position() const
+    Vector2D  GText::position() const
     {
         if(const GTextData* gn = data())
             return gn -> position;
         return NAN;
     }
     
-    void      GText::position(set_k, const Vector2F&v)
+    void      GText::position(set_k, const Vector2D&v)
     {
         if(GTextData* gn = data())
             gn -> position  = v;
     }
 
+    Size2D  GText::size() const
+    {
+        if(const GTextData* gn = data())
+            return gn -> size;
+        return NAN;
+    }
+    
+    void    GText::size(set_k, const Size2D&v)
+    {
+        if(GTextData* gn = data())
+            gn -> size  = v;
+    }
+    
     ////////////////////////////////////////////////////////////////////////////
 
     GTextData::GTextData(gid_t _id) : GBaseData(_id) {}
     GTextData::GTextData(const GTextData& cp) : 
-        GBaseData(cp), position(cp.position), size(cp.size), symbol(cp.symbol), text(cp.text)
+        GBaseData(cp), GPosSizeData(cp), text(cp.text)
     {
     }
     

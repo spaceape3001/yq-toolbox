@@ -106,6 +106,32 @@ namespace yq {
             gn -> position  = v;
     }
 
+    Size2D  GNode::size() const
+    {
+        if(const GNodeData* gn = data())
+            return gn -> size;
+        return NAN;
+    }
+    
+    void    GNode::size(set_k, const Size2D&v)
+    {
+        if(GNodeData* gn = data())
+            gn -> size  = v;
+    }
+    
+    symbol::TransformMode    GNode::transform() const
+    {
+        if(const GNodeData* gn = data())
+            return gn -> transform;
+        return symbol::TransformMode();
+    }
+    
+    void                    GNode::transform(set_k, symbol::TransformMode v)
+    {
+        if(GNodeData* gn = data())
+            gn -> transform  = v;
+    }
+
     std::string_view    GNode::type() const
     {
         if(const GNodeData* gn = data()){
@@ -118,9 +144,7 @@ namespace yq {
 
     GNodeData::GNodeData(gid_t _id) : GBaseData(_id) {}
     
-    GNodeData::GNodeData(const GNodeData& cp ) : GBaseData(cp), 
-        position(cp.position),
-        size(cp.size),
+    GNodeData::GNodeData(const GNodeData& cp ) : GBaseData(cp), GPosSizeData(cp),
         type(cp.type)
     {
     }

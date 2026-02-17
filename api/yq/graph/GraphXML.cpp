@@ -63,6 +63,35 @@ namespace yq {
     {
         return errors::todo();
     }
+    
+    static std::error_code  read_pos_size(GPosSizeData& data, const XmlNode& xml)
+    {
+        if(has_attribute(xml, "x")){
+            auto v = read_attribute(xml, "x", x_double);
+            if(!v)
+                return v.error();
+            data.position.x = *v;
+        }
+        if(has_attribute(xml, "y")){
+            auto v = read_attribute(xml, "y", x_double);
+            if(!v)
+                return v.error();
+            data.position.y = *v;
+        }
+        if(has_attribute(xml, "w")){
+            auto v = read_attribute(xml, "w", x_double);
+            if(!v)
+                return v.error();
+            data.size.x = *v;
+        }
+        if(has_attribute(xml, "h")){
+            auto v = read_attribute(xml, "h", x_double);
+            if(!v)
+                return v.error();
+            data.size.y = *v;
+        }
+        return {};
+    }
 
     static std::error_code  read_edge(GDocument& doc, const XmlNode& xml)
     {
@@ -128,31 +157,16 @@ namespace yq {
         if(std::error_code ec = read_base(*gn, xml); ec != std::error_code())
             return ec;
 
+        if(std::error_code ec = read_pos_size(*gn, xml); ec != std::error_code())
+            return ec;
+
         gn -> type  = read_attribute(xml, "type", x_string);
     
-        if(has_attribute(xml, "x")){
-            auto v = read_attribute(xml, "x", x_double);
+        if(has_attribute(xml, "transform")){
+            auto v  = read_attribute(xml, "transform", x_enum<symbol::TransformMode>);
             if(!v)
                 return v.error();
-            gn -> position.x = *v;
-        }
-        if(has_attribute(xml, "y")){
-            auto v = read_attribute(xml, "y", x_double);
-            if(!v)
-                return v.error();
-            gn -> position.y = *v;
-        }
-        if(has_attribute(xml, "w")){
-            auto v = read_attribute(xml, "w", x_double);
-            if(!v)
-                return v.error();
-            gn -> size.x = *v;
-        }
-        if(has_attribute(xml, "h")){
-            auto v = read_attribute(xml, "h", x_double);
-            if(!v)
-                return v.error();
-            gn -> size.y = *v;
+            gn -> transform = *v;
         }
 
         // more ... ?
@@ -201,7 +215,17 @@ namespace yq {
         GShapeData*  gs  = doc.shape(CREATE, *x);
         if(std::error_code ec = read_base(*gs, xml); ec != std::error_code())
             return ec;
-            
+        if(std::error_code ec = read_pos_size(*gs, xml); ec != std::error_code())
+            return ec;
+
+        if(has_attribute(xml, "transform")){
+            auto v  = read_attribute(xml, "transform", x_enum<symbol::TransformMode>);
+            if(!v)
+                return v.error();
+            gs -> transform = *v;
+        }
+
+
         // more ... ?
         return {};
     }
@@ -214,7 +238,10 @@ namespace yq {
         GTextData*  gt  = doc.text(CREATE, *x);
         if(std::error_code ec = read_base(*gt, xml); ec != std::error_code())
             return ec;
+        if(std::error_code ec = read_pos_size(*gt, xml); ec != std::error_code())
+            return ec;
             
+        gt->text    = read_child(xml, "data", x_string);
         // more ... ?
         return {};
     }
@@ -309,6 +336,18 @@ namespace yq {
     {
     }
     
+    static void     write_pos_size(const GPosSizeData& d, XmlNode& xml)
+    {
+        if(!is_nan(d.position)){
+            write_attribute(xml, "x", d.position.x );
+            write_attribute(xml, "y", d.position.y );
+        }
+        if(!is_nan(d.size)){
+            write_attribute(xml, "w", d.size.x);
+            write_attribute(xml, "h", d.size.y);
+        }
+    }
+    
     static void     write_edge(const GEdgeData&d, XmlNode&xml)
     {
         write_base(d,xml);
@@ -335,14 +374,9 @@ namespace yq {
         write_base(d,xml);
         if(!d.type.empty())
             write_attribute(xml, "type", _deresolve(d.type));
-        if(!is_nan(d.position)){
-            write_attribute(xml, "x", d.position.x );
-            write_attribute(xml, "y", d.position.y );
-        }
-        if(!is_nan(d.size)){
-            write_attribute(xml, "w", d.size.x);
-            write_attribute(xml, "h", d.size.y);
-        }
+        write_pos_size(d, xml);
+        if(d.transform != symbol::TransformMode())
+            write_attribute(xml, "transform", d.transform);
     }
 
     static void     write_port(const GPortData&d, XmlNode&xml)
@@ -354,16 +388,23 @@ namespace yq {
             write_attribute(xml, "output", "true"sv);
         if(!d.key.empty())
             write_attribute(xml, "key", d.key);
+        
     }
 
     static void     write_shape(const GShapeData&d, XmlNode&xml)
     {
         write_base(d,xml);
+        write_pos_size(d, xml);
+        if(d.transform != symbol::TransformMode())
+            write_attribute(xml, "transform", d.transform);
     }
 
     static void     write_text(const GTextData&d, XmlNode&xml)
     {
         write_base(d,xml);
+        write_pos_size(d, xml);
+        if(!d.text.empty())
+            write_child(xml, "data", d.text);
     }
 
     std::error_code saveGraphXML(const GDocument&gdoc, XmlDocument&xdoc)

@@ -5,7 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/b3fmt/logging.hpp>
+#include <yq/meta/Init.hpp>
+
 #include "SymbolLibrary.ipp"
 #include "Shape.ipp"
 #include "Symbol.ipp"
 #include "transform.ipp"
+
+YQ_TYPE_IMPLEMENT(yq::symbol::TransformMode)

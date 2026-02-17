@@ -26,7 +26,13 @@ namespace yq {
         GShapeData*  data();
         const GShapeData*  data() const;
         
-        Vector2F            position() const;
-        void                position(set_k, const Vector2F&);
+        Vector2D            position() const;
+        void                position(set_k, const Vector2D&);
+
+        Size2D              size() const;
+        void                size(set_k, const Size2D&);
+
+        symbol::TransformMode    transform() const;
+        void                    transform(set_k, symbol::TransformMode);
     };
 }

@@ -35,26 +35,52 @@ namespace yq {
         return nullptr;
     }
 
-    Vector2F  GShape::position() const
+    Vector2D  GShape::position() const
     {
         if(const GShapeData* gn = data())
             return gn -> position;
         return NAN;
     }
     
-    void      GShape::position(set_k, const Vector2F&v)
+    void      GShape::position(set_k, const Vector2D&v)
     {
         if(GShapeData* gn = data())
             gn -> position  = v;
     }
 
+    Size2D  GShape::size() const
+    {
+        if(const GShapeData* gn = data())
+            return gn -> size;
+        return NAN;
+    }
+    
+    void    GShape::size(set_k, const Size2D&v)
+    {
+        if(GShapeData* gn = data())
+            gn -> size  = v;
+    }
+
+    symbol::TransformMode    GShape::transform() const
+    {
+        if(const GShapeData* gn = data())
+            return gn -> transform;
+        return symbol::TransformMode();
+    }
+    
+    void                    GShape::transform(set_k, symbol::TransformMode v)
+    {
+        if(GShapeData* gn = data())
+            gn -> transform  = v;
+    }
+    
     ////////////////////////////////////////////////////////////////////////////
 
     GShapeData::GShapeData(gid_t _id) : GBaseData(_id) 
     {
     }
     
-    GShapeData::GShapeData(const GShapeData& cp) : GBaseData(cp), position(cp.position), size(cp.size)
+    GShapeData::GShapeData(const GShapeData& cp) : GBaseData(cp), GPosSizeData(cp), transform(cp.transform)
     {
     }
     

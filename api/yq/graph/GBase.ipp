@@ -242,5 +242,21 @@ namespace yq {
     GBaseData::~GBaseData()
     {
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GPosSizeData::GPosSizeData()
+    {
+    }
+    
+    GPosSizeData::GPosSizeData(const GPosSizeData& cp) :         
+        position(cp.position),
+        size(cp.size)
+    {
+    }
+    
+    GPosSizeData::~GPosSizeData()
+    {
+    }
     
 }

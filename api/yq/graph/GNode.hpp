@@ -9,6 +9,7 @@
 #include <yq/graph/GBase.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
+#include <yq/symbol/transform.hpp>
 
 namespace yq {
     namespace symbol {
@@ -35,9 +36,13 @@ namespace yq {
         std::vector<GPort>  ports() const;
         size_t              ports(count_k) const;
         
-        
         Vector2D            position() const;
         void                position(set_k, const Vector2D&);
+        Size2D              size() const;
+        void                size(set_k, const Size2D&);
+        
+        symbol::TransformMode    transform() const;
+        void                    transform(set_k, symbol::TransformMode);
         
         std::string_view    type() const;
     };

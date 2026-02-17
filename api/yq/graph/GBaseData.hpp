@@ -8,6 +8,8 @@
 
 #include <yq/graph/graph_types.hpp>
 #include <yq/core/Tristate.hpp>
+#include <yq/shape/Size2.hpp>
+#include <yq/vector/Vector2.hpp>
 
 namespace yq {
 
@@ -45,5 +47,18 @@ namespace yq {
         virtual bool    is_shape() const { return false; }
         virtual bool    is_text() const { return false; }
         virtual bool    is_view() const { return false; }
+    };
+    
+#ifdef NAN
+#undef NAN
+#endif
+
+    struct GPosSizeData {
+        Vector2D                position    = NAN;
+        Size2D                  size        = NAN;
+        
+        GPosSizeData();
+        GPosSizeData(const GPosSizeData&);
+        ~GPosSizeData();
     };
 }

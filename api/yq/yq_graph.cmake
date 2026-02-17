@@ -17,6 +17,7 @@ target_link_libraries(yq_graph PUBLIC
     yq_core 
     yq_xml 
     yq_resource
+    yq_symbol
 )
 
 LinkTest(yq_graph)

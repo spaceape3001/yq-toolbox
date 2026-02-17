@@ -7,12 +7,15 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <yq/typedef/vector2.hpp>
+#include <yq/core/Enum.hpp>
+#include <yq/core/Flag.hpp>
 #include <yq/core/Flags.hpp>
+#include <yq/meta/MetaBinder.hpp>
+#include <yq/typedef/vector2.hpp>
 
 namespace yq::symbol {
-    enum class TransformMode {
-        IDENTITY,
+    YQ_ENUM(TransformMode, ,
+        IDENTITY = 0,
         ROT_090,
         ROT_180,
         ROT_270,
@@ -31,7 +34,7 @@ namespace yq::symbol {
         SWAP_090,
         SWAP_180,
         SWAP_270
-    };
+    );
 
     typedef Vector2F (*FNTransform)(Vector2F);
     
@@ -75,3 +78,5 @@ namespace yq::symbol {
     TransformMode       swapxy(TransformMode);
 */
 }
+
+YQ_TYPE_DECLARE(yq::symbol::TransformMode)

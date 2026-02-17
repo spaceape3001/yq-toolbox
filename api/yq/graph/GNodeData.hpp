@@ -7,19 +7,13 @@
 #pragma once
 
 #include <yq/graph/GBaseData.hpp>
-#include <yq/shape/Size2.hpp>
-#include <yq/vector/Vector2.hpp>
-
-#ifdef NAN
-#undef NAN
-#endif
+#include <yq/symbol/transform.hpp>
 
 namespace yq {
     class GNodeTemplate;
-    struct GNodeData : public GBaseData {
-        Vector2D            position    = NAN;
-        Size2D              size        = NAN;
-        std::string         type;  // URL/etc to the node template
+    struct GNodeData : public GBaseData, public GPosSizeData {
+        symbol::TransformMode   transform;
+        std::string             type;  // URL/etc to the node template
         
         GNodeData(gid_t);
         GNodeData(const GNodeData&);
