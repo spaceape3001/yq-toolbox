@@ -70,9 +70,12 @@ namespace yq {
         //! \note Beware that this includes an extra memory copy of the ENTIRE return set
         Set    operator^ (const Set&) const;
         
-        //! Adds specified item into this set
+        //! Adds specified item into this set (by moving in item)
         //! \return Reference to set
         Set&   operator+=(T&&);
+
+        //! Adds specified item into this set (by copying in item)
+        //! \return Reference to set
         Set&   operator+=(const T&);
         Set&   operator+=(const std::list<T>&);
         Set&   operator+=(const std::set<T,C>&);
