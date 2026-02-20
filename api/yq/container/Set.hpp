@@ -77,6 +77,9 @@ namespace yq {
         //! Adds specified item into this set (by copying in item)
         //! \return Reference to set
         Set&   operator+=(const T&);
+        
+        //! Adds the items of the given list to this set
+        //! \return Reference to set
         Set&   operator+=(const std::list<T>&);
         Set&   operator+=(const std::set<T,C>&);
         Set&   operator+=(const std::vector<T>&);
