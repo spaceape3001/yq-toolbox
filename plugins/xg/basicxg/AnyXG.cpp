@@ -10,24 +10,26 @@
 using namespace yq;
 
 namespace {
-    /*! \brief An ALWAYS node
+    /*! \brief An Any (OR) node
+    
+        This will return TRUE if any node returns true.
     */
 
-    class AlwaysXG : public XGElement {
-        YQ_OBJECT_DECLARE(AlwaysXG, XGElement)
+    class AnyXG : public XGElement {
+        YQ_OBJECT_DECLARE(AnyXG, XGElement)
     public:
-        AlwaysXG(){}
-        ~AlwaysXG(){}
+        AnyXG(){}
+        ~AnyXG(){}
         
         static void init_meta()
         {
-            auto w = writer<AlwaysXG>();
+            auto w = writer<AnyXG>();
             w.category("1..2..3");
-            w.label("Always");
-            w.description("Always execution");
-            w.icon(0, "yq/icon/xg/start.svg");
-            w.node_type(XGNodeType::Always);
-            w.symbol("yq/symbol/xgflow.sym#start");
+            w.label("ANY");
+            w.description("Any/Or execution");
+            w.icon(0, "yq/icon/xg/logic.svg");
+            //w.node_type(XGNodeType::Any);
+            w.symbol("yq/symbol/xgflow.sym#conditional");
         }
         
         xg_result_t execute(XGContext&)
@@ -37,4 +39,4 @@ namespace {
     };
 }
 
-YQ_OBJECT_IMPLEMENT(AlwaysXG)
+YQ_OBJECT_IMPLEMENT(AnyXG)

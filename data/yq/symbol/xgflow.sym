@@ -22,11 +22,46 @@ done Done {
 
 start Start {
     oval r=100,50 {
-        fill  orange
+        fill  lime
     }
     label Start
     out {
         position    0 -50
         fill        white
+    }
+}
+
+conditional Conditional {
+    oval r=100,50 {
+        fill pink
+    }
+    label Logic
+    in {
+        position 0 50
+        fill    white
+    }
+    out {
+        position 0 -50
+        fill    white
+    }
+    out ? {
+        shape circle
+        position 100 0
+        fill white
+    }
+}
+
+logic Logic {
+    oval r=100,50 {
+        fill pink
+    }
+    label Logic
+    in {
+        position 0 50
+        fill    white
+    }
+    out {
+        position 0 -50
+        fill    white
     }
 }
