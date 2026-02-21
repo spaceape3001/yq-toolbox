@@ -81,6 +81,9 @@ namespace yq {
         //! Adds the items of the given list to this set
         //! \return Reference to set
         Set&   operator+=(const std::list<T>&);
+
+        //! Adds the items of the given set to this set
+        //! \return Reference to set
         Set&   operator+=(const std::set<T,C>&);
         Set&   operator+=(const std::vector<T>&);
 
