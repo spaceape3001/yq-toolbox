@@ -263,11 +263,9 @@ namespace yq {
     ////////////////////////////////////////////////////////////////////////////
 
     GGraphData::GGraphData(gid_t _id) : GBaseData(_id) {}
-    GGraphData::GGraphData(const GGraphData&cp) : GBaseData(cp) 
-    {
-    }
-    
-    GGraphData::~GGraphData(){}
+    GGraphData::GGraphData(const GGraphData&)  = default;
+    GGraphData::~GGraphData() = default;
+
     GBaseData*  GGraphData::clone() const { return new GGraphData(*this); }
 
 }

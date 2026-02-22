@@ -59,25 +59,74 @@ namespace yq {
         return {};
     }
     
-    static std::error_code  read_waypoints(std::vector<GWaypoint>& pts, const XmlNode& xml)
-    {
-        return errors::todo();
-    }
     
-    static std::error_code  read_pos_size(GPosSizeData& data, const XmlNode& xml)
+    static std::error_code  read_position(Vector2D& data, const XmlNode& xml)
     {
         if(has_attribute(xml, "x")){
             auto v = read_attribute(xml, "x", x_double);
             if(!v)
                 return v.error();
-            data.position.x = *v;
+            data.x = *v;
         }
         if(has_attribute(xml, "y")){
             auto v = read_attribute(xml, "y", x_double);
             if(!v)
                 return v.error();
-            data.position.y = *v;
+            data.y = *v;
         }
+        return {};
+    }
+    
+    static std::error_code  read_waypoint(GWaypoint& pt, const XmlNode& xml)
+    {
+        if(has_attribute(xml, "x") || has_attribute(xml, "y")){
+            Vector2D    v{};
+            if(auto ec = read_position(v, xml); ec != std::error_code())
+                return ec;
+            pt.position = v;
+        }
+        if(has_attribute(xml, "gid")){
+            auto x = read_attribute(xml, "gid", x_uint64);
+            if(!x)
+                return x.error();
+            pt.position = *x;
+        }
+        if(has_attribute(xml, "dx")){
+            auto v = read_attribute(xml, "dx", x_double);
+            if(!v)
+                return v.error();
+            pt.direction.x = *v;
+        }
+        if(has_attribute(xml, "dy")){
+            auto v = read_attribute(xml, "dy", x_double);
+            if(!v)
+                return v.error();
+            pt.direction.y = *v;
+        }
+        if(has_attribute(xml, "f")){
+            auto v = read_attribute(xml, "f", x_float);
+            if(!v)
+                return v.error();
+            pt.position = *v;
+        }
+        return {};
+    }
+    
+    static std::error_code  read_waypoints(std::vector<GWaypoint>& pts, const XmlNode& xml)
+    {
+        for(const XmlNode* x = xml.first_node("waypoint"); x; x = x->next_sibling("waypoint")){
+            GWaypoint   way;
+            if(std::error_code ec=read_waypoint(way, *x); ec != std::error_code())
+                return ec;
+            pts.push_back(way);
+        }
+        return {};
+    }
+    
+    static std::error_code  read_pos_size(GPosSizeData& data, const XmlNode& xml)
+    {
+        if(auto ec = read_position(data.position, xml); ec != std::error_code())
+            return ec;
         if(has_attribute(xml, "w")){
             auto v = read_attribute(xml, "w", x_double);
             if(!v)
@@ -334,16 +383,38 @@ namespace yq {
         //  attributes....
     }
     
+    static void     write_position(const Vector2D& pt, XmlNode& xml)
+    {
+        if(!is_nan(pt)){
+            write_attribute(xml, "x", pt.x );
+            write_attribute(xml, "y", pt.y );
+        }
+    }
+
+    static void     write_waypoint(const GWaypoint& way, XmlNode& xml)
+    {
+        if(auto p = std::get_if<Vector2D>(&way.position))
+            write_position(*p, xml);
+        if(auto p = std::get_if<gid_t>(&way.position); p && *p)
+            write_attribute(xml, "gid", *p);
+        if(auto p = std::get_if<float>(&way.position))
+            write_attribute(xml, "f", *p);
+        if(!is_nan(way.direction)){
+            write_attribute(xml, "dx", way.direction.x );
+            write_attribute(xml, "dy", way.direction.y );
+        }
+        
+    }
+    
     static void     write_waypoints(const std::vector<GWaypoint>& points, XmlNode& xml)
     {
+        for(auto& way : points)
+            write_waypoint(way, *xml.create_element("waypoint"));
     }
     
     static void     write_pos_size(const GPosSizeData& d, XmlNode& xml)
     {
-        if(!is_nan(d.position)){
-            write_attribute(xml, "x", d.position.x );
-            write_attribute(xml, "y", d.position.y );
-        }
+        write_position(d.position, xml);
         if(!is_nan(d.size)){
             write_attribute(xml, "w", d.size.x);
             write_attribute(xml, "h", d.size.y);

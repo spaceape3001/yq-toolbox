@@ -35,6 +35,8 @@ namespace yq {
         GNodeData*              data();
         const GNodeData*        data() const;
         
+        std::vector<GEdge>      edges(const GNodeEdgeSearchOptions& opts={}) const;
+        
         std::vector<GEdge>      inbound(const GNodeEdgeSearchOptions& opts={}) const;
         std::vector<GEdge>      outbound(const GNodeEdgeSearchOptions& opts={}) const;
         

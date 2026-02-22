@@ -176,9 +176,9 @@ namespace yq {
         
         using connection_map_t  = Map<std::pair<gid_t,gid_t>,gid_t>;
     
+        connection_map_t            m_connections;
         std::vector<GBaseData*>     m_data;
         std::string                 m_kind;
-        connection_map_t            m_connections;
 
         //std::string                 kind;
         //std::vector<std::string>    auxlibs;

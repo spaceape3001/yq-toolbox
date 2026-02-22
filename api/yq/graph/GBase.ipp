@@ -239,59 +239,37 @@ namespace yq {
     {
     }
 
-    GBaseData::GBaseData(const GBaseData& cp) : 
-        id(cp.id), 
-        deleted(cp.deleted),    // should be skipping...maybe...
-        hidden(cp.hidden), 
-        parent(cp.parent), 
-        z(cp.z) 
-    {
-    }
-
-    GBaseData::~GBaseData()
-    {
-    }
+    GBaseData::GBaseData(const GBaseData& cp)  = default;
+    GBaseData::~GBaseData() = default;
 
     ////////////////////////////////////////////////////////////////////////////
+
+    GPortCache::GPortCache() = default;
+    GPortCache::GPortCache(const GPortCache&) = default;
+    GPortCache::~GPortCache() = default;
 
     bool    GPortCache::has_port(gid_t g) const
     {
         return ports.contains(g);
     }
     
-    GPortCache::GPortCache()
-    {
-    }
-    
-    GPortCache::~GPortCache()
-    {
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
-    GPosSizeData::GPosSizeData()
-    {
-    }
-    
-    GPosSizeData::GPosSizeData(const GPosSizeData& cp) :         
-        position(cp.position),
-        size(cp.size)
-    {
-    }
-    
-    GPosSizeData::~GPosSizeData()
-    {
-    }
+    GPosSizeData::GPosSizeData() = default;
+    GPosSizeData::GPosSizeData(const GPosSizeData&) = default;
+    GPosSizeData::~GPosSizeData() = default;
     
     ////////////////////////////////////////////////////////////////////////////
 
 
     GSocketCache::GSocketCache() = default;
+    GSocketCache::GSocketCache(const GSocketCache&) = default;
     GSocketCache::~GSocketCache() = default;
 
     ////////////////////////////////////////////////////////////////////////////
 
     GSocketDir::GSocketDir() = default;
+    GSocketDir::GSocketDir(const GSocketDir&) = default;
     GSocketDir::~GSocketDir() = default;
 
     bool    GSocketDir::has_edge(gid_t g) const

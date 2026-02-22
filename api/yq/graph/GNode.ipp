@@ -40,6 +40,36 @@ namespace yq {
         return nullptr;
     }
 
+    std::vector<GEdge>  GNode::edges(const GNodeEdgeSearchOptions& opts) const
+    {
+        std::vector<GEdge>  ret;
+        if(const GNodeData* gn  = data()){
+            for(gid_t g : gn->in.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+            for(gid_t g : gn->out.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+            if(opts.ports){
+                for(gid_t p : gn->ports){
+                    if(const GPortData* gp = m_doc->port(p); gp && gp->input){
+                        for(gid_t g : gp->in.edges){
+                            if(m_doc->is_edge(g))
+                                ret.push_back(GEdge(m_doc, g));
+                        }
+                        for(gid_t g : gp->out.edges){
+                            if(m_doc->is_edge(g))
+                                ret.push_back(GEdge(m_doc, g));
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
     std::vector<GEdge>  GNode::inbound(const GNodeEdgeSearchOptions& opts) const
     {
         std::vector<GEdge>  ret;
@@ -234,12 +264,8 @@ namespace yq {
 
     GNodeData::GNodeData(gid_t _id) : GBaseData(_id) {}
     
-    GNodeData::GNodeData(const GNodeData& cp ) : GBaseData(cp), GPosSizeData(cp),
-        type(cp.type)
-    {
-    }
-    
-    GNodeData::~GNodeData(){}
+    GNodeData::GNodeData(const GNodeData& cp )  = default;
+    GNodeData::~GNodeData() = default;
     
     GBaseData*  GNodeData::clone() const 
     { 

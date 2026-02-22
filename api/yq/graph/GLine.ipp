@@ -44,13 +44,9 @@ namespace yq {
     ////////////////////////////////////////////////////////////////////////////
 
     GLineData::GLineData(gid_t _id) : GBaseData(_id) {}
-    GLineData::GLineData(const GLineData& cp) : 
-        GBaseData(cp),
-        waypoints(cp.waypoints)
-    {
-    }
-    
-    GLineData::~GLineData(){}
+    GLineData::GLineData(const GLineData& cp) = default;
+    GLineData::~GLineData() = default;
+
     GBaseData* GLineData::clone() const 
     { 
         return new GLineData(*this); 

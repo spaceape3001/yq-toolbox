@@ -105,14 +105,8 @@ namespace yq {
 
     GEdgeData::GEdgeData(gid_t _id) : GBaseData(_id) {}
 
-    GEdgeData::GEdgeData(const GEdgeData& cp ) : GBaseData(cp), 
-        source(cp.source), 
-        target(cp.target), 
-        waypoints(cp.waypoints) 
-    {
-    }
-
-    GEdgeData::~GEdgeData(){}
+    GEdgeData::GEdgeData(const GEdgeData&) = default;
+    GEdgeData::~GEdgeData() = default;
 
     GBaseData*  GEdgeData::clone() const 
     { 

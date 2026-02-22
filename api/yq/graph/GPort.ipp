@@ -86,11 +86,8 @@ namespace yq {
     ////////////////////////////////////////////////////////////////////////////
 
     GPortData::GPortData(gid_t _id) : GBaseData(_id) {}
-    GPortData::GPortData(const GPortData& cp) : GBaseData(cp)
-    {
-    }
-    
-    GPortData::~GPortData(){}
+    GPortData::GPortData(const GPortData&) = default;
+    GPortData::~GPortData() = default;
     
     GBaseData*  GPortData::clone() const 
     { 

@@ -17,6 +17,7 @@
 #include "GLineData.hpp"
 //#include "GViewData.hpp"
 
+#include "logging.hpp"
 #include <yq/resource/ResourceMetaWriter.hpp>
 
 YQ_RESOURCE_IMPLEMENT(yq::GDocument)
@@ -43,6 +44,7 @@ namespace yq {
                 continue;
             m_data[n]   = cp.m_data[n]->clone();
         }
+        m_connections   = cp.m_connections;
     }
 
     GDocument::~GDocument()
@@ -141,6 +143,12 @@ namespace yq {
 
             m_connections[{s,t}] = ge->id;
         }
+if(ge){
+    graphInfo << "GDocument made connection " << s << " > " << t << " edge> " << ge->id;
+} else {
+    graphInfo << "GDocument failed to make connection " << s << " > " << t;
+}        
+        
         return ge;
     }
 

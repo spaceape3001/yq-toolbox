@@ -75,6 +75,7 @@ namespace yq {
         gid_t   route(gid_t) const;
         
         GSocketDir();
+        GSocketDir(const GSocketDir&);
         ~GSocketDir();
     };
 
@@ -83,6 +84,7 @@ namespace yq {
         GSocketDir              out;    //!< outbound
         
         GSocketCache();
+        GSocketCache(const GSocketCache&);
         virtual ~GSocketCache();  // virtual to allow dynamic casts to work
     };
 
@@ -93,6 +95,7 @@ namespace yq {
         bool    has_port(gid_t) const;
         
         GPortCache();
+        GPortCache(const GPortCache&);
         virtual ~GPortCache();  // virtual to allow dynamic casting to work
     };
 }

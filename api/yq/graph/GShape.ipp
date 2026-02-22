@@ -80,13 +80,8 @@ namespace yq {
     {
     }
     
-    GShapeData::GShapeData(const GShapeData& cp) : GBaseData(cp), GPosSizeData(cp), transform(cp.transform)
-    {
-    }
-    
-    GShapeData::~GShapeData()
-    {
-    }
+    GShapeData::GShapeData(const GShapeData&) = default;
+    GShapeData::~GShapeData() = default;
     
     GBaseData*  GShapeData::clone() const 
     { 
