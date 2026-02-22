@@ -9,7 +9,7 @@
 #include <yq/graph/GBaseData.hpp>
 
 namespace yq {
-    struct GPortData : public GBaseData {
+    struct GPortData : public GBaseData, public GSocketCache {
     
         std::string     key;
         bool            input   = true;

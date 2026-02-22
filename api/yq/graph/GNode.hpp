@@ -15,6 +15,10 @@ namespace yq {
     namespace symbol {
         class PinBase;
     }
+    
+    struct GNodeEdgeSearchOptions {
+        bool    ports   = false;
+    };
 
     class GNode : public GBase {
     public:
@@ -28,22 +32,30 @@ namespace yq {
         GNode& operator=(GNode&&);
         
         operator bool() const;
-        GNodeData*  data();
-        const GNodeData*  data() const;
+        GNodeData*              data();
+        const GNodeData*        data() const;
         
-        GPort               port(create_k, const symbol::PinBase&, const std::string& key={});
+        std::vector<GEdge>      inbound(const GNodeEdgeSearchOptions& opts={}) const;
+        std::vector<GEdge>      outbound(const GNodeEdgeSearchOptions& opts={}) const;
         
-        std::vector<GPort>  ports() const;
-        size_t              ports(count_k) const;
+        GPort                   port(create_k, const symbol::PinBase&, const std::string& key={});
         
-        Vector2D            position() const;
-        void                position(set_k, const Vector2D&);
-        Size2D              size() const;
-        void                size(set_k, const Size2D&);
+        //! First port with key
+        GPort                   port(const std::string& key) const;
+        GPort                   port(in_k, const std::string& key) const;
+        GPort                   port(out_k, const std::string& key) const;
         
-        symbol::TransformMode    transform() const;
+        std::vector<GPort>      ports() const;
+        size_t                  ports(count_k) const;
+        
+        Vector2D                position() const;
+        void                    position(set_k, const Vector2D&);
+        Size2D                  size() const;
+        void                    size(set_k, const Size2D&);
+        
+        symbol::TransformMode   transform() const;
         void                    transform(set_k, symbol::TransformMode);
         
-        std::string_view    type() const;
+        std::string_view        type() const;
     };
 }

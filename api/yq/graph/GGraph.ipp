@@ -25,6 +25,162 @@ namespace yq {
         return static_cast<bool>(data());
     }
 
+    GEdge   GGraph::connect(const GNode&src, const GNode&tgt)
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        GEdgeData* ge   = m_doc->connect(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    GEdge   GGraph::connect(const GNode&src, const GPort&tgt)
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        GEdgeData* ge   = m_doc->connect(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    GEdge   GGraph::connect(const GPort&src, const GNode&tgt)
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        GEdgeData* ge   = m_doc->connect(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    GEdge   GGraph::connect(const GPort&src, const GPort&tgt)
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        GEdgeData* ge   = m_doc->connect(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    bool    GGraph::connected(const GNode&src, const GNode&tgt) const
+    {
+        if(!m_doc)
+            return false;
+        if(src.document().ptr() != m_doc)
+            return false;
+        if(tgt.document().ptr() != m_doc)
+            return false;
+        return m_doc->connected(src.id(), tgt.id());
+    }
+    
+    bool    GGraph::connected(const GNode&src, const GPort&tgt) const
+    {
+        if(!m_doc)
+            return false;
+        if(src.document().ptr() != m_doc)
+            return false;
+        if(tgt.document().ptr() != m_doc)
+            return false;
+        return m_doc->connected(src.id(), tgt.id());
+    }
+    
+    bool    GGraph::connected(const GPort&src, const GNode&tgt) const
+    {
+        if(!m_doc)
+            return false;
+        if(src.document().ptr() != m_doc)
+            return false;
+        if(tgt.document().ptr() != m_doc)
+            return false;
+        return m_doc->connected(src.id(), tgt.id());
+    }
+    
+    bool    GGraph::connected(const GPort&src, const GPort&tgt) const
+    {
+        if(!m_doc)
+            return false;
+        if(src.document().ptr() != m_doc)
+            return false;
+        if(tgt.document().ptr() != m_doc)
+            return false;
+        return m_doc->connected(src.id(), tgt.id());
+    }
+    
+    GEdge   GGraph::connection(const GNode&src, const GNode&tgt) const
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        const GEdgeData* ge = m_doc->connection(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    GEdge   GGraph::connection(const GNode&src, const GPort&tgt) const
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        const GEdgeData* ge = m_doc->connection(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    GEdge   GGraph::connection(const GPort&src, const GNode&tgt) const
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        const GEdgeData* ge = m_doc->connection(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+    
+    GEdge   GGraph::connection(const GPort&src, const GPort&tgt) const
+    {
+        if(!m_doc)
+            return {};
+        if(src.document().ptr() != m_doc)
+            return {};
+        if(tgt.document().ptr() != m_doc)
+            return {};
+        const GEdgeData* ge = m_doc->connection(src.id(), tgt.id());
+        if(!ge)
+            return {};
+        return GEdge(m_doc, ge->id);
+    }
+
     GGraphData*  GGraph::data()
     {
         if(m_doc)

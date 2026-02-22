@@ -11,6 +11,18 @@
 #include <yq/typedef/g_document.hpp>
 
 namespace yq {
+    struct GDocumentConnectOptions {
+    
+        //! If true, will consider deleted items for uniqueness
+        //bool        deleted     = false;
+        
+        //! If true, will resurrect deleted item 
+        bool        resurrect   = false;
+        
+        //! If true, will enforce uniqueness and return existing connection
+        bool        unique      = true;
+    };
+
     /*! \brief Graph Document
     
         The graph document serves two purposes
@@ -33,8 +45,19 @@ namespace yq {
         
         static void init_meta();
         
+        void                build_connection_tables();  
+        
         GDocumentPtr        clone() const;
         
+            //! Creates a connection between two objects
+        GEdgeData*          connect(gid_t, gid_t, const GDocumentConnectOptions& opts={});
+
+        bool                connected(gid_t, gid_t, bool deleted=false) const;
+
+            //  Returns the given edge for the given connection (if it exists)
+        const GEdgeData*    connection(gid_t, gid_t, bool deleted=false) const;
+        
+
         GBaseData*          data(gid_t, bool deleted=false);
         const GBaseData*    data(gid_t, bool deleted=false) const;
 
@@ -46,11 +69,12 @@ namespace yq {
         //! Direct access
         //! \note CHECK FOR NULL POINTERS (there may be some)
         const auto&         datas() const { return m_data; }
-        
+
         GEdgeData*          edge(create_k);
         GEdgeData*          edge(create_k, gid_t);
         GEdgeData*          edge(gid_t, bool deleted=false);
         const GEdgeData*    edge(gid_t, bool deleted=false) const;
+
         size_t              edges(count_k) const;
 
         template <typename Pred>
@@ -78,7 +102,6 @@ namespace yq {
         bool                is_shape(gid_t, bool deleted=false) const;
         bool                is_text(gid_t, bool deleted=false) const;
         
-
         const auto&         kind() const { return m_kind; }
         void                kind(set_k, std::string_view);
 
@@ -150,9 +173,12 @@ namespace yq {
         
     private:
         using GBaseDataVector = std::vector<GBaseData*>;
+        
+        using connection_map_t  = Map<std::pair<gid_t,gid_t>,gid_t>;
     
         std::vector<GBaseData*>     m_data;
         std::string                 m_kind;
+        connection_map_t            m_connections;
 
         //std::string                 kind;
         //std::vector<std::string>    auxlibs;

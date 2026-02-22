@@ -25,8 +25,14 @@ namespace yq {
         const GEdgeData*    data() const;
         
         
-        GBase               source() const;
-        GBase               target() const;
+        GBase   source() const;
+        GNode   source(node_k) const;
+        GPort   source(port_k) const;
+        
+        GBase   target() const;
+        GNode   target(node_k) const;
+        GPort   target(port_k) const;
+        
         
         operator bool() const;
     };

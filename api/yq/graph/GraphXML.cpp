@@ -285,6 +285,8 @@ namespace yq {
                     return unexpected(ec);
             }
         }
+        
+        doc -> build_connection_tables();
         return doc;
     }
 

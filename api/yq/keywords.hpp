@@ -28,11 +28,17 @@ namespace yq {
     #ifdef ERROR
         #undef ERROR
     #endif
+    #ifdef IN
+        #undef IN
+    #endif
     #ifdef MIN
         #undef MIN
     #endif
     #ifdef MAX
         #undef MAX
+    #endif
+    #ifdef OUT
+        #undef OUT
     #endif
     #ifdef NAN
         #undef NAN
@@ -147,6 +153,7 @@ namespace yq {
     struct identity_k {};
     struct if_k {};
     struct igcase_k {};
+    struct in_k {};
     struct individual_k {};
     struct inflatable_k {};
     struct info_k {};
@@ -212,6 +219,7 @@ namespace yq {
     struct open_k {};
     struct opposite_k {};
     struct optional_k {};
+    struct out_k {};
     struct output_k {};
     struct parent_k {};
     struct parse_k {};
@@ -478,6 +486,7 @@ namespace yq {
     static constexpr const identity_k           IDENTITY;
     static constexpr const if_k                 IF;
     static constexpr const igcase_k             IGCASE;
+    static constexpr const in_k                 IN;
     static constexpr const individual_k         INDIVIDUAL;
     static constexpr const inflatable_k         INFLATABLE;
     static constexpr const info_k               INFO;
@@ -548,6 +557,7 @@ namespace yq {
     static constexpr const open_k               OPEN;
     static constexpr const opposite_k           OPPOSITE; 
     static constexpr const optional_k           OPTIONAL;
+    static constexpr const out_k                OUT;
     static constexpr const output_k             OUTPUT;
     static constexpr const parent_k             PARENT;
     static constexpr const parse_k              PARSE;

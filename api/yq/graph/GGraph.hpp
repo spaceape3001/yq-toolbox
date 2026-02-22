@@ -33,6 +33,20 @@ namespace yq {
         GGraphData*  data();
         const GGraphData*  data() const;
         
+        GEdge               connect(const GNode&, const GNode&);
+        GEdge               connect(const GNode&, const GPort&);
+        GEdge               connect(const GPort&, const GNode&);
+        GEdge               connect(const GPort&, const GPort&);
+        
+        bool                connected(const GNode&, const GNode&) const;
+        bool                connected(const GNode&, const GPort&) const;
+        bool                connected(const GPort&, const GNode&) const;
+        bool                connected(const GPort&, const GPort&) const;
+        
+        GEdge               connection(const GNode&, const GNode&) const;
+        GEdge               connection(const GNode&, const GPort&) const;
+        GEdge               connection(const GPort&, const GNode&) const;
+        GEdge               connection(const GPort&, const GPort&) const;
         
         std::vector<GEdge>  edges() const;
         size_t              edges(count_k) const;

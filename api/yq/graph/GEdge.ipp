@@ -47,12 +47,58 @@ namespace yq {
             return GBase(m_doc, ge->source);
         return GBase();
     }
+
+    GNode  GEdge::source(node_k) const
+    {
+        if(const GEdgeData* ge = data(); ge->source){
+            if(m_doc->is_node(ge->source)){
+                return GNode(m_doc, ge->source);
+            }
+            if(const GPortData* gp = m_doc->port(ge->source)){
+                if(m_doc->is_node(gp->parent))
+                    return GNode(m_doc, gp->parent);
+            }
+        }
+        return GNode();
+    }
+    
+    GPort  GEdge::source(port_k) const
+    {
+        if(const GEdgeData* ge = data(); ge->source){
+            if(m_doc->is_port(ge->source))
+                return GPort(m_doc, ge->source);
+        }
+        return GPort();
+    }
     
     GBase  GEdge::target() const
     {
         if(const GEdgeData* ge = data(); ge->target)
             return GBase(m_doc, ge->target);
         return GBase();
+    }
+
+    GNode  GEdge::target(node_k) const
+    {
+        if(const GEdgeData* ge = data(); ge->target){
+            if(m_doc->is_node(ge->target)){
+                return GNode(m_doc, ge->target);
+            }
+            if(const GPortData* gp = m_doc->port(ge->target)){
+                if(m_doc->is_node(gp->parent))
+                    return GNode(m_doc, gp->parent);
+            }
+        }
+        return GNode();
+    }
+    
+    GPort  GEdge::target(port_k) const
+    {
+        if(const GEdgeData* ge = data(); ge->target){
+            if(m_doc->is_port(ge->target))
+                return GPort(m_doc, ge->target);
+        }
+        return GPort();
     }
 
     ////////////////////////////////////////////////////////////////////////////

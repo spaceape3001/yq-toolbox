@@ -81,10 +81,83 @@ namespace yq {
         m_data.resize(i+1, nullptr);
     }
 
+    void                GDocument::build_connection_tables()
+    {
+        for(const GBaseData* gb : m_data){
+            if(!gb)
+                continue;
+            
+            if(const GEdgeData* ge = dynamic_cast<const GEdgeData*>(gb)){
+                GSocketCache*   src = dynamic_cast<GSocketCache*>(data(ge->source));
+                GSocketCache*   tgt = dynamic_cast<GSocketCache*>(data(ge->target));
+                if(src && tgt){
+                    src -> out.edges << ge->id;
+                    src -> out.routes[ge->target]   = ge->id;
+                    
+                    tgt -> in.edges << ge->id;
+                    tgt -> in.routes[ge->source]    = ge->id;
+                }
+                
+                m_connections[{ge->source,ge->target}] = ge->id;
+            }
+            
+            if(const GPortData* gp = dynamic_cast<const GPortData*>(gb)){
+                if(GPortCache* pc = dynamic_cast<GPortCache*>(data(gp->parent))){
+                    pc -> ports << gp -> id;
+                }
+            }
+        }
+    }
+
     GDocumentPtr        GDocument::clone() const
     {
         return new GDocument(*this);
     }
+
+    GEdgeData*          GDocument::connect(gid_t s, gid_t t, const GDocumentConnectOptions& opts) 
+    {
+        GEdgeData*    ge  = nullptr;
+        
+        if(opts.unique){
+            ge  = const_cast<GEdgeData*>(connection(s, t, opts.resurrect));
+            if(ge){
+                ge -> deleted   = false;
+                return ge;
+            }
+        }
+        
+        GSocketCache*   src = dynamic_cast<GSocketCache*>(data(s));
+        GSocketCache*   tgt = dynamic_cast<GSocketCache*>(data(t));
+        if(src && tgt){
+            ge  = edge(CREATE);
+            ge -> source    = s;
+            ge -> target    = t;
+            
+            src -> out.edges << ge -> id;
+            src -> out.routes[t] = ge -> id;
+            
+            tgt -> in.edges << ge -> id;
+            tgt -> in.routes[s] = ge -> id;
+
+            m_connections[{s,t}] = ge->id;
+        }
+        return ge;
+    }
+
+    bool    GDocument::connected(gid_t s, gid_t t, bool deleted) const
+    {
+        return static_cast<bool>(connection(s,t,deleted));
+    }
+
+    const GEdgeData*    GDocument::connection(gid_t s, gid_t t, bool deleted) const
+    {
+        gid_t   eid = m_connections.get({s,t},0);
+        const GEdgeData* ge = dynamic_cast<const GEdgeData*>(data(eid, deleted));
+        if(ge && (deleted || !ge->deleted))
+            return ge;
+        return nullptr;
+    }
+
 
     GBaseData*          GDocument::data(gid_t i, bool deleted)
     {

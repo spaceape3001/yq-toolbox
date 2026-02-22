@@ -211,6 +211,15 @@ namespace yq {
         return GBase();
     }
     
+    void    GBase::resurrect()
+    {
+        if(!m_doc)
+            return;
+        if(GBaseData* d = m_doc -> data(m_id, true)){
+            d -> deleted    = false;
+        }
+    }
+    
     double  GBase::z() const
     {
         if(const GBaseData* d = data())
@@ -245,6 +254,21 @@ namespace yq {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    bool    GPortCache::has_port(gid_t g) const
+    {
+        return ports.contains(g);
+    }
+    
+    GPortCache::GPortCache()
+    {
+    }
+    
+    GPortCache::~GPortCache()
+    {
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     GPosSizeData::GPosSizeData()
     {
     }
@@ -259,4 +283,29 @@ namespace yq {
     {
     }
     
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    GSocketCache::GSocketCache() = default;
+    GSocketCache::~GSocketCache() = default;
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    GSocketDir::GSocketDir() = default;
+    GSocketDir::~GSocketDir() = default;
+
+    bool    GSocketDir::has_edge(gid_t g) const
+    {
+        return edges.contains(g);
+    }
+    
+    bool    GSocketDir::has_route(gid_t g) const
+    {
+        return routes.contains(g);
+    }
+    
+    gid_t   GSocketDir::route(gid_t g) const
+    {
+        return routes.get(g, 0ULL);
+    }
 }

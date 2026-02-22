@@ -10,6 +10,7 @@
 #include "GPortData.hpp"
 #include "GDocument.hxx"
 #include <yq/symbol/Pin.hpp>
+#include <yq/text/match.hpp>
 
 namespace yq {
     GNode::GNode() = default;
@@ -39,14 +40,103 @@ namespace yq {
         return nullptr;
     }
 
+    std::vector<GEdge>  GNode::inbound(const GNodeEdgeSearchOptions& opts) const
+    {
+        std::vector<GEdge>  ret;
+        if(const GNodeData* gn  = data()){
+            for(gid_t g : gn->in.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+            if(opts.ports){
+                for(gid_t p : gn->ports){
+                    if(const GPortData* gp = m_doc->port(p); gp && gp->input){
+                        for(gid_t g : gp->in.edges){
+                            if(m_doc->is_edge(g))
+                                ret.push_back(GEdge(m_doc, g));
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+    
+    std::vector<GEdge>  GNode::outbound(const GNodeEdgeSearchOptions& opts) const
+    {
+        std::vector<GEdge>  ret;
+        if(const GNodeData* gn  = data()){
+            for(gid_t g : gn->out.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+            if(opts.ports){
+                for(gid_t p : gn->ports){
+                    if(const GPortData* gp = m_doc->port(p); gp && gp->output){
+                        for(gid_t g : gp->out.edges){
+                            if(m_doc->is_edge(g))
+                                ret.push_back(GEdge(m_doc, g));
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    GPort   GNode::port(const std::string& key) const
+    {
+        const GNodeData*  gn  = data();
+        if(!gn)
+            return {};
+        for(gid_t p : gn -> ports){
+            if(const GPortData* gp = m_doc->port(p)){
+                if(is_similar(key, gp->key))
+                    return GPort(m_doc, p);
+            }
+        }
+        return {};
+    }
+    
+    GPort   GNode::port(in_k, const std::string& key) const
+    {
+        const GNodeData*  gn  = data();
+        if(!gn)
+            return {};
+        for(gid_t p : gn -> ports){
+            if(const GPortData* gp = m_doc->port(p)){
+                if(gp -> input && is_similar(key, gp->key))
+                    return GPort(m_doc, p);
+            }
+        }
+        return {};
+    }
+    
+    GPort   GNode::port(out_k, const std::string& key) const
+    {
+        const GNodeData*  gn  = data();
+        if(!gn)
+            return {};
+        for(gid_t p : gn -> ports){
+            if(const GPortData* gp = m_doc->port(p)){
+                if(gp -> output && is_similar(key, gp->key))
+                    return GPort(m_doc, p);
+            }
+        }
+        return {};
+    }
+
     GPort               GNode::port(create_k, const symbol::PinBase&pb, const std::string& key)
     {
-        if(!m_doc)
-            return GPort();
+        GNodeData*  gn  = data();
+        if(!gn)
+            return {};
             
         GPortData*d = m_doc -> port(CREATE);
         d->key  = key;
         d->parent   = m_id;
+        gn -> ports << d->id;
+        
         switch(pb.flow){
         case symbol::PinFlow::Bi:
             d -> input = true;
@@ -72,11 +162,11 @@ namespace yq {
     std::vector<GPort>  GNode::ports() const
     {
         std::vector<GPort>  ret;
-        if(m_doc){
-            m_doc -> ports(FOR, [&](const GPortData& d){
-                if(d.parent == m_id)
-                    ret.push_back(GPort(m_doc, d.id));
-            });
+        if(const GNodeData* gn = data()){
+            for(gid_t g : gn->ports){
+                if(m_doc -> is_port(g))
+                    ret.push_back(GPort(m_doc, g));
+            }
         }
         return ret;
     }
@@ -84,11 +174,11 @@ namespace yq {
     size_t              GNode::ports(count_k) const
     {
         size_t ret = 0;
-        if(m_doc){
-            m_doc -> ports(FOR, [&](const GPortData& d){
-                if(d.parent == m_id)
+        if(const GNodeData* gn = data()){
+            for(gid_t g : gn->ports){
+                if(m_doc -> is_port(g))
                     ++ret;
-            });
+            }
         }
         return ret;
     }

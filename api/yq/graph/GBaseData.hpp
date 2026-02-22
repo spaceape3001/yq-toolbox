@@ -7,6 +7,8 @@
 #pragma once
 
 #include <yq/graph/graph_types.hpp>
+#include <yq/container/Set.hpp>
+#include <yq/container/MultiMap.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
@@ -60,5 +62,37 @@ namespace yq {
         GPosSizeData();
         GPosSizeData(const GPosSizeData&);
         ~GPosSizeData();
+    };
+    
+    struct GSocketDir {
+        Set<gid_t>              edges;
+        Map<gid_t,gid_t>        routes;
+        
+        bool    has_edge(gid_t) const;
+        bool    has_route(gid_t) const;
+        
+        //! Route to ID (note, implies unique edges)
+        gid_t   route(gid_t) const;
+        
+        GSocketDir();
+        ~GSocketDir();
+    };
+
+    struct GSocketCache {
+        GSocketDir              in;     //!< inbound
+        GSocketDir              out;    //!< outbound
+        
+        GSocketCache();
+        virtual ~GSocketCache();  // virtual to allow dynamic casts to work
+    };
+
+    
+    struct GPortCache {
+        Set<gid_t>      ports;
+        
+        bool    has_port(gid_t) const;
+        
+        GPortCache();
+        virtual ~GPortCache();  // virtual to allow dynamic casting to work
     };
 }

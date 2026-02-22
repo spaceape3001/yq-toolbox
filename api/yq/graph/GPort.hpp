@@ -11,6 +11,9 @@
 namespace yq {
     class GNode;
 
+    struct GPortEdgeSearchOptions {
+    };
+
     class GPort : public GBase {
     public:
         
@@ -30,6 +33,8 @@ namespace yq {
         operator bool() const;
         GPortData*  data();
         const GPortData*  data() const;
-        
+
+        std::vector<GEdge>      inbound(const GPortEdgeSearchOptions& opts={}) const;
+        std::vector<GEdge>      outbound(const GPortEdgeSearchOptions& opts={}) const;
     };
 }

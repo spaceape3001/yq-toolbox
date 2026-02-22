@@ -36,6 +36,30 @@ namespace yq {
         return nullptr;
     }
 
+    std::vector<GEdge>      GPort::inbound(const GPortEdgeSearchOptions&) const
+    {
+        std::vector<GEdge> ret;
+        if(const GPortData* gp = data()){
+            for(gid_t g : gp->in.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+        }
+        return ret;
+    }
+    
+    std::vector<GEdge>      GPort::outbound(const GPortEdgeSearchOptions&) const
+    {
+        std::vector<GEdge> ret;
+        if(const GPortData* gp = data()){
+            for(gid_t g : gp->out.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+        }
+        return ret;
+    }
+
     bool    GPort::is_input() const
     {
         if(const GPortData* d = data())

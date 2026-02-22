@@ -65,6 +65,8 @@ namespace yq {
     
 
         GBase               parent() const;
+        
+        void                resurrect();
 
         double              z() const;
         void                z(set_k, double);

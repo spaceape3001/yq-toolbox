@@ -11,7 +11,7 @@
 
 namespace yq {
     class GNodeTemplate;
-    struct GNodeData : public GBaseData, public GPosSizeData {
+    struct GNodeData : public GBaseData, public GPosSizeData, public GSocketCache, public GPortCache {
         symbol::TransformMode   transform;
         std::string             type;  // URL/etc to the node template
         
