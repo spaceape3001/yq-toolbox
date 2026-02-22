@@ -40,6 +40,7 @@ namespace yq {
         std::vector<GEdge>      inbound(const GNodeEdgeSearchOptions& opts={}) const;
         std::vector<GEdge>      outbound(const GNodeEdgeSearchOptions& opts={}) const;
         
+        GPort                   port(create_k, const std::string& key={});
         GPort                   port(create_k, const symbol::PinBase&, const std::string& key={});
         
         //! First port with key
@@ -59,5 +60,8 @@ namespace yq {
         void                    transform(set_k, symbol::TransformMode);
         
         std::string_view        type() const;
+        
+    private:
+        GPortData*              _port(create_k, const std::string& key);
     };
 }

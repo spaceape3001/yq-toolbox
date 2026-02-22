@@ -34,6 +34,12 @@ namespace yq {
         GPortData*  data();
         const GPortData*  data() const;
 
+        void    input(disable_k);
+        void    input(enable_k);
+        void    output(disable_k);
+        void    output(enable_k);
+
+        std::vector<GEdge>      edges(const GPortEdgeSearchOptions& opts={}) const;
         std::vector<GEdge>      inbound(const GPortEdgeSearchOptions& opts={}) const;
         std::vector<GEdge>      outbound(const GPortEdgeSearchOptions& opts={}) const;
     };

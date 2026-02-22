@@ -27,6 +27,8 @@ namespace yq {
     GBase&  GBase::operator=(const GBase&) = default;
     GBase&  GBase::operator=(GBase&&) = default;
 
+    bool GBase::operator==(const GBase&) const noexcept = default;
+
     GBase::operator GEdge() const
     {
         if(is_edge())
@@ -218,6 +220,11 @@ namespace yq {
         if(GBaseData* d = m_doc -> data(m_id, true)){
             d -> deleted    = false;
         }
+    }
+
+    bool    GBase::valid() const
+    {
+        return static_cast<bool>(data());
     }
     
     double  GBase::z() const

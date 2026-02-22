@@ -26,6 +26,8 @@ namespace yq {
         
         GBase&  operator=(const GBase&);
         GBase&  operator=(GBase&&);
+        
+        bool operator==(const GBase&) const noexcept;
 
         operator bool() const;
         explicit operator GEdge() const;
@@ -70,6 +72,8 @@ namespace yq {
 
         double              z() const;
         void                z(set_k, double);
+        
+        bool                valid() const;
 
     protected:
         GDocumentPtr    m_doc;

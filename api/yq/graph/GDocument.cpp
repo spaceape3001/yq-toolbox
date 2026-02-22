@@ -143,12 +143,6 @@ namespace yq {
 
             m_connections[{s,t}] = ge->id;
         }
-if(ge){
-    graphInfo << "GDocument made connection " << s << " > " << t << " edge> " << ge->id;
-} else {
-    graphInfo << "GDocument failed to make connection " << s << " > " << t;
-}        
-        
         return ge;
     }
 

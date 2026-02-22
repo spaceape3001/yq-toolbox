@@ -26,6 +26,19 @@ namespace yq {
         return static_cast<bool>(data());
     }
 
+    GPortData* GNode::_port(create_k, const std::string& key)
+    {
+        GNodeData*  gn  = data();
+        if(!gn)
+            return nullptr;
+
+        GPortData*gp = m_doc -> port(CREATE);
+        gp->key  = key;
+        gp->parent   = m_id;
+        gn -> ports << gp->id;
+        return gp;
+    }
+
     GNodeData*          GNode::data()
     {
         if(m_doc)
@@ -54,14 +67,18 @@ namespace yq {
             }
             if(opts.ports){
                 for(gid_t p : gn->ports){
-                    if(const GPortData* gp = m_doc->port(p); gp && gp->input){
-                        for(gid_t g : gp->in.edges){
-                            if(m_doc->is_edge(g))
-                                ret.push_back(GEdge(m_doc, g));
+                    if(const GPortData* gp = m_doc->port(p)){
+                        if(gp->input){
+                            for(gid_t g : gp->in.edges){
+                                if(m_doc->is_edge(g))
+                                    ret.push_back(GEdge(m_doc, g));
+                            }
                         }
-                        for(gid_t g : gp->out.edges){
-                            if(m_doc->is_edge(g))
-                                ret.push_back(GEdge(m_doc, g));
+                        if(gp->output){
+                            for(gid_t g : gp->out.edges){
+                                if(m_doc->is_edge(g))
+                                    ret.push_back(GEdge(m_doc, g));
+                            }
                         }
                     }
                 }
@@ -156,37 +173,38 @@ namespace yq {
         return {};
     }
 
+    GPort   GNode::port(create_k, const std::string& key)
+    {
+        if(GPortData* gp = _port(CREATE, key))
+            return GPort(m_doc, gp->id);
+        return {};
+    }
+
     GPort               GNode::port(create_k, const symbol::PinBase&pb, const std::string& key)
     {
-        GNodeData*  gn  = data();
-        if(!gn)
-            return {};
-            
-        GPortData*d = m_doc -> port(CREATE);
-        d->key  = key;
-        d->parent   = m_id;
-        gn -> ports << d->id;
+        if(GPortData* gp = _port(CREATE, key)){
+            switch(pb.flow){
+            case symbol::PinFlow::Bi:
+                gp -> input = true;
+                gp -> output = true;
+                break;
+            case symbol::PinFlow::In:
+                gp -> input = true;
+                gp -> output = false;
+                break;
+            case symbol::PinFlow::Out:
+                gp -> input = false;
+                gp -> output    = true;
+                break;
+            case symbol::PinFlow::NC:
+                gp -> input = false;
+                gp -> output = false;
+                break;
+            }
         
-        switch(pb.flow){
-        case symbol::PinFlow::Bi:
-            d -> input = true;
-            d -> output = true;
-            break;
-        case symbol::PinFlow::In:
-            d -> input = true;
-            d -> output = false;
-            break;
-        case symbol::PinFlow::Out:
-            d -> input = false;
-            d -> output    = true;
-            break;
-        case symbol::PinFlow::NC:
-            d -> input = false;
-            d -> output = false;
-            break;
+            return GPort(m_doc, gp->id);
         }
-        
-        return GPort(m_doc, d->id);
+        return {};
     }
 
     std::vector<GPort>  GNode::ports() const

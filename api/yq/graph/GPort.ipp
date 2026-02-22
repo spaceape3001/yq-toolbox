@@ -36,6 +36,22 @@ namespace yq {
         return nullptr;
     }
 
+    std::vector<GEdge>      GPort::edges(const GPortEdgeSearchOptions&) const
+    {
+        std::vector<GEdge> ret;
+        if(const GPortData* gp = data()){
+            for(gid_t g : gp->in.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+            for(gid_t g : gp->out.edges){
+                if(m_doc->is_edge(g))
+                    ret.push_back(GEdge(m_doc, g));
+            }
+        }
+        return ret;
+    }
+
     std::vector<GEdge>      GPort::inbound(const GPortEdgeSearchOptions&) const
     {
         std::vector<GEdge> ret;
@@ -48,6 +64,18 @@ namespace yq {
         return ret;
     }
     
+    void    GPort::input(disable_k)
+    {
+        if(GPortData* gp = data())
+            gp -> input = false;
+    }
+    
+    void    GPort::input(enable_k)
+    {
+        if(GPortData* gp = data())
+            gp -> input = true;
+    }
+
     std::vector<GEdge>      GPort::outbound(const GPortEdgeSearchOptions&) const
     {
         std::vector<GEdge> ret;
@@ -81,6 +109,18 @@ namespace yq {
                 return GNode(m_doc, d->parent);
         }
         return GNode();
+    }
+
+    void    GPort::output(disable_k)
+    {
+        if(GPortData* gp = data())
+            gp -> output = false;
+    }
+    
+    void    GPort::output(enable_k)
+    {
+        if(GPortData* gp = data())
+            gp -> output = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////
