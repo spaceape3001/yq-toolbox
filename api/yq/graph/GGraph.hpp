@@ -24,6 +24,11 @@ namespace yq {
         GGraph();
         GGraph(create_k);
         GGraph(const GGraph&);
+        
+        // TODO ... weave in the readonly
+        GGraph(load_k, std::string_view);
+        GGraph(read_only_k, GDocumentCPtr);
+        
         GGraph(GDocumentPtr, gid_t i=0);
         GGraph(GGraph&&);
         ~GGraph();

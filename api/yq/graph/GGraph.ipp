@@ -20,6 +20,18 @@ namespace yq {
     GGraph& GGraph::operator=(const GGraph&) = default;
     GGraph& GGraph::operator=(GGraph&&) = default;
 
+    GGraph::GGraph(load_k, std::string_view sv)
+    {
+        GDocumentCPtr doc = GDocument::IO::load(sv);
+        m_doc   = const_cast<GDocument*>(doc.ptr());
+    }
+    
+    GGraph::GGraph(read_only_k, GDocumentCPtr doc)
+    {
+        if(doc && doc->read_only())
+            m_doc   = const_cast<GDocument*>(doc.ptr());
+    }
+
     GGraph::operator bool() const
     {
         return static_cast<bool>(data());
@@ -28,6 +40,8 @@ namespace yq {
     GEdge   GGraph::connect(const GNode&src, const GNode&tgt)
     {
         if(!m_doc)
+            return {};
+        if(m_doc->read_only())
             return {};
         if(src.document().ptr() != m_doc)
             return {};
@@ -43,6 +57,8 @@ namespace yq {
     {
         if(!m_doc)
             return {};
+        if(m_doc->read_only())
+            return {};
         if(src.document().ptr() != m_doc)
             return {};
         if(tgt.document().ptr() != m_doc)
@@ -57,6 +73,8 @@ namespace yq {
     {
         if(!m_doc)
             return {};
+        if(m_doc->read_only())
+            return {};
         if(src.document().ptr() != m_doc)
             return {};
         if(tgt.document().ptr() != m_doc)
@@ -70,6 +88,8 @@ namespace yq {
     GEdge   GGraph::connect(const GPort&src, const GPort&tgt)
     {
         if(!m_doc)
+            return {};
+        if(m_doc->read_only())
             return {};
         if(src.document().ptr() != m_doc)
             return {};
@@ -222,6 +242,8 @@ namespace yq {
     {
         if(!m_doc)
             return GNode();
+        if(m_doc->read_only())
+            return {};
         GNodeData* d    = m_doc->node(CREATE);
         d->parent   = m_id;
         return GNode(m_doc, d->id); 
@@ -231,6 +253,8 @@ namespace yq {
     {
         if(!m_doc)
             return GNode();
+        if(m_doc->read_only())
+            return {};
         GNodeData*  d   = m_doc->node(CREATE);
         d->parent           = m_id;
         d->type             = to_string(nt.url());

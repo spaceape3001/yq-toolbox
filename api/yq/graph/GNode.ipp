@@ -32,6 +32,9 @@ namespace yq {
         if(!gn)
             return nullptr;
 
+        if(m_doc->read_only())
+            return {};
+
         GPortData*gp = m_doc -> port(CREATE);
         gp->key  = key;
         gp->parent   = m_id;

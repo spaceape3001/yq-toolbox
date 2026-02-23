@@ -212,6 +212,13 @@ namespace yq {
             return GBase(m_doc, d->parent);
         return GBase();
     }
+
+    bool    GBase::read_only() const
+    {
+        if(!m_doc)
+            return false;
+        return m_doc -> read_only();
+    }
     
     void    GBase::resurrect()
     {

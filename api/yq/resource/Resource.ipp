@@ -167,11 +167,6 @@ namespace yq {
         }
 
         if(api.m_options.cache != Tristate::NO){
-            if((ret.first != ret.second) && !ret.first->m_readonly){
-                ret.second -> m_readonly    = true;
-                _c.inject(ret.second);
-            }
-
             ret.second -> m_readonly    = true;
             _c.inject(ret.second);
         }

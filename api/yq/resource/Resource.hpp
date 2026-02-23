@@ -27,6 +27,7 @@
 #include <system_error>
 //#include <variant>
 
+
 namespace yq {
     class FileResolver;
     class ResourceLibraryMeta;
@@ -251,7 +252,7 @@ namespace yq {
         };
 
         //! Indicates this resource is "read only", usually in the cache and shouldn't be modified (as it'll be thread unsafe to do so)
-        bool                            read_only() const { return m_readonly; }
+        bool        read_only() const { return m_readonly; }
 
 
         //! Current data size
@@ -331,7 +332,7 @@ namespace yq {
     
         //  INFO... TODO
         //  LIBRARY (somewhat TODO)
-    
+        
     protected:
         friend class ResourceMeta;
         friend class ResourceLibraryMeta;

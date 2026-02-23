@@ -160,7 +160,6 @@ namespace yq {
         return nullptr;
     }
 
-
     GBaseData*          GDocument::data(gid_t i, bool deleted)
     {
         if(i>=m_data.size())

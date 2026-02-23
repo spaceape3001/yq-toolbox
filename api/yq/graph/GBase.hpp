@@ -68,6 +68,8 @@ namespace yq {
 
         GBase               parent() const;
         
+        bool                read_only() const;
+        
         void                resurrect();
 
         double              z() const;
