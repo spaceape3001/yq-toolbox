@@ -90,6 +90,7 @@ namespace yq {
         //! \return Reference to set
         Set&   operator+=(const std::vector<T>&);
 
+        //! Removes the item from the set (if exists)
         Set&   operator-=(const T&);
         Set&   operator-=(const std::list<T>&);
         Set&   operator-=(const std::set<T,C>&);
