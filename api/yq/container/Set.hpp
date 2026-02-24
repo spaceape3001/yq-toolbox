@@ -71,11 +71,11 @@ namespace yq {
         Set    operator^ (const Set&) const;
         
         //! Adds specified item into this set (by moving in item)
-        //! \return Reference to set
+        //! \return Reference to this set
         Set&   operator+=(T&&);
 
         //! Adds specified item into this set (by copying in item)
-        //! \return Reference to set
+        //! \return Reference to this set
         Set&   operator+=(const T&);
         
         //! Adds the items of the given list to this set
@@ -83,15 +83,19 @@ namespace yq {
         Set&   operator+=(const std::list<T>&);
 
         //! Adds the items of the given set to this set
-        //! \return Reference to set
+        //! \return Reference to this set
         Set&   operator+=(const std::set<T,C>&);
 
         //! Adds the items of the given vector to this set
-        //! \return Reference to set
+        //! \return Reference to this set
         Set&   operator+=(const std::vector<T>&);
 
         //! Removes the item from the set (if exists)
+        //! \return Reference to this set
         Set&   operator-=(const T&);
+        
+        //! Removes all the items in the RHS list from this set
+        //! \return Reference to this set
         Set&   operator-=(const std::list<T>&);
         Set&   operator-=(const std::set<T,C>&);
         Set&   operator-=(const std::vector<T>&);
