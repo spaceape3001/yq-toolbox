@@ -101,6 +101,9 @@ namespace yq {
         //! Removes all the items in the RHS set from this set
         //! \return Reference to this set
         Set&   operator-=(const std::set<T,C>&);
+
+        //! Removes all the items in the RHS vector from this set
+        //! \return Reference to this set
         Set&   operator-=(const std::vector<T>&);
         
         Set&   operator&=(const Set&);
