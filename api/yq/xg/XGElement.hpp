@@ -10,6 +10,7 @@
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/core/UniqueID.hpp>
+#include <yq/graph/GNode.hpp>
 #include <yq/graph/GNodeObject.hpp>
 #include <yq/xg/types.hpp>
 #include <yq/trait/numbers.hpp>
@@ -21,7 +22,7 @@
 namespace yq {
     class XGRuntime;
     struct XGDocNode;
-    
+    class GNode;
     
     class XGElementMeta : public GNodeObjectMeta {
     public:
@@ -36,17 +37,21 @@ namespace yq {
         
         std::string_view    symbol_spec() const { return m_symbol; }
         
-        //! Lets user know this is a *decision* type of element
+        //! Default priority for elements of this type
         float               priority() const { return m_priority; }
         
+        //! All XG Element meta
         static const std::vector<const XGElementMeta*>& all();
         
+        //! Finds the specified XG element meta by name.  Key & Stem lookups are used
         static const XGElementMeta* find(std::string_view);
         
+        //! Create a meta graph based on all registered XG elements
         static GMetaGraphPtr    create_manifest();
         
         //GNodeTemplatePtr        create_meta_node() const;
         
+        //! used by the Graph meta
         virtual const char* app_path() const override;
         
     private:
@@ -80,13 +85,21 @@ namespace yq {
         XGElement();
         virtual ~XGElement();
     
-        virtual bool    initialize(const XGDocNode&);
+        /*! \brief Initializes the element from the node
+        
+            This will be called *AFTER* all meta-capable properties
+            are set from the node's data.  (Thus, should hopefully 
+            be minimal.)
+        */
+        virtual std::error_code     initialize(const InitAPI&) override;
     
     private:
         friend class XGRuntime;
         
+        //std::error_code             _initialize(const GNode&);
+        
         std::vector<xg_execute_t>   m_next;
-        XGNodeType                  m_nodeType      = XGNodeType::Unspecified;
-        xg_priority_t               m_priority      = NaNf;
+        XGNodeType                  m_nodeType      = XGNodeType::Unspecified;  // likely obsolete... 
+        xg_priority_t               m_priority      = NaNf;                     // will be used
     };
 }

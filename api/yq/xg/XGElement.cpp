@@ -54,16 +54,23 @@ namespace yq {
     {
     }
 
+    //std::error_code XGElement::_initialize(const GNode& gn)
+    //{
+        ////  meta stuff here
+        
+        //return initialize(gn);
+    //}
+
     xg_result_t    XGElement::execute(XGContext&)
     {
         return {};
     }
 
-    bool    XGElement::initialize(const XGDocNode&dn)
+    std::error_code  XGElement::initialize(const InitAPI&dn)
     {
         //m_nodeType  = dn.node_type;
         //m_priority  = dn.priority;
-        return true;
+        return {};
     }
     
     XGNodeType  XGElement::node_type() const

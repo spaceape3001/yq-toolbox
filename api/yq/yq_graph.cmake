@@ -8,6 +8,7 @@ add_library(yq_graph SHARED
     graph/GraphData.cpp
     graph/GDocument.cpp
     graph/GMetaGraph.cpp
+    graph/GraphEngine.cpp
     graph/GNodeObject.cpp
     graph/GNodeTemplate.cpp
     graph/GraphXML.cpp

@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <variant>
 #include <system_error>
+#include <yq/typedef/graph.hpp>
 #include <yq/typedef/xg_document.hpp>
 
 namespace yq {

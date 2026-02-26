@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/graph/graph_types.hpp>
 #include <yq/container/Set.hpp>
 #include <yq/container/MultiMap.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/Size2.hpp>
+#include <yq/typedef/graph.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq {

@@ -28,6 +28,7 @@ namespace yq {
             gnt.icons[itr.first]    = std::string(itr.second);
         
         gnt.label           = std::string(label());
+        gnt.meta            = std::string(name());
         
         //  TODO PINS
         
@@ -73,7 +74,19 @@ namespace yq {
     GNodeObject::~GNodeObject()
     {
     }
+
+    std::error_code GNodeObject::initialize(const InitAPI& api)
+    {
+        return {};
+    }
     
+    std::error_code GNodeObject::_initialize(const InitAPI& api)
+    {
+        // meta stuff and the like...
+        
+        return initialize(api);
+    }
+
     void GNodeObject::init_meta()
     {
         auto w = writer<GNodeObject>();

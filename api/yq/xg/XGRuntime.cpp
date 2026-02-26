@@ -13,6 +13,8 @@
 //#include <yq/xg/XGDocument.hpp>
 #include <yq/xg/XGElement.hpp>
 
+#include <yq/graph/GNodeObject.hxx>
+
 #include <cassert>
 
 namespace yq {
@@ -43,14 +45,52 @@ namespace yq {
     XGContext::~XGContext() = default;
 
 //////////////////
-
+    
     XGRuntime::XGRuntime()
     {
-        m_elements.push_back(nullptr);
     }
     
     XGRuntime::~XGRuntime()
     {
+        clear();
+    }
+    
+    Expect<XGElement*>  XGRuntime::_compile(const GNode&gn)
+    {
+        const XGElementMeta*    xm  = nullptr; // XGElementMeta::find(gn.meta);
+        if(!xm)
+            return unexpected<"Cannot find XGElement">();
+        
+        Object* obj = xm -> create();
+        if(!obj)
+            return unexpected<"Cannot create XGElement">();
+        
+        XGElement* x    = dynamic_cast<XGElement*>(obj);
+        if(!x) [[unlikely]] {
+            delete obj;
+            return unexpected<"Created object is not an XGElement">();
+        }
+        
+        XGElement::InitAPI  api;
+        api.node    = gn;
+        std::error_code ec  = GraphEngine::initialize(*x, api);
+        if(ec != std::error_code()){
+            delete x;
+            return unexpected(ec);
+        }
+    
+        return x;
+    }
+    
+    std::error_code     XGRuntime::_compile(const GGraph& g)
+    {
+        for(GNode gn : m_graph.nodes()){
+            auto x  = _compile(gn);
+            if(!x)
+                return x.error();
+            m_nodes[gn.id()]    = *x;
+        }
+        return {};
     }
 
   //struct pri_uint32_t {
@@ -58,31 +98,47 @@ namespace yq {
         //float       pri = 0.;
     //};
     
-    std::error_code         XGRuntime::compile(const GDocumentCPtr&)
+    void  XGRuntime::clear()
     {
-        return errors::todo();
+        GraphEngine::clear();
     }
 
-    XGElement*              XGRuntime::element(id_t n) 
+    std::error_code         XGRuntime::compile(const GGraph& g)
     {
-        if(n>=m_elements.size())
-            return nullptr;
-        return m_elements[n];
+        if(m_graph.valid()) 
+            return create_error<"XGRuntime already has a graph, clear first">();
+        
+        if(std::error_code ec = _compile(g); ec != std::error_code()){
+            clear();
+            return ec;
+        }
+            
+        m_graph     = g;
+        m_current   = 0ULL;
+        return {};
+    }
+    
+    XGElement*              XGRuntime::element(gid_t i)
+    {
+        return static_cast<XGElement*>(m_nodes.get(i,nullptr));
+    }
+    
+    const XGElement*        XGRuntime::element(gid_t i) const
+    {
+        return static_cast<XGElement*>(m_nodes.get(i,nullptr));
     }
 
-    const XGElement*        XGRuntime::element(id_t n) const
+    bool  XGRuntime::empty() const
     {
-        if(n>=m_elements.size())
-            return nullptr;
-        return m_elements[n];
+        return m_nodes.empty();
     }
 
     xg_result_t             XGRuntime::execute(XGContext&ctx, const XGRuntimeOptions& options)
     {
         for(size_t n = 0; n<options.iterations; ++n){
-            auto r  = step(ctx);
+            auto r  = step(ctx, options);
             if(options.history)
-                options.history(element(m_current));
+                options.history(m_current);
             if(is_continue(r))
                 continue;
             if(is_error(r))
@@ -96,20 +152,18 @@ namespace yq {
         return WAIT;
     }
     
-    uint32_t                XGRuntime::size() const
-    {
-        if(m_elements.empty())  
-            return 0;
-        return (uint32_t)(m_elements.size() - 1);
-    }
-
     void    XGRuntime::reset()
     {
         m_current   = 0;
     }
 
+    size_t                XGRuntime::size() const
+    {
+        return m_nodes.size();
+    }
 
-    xg_result_t             XGRuntime::step(XGContext& ctx)
+
+    xg_result_t             XGRuntime::step(XGContext& ctx, const XGRuntimeOptions& options)
     {
         if(!m_current)
             return stepstep(ctx, m_start);

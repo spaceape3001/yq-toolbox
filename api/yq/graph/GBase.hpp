@@ -9,7 +9,7 @@
 #include <yq/keywords.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Tristate.hpp>
-#include <yq/graph/graph_types.hpp>
+#include <yq/typedef/graph.hpp>
 #include <yq/typedef/g_document.hpp>
 #include <vector>
 

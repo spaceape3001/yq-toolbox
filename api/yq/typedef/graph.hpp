@@ -32,4 +32,5 @@ namespace yq {
     struct GTextData;
     struct GViewData;
     
+    class GraphEngine;
 }

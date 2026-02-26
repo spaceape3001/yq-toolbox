@@ -14,7 +14,9 @@
 #include <yq/typedef/g_node_template.hpp>
 
 namespace yq {
+    class GraphEngine;
     class GNodeObject;
+    
     class GNodeObjectMeta : public ObjectMeta {
     public:
     
@@ -68,5 +70,14 @@ namespace yq {
         virtual ~GNodeObject();
         
         static void init_meta();
+        
+    protected:
+        struct InitAPI;
+        friend class GraphEngine;
+        
+        virtual std::error_code initialize(const InitAPI&);
+        
+        //  does meta stuff (as necessary)
+        std::error_code     _initialize(const InitAPI&);
     };
 }

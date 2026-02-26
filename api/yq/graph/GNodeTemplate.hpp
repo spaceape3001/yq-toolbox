@@ -84,6 +84,8 @@ namespace yq {
         //! What should be displayed (name, key, url) will be used as backups)
         std::string                 label;
         
+        std::string                 meta;   //<! Meta key for whatever
+        
         //! Logical Pins/Ports
         std::vector<GPortTemplate>  ports;
         

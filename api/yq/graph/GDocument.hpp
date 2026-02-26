@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/graph/graph_types.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/typedef/g_document.hpp>
+#include <yq/typedef/graph.hpp>
 
 namespace yq {
     struct GDocumentConnectOptions {
