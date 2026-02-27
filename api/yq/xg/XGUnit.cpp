@@ -5,10 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "XGContext.hpp"
-#include "XGRuntime.hpp"
+#include "XGUnit.hpp"
 
 #include <yq/errors.hpp>
+#include <yq/graph/GNodeTemplate.hpp>
 #include <yq/xg/errors.hpp>
+#include <yq/xg/logging.hpp>
 #include <yq/xg/XGContext.hpp>
 //#include <yq/xg/XGDocument.hpp>
 #include <yq/xg/XGElement.hpp>
@@ -46,18 +48,31 @@ namespace yq {
 
 //////////////////
     
-    XGRuntime::XGRuntime()
+    XGUnit::XGUnit()
     {
     }
     
-    XGRuntime::~XGRuntime()
+    XGUnit::~XGUnit()
     {
         clear();
     }
     
-    Expect<XGElement*>  XGRuntime::_compile(const GNode&gn)
+    Expect<XGElement*>  XGUnit::_compile(const GNode&gn)
     {
-        const XGElementMeta*    xm  = nullptr; // XGElementMeta::find(gn.meta);
+        const XGElementMeta*    xm  = nullptr;
+        std::string_view   type = gn.type();
+        
+        XGElement::InitAPI  api;
+        api.node    = gn;
+        
+        xm  = XGElementMeta::find(type);
+        if(!xm){
+            api.node_template   = GNodeTemplate::IO::load(type);
+            if(!api.node_template)
+                return unexpected<"Cannot resolve node type">();
+            xm  = XGElementMeta::find(api.node_template -> meta);
+        }
+        
         if(!xm)
             return unexpected<"Cannot find XGElement">();
         
@@ -71,9 +86,7 @@ namespace yq {
             return unexpected<"Created object is not an XGElement">();
         }
         
-        XGElement::InitAPI  api;
-        api.node    = gn;
-        std::error_code ec  = GraphEngine::initialize(*x, api);
+        std::error_code ec  = GraphEngine::_initialize(*x, api);
         if(ec != std::error_code()){
             delete x;
             return unexpected(ec);
@@ -82,14 +95,27 @@ namespace yq {
         return x;
     }
     
-    std::error_code     XGRuntime::_compile(const GGraph& g)
+    std::error_code     XGUnit::_compile(const GGraph& g)
     {
-        for(GNode gn : m_graph.nodes()){
+        for(GNode gn : g.nodes()){ 
             auto x  = _compile(gn);
             if(!x)
                 return x.error();
+            
+            XGElement*  xg  = *x;
+            switch(xg->metaInfo().node_type()){
+            case XGNodeType::Always:
+                
+                break;
+            case XGNodeType::Start:
+                break;
+            default:
+                break;
+            }
+            
             m_nodes[gn.id()]    = *x;
         }
+        
         return {};
     }
 
@@ -98,42 +124,44 @@ namespace yq {
         //float       pri = 0.;
     //};
     
-    void  XGRuntime::clear()
+    void  XGUnit::clear()
     {
         GraphEngine::clear();
     }
 
-    std::error_code         XGRuntime::compile(const GGraph& g)
+    std::error_code         XGUnit::compile(const GGraph& g)
     {
         if(m_graph.valid()) 
-            return create_error<"XGRuntime already has a graph, clear first">();
+            return create_error<"XGUnit already has a graph, clear first">();
+        
+        m_graph     = g;
+        m_current   = 0ULL;
         
         if(std::error_code ec = _compile(g); ec != std::error_code()){
             clear();
             return ec;
         }
             
-        m_graph     = g;
-        m_current   = 0ULL;
+        m_state     = State::Start;
         return {};
     }
     
-    XGElement*              XGRuntime::element(gid_t i)
+    XGElement*              XGUnit::element(gid_t i)
     {
         return static_cast<XGElement*>(m_nodes.get(i,nullptr));
     }
     
-    const XGElement*        XGRuntime::element(gid_t i) const
+    const XGElement*        XGUnit::element(gid_t i) const
     {
         return static_cast<XGElement*>(m_nodes.get(i,nullptr));
     }
 
-    bool  XGRuntime::empty() const
+    bool  XGUnit::empty() const
     {
         return m_nodes.empty();
     }
 
-    xg_result_t             XGRuntime::execute(XGContext&ctx, const XGRuntimeOptions& options)
+    xg_result_t             XGUnit::execute(XGContext&ctx, const XGUnitOptions& options)
     {
         for(size_t n = 0; n<options.iterations; ++n){
             auto r  = step(ctx, options);
@@ -152,18 +180,18 @@ namespace yq {
         return WAIT;
     }
     
-    void    XGRuntime::reset()
+    void    XGUnit::reset()
     {
         m_current   = 0;
     }
 
-    size_t                XGRuntime::size() const
+    size_t                XGUnit::size() const
     {
         return m_nodes.size();
     }
 
 
-    xg_result_t             XGRuntime::step(XGContext& ctx, const XGRuntimeOptions& options)
+    xg_result_t             XGUnit::step(XGContext& ctx, const XGUnitOptions& options)
     {
         if(!m_current)
             return stepstep(ctx, m_start);
@@ -218,8 +246,19 @@ namespace yq {
         }
     };
     
-    xg_result_t            XGRuntime::stepstep(XGContext&ctx, const std::vector<xg_execute_t>& next)
+    xg_result_t            XGUnit::stepstep(XGContext&ctx, const std::vector<xg_execute_t>& next)
     {
+        switch(m_state){
+        case State::Uninit:
+            return create_error<"XGUnit has not been properly initialized">();
+        case State::Error:
+            return create_error<"XGUnit is in an error state">();
+        case State::Start:
+            //  find start element
+        default:
+            break;
+        }
+    
         ExecuteBlender eb{ next, m_always, ctx.always };
         while(const xg_execute_t* n = ++eb){
             if(!n){

@@ -14,6 +14,9 @@
 #include <yq/resource/Resource.hxx>
 #include <format>
 
+#include <yq/meta/Init.hpp>
+
+YQ_TYPE_IMPLEMENT(yq::XGNodeType)
 YQ_OBJECT_IMPLEMENT(yq::XGElement)
 
 namespace yq {
@@ -38,12 +41,18 @@ namespace yq {
 
     void XGElement::init_meta()
     {
-        auto w = writer<XGElement>();
-        w.abstract();
-        w.description("Executive Graph Element");
-        GNodeTemplate::IO::add_loader({.yqpath=szXGElementMetaPath}, makeMetaNode);
-        GMetaGraph::IO::add_loader({.yqpath=szXGMetaGraphPath}, makeXGMetaGraph);
-        GMetaGraph::kind_define("executive", { .scheme="app", .path=szXGMetaGraphPath});
+        {
+            auto w = writer<XGElement>();
+            w.abstract();
+            w.description("Executive Graph Element");
+            GNodeTemplate::IO::add_loader({.yqpath=szXGElementMetaPath}, makeMetaNode);
+            GMetaGraph::IO::add_loader({.yqpath=szXGMetaGraphPath}, makeXGMetaGraph);
+            GMetaGraph::kind_define("executive", { .scheme="app", .path=szXGMetaGraphPath});
+        }
+        {
+            auto w = writer<XGNodeType>();
+            w.description("Executive Graph Node Type");
+        }
     }
 
     XGElement::XGElement()
@@ -71,13 +80,6 @@ namespace yq {
         //m_nodeType  = dn.node_type;
         //m_priority  = dn.priority;
         return {};
-    }
-    
-    XGNodeType  XGElement::node_type() const
-    {
-        if(m_nodeType != XGNodeType::Unspecified)
-            return m_nodeType;
-        return metaInfo().node_type();
     }
 
     ////////////////////////////////////////////////////////////////////////////

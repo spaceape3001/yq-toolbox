@@ -6,12 +6,19 @@
 
 #include "GraphEngine.hxx"
 #include <yq/graph/GNodeObject.hpp>
+#include <yq/graph/GNodeTemplate.hpp>
 
 namespace yq {
-    std::error_code GraphEngine::initialize(GNodeObject& gno, const GNodeObject::InitAPI& api)
+
+    std::error_code GraphEngine::_initialize(GNodeObject& gno, const GNodeObject::InitAPI& api)
     {
         return gno._initialize(api);
     }
+
+    //const GNodeObjectMeta*    GraphEngine::_meta(GNode gn)
+    //{
+        
+    //}
 
     //////////////////
     GraphEngine::GraphEngine()
@@ -34,6 +41,11 @@ namespace yq {
     void    GraphEngine::clear()
     {
         _clear();
+    }
+
+    bool    GraphEngine::empty() const
+    {
+        return m_nodes.empty();
     }
 
     GNodeObject*        GraphEngine::node(gid_t i)

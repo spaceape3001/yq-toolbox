@@ -10,9 +10,7 @@
 using namespace yq;
 
 namespace {
-    /*! \brief An NOR node that will return TRUE if none of its connected nodes are true.
-        
-        \note A none with no conditionals will return TRUE
+    /*! \brief A debugging node that will always trigger false
     */
     class FalseXG : public XGElement {
         YQ_OBJECT_DECLARE(FalseXG, XGElement)

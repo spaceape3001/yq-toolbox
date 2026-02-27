@@ -9,12 +9,45 @@
 #include "GNodeTemplate.hpp"
 #include <yq/core/Logging.hpp>
 
+#include "GNodeObject.hxx"
+
 YQ_OBJECT_IMPLEMENT(yq::GNodeObject)
 
 namespace yq {
+    struct GNodeObjectMeta::Repo {
+        MetaLookup<GNodeObjectMeta>   lut;
+    };
+    
+    
+    GNodeObjectMeta::Repo& GNodeObjectMeta::repo()
+    {
+        static Repo s_repo;
+        return s_repo;
+    }
+
+    const GNodeObjectMeta*  GNodeObjectMeta::find(const GNode& gn)
+    {
+        static auto& _r    = repo();
+        
+        std::string_view    type    = gn.type();
+        if(const GNodeObjectMeta* gm = _r.lut.find(type))
+            return gm;
+        GNodeTemplateCPtr p = GNodeTemplate::IO::load(type);
+        if(!p)
+            return nullptr;
+        return _r.lut.find(p->meta);
+    }
+    
+    const GNodeObjectMeta* GNodeObjectMeta::find(std::string_view sv)
+    {
+        return repo().lut.find(sv);
+    }
+    
+
     GNodeObjectMeta::GNodeObjectMeta(std::string_view zName, ObjectMeta& base, const std::source_location& sl) :
         ObjectMeta(zName, base, sl)
     {
+        repo().lut << this;
     }
 
     void        GNodeObjectMeta::g_write(GNodeTemplate& gnt) const
@@ -82,9 +115,24 @@ namespace yq {
     
     std::error_code GNodeObject::_initialize(const InitAPI& api)
     {
+        if(m_node)
+            return create_error<"GNodeObject already initialized">();
+    
+        if(!api.node)
+            return create_error<"GNodeObject cannot initialize to null node">();
+    
         // meta stuff and the like...
         
-        return initialize(api);
+        m_node  = api.node;
+        
+        if(std::error_code ec = initialize(api); ec != std::error_code()){
+            m_node  = {};
+            return ec;
+        }
+        
+        //  any thing more....?
+        
+        return {};
     }
 
     void GNodeObject::init_meta()

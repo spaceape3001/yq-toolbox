@@ -20,7 +20,7 @@
 #include <yq/typedef/g_meta_graph.hpp>
 
 namespace yq {
-    class XGRuntime;
+    class XGUnit;
     struct XGDocNode;
     class GNode;
     
@@ -72,9 +72,6 @@ namespace yq {
     
         virtual xg_result_t         execute(XGContext&);
         
-        // Type of the node
-        XGNodeType                  node_type() const;
-        
         xg_priority_t               priority() const;
         
         //! Might want some wait condition handling...  (will, if it becomes an issue)
@@ -94,12 +91,12 @@ namespace yq {
         virtual std::error_code     initialize(const InitAPI&) override;
     
     private:
-        friend class XGRuntime;
+        friend class XGUnit;
         
         //std::error_code             _initialize(const GNode&);
         
-        std::vector<xg_execute_t>   m_next;
-        XGNodeType                  m_nodeType      = XGNodeType::Unspecified;  // likely obsolete... 
+        std::vector<xg_execute_t>   m_next;     //< General "NEXT"
+        std::vector<xg_execute_t>   m_logic;    //< Conditional connections (TBD)
         xg_priority_t               m_priority      = NaNf;                     // will be used
     };
 }

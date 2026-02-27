@@ -12,6 +12,7 @@
 #include <yq/net/Url.hpp>
 #include <yq/typedef/color.hpp>
 #include <yq/typedef/g_node_template.hpp>
+#include <yq/graph/GNode.hpp>
 
 namespace yq {
     class GraphEngine;
@@ -39,6 +40,9 @@ namespace yq {
         */
         virtual GNodeTemplatePtr    make_template() const;
         
+        static const GNodeObjectMeta*  find(std::string_view);
+        static const GNodeObjectMeta*  find(const GNode&);
+        
     protected:
     
         // writes all it can *EXCEPT* the URL/KEY
@@ -52,6 +56,9 @@ namespace yq {
         
         // TODO: Pins
         // TODO: Dynamic pins (based on function/string)
+        
+        struct Repo;
+        static Repo& repo();
     };
 
     /*! \brief Root for Nodes
@@ -74,6 +81,8 @@ namespace yq {
     protected:
         struct InitAPI;
         friend class GraphEngine;
+        
+        GNode       m_node;
         
         virtual std::error_code initialize(const InitAPI&);
         

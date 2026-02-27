@@ -23,7 +23,6 @@ namespace {
             w.label("Delay");
             //w.icon(0, "pp:yq/icon/xg/delay.svg");
             w.description("Delay execution");
-            //w.node_type(XGNodeType::Delay);
             w.symbol("yq/symbol/xgtiming.sym#delay");
         }
         

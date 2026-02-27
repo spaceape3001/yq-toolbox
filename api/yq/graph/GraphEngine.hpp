@@ -21,6 +21,8 @@ namespace yq {
     
         virtual void        clear();
     
+        bool                empty() const;
+    
         GNodeObject*        node(gid_t);
         const GNodeObject*  node(gid_t) const;
     
@@ -33,7 +35,11 @@ namespace yq {
         
         virtual const GNodeObjectMeta*  node_meta() const;
         
-        static std::error_code initialize(GNodeObject&, const GNodeObject::InitAPI&);
+        static std::error_code _initialize(GNodeObject&, const GNodeObject::InitAPI&);
+        
+        // creates but does *NOT* initialize nor add to the map
+        //static const GNodeObjectMeta*    _meta(GNode);
+        
         
     private:
         void    _clear();

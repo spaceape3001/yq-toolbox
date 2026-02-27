@@ -10,9 +10,7 @@
 using namespace yq;
 
 namespace {
-    /*! \brief An NOR node that will return TRUE if none of its connected nodes are true.
-        
-        \note A none with no conditionals will return TRUE
+    /*! \brief A debugging node that is always true
     */
     class TrueXG : public XGElement {
         YQ_OBJECT_DECLARE(TrueXG, XGElement)
@@ -27,7 +25,6 @@ namespace {
             w.label("TRUE");
             w.description("Always true trigger");
             w.icon(0, "yq/icon/xg/true.svg");
-            //w.node_type(XGNodeType::True);
             w.symbol("yq/symbol/xgflow.sym#logic");
         }
         

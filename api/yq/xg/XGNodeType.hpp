@@ -10,20 +10,28 @@
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
+
+    //! Generalized node type (that the runtime needs to know about)
     YQ_ENUM(XGNodeType, ,
-        Unspecified = 0,   // non deterministic
-        Command,
-        Decision,
+        //! Generic node, unremarkable, ordinary, common
+        Unspecified = 0, 
+        
+        //! Always node
         Always,
+        
+        //! Continue (execution)
         Continue,
-        Start,
+        
+        //! Done 
+        Done,
+        
+        //! Logic node
+        Logic,
+        
         Resume,
-        Done
+        
+        Start
     );
-    
-    bool    is_command(XGNodeType);
-    bool    is_decision(XGNodeType);
-    bool    is_flow(XGNodeType);
 }
 
 YQ_TYPE_DECLARE(yq::XGNodeType)

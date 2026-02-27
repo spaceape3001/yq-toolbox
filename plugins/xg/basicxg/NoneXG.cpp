@@ -27,7 +27,7 @@ namespace {
             w.label("NONE");
             w.description("Not/nor execution");
             w.icon(0, "yq/icon/xg/not.svg");
-            //w.node_type(XGNodeType::None);
+            w.node_type(XGNodeType::Logic);
             w.symbol("yq/symbol/xgflow.sym#conditional");
         }
         

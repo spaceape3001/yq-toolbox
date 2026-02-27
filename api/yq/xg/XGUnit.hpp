@@ -22,16 +22,28 @@ namespace yq {
     struct XGContext;
     class GGraph;
     
-    struct XGRuntimeOptions {
+    struct XGUnitOptions {
         std::function<void(gid_t)>     history;
         size_t                          iterations = 1000;
     };
     
-    class XGRuntime : public GraphEngine {
-    public:
+    /*! \brief Single graph file execution
     
-        XGRuntime();
-        ~XGRuntime();
+        This runs a *SINGLE* executive graph file... 
+    */
+    class XGUnit : public GraphEngine {
+    public:
+
+        enum class State {
+            Uninit,
+            Start,
+            Run,
+            Done,
+            Error
+        };
+    
+        XGUnit();
+        ~XGUnit();
         
         std::error_code             compile(const GGraph&);
         void                        clear();
@@ -41,15 +53,17 @@ namespace yq {
         const XGElement*            element(gid_t) const;
         
         bool                        empty() const;
-        xg_result_t                 execute(XGContext&, const XGRuntimeOptions& options={});
+        xg_result_t                 execute(XGContext&, const XGUnitOptions& options={});
 
         //! Reset the runtime to the start
         void                        reset();
         size_t                      size() const;
-        xg_result_t                 step(XGContext&, const XGRuntimeOptions& options={});
+        xg_result_t                 step(XGContext&, const XGUnitOptions& options={});
         
+        State       state() const { return m_state; }
         
     private:
+    
         
         struct Node;
         
@@ -62,6 +76,7 @@ namespace yq {
         std::vector<xg_execute_t>       m_always;        // start elements
         std::vector<xg_execute_t>       m_start;        // start elements
         Stack<gid_t>                    m_stack;
+        State                           m_state     = State::Uninit;
         
         xg_result_t         stepstep(XGContext&, const std::vector<xg_execute_t>&);
     };
