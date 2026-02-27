@@ -106,6 +106,8 @@ namespace yq {
         //! \return Reference to this set
         Set&   operator-=(const std::vector<T>&);
         
+        //! Intersection of this set and the other (ie, keep whatever's in both sets)
+        //! \return Reference to this set
         Set&   operator&=(const Set&);
         Set&   operator|=(const Set&);
         Set&   operator^=(const Set&);
