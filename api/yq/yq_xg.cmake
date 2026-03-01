@@ -6,7 +6,7 @@
 
 add_library(yq_xg SHARED
     xg/XGElement.cpp
-    xg/XGUnit.cpp
+    xg/XGRuntime.cpp
 )
 
 target_link_libraries(yq_xg 

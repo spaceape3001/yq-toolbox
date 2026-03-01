@@ -7,7 +7,10 @@
 #pragma once
 
 #include <yq/units.hpp>
+#include <yq/container/Hash.hpp>
+#include <yq/container/Map.hpp>
 #include <yq/container/Stack.hpp>
+#include <yq/container/Vector.hpp>
 #include <yq/core/Any.hpp>
 #include <yq/text/IgCase.hpp>
 #include <yq/trait/numbers.hpp>
@@ -15,28 +18,32 @@
 
 namespace yq {
     struct XGContext {
+        XGRuntime&                              runtime;
     
         //! Current always mode, flip to NaN to exit
-        float                                       always  = NaNf;
-        
-        //! Current sim time
-        unit::Second                                time{0.};
+        double                                  always  = NaN;
 
+        //! When key/values are needed (nicer for debugging)
+        Map<std::string, xg_value_t, IgCase>    attributes;
+    
+        //! Current sim time
+        unit::Second                            time{0.};
+
+        //! Last result from given node
+        Map<gid_t, xg_result_t>                 results;
+        
         //  fleetingly
         //  stack....
-        Stack<xg_value_t>                           stack;
+        Stack<xg_value_t>                       stack;
         
         //  will be added/dropped
         //  positional...
-        std::vector<xg_value_t>                     values;
+        Vector<xg_value_t>                      values;
 
         //! Prefer values over variables (faster)
-        std::unordered_map<uint32_t, xg_value_t>    variables; 
+        Hash<uint32_t, xg_value_t>              variables; 
         
-        //! When key/values are needed (nicer for debugging)
-        std::map<std::string, xg_value_t, IgCase>   attributes;
-        
-        XGContext();
+        XGContext(XGRuntime&);
         virtual ~XGContext();
     };
 }

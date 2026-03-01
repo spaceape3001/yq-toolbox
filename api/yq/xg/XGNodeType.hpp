@@ -25,11 +25,13 @@ namespace yq {
         //! Done 
         Done,
         
-        //! Logic node
-        Logic,
+        //! Decision node
+        Decision,
         
+        //! Resume node
         Resume,
         
+        //! Start node
         Start
     );
 }

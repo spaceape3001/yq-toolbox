@@ -28,13 +28,13 @@ namespace {
             w.label("ANY");
             w.description("Any/Or execution");
             w.icon(0, "yq/icon/xg/logic.svg");
-            w.node_type(XGNodeType::Logic);
+            //w.node_type(XGNodeType::Logic);
             w.symbol("yq/symbol/xgflow.sym#conditional");
         }
         
         xg_result_t execute(XGContext&)
         {
-            return {};
+            return false;
         }
     };
 }

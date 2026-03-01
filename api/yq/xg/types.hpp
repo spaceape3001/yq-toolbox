@@ -11,7 +11,8 @@
 #include <cstdint>
 #include <variant>
 #include <system_error>
-#include <yq/typedef/graph.hpp>
+#include <yq/trait/numbers.hpp>
+#include <yq/graph/GBase.hpp>
 #include <yq/typedef/xg_document.hpp>
 
 namespace yq {
@@ -20,15 +21,30 @@ namespace yq {
 
 namespace yq {
     class Any;
+
+    struct xg_cursor_t {
+        uint64_t    file    = 0ULL;
+        uint64_t    gid     = 0ULL;
+        constexpr auto operator<=>(const xg_cursor_t&) const noexcept = default;
+    };
     
+    struct xg_next_t {
+        xg_cursor_t     cursor;
+        int32_t         priority    = 0;
+        int32_t         subpri      = 0;
+    };
+
     using xg_result_t  = std::variant<
         std::monostate,     //< Here for an empty variant, usually treated as continue
-        continue_k,         //< Continue to next node
-        wait_k,             //< Wait for conditions to be met
-        resume_k,           //< Resume previous state (or less-priority always...?)
-        error_k,            //< Error state
         std::error_code,    //< Alternate way of errors (can issue messages here)
-        done_k              //< We're finished graph/sub-graph
+        bool,               //< Decision node true/false
+        continue_k,         //< Continue to next node
+        done_k,             //< We're finished graph/sub-graph
+        error_k,            //< Error state
+        limit_k,            //< Iteration limit reached
+        resume_k,           //< Resume previous state (or less-priority always...?)
+        wait_k,             //< Wait for conditions to be met
+        xg_cursor_t         //< Wait for result (node/edge/etc)
     >;
     
     
@@ -43,16 +59,17 @@ namespace yq {
     bool    is_wait(const xg_result_t&);
     bool    is_done(const xg_result_t&);
     bool    is_error(const xg_result_t&);
-    
-    
-    using xg_id_t          = uint32_t;
-    using xg_priority_t    = float;
+    bool    is_limit(const xg_result_t&);
     
     struct xg_execute_t {
-        xg_priority_t   pri = 0.;
-        xg_id_t         idx = 0;
+        gid_t       gid         = 0;
+        double      priority    = NaN;
     };
     
     class XGElement;
     struct XGContext;
+
+    using XGEvaluatorFN     = std::function<xg_result_t(const XGElement&)> ;
+    
+    
 }

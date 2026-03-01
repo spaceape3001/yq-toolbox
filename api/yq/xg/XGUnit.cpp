@@ -25,11 +25,6 @@ namespace yq {
         return std::get_if<std::monostate>(&r) || std::get_if<continue_k>(&r);
     }
     
-    bool    is_wait(const xg_result_t& r)
-    {
-        return static_cast<bool>(std::get_if<wait_k>(&r));
-    }
-    
     bool    is_done(const xg_result_t&r)
     {
         return static_cast<bool>(std::get_if<done_k>(&r));
@@ -40,6 +35,61 @@ namespace yq {
         return std::get_if<error_k>(&r) || std::get_if<std::error_code>(&r);
     }
 
+    bool    is_limit(const xg_result_t& r)
+    {
+        return static_cast<bool>(std::get_if<limit_k>(&r));
+    }
+
+    bool    is_wait(const xg_result_t& r)
+    {
+        return static_cast<bool>(std::get_if<wait_k>(&r));
+    }
+    
+    
+    
+    struct XGExecuteBlender {
+        const std::vector<xg_execute_t>&   m_always;
+        const std::vector<xg_execute_t>&   m_next;
+        double                             m_thresh;
+        std::vector<xg_execute_t>::const_iterator  m_a, m_aEnd, m_b, m_bEnd;
+        
+        XGExecuteBlender(
+            const std::vector<xg_execute_t>&    always,
+            const std::vector<xg_execute_t>&    next,
+            double                              thresh
+        ) : m_always(always), m_next(next), m_thresh(thresh)
+        {
+            m_a     = always.begin();
+            m_aEnd  = always.end();
+            
+            if(!std::isnan(m_thresh) && (m_a != m_aEnd)){
+                auto i = std::find_if(m_a, m_aEnd, [&](const xg_execute_t&v) -> bool {
+                    return v.priority > thresh;
+                });
+                if(i != m_aEnd)
+                    m_aEnd  = i;
+            }
+            
+            m_b     = next.begin();
+            m_bEnd  = next.end();
+        }
+        
+        const xg_execute_t*    operator++()
+        {
+            if(m_a != m_aEnd){
+                if(m_b == m_bEnd)
+                    return nullptr;
+                return &*(m_b++);
+            } else {
+                if(m_b == m_bEnd)
+                    return &*(m_a++);
+            
+            }
+            
+            return nullptr;
+        }
+    };
+    
 //////////////////
 
     // seems zero point in dedicated C++ source
@@ -47,6 +97,17 @@ namespace yq {
     XGContext::~XGContext() = default;
 
 //////////////////
+    void XGUnit::_sort(std::vector<xg_execute_t>& nodes)
+    {
+        for(auto& n : nodes){
+            if(is_nan(n.priority))
+                n.priority  = 0.;
+        }
+        std::stable_sort(nodes.begin(), nodes.end(), [](const xg_execute_t& a, const xg_execute_t& b) -> bool {
+            return a.priority > b.priority;
+        });
+    }
+
     
     XGUnit::XGUnit()
     {
@@ -105,9 +166,10 @@ namespace yq {
             XGElement*  xg  = *x;
             switch(xg->metaInfo().node_type()){
             case XGNodeType::Always:
-                
+                m_always.push_back({ gn.id(), xg->priority() });
                 break;
             case XGNodeType::Start:
+                m_starts.push_back({ gn.id(), xg->priority() });
                 break;
             default:
                 break;
@@ -115,6 +177,9 @@ namespace yq {
             
             m_nodes[gn.id()]    = *x;
         }
+        
+        _sort(m_always);
+        _sort(m_starts);
         
         return {};
     }
@@ -129,23 +194,6 @@ namespace yq {
         GraphEngine::clear();
     }
 
-    std::error_code         XGUnit::compile(const GGraph& g)
-    {
-        if(m_graph.valid()) 
-            return create_error<"XGUnit already has a graph, clear first">();
-        
-        m_graph     = g;
-        m_current   = 0ULL;
-        
-        if(std::error_code ec = _compile(g); ec != std::error_code()){
-            clear();
-            return ec;
-        }
-            
-        m_state     = State::Start;
-        return {};
-    }
-    
     XGElement*              XGUnit::element(gid_t i)
     {
         return static_cast<XGElement*>(m_nodes.get(i,nullptr));
@@ -161,12 +209,18 @@ namespace yq {
         return m_nodes.empty();
     }
 
+    xg_result_t             XGUnit::execute(const XGUnitOptions& options)
+    {
+        XGContext ctx;
+        return execute(ctx, options);
+    }
+
     xg_result_t             XGUnit::execute(XGContext&ctx, const XGUnitOptions& options)
     {
         for(size_t n = 0; n<options.iterations; ++n){
             auto r  = step(ctx, options);
-            if(options.history)
-                options.history(m_current);
+            //if(options.history)
+                //options.history(m_current);
             if(is_continue(r))
                 continue;
             if(is_error(r))
@@ -177,12 +231,35 @@ namespace yq {
                 return WAIT;
             return errors::xg_invalid_result();
         }
-        return WAIT;
+        return LIMIT;
+    }
+
+    std::error_code         XGUnit::initialize(const GGraph& g)
+    {
+        if(m_graph.valid()) 
+            return create_error<"XGUnit already has a graph, clear first">();
+        
+        m_graph     = g;
+        m_current   = {};
+        
+        if(std::error_code ec = _compile(g); ec != std::error_code()){
+            clear();
+            return ec;
+        }
+            
+        m_state     = State::Start;
+        return {};
+    }
+    
+    bool    XGUnit::ready() const
+    {
+        return m_graph && (m_state == State::Start) && !m_starts.empty();
     }
     
     void    XGUnit::reset()
     {
-        m_current   = 0;
+        m_current   = {};
+        m_state     = State::Start;
     }
 
     size_t                XGUnit::size() const
@@ -193,85 +270,54 @@ namespace yq {
 
     xg_result_t             XGUnit::step(XGContext& ctx, const XGUnitOptions& options)
     {
-        if(!m_current)
-            return stepstep(ctx, m_start);
+        switch(m_state){
+        case State::Uninit:
+            return create_error<"XGUnit has not been properly initialized">();
+        case State::Error:
+            return create_error<"XGUnit is in an error state">();
+        case State::Done:
+            return create_error<"XGUnit is already done">();
+        case State::Run:
+            // chase the next 
+        
+            break;
+        case State::Interrupt:
+        
+            // interrupt in progress
+            break;
+        case State::Start:
+            //  find start element
+            break;
+        default:
+            break;
+        }
+    
+        if(!m_current.gid)
+            return stepstep(ctx, m_starts);
 
-        XGElement* xgExecElement    = element(m_current);
+        XGElement* xgExecElement    = element(m_current.gid);
         assert(xgExecElement);
         if(!xgExecElement)
             return errors::xg_invalid_element();
         return stepstep(ctx, xgExecElement->m_next);
     }
     
-    struct ExecuteBlender {
-        const std::vector<xg_execute_t>&   m_always;
-        const std::vector<xg_execute_t>&   m_next;
-        float                           m_thresh;
-        std::vector<xg_execute_t>::const_iterator  m_a, m_aEnd, m_b, m_bEnd;
-        
-        ExecuteBlender(
-            const std::vector<xg_execute_t>&   always,
-            const std::vector<xg_execute_t>&   next,
-            float                           thresh
-        ) : m_always(always), m_next(next), m_thresh(thresh)
-        {
-            m_a     = always.begin();
-            m_aEnd  = always.end();
-            
-            if(!std::isnan(m_thresh) && (m_a != m_aEnd)){
-                auto i = std::find_if(m_a, m_aEnd, [&](const xg_execute_t&v) -> bool {
-                    return v.pri > thresh;
-                });
-                if(i != m_aEnd)
-                    m_aEnd  = i;
-            }
-            
-            m_b     = next.begin();
-            m_bEnd  = next.end();
-        }
-        
-        const xg_execute_t*    operator++()
-        {
-            if(m_a != m_aEnd){
-                if(m_b == m_bEnd)
-                    return nullptr;
-                return &*(m_b++);
-            } else {
-                if(m_b == m_bEnd)
-                    return &*(m_a++);
-            
-            }
-            
-            return nullptr;
-        }
-    };
-    
+
     xg_result_t            XGUnit::stepstep(XGContext&ctx, const std::vector<xg_execute_t>& next)
     {
-        switch(m_state){
-        case State::Uninit:
-            return create_error<"XGUnit has not been properly initialized">();
-        case State::Error:
-            return create_error<"XGUnit is in an error state">();
-        case State::Start:
-            //  find start element
-        default:
-            break;
-        }
-    
-        ExecuteBlender eb{ next, m_always, ctx.always };
+        XGExecuteBlender eb{ next, m_always, ctx.always };
         while(const xg_execute_t* n = ++eb){
             if(!n){
                 if(!is_nan(ctx.always) && !m_stack.empty()){
-                    m_current   = m_stack.pop();
+                    m_current   = m_stack.pop().gid;
                     return CONTINUE;
                 } else {
                     return DONE;
                 }
             }
 
-            m_current                   = n->idx;
-            XGElement* xgExecElement    = element(n->idx);
+            m_current                   = n->gid;
+            XGElement* xgExecElement    = element(n->gid);
             assert(xgExecElement);
             if(!xgExecElement)
                 return errors::xg_invalid_element();

@@ -70,9 +70,19 @@ namespace yq {
         //return initialize(gn);
     //}
 
+    //xg_result_t    XGElement::execute_(XGContext&ctx, const XGUnitOptions&)
+    //{
+        //return execute(ctx);
+    //}
+
     xg_result_t    XGElement::execute(XGContext&)
     {
         return {};
+    }
+
+    gid_t            XGElement::id() const
+    {
+        return m_node.id();
     }
 
     std::error_code  XGElement::initialize(const InitAPI&dn)
@@ -80,6 +90,13 @@ namespace yq {
         //m_nodeType  = dn.node_type;
         //m_priority  = dn.priority;
         return {};
+    }
+
+    double          XGElement::priority() const
+    {
+        if(!is_nan(m_priority))
+            return m_priority;
+        return metaInfo().priority();
     }
 
     ////////////////////////////////////////////////////////////////////////////

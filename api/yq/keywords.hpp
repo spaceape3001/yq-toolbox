@@ -172,6 +172,7 @@ namespace yq {
     struct left_k {};
     struct lenu_k {};
     struct light_k {};
+    struct limit_k {};
     struct line_k {};
     struct lned_k {};
     struct load_k {};
@@ -199,6 +200,7 @@ namespace yq {
     };
     struct nearest_k {};
     struct ned_k {};
+    struct need_k {};
     struct negative_k {};
     struct nested_k {};
     struct new_k {};
@@ -503,6 +505,7 @@ namespace yq {
     static constexpr const last_k               LAST;
     static constexpr const layout_k             LAYOUT;
     static constexpr const light_k              LIGHT;
+    static constexpr const limit_k              LIMIT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
     static constexpr const lenu_k               LENU;
@@ -533,6 +536,7 @@ namespace yq {
     static constexpr const nan_k                NAN;
     static constexpr const nearest_k            NEAREST;
     static constexpr const ned_k                NED;
+    static constexpr const need_k               NEED;
     static constexpr const negative_k           NEGATIVE;
     static constexpr const nested_k             NESTED;
     static constexpr const new_k                NEW;

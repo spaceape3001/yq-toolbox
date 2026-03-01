@@ -23,6 +23,9 @@ namespace yq {
     class XGUnit;
     struct XGDocNode;
     class GNode;
+    struct XGUnitOptions;
+    class XGLogic;
+    class XGRuntime;
     
     class XGElementMeta : public GNodeObjectMeta {
     public:
@@ -38,7 +41,7 @@ namespace yq {
         std::string_view    symbol_spec() const { return m_symbol; }
         
         //! Default priority for elements of this type
-        float               priority() const { return m_priority; }
+        double              priority() const { return m_priority; }
         
         //! All XG Element meta
         static const std::vector<const XGElementMeta*>& all();
@@ -59,7 +62,7 @@ namespace yq {
         RGBA4F              m_bgcolor       = kInvalidColor;
         RGBA4F              m_color         = kInvalidColor;
         XGNodeType          m_nodeType      = XGNodeType::Unspecified;
-        float               m_priority      = NaNf;
+        double              m_priority      = NaN;
         
         struct Repo;
         static Repo&    repo();
@@ -70,9 +73,10 @@ namespace yq {
         YQ_OBJECT_DECLARE(XGElement, GNodeObject)
     public:
     
-        virtual xg_result_t         execute(XGContext&);
+        virtual xg_result_t         execute(XGContext&);    // extend this one
         
-        xg_priority_t               priority() const;
+        gid_t                       id() const;
+        double                      priority() const;
         
         //! Might want some wait condition handling...  (will, if it becomes an issue)
         
@@ -89,14 +93,24 @@ namespace yq {
             be minimal.)
         */
         virtual std::error_code     initialize(const InitAPI&) override;
-    
+        
+        //const auto& logic_results() const { return m_results; }
+        //const auto& logic_nodes() const { return m_logics; }
+
     private:
         friend class XGUnit;
+        friend class XGRuntime;
+        //friend class XGLogic;
+        
+        //virtual xg_result_t         execute_(XGContext&, const XGUnitOptions&);
         
         //std::error_code             _initialize(const GNode&);
         
+        //  some attribute overrides (here and/or in the graph node object)
+        
         std::vector<xg_execute_t>   m_next;     //< General "NEXT"
-        std::vector<xg_execute_t>   m_logic;    //< Conditional connections (TBD)
-        xg_priority_t               m_priority      = NaNf;                     // will be used
+        //std::vector<xg_execute_t>   m_logics;   //< Conditional connections (TBD)
+        //std::vector<xg_result_t>    m_results;  //< Logical results
+        double                      m_priority      = NaN;                     // will be used
     };
 }

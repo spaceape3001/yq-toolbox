@@ -30,7 +30,7 @@ namespace {
         
         xg_result_t execute(XGContext&)
         {
-            return {};
+            return true;
         }
     };
 }

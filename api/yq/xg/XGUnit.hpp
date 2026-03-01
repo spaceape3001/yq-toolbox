@@ -23,8 +23,8 @@ namespace yq {
     class GGraph;
     
     struct XGUnitOptions {
-        std::function<void(gid_t)>     history;
-        size_t                          iterations = 1000;
+        std::function<void(gid_t, const xg_result_t&)>      history;
+        size_t                                              iterations = 1000;
     };
     
     /*! \brief Single graph file execution
@@ -37,32 +37,48 @@ namespace yq {
         enum class State {
             Uninit,
             Start,
-            Run,
+            Run,            // normal running
+            Logic,          // logic running
+            Interrupt,      // always
             Done,
             Error
         };
     
         XGUnit();
+        XGUnit(const GGraph&);
         ~XGUnit();
         
-        std::error_code             compile(const GGraph&);
         void                        clear();
-        gid_t                       current() const { return m_current; }
+        const xg_execute_t&         current() const { return m_current; }
         
         XGElement*                  element(gid_t);
         const XGElement*            element(gid_t) const;
         
         bool                        empty() const;
+        
+        //! Steps until there's a done/wait/error
+        xg_result_t                 execute(const XGUnitOptions& options={});
+
+        //! Steps until there's a done/wait/error
         xg_result_t                 execute(XGContext&, const XGUnitOptions& options={});
+
+        std::error_code             initialize(const GGraph&);
+        
+        bool                        ready() const;
 
         //! Reset the runtime to the start
         void                        reset();
         size_t                      size() const;
         xg_result_t                 step(XGContext&, const XGUnitOptions& options={});
         
-        State       state() const { return m_state; }
+        State                       state() const { return m_state; }
+        
+        //! Odometer to total number of steps taken (note, if a lot, rollover might happen)
+        size_t                      steps() const { return m_steps; }
         
     private:
+    
+        static void _sort(std::vector<xg_execute_t>&);
     
         
         struct Node;
@@ -70,13 +86,14 @@ namespace yq {
         std::error_code                 _compile(const GGraph&);
         Expect<XGElement*>              _compile(const GNode&);
         
-        gid_t                           m_current   = 0ULL;
         
         //std::vector<GDocumentCPtr> m_documents;    // keep documents alive
-        std::vector<xg_execute_t>       m_always;        // start elements
-        std::vector<xg_execute_t>       m_start;        // start elements
-        Stack<gid_t>                    m_stack;
-        State                           m_state     = State::Uninit;
+        std::vector<xg_execute_t>       m_always;   //< always elements
+        std::vector<xg_execute_t>       m_starts;   //< start elements
+        Stack<xg_execute_t>             m_stack;
+        State                           m_state             = State::Uninit;
+        xg_execute_t                    m_current           = {};   // priority only matters once we're in interrupts
+        size_t                          m_steps             = 0;
         
         xg_result_t         stepstep(XGContext&, const std::vector<xg_execute_t>&);
     };
