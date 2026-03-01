@@ -113,6 +113,9 @@ namespace yq {
         //! Union of this set and the other (ie, keep whatever's in one or the other sets)
         //! \return Reference to this set
         Set&   operator|=(const Set&);
+
+        //! Exclusive or of this set and the other (ie, keep whatever's in one or the other set, but not both)
+        //! \return Reference to this set
         Set&   operator^=(const Set&);
         
         Set&   operator<<(const T&);
