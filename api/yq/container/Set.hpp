@@ -118,6 +118,8 @@ namespace yq {
         //! \return Reference to this set
         Set&   operator^=(const Set&);
         
+        //! Insert the specified item into the set (copy)
+        //! \return Reference to this set
         Set&   operator<<(const T&);
         Set&   operator<<(T&&);
         
