@@ -71,5 +71,4 @@ namespace yq {
 
     using XGEvaluatorFN     = std::function<xg_result_t(const XGElement&)> ;
     
-    
 }

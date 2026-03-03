@@ -35,13 +35,6 @@ namespace yq {
             //}
         //}
 
-        void    priority(float v)
-        {
-            if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_priority  = v;
-            }
-        }
-
         void    node_type(XGNodeType v)
         {
             if(m_meta && Meta::thread_safe_write()){

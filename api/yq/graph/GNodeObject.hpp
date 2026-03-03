@@ -72,21 +72,22 @@ namespace yq {
         YQ_OBJECT_META(GNodeObjectMeta)
         YQ_OBJECT_DECLARE(GNodeObject, Object)
     public:
+        struct InitAPI;
     
         GNodeObject();
         virtual ~GNodeObject();
         
         static void init_meta();
         
+        //  does meta stuff (as necessary)
+        std::error_code         initialize(const InitAPI&);
+        virtual void            reset();              //!< Reset node to start
+
     protected:
-        struct InitAPI;
-        friend class GraphEngine;
+        //friend class GraphEngine;
         
         GNode       m_node;
         
-        virtual std::error_code initialize(const InitAPI&);
-        
-        //  does meta stuff (as necessary)
-        std::error_code     _initialize(const InitAPI&);
+        virtual std::error_code init(const InitAPI&);
     };
 }

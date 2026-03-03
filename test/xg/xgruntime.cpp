@@ -11,6 +11,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/graph/GDocument.hpp>
 #include <yq/graph/GGraph.hpp>
+#include <yq/graph/GNode.hpp>
 #include <yq/meta/Meta.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/process/PluginLoader.hpp>
@@ -72,6 +73,7 @@ int main(int argc, char* argv[])
             return;
         }
         
+        expect(xg.elements(COUNT) == 2);
         expect(xg.valid() == true);
     };
     
@@ -79,20 +81,18 @@ int main(int argc, char* argv[])
         expect(xg.valid() == true);
         if(!xg.valid())
             return ;
-            
-        #if 0
+
         using yq::gid_t;
-            
         std::vector<gid_t>  history;
-        XGUnitOptions       opts;
-        opts.history    = [&](gid_t i, const xg_result_t&){
-            history.push_back(i);
-        };
         
+        XGRuntimeOptions    opts;
+        opts.history    = [&](const GNode& gn, const xg_result_t&){
+            history.push_back(gn.id());
+        };
+            
         auto r = xg.execute(opts);
         
         expect(is_done(r) == true);
-
         if(auto p = std::get_if<std::error_code>(&r)){
             yError() << "Unable to execute executive graph runtime: " << p->message();
             return;
@@ -106,7 +106,6 @@ int main(int argc, char* argv[])
             expect(history[0] == 1);
             expect(history[1] == 3);
         }
-        #endif
     };
     
     return ut::cfg<>.run();

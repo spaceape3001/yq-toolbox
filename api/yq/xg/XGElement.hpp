@@ -40,9 +40,6 @@ namespace yq {
         
         std::string_view    symbol_spec() const { return m_symbol; }
         
-        //! Default priority for elements of this type
-        double              priority() const { return m_priority; }
-        
         //! All XG Element meta
         static const std::vector<const XGElementMeta*>& all();
         
@@ -62,7 +59,6 @@ namespace yq {
         RGBA4F              m_bgcolor       = kInvalidColor;
         RGBA4F              m_color         = kInvalidColor;
         XGNodeType          m_nodeType      = XGNodeType::Unspecified;
-        double              m_priority      = NaN;
         
         struct Repo;
         static Repo&    repo();
@@ -74,9 +70,12 @@ namespace yq {
     public:
     
         virtual xg_result_t         execute(XGContext&);    // extend this one
+        virtual void                reset();                //!< Reset node to start
         
+        const auto& cursor() const { return m_cursor; }
+
         gid_t                       id() const;
-        double                      priority() const;
+        int32_t                     priority() const { return m_priority; }
         
         //! Might want some wait condition handling...  (will, if it becomes an issue)
         
@@ -92,10 +91,11 @@ namespace yq {
             are set from the node's data.  (Thus, should hopefully 
             be minimal.)
         */
-        virtual std::error_code     initialize(const InitAPI&) override;
+        virtual std::error_code     init(const InitAPI&) override;
         
         //const auto& logic_results() const { return m_results; }
         //const auto& logic_nodes() const { return m_logics; }
+        
 
     private:
         friend class XGUnit;
@@ -109,8 +109,9 @@ namespace yq {
         //  some attribute overrides (here and/or in the graph node object)
         
         std::vector<xg_execute_t>   m_next;     //< General "NEXT"
+        xg_cursor_t                 m_cursor;
         //std::vector<xg_execute_t>   m_logics;   //< Conditional connections (TBD)
         //std::vector<xg_result_t>    m_results;  //< Logical results
-        double                      m_priority      = NaN;                     // will be used
+        int32_t                     m_priority      = 0;
     };
 }

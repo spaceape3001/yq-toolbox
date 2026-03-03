@@ -18,24 +18,26 @@
 
 namespace yq {
     struct XGContext {
-        XGRuntime&                              runtime;
     
         //! Current always mode, flip to NaN to exit
         double                                  always  = NaN;
 
         //! When key/values are needed (nicer for debugging)
         Map<std::string, xg_value_t, IgCase>    attributes;
-    
-        //! Current sim time
-        unit::Second                            time{0.};
 
         //! Last result from given node
         Map<gid_t, xg_result_t>                 results;
         
+        XGRuntime*                              runtime = nullptr;
+
         //  fleetingly
         //  stack....
         Stack<xg_value_t>                       stack;
         
+    
+        //! Current sim time
+        unit::Second                            time{0.};
+
         //  will be added/dropped
         //  positional...
         Vector<xg_value_t>                      values;
@@ -43,7 +45,7 @@ namespace yq {
         //! Prefer values over variables (faster)
         Hash<uint32_t, xg_value_t>              variables; 
         
-        XGContext(XGRuntime&);
+        XGContext();
         virtual ~XGContext();
     };
 }

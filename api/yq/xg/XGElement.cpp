@@ -85,18 +85,16 @@ namespace yq {
         return m_node.id();
     }
 
-    std::error_code  XGElement::initialize(const InitAPI&dn)
+    std::error_code  XGElement::init(const InitAPI&dn)
     {
         //m_nodeType  = dn.node_type;
         //m_priority  = dn.priority;
         return {};
     }
 
-    double          XGElement::priority() const
+    void   XGElement::reset() 
     {
-        if(!is_nan(m_priority))
-            return m_priority;
-        return metaInfo().priority();
+        //  reload meta attributes
     }
 
     ////////////////////////////////////////////////////////////////////////////

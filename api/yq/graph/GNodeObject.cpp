@@ -108,12 +108,12 @@ namespace yq {
     {
     }
 
-    std::error_code GNodeObject::initialize(const InitAPI& api)
+    std::error_code GNodeObject::init(const InitAPI& api)
     {
         return {};
     }
     
-    std::error_code GNodeObject::_initialize(const InitAPI& api)
+    std::error_code GNodeObject::initialize(const InitAPI& api)
     {
         if(m_node)
             return create_error<"GNodeObject already initialized">();
@@ -125,7 +125,7 @@ namespace yq {
         
         m_node  = api.node;
         
-        if(std::error_code ec = initialize(api); ec != std::error_code()){
+        if(std::error_code ec = init(api); ec != std::error_code()){
             m_node  = {};
             return ec;
         }
@@ -133,6 +133,10 @@ namespace yq {
         //  any thing more....?
         
         return {};
+    }
+
+    void GNodeObject::reset() 
+    {
     }
 
     void GNodeObject::init_meta()
