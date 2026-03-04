@@ -6,6 +6,7 @@
 
 add_library(yq_xg SHARED
     xg/XGElement.cpp
+    xg/XGLogic.cpp
     xg/XGRuntime.cpp
 )
 

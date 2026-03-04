@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/xg/XGElement.hpp>
+#include <yq/xg/XGLogic.hpp>
 #include <yq/xg/XGElementMetaWriter.hpp>
 
 using namespace yq;
@@ -15,8 +15,8 @@ namespace {
         Returns TRUE if ALL connected nodes are true
     */
 
-    class AllXG : public XGElement {
-        YQ_OBJECT_DECLARE(AllXG, XGElement)
+    class AllXG : public XGLogic {
+        YQ_OBJECT_DECLARE(AllXG, XGLogic)
     public:
         AllXG(){}
         ~AllXG(){}

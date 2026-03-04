@@ -101,6 +101,13 @@ namespace yq {
             return d -> output;
         return false;
     }
+
+    std::string_view    GPort::key() const
+    {
+        if(const GPortData* d = data())
+            return d->key;
+        return {};
+    }
     
     GNode   GPort::node() const
     {

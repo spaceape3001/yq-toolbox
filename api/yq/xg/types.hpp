@@ -7,13 +7,14 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-
-#include <cstdint>
-#include <variant>
-#include <system_error>
 #include <yq/trait/numbers.hpp>
 #include <yq/graph/GBase.hpp>
 #include <yq/typedef/xg_document.hpp>
+
+#include <cstdint>
+#include <span>
+#include <system_error>
+#include <variant>
 
 namespace yq {
     template <typename> class Ref;
@@ -69,6 +70,7 @@ namespace yq {
     class XGElement;
     struct XGContext;
 
+    using xg_next_span_t    = std::span<const xg_next_t>;
     using XGEvaluatorFN     = std::function<xg_result_t(const XGElement&)> ;
     
 }

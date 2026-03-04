@@ -18,17 +18,17 @@
 
 namespace yq {
     struct XGContext {
-    
-        //! Current always mode, flip to NaN to exit
-        double                                  always  = NaN;
 
         //! When key/values are needed (nicer for debugging)
         Map<std::string, xg_value_t, IgCase>    attributes;
 
-        //! Last result from given node
-        Map<gid_t, xg_result_t>                 results;
+        //! True if we're running in interrupt mode
+        bool                                    interrupt   = false;    //< set by the runtime
         
-        XGRuntime*                              runtime = nullptr;
+        //! Current interrupt priority
+        int32_t                                 priority    = 0;        //< set by the runtime
+        
+        XGRuntime*                              runtime     = nullptr;  //< set by the runtime
 
         //  fleetingly
         //  stack....

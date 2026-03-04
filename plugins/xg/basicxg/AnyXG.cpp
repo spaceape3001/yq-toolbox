@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/xg/XGElement.hpp>
+#include <yq/xg/XGLogic.hpp>
 #include <yq/xg/XGElementMetaWriter.hpp>
 
 using namespace yq;
@@ -15,8 +15,8 @@ namespace {
         This will return TRUE if any node returns true.
     */
 
-    class AnyXG : public XGElement {
-        YQ_OBJECT_DECLARE(AnyXG, XGElement)
+    class AnyXG : public XGLogic {
+        YQ_OBJECT_DECLARE(AnyXG, XGLogic)
     public:
         AnyXG(){}
         ~AnyXG(){}

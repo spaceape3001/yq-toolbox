@@ -22,6 +22,8 @@ namespace yq {
         
         GNode   node() const;
         
+        std::string_view    key() const;
+        
         GPort();
         GPort(const GPort&);
         GPort(GPort&&);

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/xg/XGElement.hpp>
+#include <yq/xg/XGLogic.hpp>
 #include <yq/xg/XGElementMetaWriter.hpp>
 
 using namespace yq;
@@ -14,8 +14,8 @@ namespace {
         
         \note A none with no conditionals will return TRUE
     */
-    class NoneXG : public XGElement {
-        YQ_OBJECT_DECLARE(NoneXG, XGElement)
+    class NoneXG : public XGLogic {
+        YQ_OBJECT_DECLARE(NoneXG, XGLogic)
     public:
         NoneXG(){}
         ~NoneXG(){}

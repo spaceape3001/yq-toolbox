@@ -9,10 +9,12 @@
 #include <yq/graph/GDocument.hpp>
 #include <yq/graph/GEdge.hpp>
 #include <yq/graph/GNode.hpp>
+#include <yq/graph/GPort.hpp>
 #include <yq/util/AutoReset.hpp>
 #include <yq/util/Safety.hpp>
 #include <yq/xg/logging.hpp>
 #include <yq/xg/XGContext.hpp>
+#include <yq/xg/XGLogic.hpp>
 
 #include <yq/xg/XGElement.hxx>
 
@@ -41,12 +43,31 @@ namespace yq {
     {
         return static_cast<bool>(std::get_if<wait_k>(&r));
     }
+    
+    int32_t priority_of(const GEdge& ge)
+    {
+        //  TODO
+        return 0;
+    }
 
 //////////////////
 
     // seems zero point in dedicated C++ source
     XGContext::XGContext() = default;
     XGContext::~XGContext() = default;
+
+//////////////////
+
+    XGRuntime::State::State(){}
+    XGRuntime::State::State(const xg_next_t& nxt) : next(nxt), iterate(false)
+    {
+    }
+    
+    XGRuntime::State::State(xg_next_span_t spn) : span(spn), iterate(true)
+    {
+        if(!spn.empty())
+            next    = spn[0];
+    }
 
 //////////////////
 
@@ -66,6 +87,29 @@ namespace yq {
             xgError << "Cannot initialize graph: " << ec.message();
     }
     
+    void    XGRuntime::_push(State st, Tristate interrupt)
+    {
+        switch(interrupt){
+        case Tristate::Yes:
+            st.interrupt    = true;
+            break;
+        case Tristate::No:
+            st.interrupt    = false;
+            break;
+        case Tristate::Inherit:
+        default:
+            if(m_state.empty()){
+                st.interrupt    = false;
+            } else {
+                st.interrupt    = m_state.top().interrupt;
+            }
+            break;
+        }
+        if(st.interrupt && !m_state.empty())
+            st.priority = m_state.top().priority;
+        m_state << st;
+    }
+    
     std::error_code             XGRuntime::add(GGraph)
     {
         return errors::todo();
@@ -81,6 +125,21 @@ namespace yq {
         return errors::todo();
     }
 
+    void                        XGRuntime::always(push_k)
+    {
+        always(PUSH, m_primary);
+    }
+
+    void                        XGRuntime::always(push_k, uint64_t docId)
+    {
+        auto x = m_files.find(docId);
+        if(x == m_files.end())
+            return;
+        if(x->second.always.empty())
+            return;
+        _push(State(x->second.always), Tristate::YES);
+    }
+
     uint64_x                    XGRuntime::compile(GGraph g)
     {
         if(!g.document())
@@ -90,7 +149,8 @@ namespace yq {
         if(m_files.contains(docId))
             return unexpected<"Already compiled">();
         
-        Map<uint64_t,XGElement*>   elems;
+        Map<uint64_t,XGElement*>    elems;
+        Vector<xg_next_t>           starts, always;
         
         auto safe   = safety([&](){
             for(auto& itr : elems)
@@ -98,24 +158,72 @@ namespace yq {
         });
         
         for(GNode gn : g.nodes()){
-            auto x  = compile(gn);
+            auto xx  = compile(gn);
+            if(!xx)
+                return unexpected(xx.error());
+            
+            XGElement* x    = *xx;
             if(!x)
-                return unexpected(x.error());
-            if(!*x)
                 return errors::null_pointer();
-            (*x) -> m_cursor = { docId, gn.id() };
-            elems[gn.id()]  = *x;
+                
+            x -> m_cursor   = { docId, gn.id() };
+            
+            switch(x -> metaInfo().node_type()){
+            case XGNodeType::Always:
+                always.push_back({ .cursor = x->m_cursor, .priority=x->m_priority });
+                break;
+            case XGNodeType::Start:
+                always.push_back({ .cursor = x->m_cursor, .priority=x->m_priority });
+                break;
+            default:
+                break;
+            }
+            
+            elems[gn.id()]  = x;
         }
         
         for(GEdge ge : g.edges()){
-            // todo
+            GPort       sp  = ge.source(PORT);
+            GNode       sn  = ge.source(NODE);
+            
+            XGElement*  sx  = elems.get(sn.id(), nullptr);
+            XGLogic*    sl  = dynamic_cast<XGLogic*>(sx);
+            
+            if(sn && !sx)
+                return unexpected<"Edge has bad source">();
+            
+            GPort       tp  = ge.target(PORT);
+            GNode       tn  = ge.target(NODE);
+
+            XGElement*  tx  = elems.get(tn.id(), nullptr);
+            if(tn && !tx)
+                return unexpected<"Edge has bad target">();
+
+            xg_next_t   nx{}; 
+            nx.priority     = priority_of(ge);
+            if(tx){
+                nx.cursor   = tx->cursor();
+                nx.subpri   = tx->priority();
+            }
+
+            if(sp && !sp.key().empty()){
+                if(sl && (sp.key() == "?")){
+                    sl -> m_logic.push_back(nx);
+                } else {
+                    return unexpected<"Edge has bad source specifier">();
+                }
+            }
         }
+        
+        //  TODO... sort the edges
         
         safe.disarm();
 
         File& file = m_files[docId];
         file.graph      = g;
         file.elements   = std::move(elems);
+        file.starts     = std::move(starts);
+        file.always     = std::move(always);
 
         for(auto& itr : file.elements)
             m_elements[itr.second->cursor()] = itr.second;
@@ -185,11 +293,26 @@ namespace yq {
     
     xg_result_t  XGRuntime::execute(XGContext& ctx, const XGRuntimeOptions& opts)
     {
-        auto me = auto_reset(ctx.runtime, this);
-        
+        switch(m_mode){
+        case Mode::Uninit:
+            return create_error<"XGRuntime is not initialized">();
+        case Mode::Error:
+            return create_error<"XGRuntime is in error state">();
+        case Mode::Done:
+            return create_error<"XGRuntime is already done">();
+        default:
+            break;
+        }
+    
+        always(PUSH);
         for(unsigned n=0;n<opts.max_steps;++n){
-            xg_result_t r = step(ctx);
-            
+            xg_result_t r = step(ctx, opts);
+            if(is_error(r))
+                return r;
+            if(is_done(r))
+                return r;
+            if(is_wait(r))
+                return r;
         }
         return LIMIT;
     }
@@ -248,32 +371,83 @@ namespace yq {
             return itr->second;
         return s_null_result;
     }
+
+    void                        XGRuntime::starts(push_k)
+    {
+        starts(PUSH, m_primary);
+    }
     
-    xg_result_t                 XGRuntime::step(XGContext& ctx)
+    void                        XGRuntime::starts(push_k, uint64_t docId)
+    {
+        auto x = m_files.find(docId);
+        if(x == m_files.end())
+            return ;
+        if(x->second.starts.empty())
+            return;
+        _push(State(x->second.starts), Tristate::NO);
+    }
+    
+    xg_result_t                 XGRuntime::step(XGContext& ctx, const XGRuntimeOptions& opts)
     {
         switch(m_mode){
         case Mode::Uninit:
-            return create_error<"XGUnit has not been properly initialized">();
+            return create_error<"XGRuntime has not been properly initialized">();
         case Mode::Error:
-            return create_error<"XGUnit is in an error state">();
+            return create_error<"XGRuntime is in an error state">();
         case Mode::Done:
-            return create_error<"XGUnit is already done">();
+            return create_error<"XGRuntime is already done">();
         case Mode::Run:
-            // chase the next 
-        
             break;
-            
-        case Mode::Interrupt:
-        
-            // interrupt in progress
-            break;
-            
         case Mode::Start:
-            //  find start element
+            starts(PUSH);
             break;
-            
         default:
             break;
+        }
+        
+        if(m_state.empty()){
+            m_mode  = Mode::Done;
+            return DONE;
+        }
+        
+        xg_result_t     result;
+        XGElement*      elem    = nullptr;
+        
+        {
+            auto& st    = m_state.top();
+
+            elem    = element(st.next.cursor);
+            if(!elem){
+                assert(elem && "XGRuntime encountered a null element");
+                m_mode  = Mode::Error;
+                return create_error<"XGRuntime encountered a null element">();
+            }
+            
+            auto _runtime       = auto_reset(ctx.runtime, this);
+            auto _interrupt     = auto_reset(ctx.interrupt, st.interrupt);
+            auto _priority      = auto_reset(ctx.priority, st.priority);
+            
+            #ifdef NDEBUG
+            try {
+            #endif
+            
+                result          = elem -> execute(ctx);
+                
+            #ifdef NDEBUG
+            } 
+            catch(...){
+                result          = ERROR;
+            }
+            #endif
+        }
+        
+        m_results[elem->cursor()]   = result;
+        if(opts.history)
+            opts.history(elem->node(), result);
+        
+        if(is_error(result)){
+            m_mode  = Mode::Error;
+            return result;
         }
 
         return errors::todo();

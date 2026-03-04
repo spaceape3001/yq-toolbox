@@ -8,6 +8,7 @@
 
 #include <yq/container/Map.hpp>
 #include <yq/container/Stack.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/graph/GGraph.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/xg/types.hpp>
@@ -19,9 +20,9 @@ namespace yq {
     
     struct XGRuntimeOptions {
         XGHistoryFN     history;
-        unsigned        max_steps   = 1000;
+        unsigned        max_steps   = 10000;
     };
-
+    
     class XGRuntime {
     public:
     
@@ -29,7 +30,6 @@ namespace yq {
             Uninit      = 0,
             Start,
             Run,
-            Interrupt,
             Done,
             Error
         };
@@ -51,6 +51,10 @@ namespace yq {
         std::error_code             add(int, GGraph);
         std::error_code             add(const std::string&, GGraph);
 
+        void                        always(push_k);
+
+        void                        always(push_k, uint64_t);
+
         XGElement*                  element(const xg_cursor_t&);
         const XGElement*            element(const xg_cursor_t&) const;
 
@@ -67,14 +71,18 @@ namespace yq {
         //! The "primary" graph
         GGraph                      primary() const;
 
-        //! Resets to the start
+        //! Resets to the start (and wipes results)
         void                        reset();
     
         //! Last result for element
         //! \note Do NOT hold onto a reference, copy for permanent retention.
         const xg_result_t&          result(const xg_cursor_t&) const;
         
-        xg_result_t                 step(XGContext&);
+        void                        starts(push_k);
+        void                        starts(push_k, uint64_t);
+
+        //! Executes *ONE* node
+        xg_result_t                 step(XGContext&, const XGRuntimeOptions& opts={});
         
         bool                        valid() const;
         
@@ -85,22 +93,24 @@ namespace yq {
         struct File {
             GGraph                      graph;
             Map<uint64_t,XGElement*>    elements;
-            //AllLocal<xg_cur>  always;
-            //AllLocal<xg_cur>  starts;
-        };
-        
-        enum class X {
-            Uninit,
-            Iterate
+            Vector<xg_next_t>           starts;
+            Vector<xg_next_t>           always;
         };
         
         struct State {
-            Vector<XGElement*>          eval;
-            xg_cursor_t                 cursor      = {};
+            xg_next_t                   next        = {};
+            xg_next_span_t              span        = {};
             size_t                      index       = 0ULL;
-            int32_t                     priority    = 0;
-            X                           x           = X::Uninit;
+            int32_t                     priority    = INT32_MIN;
+            bool                        iterate     = false;
+            bool                        interrupt   = false;
+            
+            State();
+            State(const xg_next_t&);
+            State(xg_next_span_t);
         };
+        
+        void    _push(State, Tristate interrupt=Tristate::Inherit);
         
         uint64_x                        compile(GGraph);
         Expect<XGElement*>              compile(const GNode&);
@@ -114,8 +124,8 @@ namespace yq {
         Map<uint64_t,File>              m_files;
         uint64_t                        m_primary   = 0ULL;
         Mode                            m_mode      = Mode::Uninit;
-        Stack<State>                    m_stack;
-        State                           m_current   = {};
+        Stack<State>                    m_state;
+        //State                           m_current   = {};
         
         // Stack
     };

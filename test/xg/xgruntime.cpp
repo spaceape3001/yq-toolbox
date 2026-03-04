@@ -91,7 +91,6 @@ int main(int argc, char* argv[])
         };
             
         auto r = xg.execute(opts);
-        
         expect(is_done(r) == true);
         if(auto p = std::get_if<std::error_code>(&r)){
             yError() << "Unable to execute executive graph runtime: " << p->message();

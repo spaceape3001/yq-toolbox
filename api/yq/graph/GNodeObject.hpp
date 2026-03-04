@@ -82,6 +82,8 @@ namespace yq {
         //  does meta stuff (as necessary)
         std::error_code         initialize(const InitAPI&);
         virtual void            reset();              //!< Reset node to start
+        
+        const GNode&            node() const { return m_node; }
 
     protected:
         //friend class GraphEngine;

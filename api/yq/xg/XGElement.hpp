@@ -73,9 +73,11 @@ namespace yq {
         virtual void                reset();                //!< Reset node to start
         
         const auto& cursor() const { return m_cursor; }
+        const auto& next() const { return m_next; }
 
         gid_t                       id() const;
         int32_t                     priority() const { return m_priority; }
+        
         
         //! Might want some wait condition handling...  (will, if it becomes an issue)
         
@@ -108,7 +110,7 @@ namespace yq {
         
         //  some attribute overrides (here and/or in the graph node object)
         
-        std::vector<xg_execute_t>   m_next;     //< General "NEXT"
+        std::vector<xg_next_t>      m_next;     //< General "NEXT"
         xg_cursor_t                 m_cursor;
         //std::vector<xg_execute_t>   m_logics;   //< Conditional connections (TBD)
         //std::vector<xg_result_t>    m_results;  //< Logical results
