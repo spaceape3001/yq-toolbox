@@ -126,7 +126,8 @@ namespace yq {
         //! \return Reference to this set
         Set&   operator<<(T&&);
         
-        // Returns TRUE if this item was inserted, FALSE if it already existed
+        //! Insert the specified item into the set (copy)
+        //! Returns TRUE if this item was inserted, FALSE if it already existed
         bool    add(const T&);
         bool    add(T&&);
         
