@@ -129,6 +129,9 @@ namespace yq {
         //! Insert the specified item into the set (copy)
         //! Returns TRUE if this item was inserted, FALSE if it already existed
         bool    add(const T&);
+
+        //! Insert the specified item into the set (move)
+        //! Returns TRUE if this item was inserted, FALSE if it already existed
         bool    add(T&&);
         
         bool    has(const T&) const;
