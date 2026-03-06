@@ -134,6 +134,8 @@ namespace yq {
         //! Returns TRUE if this item was inserted, FALSE if it already existed
         bool    add(T&&);
         
+        //! True if the container has the specified item
+        //! \sa contains (in the std set)
         bool    has(const T&) const;
         bool    has_any(const Set<T,C>&) const;
         
