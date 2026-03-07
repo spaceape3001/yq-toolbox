@@ -137,6 +137,8 @@ namespace yq {
         //! True if the container has the specified item
         //! \sa contains (in the std set)
         bool    has(const T&) const;
+
+        //! True if the container has any of the specified items
         bool    has_any(const Set<T,C>&) const;
         
         const T&   first() const
