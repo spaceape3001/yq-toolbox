@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <set>
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -328,6 +329,20 @@ namespace yq {
             std::inserter(ret.removed, ret.removed.end()), 
             std::inserter(ret.added, ret.added.end()), c);
         return ret;
+    }
+
+    //! \brief Make a set from an initializer list
+    template <typename T>
+    std::set<T>                 make_set(std::span<const T> data)
+    {
+        return std::set<T>(data.begin(), data.end());
+    }
+
+    //! \brief Make a set from an initializer list
+    template <typename T, typename C>
+    std::set<T,C>                 make_set(std::span<const T> data, const C& lesser)
+    {
+        return std::set<T,C>(data.begin(), data.end(), lesser);
     }
 
     //! \brief Make a set from a vector

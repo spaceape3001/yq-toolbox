@@ -102,15 +102,18 @@ namespace yq {
             xg_next_span_t              span        = {};
             size_t                      index       = 0ULL;
             int32_t                     priority    = INT32_MIN;
-            bool                        iterate     = false;
-            bool                        interrupt   = false;
             
-            State();
-            State(const xg_next_t&);
-            State(xg_next_span_t);
+            bool interrupt() const;
+            bool iterate() const;
+            bool advance();
+            
+            State(bool fInterrupt=false);
+            State(const xg_next_t&, bool fInterrupt=false);
+            State(xg_next_span_t, bool fInterrupt=false);
         };
         
-        void    _push(State, Tristate interrupt=Tristate::Inherit);
+        void    _push(const State&);
+        void    _replace(const State&);
         
         uint64_x                        compile(GGraph);
         Expect<XGElement*>              compile(const GNode&);

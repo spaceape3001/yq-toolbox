@@ -45,6 +45,8 @@ namespace yq {
         
         static void init_meta();
         
+        std::vector<gid_t>  affected(std::span<const gid_t>) const; 
+
         void                build_connection_tables();  
         
         GDocumentPtr        clone() const;
@@ -81,6 +83,13 @@ namespace yq {
         auto                edges(for_k, Pred&&);
         template <typename Pred>
         auto                edges(for_k, Pred&&) const;
+
+        //! Erases the specified items
+        void                erase(std::span<const gid_t>);
+        
+        //! Unerases the specified items
+        void                unerase(std::span<const gid_t>);
+        
 
         GGraphData*         graph(create_k);
         GGraphData*         graph(create_k, gid_t);

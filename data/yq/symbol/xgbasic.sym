@@ -1,0 +1,44 @@
+trigger Trigger {
+    oval r=100,50 {
+        fill  yellow
+    }
+    label Trigger
+    in {
+        position    0 50
+        fill        white
+    }
+    out {
+        position    0 -50
+        fill        white
+    }
+}
+
+command Command {
+    box 200,100 {
+        fill white
+    }
+    label Command
+    in {
+        position    0 50
+        fill        white
+    }
+    out {
+        position    0 -50
+        fill        white
+    }
+}
+
+pass Pass {
+    oval r=100,50 {
+        fill  white
+    }
+    label Trigger
+    in {
+        position    0 50
+        fill        white
+    }
+    out {
+        position    0 -50
+        fill        white
+    }
+}

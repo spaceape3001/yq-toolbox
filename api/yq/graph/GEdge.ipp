@@ -43,14 +43,14 @@ namespace yq {
 
     GBase  GEdge::source() const
     {
-        if(const GEdgeData* ge = data(); ge->source)
+        if(const GEdgeData* ge = data(); ge && ge->source)
             return GBase(m_doc, ge->source);
         return GBase();
     }
 
     GNode  GEdge::source(node_k) const
     {
-        if(const GEdgeData* ge = data(); ge->source){
+        if(const GEdgeData* ge = data(); ge && ge->source){
             if(m_doc->is_node(ge->source)){
                 return GNode(m_doc, ge->source);
             }
@@ -64,7 +64,7 @@ namespace yq {
     
     GPort  GEdge::source(port_k) const
     {
-        if(const GEdgeData* ge = data(); ge->source){
+        if(const GEdgeData* ge = data(); ge && ge->source){
             if(m_doc->is_port(ge->source))
                 return GPort(m_doc, ge->source);
         }
@@ -73,14 +73,14 @@ namespace yq {
     
     GBase  GEdge::target() const
     {
-        if(const GEdgeData* ge = data(); ge->target)
+        if(const GEdgeData* ge = data(); ge && ge->target)
             return GBase(m_doc, ge->target);
         return GBase();
     }
 
     GNode  GEdge::target(node_k) const
     {
-        if(const GEdgeData* ge = data(); ge->target){
+        if(const GEdgeData* ge = data(); ge && ge->target){
             if(m_doc->is_node(ge->target)){
                 return GNode(m_doc, ge->target);
             }
@@ -94,7 +94,7 @@ namespace yq {
     
     GPort  GEdge::target(port_k) const
     {
-        if(const GEdgeData* ge = data(); ge->target){
+        if(const GEdgeData* ge = data(); ge && ge->target){
             if(m_doc->is_port(ge->target))
                 return GPort(m_doc, ge->target);
         }

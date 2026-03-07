@@ -15,10 +15,13 @@
 #include <span>
 #include <system_error>
 #include <variant>
+#include <iosfwd>
 
 namespace yq {
     template <typename> class Ref;
 }
+
+namespace log4cpp { class CategoryStream; }
 
 namespace yq {
     class Any;
@@ -29,11 +32,15 @@ namespace yq {
         constexpr auto operator<=>(const xg_cursor_t&) const noexcept = default;
     };
     
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const xg_cursor_t&);
+    
     struct xg_next_t {
         xg_cursor_t     cursor;
         int32_t         priority    = 0;
         int32_t         subpri      = 0;
     };
+
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const xg_next_t&);
 
     using xg_result_t  = std::variant<
         std::monostate,     //< Here for an empty variant, usually treated as continue
@@ -48,6 +55,7 @@ namespace yq {
         xg_cursor_t         //< Wait for result (node/edge/etc)
     >;
     
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&, const xg_result_t&);
     
     // This might not be generic enough (TBD)
     using xg_value_t       = std::variant<

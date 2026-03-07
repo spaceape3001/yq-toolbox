@@ -14,6 +14,7 @@ add_library(${PROJECT_NAME} SHARED
     DoneXG.cpp
     FalseXG.cpp
     NoneXG.cpp
+    PassXG.cpp
     ResumeXG.cpp
     StartXG.cpp
     TrueXG.cpp

@@ -18,6 +18,8 @@
 //#include "GViewData.hpp"
 
 #include "logging.hpp"
+#include <yq/container/set_utils.hpp>
+#include <yq/container/vector_utils.hpp>
 #include <yq/resource/ResourceMetaWriter.hpp>
 
 YQ_RESOURCE_IMPLEMENT(yq::GDocument)
@@ -81,6 +83,54 @@ namespace yq {
         if(m_data.size() > i)
             return ;
         m_data.resize(i+1, nullptr);
+    }
+
+    std::vector<gid_t>  GDocument::affected(std::span<const gid_t> gids) const
+    {
+        std::set<gid_t>  proposed    = make_set(gids);
+        std::set<gid_t>  ret;
+    
+        for(gid_t g : gids){
+            const GBaseData* gb = data(g);
+            if(!gb)
+                continue;
+            if(gb->deleted)
+                continue;
+            if(gb->is_port() && gb->parent && !proposed.contains(gb->parent))   // reject isolated ports
+                continue;
+            ret.insert(g);
+        }
+        
+        //! scan for ports under nodes
+        for(const GBaseData* gb : m_data){
+            if(!gb)
+                continue;
+            if(gb->deleted)
+                continue;
+            if(!gb->is_port())
+                continue;
+            if(ret.contains(gb -> parent))
+                ret.insert(gb->id);
+        }
+        
+        //! scan for edges with source/targets
+        for(const GBaseData* gb : m_data){
+            if(!gb)
+                continue;
+            if(gb->deleted)
+                continue;
+            if(!gb->is_edge())
+                continue;
+            const GEdgeData* ge = static_cast<const GEdgeData*>(gb);
+            if(ge->source && ret.contains(ge->source)){
+                ret.insert(gb->id);
+            }
+            if(ge->target && ret.contains(ge->target)){
+                ret.insert(gb->id);
+            }
+        }
+        
+        return make_vector(ret);
     }
 
     void                GDocument::build_connection_tables()
@@ -190,14 +240,14 @@ namespace yq {
 
     GEdgeData*          GDocument::edge(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i,deleted); d->is_edge())
+        if(GBaseData*d = data(i,deleted); d && d->is_edge())
             return static_cast<GEdgeData*>(d);
         return nullptr;
     }
     
     const GEdgeData*    GDocument::edge(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_edge())
+        if(const GBaseData*d = data(i, deleted); d && d->is_edge())
             return static_cast<const GEdgeData*>(d);
         return nullptr;
     }
@@ -208,6 +258,16 @@ namespace yq {
         edges(FOR, [&](const GEdgeData&){ ++ret; });
         return ret;
     }
+
+    void        GDocument::erase(std::span<const gid_t> gids)
+    {
+        for(gid_t g : gids){
+            if(GBaseData*d = data(g)){
+                d -> deleted    = true;
+            }
+        }
+    }
+
 
     GGraphData*         GDocument::graph(create_k)
     {
@@ -221,14 +281,14 @@ namespace yq {
 
     GGraphData*         GDocument::graph(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i, deleted); d->is_graph())
+        if(GBaseData*d = data(i, deleted); d && d->is_graph())
             return static_cast<GGraphData*>(d);
         return nullptr;
     }
     
     const GGraphData*   GDocument::graph(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_graph())
+        if(const GBaseData*d = data(i, deleted); d && d->is_graph())
             return static_cast<const GGraphData*>(d);
         return nullptr;
     }
@@ -306,14 +366,14 @@ namespace yq {
 
     GLineData*          GDocument::line(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i, deleted); d->is_line())
+        if(GBaseData*d = data(i, deleted); d && d->is_line())
             return static_cast<GLineData*>(d);
         return nullptr;
     }
     
     const GLineData*    GDocument::line(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_line())
+        if(const GBaseData*d = data(i, deleted); d && d->is_line())
             return static_cast<const GLineData*>(d);
         return nullptr;
     }
@@ -338,14 +398,14 @@ namespace yq {
 
     GNodeData*          GDocument::node(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i, deleted); d->is_node())
+        if(GBaseData*d = data(i, deleted); d && d->is_node())
             return static_cast<GNodeData*>(d);
         return nullptr;
     }
     
     const GNodeData*    GDocument::node(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_node())
+        if(const GBaseData*d = data(i, deleted); d && d->is_node())
             return static_cast<const GNodeData*>(d);
         return nullptr;
     }
@@ -370,14 +430,14 @@ namespace yq {
 
     GPortData*          GDocument::port(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i, deleted); d->is_port())
+        if(GBaseData*d = data(i, deleted); d && d->is_port())
             return static_cast<GPortData*>(d);
         return nullptr;
     }
     
     const GPortData*    GDocument::port(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_port())
+        if(const GBaseData*d = data(i, deleted); d && d->is_port())
             return static_cast<const GPortData*>(d);
         return nullptr;
     }
@@ -410,14 +470,14 @@ namespace yq {
 
     GShapeData*         GDocument::shape(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i, deleted); d->is_shape())
+        if(GBaseData*d = data(i, deleted); d && d->is_shape())
             return static_cast<GShapeData*>(d);
         return nullptr;
     }
 
     const GShapeData*   GDocument::shape(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_shape())
+        if(const GBaseData*d = data(i, deleted); d && d->is_shape())
             return static_cast<const GShapeData*>(d);
         return nullptr;
     }
@@ -442,14 +502,14 @@ namespace yq {
     
     GTextData*          GDocument::text(gid_t i, bool deleted)
     {
-        if(GBaseData*d = data(i, deleted); d->is_text())
+        if(GBaseData*d = data(i, deleted); d && d->is_text())
             return static_cast<GTextData*>(d);
         return nullptr;
     }
     
     const GTextData*    GDocument::text(gid_t i, bool deleted) const
     {
-        if(const GBaseData*d = data(i, deleted); d->is_text())
+        if(const GBaseData*d = data(i, deleted); d && d->is_text())
             return static_cast<const GTextData*>(d);
         return nullptr;
     }
@@ -459,6 +519,15 @@ namespace yq {
         size_t  ret = 0;
         texts(FOR, [&](const GTextData&){ ++ret; });
         return ret;
+    }
+
+    void        GDocument::unerase(std::span<const gid_t> gids)
+    {
+        for(gid_t g : gids){
+            if(GBaseData*d = data(g, true)){
+                d -> deleted    = false;
+            }
+        }
     }
 
     //GViewData*          _view(create_k);

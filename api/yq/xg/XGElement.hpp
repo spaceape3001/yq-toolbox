@@ -69,7 +69,7 @@ namespace yq {
         YQ_OBJECT_DECLARE(XGElement, GNodeObject)
     public:
     
-        virtual xg_result_t         execute(XGContext&);    // extend this one
+        virtual xg_result_t         execute(XGContext&) = 0;    // extend this one
         virtual void                reset();                //!< Reset node to start
         
         const auto& cursor() const { return m_cursor; }

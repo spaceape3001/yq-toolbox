@@ -50,6 +50,54 @@ namespace yq {
         return 0;
     }
 
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&str, const xg_cursor_t& v)
+    {
+        str << "{" << v.file << "," << v.gid << "}";
+        return str;
+    }
+
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&str, const xg_next_t& v)
+    {
+        str << "{" << v.cursor.file << "," << v.cursor.gid << "/" << v.priority << "." << v.subpri << "}";
+        return str;
+    }
+
+    log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&str, const xg_result_t& v)
+    {
+        if(std::get_if<std::monostate>(&v)){
+            str << "{DEFAULT}";
+        } else if(auto p = std::get_if<std::error_code>(&v)){
+            if(*p == std::error_code()){
+                str << "{NO ERROR}";
+            } else {
+                str << "{ERROR: " << p->message() << "}";
+            }
+        } else if(auto p = std::get_if<bool>(&v)){
+            if(*p){
+                str << "{TRUE}";
+            } else {
+                str << "{FALSE}";
+            }
+        } else if(std::get_if<continue_k>(&v)){
+            str << "{CONTINUE}";
+        } else if(std::get_if<done_k>(&v)){
+            str << "{DONE}";
+        } else if(std::get_if<error_k>(&v)){
+            str << "{ERROR}";
+        } else if(std::get_if<limit_k>(&v)){
+            str << "{LIMIT}";
+        } else if(std::get_if<resume_k>(&v)){
+            str << "{RESUME}";
+        } else if(std::get_if<wait_k>(&v)){
+            str << "{WAIT}";
+        } else if(auto p = std::get_if<xg_cursor_t>(&v)){
+            str << "{" << p->file << "," << p->gid << "}";
+        } else {
+            str << "{UNSUPPORTED}";
+        }
+        return str;
+    }
+
 //////////////////
 
     // seems zero point in dedicated C++ source
@@ -58,15 +106,45 @@ namespace yq {
 
 //////////////////
 
-    XGRuntime::State::State(){}
-    XGRuntime::State::State(const xg_next_t& nxt) : next(nxt), iterate(false)
+    XGRuntime::State::State(bool fInterrupt)
     {
+        if(fInterrupt)
+            ++priority;
     }
     
-    XGRuntime::State::State(xg_next_span_t spn) : span(spn), iterate(true)
+    XGRuntime::State::State(const xg_next_t& nxt, bool fInterrupt) : State(fInterrupt)
     {
+        next    = nxt;
+    }
+    
+    XGRuntime::State::State(xg_next_span_t spn, bool fInterrupt) : State(fInterrupt)
+    {
+        span    = spn;
         if(!spn.empty())
             next    = spn[0];
+    }
+
+    bool XGRuntime::State::interrupt() const 
+    { 
+        return priority != INT32_MIN; 
+    }
+    
+    bool XGRuntime::State::iterate() const 
+    { 
+        return !span.empty(); 
+    }
+    
+    bool XGRuntime::State::advance()
+    
+    {
+        if(!span.empty()){
+            if(++index < span.size()){
+                next    = span[index];
+                return next.priority >= priority;
+            }
+        }
+        next    = {};
+        return false;
     }
 
 //////////////////
@@ -87,27 +165,27 @@ namespace yq {
             xgError << "Cannot initialize graph: " << ec.message();
     }
     
-    void    XGRuntime::_push(State st, Tristate interrupt)
+    void    XGRuntime::_push(const State& st)
     {
-        switch(interrupt){
-        case Tristate::Yes:
-            st.interrupt    = true;
-            break;
-        case Tristate::No:
-            st.interrupt    = false;
-            break;
-        case Tristate::Inherit:
-        default:
-            if(m_state.empty()){
-                st.interrupt    = false;
-            } else {
-                st.interrupt    = m_state.top().interrupt;
-            }
-            break;
+        if(m_state.empty()){
+            m_state << st;
+        } else {
+            int32_t pri = std::max(st.priority, m_state.top().priority);
+            m_state << st;
+            m_state.top().priority  = pri;
         }
-        if(st.interrupt && !m_state.empty())
-            st.priority = m_state.top().priority;
-        m_state << st;
+    }
+
+    void    XGRuntime::_replace(const State& st)
+    {
+        if(m_state.empty()){
+            m_state << st;
+        } else {
+            auto& top       = m_state.top();
+            int32_t pri     = std::max(st.priority, top.priority);
+            top             = st;
+            top.priority    = pri;
+        }
     }
     
     std::error_code             XGRuntime::add(GGraph)
@@ -137,7 +215,7 @@ namespace yq {
             return;
         if(x->second.always.empty())
             return;
-        _push(State(x->second.always), Tristate::YES);
+        _push(State(x->second.always, true));
     }
 
     uint64_x                    XGRuntime::compile(GGraph g)
@@ -384,7 +462,7 @@ namespace yq {
             return ;
         if(x->second.starts.empty())
             return;
-        _push(State(x->second.starts), Tristate::NO);
+        _push(State(x->second.starts, false));
     }
     
     xg_result_t                 XGRuntime::step(XGContext& ctx, const XGRuntimeOptions& opts)
@@ -424,7 +502,7 @@ namespace yq {
             }
             
             auto _runtime       = auto_reset(ctx.runtime, this);
-            auto _interrupt     = auto_reset(ctx.interrupt, st.interrupt);
+            auto _interrupt     = auto_reset(ctx.interrupt, st.interrupt());
             auto _priority      = auto_reset(ctx.priority, st.priority);
             
             #ifdef NDEBUG
@@ -444,13 +522,139 @@ namespace yq {
         m_results[elem->cursor()]   = result;
         if(opts.history)
             opts.history(elem->node(), result);
+
+        State   st;
         
-        if(is_error(result)){
+        bool next_      = false;
+        bool advance_   = false;
+        bool push_      = false;
+        bool replace_   = false;
+        bool done_      = false;
+        bool wait_      = false;
+        bool pop_       = false;
+        bool continue_  = false;
+        
+        if(std::get_if<std::monostate>(&result)){
+            next_       = true;
+            advance_    = true;
+            replace_    = true;
+        } else if(auto p = std::get_if<bool>(&result)){
+            if(*p){
+                next_       = true;
+                advance_    = true;
+                replace_    = true;
+            } else {
+                advance_    = true;
+            }
+        } else if(auto p = std::get_if<std::error_code>(&result)){
+            if(*p == std::error_code()){
+                return result;
+            } else {
+                next_       = true;
+                advance_    = true;
+                replace_    = true;
+            }
+        } else if (std::get_if<continue_k>(&result)){
+            continue_   = true;
+        } else if(std::get_if<done_k>(&result)){
+            done_       = true;
+        } else if(std::get_if<error_k>(&result)){
+            return result;
+        } else if(std::get_if<limit_k>(&result)){
+            xgError << "Unexpected limit from XGElement " << elem->metaInfo().name();
+            return result;
+        } else if(std::get_if<resume_k>(&result)){
+            pop_        = true;
+        } else if(std::get_if<wait_k>(&result)){
+            wait_       = true;
+        } else if(auto p = std::get_if<xg_cursor_t>(&result)){
+            if(m_elements.contains(*p)){
+                st      = State({.cursor=*p});
+                push_   = true;
+            } else {
+                xgError << "Invalid cursor result from XGElement " << elem->metaInfo().name(); 
+                m_mode  = Mode::Error;
+                return result;
+            }
+        } else {
             m_mode  = Mode::Error;
+            xgAlert << "Unexpected/unhandled result type from XGElement " << elem->metaInfo().name();
+            return result;
+        }
+        
+        //  done as if's as the action can change
+        
+        if(next_ && elem->m_next.empty()){
+            st  = State(elem->m_next);
+        }
+        
+        if(advance_){
+            
+        }
+        
+        if(m_elements.contains(st.next.cursor)){
+            if(push_)
+                _push(st);
+            if(replace_)
+                _replace(st);
             return result;
         }
 
-        return errors::todo();
+#if 0        
+        
+        while(!m_state.empty()){
+            switch(action){
+            case Action::Next:
+                if(!elem->next.empty()){
+                    st      = State(elem->next);
+                    action  = Push;
+                } else {
+                    action  = Advance;
+                }
+                
+                
+            case Action::Done:
+                //  TODO: multigraph logic here... (for now...)
+                m_mode  = Mode::Done;
+                break;
+            case Action::Error:
+                m_mode  = Mode::Error;
+                break;
+            }
+        }
+        
+        return result;
+        
+        if(action == Next){
+            if(!elem->next.empty()){
+                st      = State(elem->next);
+                action  = Push;
+            } else {
+                action  = Advance;
+            }
+        }
+        
+        if(action == Advance){
+        }
+        
+        if(action == Pop){
+        }
+        
+        if(action == Push){
+            // priority/interrupt adjustment
+            m_state.push(st);
+        }
+        
+        if(action == Done){
+            m_mode  = Mode::Done;
+        }
+        
+        if(action == Error){
+            m_mode  = Mode::Eror;
+        }
+#endif
+        
+        return result;
     }
     
     bool                        XGRuntime::valid() const

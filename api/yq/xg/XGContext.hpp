@@ -17,6 +17,8 @@
 #include <yq/xg/types.hpp>
 
 namespace yq {
+    class XGRuntime;
+    
     struct XGContext {
 
         //! When key/values are needed (nicer for debugging)
@@ -46,6 +48,6 @@ namespace yq {
         Hash<uint32_t, xg_value_t>              variables; 
         
         XGContext();
-        virtual ~XGContext();
+        virtual ~XGContext(); // virtual for dynamic casting
     };
 }
