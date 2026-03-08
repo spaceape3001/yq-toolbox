@@ -9,6 +9,7 @@
 
 #include <yq/container/forward.hpp>
 
+#include <cassert>
 #include <set>
 #include <list>
 #include <vector>
@@ -141,8 +142,11 @@ namespace yq {
         //! True if the container has any of the specified items
         bool    has_any(const Set<T,C>&) const;
         
+        //! Reference to first item in set
+        //! \note INVALID FOR EMPTY SET
         const T&   first() const
         {
+            assert(!base_set::empty());
             return *base_set::begin();
         }
         
