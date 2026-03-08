@@ -48,12 +48,19 @@ namespace yq {
         */
 
         std::error_code             add(GGraph);
-        std::error_code             add(int, GGraph);
-        std::error_code             add(const std::string&, GGraph);
+        //std::error_code             add(int, GGraph);
+        //std::error_code             add(const std::string&, GGraph);
 
+        const auto&                 always() const { return m_always; }
+
+        //! Push the current always chain
         void                        always(push_k);
-
+        
+        //! Push the specified document's always chain
         void                        always(push_k, uint64_t);
+
+        //! Set the always chain
+        void                        always(set_k, std::span<const uint64_t>);
 
         XGElement*                  element(const xg_cursor_t&);
         const XGElement*            element(const xg_cursor_t&) const;
@@ -70,9 +77,11 @@ namespace yq {
 
         //! The "primary" graph
         GGraph                      primary() const;
+        void                        primary(set_k, uint64_t);
 
         //! Resets to the start (and wipes results)
         void                        reset();
+        
     
         //! Last result for element
         //! \note Do NOT hold onto a reference, copy for permanent retention.
@@ -120,15 +129,16 @@ namespace yq {
         
         // Will support auxillary (ie reflexes)
         //  
-        //Map<unsigned,GGraph>            m_byRoleID;
-        //Map<std::string,GGraph,IgCase>  m_byRoleKey;
-        Map<xg_cursor_t,XGElement*>     m_elements;
-        Map<xg_cursor_t,xg_result_t>    m_results;
-        Map<uint64_t,File>              m_files;
-        uint64_t                        m_primary   = 0ULL;
-        Mode                            m_mode      = Mode::Uninit;
-        Stack<State>                    m_state;
-        //State                           m_current   = {};
+        //Map<unsigned,uint64_t>              m_byRoleID;
+        //Map<std::string,uint64_t,IgCase>    m_byRoleKey;
+        Map<xg_cursor_t,XGElement*>         m_elements;
+        Map<xg_cursor_t,xg_result_t>        m_results;
+        Map<uint64_t,File>                  m_files;
+        uint64_t                            m_primary   = 0ULL;
+        Mode                                m_mode      = Mode::Uninit;
+        Stack<State>                        m_state;
+        Vector<xg_next_t>                   m_always;
+        //State                               m_current   = {};
         
         // Stack
     };

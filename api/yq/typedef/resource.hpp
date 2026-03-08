@@ -7,6 +7,9 @@
 #pragma once
 
 #include <concepts>
+#include <span>
+#include <vector>
+#include <yq/typedef/vector.hpp>
 
 namespace yq {
     template <typename> class Ref;      // general forward declaration
@@ -39,6 +42,9 @@ namespace yq {
 
     using ResourceInfoPtr          = Ref<ResourceInfo>;
     using ResourceInfoCPtr         = Ref<const ResourceInfo>;
+    
+    using ResourceCPtrVector        = std::vector<ResourceCPtr>;
+    using ResourceCPtrCSpan         = std::span<const ResourceCPtr>;
 
     //! Concept for an resource
     template <class A>

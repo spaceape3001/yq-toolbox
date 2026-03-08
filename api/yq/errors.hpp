@@ -14,6 +14,7 @@ namespace yq::errors {
     using bad_constructor           = error_db::entry<"Bad constructor">;
     using bad_conversion            = error_db::entry<"Bad conversion">;
     using bad_enumeration_key       = error_db::entry<"Bad enumeration key">;
+    using bad_index                 = error_db::entry<"Bad index">;
     using cant_open_read            = error_db::entry<"Unable to open file for reading">;
     using cant_open_write           = error_db::entry<"Unable to open file for writing">;
     using checksum_failure          = error_db::entry<"Checksum failure">;

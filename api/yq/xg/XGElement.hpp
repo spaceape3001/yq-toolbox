@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/color/RGBA.hpp>
+#include <yq/container/Vector.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/core/UniqueID.hpp>
@@ -110,7 +111,7 @@ namespace yq {
         
         //  some attribute overrides (here and/or in the graph node object)
         
-        std::vector<xg_next_t>      m_next;     //< General "NEXT"
+        Vector<xg_next_t>           m_next;     //< General "NEXT"
         xg_cursor_t                 m_cursor;
         //std::vector<xg_execute_t>   m_logics;   //< Conditional connections (TBD)
         //std::vector<xg_result_t>    m_results;  //< Logical results

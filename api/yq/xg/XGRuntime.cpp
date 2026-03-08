@@ -19,6 +19,17 @@
 #include <yq/xg/XGElement.hxx>
 
 namespace yq {
+    namespace {
+        void    _sort(std::vector<xg_next_t>& data)
+        {
+            std::stable_sort(data.begin(), data.end(), [](const xg_next_t&a, const xg_next_t& b){
+                if(a.priority != b.priority)
+                    return a.priority > b.priority;
+                return a.subpri > b.subpri;
+            });
+        }
+    }
+
     bool    is_continue(const xg_result_t& r)
     {
         return std::get_if<std::monostate>(&r) || std::get_if<continue_k>(&r);
@@ -188,20 +199,27 @@ namespace yq {
         }
     }
     
-    std::error_code             XGRuntime::add(GGraph)
+    std::error_code             XGRuntime::add(GGraph g)
     {
-        return errors::todo();
+        auto x = compile(g);
+        if(!x)
+            return x.error();
+        if(m_mode == Mode::Uninit){
+            m_mode      = Mode::Start;
+            m_primary   = *x;
+        }
+        return {};
     }
     
-    std::error_code             XGRuntime::add(int, GGraph)
-    {
-        return errors::todo();
-    }
+    //std::error_code             XGRuntime::add(int, GGraph)
+    //{
+        //return errors::todo();
+    //}
     
-    std::error_code             XGRuntime::add(const std::string&, GGraph)
-    {
-        return errors::todo();
-    }
+    //std::error_code             XGRuntime::add(const std::string&, GGraph)
+    //{
+        //return errors::todo();
+    //}
 
     void                        XGRuntime::always(push_k)
     {
@@ -218,6 +236,19 @@ namespace yq {
         _push(State(x->second.always, true));
     }
 
+    void                        XGRuntime::always(set_k, std::span<const uint64_t> docs)
+    {
+        Vector<xg_next_t>  nodes;
+        for(auto docId : docs){
+            auto x = m_files.find(docId);
+            if(x == m_files.end())
+                continue;
+            nodes += x->second.always;
+        }
+        _sort(nodes);
+        m_always    = std::move(nodes);
+    }
+
     uint64_x                    XGRuntime::compile(GGraph g)
     {
         if(!g.document())
@@ -226,6 +257,9 @@ namespace yq {
         uint64_t    docId   = g.document()->id();
         if(m_files.contains(docId))
             return unexpected<"Already compiled">();
+            
+        if(g.document()->kind() != "executive")
+            return unexpected<"Not an executive graph">();
         
         Map<uint64_t,XGElement*>    elems;
         Vector<xg_next_t>           starts, always;
@@ -302,10 +336,15 @@ namespace yq {
         file.elements   = std::move(elems);
         file.starts     = std::move(starts);
         file.always     = std::move(always);
-
-        for(auto& itr : file.elements)
-            m_elements[itr.second->cursor()] = itr.second;
         
+
+        for(auto& itr : file.elements){
+            _sort(itr.second->m_next);
+            m_elements[itr.second->cursor()] = itr.second;
+        }
+        
+        _sort(file.always);
+        _sort(file.starts);
         
         return docId;
     }
@@ -427,6 +466,14 @@ namespace yq {
         if(auto itr = m_files.find(m_primary); itr != m_files.end())
             return itr->second.graph;
         return {};
+    }
+
+    void    XGRuntime::primary(set_k, uint64_t docId)
+    {
+        if(m_files.contains(docId)){
+            m_primary   = docId;
+            m_mode      = Mode::Start;
+        }
     }
 
     void    XGRuntime::reset()
