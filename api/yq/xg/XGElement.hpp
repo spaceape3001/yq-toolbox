@@ -79,7 +79,6 @@ namespace yq {
         gid_t                       id() const;
         int32_t                     priority() const { return m_priority; }
         
-        
         //! Might want some wait condition handling...  (will, if it becomes an issue)
         
         static void init_meta();
@@ -113,8 +112,6 @@ namespace yq {
         
         Vector<xg_next_t>           m_next;     //< General "NEXT"
         xg_cursor_t                 m_cursor;
-        //std::vector<xg_execute_t>   m_logics;   //< Conditional connections (TBD)
-        //std::vector<xg_result_t>    m_results;  //< Logical results
         int32_t                     m_priority      = 0;
     };
 }

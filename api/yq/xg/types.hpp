@@ -46,11 +46,10 @@ namespace yq {
         std::monostate,     //< Here for an empty variant, usually treated as continue
         std::error_code,    //< Alternate way of errors (can issue messages here)
         bool,               //< Decision node true/false
-        continue_k,         //< Continue to next node
         done_k,             //< We're finished graph/sub-graph
+        end_k,              //< Reached a dead end of the chain
         error_k,            //< Error state
         limit_k,            //< Iteration limit reached
-        resume_k,           //< Resume previous state (or less-priority always...?)
         wait_k,             //< Wait for conditions to be met
         xg_cursor_t         //< Wait for result (node/edge/etc)
     >;
@@ -64,7 +63,6 @@ namespace yq {
         Any
     >;
 
-    bool    is_continue(const xg_result_t&);
     bool    is_wait(const xg_result_t&);
     bool    is_done(const xg_result_t&);
     bool    is_error(const xg_result_t&);

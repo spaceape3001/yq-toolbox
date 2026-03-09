@@ -149,17 +149,17 @@ namespace yq {
     template <typename T>
     T*          Stack<T>::peek(size_t n) 
     {
-        if(n > base_stack::size())
+        if(n >= base_stack::size())
             return nullptr;
-        return &base_stack::operator[](base_stack::size()-n);
+        return &base_stack::operator[](base_stack::size()-n-1);
     }
 
     template <typename T>
     const T*    Stack<T>::peek(size_t n) const
     {
-        if(n > base_stack::size())
+        if(n >= base_stack::size())
             return nullptr;
-        return &base_stack::operator[](base_stack::size()-n);
+        return &base_stack::operator[](base_stack::size()-n-1);
     }
 
     template <typename T>

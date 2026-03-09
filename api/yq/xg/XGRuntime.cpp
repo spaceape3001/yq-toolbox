@@ -28,13 +28,20 @@ namespace yq {
                 return a.subpri > b.subpri;
             });
         }
+
+
+        constexpr bool is_starter(XGNodeType v)
+        {
+            switch(v){
+            case XGNodeType::Always:
+            case XGNodeType::Start:
+                return true;
+            default:
+                return false;
+            }
+        }
     }
 
-    bool    is_continue(const xg_result_t& r)
-    {
-        return std::get_if<std::monostate>(&r) || std::get_if<continue_k>(&r);
-    }
-    
     bool    is_done(const xg_result_t&r)
     {
         return static_cast<bool>(std::get_if<done_k>(&r));
@@ -89,16 +96,14 @@ namespace yq {
             } else {
                 str << "{FALSE}";
             }
-        } else if(std::get_if<continue_k>(&v)){
-            str << "{CONTINUE}";
         } else if(std::get_if<done_k>(&v)){
             str << "{DONE}";
+        } else if(std::get_if<end_k>(&v)){
+            str << "{END}";
         } else if(std::get_if<error_k>(&v)){
             str << "{ERROR}";
         } else if(std::get_if<limit_k>(&v)){
             str << "{LIMIT}";
-        } else if(std::get_if<resume_k>(&v)){
-            str << "{RESUME}";
         } else if(std::get_if<wait_k>(&v)){
             str << "{WAIT}";
         } else if(auto p = std::get_if<xg_cursor_t>(&v)){
@@ -133,6 +138,16 @@ namespace yq {
         span    = spn;
         if(!spn.empty())
             next    = spn[0];
+    }
+
+    XGRuntime::State::State(const State&) = default;
+    XGRuntime::State::State(State&&) = default;
+    XGRuntime::State& XGRuntime::State::operator=(const State&) = default;
+    XGRuntime::State& XGRuntime::State::operator=(State&&) = default;
+
+    XGRuntime::State::operator bool() const
+    {
+        return next.cursor != xg_cursor_t{};
     }
 
     bool XGRuntime::State::interrupt() const 
@@ -176,6 +191,49 @@ namespace yq {
             xgError << "Cannot initialize graph: " << ec.message();
     }
     
+
+    void XGRuntime::_advance()
+    {
+        if(!m_state.empty()){
+            m_state.top().advance();
+            if(!m_state.top())
+                _pop();
+        }
+    }
+    
+    bool    XGRuntime::_at_end() const
+    {
+        if(m_state.empty())
+            return true;
+        return !m_state.top().next.cursor.gid;
+    }
+
+    void XGRuntime::_next()
+    {
+        XGElement *elem = element(m_last);
+        assert(elem);
+        if(!elem)   
+            return;
+
+        if(elem->m_next.empty()){
+            _pop();
+        } else if(is_starter(elem->metaInfo().node_type())){
+            _push(State(elem->m_next));
+            m_state.peek(1)->advance();
+        } else {
+            _replace(State(elem->m_next));
+        }
+    }
+
+    void    XGRuntime::_pop()
+    {
+        if(m_state.empty())
+            return;
+        m_state.pop();
+        while(!m_state.empty() && !m_state.top())
+            m_state.pop();
+    }
+
     void    XGRuntime::_push(const State& st)
     {
         if(m_state.empty()){
@@ -324,6 +382,8 @@ namespace yq {
                 } else {
                     return unexpected<"Edge has bad source specifier">();
                 }
+            } else if(sx && tx){
+                sx -> m_next.push_back(nx);
             }
         }
         
@@ -387,6 +447,20 @@ namespace yq {
         return x;
     }
 
+    XGElement*                  XGRuntime::element(const GNode& gn)
+    {
+        if(!gn.document())
+            return nullptr;
+        return element(xg_cursor_t{gn.document()->id(), gn.id()});
+    }
+    
+    const XGElement*            XGRuntime::element(const GNode& gn) const
+    {
+        if(!gn.document())
+            return nullptr;
+        return element(xg_cursor_t{gn.document()->id(), gn.id()});
+    }
+
     XGElement*                  XGRuntime::element(const xg_cursor_t&k)
     {
         return m_elements.get(k, nullptr);
@@ -447,6 +521,13 @@ namespace yq {
         m_mode     = Mode::Start;
         return {};
     }
+
+    bool                        XGRuntime::interrupting() const
+    {
+        if(m_state.empty())
+            return false;
+        return m_state.top().priority != INT32_MIN;
+    }
     
     void                        XGRuntime::kill()
     {
@@ -459,6 +540,13 @@ namespace yq {
         
         m_primary   = 0ULL;
         m_mode     = Mode::Uninit;
+    }
+
+    xg_cursor_t                 XGRuntime::next() const
+    {
+        if(m_state.empty())
+            return {};
+        return m_state.top().next.cursor;
     }
 
     GGraph                      XGRuntime::primary() const
@@ -476,6 +564,13 @@ namespace yq {
         }
     }
 
+    int32_t                     XGRuntime::priority() const
+    {
+        if(m_state.empty())
+            return INT32_MIN;
+        return m_state.top().priority;
+    }
+    
     void    XGRuntime::reset()
     {
         m_results.clear();
@@ -491,10 +586,11 @@ namespace yq {
     const xg_result_t&          XGRuntime::result(const xg_cursor_t&k) const
     {
         static const xg_result_t    s_null_result;
+        
         auto itr = m_results.find(k);
-        if(itr != m_results.end())
-            return itr->second;
-        return s_null_result;
+        if(itr == m_results.end())  
+            return s_null_result;
+        return itr->second;
     }
 
     void                        XGRuntime::starts(push_k)
@@ -532,178 +628,87 @@ namespace yq {
         
         if(m_state.empty()){
             m_mode  = Mode::Done;
-            return DONE;
+            return END;
         }
         
-        xg_result_t     result;
-        XGElement*      elem    = nullptr;
-        
-        {
-            auto& st    = m_state.top();
+        xg_result_t res = xnode(ctx, m_state.top().next.cursor, opts);
 
-            elem    = element(st.next.cursor);
-            if(!elem){
-                assert(elem && "XGRuntime encountered a null element");
-                m_mode  = Mode::Error;
-                return create_error<"XGRuntime encountered a null element">();
-            }
-            
-            auto _runtime       = auto_reset(ctx.runtime, this);
-            auto _interrupt     = auto_reset(ctx.interrupt, st.interrupt());
-            auto _priority      = auto_reset(ctx.priority, st.priority);
-            
-            #ifdef NDEBUG
-            try {
-            #endif
-            
-                result          = elem -> execute(ctx);
-                
-            #ifdef NDEBUG
-            } 
-            catch(...){
-                result          = ERROR;
-            }
-            #endif
-        }
-        
-        m_results[elem->cursor()]   = result;
-        if(opts.history)
-            opts.history(elem->node(), result);
-
-        State   st;
-        
-        bool next_      = false;
-        bool advance_   = false;
-        bool push_      = false;
-        bool replace_   = false;
-        bool done_      = false;
-        bool wait_      = false;
-        bool pop_       = false;
-        bool continue_  = false;
-        
-        if(std::get_if<std::monostate>(&result)){
-            next_       = true;
-            advance_    = true;
-            replace_    = true;
-        } else if(auto p = std::get_if<bool>(&result)){
-            if(*p){
-                next_       = true;
-                advance_    = true;
-                replace_    = true;
-            } else {
-                advance_    = true;
-            }
-        } else if(auto p = std::get_if<std::error_code>(&result)){
+        if(std::get_if<std::monostate>(&res)){
+            _next();
+        } else if(auto p = std::get_if<std::error_code>(&res)){
             if(*p == std::error_code()){
-                return result;
+                _next();
             } else {
-                next_       = true;
-                advance_    = true;
-                replace_    = true;
-            }
-        } else if (std::get_if<continue_k>(&result)){
-            continue_   = true;
-        } else if(std::get_if<done_k>(&result)){
-            done_       = true;
-        } else if(std::get_if<error_k>(&result)){
-            return result;
-        } else if(std::get_if<limit_k>(&result)){
-            xgError << "Unexpected limit from XGElement " << elem->metaInfo().name();
-            return result;
-        } else if(std::get_if<resume_k>(&result)){
-            pop_        = true;
-        } else if(std::get_if<wait_k>(&result)){
-            wait_       = true;
-        } else if(auto p = std::get_if<xg_cursor_t>(&result)){
-            if(m_elements.contains(*p)){
-                st      = State({.cursor=*p});
-                push_   = true;
-            } else {
-                xgError << "Invalid cursor result from XGElement " << elem->metaInfo().name(); 
                 m_mode  = Mode::Error;
-                return result;
+            }
+        } else if(auto p = std::get_if<bool>(&res)){
+            if(*p){
+                _next();
+            } else {
+                _advance();
+            }
+        } else if(std::get_if<done_k>(&res)){
+            m_mode  = Mode::Done;
+        } else if(std::get_if<end_k>(&res)){
+            xgAlert << "Unexpected END from XGElement";
+            m_mode  = Mode::Done;
+        } else if(std::get_if<error_k>(&res)){
+            m_mode  = Mode::Error;
+        } else if(std::get_if<limit_k>(&res)){
+            xgAlert << "Unexpected limit from XGElement";
+            m_mode  = Mode::Error;
+        } else if(std::get_if<wait_k>(&res)){
+            // TODO (currently, wait...wait...wait...)
+        } else if(auto p = std::get_if<xg_cursor_t>(&res)){
+            if(m_elements.contains(*p)){
+                _push(State({.cursor=*p}));
+            } else {
+                xgError << "Invalid cursor result from XGElement";
+                m_mode  = Mode::Error;
             }
         } else {
             m_mode  = Mode::Error;
-            xgAlert << "Unexpected/unhandled result type from XGElement " << elem->metaInfo().name();
-            return result;
+            xgAlert << "Unexpected/unhandled result type from XGElement";
         }
         
-        //  done as if's as the action can change
-        
-        if(next_ && elem->m_next.empty()){
-            st  = State(elem->m_next);
-        }
-        
-        if(advance_){
-            
-        }
-        
-        if(m_elements.contains(st.next.cursor)){
-            if(push_)
-                _push(st);
-            if(replace_)
-                _replace(st);
-            return result;
-        }
-
-#if 0        
-        
-        while(!m_state.empty()){
-            switch(action){
-            case Action::Next:
-                if(!elem->next.empty()){
-                    st      = State(elem->next);
-                    action  = Push;
-                } else {
-                    action  = Advance;
-                }
-                
-                
-            case Action::Done:
-                //  TODO: multigraph logic here... (for now...)
-                m_mode  = Mode::Done;
-                break;
-            case Action::Error:
-                m_mode  = Mode::Error;
-                break;
-            }
-        }
-        
-        return result;
-        
-        if(action == Next){
-            if(!elem->next.empty()){
-                st      = State(elem->next);
-                action  = Push;
-            } else {
-                action  = Advance;
-            }
-        }
-        
-        if(action == Advance){
-        }
-        
-        if(action == Pop){
-        }
-        
-        if(action == Push){
-            // priority/interrupt adjustment
-            m_state.push(st);
-        }
-        
-        if(action == Done){
-            m_mode  = Mode::Done;
-        }
-        
-        if(action == Error){
-            m_mode  = Mode::Eror;
-        }
-#endif
-        
-        return result;
+        return res;
     }
     
+    xg_result_t XGRuntime::xnode(XGContext& ctx, const xg_cursor_t& cur, const XGRuntimeOptions& opts)
+    {
+        XGElement*elem  = element(cur);
+        if(!elem){
+            xgError << "XGRuntime::xnode(" << cur << "): bad element";
+            return create_error<"XGRuntime encountered a bad element">();
+        }
+            
+
+        auto _runtime       = auto_reset(ctx.runtime, this);
+        //auto _interrupt     = auto_reset(ctx.interrupt, st.interrupt());
+        //auto _priority      = auto_reset(ctx.priority, st.priority);
+        
+        xg_result_t res;
+        
+        #ifdef NDEBUG
+        try {
+        #endif
+        
+            res          = elem -> execute(ctx);
+            
+        #ifdef NDEBUG
+        } 
+        catch(...){
+            res          = ERROR;
+        }
+        #endif
+        
+        m_last  = elem->cursor();
+        m_results[m_last]   = res;
+        if(opts.history)
+            opts.history(elem->node(), res);
+        return res;
+    }
+
     bool                        XGRuntime::valid() const
     {
         return m_primary != 0ULL;

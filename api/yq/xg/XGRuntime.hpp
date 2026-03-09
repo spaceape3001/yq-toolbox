@@ -62,6 +62,8 @@ namespace yq {
         //! Set the always chain
         void                        always(set_k, std::span<const uint64_t>);
 
+        XGElement*                  element(const GNode&);
+        const XGElement*            element(const GNode&) const;
         XGElement*                  element(const xg_cursor_t&);
         const XGElement*            element(const xg_cursor_t&) const;
 
@@ -73,7 +75,15 @@ namespace yq {
         //! Clear & kill the runtime (all results...elements...etc)
         void                        kill();
         
+        bool                        interrupting() const;
+        int32_t                     priority() const;
+        
+        //! Last node executed
+        const auto&                 last() const { return m_last; }
+        
         Mode                        mode() const { return m_mode; }
+
+        xg_cursor_t                 next() const;
 
         //! The "primary" graph
         GGraph                      primary() const;
@@ -95,6 +105,7 @@ namespace yq {
         
         bool                        valid() const;
         
+        xg_result_t   xnode(XGContext&, const xg_cursor_t&, const XGRuntimeOptions& opts={});
         
     private:
         //GGraph                          m_primary;
@@ -119,10 +130,21 @@ namespace yq {
             State(bool fInterrupt=false);
             State(const xg_next_t&, bool fInterrupt=false);
             State(xg_next_span_t, bool fInterrupt=false);
+            operator bool() const;
+            
+            State(const State&);
+            State(State&&);
+            State& operator=(const State&);
+            State& operator=(State&&);
         };
         
+        bool    _at_end() const;
         void    _push(const State&);
         void    _replace(const State&);
+        
+        void    _next();
+        void    _advance();
+        void    _pop();
         
         uint64_x                        compile(GGraph);
         Expect<XGElement*>              compile(const GNode&);
@@ -138,6 +160,7 @@ namespace yq {
         Mode                                m_mode      = Mode::Uninit;
         Stack<State>                        m_state;
         Vector<xg_next_t>                   m_always;
+        xg_cursor_t                         m_last      = {};
         //State                               m_current   = {};
         
         // Stack

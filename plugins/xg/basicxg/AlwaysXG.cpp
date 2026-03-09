@@ -16,7 +16,10 @@ namespace {
     class AlwaysXG : public XGElement {
         YQ_OBJECT_DECLARE(AlwaysXG, XGElement)
     public:
-        AlwaysXG(){}
+        AlwaysXG()
+        {
+        }
+        
         ~AlwaysXG(){}
         
         static void init_meta()

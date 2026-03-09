@@ -9,13 +9,11 @@ add_library(${PROJECT_NAME} SHARED
     AlwaysXG.cpp
     AllXG.cpp
     AnyXG.cpp
-    ContinueXG.cpp
     DelayXG.cpp
     DoneXG.cpp
     FalseXG.cpp
     NoneXG.cpp
     PassXG.cpp
-    ResumeXG.cpp
     StartXG.cpp
     TrueXG.cpp
 )

@@ -24,11 +24,11 @@ namespace yq {
         //! When key/values are needed (nicer for debugging)
         Map<std::string, xg_value_t, IgCase>    attributes;
 
-        //! True if we're running in interrupt mode
-        bool                                    interrupt   = false;    //< set by the runtime
+        ////! True if we're running in interrupt mode
+        //bool                                    interrupt   = false;    //< set by the runtime
         
-        //! Current interrupt priority
-        int32_t                                 priority    = 0;        //< set by the runtime
+        ////! Current interrupt priority
+        //int32_t                                 priority    = 0;        //< set by the runtime
         
         XGRuntime*                              runtime     = nullptr;  //< set by the runtime
 

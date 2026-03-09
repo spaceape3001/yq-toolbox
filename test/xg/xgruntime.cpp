@@ -16,6 +16,7 @@
 #include <yq/resource/Resource.hpp>
 #include <yq/process/PluginLoader.hpp>
 #include <yq/text/format.hpp>
+#include <yq/xg/XGElement.hpp>
 #include <yq/xg/XGRuntime.hpp>
 
 #ifdef gid_t
@@ -86,13 +87,15 @@ int main(int argc, char* argv[])
         std::vector<gid_t>  history;
         
         XGRuntimeOptions    opts;
-        opts.history    = [&](const GNode& gn, const xg_result_t&){
+        opts.history    = [&](const GNode& gn, const xg_result_t& res){
+//const XGElement* elem = xg.element(gn);
+//yInfo() << elem->metaInfo().name() << ":" << gn.id() << " => " << res;
             history.push_back(gn.id());
         };
             
         auto r = xg.execute(opts);
         
-yInfo() << "Execution result: " << r;
+//yInfo() << "Execution result: " << r;
         
         expect(is_done(r) == true);
         if(auto p = std::get_if<std::error_code>(&r)){
