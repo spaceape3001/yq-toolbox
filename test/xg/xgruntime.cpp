@@ -27,8 +27,21 @@ namespace ut = boost::ut;
 using namespace ut;
 using namespace yq;
 
+
 int main(int argc, char* argv[])
 {
+    using yq::gid_t;
+    struct TestData {
+        const char*                     file;
+        size_t                          nodes;
+        size_t                          edges;
+        std::initializer_list<gid_t>    path;
+        bool                            print = false;
+    } kTestData[] = {
+        { "yq/xg/test/start_stop.g", 2, 1, { 1, 3 } },
+        { "yq/xg/test/true_false.g", 5, 4, { 1, 3, 12 } }
+    };
+
     BasicAppConfig  cfg;
     cfg.log_cerr    = {};
     cfg.log_cout    = LogPriority::Debug;
@@ -40,77 +53,77 @@ int main(int argc, char* argv[])
     load_plugin_dir("plugin/xg");
     Meta::freeze();
 
-    GDocumentCPtr   gdoc;
-    GGraph          graph;
-    XGRuntime       xg;
-    
-    "loadSimple"_test = [&](){
-    
-        gdoc        = GDocument::IO::load("yq/xg/test/start_stop.g");
-        expect(gdoc.valid() == true);
-        if(!gdoc)
-            return;
+    "graphTraversal"_test = [&](){
+        for(auto& k : kTestData){
             
-        expect(gdoc->read_only() == true);
-        expect(gdoc->kind() == "executive");
-
-        graph       = GGraph(READ_ONLY, gdoc);
-
-        expect(graph.document() == gdoc.ptr());
-        expect(graph.valid() == true);
-        expect(graph.nodes(COUNT) == 2);
-        expect(graph.edges(COUNT) == 1);
-    };
-    
-    "compileSimple"_test = [&](){
-        expect(gdoc.valid() == true);
-        if(!gdoc)
-            return ;
-        
-        std::error_code ec  = xg.initialize(graph);
-        expect(ec == std::error_code());
-        if(ec != std::error_code()){
-            yError() << "Unable to compile executive graph runtime: " << ec.message();
-            return;
-        }
-        
-        expect(xg.elements(COUNT) == 2);
-        expect(xg.valid() == true);
-    };
-    
-    "executeSimple"_test = [&](){
-        expect(xg.valid() == true);
-        if(!xg.valid())
-            return ;
-
-        using yq::gid_t;
-        std::vector<gid_t>  history;
-        
-        XGRuntimeOptions    opts;
-        opts.history    = [&](const GNode& gn, const xg_result_t& res){
-//const XGElement* elem = xg.element(gn);
-//yInfo() << elem->metaInfo().name() << ":" << gn.id() << " => " << res;
-            history.push_back(gn.id());
-        };
+            GDocumentCPtr   gdoc    = GDocument::IO::load(k.file);
+            expect(gdoc.valid() == true);
+            if(!gdoc){
+                yError() << k.file << "> Unable to load graph";
+                continue;
+            }
+                
+            expect(gdoc->read_only() == true);
+            expect(gdoc->kind() == "executive");
             
-        auto r = xg.execute(opts);
-        
-//yInfo() << "Execution result: " << r;
-        
-        expect(is_done(r) == true);
-        if(auto p = std::get_if<std::error_code>(&r)){
-            yError() << "Unable to execute executive graph runtime: " << p->message();
-            return;
+            GGraph graph       = GGraph(READ_ONLY, gdoc);
+
+            expect(graph.document() == gdoc.ptr());
+            expect(graph.valid() == true);
+            expect(graph.nodes(COUNT) == k.nodes);
+            expect(graph.edges(COUNT) == k.edges);
+            
+            XGRuntime   xg;
+            std::error_code ec = xg.initialize(graph);
+            expect(ec == std::error_code());
+            
+            
+            if(ec != std::error_code()){
+                yError() << k.file << "> Unable to compile executive graph: " << ec.message();
+                continue;
+            }
+            
+            expect(xg.elements(COUNT) == k.nodes);
+            expect(xg.valid() == true);
+            
+
+            std::vector<gid_t>  history;
+            
+            XGRuntimeOptions    opts;
+            opts.history    = [&](const GNode& gn, const xg_result_t& res){
+                if(k.print){
+                    const XGElement* elem = xg.element(gn);
+                    if(elem){
+                        yInfo() << k.file << "> " << elem->metaInfo().name() << ":" << gn.id() << " => " << res;
+                    }
+                }
+                history.push_back(gn.id());
+            };
+                
+            auto r = xg.execute(opts);
+            
+            if(k.print)
+                yInfo() << k.file << "> Execution result: " << r;
+            
+            expect(is_done(r) == true);
+            if(auto p = std::get_if<std::error_code>(&r)){
+                yInfo() << k.file << ">  Unable to execute executive graph runtime: " << p->message();
+                continue;
+            }
+            
+            if(!is_done(r))
+                continue;
+                
+            expect(history.size() == k.path.size());
+            if(history.size() != k.path.size()){
+                yInfo() << k.file << ">  History size mismatch";
+                continue;
+            }
+
+            for(size_t n = 0; n<history.size(); ++n)
+                expect(history[n] == *(k.path.begin()+n));
         }
-        
-        if(!is_done(r))
-            return;
-        
-        expect(history.size() == 2);
-        if(history.size() == 2){
-            expect(history[0] == 1);
-            expect(history[1] == 3);
-        }
+    
     };
     
     return ut::cfg<>.run();
