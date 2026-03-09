@@ -37,7 +37,7 @@ namespace yq {
         static std::filesystem::path        executable();
 
         //! Tries to find executables based on short name
-        static std::filesystem::path        find_exe(const std::string_view);
+        static std::filesystem::path        find_exe(std::string_view);
 
         //! Our hostname
         static const std::string&           hostname();

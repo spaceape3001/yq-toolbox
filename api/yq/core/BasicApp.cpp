@@ -127,7 +127,7 @@ namespace yq {
         #endif
     }
 
-    std::filesystem::path        BasicApp::find_exe(const std::string_view k)
+    std::filesystem::path        BasicApp::find_exe(std::string_view k)
     {
         static const auto& search    = search_path();
         for(auto& fs : search){

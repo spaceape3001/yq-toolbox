@@ -6,6 +6,7 @@
 
 #include "PluginLoader.hpp"
 
+#include <yq/core/BasicApp.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/file/DirUtils.hpp>
@@ -20,13 +21,22 @@ namespace yq {
     //  PID FILE
     //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    static filesystem_path_t check_exist(const filesystem_path_t& pth)
+    {
+        if(std::filesystem::exists(pth))
+            return pth;
+        return BasicApp::app_dir() / pth;
+    }
+    
     bool  load_plugin(const filesystem_path_t&pth)
     {
         if(thread::id()){
             yCritical() << "Plugins should only be loaded on the main thread!";
             return false;
         }
-    
+        
+        filesystem_path_t path  = check_exist(pth);
+        
         #ifdef NDEBUG
         try {
         #endif
@@ -34,8 +44,8 @@ namespace yq {
             #if defined(WIN32)
             #error "This code is not yet defined for windows!"
             #else
-            if(!dlopen(pth.c_str(), YQ_DBGREL(RTLD_LAZY|RTLD_LOCAL, RTLD_NOW|RTLD_LOCAL)))
-                yError() << "Plugin (" << pth << ") failed to load.";
+            if(!dlopen(path.c_str(), YQ_DBGREL(RTLD_LAZY|RTLD_LOCAL, RTLD_NOW|RTLD_LOCAL)))
+                yError() << "Plugin (" << path << ") failed to load.";
             return true;
             #endif
             
@@ -53,9 +63,12 @@ namespace yq {
             return 0;
         }
         
-        if(!std::filesystem::is_directory(pdir)){
+        filesystem_path_t path  = check_exist(pdir);
+
+        if(!std::filesystem::is_directory(path)){
             yWarning() << "Not a directory " << pdir;
         }
+
 
         //  Update this for the operating system
         #if defined(WIN32)
@@ -66,7 +79,7 @@ namespace yq {
 
         size_t      cnt   = 0;
         
-        dir::for_all_children(pdir, dir::NO_DIRS, [&](const filesystem_path_t&p){
+        dir::for_all_children(path, dir::NO_DIRS, [&](const filesystem_path_t&p){
             if(!is_similar(p.extension().c_str(), szExt))
                 return ;
             if(load_plugin(p))
