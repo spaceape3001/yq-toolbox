@@ -150,6 +150,8 @@ namespace yq {
             return *base_set::begin();
         }
         
+        //! Reference to last item in set
+        //! \note INVALID FOR EMPTY SET
         const T&    last() const
         {
             return *base_set::rbegin();
