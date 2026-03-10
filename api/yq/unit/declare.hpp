@@ -11,6 +11,7 @@
 namespace yq {
 
     template <typename> struct Tensor33;
+    template <typename> struct Vector2;
     template <typename> struct Vector3;
 
     namespace def {
@@ -430,6 +431,7 @@ namespace yq {
         using Foot3D                    = Vector3<Foot>;
         using Foot3F                    = Vector3<FootF>;
         using KilometerPerSecond3D      = Vector3<KilometerPerSecond>;
+        using Meter2D                   = Vector2<Meter>;
         using Meter3D                   = Vector3<Meter>;
         using Meter3F                   = Vector3<MeterF>;
         using Meter3I                   = Vector3<int>;
