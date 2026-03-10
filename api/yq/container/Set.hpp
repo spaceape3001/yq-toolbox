@@ -158,7 +158,7 @@ namespace yq {
         }
     };
 
-
+    //! Makes a Set from a List
     template <typename T>
     Set<T>          makeSet(const List<T>&);
     template <typename T>
