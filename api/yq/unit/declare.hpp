@@ -451,7 +451,11 @@ namespace yq {
     
     using unit::Radian;
     using unit::Meter;
+    using unit::Meter2D;
+    using unit::Meter3D;
     using unit::Degree;
     using unit::Foot;
     using unit::Second;
+    using unit::Kilogram;
+    using unit::Gram;
 }
