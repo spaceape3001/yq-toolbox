@@ -16,6 +16,7 @@
 #include <yq/vector/Vector1.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
+#include <yq/vector/Vector4.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
 
@@ -288,6 +289,9 @@ YQ_TYPE_IMPLEMENT(yq::unit::Yard)
 YQ_TYPE_IMPLEMENT(yq::unit::Yard²)
 YQ_TYPE_IMPLEMENT(yq::unit::Yard³)
 
+YQ_TYPE_IMPLEMENT(yq::unit::Centimeter1D)
+YQ_TYPE_IMPLEMENT(yq::unit::Centimeter2D)
+YQ_TYPE_IMPLEMENT(yq::unit::Centimeter3D)
 YQ_TYPE_IMPLEMENT(yq::unit::CentimeterPerSecond3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Degree3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Foot3D)
@@ -297,9 +301,13 @@ YQ_TYPE_IMPLEMENT(yq::unit::Meter1D)
 YQ_TYPE_IMPLEMENT(yq::unit::Meter2D)
 YQ_TYPE_IMPLEMENT(yq::unit::Meter3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Meter3F)
+YQ_TYPE_IMPLEMENT(yq::unit::Meter4D)
 YQ_TYPE_IMPLEMENT(yq::unit::MeterPerSecond3D)
 YQ_TYPE_IMPLEMENT(yq::unit::MeterPerSecond²3D)
 YQ_TYPE_IMPLEMENT(yq::unit::MicrometerPerSecond3D)
+YQ_TYPE_IMPLEMENT(yq::unit::Millimeter1D)
+YQ_TYPE_IMPLEMENT(yq::unit::Millimeter2D)
+YQ_TYPE_IMPLEMENT(yq::unit::Millimeter3D)
 YQ_TYPE_IMPLEMENT(yq::unit::MillimeterPerSecond3D)
 YQ_TYPE_IMPLEMENT(yq::unit::NanometerPerSecond3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Newton3D)

@@ -14,6 +14,7 @@ namespace yq {
     template <typename> struct Vector1;
     template <typename> struct Vector2;
     template <typename> struct Vector3;
+    template <typename> struct Vector4;
 
     namespace def {
         static constexpr const long double   long_pi     = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862;
@@ -427,6 +428,9 @@ namespace yq {
         using Yard²                     = SCALED<double,dim::Area, (double) (9.*def::foot²)>;
         using Yard³                     = SCALED<double,dim::Volume, (double) (27.*def::foot³)>;
         
+        using Centimeter1D              = Vector1<Centimeter>;
+        using Centimeter2D              = Vector2<Centimeter>;
+        using Centimeter3D              = Vector3<Centimeter>;
         using CentimeterPerSecond3D     = Vector3<CentimeterPerSecond>;
         using Degree3D                  = Vector3<Degree>;
         using Foot3D                    = Vector3<Foot>;
@@ -437,9 +441,13 @@ namespace yq {
         using Meter3D                   = Vector3<Meter>;
         using Meter3F                   = Vector3<MeterF>;
         using Meter3I                   = Vector3<int>;
+        using Meter4D                   = Vector4<Meter>;
         using MeterPerSecond3D          = Vector3<MeterPerSecond>;
         using MeterPerSecond²3D         = Vector3<MeterPerSecond²>;
         using MicrometerPerSecond3D     = Vector3<MicrometerPerSecond>;
+        using Millimeter1D              = Vector1<Millimeter>;
+        using Millimeter2D              = Vector2<Millimeter>;
+        using Millimeter3D              = Vector3<Millimeter>;
         using MillimeterPerSecond3D     = Vector3<MillimeterPerSecond>;
         using NanometerPerSecond3D      = Vector3<NanometerPerSecond>;
         using Newton3D                  = Vector3<Newton>;

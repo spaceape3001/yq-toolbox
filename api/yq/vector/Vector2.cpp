@@ -32,8 +32,8 @@ YQ_TYPE_IMPLEMENT(yq::Vector2F)
 YQ_TYPE_IMPLEMENT(yq::Vector2I)
 YQ_TYPE_IMPLEMENT(yq::Vector2U)
 //YQ_TYPE_IMPLEMENT(yq::Vector2M)
-YQ_TYPE_IMPLEMENT(yq::Vector2CM)
-YQ_TYPE_IMPLEMENT(yq::Vector2MM)
+//YQ_TYPE_IMPLEMENT(yq::Vector2CM)
+//YQ_TYPE_IMPLEMENT(yq::Vector2MM)
 
 namespace yq {
     Vector2I    iround(const Vector2D&v)
