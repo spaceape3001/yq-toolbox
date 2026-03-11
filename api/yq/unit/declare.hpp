@@ -464,6 +464,7 @@ namespace yq {
     using unit::Meter1D;
     using unit::Meter2D;
     using unit::Meter3D;
+    using unit::Meter4D;
     using unit::Degree;
     using unit::Foot;
     using unit::Second;
