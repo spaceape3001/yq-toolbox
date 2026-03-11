@@ -13,6 +13,8 @@
 #include <yq/core/StringLiteral.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/tensor/Tensor33.hpp>
+#include <yq/vector/Vector1.hpp>
+#include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/text/format.hpp>
 #include <yq/text/parse.hpp>
@@ -291,6 +293,8 @@ YQ_TYPE_IMPLEMENT(yq::unit::Degree3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Foot3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Foot3F)
 YQ_TYPE_IMPLEMENT(yq::unit::KilometerPerSecond3D)
+YQ_TYPE_IMPLEMENT(yq::unit::Meter1D)
+YQ_TYPE_IMPLEMENT(yq::unit::Meter2D)
 YQ_TYPE_IMPLEMENT(yq::unit::Meter3D)
 YQ_TYPE_IMPLEMENT(yq::unit::Meter3F)
 YQ_TYPE_IMPLEMENT(yq::unit::MeterPerSecond3D)

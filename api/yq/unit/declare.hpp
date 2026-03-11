@@ -11,6 +11,7 @@
 namespace yq {
 
     template <typename> struct Tensor33;
+    template <typename> struct Vector1;
     template <typename> struct Vector2;
     template <typename> struct Vector3;
 
@@ -431,6 +432,7 @@ namespace yq {
         using Foot3D                    = Vector3<Foot>;
         using Foot3F                    = Vector3<FootF>;
         using KilometerPerSecond3D      = Vector3<KilometerPerSecond>;
+        using Meter1D                   = Vector1<Meter>;
         using Meter2D                   = Vector2<Meter>;
         using Meter3D                   = Vector3<Meter>;
         using Meter3F                   = Vector3<MeterF>;
@@ -451,6 +453,7 @@ namespace yq {
     
     using unit::Radian;
     using unit::Meter;
+    using unit::Meter1D;
     using unit::Meter2D;
     using unit::Meter3D;
     using unit::Degree;
