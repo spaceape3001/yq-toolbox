@@ -470,4 +470,5 @@ namespace yq {
     using unit::Second;
     using unit::Kilogram;
     using unit::Gram;
+    using unit::Centimeter;
 }
