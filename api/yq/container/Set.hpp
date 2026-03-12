@@ -161,6 +161,9 @@ namespace yq {
     //! Makes a Set from a List
     template <typename T>
     Set<T>          makeSet(const List<T>&);
+
+    //! Makes a Set from another set 
+    //! \note This is here for completeness, copy constructor normally works
     template <typename T>
     Set<T>          makeSet(const Set<T>&);
     template <typename T>
