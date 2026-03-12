@@ -7,6 +7,7 @@
 #include "Size2.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/units.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/math/math_io.hpp>
 #include <yq/math/utility.hpp>
@@ -21,6 +22,7 @@ YQ_TYPE_IMPLEMENT(yq::Size2D)
 YQ_TYPE_IMPLEMENT(yq::Size2F)
 YQ_TYPE_IMPLEMENT(yq::Size2I)
 YQ_TYPE_IMPLEMENT(yq::Size2U)
+YQ_TYPE_IMPLEMENT(yq::Size2M)
 
 namespace yq {
     Size2I  iround(const Size2D&v)
@@ -76,6 +78,19 @@ static void reg_size2()
         w.print<math_io::print<Size2U>>();
         w.operate_with<unsigned>();
     }
+    
+    {
+        auto w = writer<Size2M>();
+        w.description("2D Size in meters");
+        w.property(szX, &Size2M::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size2M::y).description(szY_Size).alias(szHeight);
+        //w.format<math_io::format<Size2M>>();
+        //w.parse<math_io::parse<Size2M>>();
+        //w.print<math_io::print<Size2M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
+    }
+
 }
 
 YQ_INVOKE(reg_size2();)

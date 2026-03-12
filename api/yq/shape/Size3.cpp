@@ -7,6 +7,7 @@
 #include "Size3.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/units.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/math/math_io.hpp>
 #include <yq/math/utility.hpp>
@@ -21,6 +22,7 @@ YQ_TYPE_IMPLEMENT(yq::Size3D)
 YQ_TYPE_IMPLEMENT(yq::Size3F)
 YQ_TYPE_IMPLEMENT(yq::Size3I)
 YQ_TYPE_IMPLEMENT(yq::Size3U)
+YQ_TYPE_IMPLEMENT(yq::Size3M)
 
 namespace yq {
     Size3I  iround(const Size3D&v)
@@ -81,6 +83,19 @@ static void reg_size3()
         w.parse<math_io::parse<Size3U>>();
         w.print<math_io::print<Size3U>>();
         w.operate_with<unsigned>();
+    }
+
+    {
+        auto w = writer<Size3M>();
+        w.description("3D Size in meters");
+        w.property(szX, &Size3M::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size3M::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size3M::z).description(szZ_Size).alias(szDepth);
+        //w.format<math_io::format<Size3M>>();
+        //w.parse<math_io::parse<Size3M>>();
+        //w.print<math_io::print<Size3M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
     }
 }
 

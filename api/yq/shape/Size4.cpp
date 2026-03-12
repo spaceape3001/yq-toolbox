@@ -7,6 +7,7 @@
 #include "Size4.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/units.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/math/math_io.hpp>
 #include <yq/math/utility.hpp>
@@ -21,6 +22,7 @@ YQ_TYPE_IMPLEMENT(yq::Size4D)
 YQ_TYPE_IMPLEMENT(yq::Size4F)
 YQ_TYPE_IMPLEMENT(yq::Size4I)
 YQ_TYPE_IMPLEMENT(yq::Size4U)
+YQ_TYPE_IMPLEMENT(yq::Size4M)
 
 namespace yq {
     Size4I  iround(const Size4D&v)
@@ -83,6 +85,20 @@ static void reg_size4()
         w.parse<math_io::parse<Size4U>>();
         w.print<math_io::print<Size4U>>();
         w.operate_with<unsigned>();
+    }
+
+    {
+        auto w = writer<Size4M>();
+        w.description("4D Size in Meters");
+        w.property(szX, &Size4M::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size4M::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size4M::z).description(szZ_Size).alias(szDepth);
+        w.property(szW, &Size4M::w).description(szW_Size).alias(szDuration);
+        //w.format<math_io::format<Size4M>>();
+        //w.parse<math_io::parse<Size4M>>();
+        //w.print<math_io::print<Size4M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
     }
 }
 

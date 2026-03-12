@@ -7,6 +7,7 @@
 #include "Size1.hpp"
 
 #include <yq/strings.hpp>
+#include <yq/units.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/math/math_io.hpp>
 #include <yq/math/utility.hpp>
@@ -18,6 +19,7 @@ YQ_TYPE_IMPLEMENT(yq::Size1D)
 YQ_TYPE_IMPLEMENT(yq::Size1F)
 YQ_TYPE_IMPLEMENT(yq::Size1I)
 YQ_TYPE_IMPLEMENT(yq::Size1U)
+YQ_TYPE_IMPLEMENT(yq::Size1M)
 
 namespace yq {
     Size1I  iround(const Size1D&v)
@@ -68,6 +70,17 @@ static void reg_size1()
         w.parse<math_io::parse<Size1U>>();
         w.print<math_io::print<Size1U>>();
         w.operate_with<unsigned>();
+    }
+
+    {
+        auto w = writer<Size1M>();
+        w.description("1D Size in meters");
+        w.property(szX, &Size1M::x).description(szX_Size).alias(szWidth);
+        //w.format<math_io::format<Size1M>>();
+        //w.parse<math_io::parse<Size1M>>();
+        //w.print<math_io::print<Size1M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
     }
 }
 
