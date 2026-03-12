@@ -8,7 +8,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <yq/units/declare.hpp>
+#include <yq/unit/declare.hpp>
 
 namespace yq {
     template <typename> struct Size1;
