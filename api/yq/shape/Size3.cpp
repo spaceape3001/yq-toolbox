@@ -23,6 +23,7 @@ YQ_TYPE_IMPLEMENT(yq::Size3F)
 YQ_TYPE_IMPLEMENT(yq::Size3I)
 YQ_TYPE_IMPLEMENT(yq::Size3U)
 YQ_TYPE_IMPLEMENT(yq::Size3M)
+YQ_TYPE_IMPLEMENT(yq::Size3CM)
 
 namespace yq {
     Size3I  iround(const Size3D&v)
@@ -94,6 +95,19 @@ static void reg_size3()
         //w.format<math_io::format<Size3M>>();
         //w.parse<math_io::parse<Size3M>>();
         //w.print<math_io::print<Size3M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
+    }
+
+    {
+        auto w = writer<Size3CM>();
+        w.description("3D Size in centimeters");
+        w.property(szX, &Size3CM::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size3CM::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size3CM::z).description(szZ_Size).alias(szDepth);
+        //w.format<math_io::format<Size3CM>>();
+        //w.parse<math_io::parse<Size3CM>>();
+        //w.print<math_io::print<Size3CM>>();
         w.operate_with<double>();
         w.operate_with<Meter>();
     }

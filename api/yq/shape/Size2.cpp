@@ -23,6 +23,7 @@ YQ_TYPE_IMPLEMENT(yq::Size2F)
 YQ_TYPE_IMPLEMENT(yq::Size2I)
 YQ_TYPE_IMPLEMENT(yq::Size2U)
 YQ_TYPE_IMPLEMENT(yq::Size2M)
+YQ_TYPE_IMPLEMENT(yq::Size2CM)
 
 namespace yq {
     Size2I  iround(const Size2D&v)
@@ -91,6 +92,17 @@ static void reg_size2()
         w.operate_with<Meter>();
     }
 
+    {
+        auto w = writer<Size2CM>();
+        w.description("2D Size in centimeters");
+        w.property(szX, &Size2CM::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size2CM::y).description(szY_Size).alias(szHeight);
+        //w.format<math_io::format<Size2CM>>();
+        //w.parse<math_io::parse<Size2CM>>();
+        //w.print<math_io::print<Size2CM>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
+    }
 }
 
 YQ_INVOKE(reg_size2();)

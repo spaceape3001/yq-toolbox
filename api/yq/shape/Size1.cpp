@@ -20,6 +20,7 @@ YQ_TYPE_IMPLEMENT(yq::Size1F)
 YQ_TYPE_IMPLEMENT(yq::Size1I)
 YQ_TYPE_IMPLEMENT(yq::Size1U)
 YQ_TYPE_IMPLEMENT(yq::Size1M)
+YQ_TYPE_IMPLEMENT(yq::Size1CM)
 
 namespace yq {
     Size1I  iround(const Size1D&v)
@@ -79,6 +80,17 @@ static void reg_size1()
         //w.format<math_io::format<Size1M>>();
         //w.parse<math_io::parse<Size1M>>();
         //w.print<math_io::print<Size1M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
+    }
+
+    {
+        auto w = writer<Size1CM>();
+        w.description("1D Size in centimeters");
+        w.property(szX, &Size1CM::x).description(szX_Size).alias(szWidth);
+        //w.format<math_io::format<Size1CM>>();
+        //w.parse<math_io::parse<Size1CM>>();
+        //w.print<math_io::print<Size1CM>>();
         w.operate_with<double>();
         w.operate_with<Meter>();
     }

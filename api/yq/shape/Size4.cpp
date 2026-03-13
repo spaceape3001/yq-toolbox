@@ -23,6 +23,7 @@ YQ_TYPE_IMPLEMENT(yq::Size4F)
 YQ_TYPE_IMPLEMENT(yq::Size4I)
 YQ_TYPE_IMPLEMENT(yq::Size4U)
 YQ_TYPE_IMPLEMENT(yq::Size4M)
+YQ_TYPE_IMPLEMENT(yq::Size4CM)
 
 namespace yq {
     Size4I  iround(const Size4D&v)
@@ -89,7 +90,7 @@ static void reg_size4()
 
     {
         auto w = writer<Size4M>();
-        w.description("4D Size in Meters");
+        w.description("4D Size in meters");
         w.property(szX, &Size4M::x).description(szX_Size).alias(szWidth);
         w.property(szY, &Size4M::y).description(szY_Size).alias(szHeight);
         w.property(szZ, &Size4M::z).description(szZ_Size).alias(szDepth);
@@ -97,6 +98,20 @@ static void reg_size4()
         //w.format<math_io::format<Size4M>>();
         //w.parse<math_io::parse<Size4M>>();
         //w.print<math_io::print<Size4M>>();
+        w.operate_with<double>();
+        w.operate_with<Meter>();
+    }
+
+    {
+        auto w = writer<Size4CM>();
+        w.description("4D Size in centimeters");
+        w.property(szX, &Size4CM::x).description(szX_Size).alias(szWidth);
+        w.property(szY, &Size4CM::y).description(szY_Size).alias(szHeight);
+        w.property(szZ, &Size4CM::z).description(szZ_Size).alias(szDepth);
+        w.property(szW, &Size4CM::w).description(szW_Size).alias(szDuration);
+        //w.format<math_io::format<Size4CM>>();
+        //w.parse<math_io::parse<Size4CM>>();
+        //w.print<math_io::print<Size4CM>>();
         w.operate_with<double>();
         w.operate_with<Meter>();
     }
