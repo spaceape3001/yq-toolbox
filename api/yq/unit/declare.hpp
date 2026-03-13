@@ -431,6 +431,7 @@ namespace yq {
         using Centimeter1D              = Vector1<Centimeter>;
         using Centimeter2D              = Vector2<Centimeter>;
         using Centimeter3D              = Vector3<Centimeter>;
+        using Centimeter4D              = Vector4<Centimeter>;
         using CentimeterPerSecond3D     = Vector3<CentimeterPerSecond>;
         using Degree3D                  = Vector3<Degree>;
         using Foot3D                    = Vector3<Foot>;
@@ -471,4 +472,8 @@ namespace yq {
     using unit::Kilogram;
     using unit::Gram;
     using unit::Centimeter;
+    using unit::Centimeter1D;
+    using unit::Centimeter2D;
+    using unit::Centimeter3D;
+    using unit::Centimeter4D;
 }
