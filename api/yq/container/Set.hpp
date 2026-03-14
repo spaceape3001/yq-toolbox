@@ -171,6 +171,7 @@ namespace yq {
     template <typename T>
     Set<T>          makeSet(const Vector<T>&);
 
+    //! Makes a Set from a std list
     template <typename T>
     Set<T>          makeSet(const std::list<T>&);
     template <typename T>
