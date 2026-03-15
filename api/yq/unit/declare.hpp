@@ -443,7 +443,11 @@ namespace yq {
         using Meter3F                   = Vector3<MeterF>;
         using Meter3I                   = Vector3<int>;
         using Meter4D                   = Vector4<Meter>;
+        using MeterPerSecond1D          = Vector1<MeterPerSecond>;
+        using MeterPerSecond2D          = Vector2<MeterPerSecond>;
         using MeterPerSecond3D          = Vector3<MeterPerSecond>;
+        using MeterPerSecond²1D         = Vector1<MeterPerSecond²>;
+        using MeterPerSecond²2D         = Vector2<MeterPerSecond²>;
         using MeterPerSecond²3D         = Vector3<MeterPerSecond²>;
         using MicrometerPerSecond3D     = Vector3<MicrometerPerSecond>;
         using Millimeter1D              = Vector1<Millimeter>;
@@ -460,20 +464,32 @@ namespace yq {
         
     }
     
-    using unit::Radian;
-    using unit::Meter;
-    using unit::Meter1D;
-    using unit::Meter2D;
-    using unit::Meter3D;
-    using unit::Meter4D;
-    using unit::Degree;
-    using unit::Foot;
-    using unit::Second;
-    using unit::Kilogram;
-    using unit::Gram;
     using unit::Centimeter;
     using unit::Centimeter1D;
     using unit::Centimeter2D;
     using unit::Centimeter3D;
     using unit::Centimeter4D;
+    using unit::Degree;
+    using unit::Foot;
+    using unit::Gram;
+    using unit::Kilogram;
+    using unit::Meter;
+    using unit::Meter1D;
+    using unit::Meter2D;
+    using unit::Meter3D;
+    using unit::Meter4D;
+    using unit::MeterPerSecond;
+    using unit::MeterPerSecond1D;
+    using unit::MeterPerSecond2D;
+    using unit::MeterPerSecond3D;
+    using unit::MeterPerSecond²1D;
+    using unit::MeterPerSecond²2D;
+    using unit::MeterPerSecond²3D;
+    using unit::Radian;
+    using unit::Radian3D;
+    using unit::RadianPerSecond;
+    using unit::RadianPerSecond3D;
+    using unit::RadianPerSecond²;
+    using unit::RadianPerSecond²3D;
+    using unit::Second;
 }

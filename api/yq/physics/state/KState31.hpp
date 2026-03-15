@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/physics/state/KState30.hpp>
+
+namespace yq::physics {
+    struct KState31 : public KState30 {
+        MeterPerSecond3D    vel         = ZERO;
+        RadianPerSecond3D   avel        = ZERO;
+    };
+}
