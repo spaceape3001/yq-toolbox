@@ -179,6 +179,8 @@ namespace yq {
     //! \note This is here for completeness, copy constructor normally works
     template <typename T>
     Set<T>          makeSet(const std::set<T>&);
+
+    //! Makes a Set from a std vector
     template <typename T>
     Set<T>          makeSet(const std::vector<T>&);
 
