@@ -374,6 +374,9 @@ namespace yq {
         return std::set<T,C>(data.begin(), data.end(), lesser);
     }
 
+    //! \brief Converts provided set into another with new comparison function 
+    //! \note Caution, if new comparison C2 compares equal for some unique keys in C,
+    //!     some elements may be lost.
     template <typename T, typename C, typename C2, typename A>
     std::set<T,C2,A>    make_set(const std::set<T,C,A>& data, const C2& lesser)
     {
