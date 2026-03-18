@@ -35,6 +35,7 @@ namespace yq {
     class Vector : public std::vector<T> {
     public:
 
+        //! Const iterator type
         typedef typename std::vector<T>::const_iterator const_iterator;
         typedef typename std::vector<T>::iterator iterator;
 
