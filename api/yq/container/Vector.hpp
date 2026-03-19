@@ -37,6 +37,8 @@ namespace yq {
 
         //! Const iterator type
         typedef typename std::vector<T>::const_iterator const_iterator;
+        
+        //! Iterator type
         typedef typename std::vector<T>::iterator iterator;
 
         typedef std::vector<T> base_vec;
