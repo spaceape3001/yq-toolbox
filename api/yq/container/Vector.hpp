@@ -41,6 +41,7 @@ namespace yq {
         //! Iterator type
         typedef typename std::vector<T>::iterator iterator;
 
+        //! Base vector (alias)
         typedef std::vector<T> base_vec;
         
 
