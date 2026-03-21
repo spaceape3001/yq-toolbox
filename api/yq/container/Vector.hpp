@@ -44,7 +44,7 @@ namespace yq {
         //! Base vector (alias)
         typedef std::vector<T> base_vec;
         
-
+        //! Default constructor
         Vector(){}
         Vector(const base_vec& toCopy);
         
