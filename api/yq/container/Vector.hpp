@@ -46,6 +46,8 @@ namespace yq {
         
         //! Default constructor
         Vector(){}
+        
+        //! Copy constructor
         Vector(const base_vec& toCopy);
         
         template <class InputIterator>
