@@ -50,6 +50,7 @@ namespace yq {
         //! Copy constructor
         Vector(const base_vec& toCopy);
         
+        //! Copies from a pair of iterators of another container
         template <class InputIterator>
         Vector(InputIterator, InputIterator);
         
