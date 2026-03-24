@@ -50,10 +50,11 @@ namespace yq {
         //! Copy constructor
         Vector(const base_vec& toCopy);
         
-        //! Copies from a pair of iterators of another container
+        //! Constructor that copies from a pair of iterators of another container
         template <class InputIterator>
         Vector(InputIterator, InputIterator);
         
+        //! Constructor with pointer & count
         Vector(const T*, size_t);
 
         Vector(base_vec&& toMove);
