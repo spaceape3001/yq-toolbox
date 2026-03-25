@@ -47,7 +47,7 @@ namespace yq {
         //! Default constructor
         Vector(){}
         
-        //! Copy constructor
+        //! Copy constructor (from a base vector)
         Vector(const base_vec& toCopy);
         
         //! Constructor that copies from a pair of iterators of another container
@@ -57,6 +57,7 @@ namespace yq {
         //! Constructor with pointer & count
         Vector(const T*, size_t);
 
+        //! Move constructor (from a base vector)
         Vector(base_vec&& toMove);
         explicit Vector(size_t n) : std::vector<T>(n) {}
         Vector(size_t n, const T& v) : std::vector<T>(n,v) {}
