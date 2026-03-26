@@ -59,6 +59,8 @@ namespace yq {
 
         //! Move constructor (from a base vector)
         Vector(base_vec&& toMove);
+        
+        //! Constructor with an initial size of defaulted values
         explicit Vector(size_t n) : std::vector<T>(n) {}
         Vector(size_t n, const T& v) : std::vector<T>(n,v) {}
         
