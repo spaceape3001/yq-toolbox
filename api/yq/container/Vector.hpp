@@ -62,6 +62,8 @@ namespace yq {
         
         //! Constructor with an initial size of defaulted values
         explicit Vector(size_t n) : std::vector<T>(n) {}
+        
+        //! Constructor with an initial size of (duplicated) given value
         Vector(size_t n, const T& v) : std::vector<T>(n,v) {}
         
         ~Vector(){}
