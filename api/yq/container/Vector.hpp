@@ -66,6 +66,7 @@ namespace yq {
         //! Constructor with an initial size of (duplicated) given value
         Vector(size_t n, const T& v) : std::vector<T>(n,v) {}
         
+        //! Destructor
         ~Vector(){}
         
         Vector&    operator=(const base_vec& toCopy);
