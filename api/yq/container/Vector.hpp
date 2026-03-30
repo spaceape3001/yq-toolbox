@@ -71,6 +71,8 @@ namespace yq {
         
         //! Copy operator (from base std::vector)
         Vector&    operator=(const base_vec& toCopy);
+        
+        //! Move operator (from base std::vector)
         Vector&    operator=(base_vec&& toMove);
 
         Vector&    operator<<(const T& value);
