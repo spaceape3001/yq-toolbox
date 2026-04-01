@@ -77,6 +77,8 @@ namespace yq {
 
         //! Append item to back of vector (copy item)
         Vector&    operator<<(const T& value);
+
+        //! Append item to back of vector (move item)
         Vector&    operator<<(T&&);
 
         //! Merging (ie, will check, this is horrendous for  efficiency)
