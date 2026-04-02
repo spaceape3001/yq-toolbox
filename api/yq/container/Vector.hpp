@@ -83,6 +83,8 @@ namespace yq {
 
         //! Merging (ie, will check, this is horrendous for  efficiency)
         Vector&     operator|=(const T& value);
+        
+        //! Merging (ie will check before inserting, this is horrendous for efficiency)
         Vector&     operator|=(const std::vector<T>&);
 
         Vector&    operator += (const T& value);
