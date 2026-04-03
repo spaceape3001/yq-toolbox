@@ -75,13 +75,19 @@ namespace yq {
         //! Move operator (from base std::vector)
         Vector&    operator=(base_vec&& toMove);
 
+        //! Append item to back of vector (copy item)
         Vector&    operator<<(const T& value);
+
+        //! Append item to back of vector (move item)
         Vector&    operator<<(T&&);
 
         //! Merging (ie, will check, this is horrendous for  efficiency)
         Vector&     operator|=(const T& value);
+        
+        //! Merging (ie will check before inserting, this is horrendous for efficiency)
         Vector&     operator|=(const std::vector<T>&);
 
+        //! Concatenates value to vector, returns reference
         Vector&    operator += (const T& value);
         Vector&    operator += (T&&);
         Vector&    operator += (const std::vector<T>&);
