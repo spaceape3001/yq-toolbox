@@ -87,8 +87,10 @@ namespace yq {
         //! Merging (ie will check before inserting, this is horrendous for efficiency)
         Vector&     operator|=(const std::vector<T>&);
 
-        //! Concatenates value to vector, returns reference
+        //! Concatenates value to vector (copies it in), returns reference
         Vector&    operator += (const T& value);
+
+        //! Concatenates value to vector (moves it in), returns reference
         Vector&    operator += (T&&);
         Vector&    operator += (const std::vector<T>&);
         Vector&    operator += (const List<T>&);
