@@ -26,6 +26,7 @@ namespace yq {
         //! Base class
         const ObjectMeta*   base() const { return m_base; }
     
+        //! Our writer class
         template <typename C> class Writer;
 
         /*! Constructor
