@@ -90,7 +90,15 @@ namespace yq {
         */
         bool    is_base_or_this(const ObjectMeta& presumedBase) const;
 
-        template <SomeObject>
+        /*! \brief  Tests for base object (or this object)
+        
+            This tests to see if the presumed base *is* a base class to this object or is this object type.
+            
+            \note This will return TRUE if the presumedBase *IS* this object.
+            \tparam  PresumedBase    What we're assuming is a base object
+            \return TRUE if presumedBase is a correct assumption, and is a base class to or is this object type.
+        */
+        template <SomeObject PresumedBase>
         bool    is_base_or_this() const;
 
         bool    is_this(const ObjectMeta& presumedBase) const;
