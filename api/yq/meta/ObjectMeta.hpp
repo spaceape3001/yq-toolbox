@@ -118,6 +118,15 @@ namespace yq {
         */
         bool    is_derived(const ObjectMeta& presumedDerived) const;
         
+        /*! \brief Tests for derived object
+        
+            This tests to see if the presumed derived class *is* a derived class to this object.
+            
+            \note This will return FALSE if the presumedDerived *IS* this object
+            
+            \tparam  PresumedDerived    What we're assuming is a derived object
+            \return TRUE if presumedDerived is a correct assumpition, and is derived to this object
+        */
         template <SomeObject>
         bool    is_derived() const;
         
