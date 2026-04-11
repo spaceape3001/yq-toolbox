@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/physics/state/KState21.hpp>
+
+namespace yq::physics {
+    struct KState22 : public KState21 {
+        MeterPerSecond²2D    acc         = ZERO;
+        RadianPerSecond²     aacc        = ZERO;
+    };
+}

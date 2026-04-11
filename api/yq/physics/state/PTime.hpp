@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/units.hpp>
+
+namespace yq::physics {
+    struct PTime {
+        Second          time = ZERO;
+    };
+    
+    template <typename A>
+    struct WithTime : public PTime, public A {
+    };
+}

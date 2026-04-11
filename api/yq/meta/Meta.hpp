@@ -118,6 +118,7 @@ namespace yq {
             INTERFACE,      //!< It's an interface
             JOYSTICK,       //!< Joystick related
             KEYBOARD,       //!< Keyboard related
+            KINETIC,
             LESS,           //!< Can compare
             LIGHT,          //!< A light source
             LOADER,         //!< A loader
@@ -144,6 +145,7 @@ namespace yq {
             POST,           //!< Post (post library)
             POST_ANON,      //!< Allow for anonymouse posting (ie, login url)
             PHYSICAL,       //!< Physical doodle item
+            PHYSICS,
             PROJECT,        //!< A project type of object
             PROPERTY,       //!< Meta has PropertyMeta
             PROXY,          //!< It's a proxy
