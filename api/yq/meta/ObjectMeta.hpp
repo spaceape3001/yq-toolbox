@@ -101,6 +101,7 @@ namespace yq {
         template <SomeObject PresumedBase>
         bool    is_base_or_this() const;
 
+        //! TRUE if this meta matches the meta for the given object type
         bool    is_this(const ObjectMeta& presumedBase) const;
         
         //! TRUE if this meta matches the meta for the given object type
