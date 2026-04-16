@@ -178,6 +178,10 @@ namespace yq {
         */
         const MetaLookup<ObjectMeta>&    deriveds(all_k) const { return m_all.derived; }
         
+        /*! \brief Immediate Derived objects
+            
+            These are the derived objects directly derived from this object type
+        */
         const MetaLookup<ObjectMeta>&    deriveds(local_k) const { return m_local.derived; }
         
         /*! \brief Base objects
