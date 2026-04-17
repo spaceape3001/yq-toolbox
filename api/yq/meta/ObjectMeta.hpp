@@ -192,6 +192,10 @@ namespace yq {
         */
         const MetaLookup<ObjectMeta>&    bases(bool all=false) const;
 
+        /*! \brief All base objects
+        
+            These are all the base object types to this object type (includes bases of bases)
+        */
         const MetaLookup<ObjectMeta>&    bases(all_k) const { return m_all.bases; }
         
         const MetaLookup<ObjectMeta>&    bases(local_k) const { return m_local.bases; }
