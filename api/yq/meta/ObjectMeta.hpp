@@ -198,6 +198,13 @@ namespace yq {
         */
         const MetaLookup<ObjectMeta>&    bases(all_k) const { return m_all.bases; }
         
+        /*! \brief Immediate Base Object
+        
+            These are the base objects that are immedately derived from by this object
+            
+            \note Currently, this should be at most ONE item; however, do not discount the 
+            possibility that future work legitimizes multiple inheritance
+        */
         const MetaLookup<ObjectMeta>&    bases(local_k) const { return m_local.bases; }
         
         /*! \brief Properties
