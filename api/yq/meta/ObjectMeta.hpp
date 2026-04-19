@@ -215,6 +215,10 @@ namespace yq {
         */
         const MetaLookup<PropertyMeta>&  properties(bool all=false) const;
 
+        /*! \brief All properties
+        
+            All properties defined by this object and all its base objects
+        */
         const MetaLookup<PropertyMeta>&  properties(all_k) const { return m_all.properties; }
 
         const MetaLookup<PropertyMeta>&  properties(local_k) const { return m_local.properties; }
