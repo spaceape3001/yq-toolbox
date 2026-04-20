@@ -221,6 +221,10 @@ namespace yq {
         */
         const MetaLookup<PropertyMeta>&  properties(all_k) const { return m_all.properties; }
 
+        /*! \brief This object type's defined properties
+        
+            Properties that are defined by *this* object type (ie, nothing inherited from the bases).
+        */
         const MetaLookup<PropertyMeta>&  properties(local_k) const { return m_local.properties; }
         
         /*! \brief Methods
