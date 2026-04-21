@@ -174,19 +174,19 @@ namespace yq {
 
         /*! \brief ALL Derived objects
             
-            These are all the derived objects to this object (both direct and indirect)
+            These are all the derived objects to this object (both direct and indirect).
         */
         const MetaLookup<ObjectMeta>&    deriveds(all_k) const { return m_all.derived; }
         
         /*! \brief Immediate Derived objects
             
-            These are the derived objects directly derived from this object type
+            These are the derived objects directly derived from this object type.
         */
         const MetaLookup<ObjectMeta>&    deriveds(local_k) const { return m_local.derived; }
         
         /*! \brief Base objects
         
-            These are the base objects to this object
+            These are the base objects to this object.
             
             \param[in] all      TRUE to get all base objects (all the way to Object)
         */
@@ -194,7 +194,7 @@ namespace yq {
 
         /*! \brief All base objects
         
-            These are all the base object types to this object type (includes bases of bases)
+            These are all the base object types to this object type (includes bases of bases).
         */
         const MetaLookup<ObjectMeta>&    bases(all_k) const { return m_all.bases; }
         
@@ -203,7 +203,7 @@ namespace yq {
             These are the base objects that are immedately derived from by this object
             
             \note Currently, this should be at most ONE item; however, do not discount the 
-            possibility that future work legitimizes multiple inheritance
+            possibility that future work legitimizes multiple inheritance.
         */
         const MetaLookup<ObjectMeta>&    bases(local_k) const { return m_local.bases; }
         
@@ -217,7 +217,7 @@ namespace yq {
 
         /*! \brief All properties
         
-            All properties defined by this object and all its base objects
+            All properties defined by this object and all its base objects.
         */
         const MetaLookup<PropertyMeta>&  properties(all_k) const { return m_all.properties; }
 
@@ -235,6 +235,10 @@ namespace yq {
         */
         const MetaLookup<MethodMeta>&   methods(bool all=false) const;
         
+        /*! \brief All methods
+        
+            All methods defined by this object type and all its base object types.
+        */
         const MetaLookup<MethodMeta>&   methods(all_k) const { return m_all.methods; }
         
         const MetaLookup<MethodMeta>&   methods(local_k) const { return m_local.methods; }
