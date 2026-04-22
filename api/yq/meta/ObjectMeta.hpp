@@ -241,6 +241,10 @@ namespace yq {
         */
         const MetaLookup<MethodMeta>&   methods(all_k) const { return m_all.methods; }
         
+        /*! \brief This object type's defined methods
+        
+            Methods that are defined by *this* object type (ie, nothing inherited from the bases)
+        */
         const MetaLookup<MethodMeta>&   methods(local_k) const { return m_local.methods; }
         
         //! Finds the specified property (ALL is implied)
