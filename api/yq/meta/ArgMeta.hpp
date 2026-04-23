@@ -19,6 +19,8 @@ namespace yq {
         
         template <typename T> class Typed;
         
+        //! Pointer to a default argument (if any, otherwise NULL)
+        //! \note it's data type is specified in type
         const void*         default_argument() const { return m_default; }
     
     protected:
