@@ -24,6 +24,7 @@ namespace yq {
         
         template <typename> class Writer;   // which will only ever by GlobalMeta...however, consistency
         
+        //! Global instance of the global meta
         static GlobalMeta&          instance();
 
         const MetaLookup<MethodMeta>&    methods() const { return m_methods; }
