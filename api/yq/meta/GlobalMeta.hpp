@@ -27,6 +27,7 @@ namespace yq {
         //! Global instance of the global meta
         static GlobalMeta&          instance();
 
+        //! Global meta methods
         const MetaLookup<MethodMeta>&    methods() const { return m_methods; }
         const MetaLookup<PropertyMeta>&  properties() const { return m_properties; }
         
