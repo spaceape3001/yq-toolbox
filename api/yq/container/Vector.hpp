@@ -95,6 +95,8 @@ namespace yq {
         
         //! Concatenates contents of right hand vector to end of this vector, returns reference
         Vector&    operator += (const std::vector<T>&);
+
+        //! Concatenates contents of right hand list to end of this vector, returns reference
         Vector&    operator += (const List<T>&);
         
         Vector      operator + (const Vector<T>&) const;
