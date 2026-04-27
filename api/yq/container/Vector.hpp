@@ -99,7 +99,9 @@ namespace yq {
         //! Concatenates contents of right hand list to end of this vector, returns reference
         Vector&    operator += (const List<T>&);
         
-        Vector      operator + (const Vector<T>&) const;
+        //! Creates a vector COPY of both vectors together 
+        //! \note This is bad for memory performance, lots of copying for large vectors
+        Vector     operator + (const Vector<T>&) const;
 
         Vector&    add(size_t pos, const T&);
         
