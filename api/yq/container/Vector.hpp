@@ -103,6 +103,14 @@ namespace yq {
         //! \note This is bad for memory performance, lots of copying for large vectors
         Vector     operator + (const Vector<T>&) const;
 
+        //! \brief Add/Append value
+        //!
+        //! If position is before end-of-vector, the time is inserted at 
+        //! position (bumping others), or if position exceeds vector size,
+        //! the item is appended (by copy).
+        //!
+        //! \param[in] pos Position to insert at
+        //! \return Reference to self
         Vector&    add(size_t pos, const T&);
         
         /*! \brief Returns all items after the specified index
