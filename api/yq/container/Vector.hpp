@@ -118,7 +118,15 @@ namespace yq {
         */
         Vector     after(size_t) const;
         
-        Vector&     append(const T*, size_t);
+        /*!  \brief Append an array of data
+        
+            This appends the given buffer of items to this vector.
+            
+            \param[in] pData Pointer to the data
+            \param[in] nCount Count of items
+            \return Reference to self
+        */
+        Vector&     append(const T* pData, size_t nCount);
         
         Vector&     append_if_unique(const T&);
         
@@ -415,7 +423,8 @@ namespace yq {
     template <typename T>
     Vector<T>&     Vector<T>::append(const T*p, size_t sz)
     {
-        base_vec::insert(base_vec::end(), p, p+sz);
+        if(p && sz)
+            base_vec::insert(base_vec::end(), p, p+sz);
         return *this;
     }
 
