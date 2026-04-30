@@ -128,6 +128,16 @@ namespace yq {
         */
         Vector&     append(const T* pData, size_t nCount);
         
+        /*! \brief Append if not present
+        
+            Appends the item to the vector if the given value is not already
+            in it.
+        
+            \note This will do a linear search first, so will be algorithmically 
+                inefficient to use at scale
+
+            \return Reference to self
+        */
         Vector&     append_if_unique(const T&);
         
         /*! \brief Erases element at specified location
