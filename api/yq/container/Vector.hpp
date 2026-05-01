@@ -141,9 +141,16 @@ namespace yq {
         Vector&     append_if_unique(const T&);
         
         /*! \brief Erases element at specified location
+            \return Reference to self
         */
         Vector&    erase_at(size_t pos);
 
+        /*! \brief Erases elements at specified location for given count
+        
+            \param[in] pos  position to start
+            \param[in] cnt  number of things to erase
+            \return Reference to self
+        */
         Vector&     erase_at(size_t pos, size_t cnt);
 
         /*! \brief Erases from the current vector
