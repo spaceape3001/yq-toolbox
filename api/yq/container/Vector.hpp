@@ -161,6 +161,15 @@ namespace yq {
         template <typename Pred>
         Vector&    erase_if(Pred);
         
+        /*! \brief Erases range of elements
+        
+            \note This routine will do nothing if high <= low!
+        
+            \param[in] lower index
+            \param[in] upper index
+            
+            \return Reference to self
+        */
         Vector&    erase_range(size_t low, size_t high);
 
         /*! \brief Filters the current vector
