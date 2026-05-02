@@ -12,7 +12,7 @@ Your Quill uses CMake for build management and C++26 as the language standard.  
 
 ### Dependencies
 
-* C++ 23 compiler (GCC 14 recommended)
+* C++ 26 compiler (GCC 16+ required)
 * Intel TBB (thread building blocks)
 * [Log4Cpp](https://log4cpp.sourceforge.net/) &mdash; O/S installed/package
 * Curl &mdash; optional (to the toolbox)
