@@ -6,7 +6,7 @@ This is the general utility toolbox for my Your Quill project.  It's split into 
 
 ### Building
 
-Your Quill uses CMake for build management and C++23 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
+Your Quill uses CMake for build management and C++26 as the language standard.  On linux, the build type is determined based on the final directory name (ie build/Debug vs build/Release).  
 
 ### Contributing
 
