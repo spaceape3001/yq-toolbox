@@ -187,6 +187,9 @@ namespace yq {
         template <typename Pred>
         Vector     filtered(Pred) const;
 
+        /*! Find specified item in vector 
+            \note This is a linear search!
+        */
         iterator        find(const T&) ;
         const_iterator  find(const T&) const;
 
