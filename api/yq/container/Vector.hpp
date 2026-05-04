@@ -191,6 +191,10 @@ namespace yq {
             \note This is a linear search!
         */
         iterator        find(const T&) ;
+
+        /*! Find specified item in vector 
+            \note This is a linear search!
+        */
         const_iterator  find(const T&) const;
 
         T            first(const T& def={}) const;
