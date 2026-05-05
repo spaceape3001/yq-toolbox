@@ -197,6 +197,13 @@ namespace yq {
         */
         const_iterator  find(const T&) const;
 
+        /*! \brief First item in the vector
+            
+            Returns a copy of the first item in the vector, 
+            returns a default (provided) value otherwise.
+            
+            \param[in] def  Value to use if the vector is empty
+        */
         T            first(const T& def={}) const;
         
         //!  Returns the first index, or size() if not found
