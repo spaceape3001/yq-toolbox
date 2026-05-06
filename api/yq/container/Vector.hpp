@@ -209,6 +209,10 @@ namespace yq {
         //!  Returns the first index, or size() if not found
         size_t      first_index_of(const T&) const;
         
+        /*! \brief Contains/has an item
+        
+            \note This is a linear search, so it's O(n).
+        */
         bool        has(const T&) const;
         
         // pull the STL ones forward
