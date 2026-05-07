@@ -218,6 +218,8 @@ namespace yq {
         // pull the STL ones forward
         using       base_vec::insert;
         
+        /*! \brief Inserts new item at specified location (move operation)
+        */
         Vector&     insert(size_t before, T&&);
         Vector&     insert(size_t before, const T&);
         
