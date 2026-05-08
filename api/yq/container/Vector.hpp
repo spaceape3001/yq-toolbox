@@ -221,6 +221,9 @@ namespace yq {
         /*! \brief Inserts new item at specified location (move operation)
         */
         Vector&     insert(size_t before, T&&);
+
+        /*! \brief Inserts new item at specified location (copy operation)
+        */
         Vector&     insert(size_t before, const T&);
         
         T           last(const T& def={}) const;
