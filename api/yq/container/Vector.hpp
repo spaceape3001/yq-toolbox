@@ -226,6 +226,13 @@ namespace yq {
         */
         Vector&     insert(size_t before, const T&);
         
+        /*! \brief Last item in the vector
+        
+            Returns a copy of the last item in the vector,
+            returns a default (provided) value otherwise
+            
+            \param[in] def Value to use if the vector is empty
+        */
         T           last(const T& def={}) const;
 
         Vector      mid(size_t pos, size_t length=~0ULL) const;
