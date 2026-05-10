@@ -235,6 +235,12 @@ namespace yq {
         */
         T           last(const T& def={}) const;
 
+        /*! \brief Copies out a portion of the vector 
+        
+            \param[in] pos      Where to start
+            \param[in] length   How many elements
+            \return COPY of new vector
+        */
         Vector      mid(size_t pos, size_t length=~0ULL) const;
 
         Vector&     move(size_t curIdx, size_t newIdx);
