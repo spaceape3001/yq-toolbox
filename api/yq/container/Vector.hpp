@@ -243,6 +243,12 @@ namespace yq {
         */
         Vector      mid(size_t pos, size_t length=~0ULL) const;
 
+        /*! \brief Moves item from one index to another, shifting elements in between
+        
+            \param[in] curIdx   Index to item to move
+            \param[in] newIdx   Index of where to move it
+        
+        */
         Vector&     move(size_t curIdx, size_t newIdx);
         
         T           next(const T&, const T& def={}) const;
