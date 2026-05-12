@@ -251,7 +251,13 @@ namespace yq {
         */
         Vector&     move(size_t curIdx, size_t newIdx);
         
-        T           next(const T&, const T& def={}) const;
+        /*! \brief Finds item in list, returns the one after (or the default if not found/out-of-range)
+        
+            \param[in] value    What to search for.
+            \param[in] def      What to return if the value is not found before the end of the vector.
+            \return Either the thing after value OR def.
+        */
+        T           next(const T& value, const T& def={}) const;
 
         //  Assumes the vector is currently sorted....
         template <typename Pred>
