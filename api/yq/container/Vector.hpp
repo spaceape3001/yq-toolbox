@@ -263,6 +263,8 @@ namespace yq {
         template <typename Pred>
         Vector&     insert_sort(const T&, Pred);
         
+        /*! \brief Pushes the item to the start of the vector (ie, push_front)
+        */
         void        prepend(const T&);
         
         T           prev(const T&, const T& def={}) const;
