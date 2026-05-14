@@ -260,8 +260,15 @@ namespace yq {
         T           next(const T& value, const T& def={}) const;
 
         //  Assumes the vector is currently sorted....
+        
+        /*! \brief Inserts the item into a sorted vector
+        
+            This inserts  *BEFORE* the first item that is greater (as defined by the predicate).
+            
+            \param[in]  pred The predicate to compare/sort by.
+        */
         template <typename Pred>
-        Vector&     insert_sort(const T&, Pred);
+        Vector&     insert_sort(const T&, Pred pred);
         
         /*! \brief Pushes the item to the start of the vector (ie, push_front)
         */
