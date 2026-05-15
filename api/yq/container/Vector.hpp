@@ -274,6 +274,12 @@ namespace yq {
         */
         void        prepend(const T&);
         
+        /*! \brief Finds item in list, returns the one before (or the default if not found/out-of-range)
+        
+            \param[in] value    What to search for.
+            \param[in] def      What to return if the value is not found before the end of the vector.
+            \return Either the thing after value OR def.
+        */
         T           prev(const T&, const T& def={}) const;
 
         
