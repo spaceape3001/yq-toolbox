@@ -282,7 +282,11 @@ namespace yq {
         */
         T           prev(const T&, const T& def={}) const;
 
+        /*! \brief Push item to back of vector, return old size
         
+            Pushes a new item to the back of the vector, returns the old size. 
+            (Useful for index based ID systems.)
+        */
         size_t      push(const T&);
         
         Vector&     remove_all(const T&);
