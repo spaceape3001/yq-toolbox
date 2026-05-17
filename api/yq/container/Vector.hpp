@@ -289,6 +289,11 @@ namespace yq {
         */
         size_t      push(const T&);
         
+        /*! \brief Remove all instances of specific value
+        
+            This erases all instances of the specific value from the vector.
+            \return Reference to self
+        */
         Vector&     remove_all(const T&);
         
         using base_vec::resize;
