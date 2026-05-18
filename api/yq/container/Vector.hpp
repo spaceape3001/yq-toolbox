@@ -302,6 +302,10 @@ namespace yq {
         */
         void        resize_if_under(size_t needed, size_t extra, const T& def={});
 
+        /*! \brief Sets specified item (resizes if necessary)
+        
+            Sets the specified index.  Will resize the vector to accommodate.
+        */
         Vector&     set(size_t, const T&);
         
         //  Disable because Visual studio expands *everything* with an argument,
