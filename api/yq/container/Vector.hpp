@@ -313,6 +313,12 @@ namespace yq {
         //  vector!
         //Vector&     sort(); // uses the natural order
         
+        /*! \brief Sort the vector
+        
+            Sorts the vector given the predicate (a < b).
+            
+            \return Reference to vector
+        */
         template <typename Pred>
         Vector&     sort(Pred);
         
