@@ -322,6 +322,13 @@ namespace yq {
         template <typename Pred>
         Vector&     sort(Pred);
         
+        /*! \brief Sort (Stabley) the vector
+        
+            Stabley sorts the vector given the predicate (a < b); by stable, means
+            relative order will be preserved for matching items.
+            
+            \return Reference to vector
+        */
         template <typename Pred>
         Vector&     stable_sort(Pred);
 
