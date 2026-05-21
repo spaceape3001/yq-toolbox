@@ -109,6 +109,7 @@ if(NOT YOUR_QUILL_TOOLBOX)
         -fno-elide-type 
         -fdiagnostics-path-format=inline-events 
         -fdiagnostics-generate-patch
+        -freflection
 
         #   *WISH* I could use this... but gcc 14 is flagging default constructed std::variant
         #   AND I tried cmake release-only generator expressions only to get linker errors all over 
