@@ -332,6 +332,9 @@ namespace yq {
         template <typename Pred>
         Vector&     stable_sort(Pred);
 
+        //! Swap the values of two indices
+        //!
+        //! equiv to std::swap(vector[a], vector[b]) when both values are in range
         Vector&     swap(size_t, size_t);
         
         T           take(size_t pos, const T& def={});
@@ -813,18 +816,6 @@ namespace yq {
         return *this;
     }
 
-    template <typename T>
-    T           Vector<T>::take(size_t pos, const T& def)
-    {
-        if(pos >= base_vec::size())
-            return def;
-        auto itr = base_vec::begin() + pos;
-        T       ret = *itr;
-        base_vec::erase(itr);
-        return ret;
-    }
-
-
     //template <typename T>
     //Vector<T>&        Vector<T>::sort()
     //{
@@ -856,6 +847,18 @@ namespace yq {
             std::swap( base_vec::operator[](a), base_vec::operator[](b));
         return *this;
     }
+
+    template <typename T>
+    T           Vector<T>::take(size_t pos, const T& def)
+    {
+        if(pos >= base_vec::size())
+            return def;
+        auto itr = base_vec::begin() + pos;
+        T       ret = *itr;
+        base_vec::erase(itr);
+        return ret;
+    }
+
 
     template <typename T>
     Vector<T>& Vector<T>::unique()
