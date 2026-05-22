@@ -119,6 +119,7 @@ namespace yq {
     struct enabled_k {};
     struct end_k {};
     struct enu_k {};
+    struct enumeration_k {};
     struct erasable_k {};
     struct erase_k {};
     struct error_k {};
@@ -221,6 +222,7 @@ namespace yq {
     struct open_k {};
     struct opposite_k {};
     struct optional_k {};
+    struct ordered_k {};
     struct out_k {};
     struct output_k {};
     struct parent_k {};
@@ -286,6 +288,7 @@ namespace yq {
     struct snoop_k {};
     struct soft_k {};
     struct sort_k {};
+    struct sorted_k {};
     struct span_k {};
     struct socket_k {};
     struct source_k {};
@@ -454,6 +457,7 @@ namespace yq {
     static constexpr const enabled_k            ENABLED;
     static constexpr const end_k                END;
     static constexpr const enu_k                ENU;
+    static constexpr const enumeration_k        ENUM, ENUMERATION;
     static constexpr const erasable_k           ERASABLE;
     static constexpr const erase_k              ERASE;
     static constexpr const error_k              ERROR;
@@ -561,6 +565,7 @@ namespace yq {
     static constexpr const open_k               OPEN;
     static constexpr const opposite_k           OPPOSITE; 
     static constexpr const optional_k           OPTIONAL;
+    static constexpr const ordered_k            ORDERED;
     static constexpr const out_k                OUT;
     static constexpr const output_k             OUTPUT;
     static constexpr const parent_k             PARENT;
@@ -626,6 +631,7 @@ namespace yq {
     static constexpr const smallest_k           SMALLEST;
     static constexpr const soft_k               SOFT;
     static constexpr const sort_k               SORT;
+    static constexpr const sorted_k             SORTED;
     static constexpr const snoop_k              SNOOP;
     static constexpr const source_k             SOURCE;
     static constexpr const span_k               SPAN;
