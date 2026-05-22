@@ -25,7 +25,7 @@ enum class Color {
     White
 };
 
-YQ_ENUMERATION_IMPLEMENT(Color)
+YQ_ENUM_IMPLEMENT(Color)
 
 int main()
 {
@@ -56,7 +56,7 @@ int main()
         auto& em = enumeration<Color>();
         Result<Color>   x;
         
-        x   = em.value_of("Black");
+        x   = em.value("Black");
         expect(x.good);
         expect(x.value == Color::Black);
     };

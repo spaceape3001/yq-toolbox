@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/keywords.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/container/Vector.hpp>
 #include <yq/macro/cppstring.hpp>
@@ -110,7 +111,7 @@ namespace yq {
         //! \brief Assignment of the enumeration
         //! \note Invalid values will be replaced by the default-value
         Enum(const EnumDef *def, int value);
-
+        
     protected:
         template <class E> friend class EnumImpl;
         friend class EnumDef;
@@ -549,6 +550,14 @@ namespace yq {
     {
         return e.key();
     }
+
+    template <typename E>
+    requires is_template_enum_v<E>
+    std::string_view    key_of(EnumImpl<E> e)
+    {
+        return e.key();
+    }
+
 
     //template <typename E>
     //bool    EnumImpl<E>::operator==(typename E::enum_t rhs) const

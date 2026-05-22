@@ -17,6 +17,9 @@ namespace yq {
     class CompoundMeta::Dynamic : public CompoundMeta::Static {
     public:
     
+        //  auto property with reflection...?
+    
+    
         /*! \brief Defines a property
         
             This defines a property for the type/object

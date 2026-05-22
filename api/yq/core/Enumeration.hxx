@@ -13,8 +13,92 @@
 #include <algorithm>
 
 namespace yq {
+
     template <typename E>
-    constexpr typename Enumeration<E>::definition_t Enumeration<E>::create_definition()
+    class BoundEnumerationInfo : public EnumerationInfo {
+        using Enum = Enumeration<E>;
+    public:
+        size_t  count() const override
+        {
+            return Enum::count();
+        }
+        
+        std::string_view display(int v) const override
+        {
+            return enumeration<E>().display((E) v);
+        }
+
+        std::string_view        key(int v) const override
+        {
+            return enumeration<E>().key((E) v);
+        }
+        
+        const string_view_vector_t& keys() const 
+        {
+            return enumeration<E>().keys();
+        }
+
+        const string_view_vector_t& keys(ordered_k) const 
+        {
+            return enumeration<E>().keys(ORDERED);
+        }
+
+        const string_view_vector_t& keys(sorted_k) const 
+        {
+            return enumeration<E>().keys(SORTED);
+        }
+
+        std::string_view pretty(int v) const override
+        {
+            return enumeration<E>().key((E) v);
+        }
+    
+        int value(default_k) const override
+        {
+            return (int) enumeration<E>().value(DEFAULT);
+        }
+
+        int value(minimum_k) const override
+        {
+            return (int) enumeration<E>().value(MINIMUM);
+        }
+        
+        int value(maximum_k) const override
+        {
+            return (int) enumeration<E>().value(MAXIMUM);
+        }
+    
+    private:
+        friend class Enumeration<E>;
+        BoundEnumerationInfo()
+        {
+            const auto& em = enumeration<E>();
+            for(E e : em.values())
+                m_values.declared.push_back((int) e);
+            for(E e : em.values(ORDERED))
+                m_values.ordered.push_back((int) e);
+            for(E e : em.values(SORTED))
+                m_values.sorted.push_back((int) e);
+            for(E e : em.values(UNIQUE))
+                m_values.unique.push_back((int) e);
+        }
+        
+        ~BoundEnumerationInfo()
+        {
+        }
+    };
+    
+    
+    template <typename E>
+    const EnumerationInfo& Enumeration<E>::info()
+    {
+        static BoundEnumerationInfo<E> s_info;
+        return s_info;
+    }
+    
+
+    template <typename E>
+    constexpr typename Enumeration<E>::definition_t Enumeration<E>::definition(create_k)
     {
         definition_t        result;
         size_t k=0;
@@ -24,14 +108,14 @@ namespace yq {
     }
 
     template <typename E>
-    Enumeration<E>&  Enumeration<E>::static_manifest()
+    Enumeration<E>&  Enumeration<E>::manifest()
     {
         static Enumeration s_instance;
         return s_instance;
     }
 
     template <typename E>
-    Enumeration<E>::Enumeration() : m_definition{.declared=create_definition()}, 
+    Enumeration<E>::Enumeration() : m_definition{.declared=definition(CREATE)}, 
         m_name(std::meta::identifier_of(^^E))
     {
         bool first = true;
@@ -79,7 +163,7 @@ namespace yq {
     }
 
     template <typename E>
-    std::string_view    Enumeration<E>::display_of(E v) const
+    std::string_view    Enumeration<E>::display(E v) const
     {
         if(auto itr = m_value2display.find(v); itr != m_value2display.end())
             return itr->second;
@@ -87,23 +171,17 @@ namespace yq {
     }
 
     template <typename E>
-    bool    Enumeration<E>::has_key(std::string_view k) const
-    {
-        return m_name2value.contains(k);
-    }
-
-    template <typename E>
-    bool    Enumeration<E>::has_value(E v) const
-    {
-        return m_value2name.contains(v);
-    }
-    
-    template <typename E>
-    std::string_view    Enumeration<E>::key_of(E v) const
+    std::string_view    Enumeration<E>::key(E v) const
     {
         if(auto itr = m_value2name.find(v); itr != m_value2name.end())
             return itr->second;
         return {};
+    }
+
+    template <typename E>
+    bool    Enumeration<E>::key(has_k, std::string_view k) const
+    {
+        return m_name2value.contains(k);
     }
 
     template <typename E>
@@ -119,22 +197,39 @@ namespace yq {
     }
     
     template <typename E>
-    std::string_view    Enumeration<E>::pretty_of(E v) const
+    std::string_view    Enumeration<E>::pretty(E v) const
     {
         if(auto itr = m_value2pretty.find(v); itr != m_value2pretty.end())
             return itr->second;
         return {};
     }
-    
+
     template <typename E>
-    typename Enumeration<E>::result_t   Enumeration<E>::value_of(std::string_view k) const
+    typename Enumeration<E>::result_t   Enumeration<E>::value(std::string_view k) const
     {
         if(auto itr =m_name2value.find(k); itr != m_name2value.end())
             return { itr->second, true };
         return {};
     }
+
+    template <typename E>
+    void    Enumeration<E>::value(default_k, E v)
+    {
+        if(!Meta::thread_safe_write())
+            return;
+        if(!m_value2name.contains(v))
+            return;
+        m_values.def    = v;
+    }
+    
+    template <typename E>
+    bool    Enumeration<E>::value(has_k, E v) const
+    {
+        return m_value2name.contains(v);
+    }
+
 }
 
-#define YQ_ENUMERATION_IMPLEMENT(ecls) template class Enumeration<ecls>;
+#define YQ_ENUM_IMPLEMENT(ecls) template class Enumeration<ecls>;
     
 

@@ -19,6 +19,7 @@ add_library(yq_core SHARED
     core/Cleanup.cpp
     core/DelayInit.cpp
     core/Enum.cpp
+    core/Enumeration.cpp
     core/ErrorDB.cpp
     core/Flag.cpp
     core/Future.cpp
@@ -43,6 +44,7 @@ add_library(yq_core SHARED
     meta/ConstructorMeta.cpp
     meta/Generator.cpp
     meta/EnumMeta.cpp
+    meta/EnumerationMeta.cpp
     meta/GlobalMeta.cpp
     meta/Meta.cpp
     meta/MetaWriter.cpp
