@@ -134,7 +134,7 @@ namespace yq {
         //! Default value for the enumeration
         int                         default_value() const { return m_defValue; }
         
-        //! Minimum value for the enumerfation
+        //! Minimum value for the enumeration
         int                         minimum_value() const;
         
         //! Maximum value for the enumeration
