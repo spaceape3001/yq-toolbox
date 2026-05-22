@@ -332,11 +332,21 @@ namespace yq {
         template <typename Pred>
         Vector&     stable_sort(Pred);
 
-        //! Swap the values of two indices
-        //!
-        //! equiv to std::swap(vector[a], vector[b]) when both values are in range
+        /*! \brief Swap the values of two indices
+          
+           \note Equiv to std::swap(vector[a], vector[b]) when both values are in range
+        */
         Vector&     swap(size_t, size_t);
         
+        /*! Returns & removes the specified index
+        
+            This will return the specified index while also erasing it from the vector.
+            
+            \param[in] pos Index to take
+            \param[in] def Default to use if specified position is not present.
+            
+            \return The value that *was* in the vector, or a copy of the default parameter.
+        */
         T           take(size_t pos, const T& def={});
         
         Vector&     unique();
