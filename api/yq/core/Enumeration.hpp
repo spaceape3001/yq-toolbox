@@ -141,6 +141,13 @@ namespace yq {
         return enumeration<E>().key(v);
     }
 
+    template <typename E>
+    requires std::is_enum_v<E>
+    std::string_view display_of(E v)
+    {
+        return enumeration<E>().display(v);
+    }
+
     class EnumerationInfo {
     public:
 
