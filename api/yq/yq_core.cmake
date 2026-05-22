@@ -44,7 +44,7 @@ add_library(yq_core SHARED
     meta/ConstructorMeta.cpp
     meta/Generator.cpp
     meta/EnumMeta.cpp
-    meta/EnumerationMeta.cpp
+    #meta/EnumerationMeta.cpp
     meta/GlobalMeta.cpp
     meta/Meta.cpp
     meta/MetaWriter.cpp
