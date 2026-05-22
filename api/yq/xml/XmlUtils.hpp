@@ -6,7 +6,9 @@
 
 #pragma once
 
+#include <yq/errors.hpp>
 #include <yq/core/Enum.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/Flag.hpp>
 #include <yq/text/vsplit.hpp>
 #include <yq/typedef/expected.hpp>
@@ -207,12 +209,24 @@ namespace yq {
     Expect<E>           to_enum(const XmlBase& xb)
     {
         auto vt  = xb.value();
-        if(vt.empty())
-            return E::default_value();
-        auto   v    = E::value_for(vt);
-        if(v)
-            return *v;
-        return v;
+        if constexpr (std::is_enum_v<E>){
+            static const auto& em = enumeration<E>();
+            if(vt.empty())
+                return em.value(DEFAULT);
+            auto r = em.value(vt);
+            if(!r.good)
+                return errors::bad_argument();
+            return r.value;
+        } else if constexpr (is_template_enum_v<E>){
+            if(vt.empty())
+                return E::default_value();
+            auto   v    = E::value_for(vt);
+            if(v)
+                return *v;
+            return v;
+        } else {
+            return errors::incompatible_types();
+        }
     }
 
     /*! \brief Parses to bool
@@ -703,6 +717,13 @@ namespace yq {
     void                 write_x(XmlBase& xb, EnumImpl<E> v)
     {
         write_x(xb, v.key());
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
+    void                write_x(XmlBase& xb, E v)
+    {
+        write_x(xb, enumeration<E>().key(v));
     }
 
     /*! \brief Writes value to XML

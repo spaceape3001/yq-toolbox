@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Enum.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/Flag.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 
@@ -44,6 +45,13 @@ namespace yq {
     Stream&     operator<<(Stream& str, EnumImpl<E> val)
     {
         return str << val.key();
+    }
+    
+    template <typename E>
+    requires std::is_enum_v<E>
+    Stream&     operator<<(Stream& str, E val)
+    {
+        return str << enumeration<E>().key(val);
     }
     
     template <typename E>

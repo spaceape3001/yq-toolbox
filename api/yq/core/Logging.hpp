@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/LogPriority.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/Flag.hpp>
 #include <yq/macro/debugrel.hpp>
 #include <yq/typedef/filesystem_path.hpp>
@@ -35,7 +36,7 @@ namespace yq {
     {
         return str << v.key();
     }
-
+    
     //! Stream an enumeration flag set to the logger
     template <typename E>
     log4cpp::CategoryStream&     operator<<(log4cpp::CategoryStream& str, Flag<E> val)
@@ -117,6 +118,15 @@ log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream& str, const std::opt
 log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const std::error_code&);
 log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, std::u32string_view);
 log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const std::u32string&);
+
+template <typename E>
+requires std::is_enum_v<E>
+log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, E v)
+{
+    return str << yq::enumeration<E>().key(v);
+}
+
+
 
 //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const QByteArray&);
 //log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&, const QDate&);
