@@ -5,9 +5,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "HttpStatus.hpp"
+#include "HttpOp.hpp"
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/container/EnumMap.hpp>
+
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::HttpStatus)
+YQ_ENUM_IMPLEMENT(yq::HttpOp)
 
 namespace yq {
 
@@ -18,7 +24,7 @@ namespace yq {
 
     bool        isClientError(HttpStatus u)
     {
-        return isClientError((unsigned short) u.value());
+        return isClientError((unsigned short) u);
     }
 
     bool        isError(unsigned short u)
@@ -28,7 +34,7 @@ namespace yq {
 
     bool        isError(HttpStatus u)
     {
-        return isError((unsigned short) u.value());
+        return isError((unsigned short) u);
     }
 
     bool        isInformational(unsigned short u)
@@ -82,12 +88,12 @@ namespace yq {
             //return std::string(buffer);
         //}
         
-        using HttpStatusMap	= EnumMap<HttpStatus,std::string_view>;
+        using HttpStatusMap	= std::map<HttpStatus,std::string_view>;
         
         HttpStatusMap 	makeStatusMessage()
         {
             static const struct {
-                HttpStatus::enum_t  code;
+                HttpStatus          code;
                 std::string_view    message;
             } kCodes[] = {
                 { HttpStatus::None,                     	"Invalid"                           },
@@ -198,15 +204,15 @@ namespace yq {
 
     std::string_view    statusMessage(unsigned short code)
     {
-        const auto & r	= statusMessages();
-        if(!r.valid((int) code))
-            return std::string_view();
-        return r[code];
+        return statusMessage((HttpStatus) code);
     }
 
     std::string_view    statusMessage(HttpStatus code)
     {
-        return statusMessages()[code];
+        static const auto & r	= statusMessages();
+        if(auto x = r.find(code); x!=r.end())
+            return x->second;
+        return {};
     }
 
     YQ_INVOKE(

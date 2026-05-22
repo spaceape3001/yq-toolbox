@@ -163,6 +163,14 @@ namespace yq {
     }
 
     template <typename E>
+    E                   Enumeration<E>::decode(std::string_view k) const
+    {
+        if(auto itr =m_name2value.find(k); itr != m_name2value.end())
+            return itr->second;
+        return m_values.def;
+    }
+
+    template <typename E>
     std::string_view    Enumeration<E>::display(E v) const
     {
         if(auto itr = m_value2display.find(v); itr != m_value2display.end())
@@ -230,6 +238,6 @@ namespace yq {
 
 }
 
-#define YQ_ENUM_IMPLEMENT(ecls) template class Enumeration<ecls>;
+#define YQ_ENUM_IMPLEMENT(ecls) template class ::yq::Enumeration<ecls>;
     
 

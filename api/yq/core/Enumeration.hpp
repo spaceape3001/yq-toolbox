@@ -41,6 +41,8 @@ namespace yq {
         static const EnumerationInfo&   info();
         static Enumeration&             manifest();
         
+        //! Similar as value(string) but in failed lookup, it uses the default
+        E                   decode(std::string_view) const; 
 
         const auto&         definition() const { return m_definition.declared; }
         const auto&         definition(ordered_k) const { return m_definition.ordered; }
@@ -118,7 +120,7 @@ namespace yq {
         static constexpr definition_t     definition(create_k);
         Enumeration();
     };
-    
+
     /*! \brief Key/value mapping
         This accesses the key/value/pretty mapping
     */
@@ -146,6 +148,13 @@ namespace yq {
     std::string_view display_of(E v)
     {
         return enumeration<E>().display(v);
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
+    auto values_of()
+    {
+        return enumeration<E>().values();
     }
 
     class EnumerationInfo {

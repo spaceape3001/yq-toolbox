@@ -6,7 +6,9 @@
 
 #pragma once
 
+#include <yq/keywords.hpp>
 #include <yq/core/Enum.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/container/Vector.hpp>
 
 #include <cassert>
@@ -25,9 +27,14 @@ namespace yq {
     class EnumMap {
     public:
 
-        static int 	max_key();
-        static int 	min_key();
-        static bool	valid(E);
+        static_assert(std::is_enum_v<E> || is_template_enum_v<E>, "E must be an enumeration type");
+
+        static E 	    max_key();
+        static E 	    min_key();
+        static bool	    valid(E);
+        static ssize_t  index(E);
+        static size_t   count();
+        
 
         EnumMap(const V& val={});	// auto-creates the vector
         ~EnumMap();
@@ -43,41 +50,86 @@ namespace yq {
             //      IMPLEMENTATION
             //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    template <typename E, typename V>
+    size_t   EnumMap<E,V>::count()
+    {
+        if constexpr (std::is_enum_v<E>){
+            static const auto& em = enumeration<E>();
+            return (ssize_t) em.value(maximum_k())-(ssize_t) em.value(minimum_k())+2;
+        }
+        
+        if constexpr (is_template_enum_v<E>){
+            return (size_t)(E::max_value()-E::min_value()+2);
+        }
+        
+        return 2;
+    }
+
 
     template <typename E, typename V>
-    int 	EnumMap<E,V>::max_key() 
+    E 	    EnumMap<E,V>::max_key() 
     {
-        static const int 	ret	= E::max_value();
-        return ret;
+        if constexpr (std::is_enum_v<E>){
+            return enumeration<E>().value(maximum_k());
+        }
+        
+        if constexpr (is_template_enum_v<E>){
+            static const E 	ret = (typename E::enum_t) E::max_value();
+            return ret;
+        }
+        
+        return {};
     }
 
     template <typename E, typename V>
-    int 	EnumMap<E,V>::min_key() 
+    E 	EnumMap<E,V>::min_key() 
     {
-        static const int 	ret	= E::min_value();
-        return ret;
+        if constexpr (std::is_enum_v<E>){
+            return enumeration<E>().value(minimum_k());
+        }
+        
+        if constexpr (is_template_enum_v<E>){
+            static const E 	ret = (typename E::enum_t) E::min_value();
+            return ret;
+        }
+        
+        return {};
     }
 
-
+    template <typename E, typename V>
+    ssize_t  EnumMap<E,V>::index(E e)
+    {
+        if constexpr (std::is_enum_v<E>){
+            return (ssize_t) e - (ssize_t) min_key();
+        }
+        
+        if constexpr (is_template_enum_v<E>){
+            return (ssize_t) e.value() - (ssize_t) min_key().value();
+        }
+        
+        return 0;
+    }
+    
     template <typename E, typename V>
     bool	EnumMap<E,V>::valid(E e)
     {
-        return E::has_value(e.value());
+        if constexpr (std::is_enum_v<E>){
+            return enumeration<E>().value(HAS, e);
+        }
+        
+        if constexpr (is_template_enum_v<E>){
+            return E::has_value(e);
+        }
+        
+        return false;
     }
 
-    template <typename E, typename V>
-    V       EnumMap<E,V>::get(E e, V def) const
-    {
-        if(!valid(e))
-            return def;
-        return m_values[e.value() - min_key()];
-    }
+    /////////////////////////////////////////////
 
     template <typename E, typename V>
     EnumMap<E,V>::EnumMap(const V& val)
     {
-        static const size_t	cnt	= size_t(max_key() - min_key() + 1);
-        m_values.resize(cnt, val);
+        m_values.resize(count(), val);
     }
 
     template <typename E, typename V>
@@ -91,7 +143,11 @@ namespace yq {
         #ifdef _DEBUG
         assert(valid(e));
         #endif
-        return m_values[e.value() - min_key()];
+        
+        ssize_t n   = index(e);
+        if(n<0 || n>=(ssize_t) count())
+            n   = count();
+        return m_values[n];
     }
 
     template <typename E, typename V>
@@ -100,7 +156,21 @@ namespace yq {
         #ifdef _DEBUG
         assert(valid(e));
         #endif
-        return m_values[e.value() - min_key()];
+
+        ssize_t n   = index(e);
+        if(n<0 || n>= (ssize_t) count())
+            n   = count();
+        return m_values[n];
     }
+
+    template <typename E, typename V>
+    V       EnumMap<E,V>::get(E e, V def) const
+    {
+        ssize_t n   = index(e);
+        if(n<0 || n>=(ssize_t) count()-1)
+            return def;
+        return m_values[n];
+    }
+
 
 }

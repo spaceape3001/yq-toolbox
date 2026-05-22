@@ -58,7 +58,7 @@ namespace yq {
         if(curl_easy_perform(m_curl) == CURLE_OK){
             long    v = 0;
             curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &v);
-            return HttpStatus( (HttpStatus::enum_t) v);
+            return HttpStatus( (HttpStatus) v);
         } else
             return HttpStatus::CurlError;
     }

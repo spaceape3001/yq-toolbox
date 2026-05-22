@@ -14,7 +14,7 @@ namespace yq {
     
         This represets the http operations that can be legitimately passed via text
     */
-    YQ_ENUM(HttpOp, ,
+    enum class HttpOp {
     
         //! Unknown/undefined operations
         Unknown = 0,
@@ -48,34 +48,34 @@ namespace yq {
         
         //! Patch HTTP operation
         Patch
-    )
+    };
 
 
     //! HTTP Connect operation
-    static constexpr const HttpOp::enum_t hConnect                  = HttpOp::Connect;
+    static constexpr const HttpOp hConnect                  = HttpOp::Connect;
     
     //! HTTP Delete operation
-    static constexpr const HttpOp::enum_t hDelete                   = HttpOp::Delete;
+    static constexpr const HttpOp hDelete                   = HttpOp::Delete;
     
     //! HTTP Get operation
-    static constexpr const HttpOp::enum_t hGet                      = HttpOp::Get;
+    static constexpr const HttpOp hGet                      = HttpOp::Get;
     
     //! HTTP Head operation
-    static constexpr const HttpOp::enum_t hHead                     = HttpOp::Head;
+    static constexpr const HttpOp hHead                     = HttpOp::Head;
     
     //! HTTP Options operation
-    static constexpr const HttpOp::enum_t hOptions                  = HttpOp::Options;
+    static constexpr const HttpOp hOptions                  = HttpOp::Options;
     
     //! HTTP Patch operation
-    static constexpr const HttpOp::enum_t hPatch                    = HttpOp::Patch;
+    static constexpr const HttpOp hPatch                    = HttpOp::Patch;
     
     //! HTTP Post operation
-    static constexpr const HttpOp::enum_t hPost                     = HttpOp::Post;
+    static constexpr const HttpOp hPost                     = HttpOp::Post;
     
     //! HTTP Put operation
-    static constexpr const HttpOp::enum_t hPut                      = HttpOp::Put;
+    static constexpr const HttpOp hPut                      = HttpOp::Put;
     
     //! HTTP Trace operation
-    static constexpr const HttpOp::enum_t hTrace                    = HttpOp::Trace;
+    static constexpr const HttpOp hTrace                    = HttpOp::Trace;
 
 }

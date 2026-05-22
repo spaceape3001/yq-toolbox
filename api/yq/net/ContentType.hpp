@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
+#include <string_view>
 
 namespace yq {
 
-    YQ_ENUM(ContentType, ,
+    enum class ContentType {
         unknown                     = 0,
         binary,
         bmp,
@@ -36,7 +36,7 @@ namespace yq {
         tiff,
         wave,
         xml
-    )
+    };
 
     //! Mime type string for content type lookup table
     std::string_view    mimeType(ContentType);

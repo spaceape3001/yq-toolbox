@@ -10,6 +10,7 @@
 #include <yq/typedef/filesystem_path.hpp>
 #include <span>
 #include <string>
+#include <type_traits>
 
 namespace yq {
     class ByteArray;
@@ -87,6 +88,14 @@ namespace yq {
         //! 
         //! \param[in] col  Parameter/column index, starts at ONE
         bool                bind(int col, uint64_t);
+
+        template <typename E>
+        requires std::is_enum_v<E>
+        bool                bind(int col, E v)
+        {
+            using int_t = std::underlying_type_t<E>;
+            return bind(col, (int_t) v);
+        }
 
         
         //! \brief Binds a filesystem path

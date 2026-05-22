@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/math/Operator.hpp>
 
 namespace yq::expr {
-    YQ_ENUM(SymKind,, 
+    enum class SymKind {
         None		= 0,
         
             // OPERATORS (at front to match the operators enumeration)
@@ -38,6 +37,5 @@ namespace yq::expr {
         Array,
         Tuple,
         Guard
-    );
-
+    };
 }

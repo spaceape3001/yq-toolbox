@@ -11,7 +11,7 @@
 namespace yq::expr {
     template <typename S> void stream_out(S&out, const Token& tok)
     {
-        out << "{" << key(tok.category) << "/" << key(tok.kind) << ": " << tok.length << "}";
+        out << "{" << key(tok.category) << "/" << key_of(tok.kind) << ": " << tok.length << "}";
     }
 
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream& out, const Token& tok)

@@ -8,6 +8,9 @@
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/container/EnumMap.hpp>
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::ContentType)
 
 namespace yq {
 
@@ -73,12 +76,12 @@ namespace yq {
 
     namespace {
         
-        using ContentTypeMap	= EnumMap<ContentType, std::string_view>;
+        using ContentTypeMap	= std::map<ContentType, std::string_view>;
         
         ContentTypeMap makeContentType()
         {
             static const struct {
-                ContentType::enum_t     code;
+                ContentType             code;
                 std::string_view        mime;
             } kCodes[] = {
                 { ContentType::unknown,         "application/octet-stream"  },
@@ -126,7 +129,7 @@ namespace yq {
         {
             static const struct {
                 std::string_view        ext;
-                ContentType::enum_t     code;
+                ContentType             code;
             } kExts[] = {
                 { "bmp",    ContentType::bmp        },
                 { "css",    ContentType::css        },
@@ -172,17 +175,22 @@ namespace yq {
 
     std::string_view    mimeType(ContentType ct)
     {
-        return contentTypes()[ct];
+        static const auto& r = contentTypes();
+        if(auto x = r.find(ct); x != r.end())
+            return x->second;
+        return {};
     }
 
     ContentType mimeTypeForExt(std::string_view ext)
     {
-        const auto& r = extToTypeMap();
+        static const auto& r = extToTypeMap();
         if(ext.empty())
 			return ContentType::unknown;
 		if(ext[0] == '.')
 			ext	= ext.substr(1);
-        return r.get(ext);
+        if(auto x = r.find(ext); x != r.end())
+            return x->second;
+        return ContentType::unknown;
     }
 
 
@@ -191,3 +199,5 @@ namespace yq {
         extToTypeMap();
     )
 }
+
+

@@ -12,7 +12,7 @@
 namespace yq::expr {
     template <typename S>   void stream_out(S& out, const Symbol& sym)
     {
-        out << "{" << key(sym.category) << "/" << key(sym.kind) << ": " << sym.text << "}";
+        out << "{" << key(sym.category) << "/" << key_of(sym.kind) << ": " << sym.text << "}";
     }
 
     log4cpp::CategoryStream&    operator<<(log4cpp::CategoryStream&out, const Symbol&sym)

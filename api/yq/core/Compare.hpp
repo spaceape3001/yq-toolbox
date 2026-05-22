@@ -8,17 +8,6 @@
 #include <cstdint>
 
 namespace yq {
-
-    /*! \brief Enumeration for comparison results */
-    #if 0
-    YQ_ENUM(Compare, ,
-        UNCOMPARABLE   = 0,
-        GREATER,
-        LESSER,
-        EQUAL
-    );
-    #endif
-
     enum class Compare : uint8_t {
         UNCOMPARABLE   = 0,
         GREATER,

@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
+#include <string_view>
 
 namespace yq {
 
-    YQ_ENUM(HttpStatus, ,
+    enum class HttpStatus {
         None                        = 0,
         
         Continue                    = 100,
@@ -102,10 +102,10 @@ namespace yq {
         CurlError                   = 597,
         NetworkReadTimeout          = 598,
         NetworkConnectTimeout       = 599
-    )
+    };
 
-    static constexpr const HttpStatus::enum_t   hNotFound           = HttpStatus::NotFound;
-    static constexpr const HttpStatus::enum_t   hBadRequest         = HttpStatus::BadRequest;
+    static constexpr const HttpStatus   hNotFound           = HttpStatus::NotFound;
+    static constexpr const HttpStatus   hBadRequest         = HttpStatus::BadRequest;
 
     std::string_view    statusMessage(HttpStatus);
     std::string_view    statusMessage(unsigned short);
