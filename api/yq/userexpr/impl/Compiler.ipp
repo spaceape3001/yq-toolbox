@@ -88,7 +88,7 @@ namespace yq::expr {
             pop();
         }
 
-        if(!lastPop.category)
+        if(lastPop.category == SymCategory::None)
             return create_error<"bad user expression (no opener)">();
 
         if(lastPop.argcnt){  // slight hack

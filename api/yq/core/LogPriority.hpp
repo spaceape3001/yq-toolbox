@@ -6,12 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <log4cpp/Priority.hh>
 
 namespace yq {
     //! Basic logging priority
-    YQ_ENUM(LogPriority, , 
+    enum class LogPriority {
         //! No logging priority set
         NotSet,
         //! ALL logging levels
@@ -49,7 +48,7 @@ namespace yq {
         
         //! All hell has broken loose... adios and good luck!
         Emergency
-    )
+    };
 
     constexpr int log4cpp_priority(LogPriority p)
     {

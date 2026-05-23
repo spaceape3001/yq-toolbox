@@ -26,6 +26,9 @@
 //#include <QUrl>
 
 #include <iostream>
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::LogPriority)
 
 namespace yq {
 
@@ -35,9 +38,9 @@ namespace yq {
             log4cpp::Category&                                  m_root;
             tbb::spin_rw_mutex                                  m_mutex;
             log4cpp::OstreamAppender*                           m_out;
-            LogPriority                                         m_outPri;
+            LogPriority                                         m_outPri{};
             log4cpp::OstreamAppender*                           m_err;
-            LogPriority                                         m_errPri;
+            LogPriority                                         m_errPri{};
             
             LogRepo() :    m_root(log4cpp::Category::getRoot()), 
                         m_out(nullptr), 

@@ -80,7 +80,7 @@ namespace yq::expr {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     OperatorDynamic::OperatorDynamic(const SymData&sym) : 
-        Instruction(sym.text), m_operator((Operator::enum_t) sym.kind), m_args(sym.argcnt)
+        Instruction(sym.text), m_operator((Operator) sym.kind), m_args(sym.argcnt)
     {
     }
     

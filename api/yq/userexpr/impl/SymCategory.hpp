@@ -6,13 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-
 namespace yq::expr {
     
     /*! \brief Symbol category
     */
-    YQ_ENUM(SymCategory,,
+    enum class SymCategory {
         None	= 0,
         Error,
         Operator,
@@ -22,6 +20,6 @@ namespace yq::expr {
         Open,
         Close,
         Special
-    );
+    };
 }
 

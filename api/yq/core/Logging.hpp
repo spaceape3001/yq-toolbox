@@ -63,14 +63,14 @@ namespace yq {
 
     //! Enable logging to standard error
     //! \param[in] p    Minimum logging threshhold to actually report
-    void                        log_to_std_error(LogPriority p = LogPriority());
+    void                        log_to_std_error(LogPriority p = LogPriority{});
     //! Enable logging to standard output
     //! \param[in] p    Minimum logging threshhold to actually report
-    void                        log_to_std_output(LogPriority p = LogPriority());
+    void                        log_to_std_output(LogPriority p = LogPriority{});
     //! Enable logging to a file
     //! \param[in] fp   Filepath to log to
     //! \param[in] p    Minimum logging threshhold to actually report
-    void                        log_to_file(const filesystem_path_t& fp, LogPriority p = LogPriority());
+    void                        log_to_file(const filesystem_path_t& fp, LogPriority p = LogPriority{});
 
     //void                        log_freeze();
 

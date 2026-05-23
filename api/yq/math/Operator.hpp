@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
+
 #include <yq/core/Flags.hpp>
 
 namespace yq {
@@ -40,13 +40,13 @@ namespace yq {
         Union,              \
         Xor
 
-    YQ_ENUM(Operator, , 
+    enum class Operator {
         None   = 0,
         YQ_OPERATORS
-    );
+    };
     using OperatorFlags = Flags<Operator>;
     
-    YQ_ENUM(OperatorType, ,
+    enum class OperatorType {
         None    = 0,
         //! Setter
         Set,
@@ -66,5 +66,5 @@ namespace yq {
         Open,
         //! Close-mark
         Close
-    );
+    };
 }

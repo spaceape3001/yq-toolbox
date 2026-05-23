@@ -15,4 +15,5 @@
 
 #include <yq/core/Enumeration.hxx>
 
+YQ_ENUM_IMPLEMENT(yq::expr::SymCategory)
 YQ_ENUM_IMPLEMENT(yq::expr::SymKind)
