@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/keywords.hpp>
+#include <yq/core/Expect.hpp>
 #include <yq/text/IgCase.hpp>
-#include <yq/typedef/result.hpp>
 #include <yq/typedef/string_vectors.hpp>
 
 #include <map>
@@ -31,7 +31,6 @@ namespace yq {
     
         using integer_t     = std::underlying_type_t<E>;
         using enumeration_t = E;
-        using result_t      = Result<E>;
         
         static constexpr const size_t  count_n = std::meta::enumerators_of(^^E).size();
         using definition_t       = std::array<KeyValue,count_n>;
@@ -63,7 +62,7 @@ namespace yq {
         std::string_view    name() const { return m_name; }
         std::string_view    pretty(E) const;
 
-        result_t            value(std::string_view) const;
+        Expect<E>           value(std::string_view) const;
         bool                value(has_k, E) const;
         E                   value(default_k) const { return m_values.def; }
         constexpr E         value(maximum_k) const { return m_values.max; }

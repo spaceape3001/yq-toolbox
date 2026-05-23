@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/errors.hpp>
 #include <yq/core/Enumeration.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/meta/Meta.hpp>
@@ -213,11 +214,11 @@ namespace yq {
     }
 
     template <typename E>
-    typename Enumeration<E>::result_t   Enumeration<E>::value(std::string_view k) const
+    Expect<E>   Enumeration<E>::value(std::string_view k) const
     {
         if(auto itr =m_name2value.find(k); itr != m_name2value.end())
-            return { itr->second, true };
-        return {};
+            return itr->second;
+        return errors::bad_argument();
     }
 
     template <typename E>

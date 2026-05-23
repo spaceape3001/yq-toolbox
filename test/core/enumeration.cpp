@@ -54,11 +54,9 @@ int main()
     "Values"_test = [](){
     
         auto& em = enumeration<Color>();
-        Result<Color>   x;
-        
-        x   = em.value("Black");
-        expect(x.good);
-        expect(x.value == Color::Black);
+        auto x   = em.value("Black");
+        expect(x.has_value() == true);
+        expect(*x == Color::Black);
     };
 
     return ut::cfg<>.run();
