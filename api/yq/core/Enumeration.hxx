@@ -58,6 +58,14 @@ namespace yq {
         {
             return enumeration<E>().key((E) v);
         }
+
+        integer_x value(std::string_view v) const override
+        {
+            auto x = enumeration<E>().value(v);
+            if(!x)
+                return unexpected(x.error());
+            return (int) *x;
+        }
     
         int value(default_k) const override
         {

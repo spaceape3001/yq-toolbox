@@ -10,17 +10,28 @@
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/Enum.hpp>
+#include <yq/core/Enumeration.hpp>
 
 namespace yq::lua {
     integer_x               _enumeration(lua_State*, int, const EnumDef&, const TypeMeta&);
+    integer_x               _enumeration(lua_State*, int, const EnumerationInfo&, const TypeMeta&);
     
     template <typename E>
     Expect<E> enumeration(lua_State*l, int n)
     {
-        auto ix = _enumeration(l, n, *E::staticEnumInfo(), ::yq::meta<E>());
-        if(!ix)
-            return unexpected(ix.error());
-        return (typename E::enum_t) *ix;
+        if constexpr (std::is_enum_v<E>){
+            auto ix = _enumeration(l, n, ::yq::enumeration<E>().info(), ::yq::meta<E>());
+            if(!ix)
+                return unexpected(ix.error());
+            return (E) *ix;
+        }
+        if constexpr (is_template_enum_v<E>){
+            auto ix = _enumeration(l, n, *E::staticEnumInfo(), ::yq::meta<E>());
+            if(!ix)
+                return unexpected(ix.error());
+            return (typename E::enum_t) *ix;
+        }
+        return errors::bad_argument();
     }
     
 

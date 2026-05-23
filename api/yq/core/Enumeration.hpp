@@ -9,6 +9,7 @@
 #include <yq/keywords.hpp>
 #include <yq/core/Expect.hpp>
 #include <yq/text/IgCase.hpp>
+#include <yq/typedef/expected.hpp>
 #include <yq/typedef/string_vectors.hpp>
 
 #include <map>
@@ -179,6 +180,7 @@ namespace yq {
         virtual int value(default_k) const = 0;
         virtual int value(minimum_k) const = 0;
         virtual int value(maximum_k) const = 0;
+        virtual integer_x value(std::string_view) const = 0;
         
         const auto& values() const { return m_values.declared; }
         const auto& values(ordered_k) const { return m_values.ordered; }

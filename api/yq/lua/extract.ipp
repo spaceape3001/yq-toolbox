@@ -8,6 +8,7 @@
 
 #include <yq/errors.hpp>
 #include <yq/core/Any.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/lua/extract.hpp>
 #include <yq/lua/errors.hpp>
@@ -118,6 +119,24 @@ namespace yq::lua {
         switch(lua_type(l,n)){
         case LUA_TSTRING:
             return eDef.value_of(lua_tostring(l,n));
+        case LUA_TNUMBER:
+            return integer(l, n);
+        case LUA_TTABLE:
+            if(_meta(l,n,TYPE) != &tm)
+                return errors::bad_argument();
+            return _enum(l,n);
+        default:
+            return errors::bad_argument();
+        }
+    }
+
+    integer_x   _enumeration(lua_State*l, int n, const EnumerationInfo& eDef, const TypeMeta&tm)
+    {
+        if(!l)
+            return errors::lua_null();
+        switch(lua_type(l,n)){
+        case LUA_TSTRING:
+            return eDef.value(lua_tostring(l,n));
         case LUA_TNUMBER:
             return integer(l, n);
         case LUA_TTABLE:
