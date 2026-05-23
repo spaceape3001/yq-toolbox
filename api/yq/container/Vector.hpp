@@ -349,6 +349,8 @@ namespace yq {
         */
         T           take(size_t pos, const T& def={});
         
+        /*! \brief  Removes all consecutive duplicates
+        */
         Vector&     unique();
 
         template <typename Pred>
