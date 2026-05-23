@@ -49,6 +49,11 @@ namespace yq {
             return enumeration<E>().keys(SORTED);
         }
 
+        const string_view_vector_t& keys(unique_k) const 
+        {
+            return enumeration<E>().keys(UNIQUE);
+        }
+
         std::string_view pretty(int v) const override
         {
             return enumeration<E>().key((E) v);
@@ -154,13 +159,15 @@ namespace yq {
             return is_less_igCase_u8(a.key, b.key);
         });
         
+        std::set<E> seen;
         for(auto& kv : m_definition.sorted){
             m_keys.sorted.push_back(kv.key);
             m_values.sorted.push_back(kv.value);
+            if(seen.insert(kv.value).second){
+                m_keys.unique.push_back(kv.key);
+                m_values.unique.push_back(kv.value);
+            }
         }
-        
-        for(auto& itr : m_value2name)
-            m_values.unique.push_back(itr.first);
     }
 
     template <typename E>

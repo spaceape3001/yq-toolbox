@@ -5,11 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
-    YQ_ENUM(TanSurface, , 
+    enum class TanSurface {
         Unknown,
         xPositive,
         xNegative,
@@ -17,7 +16,7 @@ namespace yq {
         yNegative,
         zPositive,
         zNegative
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::TanSurface)

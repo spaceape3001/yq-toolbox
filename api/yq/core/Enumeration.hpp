@@ -58,6 +58,9 @@ namespace yq {
         
         //! All keys as sorted in alphabetical order
         const auto&         keys(sorted_k) const { return m_keys.sorted; }
+
+        //! All keys as sorted in alphabetical order (with same values eliminated)
+        const auto&         keys(unique_k) const { return m_keys.unique; }
         
         std::string_view    name() const { return m_name; }
         std::string_view    pretty(E) const;
@@ -77,7 +80,7 @@ namespace yq {
         //! All values as sorted by key
         const auto&         values(sorted_k) const { return m_values.sorted; }
 
-        //! All values (sorted by value/unique)
+        //! All values (sorted by key/unique)
         const auto&         values(unique_k) const { return m_values.unique; }
         
         //  non const here.... (using meta thread safe write to guard)
@@ -113,7 +116,7 @@ namespace yq {
         } m_values;
 
         struct {
-            std::vector<std::string_view>   declared, ordered, sorted;
+            std::vector<std::string_view>   declared, unique, ordered, sorted;
         } m_keys;
 
         static constexpr definition_t     definition(create_k);
@@ -169,6 +172,7 @@ namespace yq {
         virtual const string_view_vector_t& keys() const = 0;
         virtual const string_view_vector_t& keys(ordered_k) const = 0;
         virtual const string_view_vector_t& keys(sorted_k) const = 0;
+        virtual const string_view_vector_t& keys(unique_k) const = 0;
 
         virtual std::string_view pretty(int) const = 0;
 

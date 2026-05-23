@@ -7,7 +7,9 @@
 #pragma once
 
 #include "TanSurface.hpp"
+#include <yq/core/Enumeration.hxx>
 
+YQ_ENUM_IMPLEMENT(yq::TanSurface)
 YQ_TYPE_IMPLEMENT(yq::TanSurface)
 
 namespace {
