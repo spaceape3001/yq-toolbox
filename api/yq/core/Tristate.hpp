@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
@@ -15,7 +14,7 @@ namespace yq {
     
         This tristate allows for overriding or taking the prevailing option
     */
-    YQ_ENUM(Tristate, ,
+    enum class Tristate : uint8_t {
         
         //! Default is a "maybe", which means inherit and/or optional
         Maybe           = 1,
@@ -47,7 +46,7 @@ namespace yq {
 
         //! Synonym for "maybe"
         INDETERMINANT   = Indeterminant
-    );
+    };
 }
 
 YQ_TYPE_DECLARE(yq::Tristate)

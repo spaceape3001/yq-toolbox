@@ -26,7 +26,7 @@ namespace yq {
         \note All structures can double as either definition or meta/generic
     */
     namespace g { 
-        YQ_ENUM(Option, , 
+        enum class Option {
             /*! \brief Marks the target as informational
             
                 This means it's meta-data defining a property/node that *CAN* 
@@ -39,7 +39,7 @@ namespace yq {
             
             //! Supports multiple items
             MULTI
-        );
+        };
     
     
         /*! \brief Type/Name/Description

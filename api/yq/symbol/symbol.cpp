@@ -12,4 +12,7 @@
 #include "Symbol.ipp"
 #include "transform.ipp"
 
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::symbol::TransformMode)
 YQ_TYPE_IMPLEMENT(yq::symbol::TransformMode)

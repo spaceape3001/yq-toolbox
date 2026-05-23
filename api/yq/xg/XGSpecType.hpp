@@ -6,14 +6,13 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
-    YQ_ENUM(XGSpecType, ,
+    enum class XGSpecType : uint8_t {
         Unknown,
         Meta,
         Url
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::XGSpecType)

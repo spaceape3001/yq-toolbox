@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
-    YQ_ENUM( Weekday, ,
+    enum class Weekday : uint8_t {
         Sunday  = 1,
         Monday,
         Tuesday,
@@ -18,6 +17,6 @@ namespace yq {
         Thursday,
         Friday,
         Saturday
-    );
+    };
 }
 YQ_TYPE_DECLARE(yq::Weekday)

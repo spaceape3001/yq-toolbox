@@ -13,6 +13,7 @@
 #include <yq/b3fmt/parse.hpp>
 #include <yq/b3fmt/logging.hpp>
 #include <yq/core/DelayInit.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/math/Cardinal.hpp>
 #include <yq/net/Url.hpp>
 #include <yq/resource/ResourceDriverAPI.hpp>
@@ -85,17 +86,17 @@ namespace {
     
     std::error_code _vector2(Vector2F&ret, std::span<const std::string> values, float sca=1.) // sca applies to cardinals
     {
+        static const auto& cardinal = enumeration<Cardinal>();
         switch(values.size()){
         case 0:
         case 1:
             return create_error<"Insufficient vector arguments">();
         case 2:
             {
-                bool        ok  = false;
-                Cardinal    c(values[1], &ok);
-                if(!ok)
+                auto x  = cardinal.value(values[1]);
+                if(!x)
                     return create_error<"Bad cardinal value">();
-                switch(c){
+                switch(*x){
                 case Cardinal::Center:
                     ret = { 0.f, 0.f };
                     break;

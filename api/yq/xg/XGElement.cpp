@@ -14,8 +14,10 @@
 #include <yq/resource/Resource.hxx>
 #include <format>
 
+#include <yq/core/Enumeration.hxx>
 #include <yq/meta/Init.hpp>
 
+YQ_ENUM_IMPLEMENT(yq::XGNodeType)
 YQ_TYPE_IMPLEMENT(yq::XGNodeType)
 YQ_OBJECT_IMPLEMENT(yq::XGElement)
 

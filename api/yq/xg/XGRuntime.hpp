@@ -8,6 +8,7 @@
 
 #include <yq/container/Map.hpp>
 #include <yq/container/Stack.hpp>
+#include <yq/container/Vector.hpp>
 #include <yq/core/Flags.hpp>
 #include <yq/graph/GGraph.hpp>
 #include <yq/typedef/expected.hpp>

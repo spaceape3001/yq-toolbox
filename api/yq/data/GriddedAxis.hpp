@@ -8,6 +8,7 @@
 
 #include <yq/data/AxisScaling.hpp>
 #include <yq/meta/MetaBinder.hpp>
+#include <yq/text/IgCase.hpp>
 #include <yq/typedef/string_maps.hpp>
 
 namespace yq::data {

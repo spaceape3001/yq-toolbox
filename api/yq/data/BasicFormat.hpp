@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -16,7 +15,7 @@ namespace yq::tachyon {
         This is the expected data format.  These come from vulkan, 
         with the names shortened.
     */
-    YQ_ENUM(DataFormat, , 
+    enum class DataFormat {
         UNDEFINED = 0,
         R4G4_UNORM_PACK8 = 1,
         R4G4B4A4_UNORM_PACK16 = 2,
@@ -319,7 +318,7 @@ namespace yq::tachyon {
         G16_B16R16_2PLANE_444_UNORM_EXT = G16_B16R16_2PLANE_444_UNORM,
         A4R4G4B4_UNORM_PACK16_EXT = A4R4G4B4_UNORM_PACK16,
         A4B4G4R4_UNORM_PACK16_EXT = A4B4G4R4_UNORM_PACK16
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::DataFormat)

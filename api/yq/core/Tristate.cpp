@@ -6,5 +6,7 @@
 
 #include "Tristate.hpp"
 #include <yq/meta/Init.hpp>
+#include <yq/core/Enumeration.hxx>
 
+YQ_ENUM_IMPLEMENT(yq::Tristate)
 YQ_TYPE_IMPLEMENT(yq::Tristate)

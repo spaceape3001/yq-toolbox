@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <yq/container/Set.hpp>
+#include <yq/container/Map.hpp>
 #include <yq/container/MultiMap.hpp>
+#include <yq/container/Set.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/typedef/graph.hpp>

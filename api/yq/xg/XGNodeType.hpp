@@ -6,13 +6,12 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
 
     //! Generalized node type (that the runtime needs to know about)
-    YQ_ENUM(XGNodeType, ,
+    enum class XGNodeType : uint8_t {
         //! Generic node, unremarkable, ordinary, common
         Unspecified = 0, 
         
@@ -33,7 +32,7 @@ namespace yq {
         
         //! Start node
         Start
-    );
+    };
 }
 
 YQ_TYPE_DECLARE(yq::XGNodeType)

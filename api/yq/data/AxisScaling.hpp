@@ -6,14 +6,13 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::data {
-    YQ_ENUM(AxisScaling, ,
+    enum class AxisScaling : uint8_t {
         Linear      = 0,   //!< Usual...
         Logarithmic
-    );
+    };
 }
 
 YQ_TYPE_DECLARE(yq::data::AxisScaling)

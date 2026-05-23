@@ -213,10 +213,7 @@ namespace yq {
             static const auto& em = enumeration<E>();
             if(vt.empty())
                 return em.value(DEFAULT);
-            auto r = em.value(vt);
-            if(!r.good)
-                return errors::bad_argument();
-            return r.value;
+            return em.value(vt);
         } else if constexpr (is_template_enum_v<E>){
             if(vt.empty())
                 return E::default_value();

@@ -17,11 +17,11 @@ namespace yq {
         format.  It won't be obligatory for all use-cases.
     */
     namespace g {
-        YQ_ENUM(Flow, ,
+        enum class Flow : uint8_t {
             Dead,
             Input,
             Output
-        )
+        };
         
         struct Document;
         struct Graph;

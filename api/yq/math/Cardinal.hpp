@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/core/Enum.hpp>
+
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq {
 
     //! General cardinal directions..
-    YQ_ENUM( Cardinal, ,
+    enum class Cardinal : uint8_t {
         Unknown,    //!< Unknown cardinal direction
         Center,     //!< Center of the area
         NW,         //!< Northwest corner (exactly)
@@ -30,7 +30,7 @@ namespace yq {
         WSW,        //!< West by Southwest
         West,       //!< West
         WNW         //!< West by Northwest
-    );
+    };
     
     //! True for all pointing north of east-west line (ie, ENE...)
     bool                is_north(Cardinal);
