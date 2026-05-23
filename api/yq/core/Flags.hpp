@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <yq/keywords.hpp>
 #include <initializer_list>
+#include <string_view>
+#include <type_traits>
 
 namespace yq {
 
@@ -66,6 +68,10 @@ namespace yq {
             for(E e : flags)
                 m_value |= mask(e);
         }
+        
+        explicit Flags(std::string_view, char sep=',', bool *ok=nullptr);
+        std::string as_string(char sep=',') const;
+        std::string as_display(char sep=',') const;
         
         
         //! Our value
