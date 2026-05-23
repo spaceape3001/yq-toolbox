@@ -9,7 +9,6 @@
 #include <yq/errors.hpp>
 #include <yq/core/Enum.hpp>
 #include <yq/core/Enumeration.hpp>
-#include <yq/core/Result.hpp>
 #include <yq/meta/TypeMetaWriter.hpp>
 #include <yq/typedef/expected.hpp>
 
