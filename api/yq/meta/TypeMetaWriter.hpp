@@ -631,36 +631,36 @@ namespace yq {
         
         void    operate_self(OperatorFlags enabled=ALL, const std::source_location& sl=std::source_location::current())
         {
-            if constexpr ( can_add_v<T> && !is_template_enum_v<T>){
+            if constexpr ( can_add_v<T> && !std::is_enum_v<T>){
                 if(enabled(Operator::Add)){
                     operate(Operator::Add, generic_add<T>, sl );
                 }
             }
-            if constexpr ( can_affirm_v<T> && !is_template_enum_v<T> ){
+            if constexpr ( can_affirm_v<T> && !std::is_enum_v<T> ){
                 if(enabled(Operator::Affirm)){
                     operate(Operator::Affirm, generic_affirm<T>, sl );
                 }
             }
-            if constexpr ( can_divide_v<T> && !is_template_enum_v<T>){
+            if constexpr ( can_divide_v<T> && !std::is_enum_v<T>){
                 if constexpr (is_type_v<quotient_t<T,T>>){
                     if(enabled(Operator::Divide)){
                         operate(Operator::Divide, generic_divide<T>, sl );
                     }
                 }
             }
-            if constexpr ( can_multiply_v<T> && !is_template_enum_v<T>){
+            if constexpr ( can_multiply_v<T> && !std::is_enum_v<T>){
                 if constexpr (is_type_v<product_t<T,T>> ){
                     if(enabled(Operator::Multiply)){
                         operate(Operator::Multiply, generic_multiply<T>, sl );
                     }
                 }
             }
-            if constexpr ( can_negate_v<T> && !is_template_enum_v<T> ){
+            if constexpr ( can_negate_v<T> && !std::is_enum_v<T> ){
                 if(enabled(Operator::Negate)){
                     operate(Operator::Negate, generic_negate<T>, sl );
                 }
             }
-            if constexpr ( can_subtract_v<T> && !is_template_enum_v<T> ){
+            if constexpr ( can_subtract_v<T> && !std::is_enum_v<T> ){
                 if(enabled(Operator::Subtract)){
                     operate(Operator::Subtract, generic_subtract<T>, sl );
                 }

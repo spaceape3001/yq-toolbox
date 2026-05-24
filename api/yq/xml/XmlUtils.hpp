@@ -7,9 +7,8 @@
 #pragma once
 
 #include <yq/errors.hpp>
-#include <yq/core/Enum.hpp>
 #include <yq/core/Enumeration.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/text/vsplit.hpp>
 #include <yq/typedef/expected.hpp>
 #include <yq/typedef/filesystem_path.hpp>
@@ -206,24 +205,13 @@ namespace yq {
         \typename E enumeration type to parse for
     */
     template <typename E>
+    requires std::is_enum_v<E>
     Expect<E>           to_enum(const XmlBase& xb)
     {
         auto vt  = xb.value();
-        if constexpr (std::is_enum_v<E>){
-            static const auto& em = enumeration<E>();
-            if(vt.empty())
-                return em.value(DEFAULT);
-            return em.value(vt);
-        } else if constexpr (is_template_enum_v<E>){
-            if(vt.empty())
-                return E::default_value();
-            auto   v    = E::value_for(vt);
-            if(v)
-                return *v;
-            return v;
-        } else {
-            return errors::incompatible_types();
-        }
+        if(vt.empty())
+            return default_of<E>();
+        return value_of<E>(vt);
     }
 
     /*! \brief Parses to bool
@@ -456,10 +444,10 @@ namespace yq {
         
         \typename E enumeration type to parse for
     */
-    template <typename E>
-    Flag<E>             x_flag(const XmlBase& xb)
+    template <typename E,typename T=default_flags_type_t>
+    Flags<E,T>            x_flag(const XmlBase& xb)
     {
-        Flag<E> ret;
+        Flags<E,T> ret;
         vsplit(xb.value(), ',', [&](std::string_view k){
             auto    v   = E::value_for(k);
             if(v)
@@ -711,16 +699,10 @@ namespace yq {
         \param[in] v    Value to write
     */
     template <typename E>
-    void                 write_x(XmlBase& xb, EnumImpl<E> v)
-    {
-        write_x(xb, v.key());
-    }
-
-    template <typename E>
     requires std::is_enum_v<E>
     void                write_x(XmlBase& xb, E v)
     {
-        write_x(xb, enumeration<E>().key(v));
+        write_x(xb, key_of(v));
     }
 
     /*! \brief Writes value to XML
@@ -731,9 +713,9 @@ namespace yq {
         \param[in] v    Value to write
     */
     template <typename E>
-    void                 write_x(XmlBase& xb, Flag<E> v)
+    void                 write_x(XmlBase& xb, Flags<E> v)
     {
-        std::string     build   = v.as_string(","sv);
+        std::string     build   = v.as_string(',');
         write_x(xb, build);
     }
 

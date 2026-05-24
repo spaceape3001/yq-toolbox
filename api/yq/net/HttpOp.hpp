@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-
 namespace yq {
 
     /*! \brief Http operations

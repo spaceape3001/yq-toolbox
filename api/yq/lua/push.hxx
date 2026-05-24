@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/errors.hpp>
-#include <yq/core/Enum.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/lua/errors.hpp>
 #include <yq/lua/impl.hpp>
@@ -108,12 +107,13 @@ namespace yq::lua {
     }
 
     template <typename E>
-    std::error_code         push(lua_State*l, EnumImpl<E> val)
+    requires std::is_enum_v<E>
+    std::error_code         push(lua_State*l, E val)
     {
         lua_newtable(l);
         int tm = lua_gettop(l);
         _meta_add(l, ::yq::meta<E>());
-        _push_enum(l, val.value());
+        _push_enum(l, val);
         lua_setfield(l, tm, keyValue);
         _flags_set(l, X::Type);
         return {};

@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yq/errors.hpp>
 #include <yq/container/ByteArray.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/core/Stream.hpp>

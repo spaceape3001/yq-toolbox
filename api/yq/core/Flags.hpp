@@ -14,6 +14,7 @@
 
 namespace yq {
 
+    using default_flags_type_t  = uint64_t;
 
     /*! \brief A flag object for enums (up to 64-values)
     
@@ -25,7 +26,7 @@ namespace yq {
         \tparam E   the enumeration for bit-values
         \tparam T   Data type to represet the bit-field, default 64-bit.
     */
-    template <typename E, typename T=uint64_t>
+    template <typename E, typename T=default_flags_type_t>
     class Flags {
     public:
     

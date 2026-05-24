@@ -8,7 +8,7 @@
 
 #include <yq/core/LogPriority.hpp>
 #include <yq/core/Enumeration.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/macro/debugrel.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <log4cpp/Category.hh>
@@ -30,29 +30,11 @@ namespace yq {
     static constexpr const auto  kLogDef_File    = YQ_DBGREL(LogPriority::Debug, LogPriority::Info);
 
 
-    //! Stream an enumeration to the logger
-    template <typename E>
-    log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, EnumImpl<E> v)
-    {
-        return str << v.key();
-    }
-    
     //! Stream an enumeration flag set to the logger
     template <typename E>
-    log4cpp::CategoryStream&     operator<<(log4cpp::CategoryStream& str, Flag<E> val)
+    log4cpp::CategoryStream&     operator<<(log4cpp::CategoryStream& str, Flags<E> val)
     {
-        str << '{';
-        bool f = true;
-        for(E e : E::all_values()){
-            if(val.is_set(e)){
-                if(f){
-                    f   = false;
-                } else 
-                    str << "|";
-                str << e.key();
-            }
-        }
-        str << '}';
+        str << '{' << val.as_string('|') << '}';
         return str;
     }
 
@@ -123,7 +105,7 @@ template <typename E>
 requires std::is_enum_v<E>
 log4cpp::CategoryStream& operator<<(log4cpp::CategoryStream&str, E v)
 {
-    return str << yq::enumeration<E>().key(v);
+    return str << key_of(v);
 }
 
 

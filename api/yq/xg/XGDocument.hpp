@@ -8,7 +8,6 @@
 
 #include <yq/keywords.hpp>
 #include <yq/core/Tristate.hpp>
-#include <yq/core/Enum.hpp>
 #include <yq/graph/GDocument.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/shape/Size2.hpp>

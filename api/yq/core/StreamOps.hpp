@@ -6,9 +6,8 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/core/Enumeration.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 
 #include <string>
@@ -42,12 +41,6 @@ namespace yq {
     Stream&     operator<<(Stream&, const filesystem_path_t&);
 
     template <typename E>
-    Stream&     operator<<(Stream& str, EnumImpl<E> val)
-    {
-        return str << val.key();
-    }
-    
-    template <typename E>
     requires std::is_enum_v<E>
     Stream&     operator<<(Stream& str, E val)
     {
@@ -55,20 +48,9 @@ namespace yq {
     }
     
     template <typename E>
-    Stream&     operator<<(Stream& str, Flag<E> val)
+    Stream&     operator<<(Stream& str, Flags<E> val)
     {
-        str << '{';
-        bool f = true;
-        for(E e : E::all_values()){
-            if(val.is_set(e)){
-                if(f){
-                    f   = false;
-                } else 
-                    str << "|";
-                str << e.key();
-            }
-        }
-        str << '}';
+        str << '{' << val.as_string('|') << '}';
         return str;
     }
 

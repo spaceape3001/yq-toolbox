@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/keywords.hpp>
-#include <yq/core/Enum.hpp>
 #include <yq/core/Enumeration.hpp>
 #include <yq/container/Vector.hpp>
 
@@ -27,7 +26,7 @@ namespace yq {
     class EnumMap {
     public:
 
-        static_assert(std::is_enum_v<E> || is_template_enum_v<E>, "E must be an enumeration type");
+        static_assert(std::is_enum_v<E>, "E must be an enumeration type");
 
         static E 	    max_key();
         static E 	    min_key();
@@ -53,73 +52,33 @@ namespace yq {
     template <typename E, typename V>
     size_t   EnumMap<E,V>::count()
     {
-        if constexpr (std::is_enum_v<E>){
-            static const auto& em = enumeration<E>();
-            return (ssize_t) em.value(maximum_k())-(ssize_t) em.value(minimum_k())+2;
-        }
-        
-        if constexpr (is_template_enum_v<E>){
-            return (size_t)(E::max_value()-E::min_value()+2);
-        }
-        
-        return 2;
+        static const auto& em = enumeration<E>();
+        return (ssize_t) em.value(maximum_k())-(ssize_t) em.value(minimum_k())+2;
     }
 
 
     template <typename E, typename V>
     E 	    EnumMap<E,V>::max_key() 
     {
-        if constexpr (std::is_enum_v<E>){
-            return enumeration<E>().value(maximum_k());
-        }
-        
-        if constexpr (is_template_enum_v<E>){
-            static const E 	ret = (typename E::enum_t) E::max_value();
-            return ret;
-        }
-        
-        return {};
+        return enumeration<E>().value(maximum_k());
     }
 
     template <typename E, typename V>
     E 	EnumMap<E,V>::min_key() 
     {
-        if constexpr (std::is_enum_v<E>){
-            return enumeration<E>().value(minimum_k());
-        }
-        
-        if constexpr (is_template_enum_v<E>){
-            static const E 	ret = (typename E::enum_t) E::min_value();
-            return ret;
-        }
-        
-        return {};
+        return enumeration<E>().value(minimum_k());
     }
 
     template <typename E, typename V>
     ssize_t  EnumMap<E,V>::index(E e)
     {
-        if constexpr (std::is_enum_v<E>){
-            return (ssize_t) e - (ssize_t) min_key();
-        }
-        
-        if constexpr (is_template_enum_v<E>){
-            return (ssize_t) e.value() - (ssize_t) min_key().value();
-        }
-        
-        return 0;
+        return (ssize_t) e - (ssize_t) min_key();
     }
     
     template <typename E, typename V>
     bool	EnumMap<E,V>::valid(E e)
     {
-        if constexpr (std::is_enum_v<E>){
-            return enumeration<E>().value(HAS, e);
-        }
-        
-        if constexpr (is_template_enum_v<E>){
-            return E::has_value(e);
-        }
+        return enumeration<E>().value(HAS, e);
         
         return false;
     }

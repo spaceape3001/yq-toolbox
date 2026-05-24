@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
+
 //#include <0/basic/preamble.hpp>
 #include <yq/meta/MetaBinder.hpp>
 

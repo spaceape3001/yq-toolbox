@@ -10,7 +10,6 @@
 #include <yq/lua/impl.hpp>
 #include <yq/lua/keys.hpp>
 #include <yq/lua/writer.hpp>
-#include <yq/core/Enum.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/stream/Text.hpp>
 #include <iostream>

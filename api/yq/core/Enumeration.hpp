@@ -154,6 +154,12 @@ namespace yq {
     }
 
     template <typename E>
+    const EnumerationInfo& info_of()
+    {
+        return Enumeration<E>::info();
+    }
+
+    template <typename E>
     requires std::is_enum_v<E>
     std::string_view key_of(E v, std::string_view def={})
     {
@@ -223,6 +229,8 @@ namespace yq {
         return enumeration<E>().values(UNIQUE);
     }
 
+    /*! \brief Generic wrapper for enumeration information
+    */
     class EnumerationInfo {
     public:
 

@@ -9,8 +9,7 @@
 #include <yq/graph/preamble.hpp>
 
 #include <yq/core/Any.hpp>
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/container/Map.hpp>
 #include <yq/core/MinMaxDef.hpp>
 #include <yq/typedef/filesystem_path.hpp>
