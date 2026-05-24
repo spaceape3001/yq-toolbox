@@ -3,6 +3,7 @@
 ## Upcoming
 
 * C++26 is the new standard, min GCC is 16.
+* Removing the old enumeration stuff (`YQ_ENUM()`) in favor of reflection.  This will mean adding `YQ_ENUM_IMPLEMENT()` in places to instantiate the templates in source files. **WARNING enum class does not zero initialize by default!** 
 
 ## 2025.12.26
 

@@ -48,8 +48,8 @@ namespace yq {
         const auto&         definition(ordered_k) const { return m_definition.ordered; }
         const auto&         definition(sorted_k) const { return m_definition.sorted; }
 
-        std::string_view    display(E) const;
-        std::string_view    key(E) const;
+        std::string_view    display(E, std::string_view def={}) const;
+        std::string_view    key(E, std::string_view def={}) const;
         bool                key(has_k, std::string_view) const;
         //! All keys as declared
         const auto&         keys() const { return m_keys.declared; }
@@ -148,16 +148,16 @@ namespace yq {
     
     template <typename E>
     requires std::is_enum_v<E>
-    std::string_view display_of(E v)
+    std::string_view display_of(E v, std::string_view def={})
     {
-        return enumeration<E>().display(v);
+        return enumeration<E>().display(v,def);
     }
 
     template <typename E>
     requires std::is_enum_v<E>
-    std::string_view key_of(E v)
+    std::string_view key_of(E v, std::string_view def={})
     {
-        return enumeration<E>().key(v);
+        return enumeration<E>().key(v,def);
     }
     
     template <typename E>

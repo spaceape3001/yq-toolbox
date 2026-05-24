@@ -187,19 +187,19 @@ namespace yq {
     }
 
     template <typename E>
-    std::string_view    Enumeration<E>::display(E v) const
+    std::string_view    Enumeration<E>::display(E v, std::string_view def) const
     {
         if(auto itr = m_value2display.find(v); itr != m_value2display.end())
             return itr->second;
-        return {};
+        return def;
     }
 
     template <typename E>
-    std::string_view    Enumeration<E>::key(E v) const
+    std::string_view    Enumeration<E>::key(E v, std::string_view def) const
     {
         if(auto itr = m_value2name.find(v); itr != m_value2name.end())
             return itr->second;
-        return {};
+        return def;
     }
 
     template <typename E>
