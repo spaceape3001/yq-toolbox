@@ -138,14 +138,14 @@ namespace yq {
     {
         return Enumeration<E>::manifest();
     }
-    
+
     template <typename E>
     requires std::is_enum_v<E>
-    std::string_view key_of(E v)
+    E default_of()
     {
-        return enumeration<E>().key(v);
+        return enumeration<E>().value(DEFAULT);
     }
-
+    
     template <typename E>
     requires std::is_enum_v<E>
     std::string_view display_of(E v)
@@ -155,9 +155,72 @@ namespace yq {
 
     template <typename E>
     requires std::is_enum_v<E>
+    std::string_view key_of(E v)
+    {
+        return enumeration<E>().key(v);
+    }
+    
+    template <typename E>
+    requires std::is_enum_v<E>
+    auto keys_of()
+    {
+        return enumeration<E>().keys();
+    }
+    
+    template <typename E>
+    requires std::is_enum_v<E>
+    auto keys_of(ordered_k)
+    {
+        return enumeration<E>().keys(ORDERED);
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
+    auto keys_of(sorted_k)
+    {
+        return enumeration<E>().keys(SORTED);
+    }
+    
+    template <typename E>
+    requires std::is_enum_v<E>
+    auto keys_of(unique_k)
+    {
+        return enumeration<E>().keys(UNIQUE);
+    }
+    
+    template <typename E>
+    requires std::is_enum_v<E>
+    E maximum_of()
+    {
+        return enumeration<E>().value(maximum_k{});
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
+    E minimum_of()
+    {
+        return enumeration<E>().value(minimum_k{});
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
+    E value_of(std::string_view s, default_k)
+    {
+        return enumeration<E>().decode(s);
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
+    auto value_of(std::string_view s)
+    {
+        return enumeration<E>().value(s);
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
     auto values_of()
     {
-        return enumeration<E>().values();
+        return enumeration<E>().values(UNIQUE);
     }
 
     class EnumerationInfo {

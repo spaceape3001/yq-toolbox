@@ -99,6 +99,7 @@ namespace yq {
     struct cursor_k {};
     struct dark_k {};
     struct data_k {};
+    struct decode_k {};
     struct default_k {};
     struct delete_k {};
     struct diagonal_k {};
@@ -117,6 +118,7 @@ namespace yq {
     struct empty_k {};
     struct enable_k {};
     struct enabled_k {};
+    struct encode_k {};
     struct end_k {};
     struct enu_k {};
     struct enumeration_k {};
@@ -437,6 +439,7 @@ namespace yq {
     static constexpr const cursor_k             CURSOR;
     static constexpr const dark_k               DARK;
     static constexpr const data_k               DATA;
+    static constexpr const decode_k             DECODE;
     static constexpr const default_k            DEFAULT;
     static constexpr const diagonal_k           DIAGONAL;
     static constexpr const diameter_k           DIAMETER;
@@ -455,6 +458,7 @@ namespace yq {
     static constexpr const empty_k              EMPTY;
     static constexpr const enable_k             ENABLE;
     static constexpr const enabled_k            ENABLED;
+    static constexpr const encode_k             ENCODE;
     static constexpr const end_k                END;
     static constexpr const enu_k                ENU;
     static constexpr const enumeration_k        ENUM, ENUMERATION;
