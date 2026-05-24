@@ -353,6 +353,14 @@ namespace yq {
         */
         Vector&     unique();
 
+        /*! \brief Inserts element into already sorted vector
+        
+            Assuming the vector is already sorted, this will insert the item into the vector
+            at the sorted location; unless there's already an item of the specified value,
+            at which point, it'll skip the insert.
+            
+            \note It's a linear search, so O(n) for insertion.
+        */
         template <typename Pred>
         Vector&     unique_insert_sort(const T&, Pred);
 
