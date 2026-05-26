@@ -368,6 +368,12 @@ namespace yq {
         */
         bool        valid(size_t i) const { return i < base_vec::size(); }
 
+        /*! \brief Gets the value at index (or default if not there)
+        
+            This returns the value at the given index; or, if the index
+            is invalid (ie out of range) then the provided default is returned
+            instead.  Thus, this routine will not throw for out-of-bounds.
+        */
         T           value(size_t, const T& def={}) const;
         
         struct CommaOp { 
