@@ -383,6 +383,7 @@ namespace yq {
             Vector & vec;
         };
         
+        //! Used to allow for v=4,3,2,... syntax
         CommaOp     operator=(const T&);
         CommaOp     operator=(T&&);
     };
