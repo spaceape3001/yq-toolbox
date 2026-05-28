@@ -385,6 +385,8 @@ namespace yq {
         
         //! Used to allow for v=4,3,2,... syntax
         CommaOp     operator=(const T&);
+
+        //! Used to allow for v=4,3,2,... syntax
         CommaOp     operator=(T&&);
     };
 
