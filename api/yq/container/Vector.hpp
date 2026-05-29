@@ -390,7 +390,10 @@ namespace yq {
         CommaOp     operator=(T&&);
     };
 
-
+    /*! \brief Makes a vector of const pointers
+    
+        This turns a vector of pointers into a vector of const pointers, returns the result
+    */
     template <typename T>
     Vector<const T*> makeConst(const Vector<T*>&);
 
