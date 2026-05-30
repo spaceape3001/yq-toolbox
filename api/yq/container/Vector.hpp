@@ -397,6 +397,10 @@ namespace yq {
     template <typename T>
     Vector<const T*> makeConst(const Vector<T*>&);
 
+    /*! \brief Makes a vector of const pointers from a list
+    
+        This turns a list of pointers into a vector of const pointers, returns the result
+    */
     template <typename T>
     Vector<const T*> makeConstVector(const List<T*>&);
 
