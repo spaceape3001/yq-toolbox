@@ -405,6 +405,8 @@ namespace yq {
     Vector<const T*> makeConstVector(const List<T*>&);
 
 
+    /*! \brief Makes vector from list of items
+    */
     template <typename T>
     Vector<T>       makeVector(const List<T>&);
 
