@@ -43,7 +43,7 @@ namespace yq {
         constexpr SCALED(const SCALED<T,DIM,K2>&v) noexcept : value( T(v.value*K2/K)) {}
         
         
-        operator MKS<T,DIM>() const noexcept { return { T(value*K) }; }
+        constexpr operator MKS<T,DIM>() const noexcept { return { T(value*K) }; }
         
         SCALED&    operator=(const MKS<T,DIM>& v) 
         {

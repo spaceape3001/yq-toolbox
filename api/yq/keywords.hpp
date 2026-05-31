@@ -512,7 +512,9 @@ namespace yq {
     static constexpr const l_k                  L;
     static constexpr const last_k               LAST;
     static constexpr const layout_k             LAYOUT;
+#ifndef YQ_KEYWORD_OMIT_LIGHT
     static constexpr const light_k              LIGHT;
+#endif
     static constexpr const limit_k              LIMIT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
@@ -653,7 +655,9 @@ namespace yq {
     static constexpr const tensor_k             TENSOR;
     static constexpr const tenu_k               TENU;
     static constexpr const text_k               TEXT;
+#ifndef YQ_KEYWORD_OMIT_THREAD
     static constexpr const thread_k             THREAD;
+#endif
     static constexpr const three_k              THREE;
     static constexpr const throw_k              THROW;
     static constexpr const ticks_k              TICKS;
@@ -695,7 +699,9 @@ namespace yq {
     static constexpr const w_k                  W;
     static constexpr const wait_k               WAIT;
     static constexpr const warning_k            WARNING, WARN;
+#ifndef YQ_KEYWORD_OMIT_WIDGET
     static constexpr const widget_k             WIDGET;
+#endif
     static constexpr const write_k              WRITE;
     static constexpr const ww_k                 WW;
     static constexpr const wx_k                 WX;
