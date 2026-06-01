@@ -79,6 +79,8 @@ namespace yq {
         return sz;
     }
     
+    /*! \brief Makes vector from set
+    */
     template <typename T, typename C, typename A>
     std::vector<T,A>    make_vector(const std::set<T,C,A>& data)
     {
