@@ -87,6 +87,12 @@ namespace yq {
         return std::vector<T,A>(data.begin(), data.end());
     }
 
+    /*! \brief Checks if the two spans are equal
+    
+        \param[in] a    First span
+        \param[in] b    Second span
+        \return TRUE if the spans are the same (in size & contents)
+    */
     template <typename T>
     bool    is_same(const std::span<const T>& a, const std::span<const T>& b)
     {
