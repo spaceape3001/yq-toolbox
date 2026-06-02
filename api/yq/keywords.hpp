@@ -436,7 +436,9 @@ namespace yq {
     static constexpr const count_k              COUNT;
     static constexpr const cout_k               COUT;
     static constexpr const create_k             CREATE;
+#ifdef YQ_KEYWORD_OMIT_CURSOR    
     static constexpr const cursor_k             CURSOR;
+#endif
     static constexpr const dark_k               DARK;
     static constexpr const data_k               DATA;
     static constexpr const decode_k             DECODE;

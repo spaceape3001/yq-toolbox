@@ -249,6 +249,24 @@ namespace yq {
         using dim_t  = typename DIM1::template _mult_<DIM2>;
         return MKS<T,dim_t>( a.value * b.value * K2);
     }
+    
+    template <typename T, typename DIM1, double K1>
+    auto operator*(const SCALED<T,DIM1,K1>& a, T b)
+    {
+        return SCALED<T,DIM1,K1>(a.value*b);
+    }
+
+    template <typename T, typename DIM1, double K1>
+    auto operator*=(SCALED<T,DIM1,K1>& a, T b)
+    {
+        return a.value*=b;
+    }
+
+    template <typename T, typename DIM1, double K1>
+    auto operator*(T a, const SCALED<T,DIM1,K1>& b)
+    {
+        return SCALED<T,DIM1,K1>(a*b.value);
+    }
 
 //  --------------------------------------------------------
 //  DIVISION
@@ -278,6 +296,18 @@ namespace yq {
     {
         using dim_t  = typename DIM1::template _div_<DIM2>;
         return MKS<T,dim_t>( a.value / (b.value * K2) );
+    }
+
+    template <typename T, typename DIM1, double K1>
+    auto operator/(const SCALED<T,DIM1,K1>& a, T b)
+    {
+        return SCALED<T,DIM1,K1>(a.value/b);
+    }
+
+    template <typename T, typename DIM1, double K1>
+    auto operator/=(SCALED<T,DIM1,K1>& a, T b)
+    {
+        return a.value/=b;
     }
 
 //  --------------------------------------------------------
