@@ -87,7 +87,7 @@ namespace yq {
         return std::vector<T,A>(data.begin(), data.end());
     }
 
-    /*! \brief Checks if the two spans are equal
+    /*! \brief Checks if the two spans are equal/equivalent
     
         \param[in] a    First span
         \param[in] b    Second span
@@ -105,6 +105,12 @@ namespace yq {
         return true;
     }
     
+    /*! \brief Checks if a vector and initializer list are equivalent
+    
+        \param[in] a    Vector
+        \param[in] b    initializer list
+        \return TRUE if the spans are the same (in size & contents)
+    */
     template <typename T, typename A>
     bool    is_same(const std::vector<T, A>& a, const std::initializer_list<T>& b)
     {
