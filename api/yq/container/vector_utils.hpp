@@ -117,6 +117,8 @@ namespace yq {
         return is_same(span(a), span(b));
     }
 
+    /*! \brief Helper to get a span from a vector
+    */
     template <typename T, typename Allocator>
     constexpr std::span<const T> span(const std::vector<T,Allocator>& data) noexcept
     {
