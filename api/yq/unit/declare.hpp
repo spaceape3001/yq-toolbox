@@ -494,6 +494,7 @@ namespace yq {
     using unit::Foot3D;
     using unit::Foot4D;
     using unit::Gram;
+    using unit::Inch;
     using unit::Inch1D;
     using unit::Inch2D;
     using unit::Inch3D;
