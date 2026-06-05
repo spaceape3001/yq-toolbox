@@ -79,7 +79,8 @@ namespace yq {
     struct cancel_k {};
     struct ccw_k {};
     struct centimeter_k {};
-    struct cerr_t {};
+    struct cerr_k {};
+    struct cgs_k {};
     struct changed_k {};
     struct child_k {};
     struct children_k {};
@@ -137,6 +138,7 @@ namespace yq {
     struct foot_k {};
     struct for_k {};
     struct forward_k {};
+    struct fps_k {};
     struct frequency_k {};
     struct from_k {};
     struct full_k {};
@@ -195,6 +197,7 @@ namespace yq {
     struct meter_k {};
     struct minimum_k {};
     struct mismatch_k {};
+    struct mks_k {};
     struct module_k {};
     struct move_k {};
     struct moveable_k {};
@@ -427,7 +430,8 @@ namespace yq {
     static constexpr const cancel_k             CANCEL;
     static constexpr const ccw_k                CCW;
     static constexpr const centimeter_k         CENTIMETER, CM;
-    static constexpr const cerr_t               CERR;
+    static constexpr const cerr_k               CERR;
+    static constexpr const cgs_k                CGS;
     static constexpr const changed_k            CHANGED;
     static constexpr const child_k              CHILD;
     static constexpr const children_k           CHILDREN;
@@ -551,6 +555,7 @@ namespace yq {
     static constexpr const minimum_k            MIN, MINIMUM;
 #endif
     static constexpr const mismatch_k           MISMATCH;
+    static constexpr const mks_k                METRIC;
     static constexpr const module_k             MODULE;
     static constexpr const move_k               MOVE;
     static constexpr const moveable_k           MOVEABLE;
