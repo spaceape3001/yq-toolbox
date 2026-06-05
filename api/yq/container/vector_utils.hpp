@@ -125,6 +125,8 @@ namespace yq {
         return data;
     }
 
+    /*! \brief Byte count to things in a vector (size * sizeof)
+    */
     template <typename T, typename Allocator>
     size_t  byte_count(const std::vector<T,Allocator>& data) noexcept
     {
