@@ -283,6 +283,8 @@ namespace yq {
             }
         }
         
+        /*! \brief Byte count to the array's data
+        */
         size_t  bytes() const 
         {
             return size() * sizeof(value_type);
