@@ -477,7 +477,10 @@ namespace yq {
         using Millimeter4D              = Vector4<Millimeter>;
         using MillimeterPerSecond3D     = Vector3<MillimeterPerSecond>;
         using NanometerPerSecond3D      = Vector3<NanometerPerSecond>;
+        using Newton1D                  = Vector1<Newton>;
+        using Newton2D                  = Vector2<Newton>;
         using Newton3D                  = Vector3<Newton>;
+        using Newton4D                  = Vector4<Newton>;
         using Pascal33D                 = Tensor33<Pascal>;
         using Radian3D                  = Vector3<Radian>;
         using RadianPerSecond3D         = Vector3<RadianPerSecond>;
@@ -526,6 +529,11 @@ namespace yq {
     using unit::Millimeter2D;
     using unit::Millimeter3D;
     using unit::Millimeter4D;
+    using unit::Newton;
+    using unit::Newton1D;
+    using unit::Newton2D;
+    using unit::Newton3D;
+    using unit::Newton4D;
     using unit::Radian;
     using unit::Radian3D;
     using unit::RadianPerSecond;
