@@ -521,6 +521,7 @@ namespace yq {
     using unit::MeterPerSecond1D;
     using unit::MeterPerSecond2D;
     using unit::MeterPerSecond3D;
+    using unit::MeterPerSecond²;
     using unit::MeterPerSecond²1D;
     using unit::MeterPerSecond²2D;
     using unit::MeterPerSecond²3D;
