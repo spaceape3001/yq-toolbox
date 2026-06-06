@@ -43,6 +43,8 @@ namespace yq {
         static constexpr const long double   light       = 299792458.0;
         static constexpr const long double   slug        = 1.459390293720636482939632545931759e1;
         static constexpr const long double   lbm         = 0.45359237;
+        static constexpr const long double   ounceM      = lbm / 16.0;
+        static constexpr const long double   ounceF      = lbf / 16.0;
         static constexpr const long double   eV          = 1.602176634-19;    // per 2019 definition
         static constexpr const long double   litre       = 1e-3;
         static constexpr const long double   gallon      = 3.785411784;
@@ -384,6 +386,8 @@ namespace yq {
         using NewtonPerSecond           = MKS<double,dim::ForceRate>;
         using NewtonSecond              = MKS<double,dim::Impulse>;
         using Ohm                       = MKS<double,dim::Resistance>;
+        using OunceForce                = SCALED<double,dim::Force, (double) def::ounceF>;
+        using OunceMass                 = SCALED<double,dim::Mass, (double) def::ounceM>;
         using Pascal                    = MKS<double,dim::Pressure>;
         using Percent                   = SCALED<double,dim::None, (double) def::percent>;
         using PerRadian                 = MKS<double,dim::PerAngle>;

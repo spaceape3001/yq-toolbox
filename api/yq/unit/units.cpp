@@ -240,6 +240,8 @@ YQ_TYPE_IMPLEMENT(yq::unit::NewtonMeter)
 YQ_TYPE_IMPLEMENT(yq::unit::NewtonPerSecond)
 YQ_TYPE_IMPLEMENT(yq::unit::NewtonSecond)
 YQ_TYPE_IMPLEMENT(yq::unit::Ohm)
+YQ_TYPE_IMPLEMENT(yq::unit::OunceForce)
+YQ_TYPE_IMPLEMENT(yq::unit::OunceMass)
 YQ_TYPE_IMPLEMENT(yq::unit::Pascal)
 YQ_TYPE_IMPLEMENT(yq::unit::Percent)
 YQ_TYPE_IMPLEMENT(yq::unit::PerRadian)
@@ -1807,6 +1809,21 @@ static void reg_units_math () {
     }
     
     {
+        auto w = writer<unit::OunceMass>();
+        w.print<print_unit<unit::OunceMass, "oz(m)">>();
+        w.format<write_unit<unit::OunceMass>>();
+        w.parse<parse_unit<unit::OunceMass>>();
+    }
+    
+    {
+        auto w = writer<unit::OunceForce>();
+        w.print<print_unit<unit::OunceForce, "oz(f)">>();
+        w.format<write_unit<unit::OunceForce>>();
+        w.parse<parse_unit<unit::OunceForce>>();
+    }
+    
+
+    {
         auto w = writer<unit::Pascal>();
         w.print<print_unit<unit::Pascal, "Pa">>();
         w.format<write_unit<unit::Pascal>>();
@@ -1878,14 +1895,14 @@ static void reg_units_math () {
     
     {
         auto w = writer<unit::PoundMass>();
-        w.print<print_unit<unit::PoundMass, "lbm">>();
+        w.print<print_unit<unit::PoundMass, "lb(m)">>();
         w.format<write_unit<unit::PoundMass>>();
         w.parse<parse_unit<unit::PoundMass>>();
     }
     
     {
         auto w = writer<unit::PoundForce>();
-        w.print<print_unit<unit::PoundForce, "lbf">>();
+        w.print<print_unit<unit::PoundForce, "lb(f)">>();
         w.format<write_unit<unit::PoundForce>>();
         w.parse<parse_unit<unit::PoundForce>>();
     }
