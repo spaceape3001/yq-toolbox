@@ -21,6 +21,15 @@ namespace yq {
 
     struct EnumerationInfo;
     
+    /*! \brief Parser & holder of enumeration data
+        
+        This holds keys/values lookups for the enumeration.  It's templated based
+        on enumeration type.  
+        
+        \note Some of these method instantations need the YQ_ENUM_IMPLEMENT 
+        macro (from Enumeration.hxx) to be created.  (This is so most compilation
+        units aren't paying that build-time price.)
+    */
     template <typename E>
     class Enumeration {
     public:
