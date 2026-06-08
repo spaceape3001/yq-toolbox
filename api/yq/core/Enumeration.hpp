@@ -34,6 +34,8 @@ namespace yq {
     class Enumeration {
     public:
         static_assert(std::is_enum_v<E>, "Must be a valid enumeration!");
+        
+        //! Key/Value pair, used during the extraction from the reflection (compile time)
         struct KeyValue {
             std::string_view    key;
             E                   value;
