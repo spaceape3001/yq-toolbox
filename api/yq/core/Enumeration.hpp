@@ -41,6 +41,7 @@ namespace yq {
             E                   value;
         };
     
+        //! Capture the underlying integer type
         using integer_t     = std::underlying_type_t<E>;
         using enumeration_t = E;
         
