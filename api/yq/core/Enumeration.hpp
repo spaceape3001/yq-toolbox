@@ -173,6 +173,13 @@ namespace yq {
 
     template <typename E>
     requires std::is_enum_v<E>
+    bool is_valid(E v)
+    {
+        return enumeration<E>().value(HAS, v);
+    }
+
+    template <typename E>
+    requires std::is_enum_v<E>
     std::string_view key_of(E v, std::string_view def={})
     {
         return enumeration<E>().key(v,def);

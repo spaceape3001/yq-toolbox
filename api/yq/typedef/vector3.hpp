@@ -14,9 +14,12 @@ namespace yq {
     using Vector3F                  = Vector3<float>;
     using Vector3I                  = Vector3<int>;
     using Vector3U                  = Vector3<unsigned>;
-    using Vector3M                  = Vector3<Meter>;
+    using Vector3M                  = Vector3<unit::Meter>;
     using Vector3CM                 = Vector3<unit::Centimeter>;
     using Vector3MM                 = Vector3<unit::Millimeter>;
+    using Vector3KM                 = Vector3<unit::Kilometer>;
+    using Vector3FT                 = Vector3<unit::Foot>;
+    using Vector3IN                 = Vector3<unit::Inch>;
     
     struct Vector3S;
 }

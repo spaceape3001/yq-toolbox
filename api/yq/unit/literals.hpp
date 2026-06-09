@@ -1472,6 +1472,26 @@ namespace yq {
         return {(double) v};
     }
 
+    constexpr unit::OunceMass operator ""_ozm(unsigned long long int v)
+    {
+        return {(double) v};
+    }
+
+    constexpr unit::OunceMass operator ""_ozm(long double v)
+    {
+        return {(double) v};
+    }
+
+    constexpr unit::OunceForce operator ""_ozf(unsigned long long int v)
+    {
+        return {(double) v};
+    }
+
+    constexpr unit::OunceForce operator ""_ozf(long double v)
+    {
+        return {(double) v};
+    }
+
     constexpr unit::PoundPerFoot² operator ""_psf(unsigned long long int v)
     {
         return {(double) v};

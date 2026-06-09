@@ -78,7 +78,9 @@ namespace yq {
     struct calculate_k {};
     struct cancel_k {};
     struct ccw_k {};
-    struct cerr_t {};
+    struct centimeter_k {};
+    struct cerr_k {};
+    struct cgs_k {};
     struct changed_k {};
     struct child_k {};
     struct children_k {};
@@ -133,8 +135,10 @@ namespace yq {
     struct first_k {};
     struct flags_k {};
     struct focus_k {};
+    struct foot_k {};
     struct for_k {};
     struct forward_k {};
+    struct fps_k {};
     struct frequency_k {};
     struct from_k {};
     struct full_k {};
@@ -157,6 +161,7 @@ namespace yq {
     struct if_k {};
     struct igcase_k {};
     struct in_k {};
+    struct inch_k {};
     struct individual_k {};
     struct inflatable_k {};
     struct info_k {};
@@ -169,6 +174,7 @@ namespace yq {
     struct julian_k {};
     struct k_k {};
     struct key_k {};
+    struct kilometer_k {};
     struct l_k {};
     struct last_k {};
     struct layout_k {};
@@ -188,8 +194,10 @@ namespace yq {
     struct maximum_k {};
     struct maybe_k {};
     struct meta_k {};
+    struct meter_k {};
     struct minimum_k {};
     struct mismatch_k {};
+    struct mks_k {};
     struct module_k {};
     struct move_k {};
     struct moveable_k {};
@@ -385,6 +393,9 @@ namespace yq {
     using ptr_k     = pointer_k;
     using spec_k    = specification_k;
     
+    struct m_or_meter_k : public m_k, public meter_k {};
+    struct in_or_inch_k : public in_k, public inch_k {};
+    
     static constexpr const a_k                  A;
     static constexpr const abort_k              ABORT;
     static constexpr const absolute_k           ABSOLUTE;
@@ -418,7 +429,9 @@ namespace yq {
     static constexpr const calculate_k          CALC, CALCULATE;
     static constexpr const cancel_k             CANCEL;
     static constexpr const ccw_k                CCW;
-    static constexpr const cerr_t               CERR;
+    static constexpr const centimeter_k         CENTIMETER, CM;
+    static constexpr const cerr_k               CERR;
+    static constexpr const cgs_k                CGS;
     static constexpr const changed_k            CHANGED;
     static constexpr const child_k              CHILD;
     static constexpr const children_k           CHILDREN;
@@ -436,7 +449,9 @@ namespace yq {
     static constexpr const count_k              COUNT;
     static constexpr const cout_k               COUT;
     static constexpr const create_k             CREATE;
+#ifdef YQ_KEYWORD_OMIT_CURSOR    
     static constexpr const cursor_k             CURSOR;
+#endif
     static constexpr const dark_k               DARK;
     static constexpr const data_k               DATA;
     static constexpr const decode_k             DECODE;
@@ -473,6 +488,7 @@ namespace yq {
     static constexpr const first_k              FIRST;
     static constexpr const flags_k              FLAGS;
     static constexpr const focus_k              FOCUS;
+    static constexpr const foot_k               FOOT, FT;
     static constexpr const for_k                FOR;
     static constexpr const forward_k            FORWARD;
     static constexpr const frequency_k          FREQUENCY;
@@ -496,7 +512,8 @@ namespace yq {
     static constexpr const identity_k           IDENTITY;
     static constexpr const if_k                 IF;
     static constexpr const igcase_k             IGCASE;
-    static constexpr const in_k                 IN;
+    static constexpr const in_or_inch_k         IN;
+    static constexpr const inch_k               INCH;
     static constexpr const individual_k         INDIVIDUAL;
     static constexpr const inflatable_k         INFLATABLE;
     static constexpr const info_k               INFO;
@@ -509,10 +526,13 @@ namespace yq {
     static constexpr const julian_k             JULIAN;
     static constexpr const k_k                  K;
     static constexpr const key_k                KEY;
+    static constexpr const kilometer_k          KILOMETER, KM;
     static constexpr const l_k                  L;
     static constexpr const last_k               LAST;
     static constexpr const layout_k             LAYOUT;
+#ifndef YQ_KEYWORD_OMIT_LIGHT
     static constexpr const light_k              LIGHT;
+#endif
     static constexpr const limit_k              LIMIT;
     static constexpr const line_k               LINE;
     static constexpr const left_k               LEFT;
@@ -523,17 +543,19 @@ namespace yq {
     static constexpr const lock_k               LOCK;
     static constexpr const locked_k             LOCKED;
     static constexpr const low_k                LO, LOW;
-    static constexpr const m_k                  M;
+    static constexpr const m_or_meter_k         M;
     static constexpr const main_k               MAIN;
 #ifndef YQ_KEYWORD_OMIT_MAX
     static constexpr const maximum_k            MAX, MAXIMUM;
 #endif
     static constexpr const maybe_k              MAYBE;
     static constexpr const meta_k               META;
+    static constexpr const meter_k              METER;
 #ifndef YQ_KEYWORD_OMIT_MIN
     static constexpr const minimum_k            MIN, MINIMUM;
 #endif
     static constexpr const mismatch_k           MISMATCH;
+    static constexpr const mks_k                METRIC;
     static constexpr const module_k             MODULE;
     static constexpr const move_k               MOVE;
     static constexpr const moveable_k           MOVEABLE;
@@ -653,7 +675,9 @@ namespace yq {
     static constexpr const tensor_k             TENSOR;
     static constexpr const tenu_k               TENU;
     static constexpr const text_k               TEXT;
+#ifndef YQ_KEYWORD_OMIT_THREAD
     static constexpr const thread_k             THREAD;
+#endif
     static constexpr const three_k              THREE;
     static constexpr const throw_k              THROW;
     static constexpr const ticks_k              TICKS;
@@ -695,7 +719,9 @@ namespace yq {
     static constexpr const w_k                  W;
     static constexpr const wait_k               WAIT;
     static constexpr const warning_k            WARNING, WARN;
+#ifndef YQ_KEYWORD_OMIT_WIDGET
     static constexpr const widget_k             WIDGET;
+#endif
     static constexpr const write_k              WRITE;
     static constexpr const ww_k                 WW;
     static constexpr const wx_k                 WX;
