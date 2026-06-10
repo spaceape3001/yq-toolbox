@@ -43,6 +43,8 @@ namespace yq {
     
         //! Capture the underlying integer type
         using integer_t     = std::underlying_type_t<E>;
+        
+        //! Capture the enumeration argument type
         using enumeration_t = E;
         
         static constexpr const size_t  count_n = std::meta::enumerators_of(^^E).size();
