@@ -47,6 +47,7 @@ namespace yq {
         //! Capture the enumeration argument type
         using enumeration_t = E;
         
+        //! Count of enumerators
         static constexpr const size_t  count_n = std::meta::enumerators_of(^^E).size();
         using definition_t       = std::array<KeyValue,count_n>;
     
