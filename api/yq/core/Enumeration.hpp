@@ -49,6 +49,8 @@ namespace yq {
         
         //! Count of enumerators
         static constexpr const size_t  count_n = std::meta::enumerators_of(^^E).size();
+        
+        //! Array to capture the key/value definitions from std meta
         using definition_t       = std::array<KeyValue,count_n>;
     
         static size_t                   count() { return count_n; }
