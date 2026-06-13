@@ -53,6 +53,7 @@ namespace yq {
         //! Array to capture the key/value definitions from std meta
         using definition_t       = std::array<KeyValue,count_n>;
     
+        //! Count of enumerators (here for those needing routines)
         static size_t                   count() { return count_n; }
         
         static const EnumerationInfo&   info();
