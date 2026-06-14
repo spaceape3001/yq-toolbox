@@ -56,6 +56,7 @@ namespace yq {
         //! Count of enumerators (here for those needing routines)
         static size_t                   count() { return count_n; }
         
+        //! The info for this enumeration (allows for generic UI elements)
         static const EnumerationInfo&   info();
         static Enumeration&             manifest();
         
