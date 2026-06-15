@@ -58,6 +58,8 @@ namespace yq {
         
         //! The info for this enumeration (allows for generic UI elements)
         static const EnumerationInfo&   info();
+        
+        //! The manifest instance for this enumeration
         static Enumeration&             manifest();
         
         //! Similar as value(string) but in failed lookup, it uses the default
