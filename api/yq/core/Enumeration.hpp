@@ -65,6 +65,7 @@ namespace yq {
         //! Similar as value(string) but in failed lookup, it uses the default
         E                   decode(std::string_view) const; 
 
+		//! key/value definition (whose order is as presented by the author of the enumeration)
         const auto&         definition() const { return m_definition.declared; }
         const auto&         definition(ordered_k) const { return m_definition.ordered; }
         const auto&         definition(sorted_k) const { return m_definition.sorted; }
