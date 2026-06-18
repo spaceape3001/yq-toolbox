@@ -70,6 +70,8 @@ namespace yq {
         
         //! Key/value definition (ordered by values)
         const auto&         definition(ordered_k) const { return m_definition.ordered; }
+
+        //! Key/value definition (ordered by keys)
         const auto&         definition(sorted_k) const { return m_definition.sorted; }
 
         std::string_view    display(E, std::string_view def={}) const;
