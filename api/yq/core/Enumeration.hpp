@@ -74,6 +74,7 @@ namespace yq {
         //! Key/value definition (ordered by keys)
         const auto&         definition(sorted_k) const { return m_definition.sorted; }
 
+		//! Display string for given enumeration (use default if bad enum value)
         std::string_view    display(E, std::string_view def={}) const;
         std::string_view    key(E, std::string_view def={}) const;
         bool                key(has_k, std::string_view) const;
