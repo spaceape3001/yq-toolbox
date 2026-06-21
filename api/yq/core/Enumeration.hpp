@@ -79,6 +79,8 @@ namespace yq {
         
         //! Key for the given enumeration (use default if bad enum value)
         std::string_view    key(E, std::string_view def={}) const;
+        
+        //! Tests for valid string as key
         bool                key(has_k, std::string_view) const;
         //! All keys as declared
         const auto&         keys() const { return m_keys.declared; }
