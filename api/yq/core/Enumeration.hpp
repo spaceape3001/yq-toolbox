@@ -82,6 +82,7 @@ namespace yq {
         
         //! Tests for valid string as key
         bool                key(has_k, std::string_view) const;
+        
         //! All keys as declared
         const auto&         keys() const { return m_keys.declared; }
         
@@ -94,6 +95,7 @@ namespace yq {
         //! All keys as sorted in alphabetical order (with same values eliminated)
         const auto&         keys(unique_k) const { return m_keys.unique; }
         
+        //! Name of this enumeration (will be stem, won't be fully qualified)
         std::string_view    name() const { return m_name; }
         std::string_view    pretty(E) const;
 
