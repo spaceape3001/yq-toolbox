@@ -97,6 +97,8 @@ namespace yq {
         
         //! Name of this enumeration (will be stem, won't be fully qualified)
         std::string_view    name() const { return m_name; }
+        
+        //! Pretty equivalent to the given enumeration (will be empty if not defined)
         std::string_view    pretty(E) const;
 
         Expect<E>           value(std::string_view) const;
