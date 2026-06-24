@@ -101,6 +101,7 @@ namespace yq {
         //! Pretty equivalent to the given enumeration (will be empty if not defined)
         std::string_view    pretty(E) const;
 
+		//! String to value (an expected because it could be invalid)
         Expect<E>           value(std::string_view) const;
         bool                value(has_k, E) const;
         E                   value(default_k) const { return m_values.def; }
