@@ -103,6 +103,8 @@ namespace yq {
 
 		//! String to value (an expected because it could be invalid)
         Expect<E>           value(std::string_view) const;
+        
+        //! Tests if the value is valid
         bool                value(has_k, E) const;
         E                   value(default_k) const { return m_values.def; }
         constexpr E         value(maximum_k) const { return m_values.max; }
