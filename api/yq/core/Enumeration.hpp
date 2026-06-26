@@ -106,6 +106,8 @@ namespace yq {
         
         //! Tests if the value is valid
         bool                value(has_k, E) const;
+        
+        //! Default value (first unless overriden)
         E                   value(default_k) const { return m_values.def; }
         constexpr E         value(maximum_k) const { return m_values.max; }
         constexpr E         value(minimum_k) const { return m_values.min; }
