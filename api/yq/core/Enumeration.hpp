@@ -109,6 +109,8 @@ namespace yq {
         
         //! Default value (first unless overriden)
         E                   value(default_k) const { return m_values.def; }
+        
+        //! Maximum value (numerically)
         constexpr E         value(maximum_k) const { return m_values.max; }
         constexpr E         value(minimum_k) const { return m_values.min; }
         
