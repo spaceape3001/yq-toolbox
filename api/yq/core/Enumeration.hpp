@@ -112,6 +112,8 @@ namespace yq {
         
         //! Maximum value (numerically)
         constexpr E         value(maximum_k) const { return m_values.max; }
+
+        //! Minimum value (numerically)
         constexpr E         value(minimum_k) const { return m_values.min; }
         
         //! All values as declared (note, might be extra)
