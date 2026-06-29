@@ -130,8 +130,9 @@ namespace yq {
         
         //  non const here.... (using meta thread safe write to guard)
         
+        //! Sets the "pretty" for a specific value
         template <size_t N>
-        void    pretty(E, const char (&)[N]);
+        void    pretty(E val, const char (&)[N]);
         
         void    value(default_k, E);
     
