@@ -13,6 +13,7 @@
 namespace yq {
     using cleanup_fn               = std::function<void()>;
     
+    //! Manager of cleanup routines
     class Cleanup {
     public:
         Cleanup();
