@@ -134,6 +134,7 @@ namespace yq {
         template <size_t N>
         void    pretty(E val, const char (&)[N]);
         
+        //! Set the default value
         void    value(default_k, E);
     
     protected:
