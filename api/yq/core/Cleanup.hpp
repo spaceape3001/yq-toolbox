@@ -13,9 +13,15 @@
 namespace yq {
     using cleanup_fn               = std::function<void()>;
     
-    //! Manager of cleanup routines
+    /*! Manager of cleanup routines
+    
+		This will sweep (and clear) all added "cleanup routines" that need
+		to be triggered at a specific point (or, with a mutex lock, etc).
+    */
     class Cleanup {
     public:
+    
+		//! Constructor
         Cleanup();
         ~Cleanup();
         
