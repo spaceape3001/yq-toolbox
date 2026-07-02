@@ -27,6 +27,7 @@ namespace yq {
         //! Destructor
         ~Cleanup();
         
+        //! Add a callback to run with sweep (lambda capture good here)
         void                add(cleanup_fn&&);
         Cleanup&            operator<<(cleanup_fn&&);
         void                sweep();
