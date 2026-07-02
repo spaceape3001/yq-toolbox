@@ -23,6 +23,8 @@ namespace yq {
     
 		//! Constructor
         Cleanup();
+        
+        //! Destructor
         ~Cleanup();
         
         void                add(cleanup_fn&&);
