@@ -32,6 +32,11 @@ namespace yq {
 
         //! Add a callback to run with sweep (lambda capture good here)
         Cleanup&            operator<<(cleanup_fn&&);
+        
+        /*! Sweep/call all cleanup routines
+        
+            \note Clears all registered routines
+        */
         void                sweep();
         
     private:
