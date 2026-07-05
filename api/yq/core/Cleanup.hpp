@@ -11,6 +11,8 @@
 #include <tbb/spin_mutex.h>
 
 namespace yq {
+
+    //! Cleanup function prototype
     using cleanup_fn               = std::function<void()>;
     
     /*! Manager of cleanup routines
