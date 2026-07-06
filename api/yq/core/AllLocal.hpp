@@ -14,6 +14,8 @@ namespace yq {
     //! Used when there's a "local" concept and "all", (ie properties on an object with inheritance)
     template <typename T>
     struct AllLocal {
+    
+        //! The "ALL" data
         T   all;
         T   local;
         
