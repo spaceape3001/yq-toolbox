@@ -17,6 +17,8 @@ namespace yq {
     
         //! The "ALL" data
         T   all;
+        
+        //! The "LOCAL" data
         T   local;
         
         constexpr T&        operator[](all_k) noexcept { return all; }
