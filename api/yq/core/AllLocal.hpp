@@ -21,6 +21,7 @@ namespace yq {
         //! The "LOCAL" data
         T   local;
         
+        //! Helper to get the "all" reference
         constexpr T&        operator[](all_k) noexcept { return all; }
         constexpr const T&  operator[](all_k) const noexcept { return all; }
         constexpr T&        operator[](local_k) noexcept { return local; }
