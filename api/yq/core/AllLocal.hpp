@@ -23,6 +23,8 @@ namespace yq {
         
         //! Helper to get the "all" reference
         constexpr T&        operator[](all_k) noexcept { return all; }
+
+        //! Helper to get the "all" reference
         constexpr const T&  operator[](all_k) const noexcept { return all; }
         constexpr T&        operator[](local_k) noexcept { return local; }
         constexpr const T&  operator[](local_k) const noexcept { return local; }
