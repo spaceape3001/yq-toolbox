@@ -35,6 +35,8 @@ namespace yq {
         
         //! Helper to get the all/local reference depending on the flag (true for all)
         constexpr T&        operator[](bool f) noexcept { return f ? all : local; }
+
+        //! Helper to get the all/local reference depending on the flag (true for all)
         constexpr const T&  operator[](bool f) const noexcept { return f ? all : local; }
     };
 }
