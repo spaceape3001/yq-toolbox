@@ -16,6 +16,8 @@ namespace yq {
     */
     template <typename T>
     struct Created {
+		
+		//! Value of the created object
         T       value;
         bool    created = false;
         
