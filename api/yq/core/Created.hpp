@@ -19,6 +19,8 @@ namespace yq {
 		
 		//! Value of the created object
         T       value;
+        
+        //! TRUE if the item was created by the call
         bool    created = false;
         
         operator const T& () const { return value; }
