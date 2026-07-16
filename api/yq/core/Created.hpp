@@ -23,6 +23,7 @@ namespace yq {
         //! TRUE if the item was created by the call
         bool    created = false;
         
+        //! Reference to the value, allows for passing to other functions
         operator const T& () const { return value; }
         bool operator==(const Created&) const noexcept = default;
         
