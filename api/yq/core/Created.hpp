@@ -29,6 +29,7 @@ namespace yq {
         //! Equality operator (defaulted)
         bool operator==(const Created&) const noexcept = default;
         
+        //! Casts this object to another (explicit to help with template issues)
         template <typename U>
         Created<U>       cast_to() const
         {
