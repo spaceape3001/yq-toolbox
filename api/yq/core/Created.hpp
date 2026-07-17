@@ -25,6 +25,8 @@ namespace yq {
         
         //! Reference to the value, allows for passing to other functions
         operator const T& () const { return value; }
+        
+        //! Equality operator (defaulted)
         bool operator==(const Created&) const noexcept = default;
         
         template <typename U>
