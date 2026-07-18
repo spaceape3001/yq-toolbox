@@ -36,6 +36,7 @@ namespace yq {
             return Created<U>{(U) value, created};
         }
         
+        //! Casts to the standard pair of item/bool flag
         constexpr operator std::pair<T,bool>() const { return std::pair<T,bool>(value, created); }
         
     };
