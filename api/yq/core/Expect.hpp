@@ -10,6 +10,7 @@
 #include <expected>
 
 namespace yq {
-        // the "new" results
+	/*! \brief Standard "expected" form (using an error code)
+	*/
     template <typename T> using Expect  = std::expected<T,std::error_code>;
 }
