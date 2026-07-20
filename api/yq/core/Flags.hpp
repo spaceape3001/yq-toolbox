@@ -53,6 +53,9 @@ namespace yq {
         //!  Default constructor, all flags clear ....
         constexpr Flags() noexcept : m_value(0) {}
         
+        /*! Constructs all flags to clear/set depending on the parameter
+			\param[in] v 	Value to set (on vs off)
+        */
         constexpr Flags(all_k, bool v) noexcept : m_value(v?~T(0):T(0)) {}
         
         constexpr Flags(all_k) noexcept : Flags(ALL, true) {}
