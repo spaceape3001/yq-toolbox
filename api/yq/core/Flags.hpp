@@ -58,6 +58,7 @@ namespace yq {
         */
         constexpr Flags(all_k, bool v) noexcept : m_value(v?~T(0):T(0)) {}
         
+        //! Constructs all flags to be set
         constexpr Flags(all_k) noexcept : Flags(ALL, true) {}
 
         //! Constructs by bit-field
