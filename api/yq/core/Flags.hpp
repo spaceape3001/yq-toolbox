@@ -74,7 +74,16 @@ namespace yq {
                 m_value |= mask(e);
         }
         
-        explicit Flags(std::string_view, char sep=',', bool *ok=nullptr);
+        /*! Construct from parsing string
+        
+			This creates a flags object by parsing & interpretting the string.
+			
+			\param[in] bitString	text to parse
+			\param[in] sep 			separator between keys
+			\param[out] ok			pass a pointer to a bool to get yes/no on 
+									parsing result
+        */
+        explicit Flags(std::string_view bitString, char sep=',', bool *ok=nullptr);
         std::string as_string(char sep=',') const;
         std::string as_display(char sep=',') const;
         
