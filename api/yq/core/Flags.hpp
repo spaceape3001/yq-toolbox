@@ -82,8 +82,19 @@ namespace yq {
 			\param[in] sep 			separator between keys
 			\param[out] ok			pass a pointer to a bool to get yes/no on 
 									parsing result
+									
+			\note Include Flags.hxx to get the implemetation
         */
         explicit Flags(std::string_view bitString, char sep=',', bool *ok=nullptr);
+        
+        /*! \brief Format as a string
+        
+			This formats the keys as a string, good for I/O.
+			
+			\param[in] sep Separator character
+			
+			\note Include Flags.hxx to get the implementation
+        */
         std::string as_string(char sep=',') const;
         std::string as_display(char sep=',') const;
         
