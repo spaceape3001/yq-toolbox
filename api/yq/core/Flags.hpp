@@ -87,7 +87,7 @@ namespace yq {
         */
         explicit Flags(std::string_view bitString, char sep=',', bool *ok=nullptr);
         
-        /*! \brief Format as a string
+        /*! \brief Format as a key string
         
 			This formats the keys as a string, good for I/O.
 			
@@ -96,6 +96,16 @@ namespace yq {
 			\note Include Flags.hxx to get the implementation
         */
         std::string as_string(char sep=',') const;
+        
+        /*! \brief Format as a display string
+        
+			This formats using the display tokens for the string, 
+			better for debug/user facing text.
+			
+			\param[in] sep Separator character
+			
+			\note Include Flags.hxx to get the implementation
+        */
         std::string as_display(char sep=',') const;
         
         
