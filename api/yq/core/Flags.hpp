@@ -128,6 +128,10 @@ namespace yq {
             }
         }
 
+		/*! Sets the specified flags
+		
+			\param[in] f	Flags to set
+		*/
         void    set(Flags f)
         {
             m_value |= f.m_value;
