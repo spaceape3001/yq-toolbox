@@ -143,6 +143,10 @@ namespace yq {
             m_value &= ~mask(e);
         }
 
+		/*! Clears the specified flags
+		
+			\param[in] f	Flags to clear
+		*/
         void    clear(Flags f)
         {
             m_value &= ~f.m_value;
