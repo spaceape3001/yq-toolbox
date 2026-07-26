@@ -152,6 +152,10 @@ namespace yq {
             m_value &= ~f.m_value;
         }
 
+		/*! Toggles the specified bit
+		
+			\param[in] e	Bit to flip
+		*/
         void    toggle(E e)
         {
             m_value ^= mask(e);
