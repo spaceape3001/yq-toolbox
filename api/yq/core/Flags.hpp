@@ -190,7 +190,8 @@ namespace yq {
         {
             return (f.m_value & m_value) == T{};
         }
-        
+       
+		//! Count of set bits
         size_t count() const 
         {
             size_t  cnt = 0;
