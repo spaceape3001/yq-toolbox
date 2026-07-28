@@ -217,7 +217,7 @@ namespace yq {
             return is_set(e);
         }
         
-
+		//! Flips all bits
         constexpr Flags      operator~() const noexcept
         { 
             return Flags(~m_value);
