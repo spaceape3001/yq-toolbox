@@ -211,6 +211,7 @@ namespace yq {
             return is_set(e);
         }
         
+        //! Tests if specified bit is set, returning true if it is
         bool    operator()(E e) const
         {
             return is_set(e);
