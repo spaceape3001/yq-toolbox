@@ -251,6 +251,7 @@ namespace yq {
             return Flags(m_value | f.m_value );
         }
 
+		//! Clear/Remove overload
         constexpr Flags        operator-(Flags f) const noexcept
         {
             return Flags(m_value & ~f.m_value );
