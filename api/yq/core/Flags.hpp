@@ -257,6 +257,7 @@ namespace yq {
             return Flags(m_value & ~f.m_value );
         }
         
+		//! Add/Union overload `(a|b)`
         constexpr Flags        operator|(Flags f) const noexcept
         {
             return Flags(m_value | f.m_value );
