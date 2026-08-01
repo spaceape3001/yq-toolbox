@@ -263,6 +263,10 @@ namespace yq {
             return Flags(m_value | f.m_value );
         }
     
+		/*! Intersection
+		
+			Returns the flags set in both the left & right operands.
+		*/
         constexpr Flags        operator&(Flags f) const noexcept
         {
             return Flags(m_value & f.m_value );
