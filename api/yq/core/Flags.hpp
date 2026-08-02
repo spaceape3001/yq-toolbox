@@ -272,6 +272,10 @@ namespace yq {
             return Flags(m_value & f.m_value );
         }
     
+		/*! \brief XOR operator
+		
+			Returns flags set if either left or right is set, but not both.
+		*/
         constexpr Flags        operator^(Flags f) const noexcept
         {
             return Flags(m_value ^ f.m_value );
