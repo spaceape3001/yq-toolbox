@@ -41,6 +41,7 @@ namespace yq {
         //! Captures the bit-field type parameter (naming convention to standard library)
         using value_type    = T;
 
+		//! Bit mask for the given enumeration
         static constexpr T  mask(E e) noexcept
         {
             return T(1) << T(e);
