@@ -285,7 +285,7 @@ namespace yq {
             return Flags(m_value ^ f.m_value );
         }
 
-        
+        //! Adds/Unions right flags into the left flags, returns reference.
         Flags&   operator+=(Flags f) noexcept
         {
             m_value |= f.m_value;
