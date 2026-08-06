@@ -299,6 +299,7 @@ namespace yq {
             return *this;
         }
         
+        //! Sets the right flags onto the LHS flags, returns reference
         Flags&   operator|=(Flags f) noexcept
         {
             m_value |= f.m_value;
