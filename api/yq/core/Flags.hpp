@@ -306,6 +306,7 @@ namespace yq {
             return *this;
         }
         
+        //! Flips the bits of the right flags into the LHS flags, returns reference
         Flags&   operator&=(Flags f) noexcept
         {
             m_value &= f.m_value;
