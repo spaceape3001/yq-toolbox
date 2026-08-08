@@ -306,13 +306,14 @@ namespace yq {
             return *this;
         }
         
-        //! Flips the bits of the right flags into the LHS flags, returns reference
+        //! Intersection of flags into the LHS; ie, bits need to be set in both.  Returns reference
         Flags&   operator&=(Flags f) noexcept
         {
             m_value &= f.m_value;
             return *this;
         }
 
+        //! Flips the bits of the right flags into the LHS flags, returns reference
         Flags&   operator^=(Flags f) noexcept
         {
             m_value ^= f.m_value;
