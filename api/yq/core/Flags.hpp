@@ -323,12 +323,13 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Flags/Enum
     
-		//! Add/Union flags to enumeration, returns the result
+		//! Add/Union flag to enumeration, returns the result
         constexpr Flags        operator+(E e) const noexcept
         {
             return Flags(m_value | mask(e) );
         }
     
+		//! Subtract/remove flag to enumeration, returns result
         constexpr Flags        operator-(E e) const noexcept
         {
             return Flags(m_value & ~mask(e) );
