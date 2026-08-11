@@ -335,6 +335,7 @@ namespace yq {
             return Flags(m_value & ~mask(e) );
         }
 
+		//! Union in flag to enumeration, returns the result
         constexpr Flags        operator|(E e) const noexcept
         {
             return Flags(m_value | mask(e) );
