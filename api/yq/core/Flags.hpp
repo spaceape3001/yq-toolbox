@@ -341,6 +341,8 @@ namespace yq {
             return Flags(m_value | mask(e) );
         }
 
+		//! Intersection of flag with enumeration, returns the result
+		//! \note The likely result is either all clear or singular flag set
         constexpr Flags        operator&(E e) const noexcept
         {
             return Flags(m_value & mask(e) );
