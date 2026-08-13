@@ -348,6 +348,7 @@ namespace yq {
             return Flags(m_value & mask(e) );
         }
 
+		//! XOR with the specific flag (ie bit flips), returns thre result
         constexpr Flags        operator^(E e) const noexcept
         {
             return Flags(m_value ^ mask(e) );
