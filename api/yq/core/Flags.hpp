@@ -354,6 +354,7 @@ namespace yq {
             return Flags(m_value ^ mask(e) );
         }
 
+		//! Adds/Unions in specific enum into the LHS flags, returns reference
         Flags&   operator+=(E e) noexcept
         {
             m_value |= mask(e);
