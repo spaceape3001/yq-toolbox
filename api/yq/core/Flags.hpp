@@ -361,6 +361,7 @@ namespace yq {
             return *this;
         }
         
+        //! Removes/Clears specific enum from the LHS flags, returns reference
         Flags&   operator-=(E e) noexcept
         {
             m_value &= ~mask(e);
