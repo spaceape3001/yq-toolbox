@@ -375,6 +375,8 @@ namespace yq {
             return *this;
         }
         
+        //! Intersection/And a specific enum into the LHS flags, returns reference
+        //! \note This will result in LHS being either all clear, or ONLY set to specific flag 
         Flags&   operator&=(E e) noexcept
         {
             m_value &= mask(e);
