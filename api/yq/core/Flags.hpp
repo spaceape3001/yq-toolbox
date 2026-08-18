@@ -383,6 +383,7 @@ namespace yq {
             return *this;
         }
 
+		//! XOR/Toggles specific enumeration flag in the LHS side, returns reference
         Flags&   operator^=(E e) noexcept
         {
             m_value ^= mask(e);
