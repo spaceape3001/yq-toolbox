@@ -393,6 +393,7 @@ namespace yq {
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     //  Enum/Flags
 
+		//! Adds/Unions a LHS enum with a flags, returns the result
         friend constexpr Flags        operator+(E e, Flags f) noexcept
         {
             return Flags(mask(e) | f.m_value);
