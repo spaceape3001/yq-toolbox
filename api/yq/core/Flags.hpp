@@ -409,6 +409,7 @@ namespace yq {
             return Flags(mask(e) &~ f.m_value);
         }
 
+		//! Unions a LHS enum with LHS flags, returns the result.
         friend constexpr Flags        operator|(E e, Flags f) noexcept
         {
             return Flags(mask(e) | f.m_value);
