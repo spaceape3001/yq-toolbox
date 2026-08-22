@@ -399,11 +399,7 @@ namespace yq {
             return Flags(mask(e) | f.m_value);
         }
 
-		/*! \brief Differences the LHS enum with flags, returns the result
-		
-			\note The effective result will either be the enum set/all-others 
-			clear *IF* the RHS flags bit is set; otherwise, an null flags
-		*/
+		//! \brief Differences the LHS enum with flags, returns the result.		
         friend constexpr Flags        operator-(E e, Flags f) noexcept
         {
             return Flags(mask(e) &~ f.m_value);
@@ -415,6 +411,11 @@ namespace yq {
             return Flags(mask(e) | f.m_value);
         }
 
+		/*! And/Intersection of LHS flag with RHS flags
+		
+			\note The effective result will either be the enum set/all-others 
+			clear *IF* the RHS flags bit is set; otherwise, an null flags
+		*/
         friend constexpr Flags        operator&(E e, Flags f) noexcept
         {
             return Flags(mask(e) & f.m_value);
