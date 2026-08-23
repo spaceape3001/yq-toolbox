@@ -421,6 +421,7 @@ namespace yq {
             return Flags(mask(e) & f.m_value);
         }
         
+        //! XOR a specific LHS enum with the RHS flags (ie, flips the specific bit)
         friend constexpr Flags        operator^(E e, Flags f) noexcept
         {
             return Flags(mask(e) ^ f.m_value);
