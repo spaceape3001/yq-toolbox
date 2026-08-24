@@ -171,6 +171,7 @@ namespace yq {
     };
 
     /*! \brief Key/value mapping
+    
         This accesses the key/value/pretty mapping
     */
     template <typename E>
@@ -179,6 +180,13 @@ namespace yq {
         return Enumeration<E>::manifest();
     }
 
+    /*! \brief Key/value mapping
+    
+        This accesses the key/value/pretty mapping in a writable 
+        fashion.  
+        
+        \note Only use during application startup/initialization.
+    */
     template <typename E>
     Enumeration<E>& enumeration(write_k)
     {
