@@ -193,6 +193,14 @@ namespace yq {
         return Enumeration<E>::manifest();
     }
 
+	/*! \brief Default value
+	
+		This gets the default value of the specified enumeration (either the
+		first item or overriden during startup).
+		
+		\note This will be zero in the case of a valueless 
+			  enumeration (ie enum class Foo {}).
+	*/
     template <typename E>
     requires std::is_enum_v<E>
     E default_of()
