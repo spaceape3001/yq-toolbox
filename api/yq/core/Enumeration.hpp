@@ -208,6 +208,20 @@ namespace yq {
         return enumeration<E>().value(DEFAULT);
     }
     
+    /*! \brief "Display form" of enumeration
+    
+		This is the "display form" of the enumeration, either the pretty
+		string if any, or the value text, or the default string.
+		
+		\param[in] v	Value to get the display for
+		\param[in] def	String to use if both lookups fail (ie, value is *NOT*
+						among those listed in the enumeration declaration.
+						
+		\return IF a pretty string was registered for the given value, that is 
+			returned first; otherwise, if the value has a corresponding key, that
+			is returned second; but if both lookups fail, the default (argument) 
+			is returned as a last resort.
+    */
     template <typename E>
     requires std::is_enum_v<E>
     std::string_view display_of(E v, std::string_view def={})
