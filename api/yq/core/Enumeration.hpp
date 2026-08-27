@@ -229,6 +229,13 @@ namespace yq {
         return enumeration<E>().display(v,def);
     }
 
+	/*! \brief Gets the information for a given enumeration
+	
+		While Enumeration is the enumeration-specific bound data, the 
+		enumeration info is the generic one for lists/GUI helpers, etc.  
+		
+		This returns the reference for it.
+	*/
     template <typename E>
     const EnumerationInfo& info_of()
     {
