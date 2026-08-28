@@ -242,6 +242,13 @@ namespace yq {
         return Enumeration<E>::info();
     }
 
+	/*! \brief Checks for a valid enumeration value
+	
+		This checks to see if the given enumeration is in the defined list
+		by the definition.  
+		
+		\note This mismatch can easily arise once casting starts to occur.
+	*/
     template <typename E>
     requires std::is_enum_v<E>
     bool is_valid(E v)
