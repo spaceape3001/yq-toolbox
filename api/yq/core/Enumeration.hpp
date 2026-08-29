@@ -256,6 +256,17 @@ namespace yq {
         return enumeration<E>().value(HAS, v);
     }
 
+	/*! \brief Gets the key for an enumeration
+	
+		This returns the C++ key for the enumeration. 
+		
+		\note If the value *wasn't* declared, the def parameter is returned.
+		\note In the case of aliases (ie, two keys with the same value), the 
+		first key will be returned.
+		
+		\param[in] v 	Value to get the key for
+		\param[in] def	String for undefined values
+	*/
     template <typename E>
     requires std::is_enum_v<E>
     std::string_view key_of(E v, std::string_view def={})
