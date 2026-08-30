@@ -274,9 +274,13 @@ namespace yq {
         return enumeration<E>().key(v,def);
     }
     
+    /*! \brief All keys of the enumeration
+    
+		This returns all keys of the enumeration (as declared).
+    */
     template <typename E>
     requires std::is_enum_v<E>
-    auto keys_of()
+    const auto& keys_of()
     {
         return enumeration<E>().keys();
     }
