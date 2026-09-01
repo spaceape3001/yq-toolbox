@@ -308,6 +308,11 @@ namespace yq {
         return enumeration<E>().keys(SORTED);
     }
     
+    /*! \brief Unique value keys of the enumeration
+    
+		This is where the first key of any value is taken, duplicates
+		are ignored.
+	*/
     template <typename E>
     requires std::is_enum_v<E>
     auto keys_of(unique_k)
