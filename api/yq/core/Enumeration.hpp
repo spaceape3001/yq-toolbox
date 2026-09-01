@@ -285,9 +285,9 @@ namespace yq {
         return enumeration<E>().keys();
     }
     
-    /*! \brief All keys of the enumeration
+    /*! \brief All keys of the enumeration (sorted by value)
     
-		This returns all keys of the enumeration (sorted by value)
+		This returns all keys of the enumeration sorted by value.
 	*/
     template <typename E>
     requires std::is_enum_v<E>
@@ -296,6 +296,11 @@ namespace yq {
         return enumeration<E>().keys(ORDERED);
     }
 
+    /*! \brief All keys of the enumeration (sorted alphabetically)
+    
+		This returns all keys of the enumeration sorted alphabetically 
+		(case insensitive).
+	*/
     template <typename E>
     requires std::is_enum_v<E>
     auto keys_of(sorted_k)
