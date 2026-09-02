@@ -320,6 +320,10 @@ namespace yq {
         return enumeration<E>().keys(UNIQUE);
     }
     
+    /*! \brief Maximum value of the enumeration
+    
+		This is the maximum enumerated value (as declared) in the enumeration.
+    */
     template <typename E>
     requires std::is_enum_v<E>
     E maximum_of()
