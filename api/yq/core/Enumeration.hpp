@@ -331,6 +331,10 @@ namespace yq {
         return enumeration<E>().value(maximum_k{});
     }
 
+    /*! \brief Minimum value of the enumeration
+    
+		This is the minimum enumerated value (as declared) in the enumeration.
+    */
     template <typename E>
     requires std::is_enum_v<E>
     E minimum_of()
