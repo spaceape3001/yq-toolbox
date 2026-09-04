@@ -342,11 +342,23 @@ namespace yq {
         return enumeration<E>().value(minimum_k{});
     }
 
+	/*! \brief Value of string (key)
+	
+		This searches the enumeration for the given string/key; either
+		returns that value it matches or the "default" value for the 
+		enumeration.  This routine is a convienence for "if not here, use the 
+		default value".
+		
+		\param[in] key			Key string to use
+		\param[in] default_k	Use the DEFAULT keyword here.
+		
+		\return Value that maps *OR* the default value.
+	*/
     template <typename E>
     requires std::is_enum_v<E>
-    E value_of(std::string_view s, default_k)
+    E value_of(std::string_view key, default_k)
     {
-        return enumeration<E>().decode(s);
+        return enumeration<E>().decode(key);
     }
 
     template <typename E>
