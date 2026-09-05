@@ -361,11 +361,17 @@ namespace yq {
         return enumeration<E>().decode(key);
     }
 
+	/*! \brief Value for key string
+	
+		\param[in] key			Key string to use
+		\return The value as a std::expected (so one can catch the
+		likely "not a match" issues)
+	*/
     template <typename E>
     requires std::is_enum_v<E>
-    auto value_of(std::string_view s)
+    auto value_of(std::string_view key)
     {
-        return enumeration<E>().value(s);
+        return enumeration<E>().value(key);
     }
 
     template <typename E>
