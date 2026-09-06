@@ -374,9 +374,15 @@ namespace yq {
         return enumeration<E>().value(key);
     }
 
+	/*! \brief All (unique) values for the enumeration
+	
+		This returns all the unique values for the specified enumeration.
+		
+		\return Reference to vector of values
+	*/
     template <typename E>
     requires std::is_enum_v<E>
-    auto values_of()
+    const auto& values_of()
     {
         return enumeration<E>().values(UNIQUE);
     }
