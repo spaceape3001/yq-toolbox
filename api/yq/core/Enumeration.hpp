@@ -388,6 +388,10 @@ namespace yq {
     }
 
     /*! \brief Generic wrapper for enumeration information
+    
+		This is a generic/abstract wrapper API for enumerations, allowing 
+		for enumerations (signed 4-bytes or less) to be used/interpretted
+		generically in things like drop downs, file I/O, etc.
     */
     class EnumerationInfo {
     public:
