@@ -396,6 +396,7 @@ namespace yq {
     class EnumerationInfo {
     public:
 
+		//! Number of keys in the enumeration mapping
         virtual size_t  count() const = 0;
 
         virtual std::string_view display(int) const = 0;
