@@ -405,6 +405,10 @@ namespace yq {
         virtual std::string_view display(int) const = 0;
 
         //virtual const std::vector<
+        
+        //! Key for the specified value
+		//! \note If a value maps to two keys, the first one will be 
+		//! mapped & returned
         virtual std::string_view            key(int) const = 0;
 
         virtual const string_view_vector_t& keys() const = 0;
