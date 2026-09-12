@@ -413,6 +413,8 @@ namespace yq {
 
 		//! All keys (as declared) in the enumeration
         virtual const string_view_vector_t& keys() const = 0;
+        
+        //! All keys (ordered by value) in the enumeration
         virtual const string_view_vector_t& keys(ordered_k) const = 0;
         virtual const string_view_vector_t& keys(sorted_k) const = 0;
         virtual const string_view_vector_t& keys(unique_k) const = 0;
