@@ -419,6 +419,8 @@ namespace yq {
         
         //! All keys (sorted by alphabetical order) in the enumeration
         virtual const string_view_vector_t& keys(sorted_k) const = 0;
+        
+        //! All keys (as declared) but filtered for unique values
         virtual const string_view_vector_t& keys(unique_k) const = 0;
 
         virtual std::string_view pretty(int) const = 0;
