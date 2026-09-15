@@ -423,6 +423,7 @@ namespace yq {
         //! All keys (as declared) but filtered for unique values
         virtual const string_view_vector_t& keys(unique_k) const = 0;
 
+		//! Gets the pretty string for value (or empty if none has been registered)
         virtual std::string_view pretty(int) const = 0;
 
         virtual int value(default_k) const = 0;
