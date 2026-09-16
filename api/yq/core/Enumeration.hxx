@@ -135,6 +135,7 @@ namespace yq {
         bool first = true;
         for(auto& kv : m_definition.declared){
             if(first){
+				// needs a condition for empty definition... 
                 m_values.def = m_values.min = m_values.max = kv.value;
                 first = false;
             } else {

@@ -426,6 +426,8 @@ namespace yq {
 		//! Gets the pretty string for value (or empty if none has been registered)
         virtual std::string_view pretty(int) const = 0;
 
+		//! Gets the default value for the enumeration
+		//! \note Currently undefined result for an enumeration without values
         virtual int value(default_k) const = 0;
         virtual int value(minimum_k) const = 0;
         virtual int value(maximum_k) const = 0;
