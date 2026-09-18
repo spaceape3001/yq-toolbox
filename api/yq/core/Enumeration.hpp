@@ -430,9 +430,12 @@ namespace yq {
 		//! \note Currently undefined result for an enumeration without values
         virtual int value(default_k) const = 0;
         
-        //! Gets the maximum value for the enuemration
+        //! Gets the minimum value for the enuemration
 		//! \note Currently undefined result for an enumeration without values
         virtual int value(minimum_k) const = 0;
+
+        //! Gets the maximum value for the enuemration
+		//! \note Currently undefined result for an enumeration without values
         virtual int value(maximum_k) const = 0;
         virtual integer_x value(std::string_view) const = 0;
         
