@@ -437,7 +437,14 @@ namespace yq {
         //! Gets the maximum value for the enuemration
 		//! \note Currently undefined result for an enumeration without values
         virtual int value(maximum_k) const = 0;
-        virtual integer_x value(std::string_view) const = 0;
+        
+        /*! Looks up the value of a key
+        
+			This looks up the given string as a key, returns the value.
+			\param[in] k 	The key
+			\return Integer if valid, an error code if string not found.
+        */
+        virtual integer_x value(std::string_view k) const = 0;
         
         const auto& values() const { return m_values.declared; }
         const auto& values(ordered_k) const { return m_values.ordered; }
