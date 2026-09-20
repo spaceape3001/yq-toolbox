@@ -446,6 +446,7 @@ namespace yq {
         */
         virtual integer_x value(std::string_view k) const = 0;
         
+        //! All values (as declared) for the enumeration
         const auto& values() const { return m_values.declared; }
         const auto& values(ordered_k) const { return m_values.ordered; }
         const auto& values(sorted_k) const { return m_values.sorted; }
