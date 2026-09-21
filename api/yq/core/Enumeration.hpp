@@ -448,6 +448,10 @@ namespace yq {
         
         //! All values (as declared) for the enumeration
         const auto& values() const { return m_values.declared; }
+        
+        /*! All values (ordered by value) for the enumeration
+			\note Duplicate values may exist if any keys are aliases to another
+        */
         const auto& values(ordered_k) const { return m_values.ordered; }
         const auto& values(sorted_k) const { return m_values.sorted; }
         const auto& values(unique_k) const { return m_values.unique; }
