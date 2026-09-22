@@ -453,6 +453,10 @@ namespace yq {
 			\note Duplicate values may exist if any keys are aliases to another
         */
         const auto& values(ordered_k) const { return m_values.ordered; }
+        
+        /*! all values (sorted by their key value) for the enumeration
+			\note Duplicate values may exist if any keys are aliases to another
+        */
         const auto& values(sorted_k) const { return m_values.sorted; }
         const auto& values(unique_k) const { return m_values.unique; }
         
