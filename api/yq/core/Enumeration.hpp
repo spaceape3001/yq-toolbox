@@ -472,6 +472,8 @@ namespace yq {
         } m_values;
     };
 
+	/*! \brief Gets the information for the specified enumeration
+	*/
     template <typename E>
     const EnumerationInfo& enumeration(info_k)
     {
