@@ -115,6 +115,8 @@ namespace yq::future {
 }
 
 namespace yq {
+	/*! \brief Base future type
+	*/
     class FFuture : public future::Base {
     public:
 
