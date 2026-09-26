@@ -120,6 +120,7 @@ namespace yq {
     class FFuture : public future::Base {
     public:
 
+		//! Get the error code (if any)
         std::error_code     get_error() const;
         std::exception_ptr  get_exception() const;
         
