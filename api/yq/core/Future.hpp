@@ -122,8 +122,9 @@ namespace yq {
 
 		//! Get the error code (if any)
         std::error_code     get_error() const;
-        std::exception_ptr  get_exception() const;
         
+        //! Get the exception (if any)
+        std::exception_ptr  get_exception() const;
         
     protected:
         FFuture(Ref<future::State> st={});
