@@ -12,7 +12,10 @@
 namespace yq {
 
     namespace error_db {
+		
+		//! Category for YQ Errors
         const std::error_category&  category();
+
         //! REGISTERS a new reason
         //! \note Mutex is involved!
         int                         reason(const char*);
