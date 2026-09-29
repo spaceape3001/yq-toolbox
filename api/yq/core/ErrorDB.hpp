@@ -20,6 +20,9 @@ namespace yq {
         //! \note Mutex is involved!
         int                         reason(const char*);
 
+		/*! Error code entry
+			\tparam[WHY] The reason for the error
+		*/
         template <StringLiteral WHY>
         struct entry : public std::error_code {
             static int      value() 
