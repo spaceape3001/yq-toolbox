@@ -25,6 +25,8 @@ namespace yq {
 		*/
         template <StringLiteral WHY>
         struct entry : public std::error_code {
+			//! Integer value for this error 
+			//! \note Static/fixed to the message for the runtime duration
             static int      value() 
             {
                 static int  c   = error_db::reason(WHY.value);
