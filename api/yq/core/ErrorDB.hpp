@@ -33,6 +33,7 @@ namespace yq {
                 return c;
             }
             
+            //! Default constructor
             entry() : std::error_code(value(), error_db::category()) {}
 
             operator std::unexpected<std::error_code>() const
