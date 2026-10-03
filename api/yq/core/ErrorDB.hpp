@@ -42,6 +42,7 @@ namespace yq {
                 return std::unexpected<std::error_code>(*this);
             }
 
+			//! Implicit conversion to std expected
             template <typename T>
             operator std::expected<T, std::error_code>() const
             {
