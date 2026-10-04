@@ -50,6 +50,8 @@ namespace yq {
             }
         };
         
+        /*! Makes an error code for the given reason
+        */
         std::error_code     make_error(const char*);
     }
     
