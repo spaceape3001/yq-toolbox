@@ -76,6 +76,7 @@ namespace yq {
         return error_db::entry<WHY>();
     }
     
+    //! Creates an unexpected from an error code
     inline std::unexpected<std::error_code> unexpected(std::error_code ec)
     {
         return std::unexpected(ec);
