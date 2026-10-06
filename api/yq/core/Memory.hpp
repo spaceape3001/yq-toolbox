@@ -15,6 +15,8 @@
 #include <type_traits>
 
 namespace yq {
+	
+		// TODO: Make these _k keywords
 
     struct ref1_t {};
     static constexpr const ref1_t REF1;
@@ -321,8 +323,11 @@ namespace yq {
         //  Gah... compiler's having issues with argument forwarding, 
         //  therefore we have to list these *ALL* :(
 
-        //! Constructs by data copy
-
+		/*! \brief Constructs by copying a buffer of data
+		
+			\param[in] pData	pointer to the first data element
+			\param[in] count	Number of entries to copy
+		*/
         template <typename T>
         Memory(copy_k, const T* pData, size_t count) : Memory()
         {
