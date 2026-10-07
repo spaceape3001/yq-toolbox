@@ -334,6 +334,10 @@ namespace yq {
             copy(pData, count);
         }
         
+		/*! \brief Constructs by copying a vector of data
+		
+			\param[in] data		Reference to the vector of data
+		*/
         template <typename T, typename A>
         Memory(copy_k, const std::vector<T, A>& data)
         {
