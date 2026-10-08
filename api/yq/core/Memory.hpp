@@ -334,7 +334,7 @@ namespace yq {
             copy(pData, count);
         }
         
-		/*! \brief Constructs by copying a vector of data
+		/*! \brief Constructs by copying from a vector of data
 		
 			\param[in] data		Reference to the vector of data
 		*/
@@ -344,6 +344,10 @@ namespace yq {
             copy(data.data(), data.size());
         }
 
+		/*! \brief Constructs by copying from a span of data
+		
+			\param[in] data		The data span
+		*/
         template <typename T>
         Memory(copy_k, std::span<const T> data) : Memory()
         {
