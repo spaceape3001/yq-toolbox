@@ -344,7 +344,7 @@ namespace yq {
             copy(data.data(), data.size());
         }
 
-		/*! \brief Constructs by copying from a span of data
+		/*! \brief Constructs by copying from a span of constant data
 		
 			\param[in] data		The data span
 		*/
@@ -354,6 +354,10 @@ namespace yq {
             copy(data);
         }
 
+		/*! \brief Constructs by copying from a span of data
+		
+			\param[in] data		The data span
+		*/
         template <typename T>
         Memory(copy_k, std::span<T> data) : Memory()
         {
