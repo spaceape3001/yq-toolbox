@@ -327,6 +327,7 @@ namespace yq {
 		
 			\param[in] pData	pointer to the first data element
 			\param[in] count	Number of entries to copy
+			\tparam T			data type
 		*/
         template <typename T>
         Memory(copy_k, const T* pData, size_t count) : Memory()
@@ -337,6 +338,7 @@ namespace yq {
 		/*! \brief Constructs by copying from a vector of data
 		
 			\param[in] data		Reference to the vector of data
+			\tparam T			data type
 		*/
         template <typename T, typename A>
         Memory(copy_k, const std::vector<T, A>& data)
@@ -347,6 +349,7 @@ namespace yq {
 		/*! \brief Constructs by copying from a span of constant data
 		
 			\param[in] data		The data span
+			\tparam T			data type
 		*/
         template <typename T>
         Memory(copy_k, std::span<const T> data) : Memory()
@@ -357,6 +360,7 @@ namespace yq {
 		/*! \brief Constructs by copying from a span of data
 		
 			\param[in] data		The data span
+			\tparam T			data type
 		*/
         template <typename T>
         Memory(copy_k, std::span<T> data) : Memory()
@@ -364,6 +368,13 @@ namespace yq {
             copy(data);
         }
 
+		/*! \brief Constructs by copying from in-program constant 
+			data block.
+		
+			\param[in] ptr		Pointer to data
+			\tparam N			Number of bytes
+			\tparam T			data type
+		*/
         template <typename T, size_t N>
         Memory(copy_k, const T (&ptr)[N]) : Memory()
         {
