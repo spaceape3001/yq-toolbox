@@ -381,6 +381,11 @@ namespace yq {
             copy<T,N>(ptr);
         }
 
+		/*! \brief Constructs by copying in a single item
+		
+			\param data		Reference to the data
+			\tparam T			data type
+		*/
         template <typename T>
         Memory(copy1_t, const T& data) : Memory()
         {
