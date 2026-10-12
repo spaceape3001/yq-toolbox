@@ -393,6 +393,17 @@ namespace yq {
         }
 
 
+		/*! \brief Constructs by referencing a block of data
+		
+			\note The pointed data must remain VALID the entire time 
+			the memory is being used.  (So, think global static data or
+			a buffer that won't ever be deallocated while this memory block
+			is valid.)
+			
+			\param pData		Pointer to the data
+			\param count		Number of elements
+			\tparam T			data type
+		*/
         template <typename T>
         Memory(ref_k, const T* pData, size_t count) : Memory()
         {
