@@ -410,6 +410,16 @@ namespace yq {
             ref(pData, count);
         }
 
+		/*! \brief Constructs by referencing a vector of data
+		
+			\note The incoming vector must remain VALID the entire time
+			the memory is being used.  (So, think global static data 
+			or something that won't ever be deallocated while this memory
+			block is valid.
+			
+			\param	data	Reference to the data
+			\tparam T			data type
+		*/
         template <typename T, typename A>
         Memory(ref_k, const std::vector<T, A>& data)
         {
