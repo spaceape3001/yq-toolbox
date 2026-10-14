@@ -418,7 +418,7 @@ namespace yq {
 			block is valid.
 			
 			\param	data	Reference to the data
-			\tparam T			data type
+			\tparam T		data type
 		*/
         template <typename T, typename A>
         Memory(ref_k, const std::vector<T, A>& data)
@@ -426,6 +426,16 @@ namespace yq {
             ref(data.data(), data.size());
         }
 
+		/*! \brief Constructs by referencing a span of data
+		
+			\note The incoming span must remain VALID the entire time
+			the memory is being used.  (So, think global static data 
+			or something that won't ever be deallocated while this memory
+			block is valid.
+			
+			\param	data	Reference to the data
+			\tparam T		data type
+		*/
         template <typename T>
         Memory(ref_k, std::span<T> data) : Memory()
         {
