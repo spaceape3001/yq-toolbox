@@ -433,7 +433,7 @@ namespace yq {
 			or something that won't ever be deallocated while this memory
 			block is valid.
 			
-			\param	data	Reference to the data
+			\param	data	Span to the data
 			\tparam T		data type
 		*/
         template <typename T>
@@ -442,6 +442,16 @@ namespace yq {
             ref(data);
         }
 
+		/*! \brief Constructs by referencing a span of constant data
+		
+			\note The incoming span must remain VALID the entire time
+			the memory is being used.  (So, think global static data 
+			or something that won't ever be deallocated while this memory
+			block is valid.
+			
+			\param	data	Span to the constant data
+			\tparam T		data type
+		*/
         template <typename T>
         Memory(ref_k, std::span<const T> data) : Memory()
         {
