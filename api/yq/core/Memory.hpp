@@ -458,6 +458,12 @@ namespace yq {
             ref(data);
         }
 
+		/*! \brief Constructs by referencing a built in program data
+		
+			\param	data	Span to the constant data
+			\tparam T		data type (auto-deduced)
+			\tparam N		count of elements (auto-deduced)
+		*/
         template <typename T, size_t N>
         Memory(ref_k, const T (&ptr)[N]) : Memory()
         {
