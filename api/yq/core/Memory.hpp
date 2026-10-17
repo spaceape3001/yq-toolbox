@@ -459,8 +459,13 @@ namespace yq {
         }
 
 		/*! \brief Constructs by referencing a built in program data
+
+			\note The incoming array must remain VALID the entire time
+			the memory is being used.  (So, think global static data 
+			or something that won't ever be deallocated while this memory
+			block is valid.
 		
-			\param	data	Span to the constant data
+			\param	data	Array to the constant data
 			\tparam T		data type (auto-deduced)
 			\tparam N		count of elements (auto-deduced)
 		*/
@@ -470,6 +475,17 @@ namespace yq {
             ref<T,N>(ptr);
         }
 
+		/*! \brief Constructs by referencing a built in program data
+		
+			\note The incoming array must remain VALID the entire time
+			the memory is being used.  (So, think global static data 
+			or something that won't ever be deallocated while this memory
+			block is valid.
+
+			\param	data	Array to the data
+			\tparam T		data type (auto-deduced)
+			\tparam N		count of elements (auto-deduced)
+		*/
         template <typename T, size_t N>
         Memory(ref_k, T (&ptr)[N]) : Memory()
         {
