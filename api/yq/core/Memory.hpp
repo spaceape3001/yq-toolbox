@@ -492,6 +492,16 @@ namespace yq {
             ref<T,N>(ptr);
         }
 
+		/*! \brief Constructs by referencing a single bit of data
+		
+			\note The referenced data must remain VALID the entire time 
+			the memory is being used.  (So, think global static data or
+			similar variable that won't ever be deallocated while this memory 
+			block is valid.)
+			
+			\param data Reference to the data
+			\tparam T		data type (auto-deduced)
+		*/
         template <typename T>
         Memory(ref1_t, const T& data) : Memory()
         {
