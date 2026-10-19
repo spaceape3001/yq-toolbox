@@ -508,6 +508,12 @@ namespace yq {
             ref1(data);
         }
 
+		/*! \brief Ref/Move constructor (deleted)
+		
+			This routine was deleted to prevent temporaries being pushed
+			in as constant references (which naturally violate the premise
+			of persistence).
+		*/
         template <typename T>
         Memory(ref1_t, T&&) = delete;
 
