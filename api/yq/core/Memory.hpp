@@ -532,6 +532,19 @@ namespace yq {
 		*/
         Memory(set_k, const void* pData, size_t byteCount); 
 
+		/*! \brief Constructs by pointer/size
+		
+			Constructs the to a known pointer/byte
+			
+			\note This data must remain valid for the entire duration of this
+			memory object or bad things will happen.
+			
+			\note No data-type is configured with this constructor (null).
+			
+			\param pData		pointer to the data
+			\param byteCount	number of bytes to the data
+			\param stride		bytes between elements
+		*/
         Memory(set_k, const void* pData, size_t byteCount, size_t stride); 
 
         Memory(set_k, const void* pData, size_t byteCount, const TypeMeta& type); 
