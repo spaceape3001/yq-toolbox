@@ -136,6 +136,7 @@ namespace yq {
     struct ArrayConfig {
         static_assert((1 <= N) && (N <= 6), "Invalid dimension count!");
 
+		//! Number of array dimensions (capturing the template parameter)
         static constexpr const uint8_t  DIMS    = N;
 
         using coord_type    = Coord<I,N>;
