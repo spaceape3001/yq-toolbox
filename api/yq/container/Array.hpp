@@ -139,6 +139,7 @@ namespace yq {
 		//! Number of array dimensions (capturing the template parameter)
         static constexpr const uint8_t  DIMS    = N;
 
+		//! Defines our coordinate type
         using coord_type    = Coord<I,N>;
         using index_type    = I;
 
