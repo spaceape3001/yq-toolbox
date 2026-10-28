@@ -141,6 +141,8 @@ namespace yq {
 
 		//! Defines our coordinate type
         using coord_type    = Coord<I,N>;
+        
+        //! Index type (capturing the template parameter)
         using index_type    = I;
 
         static constexpr const bool origin_flag  = ORIGIN;
