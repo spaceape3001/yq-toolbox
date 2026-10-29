@@ -131,7 +131,13 @@ namespace yq {
         This is an internal class used to configuring the array.  
         It's used to avoid the overload of template parameters that's otherwise needed.   
         (As the configuration details *may* change for new features, this seemed reasonable
+        
+        \tparam I 			Index type
+        \tparam N			Number of dimensions (1->6)
+        \tparam ORIGIN		Allows for shiftable origins (ie, indexing not starting at zero)
+        \tparam GHOST		True to have a later of ghost cells 
     */
+    // TODO ... shift this bool to an unsigned integer (ie, allowing for 2/3+ cells)
     template <typename I, uint8_t N, bool ORIGIN, bool GHOST>
     struct ArrayConfig {
         static_assert((1 <= N) && (N <= 6), "Invalid dimension count!");
