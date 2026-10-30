@@ -151,6 +151,7 @@ namespace yq {
         //! Index type (capturing the template parameter)
         using index_type    = I;
 
+		//! Origin flag (capturing the template parameter)
         static constexpr const bool origin_flag  = ORIGIN;
         static constexpr const bool ghost_flag   = GHOST;
 
