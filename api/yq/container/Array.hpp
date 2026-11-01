@@ -160,6 +160,7 @@ namespace yq {
 		//! Ghost count (right now, 0/1)
 		static constexpr const uint8_t ghost_count	= GHOST ? 1 : 0;
 
+		//! True for signed index type
         static constexpr const bool is_signed   = std::is_signed_v<I>;
         static constexpr const bool is_unsigned = std::is_unsigned_v<I>;
         static_assert((ORIGIN || GHOST) ? is_signed : true, "Origin & ghost features REQUIRE signed index type.");
