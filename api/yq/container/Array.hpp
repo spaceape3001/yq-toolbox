@@ -162,6 +162,8 @@ namespace yq {
 
 		//! True for signed index type
         static constexpr const bool is_signed   = std::is_signed_v<I>;
+
+		//! True for unsigned index type
         static constexpr const bool is_unsigned = std::is_unsigned_v<I>;
         static_assert((ORIGIN || GHOST) ? is_signed : true, "Origin & ghost features REQUIRE signed index type.");
     };
