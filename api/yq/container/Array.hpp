@@ -171,6 +171,8 @@ namespace yq {
     template <typename> struct is_array_coord : std::false_type {};
     template <typename I, uint8_t N, bool ORIGIN, bool GHOST>
     struct is_array_coord<ArrayConfig<I,N,ORIGIN,GHOST>> : std::true_type {};
+    
+    //! Tests for whether a class/type is an array coordinate type
     template <typename T>
     inline constexpr bool is_array_coord_v = is_array_coord<T>::value;
     
