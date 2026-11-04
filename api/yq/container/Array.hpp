@@ -227,6 +227,7 @@ namespace yq {
     
         static_assert(is_array_coord_v<COORD>, "COORD parameter must be ArrayConfig based!");
 
+		//! Array's value (data) type (capturing the template parameter)s
         using value_type        = DATA;
         using coord_type        = typename COORD::coord_type;
         using index_type        = typename COORD::index_type;
