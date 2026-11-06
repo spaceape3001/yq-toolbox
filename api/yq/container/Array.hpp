@@ -232,6 +232,8 @@ namespace yq {
         
         //! Array's coordinate type (capturing the template parameter)
         using coord_type        = typename COORD::coord_type;
+        
+        //! Array's index type (capturing the template parameter)
         using index_type        = typename COORD::index_type;
     
         //static constexpr const bool         is_resizeable   = is_stdvector_v<DATA>;
