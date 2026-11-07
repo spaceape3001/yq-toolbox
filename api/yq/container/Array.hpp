@@ -240,6 +240,8 @@ namespace yq {
         //static constexpr const bool         is_array        = is_stdarray_v<DATA>;
         //static constexpr const bool         is_span         = is_stdspan_v<DATA>;
         //static constexpr const bool         is_vector       = is_stdvector_v<DATA>;
+        
+        //! TRUE for constant array data type
         static constexpr const bool         is_constant     = std::is_const_v<value_type>;
         static constexpr const bool         is_mutable      = !std::is_const_v<value_type>;
         static constexpr const bool         is_signed       = std::is_signed_v<index_type>;
