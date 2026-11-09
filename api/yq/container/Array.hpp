@@ -246,6 +246,8 @@ namespace yq {
         
         //! TRUE for mutable array data
         static constexpr const bool         is_mutable      = !std::is_const_v<value_type>;
+        
+        //! TRUE for signed indices
         static constexpr const bool         is_signed       = std::is_signed_v<index_type>;
         static constexpr const bool         is_unsigned     = std::is_unsigned_v<index_type>;
         
