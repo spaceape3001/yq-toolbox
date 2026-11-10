@@ -247,8 +247,10 @@ namespace yq {
         //! TRUE for mutable array data
         static constexpr const bool         is_mutable      = !std::is_const_v<value_type>;
         
-        //! TRUE for signed indices
+        //! TRUE for signed index types
         static constexpr const bool         is_signed       = std::is_signed_v<index_type>;
+        
+        //! TRUE for unsigned index types
         static constexpr const bool         is_unsigned     = std::is_unsigned_v<index_type>;
         
         static constexpr const bool         ORIGIN          = COORD::origin_flag;
