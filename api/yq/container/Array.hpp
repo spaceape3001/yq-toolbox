@@ -253,6 +253,7 @@ namespace yq {
         //! TRUE for unsigned index types
         static constexpr const bool         is_unsigned     = std::is_unsigned_v<index_type>;
         
+        //! True for an array supporting relocating origins (ie, not zero)
         static constexpr const bool         ORIGIN          = COORD::origin_flag;
         static constexpr const bool         GHOST           = COORD::ghost_flag;
         static constexpr const uint8_t      DIMS            = COORD::DIMS;
