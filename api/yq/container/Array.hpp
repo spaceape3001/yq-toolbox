@@ -255,6 +255,9 @@ namespace yq {
         
         //! True for an array supporting relocating origins (ie, not zero)
         static constexpr const bool         ORIGIN          = COORD::origin_flag;
+        
+        //! True for arrays supporting ghost cells 
+        //! \note A TODO is to change this to an uint8_t to allow for more than one layer
         static constexpr const bool         GHOST           = COORD::ghost_flag;
         static constexpr const uint8_t      DIMS            = COORD::DIMS;
 
