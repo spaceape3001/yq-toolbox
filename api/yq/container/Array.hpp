@@ -259,6 +259,8 @@ namespace yq {
         //! True for arrays supporting ghost cells 
         //! \note A TODO is to change this to an uint8_t to allow for more than one layer
         static constexpr const bool         GHOST           = COORD::ghost_flag;
+        
+        //! Number of dimensions for this array
         static constexpr const uint8_t      DIMS            = COORD::DIMS;
 
         static_assert(std::is_integral_v<index_type>, "Coordinate-index must be integer based");
