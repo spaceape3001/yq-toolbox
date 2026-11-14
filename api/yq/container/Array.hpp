@@ -265,6 +265,7 @@ namespace yq {
 
         static_assert(std::is_integral_v<index_type>, "Coordinate-index must be integer based");
 
+		//! Sizing type (for each dimension)
         using size_c            = Coord<size_t, DIMS>;
         using uint8_c           = Coord<uint8_t, DIMS>;
         using range_type        = IntRange<index_type>;
