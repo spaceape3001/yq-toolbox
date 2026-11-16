@@ -270,6 +270,8 @@ namespace yq {
         
         //! Sizing (Unsigned) type (for each dimension)
         using uint8_c           = Coord<uint8_t, DIMS>;
+        
+        //! Range type (based on the index type)
         using range_type        = IntRange<index_type>;
         using ranges_type       = Coord<range_type, DIMS>;
 
