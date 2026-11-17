@@ -273,6 +273,8 @@ namespace yq {
         
         //! Range type (based on the index type)
         using range_type        = IntRange<index_type>;
+        
+        //! Full range type for all dimensions (based on index type & dimension count)
         using ranges_type       = Coord<range_type, DIMS>;
 
         
