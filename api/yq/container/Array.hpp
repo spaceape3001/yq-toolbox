@@ -278,6 +278,11 @@ namespace yq {
         using ranges_type       = Coord<range_type, DIMS>;
 
         
+        /*! \brief Constructor (size/default value)
+        
+			\param c	Size of the array
+			\param v	Default value for array
+        */
         template <typename=void>
         requires (!ORIGIN && !GHOST)
         explicit Array(const coord_type& c, const value_type& v={})
