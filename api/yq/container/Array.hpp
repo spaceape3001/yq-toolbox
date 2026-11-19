@@ -291,6 +291,14 @@ namespace yq {
             build(v);
         }
 
+		/*! \brief Constructor (from a buffer of data)
+		
+			\note This will assume there are countOf(c) valid entries
+			at said pointer.
+			
+			\param c		Size of the array
+			\param pValue	Pointer to the data
+		*/
         template <typename=void>
         requires (!ORIGIN && !GHOST)
         Array(const coord_type& c, copy_k, const value_type* pValue)
