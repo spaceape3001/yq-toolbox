@@ -359,6 +359,12 @@ namespace yq {
             m_calc  = {};
         }
 
+		/*! \brief The "columns" to the 2D array
+		
+			\note Only present on 2 dimensional arrays
+			\note This returns a range object, gives the lo & hi numbers (lo <= j < hi)
+			\return Range object for the column limits
+		*/
         template <typename=void>
         requires (DIMS == 2)
         range_type          columns() const
