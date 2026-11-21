@@ -472,6 +472,10 @@ namespace yq {
             return m_calc.hardLo;
         }
 
+		/*! \brief Hard ranges
+		
+			These are the "hard" or limits to the indexing for each dimension.
+		*/
         constexpr ranges_type hard_ranges() const noexcept
         {
             return int_range(m_calc.hardLo, m_calc.hardHi);
